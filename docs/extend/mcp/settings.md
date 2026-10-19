@@ -8,15 +8,7 @@ These settings decide which MCP servers may run and which ones a project may use
 Administrators use them for allow lists and deny lists.
 For example, `{ "enableAllProjectMcpServers": true }` approves every server in a project `.mcp.json` file.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. Most keys also work in your own settings. |
-| Can you change it? | Edit settings files, or use managed settings for organization rules. |
-| Can you turn it on or off? | `disabledMcpjsonServers`, `enableAllProjectMcpServers`, `deniedMcpServers`, `--strict-mcp-config`, and `disableClaudeAiConnectors`. |
-| Where does it live? | Settings files, `~/.claude.json`, `.mcp.json`, and `managed-mcp.json` |
-| Status | <Documented /> <Undocumented /> |
+Most keys also work in your own settings. They live in settings files, `~/.claude.json`, `.mcp.json`, and `managed-mcp.json`. The switches are `disabledMcpjsonServers`, `enableAllProjectMcpServers`, `deniedMcpServers`, `--strict-mcp-config`, and `disableClaudeAiConnectors`.
 
 ## Settings Keys
 

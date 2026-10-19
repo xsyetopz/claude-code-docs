@@ -6,16 +6,6 @@ sidebar_position: 32
 
 The prompt that a `general-purpose` subagent gets. The main agent calls the `Agent` tool with `subagent_type: "general-purpose"`.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. The model starts subagents. |
-| Can you change it? | Not the built-in text. You can write custom agents. |
-| Can you turn it on or off? | `--disallowedTools Agent` stops all subagents. |
-| Where does it live? | Built into the program. |
-| Status | <Undocumented /> |
-
 ## Size
 
 | Part | Characters |

@@ -76,7 +76,7 @@ sidebar_position: 7
 A surface page has this order.
 
 1. A 2 to 4 sentence intro.
-2. An At a Glance table.
+2. An At a Glance table, only on a section's index page or on a standalone page with no section folder. Subpages do not repeat it.
 3. Item tables, grouped by topic.
 4. An Example section with a real config or command.
 5. Related pages and sources.

@@ -13,10 +13,10 @@ This page explains the files, the scopes, and which value wins. The other pages 
 | Question | Answer |
 | --- | --- |
 | Can you use it? | ✅ Yes. Create or edit a settings file, or run `/config`. |
-| Can you change it? | Edit the JSON files below, pass `--settings`, or ask an administrator to deploy managed settings. |
+| Can you change it? | Edit the JSON files below, pass `--settings`, use `/config` or `/model` for some keys, or ask an administrator to deploy managed settings. |
 | Can you turn it on or off? | Each key is its own switch. `disableAllHooks` turns off hooks, the status line, and file suggestions at once. |
 | Where does it live? | `~/.claude/settings.json`, `.claude/settings.json`, `.claude/settings.local.json`, managed files, and `~/.claude.json` |
-| Status | <Documented /> |
+| Status | <Documented /> <Undocumented /> <Differs note="appendPlugins and prependPlugins" /> |
 
 The managed schema of `2.1.303` lists 184 keys. The user schema lists 162, and the other 22 are managed-only.
 Source: the program (the published settings schemas).

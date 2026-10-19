@@ -7,16 +7,6 @@ sidebar_position: 6
 These are the types behind `$.model`, `$.audio`, and `$.mcp`.
 They describe the request and the answer of a model call, the cache marks of a prompt, and the result of an MCP call.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes, as types. `import type` them from `claude-code`. |
-| Can you change it? | ❌ No. These are types only. They describe data, and they do not hold settings. |
-| Can you turn it on or off? | ❌ No. A type has no switch. |
-| Where does it live? | The published type file `types-2.1.303.d.ts` and `.claude-plugin/types/claude-code/index.d.ts`. |
-| Status | <Documented /> |
-
 ## Example
 
 This call asks a model for one answer. The types below describe the request and the result.

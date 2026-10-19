@@ -7,15 +7,7 @@ sidebar_position: 6
 `$.ui` draws and manages the interface: lines in the transcript, toasts, panes, scroll, focus, the clipboard, and element tables.
 Each method is also an event with the same name, such as `ui.log`, so a hook above the caller can rewrite or refuse the call.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. `await $.ui.open({ id: "clock", title: "Clock" })` opens a pane. `$.ui.toast("Saved")` shows a short message. |
-| Can you change it? | ✅ Yes. Hook the matching event, or hook `ui.render` to redraw a part of the interface. |
-| Can you turn it on or off? | Close a pane with `$.ui.close`. A `deny` from a hook refuses a call. |
-| Where does it live? | The hooks module. |
-| Status | <Documented /> |
+Close a pane with `$.ui.close`. A `deny` from a hook refuses a call.
 
 Official page: [Draw in the Interface](https://code.claude.com/docs/en/plugins/mods/interface), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the program (`types-2.1.303.d.ts`).
 In a "Where it can be used" cell, "Run time" means in a hook, in a closure that a hook drew, or in a timer callback. It does not mean inside `register`.

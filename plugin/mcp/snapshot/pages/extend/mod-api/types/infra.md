@@ -11,16 +11,6 @@ source: docs/extend/mod-api/types/infra.md
 These are the types behind `$.fs`, `$.store`, `$.state`, `$.clock`, `$.http`, `$.process`, `$.env`, and `$.settings`.
 They describe files, stored values, timers, web requests, child processes, and settings.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes, as types. `import type` them from `claude-code`. |
-| Can you change it? | ❌ No. These are types only. They describe data, and they do not hold settings. |
-| Can you turn it on or off? | ❌ No. A type has no switch. |
-| Where does it live? | The published type file `types-2.1.303.d.ts` and `.claude-plugin/types/claude-code/index.d.ts`. |
-| Status | [Documented] |
-
 ## Example
 
 This call runs a child process and reads its exit code and output. The types below describe the input and the result.

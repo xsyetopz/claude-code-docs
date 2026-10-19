@@ -13,15 +13,7 @@ A matcher picks the events. An `if` filter narrows them to some tool calls.
 The `timeout` and `onFailure` fields set limits.
 For example, `"matcher": "Bash"` with `"if": "Bash(git push *)"` runs a hook only for `git push` commands.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. |
-| Can you change it? | ✅ Yes. Each field is set per handler or per matcher group. |
-| Can you turn it on or off? | `disableAllHooks`, `allowManagedHooksOnly`, or remove the entry. |
-| Where does it live? | The `hooks` key of a settings file, plugin, skill, or subagent. |
-| Status | [Documented] [Undocumented] [Differs] |
+Turn hooks off with `disableAllHooks` or `allowManagedHooksOnly`, or remove the entry.
 
 ## Example
 

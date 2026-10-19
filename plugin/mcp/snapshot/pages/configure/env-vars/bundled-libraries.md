@@ -12,16 +12,7 @@ Claude Code ships with libraries inside its program.
 These libraries read their own environment variables, and Claude Code itself does not use them.
 A variable here only works when the library code runs. Setting one can change behavior in a way Claude Code does not plan for.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes, but the effect depends on the library and the feature that runs it. |
-| Can you change it? | ✅ Yes. Set it in your shell. |
-| Can you turn it on or off? | Unset the variable. |
-| Where does it live? | Your shell. |
-| Rows on this page | 126 variables |
-| Status | [Documented] [Undocumented] [Differs] [Gated] |
+This page lists 126 variables. The effect depends on the library and the feature that runs it. Set them in your shell.
 
 ## Example
 

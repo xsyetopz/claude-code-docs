@@ -12,6 +12,48 @@ The text on these pages is Anthropic's. It is shown here only to describe how th
 
 Status badges: <Documented /> means an official docs page names the switch. <Undocumented /> means only the program shows it. <Differs note="example" /> means the docs and the program disagree. <Gated note="example" /> means a flag or a server gate is needed.
 
+## At a Glance
+
+You can use every prompt here: the answer to "Can you use it?" is ✅ Yes for all of them. Where a page adds a condition, it is in parentheses after the name.
+
+| Prompt | Can You Change It? | Turn On or Off | Where It Lives | Status |
+| --- | --- | --- | --- | --- |
+| [Default, Lean Prompt](./default-lean.md) (Every session on a lean model gets it) | ✅ Yes. Use the flags and settings on the other pages. | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=0` switches to the full prompt. | Built into the program. Nothing on disk. | <Undocumented /> |
+| [Default, Sonnet 5.5](./default-sonnet.md) (Every Sonnet 5.5 session gets it) | ✅ Yes. Use the flags and settings on the other pages. | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=0` switches to the full prompt. | Built into the program. Nothing on disk. | <Documented /> |
+| [Default, Haiku 5.5](./default-haiku.md) (Every Haiku 5.5 session gets it) | ✅ Yes. Use the flags and settings on the other pages. | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=0` switches to the full prompt. | Built into the program. Nothing on disk. | <Undocumented /> |
+| [Full Prompt](./full-prompt.md) | ✅ Yes. Set or unset the env var. | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=0` (also `false`, `no`, `off`). | Environment variable. Put it under `env` in `settings.json` to keep it. | <Documented /> |
+| [Simple Prompt Switch on Sonnet](./simple-prompt-sonnet.md) | ✅ Yes. Set or unset the env var. | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1`. | Environment variable. | <Documented /> |
+| [Simple Prompt Switch on Haiku](./simple-prompt-haiku.md) | ✅ Yes. Set or unset the env var. | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1`. | Environment variable. | <Documented /> |
+| [Simple Prompt Switch on Opus](./simple-prompt-opus.md) | ✅ Yes. Set or unset the env var. | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1`. | Environment variable. | <Documented /> |
+| [Bare Mode](./bare.md) | ❌ No. The two lines are fixed. | `--bare` or `CLAUDE_CODE_SIMPLE=1`. | Command-line flag. | <Documented /> |
+| [Simple Mode Env Var](./simple-env.md) | ❌ No. The two lines are fixed. | `CLAUDE_CODE_SIMPLE=1`. | Environment variable. | <Documented /> |
+| [Exclude Dynamic Sections](./exclude-dynamic.md) | ❌ No. It only moves text. | `--exclude-dynamic-system-prompt-sections`. | Command-line flag. | <Documented /> |
+| [Exclude Dynamic Sections, Full Prompt](./exclude-dynamic-full.md) | ❌ No. It only moves text. | `--exclude-dynamic-system-prompt-sections`. | Command-line flag. | <Documented /> |
+| [Output Style, Explanatory](./style-explanatory.md) | Not the built-in text. You can write a custom style. | `/output-style` or the `outputStyle` setting. | `outputStyle` in any settings scope. | <Documented /> |
+| [Output Style, Learning](./style-learning.md) | Not the built-in text. You can write a custom style. | `/output-style` or the `outputStyle` setting. | `outputStyle` in any settings scope. | <Documented /> |
+| [Output Style, Proactive](./style-proactive.md) | Not the built-in text. You can write a custom style. | `/output-style` or the `outputStyle` setting. | `outputStyle` in any settings scope. | <Documented /> |
+| [Output Style, Concise](./style-concise.md) | Not the built-in text. You can write a custom style. | `/output-style` or the `outputStyle` setting. | `outputStyle` in any settings scope. | <Documented /> |
+| [Custom Output Style](./style-custom.md) | ✅ Yes. You write the file. | `/output-style` or the `outputStyle` setting. | `~/.claude/output-styles/*.md` or `.claude/output-styles/*.md`. | <Documented /> |
+| [Custom Output Style on the Full Prompt](./style-custom-full.md) | ✅ Yes. You write the file. | `/output-style` or the `outputStyle` setting. | `~/.claude/output-styles/*.md` or `.claude/output-styles/*.md`. | <Documented /> |
+| [Custom Output Style with Keep Coding Instructions](./style-custom-keep.md) | ✅ Yes. You write the file. | `keep-coding-instructions` in the style's front matter. | `~/.claude/output-styles/*.md` or `.claude/output-styles/*.md`. | <Documented /> |
+| [Custom Output Style with Keep Coding Instructions, Lean Prompt](./style-custom-keep-lean.md) | ✅ Yes. You write the file. | `keep-coding-instructions` in the style's front matter. | `~/.claude/output-styles/*.md` or `.claude/output-styles/*.md`. | <Documented /> |
+| [Append System Prompt](./append-system-prompt.md) | ✅ Yes. You give the text. | `--append-system-prompt` or `--append-system-prompt-file`. | Command-line flags. | <Documented /> |
+| [Replace System Prompt](./system-prompt.md) | ✅ Yes. You give the text. | `--system-prompt` or `--system-prompt-file`. | Command-line flags. | <Documented /> |
+| [Replace and Append Together](./system-prompt-append.md) | ✅ Yes. You give the text. | The two flags. | Command-line flags. | <Documented /> |
+| [With a CLAUDE.md File](./claude-md.md) | ✅ Yes. You write the file. | Add or remove the file. `CLAUDE_CODE_DISABLE_CLAUDE_MDS=1` skips them. | `CLAUDE.md`, `.claude/CLAUDE.md`, `~/.claude/CLAUDE.md`. | <Documented /> |
+| [Inside a Git Repository](./git-repo.md) (It happens on its own) | ❌ No. | `includeGitInstructions` in settings controls the git rules. The status text always appears in a repo. | Built into the program. | <Undocumented /> |
+| [Main Thread Custom Agent](./agent-main.md) | ✅ Yes. You write the agent file. | `--agent` or the `agent` setting. | `.claude/agents/*.md` or `~/.claude/agents/*.md`. | <Documented /> |
+| [Permission Mode, Plan](./mode-plan.md) | ❌ No. | `--permission-mode` or `defaultMode` in settings. | Flag or settings. | <Documented /> |
+| [Permission Mode, Accept Edits](./mode-acceptEdits.md) | ❌ No. | `--permission-mode` or `defaultMode` in settings. | Flag or settings. | <Documented /> |
+| [Permission Mode, Don't Ask](./mode-dontAsk.md) | ❌ No. | `--permission-mode` or `defaultMode` in settings. | Flag or settings. | <Documented /> |
+| [Brief Mode](./brief.md) | ❌ No. | `--brief`. | Command-line flag. | <Undocumented /> |
+| [Compaction Prompt](./compact.md) | Partly. You can add focus text after `/compact`. | `/compact`, or automatic when the context fills. | Built into the program. | <Undocumented /> |
+| [Subagent, General Purpose](./subagent-general-purpose.md) (The model starts subagents) | Not the built-in text. You can write custom agents. | `--disallowedTools Agent` stops all subagents. | Built into the program. | <Undocumented /> |
+| [Subagent, Explore](./subagent-explore.md) (The model starts subagents) | Not the built-in text. You can write custom agents. | `--disallowedTools Agent` stops all subagents. | Built into the program. | <Undocumented /> |
+| [Subagent, Plan](./subagent-plan.md) (The model starts subagents) | Not the built-in text. You can write custom agents. | `--disallowedTools Agent` stops all subagents. | Built into the program. | <Undocumented /> |
+| [Subagent, Custom Agent](./subagent-custom.md) | ✅ Yes. You write the agent file. | Add or remove the file. | `.claude/agents/*.md` or `~/.claude/agents/*.md`. | <Documented /> |
+| [Tools per Variant](./tools-per-variant.md) (Every request carries the list) | ✅ Yes. Use `--tools`, `--allowedTools`, `--disallowedTools`, or settings. | `--bare` and `CLAUDE_CODE_SIMPLE=1` cut the list to three tools. | Built into the program. | <Undocumented /> |
+
 ## How the Captures Were Made
 
 Every prompt on these pages was captured offline, with no model call and no cost.
@@ -93,42 +135,42 @@ Captures disagree with the old wiki in one place: the wiki says models with `son
 
 Size is the number of characters in everything shown on the variant page, after placeholders are in place. The last column lists the `#` headings found in the system body.
 
-| Variant | How to select it | Characters | Tools | Sections | Status |
-| --- | --- | --- | --- | --- | --- |
-| [Default, Lean Prompt](./default-lean.md) | Default on Opus 5.5 | 15,142 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` | <Undocumented /> |
-| [Default, Sonnet 5.5](./default-sonnet.md) | Default on Sonnet 5.5 | 15,148 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` | <Documented /> |
-| [Default, Haiku 5.5](./default-haiku.md) | Default on Haiku 5.5 | 17,937 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` | <Undocumented /> |
-| [Full Prompt](./full-prompt.md) | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=0` | 36,526 | 20 | `System`, `Doing tasks`, `Executing actions with care`, `Using your tools`, `Tone and style`, `Text output (does not apply to tool calls)`, `Session-specific guidance`, `auto memory`, `Environment`, `Context management` | <Documented /> |
-| [Simple Prompt Switch on Sonnet](./simple-prompt-sonnet.md) (same text as default-sonnet) | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1` on Sonnet | 15,148 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` | <Documented /> |
-| [Simple Prompt Switch on Haiku](./simple-prompt-haiku.md) (same text as default-haiku) | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1` on Haiku | 17,937 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` | <Documented /> |
-| [Simple Prompt Switch on Opus](./simple-prompt-opus.md) (same text as default-lean) | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1` on Opus | 15,142 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` | <Documented /> |
-| [Bare Mode](./bare.md) | `--bare` | 362 | 3 | none | <Documented /> |
-| [Simple Mode Env Var](./simple-env.md) (same text as bare) | `CLAUDE_CODE_SIMPLE=1` | 362 | 3 | none | <Documented /> |
-| [Exclude Dynamic Sections](./exclude-dynamic.md) | `--exclude-dynamic-system-prompt-sections` | 15,037 | 20 | `Harness`, `Environment`, `Context management` | <Documented /> |
-| [Exclude Dynamic Sections, Full Prompt](./exclude-dynamic-full.md) | `--exclude-dynamic-system-prompt-sections` plus the full prompt | 36,536 | 20 | `System`, `Doing tasks`, `Executing actions with care`, `Using your tools`, `Tone and style`, `auto memory`, `Text output (does not apply to tool calls)`, `Session-specific guidance`, `Environment`, `Context management` | <Documented /> |
-| [Output Style, Explanatory](./style-explanatory.md) | Output style `Explanatory` | 16,329 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` | <Documented /> |
-| [Output Style, Learning](./style-learning.md) | Output style `Learning` | 20,188 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` | <Documented /> |
-| [Output Style, Proactive](./style-proactive.md) | Output style `Proactive` | 16,648 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` | <Documented /> |
-| [Output Style, Concise](./style-concise.md) | Output style `Concise` | 16,682 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` | <Documented /> |
-| [Custom Output Style](./style-custom.md) | Custom style file | 15,360 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` | <Documented /> |
-| [Custom Output Style on the Full Prompt](./style-custom-full.md) | Custom style, full prompt | 33,423 | 20 | `System`, `Executing actions with care`, `Using your tools`, `Tone and style`, `Text output (does not apply to tool calls)`, `Session-specific guidance`, `auto memory`, `Environment`, `Context management` | <Documented /> |
-| [Custom Output Style with Keep Coding Instructions](./style-custom-keep.md) | Custom style with `keep-coding-instructions` | 36,744 | 20 | `System`, `Doing tasks`, `Executing actions with care`, `Using your tools`, `Tone and style`, `Text output (does not apply to tool calls)`, `Session-specific guidance`, `auto memory`, `Environment`, `Context management` | <Documented /> |
-| [Custom Output Style with Keep Coding Instructions, Lean Prompt](./style-custom-keep-lean.md) (same text as style-custom) | Custom style with `keep-coding-instructions`, lean | 15,360 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` | <Documented /> |
-| [Append System Prompt](./append-system-prompt.md) | `--append-system-prompt` | 15,199 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` | <Documented /> |
-| [Replace System Prompt](./system-prompt.md) | `--system-prompt` | 9,541 | 20 | none | <Documented /> |
-| [Replace and Append Together](./system-prompt-append.md) | `--system-prompt` plus `--append-system-prompt` | 9,598 | 20 | none | <Documented /> |
-| [With a CLAUDE.md File](./claude-md.md) | A `CLAUDE.md` file | 15,531 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` | <Documented /> |
-| [Inside a Git Repository](./git-repo.md) | A git repository | 15,758 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` | <Undocumented /> |
-| [Main Thread Custom Agent](./agent-main.md) | `--agent <name>` | 9,643 | 20 | none | <Documented /> |
-| [Permission Mode, Plan](./mode-plan.md) | `--permission-mode plan` | 20,021 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` | <Documented /> |
-| [Permission Mode, Accept Edits](./mode-acceptEdits.md) (same text as default-lean) | `--permission-mode acceptEdits` | 15,142 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` | <Documented /> |
-| [Permission Mode, Don't Ask](./mode-dontAsk.md) (same text as default-lean) | `--permission-mode dontAsk` | 15,142 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` | <Documented /> |
-| [Brief Mode](./brief.md) (same text as default-lean) | `--brief` | 15,142 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` | <Undocumented /> |
-| [Compaction Prompt](./compact.md) | `/compact` | 21,610 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` | <Undocumented /> |
-| [Subagent, General Purpose](./subagent-general-purpose.md) | `Agent` tool, `general-purpose` | 10,591 | 13 | none | <Undocumented /> |
-| [Subagent, Explore](./subagent-explore.md) | `Agent` tool, `Explore` | 11,134 | 9 | none | <Undocumented /> |
-| [Subagent, Plan](./subagent-plan.md) | `Agent` tool, `Plan` | 11,441 | 9 | none | <Undocumented /> |
-| [Subagent, Custom Agent](./subagent-custom.md) | Custom agent file | 9,215 | 13 | none | <Documented /> |
+| Variant | How to select it | Characters | Tools | Sections |
+| --- | --- | --- | --- | --- |
+| [Default, Lean Prompt](./default-lean.md) | Default on Opus 5.5 | 15,142 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Default, Sonnet 5.5](./default-sonnet.md) | Default on Sonnet 5.5 | 15,148 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Default, Haiku 5.5](./default-haiku.md) | Default on Haiku 5.5 | 17,937 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Full Prompt](./full-prompt.md) | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=0` | 36,526 | 20 | `System`, `Doing tasks`, `Executing actions with care`, `Using your tools`, `Tone and style`, `Text output (does not apply to tool calls)`, `Session-specific guidance`, `auto memory`, `Environment`, `Context management` |
+| [Simple Prompt Switch on Sonnet](./simple-prompt-sonnet.md) (same text as default-sonnet) | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1` on Sonnet | 15,148 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Simple Prompt Switch on Haiku](./simple-prompt-haiku.md) (same text as default-haiku) | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1` on Haiku | 17,937 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Simple Prompt Switch on Opus](./simple-prompt-opus.md) (same text as default-lean) | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1` on Opus | 15,142 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Bare Mode](./bare.md) | `--bare` | 362 | 3 | none |
+| [Simple Mode Env Var](./simple-env.md) (same text as bare) | `CLAUDE_CODE_SIMPLE=1` | 362 | 3 | none |
+| [Exclude Dynamic Sections](./exclude-dynamic.md) | `--exclude-dynamic-system-prompt-sections` | 15,037 | 20 | `Harness`, `Environment`, `Context management` |
+| [Exclude Dynamic Sections, Full Prompt](./exclude-dynamic-full.md) | `--exclude-dynamic-system-prompt-sections` plus the full prompt | 36,536 | 20 | `System`, `Doing tasks`, `Executing actions with care`, `Using your tools`, `Tone and style`, `auto memory`, `Text output (does not apply to tool calls)`, `Session-specific guidance`, `Environment`, `Context management` |
+| [Output Style, Explanatory](./style-explanatory.md) | Output style `Explanatory` | 16,329 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Output Style, Learning](./style-learning.md) | Output style `Learning` | 20,188 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Output Style, Proactive](./style-proactive.md) | Output style `Proactive` | 16,648 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Output Style, Concise](./style-concise.md) | Output style `Concise` | 16,682 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Custom Output Style](./style-custom.md) | Custom style file | 15,360 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Custom Output Style on the Full Prompt](./style-custom-full.md) | Custom style, full prompt | 33,423 | 20 | `System`, `Executing actions with care`, `Using your tools`, `Tone and style`, `Text output (does not apply to tool calls)`, `Session-specific guidance`, `auto memory`, `Environment`, `Context management` |
+| [Custom Output Style with Keep Coding Instructions](./style-custom-keep.md) | Custom style with `keep-coding-instructions` | 36,744 | 20 | `System`, `Doing tasks`, `Executing actions with care`, `Using your tools`, `Tone and style`, `Text output (does not apply to tool calls)`, `Session-specific guidance`, `auto memory`, `Environment`, `Context management` |
+| [Custom Output Style with Keep Coding Instructions, Lean Prompt](./style-custom-keep-lean.md) (same text as style-custom) | Custom style with `keep-coding-instructions`, lean | 15,360 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Append System Prompt](./append-system-prompt.md) | `--append-system-prompt` | 15,199 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Replace System Prompt](./system-prompt.md) | `--system-prompt` | 9,541 | 20 | none |
+| [Replace and Append Together](./system-prompt-append.md) | `--system-prompt` plus `--append-system-prompt` | 9,598 | 20 | none |
+| [With a CLAUDE.md File](./claude-md.md) | A `CLAUDE.md` file | 15,531 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Inside a Git Repository](./git-repo.md) | A git repository | 15,758 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Main Thread Custom Agent](./agent-main.md) | `--agent <name>` | 9,643 | 20 | none |
+| [Permission Mode, Plan](./mode-plan.md) | `--permission-mode plan` | 20,021 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Permission Mode, Accept Edits](./mode-acceptEdits.md) (same text as default-lean) | `--permission-mode acceptEdits` | 15,142 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Permission Mode, Don't Ask](./mode-dontAsk.md) (same text as default-lean) | `--permission-mode dontAsk` | 15,142 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Brief Mode](./brief.md) (same text as default-lean) | `--brief` | 15,142 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Compaction Prompt](./compact.md) | `/compact` | 21,610 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Subagent, General Purpose](./subagent-general-purpose.md) | `Agent` tool, `general-purpose` | 10,591 | 13 | none |
+| [Subagent, Explore](./subagent-explore.md) | `Agent` tool, `Explore` | 11,134 | 9 | none |
+| [Subagent, Plan](./subagent-plan.md) | `Agent` tool, `Plan` | 11,441 | 9 | none |
+| [Subagent, Custom Agent](./subagent-custom.md) | Custom agent file | 9,215 | 13 | none |
 
 See also [Tools per Variant](./tools-per-variant.md).
 

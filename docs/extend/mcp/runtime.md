@@ -9,15 +9,7 @@ The names, the permission rules, and the limits decide what Claude can use and f
 A tool from a server is named `mcp__<server>__<tool>`.
 For example, `mcp__github__create_issue` is the `create_issue` tool of the `github` server.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. It runs by itself once a server connects. |
-| Can you change it? | ✅ Yes. Per-server options, env vars, and permission rules. |
-| Can you turn it on or off? | `permissions.deny` for tools, `ENABLE_TOOL_SEARCH` for deferral, `CLAUDE_CODE_MCP_AUTO_BACKGROUND_MS` for background moves. |
-| Where does it live? | In the running session. Large results are saved under `tool-results`. |
-| Status | <Documented /> <Undocumented /> |
+This runs by itself once a server connects. Use `permissions.deny` for tools, `ENABLE_TOOL_SEARCH` for deferral, and `CLAUDE_CODE_MCP_AUTO_BACKGROUND_MS` for background moves. Large results are saved under `tool-results`.
 
 ## Tools and Names
 

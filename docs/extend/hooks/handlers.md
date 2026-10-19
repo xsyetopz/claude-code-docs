@@ -9,15 +9,7 @@ It can run a command, call a URL, call an MCP tool, ask a model, or start a suba
 The `type` key picks which one.
 For example, `{"type": "command", "command": "./check.sh"}` runs a script.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. Five types work. |
-| Can you change it? | ✅ Yes. Set the fields in each `hooks` array entry. |
-| Can you turn it on or off? | Remove the entry, or use `disableAllHooks`. |
-| Where does it live? | Inside the `hooks` array of a matcher group. |
-| Status | <Documented /> <Undocumented /> <Differs /> |
+Remove the entry, or use `disableAllHooks`, to turn a handler off.
 
 ## Example
 

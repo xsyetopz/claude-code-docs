@@ -12,15 +12,7 @@ The frontmatter is the block of keys at the top of a `SKILL.md` file.
 It sets the name, the description, the tools the skill may use, and who may call it.
 For example, `disable-model-invocation: true` makes a skill that only you can start.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. |
-| Can you change it? | ✅ Yes. Edit the top of your `SKILL.md`. |
-| Can you turn it on or off? | Use `disable-model-invocation` and `user-invocable`, or the `skillOverrides` setting. |
-| Where does it live? | The first lines of `SKILL.md`, between two `---` lines. |
-| Status | [Documented] [Undocumented] [Differs] |
+Use `disable-model-invocation` and `user-invocable`, or the `skillOverrides` setting, to turn a skill off.
 
 ## Example
 

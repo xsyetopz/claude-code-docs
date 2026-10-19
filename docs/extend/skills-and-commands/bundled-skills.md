@@ -8,15 +8,7 @@ Bundled skills ship inside Claude Code, so you need no files to use them.
 They are prompts that guide Claude through a common job.
 For example, `/simplify` reviews changed code and fixes the problems it finds.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. Type the name after `/`. |
-| Can you change it? | ❌ No. You can replace one by making your own skill with the same name. |
-| Can you turn it on or off? | Setting `disableBundledSkills` or env var `CLAUDE_CODE_DISABLE_BUNDLED_SKILLS=1`. |
-| Where does it live? | Inside the program. |
-| Status | <Documented /> <Undocumented /> <Gated /> |
+You cannot change a bundled skill, but you can replace one by making your own skill with the same name. Turn them off with the `disableBundledSkills` setting or `CLAUDE_CODE_DISABLE_BUNDLED_SKILLS=1`.
 
 ## Example
 

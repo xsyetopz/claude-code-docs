@@ -10,15 +10,7 @@ A `ui.render` hook gets the site in `e.component` and returns a tree of elements
 The 15 render sites are `AskUserQuestion`, `UserMessage`, `AssistantMessage`, `ToolUse`, `ToolResult`, `ToolGroup`, `ToolProgress`, `CommandOutput`, `Spinner`, `TurnDuration`, `InfoNotice`, `SessionMode`, `PromptHint`, `AbovePrompt`, and `Pane`.
 The engine alone draws the permission dialog. A mod adds context to it with `$.ui.notice`.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. Hook `ui.render` with `{ component: '<Site>' }`. |
-| Can you change it? | ✅ Yes. Rewrite `e.props` with `next`, or return your own tree. |
-| Can you turn it on or off? | Return the engine's tree (call `next(e)`) to leave a site as it is. |
-| Where does it live? | The hooks module. JSX needs a `.tsx` or `.jsx` file. |
-| Status | <Documented /> <Differs note="The type file says the VS Code extension attaches no surface yet. The docs say it draws from 2.1.299." /> |
+Return the engine's tree (call `next(e)`) to leave a site as it is. JSX needs a `.tsx` or `.jsx` file.
 
 Official pages: [Draw in the Interface](https://code.claude.com/docs/en/plugins/mods/interface), [Mods Overview](https://code.claude.com/docs/en/plugins/mods/overview), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the program (`types-2.1.303.d.ts`).
 

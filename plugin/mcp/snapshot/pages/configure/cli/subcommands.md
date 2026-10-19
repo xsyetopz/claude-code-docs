@@ -12,15 +12,7 @@ A subcommand is a word after `claude` that starts a separate job, such as `claud
 `claude --help` lists 18 commands. Several more work but the root help does not show them.
 Each command has its own `--help`.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. Run `claude <command>`, or `claude <command> --help` for its options. |
-| Can you change it? | Each command has its own flags. |
-| Can you turn it on or off? | Not as a group. A command runs only when you call it. |
-| Where does it live? | The `claude` program. |
-| Status | [Documented] [Undocumented] |
+Run `claude <command>`, or `claude <command> --help` for its options. Each command has its own flags. A command runs only when you call it.
 
 ## Example
 

@@ -8,16 +8,7 @@ These variables change what you see and how the terminal behaves.
 They cover colors, fullscreen rendering, key handling, voice input, notifications, and the title bar.
 Use them when your terminal draws the screen badly or you want a quieter interface.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. |
-| Can you change it? | ✅ Yes. Restart `claude` after a change. |
-| Can you turn it on or off? | Unset the variable, or set it to `0` where the row says so. |
-| Where does it live? | Your shell or the `env` key of a settings file. |
-| Rows on this page | 88 variables |
-| Status | <Documented /> <Undocumented /> <Differs /> <Gated /> |
+This page lists 88 variables. Restart `claude` after a change. Set a variable to `0` to turn it off where the row says so.
 
 ## Example
 

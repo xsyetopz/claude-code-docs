@@ -7,16 +7,6 @@ sidebar_position: 10
 These are the types behind `$.turn`, `$.prompt`, and their events.
 They describe prompts, attachments, system prompt sections, and the prompt box.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes, as types. `import type` them from `claude-code`. |
-| Can you change it? | ❌ No. These are types only. They describe data, and they do not hold settings. |
-| Can you turn it on or off? | ❌ No. A type has no switch. |
-| Where does it live? | The published type file `types-2.1.303.d.ts` and `.claude-plugin/types/claude-code/index.d.ts`. |
-| Status | <Documented /> |
-
 ## Example
 
 The first line reads the prompt box. The second submits text as if the user typed it. The third logs server tool uses of a model step.

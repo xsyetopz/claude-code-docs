@@ -13,15 +13,7 @@ Each event fires at one point in a session, and each one gets its own input fiel
 This page lists them in groups: tool, tool result, session, prompt and turn, agent and task, and other events.
 The fields that every event shares are on [Input and Output](https://xsyetopz.github.io/claude-code-docs/extend/hooks/input-and-output.md).
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. All 33 events can run hooks. |
-| Can you change it? | ✅ Yes. You choose which events to hook, and some events let you change the action. |
-| Can you turn it on or off? | Add or remove the event key in the `hooks` map. |
-| Where does it live? | The event name is the first level of the `hooks` key. |
-| Status | [Documented] [Undocumented] [Differs] [Gated] |
+Add or remove the event key in the `hooks` map to turn an event on or off.
 
 ## Example
 

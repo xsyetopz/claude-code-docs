@@ -8,15 +8,7 @@ These types map an event name to its input, its result, and its call on `$`.
 They are how your editor knows the shape of `e` and `next` for each event.
 For example, `$.fs.read(...)` is both a call and the event `fs.read`, so a hook can answer it.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes, as types. `import type { EventName, EventOf } from 'claude-code'`. The import is empty at run time. |
-| Can you change it? | A plugin adds its own nouns by declaration merging into `EngineInterface`. Otherwise these are types only. |
-| Can you turn it on or off? | ❌ No. A type has no switch. |
-| Where does it live? | The published type file `types-2.1.303.d.ts` and `.claude-plugin/types/claude-code/index.d.ts`. |
-| Status | <Documented /> |
+A plugin adds its own nouns by declaration merging into `EngineInterface`.
 
 Source: the program (`types-2.1.303.d.ts`). Official page: [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference).
 

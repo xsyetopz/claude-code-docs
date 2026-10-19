@@ -8,15 +8,7 @@ A beta is an early API feature that a request switches on with a value in the `a
 Claude Code keeps a list of these values and sends the ones that fit the model and the provider.
 If a proxy rejects a request with a beta error, set `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1` to stop the pre-release values.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | Claude Code sends the betas for you. |
-| Can you change it? | ✅ Yes. `ANTHROPIC_BETAS` adds values (comma list). The `--betas` flag adds values too. |
-| Can you turn it on or off? | `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1` turns off the experimental betas. `DISABLE_INTERLEAVED_THINKING` turns off one. |
-| Where does it live? | The `anthropic-beta` header, or the `betas` field of the body on Bedrock. |
-| Status | <Documented /> <Undocumented /> |
+`ANTHROPIC_BETAS` adds values (comma list), and so does the `--betas` flag. `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1` turns off the experimental betas. `DISABLE_INTERLEAVED_THINKING` turns off one. The betas go in the `anthropic-beta` header, or in the `betas` field of the body on Bedrock.
 
 ## About the List
 

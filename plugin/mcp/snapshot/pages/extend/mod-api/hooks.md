@@ -13,15 +13,7 @@ You register it with `on`.
 It can watch the event, change it, or answer it.
 The events themselves are on the page of their namespace. See the [Mod API Overview](https://xsyetopz.github.io/claude-code-docs/extend/mod-api.md) for the map.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. Export `register(on, options)` from the hooks module. |
-| Can you change it? | ✅ Yes. Pick events, add a matcher, and rewrite `e` before you call `next`. |
-| Can you turn it on or off? | Remove the `on` call. `disableAllHooks` stops installed mods. |
-| Where does it live? | The hooks module named in `hooks/hooks.json`. |
-| Status | [Documented] [Differs: One item differs between the docs and the type file.] |
+Remove the `on` call to turn a hook off. `disableAllHooks` stops installed mods.
 
 Official pages: [React to Events](https://code.claude.com/docs/en/plugins/mods/events), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference), [Mods Overview](https://code.claude.com/docs/en/plugins/mods/overview#how-a-mod-works).
 

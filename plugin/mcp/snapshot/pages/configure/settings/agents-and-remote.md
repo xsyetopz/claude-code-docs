@@ -12,15 +12,7 @@ These keys control subagents, workflows, background work, and Remote Control.
 Use them to start a session as a named agent or to turn off a feature you do not want.
 Rows marked as undocumented can change in any release.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. |
-| Can you change it? | Edit a settings file. |
-| Can you turn it on or off? | `disableRemoteControl`, `disableAgentView`, and `disableWorkflows` turn features off. |
-| Where does it live? | `~/.claude/settings.json`, `.claude/settings.json`, `.claude/settings.local.json`, or managed settings |
-| Status | [Documented] [Undocumented] |
+`disableRemoteControl`, `disableAgentView`, and `disableWorkflows` turn features off.
 
 ## Keys
 

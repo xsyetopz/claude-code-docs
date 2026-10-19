@@ -276,18 +276,6 @@ for (const [id, c] of caps) {
   );
   pageOrder.push(id);
   lines.push(`${v.summary} ${v.how}`, "");
-  lines.push(
-    "## At a Glance",
-    "",
-    "| Question | Answer |",
-    "| --- | --- |",
-    `| Can you use it? | ${v.can.use} |`,
-    `| Can you change it? | ${v.can.change} |`,
-    `| Can you turn it on or off? | ${v.can.toggle} |`,
-    `| Where does it live? | ${v.can.where} |`,
-    `| Status | ${badge(v)} |`,
-    "",
-  );
   const sysChars = c.parts
     .filter((p) => p.label.startsWith("system["))
     .reduce((s, p) => s + p.text.length, 0);
@@ -406,16 +394,6 @@ function toolDiff(a: Tool[], b: Tool[]): string {
     "",
     "Tools are part of what the model reads. Each request carries a list of tools, and each tool has a name, a description, and a schema. This page compares the lists across variants.",
     "",
-    "## At a Glance",
-    "",
-    "| Question | Answer |",
-    "| --- | --- |",
-    "| Can you use it? | Yes. Every request carries the list. |",
-    "| Can you change it? | Yes. Use `--tools`, `--allowedTools`, `--disallowedTools`, or settings. |",
-    "| Can you turn it on or off? | `--bare` and `CLAUDE_CODE_SIMPLE=1` cut the list to three tools. |",
-    "| Where does it live? | Built into the program. |",
-    "| Status | <Undocumented /> |",
-    "",
     "## Default Tool List",
     "",
     `The default list has ${def.tools.length} tools on Opus 5.5. The columns show the length of the description and of the JSON schema, in characters.`,
@@ -467,6 +445,22 @@ function toolDiff(a: Tool[], b: Tool[]): string {
     "",
     ...para(INDEX_FACTS.intro),
     "",
+    "## At a Glance",
+    "",
+    'You can use every prompt here: the answer to "Can you use it?" is ✅ Yes for all of them. Where a page adds a condition, it is in parentheses after the name.',
+    "",
+    "| Prompt | Can You Change It? | Turn On or Off | Where It Lives | Status |",
+    "| --- | --- | --- | --- | --- |",
+    ...[...caps].map(([id, c]) => {
+      const u = c.v.can.use.replace(/^✅? ?Yes\.?\s*/, "").replace(/\.$/, "");
+      const name = `[${c.v.title}](./${id}.md)${u ? ` (${u})` : ""}`;
+      const ch = c.v.can.change.replace(/^(Yes|No)\b/, (m) =>
+        m === "Yes" ? "✅ Yes" : "❌ No",
+      );
+      return `| ${name} | ${ch} | ${c.v.can.toggle} | ${c.v.can.where} | ${badge(c.v)} |`;
+    }),
+    "| [Tools per Variant](./tools-per-variant.md) (Every request carries the list) | ✅ Yes. Use `--tools`, `--allowedTools`, `--disallowedTools`, or settings. | `--bare` and `CLAUDE_CODE_SIMPLE=1` cut the list to three tools. | Built into the program. | <Undocumented /> |",
+    "",
     "## How the Captures Were Made",
     "",
     ...para(INDEX_FACTS.method),
@@ -483,8 +477,8 @@ function toolDiff(a: Tool[], b: Tool[]): string {
     "",
     "Size is the number of characters in everything shown on the variant page, after placeholders are in place. The last column lists the `#` headings found in the system body.",
     "",
-    "| Variant | How to select it | Characters | Tools | Sections | Status |",
-    "| --- | --- | --- | --- | --- | --- |",
+    "| Variant | How to select it | Characters | Tools | Sections |",
+    "| --- | --- | --- | --- | --- |",
   ];
   for (const [id, c] of caps) {
     const dup = dupOf.get(id);
@@ -492,7 +486,7 @@ function toolDiff(a: Tool[], b: Tool[]): string {
       ? c.sections.map((s) => "`" + s + "`").join(", ")
       : "none";
     L.push(
-      `| [${c.v.title}](./${id}.md)${dup ? " (same text as " + dup + ")" : ""} | ${c.v.select} | ${fmt(c.chars)} | ${c.tools.length} | ${secs} | ${badge(c.v)} |`,
+      `| [${c.v.title}](./${id}.md)${dup ? " (same text as " + dup + ")" : ""} | ${c.v.select} | ${fmt(c.chars)} | ${c.tools.length} | ${secs} |`,
     );
   }
   L.push(

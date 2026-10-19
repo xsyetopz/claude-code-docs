@@ -13,15 +13,7 @@ Use `Read` before `Edit`, because `Edit` replaces an exact string in a file.
 For example, `Grep` with `output_mode` set to `files_with_matches` lists only the files that match.
 The Yes and No columns are explained on [Tools](https://xsyetopz.github.io/claude-code-docs/reference/tools.md#how-to-read-the-tool-tables).
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | Claude calls these tools. You can also read or edit files yourself and let Claude see the result. |
-| Can you change it? | ✅ Yes. Path rules in `permissions` allow, ask, or deny each tool. |
-| Can you turn it on or off? | Deny the tool name in `permissions.deny`, or leave it out of a subagent `tools` list. |
-| Where does it live? | Built into the program. |
-| Status | [Documented] [Undocumented] [Gated: memory tools need a server-side flag] |
+You can also read or edit files yourself and let Claude see the result. Deny the tool name in `permissions.deny`, or leave it out of a subagent `tools` list, to turn a tool off. The memory tools need a server-side flag.
 
 ## Tools
 

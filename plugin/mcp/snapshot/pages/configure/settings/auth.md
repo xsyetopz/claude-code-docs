@@ -12,15 +12,7 @@ These keys control sign-in rules and credential helpers.
 A helper is a script of your own that prints a token or a header.
 Claude Code runs the helper when it needs a fresh value.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. |
-| Can you change it? | Edit a settings file. The helper keys point at your own command. |
-| Can you turn it on or off? | The `forceLogin*` keys restrict sign-in methods. |
-| Where does it live? | `~/.claude/settings.json`, `.claude/settings.json`, `.claude/settings.local.json`, or managed settings |
-| Status | [Documented] [Undocumented] |
+The helper keys point at your own command. The `forceLogin*` keys restrict sign-in methods.
 
 ## Keys
 

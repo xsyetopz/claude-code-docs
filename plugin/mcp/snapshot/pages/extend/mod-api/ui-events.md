@@ -11,15 +11,7 @@ source: docs/extend/mod-api/ui-events.md
 These events fire when Claude Code draws part of the interface, and when a person uses a control that a mod drew.
 The second table lists the events that the `$.ui` methods raise.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. `on('ui.render', { component: 'Spinner' }, ...)` |
-| Can you change it? | ✅ Yes. Return a new tree from `ui.render`, or rewrite `e` with `next({ ...e, ... })`. |
-| Can you turn it on or off? | A `deny` from a hook refuses a scroll, focus, or close. An invalid tree draws the engine's own drawing. |
-| Where does it live? | The hooks module. |
-| Status | [Documented] |
+A `deny` from a hook refuses a scroll, focus, or close. An invalid tree draws the engine's own drawing.
 
 Official pages: [Draw in the Interface](https://code.claude.com/docs/en/plugins/mods/interface), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the program (`types-2.1.303.d.ts`).
 

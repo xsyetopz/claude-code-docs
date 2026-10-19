@@ -8,15 +8,7 @@ A marketplace is a `marketplace.json` file that lists plugins and where to get t
 A team can host one so that each member installs the same plugins.
 For example, `claude plugin marketplace add owner/repo` adds a marketplace from a GitHub repo.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. Add a marketplace, then install plugins from it. |
-| Can you change it? | ✅ Yes. Write your own file and host it in git or on a web server. |
-| Can you turn it on or off? | Add or remove it with `claude plugin marketplace add` and `remove`. Administrators can allow or block sources with settings. |
-| Where does it live? | `.claude-plugin/marketplace.json` in the marketplace. Clones live in `~/.claude/plugins/marketplaces/<name>`. |
-| Status | <Documented /> <Undocumented /> |
+A marketplace is a `.claude-plugin/marketplace.json` file hosted in git or on a web server. Add or remove one with `claude plugin marketplace add` and `remove`. Clones live in `~/.claude/plugins/marketplaces/<name>`. Administrators can allow or block sources with settings.
 
 ## Top-Level Keys
 

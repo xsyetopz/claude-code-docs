@@ -8,15 +8,7 @@ Each hook gets a JSON description of what happened. It answers with an exit code
 The answer tells Claude Code to go on, to block, or to add context.
 For example, exit code 2 with a message on `stderr` blocks a `PreToolUse` call and tells Claude why.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. |
-| Can you change it? | You control the answer your hook gives. You do not control the input. |
-| Can you turn it on or off? | Not as a unit. Each event decides which fields it reads. |
-| Where does it live? | Input on `stdin` (command) or the POST body (HTTP). Output on `stdout`, `stderr`, and the exit code. |
-| Status | <Documented /> <Undocumented /> <Differs /> |
+You control the answer your hook gives, not the input. Each event decides which fields it reads.
 
 ## Example
 

@@ -6,16 +6,6 @@ sidebar_position: 22
 
 Replaces the body of the prompt with your text. Run `claude --system-prompt "your text"`, or `--system-prompt-file <file>`.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. |
-| Can you change it? | ✅ Yes. You give the text. |
-| Can you turn it on or off? | `--system-prompt` or `--system-prompt-file`. |
-| Where does it live? | Command-line flags. |
-| Status | <Documented /> |
-
 ## Size
 
 | Part | Characters |

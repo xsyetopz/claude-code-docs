@@ -12,15 +12,7 @@ The `claude mcp` command adds, lists, and removes MCP servers from the shell.
 Inside a session, the `/mcp` command shows the state of each server.
 For example, `claude mcp list` prints each server and tells you if it is connected.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. Shell commands and the `/mcp` panel. |
-| Can you change it? | ✅ Yes. Flags pick the scope, the transport, env vars, headers, and OAuth fields. |
-| Can you turn it on or off? | `claude mcp add` and `remove`, or enable and disable in `/mcp`. |
-| Where does it live? | Writes to `~/.claude.json` or `.mcp.json`, depending on the scope. |
-| Status | [Documented] [Gated: XAA needs CLAUDE_CODE_ENABLE_XAA] |
+Flags pick the scope, the transport, env vars, headers, and OAuth fields. The commands write to `~/.claude.json` or `.mcp.json`, depending on the scope.
 
 ## Subcommands
 

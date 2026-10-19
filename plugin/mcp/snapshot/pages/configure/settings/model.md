@@ -12,15 +12,7 @@ These keys choose the model Claude Code uses and how hard it thinks.
 Administrators also use them to allow or block models.
 Several keys have a matching environment variable that wins over the key.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. |
-| Can you change it? | Edit a settings file, or use `/model`. |
-| Can you turn it on or off? | `fastMode`, `alwaysThinkingEnabled`, and `enforceAvailableModels` switch features. |
-| Where does it live? | `~/.claude/settings.json`, `.claude/settings.json`, `.claude/settings.local.json`, or managed settings |
-| Status | [Documented] [Undocumented] |
+Use `/model` or edit a settings file. `fastMode`, `alwaysThinkingEnabled`, and `enforceAvailableModels` switch features.
 
 ## Keys
 

@@ -12,15 +12,7 @@ The loader finds plugins, copies them into a cache, and turns their parts on.
 This page lists the paths, the variables a plugin can use, and the env vars and settings that change loading.
 For example, `${CLAUDE_PLUGIN_ROOT}` in a hook command is the folder of the plugin.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. It runs by itself at session start. |
-| Can you change it? | ✅ Yes. Env vars and settings change the paths, timeouts, and rules. |
-| Can you turn it on or off? | `enabledPlugins`, `CLAUDE_CODE_PLUGIN_DIRS`, and `syncClaudeAiPlugins`. |
-| Where does it live? | `~/.claude/plugins/` |
-| Status | [Documented] [Undocumented] |
+Loading runs by itself at session start. Env vars and settings change the paths, timeouts, and rules. The switches are `enabledPlugins`, `CLAUDE_CODE_PLUGIN_DIRS`, and `syncClaudeAiPlugins`.
 
 ## Paths
 

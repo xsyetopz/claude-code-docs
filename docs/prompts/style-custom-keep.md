@@ -6,16 +6,6 @@ sidebar_position: 19
 
 A custom style with `keep-coding-instructions: true`, on the full prompt. Add `keep-coding-instructions: true` to the style's front matter, with the full prompt on.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. |
-| Can you change it? | ✅ Yes. You write the file. |
-| Can you turn it on or off? | `keep-coding-instructions` in the style's front matter. |
-| Where does it live? | `~/.claude/output-styles/*.md` or `.claude/output-styles/*.md`. |
-| Status | <Documented /> |
-
 ## Size
 
 | Part | Characters |

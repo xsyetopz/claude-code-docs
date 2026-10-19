@@ -13,15 +13,7 @@ It names the plugin and can point to its parts.
 The file is optional, and only `name` is required.
 For example, `{ "name": "my-plugin", "version": "1.0.0" }` is a valid manifest.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. You write it by hand or start from `claude plugin init`. |
-| Can you change it? | ✅ Yes. Edit the file, then run `claude plugin validate`. |
-| Can you turn it on or off? | The plugin as a whole: `enabledPlugins`. A manifest can set `defaultEnabled` for users who set nothing. |
-| Where does it live? | `<plugin>/.claude-plugin/plugin.json` |
-| Status | [Documented] [Undocumented] |
+You write it by hand or start from `claude plugin init`. Run `claude plugin validate` after you edit it. `enabledPlugins` turns the plugin as a whole on or off. A manifest can set `defaultEnabled` for users who set nothing.
 
 ## Rules
 

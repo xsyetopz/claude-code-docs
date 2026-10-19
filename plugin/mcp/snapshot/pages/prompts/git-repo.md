@@ -10,16 +10,6 @@ source: docs/prompts/git-repo.md
 
 What changes when the project is a git repository. Start Claude Code in a folder that is a git repository.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. It happens on its own. |
-| Can you change it? | ❌ No. |
-| Can you turn it on or off? | `includeGitInstructions` in settings controls the git rules. The status text always appears in a repo. |
-| Where does it live? | Built into the program. |
-| Status | [Undocumented] |
-
 ## Size
 
 | Part | Characters |

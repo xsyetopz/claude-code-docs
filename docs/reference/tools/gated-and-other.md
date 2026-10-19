@@ -9,15 +9,7 @@ Most of them serve onboarding, design work, connectors, or self-hosted runners.
 For example, `PushNotification` sends a notice to your terminal when a long task ends.
 For most of them a server-side flag decides, so you cannot switch them on yourself.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | Only if your account, plan, or session mode has the gate on. |
-| Can you change it? | Rarely. A few have an env var or setting, such as `CLAUDE_CODE_SKILL_PROPOSALS`. |
-| Can you turn it on or off? | Mostly no. A hidden server-side flag decides. |
-| Where does it live? | Built into the program. |
-| Status | <Documented /> <Undocumented /> <Gated note="hidden server-side flags" /> |
+These tools work only if your account, plan, or session mode has the gate on. A hidden server-side flag decides, with few exceptions. A few have an env var or setting, such as `CLAUDE_CODE_SKILL_PROPOSALS`.
 
 ## Gated Tools
 

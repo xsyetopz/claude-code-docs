@@ -10,16 +10,6 @@ source: docs/prompts/tools-per-variant.md
 
 Tools are part of what the model reads. Each request carries a list of tools, and each tool has a name, a description, and a schema. This page compares the lists across variants.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. Every request carries the list. |
-| Can you change it? | ✅ Yes. Use `--tools`, `--allowedTools`, `--disallowedTools`, or settings. |
-| Can you turn it on or off? | `--bare` and `CLAUDE_CODE_SIMPLE=1` cut the list to three tools. |
-| Where does it live? | Built into the program. |
-| Status | [Undocumented] |
-
 ## Default Tool List
 
 The default list has 20 tools on Opus 5.5. The columns show the length of the description and of the JSON schema, in characters.

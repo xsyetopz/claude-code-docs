@@ -29,6 +29,7 @@ Import the types with `import type { ... } from 'claude-code'`. The import is em
 - Each page has a table of types without fields, then one section for each type that has fields.
 - The Documented badge means the type is in the published type file, which the docs call the complete reference.
 - The type file is marked early access, so a type may change between releases.
+- Types have no switch and hold no settings. They live in the published type file `types-2.1.303.d.ts` and in `.claude-plugin/types/claude-code/index.d.ts`.
 - Some doc comments in the type file are short. Rows without one say "Not described in the type file."
 
 ## Related Pages

@@ -11,15 +11,7 @@ source: docs/extend/mod-api/session.md
 `$.session` lets a mod read the running session as plain data, compact it, and send messages to other agents or sessions.
 Its events tell a mod when a session starts, ends, compacts, or gets a message.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. `await $.session.cwd()`, `await $.session.messages()`, and more. |
-| Can you change it? | ✅ Yes. Hook the events to rewrite a stored row, veto a compact, or consume a message. |
-| Can you turn it on or off? | Return `{ skip }`, `{ consumed }`, or `{ deny }` from a hook to stop an action. |
-| Where does it live? | The hooks module. |
-| Status | [Documented] |
+Return `{ skip }`, `{ consumed }`, or `{ deny }` from a hook to stop an action.
 
 Official pages: [Use the Mods API](https://code.claude.com/docs/en/plugins/mods/api), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the program (`types-2.1.303.d.ts`).
 In a "Where it can be used" cell, "Run time" means in a hook, in a closure that a hook drew, or in a timer callback. It does not mean inside `register`.

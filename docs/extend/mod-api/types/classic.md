@@ -9,16 +9,6 @@ Each input type matches the data that a settings hook of the same name receives 
 The result types match the JSON that a settings hook prints.
 Use them when you write a mod hook for an event such as `classic.Stop`.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes, as types. `import type { ClassicEventOf } from 'claude-code'`. The import is empty at run time. |
-| Can you change it? | ❌ No. These are types only. They describe data, and they do not hold settings. |
-| Can you turn it on or off? | ❌ No. A type has no switch. |
-| Where does it live? | The published type file `types-2.1.303.d.ts` and `.claude-plugin/types/claude-code/index.d.ts`. |
-| Status | <Documented /> |
-
 ## Example
 
 This hook on `classic.Stop` passes the event on without a change. Its `e` is the same data a `Stop` settings hook reads on `stdin`.

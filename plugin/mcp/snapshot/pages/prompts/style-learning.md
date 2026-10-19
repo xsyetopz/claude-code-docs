@@ -10,16 +10,6 @@ source: docs/prompts/style-learning.md
 
 The built-in Learning output style on the lean prompt. Run `/output-style Learning`, or set `"outputStyle": "Learning"` in `settings.json`.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. |
-| Can you change it? | Not the built-in text. You can write a custom style. |
-| Can you turn it on or off? | `/output-style` or the `outputStyle` setting. |
-| Where does it live? | `outputStyle` in any settings scope. |
-| Status | [Documented] |
-
 ## Size
 
 | Part | Characters |

@@ -19,7 +19,7 @@ Not made by or tied to Anthropic. Hosted at <https://xsyetopz.github.io/claude-c
 ## Writing Rules
 
 - Simple English. Chicago Title Case for titles, headings, and sidebar labels.
-- Surface pages have an At a Glance table. Mark items with `<Documented />`, `<Undocumented />`, `<Differs />`, or `<Gated />`.
+- At a Glance table: on a section's index page only (or a standalone page); subpages skip it. Mark items with `<Documented />`, `<Undocumented />`, `<Differs />`, or `<Gated />`.
 - List only items a user can use or change. Never invent a fact.
 - Cite external sources as markdown links to the exact page and section. Facts from the binary: "the program".
 - Emojis only from the allow-list in `tools/check-docs.ts`. Escape MDX: `\{`, `\}`, `<` in code, `\|` in table code cells.

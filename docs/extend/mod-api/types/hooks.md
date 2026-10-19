@@ -8,16 +8,6 @@ These types describe how `on`, `next`, matchers, and traces are typed.
 A mod author rarely writes them by hand, because your editor fills them in from the type files in `.claude-plugin/types/`.
 They help when a type error is hard to read.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes, as types. You rarely name them yourself. |
-| Can you change it? | ❌ No. These are types only. They describe data, and they do not hold settings. |
-| Can you turn it on or off? | ❌ No. A type has no switch. |
-| Where does it live? | The published type file `types-2.1.303.d.ts` and `.claude-plugin/types/claude-code/index.d.ts`. |
-| Status | <Documented /> |
-
 ## Example
 
 The editor types `e` and `next` here from the machinery types below. This sketch shows only the call shape. See the Hooks page for the full rules.

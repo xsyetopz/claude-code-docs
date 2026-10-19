@@ -10,16 +10,6 @@ source: docs/prompts/exclude-dynamic-full.md
 
 The same flag on the full prompt. Run `claude --exclude-dynamic-system-prompt-sections` with `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=0`.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. |
-| Can you change it? | ❌ No. It only moves text. |
-| Can you turn it on or off? | `--exclude-dynamic-system-prompt-sections`. |
-| Where does it live? | Command-line flag. |
-| Status | [Documented] |
-
 ## Size
 
 | Part | Characters |

@@ -9,15 +9,7 @@ sidebar_position: 11
 `$.config` lists and sets the rows of the `/config` menu.
 A tool or command that a mod registers is served by a hook on `tool.call` or `command.run`.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. `await $.tool.list()`, `await $.command.register(...)`, `await $.config.set(...)`. |
-| Can you change it? | ✅ Yes. Hook the events to refuse a call, answer it, or rewrite it. |
-| Can you turn it on or off? | A `deny` from a `tool.call`, `tool.check`, or `config.set` hook stops the action. |
-| Where does it live? | The hooks module. A registered tool is named `mcp__<plugin>__<name>`. |
-| Status | <Documented /> |
+A `deny` from a `tool.call`, `tool.check`, or `config.set` hook stops the action. A registered tool is named `mcp__<plugin>__<name>`.
 
 Official pages: [Use the Mods API](https://code.claude.com/docs/en/plugins/mods/api), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the program (`types-2.1.303.d.ts`).
 In a "Where it can be used" cell, "Run time" means in a hook, in a closure that a hook drew, or in a timer callback. It does not mean inside `register`.

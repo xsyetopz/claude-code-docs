@@ -23,7 +23,7 @@ These pages cover `2.1.303`. Official pages: [Mods Overview](https://code.claude
 | Can you change it? | ✅ Yes. Edit the module. Claude Code reloads it when you save. |
 | Can you turn it on or off? | `disableAllHooks` stops installed mods. `--safe-mode` and `--bare` load none. See [Files, Nouns, and Gates](https://xsyetopz.github.io/claude-code-docs/extend/mod-api/nouns-and-gates.md#gates-that-stop-mods). |
 | Where does it live? | A plugin folder: `.claude-plugin/plugin.json`, `hooks/hooks.json`, and the hooks module. |
-| Status | [Documented] [Differs: The docs add the re-entry value of next.error.kind, which the type file lacks.] |
+| Status | [Documented] [Differs: The docs add the re-entry value of next.error.kind, which the type file lacks.] [Differs: The type file says the VS Code extension attaches no surface yet. The docs say it draws from 2.1.299.] [Gated: Remote rollout switch for installed mods] |
 
 ## Example
 

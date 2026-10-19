@@ -8,15 +8,7 @@ These env vars change how Claude Code starts, times out, and limits MCP servers.
 Set them in the shell or in the `env` key of a settings file.
 For example, `MCP_TIMEOUT=30000` gives a server 30 seconds to start.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. |
-| Can you change it? | ✅ Yes. Export the variable, or add it to `env` in settings. |
-| Can you turn it on or off? | Some are switches, such as `ENABLE_CLAUDEAI_MCP_SERVERS` and `MCP_CONNECTION_NONBLOCKING`. |
-| Where does it live? | The shell env, or `env` in a settings file. |
-| Status | <Documented /> <Undocumented /> <Gated note="XAA vars" /> |
+Export the variable, or add it to `env` in a settings file. Some are switches, such as `ENABLE_CLAUDEAI_MCP_SERVERS` and `MCP_CONNECTION_NONBLOCKING`.
 
 ## Documented Variables
 

@@ -8,15 +8,7 @@ A permission mode sets which tool calls run without a prompt.
 The modes go from `plan`, which only reads, to `bypassPermissions`, which skips most checks.
 For example, `claude --permission-mode acceptEdits` starts a session that edits files with no prompt.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. Run `/permissions` in the chat, or start with `--permission-mode`. |
-| Can you change it? | ✅ Yes. Set `permissions.defaultMode` for the start mode. `--permission-mode` wins for one session. |
-| Can you turn it on or off? | `permissions.disableBypassPermissionsMode: "disable"` removes `bypassPermissions`. `permissions.disableAutoMode: "disable"` removes `auto`. |
-| Where does it live? | Settings files (`permissions.defaultMode`), the CLI flag, and the session itself. |
-| Status | <Documented /> <Undocumented /> |
+Run `/permissions` in the chat, or start with `--permission-mode`, which wins for one session. Set `permissions.defaultMode` for the start mode. `permissions.disableBypassPermissionsMode: "disable"` removes `bypassPermissions`, and `permissions.disableAutoMode: "disable"` removes `auto`.
 
 ## Example
 

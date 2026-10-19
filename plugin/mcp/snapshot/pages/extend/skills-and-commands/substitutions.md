@@ -13,15 +13,7 @@ It can also run shell commands and paste in their output.
 This page lists the placeholders, the shell syntax, and the rules for who can start a skill.
 For example, `$ARGUMENTS` in a `SKILL.md` file becomes the text that you type after the command.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes, in any skill or custom command. |
-| Can you change it? | ✅ Yes. Write the placeholders in the skill body. |
-| Can you turn it on or off? | `disableSkillShellExecution` turns off shell injection. `disable-model-invocation` and `user-invocable` control who can run a skill. |
-| Where does it live? | The body of `SKILL.md`, and the frontmatter keys. |
-| Status | [Documented] [Undocumented] |
+`disableSkillShellExecution` turns off shell injection. `disable-model-invocation` and `user-invocable` control who can run a skill.
 
 ## Example
 

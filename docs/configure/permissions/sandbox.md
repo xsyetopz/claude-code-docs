@@ -8,15 +8,7 @@ The sandbox runs `Bash` commands inside a wall that the operating system enforce
 It limits which files a command can write and which hosts it can reach, even when a permission rule allows the command.
 Permission rules decide whether a call runs. The sandbox limits what the call can touch once it runs.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes, on macOS, Linux, and WSL. Set `sandbox.enabled` to `true`. |
-| Can you change it? | ✅ Yes. Edit the `sandbox` key in a settings file. |
-| Can you turn it on or off? | `sandbox.enabled`. It is `false` by default. Without its dependencies, a warning shows and commands run unsandboxed. |
-| Where does it live? | The `sandbox` key of any settings scope. Some keys work only in managed or user settings. |
-| Status | <Documented /> <Undocumented /> <Gated /> |
+The sandbox works on macOS, Linux, and WSL. `sandbox.enabled` turns it on, and it is `false` by default. Without its dependencies, a warning shows and commands run unsandboxed. The `sandbox` key works in any settings scope, but some keys work only in managed or user settings.
 
 ## Example
 

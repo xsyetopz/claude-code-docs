@@ -13,15 +13,7 @@ The event `e` is the `stdin` JSON of the settings hook, with the base fields.
 The chain is the managed settings hooks, then the hooks modules, then the other settings hooks as core.
 A managed block ends the chain above every module.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. `on("classic.Stop", ($, e, next) => next(e))` sees every `Stop` event. |
-| Can you change it? | ✅ Yes. Return the result fields listed below, or use a glob such as `classic.*`. |
-| Can you turn it on or off? | Remove the `on` call. `disableAllHooks` stops installed mods. |
-| Where does it live? | The hooks module. The same events come from `hooks` in settings. |
-| Status | [Documented] |
+Remove the `on` call to turn a hook off. `disableAllHooks` stops installed mods. The same events come from `hooks` in settings.
 
 Official pages: [Hooks Reference](https://code.claude.com/docs/en/hooks), [React to Events](https://code.claude.com/docs/en/plugins/mods/events). Source: the program (the `*HookInput` types of `types-2.1.303.d.ts`). For what each event means, see [Hook Events](https://xsyetopz.github.io/claude-code-docs/extend/hooks/events.md).
 

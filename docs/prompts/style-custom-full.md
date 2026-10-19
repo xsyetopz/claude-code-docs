@@ -6,16 +6,6 @@ sidebar_position: 18
 
 A custom style without `keep-coding-instructions`, on the full prompt. The coding section is dropped. Pick a custom style whose front matter does not set `keep-coding-instructions`, with the full prompt on.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. |
-| Can you change it? | ✅ Yes. You write the file. |
-| Can you turn it on or off? | `/output-style` or the `outputStyle` setting. |
-| Where does it live? | `~/.claude/output-styles/*.md` or `.claude/output-styles/*.md`. |
-| Status | <Documented /> |
-
 ## Size
 
 | Part | Characters |

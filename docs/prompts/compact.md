@@ -6,16 +6,6 @@ sidebar_position: 31
 
 The request that summarizes a conversation. Run `/compact` in a session with some history.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. |
-| Can you change it? | Partly. You can add focus text after `/compact`. |
-| Can you turn it on or off? | `/compact`, or automatic when the context fills. |
-| Where does it live? | Built into the program. |
-| Status | <Undocumented /> |
-
 ## Size
 
 | Part | Characters |

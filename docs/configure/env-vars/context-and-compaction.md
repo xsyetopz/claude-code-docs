@@ -8,16 +8,7 @@ These variables change how Claude Code manages the conversation size.
 They set when compaction starts, how big the context window is, how memory files load, and how the prompt cache behaves.
 Use them for long sessions or when a gateway needs different cache behavior.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. |
-| Can you change it? | ✅ Yes. Set a new value and start a new session. |
-| Can you turn it on or off? | Many rows are on or off switches. Unset the variable to go back to the default. |
-| Where does it live? | Your shell or the `env` key of a settings file. |
-| Rows on this page | 49 variables |
-| Status | <Documented /> <Undocumented /> <Differs /> <Gated /> |
+This page lists 49 variables. Set a new value and start a new session. Many rows are on or off switches.
 
 ## Example
 

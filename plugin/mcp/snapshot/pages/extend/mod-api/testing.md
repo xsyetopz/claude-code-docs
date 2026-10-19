@@ -13,15 +13,7 @@ source: docs/extend/mod-api/testing.md
 A test runs in an environment like that of a hook, with no files, no network, and no process.
 A hooks module in a session cannot import this module.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. Run `claude plugin test [dir]`. |
-| Can you change it? | ✅ Yes. Write your own `*.test.ts` or `*.test.tsx` files. |
-| Can you turn it on or off? | Each test ends after 5 seconds unless it sets `timeoutMs`. |
-| Where does it live? | Test files in the plugin folder. |
-| Status | [Documented] |
+Each test ends after 5 seconds unless it sets `timeoutMs`. Test files live in the plugin folder.
 
 Official page: [Test a Mod](https://code.claude.com/docs/en/plugins/mods/test), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the program (`types-2.1.303.d.ts`).
 

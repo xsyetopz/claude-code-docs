@@ -12,15 +12,7 @@ An endpoint is a URL path on a server, and a header is a named value that a requ
 Claude Code calls the model server and a few account servers, and it adds headers to each request.
 If you run Claude Code behind a proxy, the proxy must pass `anthropic-version` and `anthropic-beta` on without a change.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | Claude Code calls these for you. |
-| Can you change it? | ✅ Yes. Base URL variables pick the server. `ANTHROPIC_CUSTOM_HEADERS` adds headers. |
-| Can you turn it on or off? | `CLAUDE_CODE_GATEWAY_HINT_HEADERS`, `CLAUDE_CODE_ATTRIBUTION_HEADER=0`, `CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY=1`. |
-| Where does it live? | The model list is cached in `~/.claude/cache/gateway-models.json`. |
-| Status | [Documented] [Undocumented] |
+Base URL variables pick the server, and `ANTHROPIC_CUSTOM_HEADERS` adds headers. The switches are `CLAUDE_CODE_GATEWAY_HINT_HEADERS`, `CLAUDE_CODE_ATTRIBUTION_HEADER=0`, and `CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY=1`. The model list is cached in `~/.claude/cache/gateway-models.json`.
 
 ## Model Endpoints
 

@@ -12,16 +12,7 @@ These variables matter when Claude Code runs away from your terminal.
 They cover cloud sessions, the remote bridge, the desktop app, the Chrome extension, Cowork, and Slack.
 Most are set by the host, and Claude Code reads them. Set one yourself only when you run your own host.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | Partly. Many are set by the host program that starts Claude Code. |
-| Can you change it? | ✅ Yes, if you control the process that starts Claude Code. |
-| Can you turn it on or off? | Unset the variable. |
-| Where does it live? | The environment of the Claude Code process. |
-| Rows on this page | 137 variables |
-| Status | [Documented] [Undocumented] [Differs] [Gated] |
+This page lists 137 variables. Many are set by the host program that starts Claude Code, so you can change them only if you control that process. They live in the environment of the Claude Code process.
 
 ## Example
 

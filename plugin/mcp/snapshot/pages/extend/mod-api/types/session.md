@@ -11,16 +11,6 @@ source: docs/extend/mod-api/types/session.md
 These are the types behind `$.session` and the `session.*` events.
 They describe the data a mod reads about a session, such as its messages, its context size, and its cost.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes, as types. `import type` them from `claude-code`. |
-| Can you change it? | ❌ No. These are types only. They describe data, and they do not hold settings. |
-| Can you turn it on or off? | ❌ No. A type has no switch. |
-| Where does it live? | The published type file `types-2.1.303.d.ts` and `.claude-plugin/types/claude-code/index.d.ts`. |
-| Status | [Documented] |
-
 ## Example
 
 The first call reads usage data. The second call sends text to another session and tells you if it arrived.

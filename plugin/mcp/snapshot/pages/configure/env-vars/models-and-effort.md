@@ -12,16 +12,7 @@ These variables choose which model Claude Code uses and how hard it thinks.
 They also pin what the aliases `opus`, `sonnet`, `haiku`, and `fable` mean, add your own entry to the `/model` picker, and limit output size.
 Use them when you want the same model in every session or when a gateway needs custom model IDs.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. Export a variable or put it in `settings.json` under `env`. |
-| Can you change it? | ✅ Yes. A `--model` flag or `/model` overrides `ANTHROPIC_MODEL`. `CLAUDE_CODE_EFFORT_LEVEL` overrides `--effort` and `/effort`. |
-| Can you turn it on or off? | Unset or delete the variable. In `settings.json` you can set it to an empty string. |
-| Where does it live? | Your shell, or the `env` key of a settings file. |
-| Rows on this page | 84 variables |
-| Status | [Documented] [Undocumented] [Differs] [Gated] |
+This page lists 84 variables. A `--model` flag or `/model` overrides `ANTHROPIC_MODEL`. `CLAUDE_CODE_EFFORT_LEVEL` overrides `--effort` and `/effort`.
 
 ## Example
 

@@ -16,7 +16,7 @@ For example, Claude can send a code search to the `Explore` subagent and get bac
 | Can you change it? | ✅ Yes. Write agent files, or pass `--agents` JSON. |
 | Can you turn it on or off? | Deny `Agent` or `Agent(name)` in `permissions.deny`. Env vars and settings in [Subagent Runtime](runtime.md#limits-and-switches) set limits. |
 | Where does it live? | `.claude/agents/`, `~/.claude/agents/`, plugins, managed settings, or `--agents`. |
-| Status | <Documented /> <Undocumented /> <Gated /> |
+| Status | <Documented /> <Undocumented /> <Differs /> <Gated /> |
 
 ## Example
 

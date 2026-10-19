@@ -9,15 +9,7 @@ Claude uses them to split a large job into parts.
 For example, `Agent` starts a subagent with its own context, and `TaskCreate` adds a step to the task list.
 The Yes and No columns are explained on [Tools](index.md#how-to-read-the-tool-tables).
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | Claude calls these tools. You see subagents, tasks, and plans in the interface. |
-| Can you change it? | ✅ Yes. Subagent `tools` and `disallowedTools` lists, permission rules, and env vars change which of these Claude can use. |
-| Can you turn it on or off? | `CLAUDE_CODE_ENABLE_TASKS=0` (use `TodoWrite`), `CLAUDE_CODE_DISABLE_WORKFLOWS=1`, or a deny rule. |
-| Where does it live? | Built into the program. |
-| Status | <Documented /> <Undocumented /> <Gated note="task, cron, plan, and agent-listing tools need a gate" /> |
+You see subagents, tasks, and plans in the interface. Turn tasks off with `CLAUDE_CODE_ENABLE_TASKS=0` (Claude uses `TodoWrite` instead), turn workflows off with `CLAUDE_CODE_DISABLE_WORKFLOWS=1`, or add a deny rule. The task, cron, plan, and agent-listing tools need a gate.
 
 ## Tools
 

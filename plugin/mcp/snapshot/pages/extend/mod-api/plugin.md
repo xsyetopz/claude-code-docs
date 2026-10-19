@@ -13,15 +13,7 @@ source: docs/extend/mod-api/plugin.md
 `engine.create` builds `$` and lets a mod add a noun.
 A plugin ships the types of its noun in the `.d.ts` file that `types` names in `plugin.json`.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. Read `$.plugin.name` anywhere. Hook `plugin.register` and `engine.create`. |
-| Can you change it? | ✅ Yes. An `engine.create` hook can add nouns. A `plugin.register` hook can refuse a module. |
-| Can you turn it on or off? | Return `{ refuse }` from `plugin.register` to keep a module out. |
-| Where does it live? | The hooks module, plus the `types` file named in `plugin.json`. |
-| Status | [Documented] |
+Return `{ refuse }` from `plugin.register` to keep a module out. The `types` file is named in `plugin.json`.
 
 Official page: [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the program (`types-2.1.303.d.ts`).
 

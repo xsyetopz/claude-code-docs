@@ -13,15 +13,7 @@ source: docs/extend/mod-api/fs-store-state.md
 `$.state` holds named values with versions during a session.
 A render hook that reads a state value is drawn again when the value changes.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. `await $.fs.read("README.md")`, then `await $.store.set("count", 1)`. |
-| Can you change it? | ✅ Yes. Hook the matching event to rewrite, refuse, or answer a call. |
-| Can you turn it on or off? | No switch. The limits apply: a file is at most 4 MiB, and `$.store` holds at most 4 MiB of JSON. |
-| Where does it live? | `$.fs` uses the real file system. `$.store` and `$.state` belong to the plugin. |
-| Status | [Documented] |
+There is no switch. A file is at most 4 MiB, and `$.store` holds at most 4 MiB of JSON. `$.fs` uses the real file system. `$.store` and `$.state` belong to the plugin.
 
 Official pages: [Draw in the Interface](https://code.claude.com/docs/en/plugins/mods/interface), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the program (`types-2.1.303.d.ts`).
 In a "Where it can be used" cell, "Run time" means in a hook, in a closure that a hook drew, or in a timer callback. It does not mean inside `register`.

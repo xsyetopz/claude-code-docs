@@ -10,16 +10,6 @@ source: docs/prompts/simple-prompt-sonnet.md
 
 `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1` on Sonnet 5.5. Set `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1` and use `--model claude-sonnet-5-5`.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. |
-| Can you change it? | ✅ Yes. Set or unset the env var. |
-| Can you turn it on or off? | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1`. |
-| Where does it live? | Environment variable. |
-| Status | [Documented] |
-
 ## Size
 
 | Part | Characters |

@@ -6,16 +6,6 @@ sidebar_position: 29
 
 Starts in `dontAsk` permission mode. Run `claude --permission-mode dontAsk`.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. |
-| Can you change it? | ❌ No. |
-| Can you turn it on or off? | `--permission-mode` or `defaultMode` in settings. |
-| Where does it live? | Flag or settings. |
-| Status | <Documented /> |
-
 ## Size
 
 | Part | Characters |

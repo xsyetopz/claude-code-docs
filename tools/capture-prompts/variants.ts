@@ -61,7 +61,7 @@ export const VARIANTS: Variant[] = [
     summary: "The prompt that Sonnet 5.5 gets with no flags.",
     how: "Run `claude --model claude-sonnet-5-5` with no other prompt flags.",
     select: "Default on Sonnet 5.5",
-    status: "Differs",
+    status: "Documented",
     can: {
       use: "Yes. Every Sonnet 5.5 session gets it.",
       change: "Yes. Use the flags and settings on the other pages.",
@@ -96,7 +96,7 @@ export const VARIANTS: Variant[] = [
     summary: "The long prompt, forced on a model that would get the lean one.",
     how: "Set `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=0` before you start Claude Code.",
     select: "`CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=0`",
-    status: "Differs",
+    status: "Documented",
     can: {
       use: "Yes.",
       change: "Yes. Set or unset the env var.",
@@ -115,7 +115,7 @@ export const VARIANTS: Variant[] = [
     summary: "`CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1` on Sonnet 5.5.",
     how: "Set `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1` and use `--model claude-sonnet-5-5`.",
     select: "`CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1` on Sonnet",
-    status: "Differs",
+    status: "Documented",
     can: {
       use: "Yes.",
       change: "Yes. Set or unset the env var.",
@@ -132,7 +132,7 @@ export const VARIANTS: Variant[] = [
     summary: "`CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1` on Haiku 5.5.",
     how: "Set `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1` and use `--model claude-haiku-5-5`.",
     select: "`CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1` on Haiku",
-    status: "Differs",
+    status: "Documented",
     can: {
       use: "Yes.",
       change: "Yes. Set or unset the env var.",
@@ -149,7 +149,7 @@ export const VARIANTS: Variant[] = [
     summary: "`CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1` on Opus 5.5.",
     how: "Set `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1` and use `--model claude-opus-5-5`.",
     select: "`CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1` on Opus",
-    status: "Differs",
+    status: "Documented",
     can: {
       use: "Yes.",
       change: "Yes. Set or unset the env var.",

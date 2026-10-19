@@ -10,16 +10,6 @@ source: docs/prompts/style-custom.md
 
 A custom style file, without `keep-coding-instructions`, on the lean prompt. Save a Markdown file in `~/.claude/output-styles/` or `.claude/output-styles/`, then pick it with `/output-style`.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. |
-| Can you change it? | ✅ Yes. You write the file. |
-| Can you turn it on or off? | `/output-style` or the `outputStyle` setting. |
-| Where does it live? | `~/.claude/output-styles/*.md` or `.claude/output-styles/*.md`. |
-| Status | [Documented] |
-
 ## Size
 
 | Part | Characters |

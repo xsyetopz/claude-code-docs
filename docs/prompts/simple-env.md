@@ -6,16 +6,6 @@ sidebar_position: 10
 
 `CLAUDE_CODE_SIMPLE=1`: the same two-line prompt that `--bare` gives. Set `CLAUDE_CODE_SIMPLE=1` before you start Claude Code.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. |
-| Can you change it? | ❌ No. The two lines are fixed. |
-| Can you turn it on or off? | `CLAUDE_CODE_SIMPLE=1`. |
-| Where does it live? | Environment variable. |
-| Status | <Documented /> |
-
 ## Size
 
 | Part | Characters |

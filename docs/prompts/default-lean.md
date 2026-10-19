@@ -6,16 +6,6 @@ sidebar_position: 2
 
 The prompt that Opus 5.5 gets with no flags. Run `claude --model claude-opus-5-5` with no other prompt flags.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. Every session on a lean model gets it. |
-| Can you change it? | ✅ Yes. Use the flags and settings on the other pages. |
-| Can you turn it on or off? | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=0` switches to the full prompt. |
-| Where does it live? | Built into the program. Nothing on disk. |
-| Status | <Undocumented /> |
-
 ## Size
 
 | Part | Characters |

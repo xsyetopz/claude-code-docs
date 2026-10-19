@@ -13,15 +13,7 @@ They travel on the same JSON line channel as the [stream messages](https://xsyet
 The Agent SDK uses them, for example to change the model or to answer a permission question.
 A host sends a line with `type` set to `control_request` and `request.subtype` set to `set_model`. Claude Code answers with a `control_response` line.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes, if you write a host program. Start `claude -p --input-format stream-json --output-format stream-json` and write lines to stdin. |
-| Can you change it? | You choose which requests to send. |
-| Can you turn it on or off? | It is on whenever `--input-format stream-json` is used. |
-| Where does it live? | Stdin and stdout of the `claude -p` process. |
-| Status | [Undocumented] |
+The protocol is on whenever you start `claude -p --input-format stream-json --output-format stream-json`. You write requests to stdin and read answers on stdout. You choose which requests to send.
 
 ## Subtypes
 

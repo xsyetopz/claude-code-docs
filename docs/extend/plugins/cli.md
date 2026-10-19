@@ -9,15 +9,7 @@ Inside a session, `/plugin` opens a panel and `/reload-plugins` applies changes.
 `claude plugins` is an alias of `claude plugin`.
 For example, `claude plugin list --json` prints your installs as JSON.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. Shell commands, session commands, and launch flags. |
-| Can you change it? | Flags change scope, output, and prompts. |
-| Can you turn it on or off? | `claude plugin enable` and `disable`. Managed `disableSideloadFlags` turns off the session flags. |
-| Where does it live? | State is in `~/.claude/plugins/` and in `enabledPlugins`. |
-| Status | <Documented /> |
+Turn a plugin on or off with `claude plugin enable` and `disable`. Managed `disableSideloadFlags` turns off the session flags. State is in `~/.claude/plugins/` and in `enabledPlugins`.
 
 ## Subcommands
 

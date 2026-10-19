@@ -13,15 +13,7 @@ A record is sent only when Claude Code or a built-in mod makes the call.
 A mod you install can watch and rewrite records, but it must give its telemetry hook the filter `{ to: 'collector' }`.
 Without the filter the mod fails `claude plugin validate`, and `*` does not select these events.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | Partly. An installed mod can hook the events for the collector. Only built-ins and the engine make records that are sent. |
-| Can you change it? | ✅ Yes. A hook can rewrite what a record carries, never where it goes (`e.to` is pinned). |
-| Can you turn it on or off? | A hook can return `{ deny }`. The built-in `cc-plugin-telemetry` sends the records. |
-| Where does it live? | The hooks module. The collector is the one the operator of the session configured. |
-| Status | [Documented] |
+A hook can return `{ deny }`. The built-in `cc-plugin-telemetry` sends the records. The collector is the one the operator of the session configured.
 
 Official page: [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the program (`types-2.1.303.d.ts`).
 

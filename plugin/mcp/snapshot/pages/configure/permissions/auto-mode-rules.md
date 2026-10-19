@@ -13,15 +13,7 @@ An `allow` entry is an exception to a block rule.
 A `soft_deny` entry blocks an action unless an `allow` entry applies or you clearly asked for it.
 For example, `Production Deploy` blocks a deploy to production until you ask for it by name.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. They apply whenever the permission mode is `auto`. |
-| Can you change it? | ✅ Yes. Add or replace entries with the `autoMode` setting. Keep the defaults with `$defaults`. |
-| Can you turn it on or off? | Drop `$defaults` from a list to remove the built-in entries of that list. |
-| Where does it live? | Inside the program. `claude auto-mode defaults` prints them as JSON. |
-| Status | [Documented] [Undocumented] |
+The entries apply whenever the permission mode is `auto`. Add or replace entries with the `autoMode` setting, and keep the defaults with `$defaults`. Drop `$defaults` from a list to remove the built-in entries of that list. The entries live inside the program, and `claude auto-mode defaults` prints them as JSON.
 
 ## Example
 

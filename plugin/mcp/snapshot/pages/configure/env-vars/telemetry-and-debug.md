@@ -12,16 +12,7 @@ These variables control what Claude Code reports and how much it logs.
 They turn telemetry on or off, configure OpenTelemetry (OTEL) exporters, and set debug output.
 Use them to opt out of reporting or to send metrics to your own collector.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. |
-| Can you change it? | ✅ Yes. |
-| Can you turn it on or off? | `DISABLE_TELEMETRY` opts out when it has any non-empty value, even `0` or `false`. Unset it to turn telemetry back on. `DO_NOT_TRACK=1` has the same effect. |
-| Where does it live? | Your shell, or managed settings. OTEL exporter variables in project or local settings do not apply, apart from a few off values. |
-| Rows on this page | 139 variables |
-| Status | [Documented] [Undocumented] [Differs] [Gated] |
+This page lists 139 variables. `DISABLE_TELEMETRY` opts out when it has any non-empty value, even `0` or `false`. Unset it to turn telemetry back on. `DO_NOT_TRACK=1` has the same effect. Set these in your shell or managed settings. OTEL exporter variables in project or local settings do not apply, apart from a few off values.
 
 ## Example
 

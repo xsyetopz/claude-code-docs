@@ -12,15 +12,7 @@ These five nouns reach the machine: `$.clock` for time and timers, `$.http` for 
 `$.process` works in the CLI only.
 `$.settings` is read only.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. `const { exitCode, stdout } = await $.process.run(["git", "status"])` |
-| Can you change it? | ✅ Yes. Hook the matching event to rewrite, refuse, or answer a call. |
-| Can you turn it on or off? | A policy can refuse a call. For example, the organization's web-fetch policy can refuse `$.http.fetch`. |
-| Where does it live? | The hooks module. |
-| Status | [Documented] |
+A policy can refuse a call. For example, the organization's web-fetch policy can refuse `$.http.fetch`.
 
 Official pages: [Use the Mods API](https://code.claude.com/docs/en/plugins/mods/api), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the program (`types-2.1.303.d.ts`).
 In a "Where it can be used" cell, "Run time" means in a hook, in a closure that a hook drew, or in a timer callback. It does not mean inside `register`.

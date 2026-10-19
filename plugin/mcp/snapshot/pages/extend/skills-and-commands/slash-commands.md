@@ -13,15 +13,7 @@ Type `/` to see the list.
 Some commands open a panel. Others print a result or expand into a prompt for Claude.
 Many commands are hidden unless your account, provider, or settings allow them.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. Type the command in the prompt. Some also work in `-p` and the SDK. |
-| Can you change it? | No for built-in commands. You can add your own with [skills](https://xsyetopz.github.io/claude-code-docs/extend/skills-and-commands.md). |
-| Can you turn it on or off? | Some have an env var or setting. The Notes column names it. |
-| Where does it live? | Inside the program. |
-| Status | [Documented] [Undocumented] [Gated] |
+You cannot change built-in commands, but you can add your own with [skills](https://xsyetopz.github.io/claude-code-docs/extend/skills-and-commands.md). Some commands have an env var or setting. The Notes column names it. Some also work in `-p` and the SDK.
 
 ## Example
 

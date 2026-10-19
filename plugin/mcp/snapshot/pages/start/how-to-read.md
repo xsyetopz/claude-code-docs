@@ -63,7 +63,7 @@ A screen reader reads the picture name, such as "locked" or "warning". The row t
 
 ## At a Glance
 
-Every page about a surface starts with a short intro and then an At a Glance table.
+A section index page, or a standalone page about a surface, starts with a short intro and then an At a Glance table. Subpages in a section do not repeat it.
 The table answers five questions.
 
 | Question | What the answer tells you |

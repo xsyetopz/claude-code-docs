@@ -10,16 +10,6 @@ source: docs/prompts/bare.md
 
 `--bare`: a two-line prompt and three tools. Run `claude --bare`.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. |
-| Can you change it? | ❌ No. The two lines are fixed. |
-| Can you turn it on or off? | `--bare` or `CLAUDE_CODE_SIMPLE=1`. |
-| Where does it live? | Command-line flag. |
-| Status | [Documented] |
-
 ## Size
 
 | Part | Characters |

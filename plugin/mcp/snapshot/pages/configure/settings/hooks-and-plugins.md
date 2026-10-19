@@ -12,15 +12,7 @@ These keys control hooks, plugins, marketplaces, skills, permissions, and the st
 Many are managed-only keys that let an administrator lock down what users can load.
 The `hooks`, `permissions`, and `statusLine` objects are large, so their own pages explain them.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. |
-| Can you change it? | Edit a settings file. Managed-only keys need a managed source. |
-| Can you turn it on or off? | `disableAllHooks`, `disableBundledSkills`, and `enabledPlugins` are switches. |
-| Where does it live? | `~/.claude/settings.json`, `.claude/settings.json`, `.claude/settings.local.json`, or managed settings |
-| Status | [Documented] [Differs: appendPlugins and prependPlugins] |
+Managed-only keys need a managed source. `disableAllHooks`, `disableBundledSkills`, and `enabledPlugins` are switches.
 
 ## Keys
 

@@ -12,16 +12,7 @@ Claude Code reads many variables that it does not define.
 Your system, your terminal, CI services, and other tools own them.
 Examples are `HOME`, `PATH`, `EDITOR`, `TERM`, and `ALL_PROXY`. Claude Code reads them to find files, pick colors, and detect where it runs.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. You set them for your system anyway. |
-| Can you change it? | ✅ Yes, in your shell, or in the `env` key of a settings file. |
-| Can you turn it on or off? | Unset the variable. |
-| Where does it live? | Your shell or the system. |
-| Rows on this page | 130 variables |
-| Status | [Documented] [Undocumented] [Differs] [Gated] |
+This page lists 130 variables. You set many of them for your system anyway. Set them in your shell, or in the `env` key of a settings file.
 
 ## Example
 

@@ -13,15 +13,7 @@ They reach outside the project, so permission rules and the sandbox matter most 
 For example, `Bash` with `run_in_background` set to `true` starts a long command and returns at once.
 The Yes and No columns are explained on [Tools](https://xsyetopz.github.io/claude-code-docs/reference/tools.md#how-to-read-the-tool-tables).
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | Claude calls these tools. You approve or deny each call by rule or by prompt. |
-| Can you change it? | ✅ Yes. `Bash(...)` rules, the sandbox, and env vars set what a call may do. |
-| Can you turn it on or off? | `CLAUDE_CODE_USE_POWERSHELL_TOOL`, `CLAUDE_CODE_DISABLE_WEB_FETCH=1`, `CLAUDE_CODE_DISABLE_BACKGROUND_TASKS=1`, or a deny rule. |
-| Where does it live? | Built into the program. |
-| Status | [Documented] [Undocumented] [Gated: PowerShell, WebFetch switch, GetTask] |
+You approve or deny each call by rule or by prompt. The switches are `CLAUDE_CODE_USE_POWERSHELL_TOOL`, `CLAUDE_CODE_DISABLE_WEB_FETCH=1`, `CLAUDE_CODE_DISABLE_BACKGROUND_TASKS=1`, or a deny rule. PowerShell, the WebFetch switch, and GetTask are gated.
 
 ## Tools
 

@@ -12,15 +12,7 @@ With `--output-format stream-json`, Claude Code writes one JSON object per line 
 With `--input-format stream-json`, you send JSON lines on stdin, and the same channel carries [control requests](https://xsyetopz.github.io/claude-code-docs/extend/headless/control-protocol.md).
 For example, `claude -p "Explain this repo" --output-format stream-json --verbose --include-partial-messages` prints a `system` / `init` line, then `stream_event` lines while the answer grows, then a final `result` line.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes, in print mode. |
-| Can you change it? | Flags add more lines: `--include-partial-messages`, `--include-hook-events`, `--forward-subagent-text`, `--replay-user-messages`. |
-| Can you turn it on or off? | `--output-format stream-json` and `--input-format stream-json`. |
-| Where does it live? | Stdout and stdin of the `claude -p` process. |
-| Status | [Documented] [Undocumented] |
+Flags add more lines: `--include-partial-messages`, `--include-hook-events`, `--forward-subagent-text`, and `--replay-user-messages`. Turn the format on with `--output-format stream-json` and `--input-format stream-json`.
 
 ## Message Types
 

@@ -8,15 +8,7 @@ A flag changes how one `claude` run behaves.
 `claude --help` shows 66 flags. Another 64 work but stay hidden from the help text.
 This page lists both kinds in one place, grouped by what they do.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. Add a flag after `claude`, for example `claude --model opus`. |
-| Can you change it? | ✅ Yes. Pass a different value. Most flags last for one run only. |
-| Can you turn it on or off? | A flag is on when you pass it. Some have a `--no-` twin, such as `--no-chrome`. |
-| Where does it live? | The command line. |
-| Status | <Documented /> <Undocumented /> |
+Pass a flag after `claude`, for example `claude --model opus`. Most flags last for one run only. A flag is on when you pass it, and some have a `--no-` twin, such as `--no-chrome`.
 
 ## How to Read the Tables
 

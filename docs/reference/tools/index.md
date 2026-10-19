@@ -14,10 +14,10 @@ This page covers the shared rules. The other pages list every tool and every par
 | Question | Answer |
 | --- | --- |
 | Can you use it? | Partly. Claude calls tools for you. You allow, ask, or deny them with permission rules. |
-| Can you change it? | ✅ Yes. Permission rules, subagent `tools` lists, and MCP servers change which tools Claude can use. |
+| Can you change it? | ✅ Yes. Permission rules, subagent `tools` and `disallowedTools` lists, and MCP servers change which tools Claude can use. |
 | Can you turn it on or off? | `permissions.deny`, `ENABLE_TOOL_SEARCH`, and tool-specific env vars such as `CLAUDE_CODE_DISABLE_WEB_FETCH`. |
 | Where does it live? | Built into the program. MCP tools come from servers you configure. |
-| Status | <Documented /> <Undocumented /> <Differs /> <Gated note="many tools need a server-side flag" /> |
+| Status | <Documented /> <Undocumented /> <Differs /> <Gated note="many tools need a server-side flag, including the task, cron, plan, agent-listing, PowerShell, WebFetch switch, GetTask, and memory tools" /> |
 
 ## Tool Pages
 

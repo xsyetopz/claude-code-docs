@@ -8,16 +8,7 @@ These variables tell Claude Code who you are.
 They carry API keys, bearer tokens, OAuth data, and the commands that fetch credentials for you.
 Put secrets in your shell or a secrets manager, not in a file you commit.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. `ANTHROPIC_API_KEY` and `ANTHROPIC_AUTH_TOKEN` are the common ones. |
-| Can you change it? | ✅ Yes. Set a different variable, or run `/login` for a stored login. |
-| Can you turn it on or off? | Unset the variable to stop using it. |
-| Where does it live? | Your shell or the `env` key of a settings file. Project settings cannot set some of them before you trust the folder. |
-| Rows on this page | 71 variables |
-| Status | <Documented /> <Undocumented /> <Differs /> <Gated /> |
+This page lists 71 variables. `ANTHROPIC_API_KEY` and `ANTHROPIC_AUTH_TOKEN` are the common ones. Run `/login` for a stored login. Project settings cannot set some of them before you trust the folder.
 
 ## Example
 

@@ -12,15 +12,7 @@ These keys change how Claude Code looks and feels in the terminal.
 They cover the theme, the spinner, notices, view modes, and vim keys.
 Many boolean keys are written as the thing to hide, so check each row before you pick a value.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. |
-| Can you change it? | Edit a settings file, or use `/config` for some keys. |
-| Can you turn it on or off? | Most boolean keys switch one display feature. |
-| Where does it live? | `~/.claude/settings.json`, `.claude/settings.json`, `.claude/settings.local.json`, or managed settings |
-| Status | [Documented] [Undocumented] |
+Use `/config` for some keys. Most boolean keys switch one display feature.
 
 ## Keys
 

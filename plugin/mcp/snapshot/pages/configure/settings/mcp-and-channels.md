@@ -12,15 +12,7 @@ These keys decide which MCP servers and channels Claude Code may use.
 An MCP server gives Claude extra tools. A channel is a plugin that can push messages into a session.
 Administrators use these keys to allow or block servers.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. |
-| Can you change it? | Edit a settings file. Allow and block lists need a managed source to bind users. |
-| Can you turn it on or off? | `enableAllProjectMcpServers`, `disableClaudeAiConnectors`, and `channelsEnabled` are switches. |
-| Where does it live? | `~/.claude/settings.json`, `.claude/settings.json`, `.claude/settings.local.json`, or managed settings |
-| Status | [Documented] |
+Allow and block lists need a managed source to bind users. `enableAllProjectMcpServers`, `disableClaudeAiConnectors`, and `channelsEnabled` are switches.
 
 ## Keys
 

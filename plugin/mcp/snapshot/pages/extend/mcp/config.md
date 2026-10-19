@@ -13,15 +13,7 @@ You write its config in `.mcp.json` or in `~/.claude.json`.
 Each transport takes its own options, and values can use `${VAR}` expansion.
 For example, `{ "mcpServers": { "files": { "command": "npx", "args": ["server"] } } }` starts a local server.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. |
-| Can you change it? | ✅ Yes. Edit the file, or use `claude mcp add` and `add-json`. |
-| Can you turn it on or off? | Remove the entry, or use `/mcp` to disable it. See [MCP Settings and Policy](https://xsyetopz.github.io/claude-code-docs/extend/mcp/settings.md). |
-| Where does it live? | `.mcp.json`, `~/.claude.json`, a plugin `.mcp.json`, or `mcpServers` in `plugin.json` |
-| Status | [Documented] [Undocumented] |
+Edit the file, or use `claude mcp add` and `add-json`. To turn a server off, remove the entry or use `/mcp`. See [MCP Settings and Policy](https://xsyetopz.github.io/claude-code-docs/extend/mcp/settings.md). Servers live in `.mcp.json`, `~/.claude.json`, a plugin `.mcp.json`, or `mcpServers` in `plugin.json`.
 
 ## File Shape
 

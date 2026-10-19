@@ -13,15 +13,7 @@ The tables below list them all, with the limits that apply.
 The one file that makes a plugin a mod is `modules` in `hooks/hooks.json`.
 A manifest has no `mods` key.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. Every noun of `$` is available in a hook. |
-| Can you change it? | ✅ Yes. A mod can add its own noun with an `engine.create` hook. |
-| Can you turn it on or off? | `disableAllHooks`, `allowManagedHooksOnly`, `allowManagedModsOnly`, `--safe-mode`, `--bare`. |
-| Where does it live? | The plugin folder, `plugin.json`, `hooks/hooks.json`, and settings files. |
-| Status | [Documented] [Gated: Remote rollout switch for installed mods] |
+These switches stop mods: `disableAllHooks`, `allowManagedHooksOnly`, `allowManagedModsOnly`, `--safe-mode`, and `--bare`. A remote rollout switch also gates installed mods. Mods live in the plugin folder, `plugin.json`, `hooks/hooks.json`, and settings files.
 
 Official pages: [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference), [Mods Overview](https://code.claude.com/docs/en/plugins/mods/overview), [Plugins Reference](https://code.claude.com/docs/en/plugins-reference), [Manage Mods for Your Organization](https://code.claude.com/docs/en/plugins/mods/admin).
 

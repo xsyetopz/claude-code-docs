@@ -6,16 +6,6 @@ sidebar_position: 26
 
 Running the whole session as a custom agent. Save an agent file in `.claude/agents/`, then run `claude --agent <name>`.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. |
-| Can you change it? | ✅ Yes. You write the agent file. |
-| Can you turn it on or off? | `--agent` or the `agent` setting. |
-| Where does it live? | `.claude/agents/*.md` or `~/.claude/agents/*.md`. |
-| Status | <Documented /> |
-
 ## Size
 
 | Part | Characters |

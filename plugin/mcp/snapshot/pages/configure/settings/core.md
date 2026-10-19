@@ -12,15 +12,7 @@ These keys control how Claude Code compacts the conversation, remembers things, 
 Most people change only a few of them, such as `language` or `cleanupPeriodDays`.
 The `env` and `sandbox` keys are objects that have their own pages elsewhere.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. Every key here works today. |
-| Can you change it? | Edit a settings file by hand. |
-| Can you turn it on or off? | Boolean keys such as `autoMemoryEnabled` and `autoCompactEnabled` switch a feature. |
-| Where does it live? | `~/.claude/settings.json`, `.claude/settings.json`, `.claude/settings.local.json`, or managed settings |
-| Status | [Documented] [Undocumented] |
+Every key here works today. Boolean keys such as `autoMemoryEnabled` and `autoCompactEnabled` switch a feature.
 
 ## Keys
 

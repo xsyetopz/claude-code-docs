@@ -12,15 +12,7 @@ These keys let an administrator control how managed settings arrive and which ve
 They work in managed settings.
 For the places managed settings can come from, see the managed settings section of the index page.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | Only if you manage a machine or organization. |
-| Can you change it? | ✅ Yes, in a managed settings source. |
-| Can you turn it on or off? | `forceRemoteSettingsRefresh` and `wslInheritsWindowsSettings` are switches. |
-| Where does it live? | Managed settings (see [Managed Settings](https://xsyetopz.github.io/claude-code-docs/configure/settings.md#managed-settings)) |
-| Status | [Documented] [Undocumented] |
+Only use these keys if you manage a machine or organization. `forceRemoteSettingsRefresh` and `wslInheritsWindowsSettings` are switches.
 
 ## Keys
 

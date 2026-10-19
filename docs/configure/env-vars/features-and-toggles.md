@@ -8,16 +8,7 @@ These variables flip one feature each.
 Some turn off a feature that is on by default. Others force on a feature that a server flag controls.
 A row with the Gated badge only works when a feature flag or server gate allows it, unless the variable overrides the gate.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. |
-| Can you change it? | ✅ Yes. |
-| Can you turn it on or off? | That is the point of this page. Most take `1` to turn on and `0` to turn off. |
-| Where does it live? | Your shell or the `env` key of a settings file. |
-| Rows on this page | 66 variables |
-| Status | <Documented /> <Undocumented /> <Differs /> <Gated /> |
+This page lists 66 variables. Most take `1` to turn on and `0` to turn off.
 
 ## Example
 

@@ -12,15 +12,7 @@ Auto mode lets Claude Code run without routine prompts.
 A classifier model reads each action and blocks what is risky, such as a deploy to production or a push of secrets.
 You tune it with the `autoMode` setting.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. Pick `auto` as the permission mode. |
-| Can you change it? | ✅ Yes. Set `autoMode.allow`, `soft_deny`, `hard_deny`, and `environment`. |
-| Can you turn it on or off? | `permissions.disableAutoMode: "disable"` turns it off. `permissions.defaultMode: "auto"` starts in it. |
-| Where does it live? | User settings, `--settings`, and managed settings. Project and local settings do not set it. |
-| Status | [Documented] [Undocumented] |
+Pick `auto` as the permission mode. `permissions.disableAutoMode: "disable"` turns it off, and `permissions.defaultMode: "auto"` starts in it. User settings, `--settings`, and managed settings set `autoMode`. Project and local settings do not.
 
 ## Example
 

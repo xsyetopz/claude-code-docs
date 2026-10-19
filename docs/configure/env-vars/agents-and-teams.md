@@ -8,16 +8,7 @@ These variables control subagents, agent teams, background tasks, and workflows.
 They set limits, switch features on, and change how child agents behave.
 Several are experimental and may change without notice.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. |
-| Can you change it? | ✅ Yes. |
-| Can you turn it on or off? | Switch rows take `1` or `0`. |
-| Where does it live? | Your shell or the `env` key of a settings file. |
-| Rows on this page | 77 variables |
-| Status | <Documented /> <Undocumented /> <Differs /> <Gated /> |
+This page lists 77 variables. Switch rows take `1` or `0`.
 
 ## Example
 

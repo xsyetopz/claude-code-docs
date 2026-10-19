@@ -12,16 +12,7 @@ These variables help a program that runs Claude Code as a child process.
 They say which surface started it, how session events reach the host, and which binary the Agent SDK looks for.
 Most people never set them. Hosts such as the Agent SDK set them for you.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes, if you write a host program. |
-| Can you change it? | ✅ Yes. Set them in the child process environment. |
-| Can you turn it on or off? | Unset the variable. |
-| Where does it live? | The environment of the Claude Code process. Project `env` cannot set most of them before trust. |
-| Rows on this page | 21 variables |
-| Status | [Documented] [Undocumented] [Differs] [Gated] |
+This page lists 21 variables. These are for a host program that starts Claude Code. Set them in the child process environment. Project `env` cannot set most of them before trust.
 
 ## Example
 

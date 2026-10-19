@@ -8,16 +8,7 @@ These variables decide where Claude Code keeps its files and how it handles save
 They also control installs and auto updates.
 `CLAUDE_CONFIG_DIR` is the most used one: it moves the whole `.claude` folder.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. |
-| Can you change it? | ✅ Yes. Use absolute paths. |
-| Can you turn it on or off? | Unset the variable. For updates, set `DISABLE_AUTOUPDATER` to stop them. |
-| Where does it live? | Your shell. Project and local settings cannot set `CLAUDE_CONFIG_DIR`. |
-| Rows on this page | 78 variables |
-| Status | <Documented /> <Undocumented /> <Differs /> <Gated /> |
+This page lists 78 variables. Use absolute paths. Set `DISABLE_AUTOUPDATER` to stop updates. Project and local settings cannot set `CLAUDE_CONFIG_DIR`. Set these in your shell.
 
 ## Example
 

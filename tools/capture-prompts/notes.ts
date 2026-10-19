@@ -1,19 +1,6 @@
 // Hand-written text for the pages. Facts here come from the captures; the wiki is cited where a capture disagrees.
 
-export const BADGE_NOTES: Record<string, string> = {
-  "default-sonnet":
-    "The docs say Sonnet gets the full prompt. In 2.1.303 Sonnet 5.5 gets the lean one.",
-  "default-haiku":
-    "The docs say Haiku gets the full prompt. In 2.1.303 Haiku 5.5 gets the lean one plus extra text.",
-  "full-prompt":
-    "The docs say newer models get the short prompt and older ones get the full prompt. The switch works as the docs say, but the model defaults are not what the docs list.",
-  "simple-prompt-sonnet":
-    "Changes nothing on Sonnet 5.5, because it already gets the short prompt.",
-  "simple-prompt-haiku":
-    "Changes nothing on Haiku 5.5, because it already gets the short prompt.",
-  "simple-prompt-opus":
-    "Changes nothing on Opus 5.5, because it already gets the short prompt.",
-};
+export const BADGE_NOTES: Record<string, string> = {};
 
 export const NOTES: Record<string, string[]> = {
   "default-lean": [
@@ -24,7 +11,7 @@ export const NOTES: Record<string, string[]> = {
   ],
   "default-sonnet": [
     "Sonnet 5.5 gets the same lean prompt as Opus 5.5. Only the model name, the model ID, and the commit trailer change.",
-    "The old wiki and the docs say Sonnet gets the full prompt. The capture shows it does not in 2.1.303.",
+    "The old wiki says Sonnet gets the full prompt. The capture shows it does not in 2.1.303, and the official docs agree with the capture.",
   ],
   "default-haiku": [
     "Haiku 5.5 gets the lean prompt, then five extra paragraphs at the end of the body. They tell the model to finish the whole request, to avoid ending the turn early, and to act when it can name the likely reading of the request.",

@@ -7,16 +7,6 @@ sidebar_position: 9
 These are the types behind `$.tool`, `$.command`, and `$.config`.
 They describe a tool call, a permission check, a command run, and a row of the `/config` menu.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes, as types. `import type` them from `claude-code`. |
-| Can you change it? | ❌ No. These are types only. They describe data, and they do not hold settings. |
-| Can you turn it on or off? | ❌ No. A type has no switch. |
-| Where does it live? | The published type file `types-2.1.303.d.ts` and `.claude-plugin/types/claude-code/index.d.ts`. |
-| Status | <Documented /> |
-
 ## Example
 
 The first call asks the permission system about a tool call. The second line reads the messages of a subagent that made a tool use.

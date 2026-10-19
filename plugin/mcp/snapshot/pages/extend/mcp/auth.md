@@ -13,15 +13,7 @@ Claude Code supports OAuth, a script that makes headers, and managed sign-in for
 For example, `/mcp` opens a panel where you start the OAuth sign-in for a server.
 This page describes the options only. It does not walk through any account sign-in.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes, for `http` and `sse` servers (OAuth) and for `http`, `sse`, and `ws` servers (headers). |
-| Can you change it? | ✅ Yes. Server `oauth` fields, `headers`, `headersHelper`, and env vars. |
-| Can you turn it on or off? | `claude mcp logout`, `Clear authentication` in `/mcp`, `disableClaudeAiConnectors`, `ENABLE_CLAUDEAI_MCP_SERVERS`. |
-| Where does it live? | The server entry in a config file. Tokens are in secure storage. |
-| Status | [Documented] [Undocumented] [Gated: XAA needs CLAUDE_CODE_ENABLE_XAA=1] |
+OAuth works for `http` and `sse` servers. Headers work for `http`, `sse`, and `ws` servers. Use the server `oauth` fields, `headers`, `headersHelper`, and env vars to change it. Turn it off with `claude mcp logout`, `Clear authentication` in `/mcp`, `disableClaudeAiConnectors`, or `ENABLE_CLAUDEAI_MCP_SERVERS`. Tokens are in secure storage.
 
 ## OAuth Options
 

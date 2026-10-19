@@ -12,16 +12,7 @@ These variables change how tools run.
 They set Bash time limits and output size, shell choice, search behavior, permission helpers, and the sandbox.
 Use them when long commands time out or when you need to limit what a tool can see.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. `BASH_DEFAULT_TIMEOUT_MS` and `BASH_MAX_OUTPUT_LENGTH` are common. |
-| Can you change it? | ✅ Yes. |
-| Can you turn it on or off? | Switch rows take `1` or `0`. Unset the variable to restore the default. |
-| Where does it live? | Your shell or the `env` key of a settings file. |
-| Rows on this page | 101 variables |
-| Status | [Documented] [Undocumented] [Differs] [Gated] |
+This page lists 101 variables. `BASH_DEFAULT_TIMEOUT_MS` and `BASH_MAX_OUTPUT_LENGTH` are common. Switch rows take `1` or `0`.
 
 ## Example
 

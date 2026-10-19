@@ -12,15 +12,7 @@ source: docs/extend/mod-api/turn-prompt.md
 `$.prompt` sends a prompt as a user turn and works with the prompt box.
 The events follow a turn from start to end, and they cover the system prompt, the context blocks, and attachments.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. `void $.prompt.submit({ text: "List the TODOs." })` |
-| Can you change it? | ✅ Yes. Rewrite `e` with `next({ ...e, text })`, or answer in place of the engine. |
-| Can you turn it on or off? | Return `{ drop }`, `{ deny }`, or `{ text: null }` from the right hook to stop or remove something. |
-| Where does it live? | The hooks module. |
-| Status | [Documented] |
+Return `{ drop }`, `{ deny }`, or `{ text: null }` from the right hook to stop or remove something.
 
 Official pages: [React to Events](https://code.claude.com/docs/en/plugins/mods/events), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the program (`types-2.1.303.d.ts`).
 In a "Where it can be used" cell, "Run time" means in a hook, in a closure that a hook drew, or in a timer callback. It does not mean inside `register`.

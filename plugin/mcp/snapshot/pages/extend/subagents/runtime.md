@@ -13,15 +13,7 @@ The rules cover tool filters, forks, background runs, depth limits, and agent te
 For example, a subagent cannot start another one past the depth limit, which is 3 by default.
 A fork is a subagent that inherits the whole conversation and shares the prompt cache with its parent.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. |
-| Can you change it? | ✅ Yes. Env vars and settings set limits and models. Your own agent file replaces a built-in one of the same name. |
-| Can you turn it on or off? | `CLAUDE_CODE_FORK_SUBAGENT`, `CLAUDE_CODE_DISABLE_BACKGROUND_TASKS`, `CLAUDE_CODE_DISABLE_EXPLORE_PLAN_AGENTS`, `CLAUDE_AGENT_SDK_DISABLE_BUILTIN_AGENTS`. |
-| Where does it live? | In the program. Limits come from env vars and settings. |
-| Status | [Documented] [Undocumented] [Gated] |
+Your own agent file replaces a built-in one of the same name. Limits come from env vars and settings. The switches are `CLAUDE_CODE_FORK_SUBAGENT`, `CLAUDE_CODE_DISABLE_BACKGROUND_TASKS`, `CLAUDE_CODE_DISABLE_EXPLORE_PLAN_AGENTS`, and `CLAUDE_AGENT_SDK_DISABLE_BUILTIN_AGENTS`.
 
 ## Example
 

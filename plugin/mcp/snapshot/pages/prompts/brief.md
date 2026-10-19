@@ -10,16 +10,6 @@ source: docs/prompts/brief.md
 
 `--brief` adds rules for the `SendUserMessage` tool. Run `claude --brief`.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. |
-| Can you change it? | ❌ No. |
-| Can you turn it on or off? | `--brief`. |
-| Where does it live? | Command-line flag. |
-| Status | [Undocumented] |
-
 ## Size
 
 | Part | Characters |
