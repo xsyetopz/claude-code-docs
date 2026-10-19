@@ -62,7 +62,7 @@ Each line is a separate command. The text after the name is the argument.
 | `/export` `[filename]` | <Documented /> | Exports the conversation to a file or the clipboard. | Panel. |
 | `/copy` `[N]` | <Documented /> | Copies the last reply to the clipboard. `/copy N` copies the Nth latest. | Panel. |
 | `/exit` (alias `/quit`) | <Documented /> | Exits the CLI. In a background session it detaches and the session keeps running. | Panel and text form. |
-| `/restart` (alias `/update`) | <Gated note="Hidden unless an internal check is true. The check was not decoded." /> | Restarts Claude Code and keeps this session. | Interactive only. |
+| `/restart` (alias `/update`) | <Gated note="Interactive terminal on macOS or Linux, native install only, and a server-side feature flag." /> | Restarts Claude Code on the newly installed version and resumes this session. | Interactive only. See [How `/restart` Works](#how-restart-works). |
 | `/rewind` (aliases `/checkpoint`, `/undo`) | <Documented /> | Restores the code, the conversation, or both to an earlier point. | Interactive only. |
 | `/tasks` (alias `/bashes`) | <Documented /> | Shows and manages everything that runs in the background. | Panel. |
 | `/list-agents` (alias `/peers`) | <Documented /> | Lists subagents, teammates, and other sessions you can message. | Off when the org setting `messagingBeyondOwnAgentsDisabled` is set. |
@@ -158,6 +158,30 @@ A command can have two objects, one for interactive use and a text one for non-i
 Aliases come from an `aliases` list on the object.
 A skill or custom command with the same name replaces a built-in command, but not its aliases (see [Skills and Commands](index.md#name-resolution)).
 
+## How `/restart` Works
+
+`/restart` restarts Claude Code on the installed version and resumes the same session. It keeps the model, the permission mode, extra working directories, and the Remote Control state. After the restart, it adds a "Successfully updated from A to B" message.
+
+It only shows when all of these are true:
+
+- You are in an interactive terminal (not `-p`).
+- You run macOS or Linux.
+- You use the native install (the binary is under `~/.local/share/claude/versions/`, so not npm).
+- You are not in a teammate agent or a remote session, and slash commands are not disabled.
+- A server-side feature flag is on for you. Some users never see it.
+
+After an auto-update installs a new version, the prompt area shows a green notice: "Update installed · /restart to apply". When the conditions above are not met, it says "Restart to update" instead.
+
+`/restart` refuses in these cases:
+
+- Background work is running or pending. It says "Can't restart while work is running in the background — wait for it to finish (or stop it via /tasks), then try again." Running subagents and background shell commands count. Remote agents do not.
+- Remote Control is connected, or the command came in over Remote Control.
+- The session is not saved to disk.
+- Claude tried to run it. You must type it at the prompt.
+- The installed version is missing (it suggests `/doctor`), or that version is on hold.
+
+Background sessions use `claude respawn <id>` instead.
+
 ## Related Pages
 
 - [Skills and Commands](index.md): skills, which also give you slash commands.
@@ -166,4 +190,3 @@ A skill or custom command with the same name replaces a built-in command, but no
 - [Environment Variables](../../configure/env-vars/index.md): the `DISABLE_*_COMMAND` variables.
 
 Source: [Commands](https://code.claude.com/docs/en/commands) and the program (the command objects). `/keybindings`, `/release-notes`, `/rewind`, `/chrome`, `/statusline`, and `/sandbox` are missing from the program inventory file because of the key order in their objects. The program itself has them.
-Not verified: the gate function of `/restart`.
