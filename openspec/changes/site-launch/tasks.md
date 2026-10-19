@@ -24,4 +24,4 @@ Wiki pages below are in SRC `wiki/claude-code/` and drop the `Claude-Code-` pref
 
 - [x] 3.1 Full build, lint, check pass; fix broken links
 - [x] 3.2 Review (reviewer): accuracy spot checks against sources, Simple English, Title Case, no ❌ items, branding guardrails
-- [ ] 3.3 Initial git commit; tell the user how to create the GitHub repo and enable Pages (do not push without asking)
+- [x] 3.3 Initial git commit; tell the user how to create the GitHub repo and enable Pages (do not push without asking)
