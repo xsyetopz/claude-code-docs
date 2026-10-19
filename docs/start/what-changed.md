@@ -12,16 +12,16 @@ For every fix and small change, read the official [Changelog](https://code.claud
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Read it before you update, or when a setup stops working. |
-| Can you change it? | No. It is a list of past changes. |
+| Can you use it? | ✅ Yes. Read it before you update, or when a setup stops working. |
+| Can you change it? | ❌ No. It is a list of past changes. |
 | Can you turn it on or off? | Some rows name a switch. |
-| Where does it live? | The official changelog, and `claude --version` for your version. |
+| Where does it live? | The [official changelog](https://code.claude.com/docs/en/changelog), and `claude --version` for your version. |
 | Status | <Documented /> |
 
 ## How to Check Your Version
 
 Run `claude --version`.
-The `/release-notes` command shows a cached copy of the changelog.
+The `/release-notes` command shows a cached copy of the [changelog](https://code.claude.com/docs/en/changelog).
 This site covers `2.1.303`, the version shown in the navbar.
 
 ## Version 2.1.303
@@ -96,8 +96,8 @@ This site does not cover versions before `2.1.300` in detail.
 The official [Changelog](https://code.claude.com/docs/en/changelog) lists them, and the weekly [What's New](https://code.claude.com/docs/en/whats-new) digest covers the larger features.
 
 :::note[Not Verified]
-The rows above come from the official changelog text and from a comparison of the `2.1.302` and `2.1.303` programs.
-This site did not re-test each changelog row against the program, so a row marked <Documented /> means the changelog names it.
+The rows above come from the [official changelog](https://code.claude.com/docs/en/changelog) text and from a comparison of the `2.1.302` and `2.1.303` programs.
+This site did not re-test each [changelog](https://code.claude.com/docs/en/changelog) row against the program, so a row marked <Documented /> means the [changelog](https://code.claude.com/docs/en/changelog) names it.
 :::
 
 ## Example

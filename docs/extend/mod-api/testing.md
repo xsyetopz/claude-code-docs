@@ -13,8 +13,8 @@ A hooks module in a session cannot import this module.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Run `claude plugin test [dir]`. |
-| Can you change it? | Yes. Write your own `*.test.ts` or `*.test.tsx` files. |
+| Can you use it? | ✅ Yes. Run `claude plugin test [dir]`. |
+| Can you change it? | ✅ Yes. Write your own `*.test.ts` or `*.test.tsx` files. |
 | Can you turn it on or off? | Each test ends after 5 seconds unless it sets `timeoutMs`. |
 | Where does it live? | Test files in the plugin folder. |
 | Status | <Documented /> |

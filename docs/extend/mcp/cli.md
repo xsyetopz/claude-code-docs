@@ -12,8 +12,8 @@ For example, `claude mcp list` prints each server and tells you if it is connect
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Shell commands and the `/mcp` panel. |
-| Can you change it? | Yes. Flags pick the scope, the transport, env vars, headers, and OAuth fields. |
+| Can you use it? | ✅ Yes. Shell commands and the `/mcp` panel. |
+| Can you change it? | ✅ Yes. Flags pick the scope, the transport, env vars, headers, and OAuth fields. |
 | Can you turn it on or off? | `claude mcp add` and `remove`, or enable and disable in `/mcp`. |
 | Where does it live? | Writes to `~/.claude.json` or `.mcp.json`, depending on the scope. |
 | Status | <Documented /> <Gated note="XAA needs CLAUDE_CODE_ENABLE_XAA" /> |
@@ -75,10 +75,10 @@ claude mcp remove weather --scope user
 
 ```mermaid
 flowchart LR
-  A[claude mcp add] --> B{--scope}
-  B -->|local| C[~/.claude.json projects path]
-  B -->|user| D[~/.claude.json mcpServers]
-  B -->|project| E[.mcp.json]
+  A["<code>claude mcp add</code>"] --> B{"<code>--scope</code>"}
+  B -->|"<code>local</code>"| C["<code>~/.claude.json</code> projects path"]
+  B -->|"<code>user</code>"| D["<code>~/.claude.json</code> <code>mcpServers</code>"]
+  B -->|"<code>project</code>"| E["<code>.mcp.json</code>"]
   C --> F[Next session connects]
   D --> F
   E --> F

@@ -13,8 +13,8 @@ A fork is a subagent that inherits the whole conversation and shares the prompt 
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. |
-| Can you change it? | Yes. Env vars and settings set limits and models. Your own agent file replaces a built-in one of the same name. |
+| Can you use it? | ✅ Yes. |
+| Can you change it? | ✅ Yes. Env vars and settings set limits and models. Your own agent file replaces a built-in one of the same name. |
 | Can you turn it on or off? | `CLAUDE_CODE_FORK_SUBAGENT`, `CLAUDE_CODE_DISABLE_BACKGROUND_TASKS`, `CLAUDE_CODE_DISABLE_EXPLORE_PLAN_AGENTS`, `CLAUDE_AGENT_SDK_DISABLE_BUILTIN_AGENTS`. |
 | Where does it live? | In the program. Limits come from env vars and settings. |
 | Status | <Documented /> <Undocumented /> <Gated /> |
@@ -95,8 +95,8 @@ An agent team is a group of Claude sessions that work as teammates.
 
 ```mermaid
 flowchart TD
-    A[Agent tool call] --> B{Depth limit reached?}
-    B -- yes --> C[Withhold Agent tool, or return an error for a fork]
+    A["<code>Agent</code> tool call"] --> B{Depth limit reached?}
+    B -- yes --> C["Withhold <code>Agent</code> tool, or return an error for a fork"]
     B -- no --> D{Concurrent limit reached?}
     D -- yes --> E[Error: Concurrent subagent limit reached]
     D -- no --> F[Pick the agent type]

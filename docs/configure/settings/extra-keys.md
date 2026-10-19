@@ -12,7 +12,7 @@ The global config file is not a settings file. Claude Code writes it, and `/conf
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. All keys here work in `2.1.303`. |
+| Can you use it? | ✅ Yes. All keys here work in `2.1.303`. |
 | Can you change it? | Edit a settings file for the first two tables. Use `/config` or edit `~/.claude.json` for the global config keys. |
 | Can you turn it on or off? | Most keys are booleans. |
 | Where does it live? | Settings files, or `~/.claude.json` for the last table. |
@@ -50,7 +50,7 @@ The first rows are sub-keys of an object key. The last rows are read only by the
 | `disableBrowserExternalNavigation` | <Documented /> | boolean | Unset, so external browsing is on | Turn off external browsing in the desktop Browser pane. Only `true` takes effect. | Managed settings only |
 | `browserExternalPageTools` | <Documented /> | string | Unset, so the tools work on external pages | Stop Claude from using its tools on external pages in the desktop Browser pane. The value is `"disabled"`. | Managed settings only |
 | `disableMobileSimulatorTools` | <Documented /> | boolean | Unset | Block Claude's tools in the desktop iOS Simulator pane. Only `true` takes effect. | Managed settings only |
-| `disableDesktopLocalSessions` | <Documented /> | Not stated | - | Turn off Desktop Code sessions that run on the device. SSH and cloud sessions stay on. | Managed settings only |
+| `disableDesktopLocalSessions` | <Documented /> | ❓ | - | Turn off Desktop Code sessions that run on the device. SSH and cloud sessions stay on. | Managed settings only |
 
 ## Global Config Keys
 

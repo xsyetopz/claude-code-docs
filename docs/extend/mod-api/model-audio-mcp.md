@@ -13,8 +13,8 @@ A model call bills to the plan or key of the person, so keep requests small.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. `await $.model.complete({ model: 'haiku', prompt: 'Hi', maxTokens: 20 })` |
-| Can you change it? | Yes. Hook `model.complete`, `audio.play`, `mcp.call`, and the other events to rewrite, refuse, or answer. |
+| Can you use it? | ✅ Yes. `await $.model.complete({ model: 'haiku', prompt: 'Hi', maxTokens: 20 })` |
+| Can you change it? | ✅ Yes. Hook `model.complete`, `audio.play`, `mcp.call`, and the other events to rewrite, refuse, or answer. |
 | Can you turn it on or off? | A `deny` from a hook refuses a call. `maxTokens` is 1024 by default and goes up to 64000 or the output limit of the model. |
 | Where does it live? | The hooks module. |
 | Status | <Documented /> |

@@ -10,8 +10,8 @@ Moves per-machine text from the system prompt into the first user message. Run `
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. |
-| Can you change it? | No. It only moves text. |
+| Can you use it? | ✅ Yes. |
+| Can you change it? | ❌ No. It only moves text. |
 | Can you turn it on or off? | `--exclude-dynamic-system-prompt-sections`. |
 | Where does it live? | Command-line flag. |
 | Status | <Documented /> |

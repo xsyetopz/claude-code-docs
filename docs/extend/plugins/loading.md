@@ -12,8 +12,8 @@ For example, `${CLAUDE_PLUGIN_ROOT}` in a hook command is the folder of the plug
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. It runs by itself at session start. |
-| Can you change it? | Yes. Env vars and settings change the paths, timeouts, and rules. |
+| Can you use it? | ✅ Yes. It runs by itself at session start. |
+| Can you change it? | ✅ Yes. Env vars and settings change the paths, timeouts, and rules. |
 | Can you turn it on or off? | `enabledPlugins`, `CLAUDE_CODE_PLUGIN_DIRS`, and `syncClaudeAiPlugins`. |
 | Where does it live? | `~/.claude/plugins/` |
 | Status | <Documented /> <Undocumented /> |
@@ -99,7 +99,7 @@ claude --plugin-dir ./my-plugin
 
 ```mermaid
 flowchart TD
-  S[Session start] --> A[Read enabledPlugins from all layers]
+  S[Session start] --> A["Read <code>enabledPlugins</code> from all layers"]
   A --> B[Add inline plugins from flags and env]
   B --> C[Add seed folders and synced plugins]
   C --> D[Resolve each plugin in the cache]

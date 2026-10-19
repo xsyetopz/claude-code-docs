@@ -12,8 +12,8 @@ Put secrets in your shell or a secrets manager, not in a file you commit.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. `ANTHROPIC_API_KEY` and `ANTHROPIC_AUTH_TOKEN` are the common ones. |
-| Can you change it? | Yes. Set a different variable, or run `/login` for a stored login. |
+| Can you use it? | ✅ Yes. `ANTHROPIC_API_KEY` and `ANTHROPIC_AUTH_TOKEN` are the common ones. |
+| Can you change it? | ✅ Yes. Set a different variable, or run `/login` for a stored login. |
 | Can you turn it on or off? | Unset the variable to stop using it. |
 | Where does it live? | Your shell or the `env` key of a settings file. Project settings cannot set some of them before you trust the folder. |
 | Rows on this page | 71 variables |
@@ -109,7 +109,7 @@ The table is sorted by name. See [Environment Variables](index.md#how-to-read-th
 ## How It Works
 
 When several credentials exist, Claude Code uses the first one in its own order.
-The official docs list the order on the Authentication page.
+The official docs list the order on the [Authentication](https://code.claude.com/docs/en/authentication) page.
 `ANTHROPIC_API_KEY` takes precedence over a profile sign-in.
 Some variables on this page are set by Claude Code for remote sessions and refreshed by it. Do not set those by hand.
 

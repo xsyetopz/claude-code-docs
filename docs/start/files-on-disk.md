@@ -12,7 +12,7 @@ This page lists them by place, says what each one is, and links to the page with
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Open any file listed here in an editor. Most are plain JSON, Markdown, or JSONL. |
+| Can you use it? | ✅ Yes. Open any file listed here in an editor. Most are plain JSON, Markdown, or JSONL. |
 | Can you change it? | You edit the files marked "You write". Do not edit the files that Claude Code writes. |
 | Can you turn it on or off? | `CLAUDE_CONFIG_DIR` moves `~/.claude`. `cleanupPeriodDays` sets the cleanup age. |
 | Where does it live? | `~/.claude/`, `~/.claude.json`, `.claude/` in a project, and managed folders. |
@@ -30,18 +30,18 @@ A secret that a tool prints goes into the transcript, and every prompt you type 
 ```mermaid
 flowchart TB
   subgraph Project["Your project"]
-    PS[".claude/settings.json and settings.local.json"]
-    PM["CLAUDE.md, CLAUDE.local.md, .claude/rules/"]
-    PX[".claude/skills, commands, agents, output-styles"]
-    PJ[".mcp.json"]
+    PS["<code>.claude/settings.json</code> and <code>settings.local.json</code>"]
+    PM["<code>CLAUDE.md</code>, <code>CLAUDE.local.md</code>, <code>.claude/rules/</code>"]
+    PX["<code>.claude/skills</code>, commands, agents, output-styles"]
+    PJ["<code>.mcp.json</code>"]
   end
   subgraph Home["Your home folder"]
-    UJ["~/.claude.json"]
-    UC["~/.claude/ settings, memory, skills, agents, plugins"]
-    UD["~/.claude/ transcripts, history, caches"]
+    UJ["<code>~/.claude.json</code>"]
+    UC["<code>~/.claude/</code> settings, memory, skills, agents, plugins"]
+    UD["<code>~/.claude/</code> transcripts, history, caches"]
   end
   subgraph Machine["The machine"]
-    MS["Managed settings, CLAUDE.md, and managed-mcp.json"]
+    MS["Managed settings, <code>CLAUDE.md</code>, and <code>managed-mcp.json</code>"]
   end
   Project --> CC[Claude Code]
   Home --> CC
@@ -56,19 +56,19 @@ You usually commit these files, except the ones marked local.
 
 | Path | Status | You write? | What it is | Page |
 | --- | --- | --- | --- | --- |
-| `.claude/settings.json` | <Documented /> | Yes | Shared project settings. | [Settings Files and Scopes](../configure/settings/index.md) |
-| `.claude/settings.local.json` | <Documented /> | Yes | Your private project settings. Claude Code adds it to your global git excludes. | [Settings Files and Scopes](../configure/settings/index.md) |
-| `CLAUDE.md` or `.claude/CLAUDE.md` | <Documented /> | Yes | Project instructions. Files in the working folder and each folder above it load at launch. | [Memory and Rules](../configure/memory-and-rules.md) |
-| `CLAUDE.local.md` | <Documented /> | Yes | Private project notes. Add it to `.gitignore`. | [Memory and Rules](../configure/memory-and-rules.md) |
-| `AGENTS.md` or `.claude/AGENTS.md` | <Documented /> | Yes | Read when no `CLAUDE.md` or `CLAUDE.local.md` is in or above the working folder. | [Memory and Rules](../configure/memory-and-rules.md) |
-| `.claude/rules/**/*.md` | <Documented /> | Yes | Rules. A `paths` key limits a rule to matching files. | [Memory and Rules](../configure/memory-and-rules.md) |
-| `<subfolder>/CLAUDE.md` | <Documented /> | Yes | Loads after Claude reads or edits a file in that subfolder. | [Memory and Rules](../configure/memory-and-rules.md) |
-| `.claude/skills/<name>/SKILL.md` | <Documented /> | Yes | A project skill. | [Skills and Commands](../extend/skills-and-commands/index.md) |
-| `.claude/commands/<name>.md` | <Documented /> | Yes | A project slash command. Skills replace this form, but it still loads. | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
-| `.claude/agents/*.md` | <Documented /> | Yes | A project subagent. The closest definition wins. | [Subagents](../extend/subagents/index.md) |
-| `.claude/agent-memory/` | <Documented /> | No | Memory of subagents that set `memory: project`. `memory: local` uses `.claude/agent-memory-local/`. | [Subagent Frontmatter](../extend/subagents/frontmatter.md) |
-| `.claude/output-styles/*.md` | <Documented /> | Yes | A project output style. | [Output Styles](../configure/output-styles.md) |
-| `.mcp.json` | <Documented /> | Yes | Project MCP servers. Claude Code asks you to approve them first. | [MCP Config](../extend/mcp/config.md) |
+| `.claude/settings.json` | <Documented /> | ✅ | Shared project settings. | [Settings Files and Scopes](../configure/settings/index.md) |
+| `.claude/settings.local.json` | <Documented /> | ✅ | Your private project settings. Claude Code adds it to your global git excludes. | [Settings Files and Scopes](../configure/settings/index.md) |
+| `CLAUDE.md` or `.claude/CLAUDE.md` | <Documented /> | ✅ | Project instructions. Files in the working folder and each folder above it load at launch. | [Memory and Rules](../configure/memory-and-rules.md) |
+| `CLAUDE.local.md` | <Documented /> | ✅ | Private project notes. Add it to `.gitignore`. | [Memory and Rules](../configure/memory-and-rules.md) |
+| `AGENTS.md` or `.claude/AGENTS.md` | <Documented /> | ✅ | Read when no `CLAUDE.md` or `CLAUDE.local.md` is in or above the working folder. | [Memory and Rules](../configure/memory-and-rules.md) |
+| `.claude/rules/**/*.md` | <Documented /> | ✅ | Rules. A `paths` key limits a rule to matching files. | [Memory and Rules](../configure/memory-and-rules.md) |
+| `<subfolder>/CLAUDE.md` | <Documented /> | ✅ | Loads after Claude reads or edits a file in that subfolder. | [Memory and Rules](../configure/memory-and-rules.md) |
+| `.claude/skills/<name>/SKILL.md` | <Documented /> | ✅ | A project skill. | [Skills and Commands](../extend/skills-and-commands/index.md) |
+| `.claude/commands/<name>.md` | <Documented /> | ✅ | A project slash command. Skills replace this form, but it still loads. | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
+| `.claude/agents/*.md` | <Documented /> | ✅ | A project subagent. The closest definition wins. | [Subagents](../extend/subagents/index.md) |
+| `.claude/agent-memory/` | <Documented /> | ❌ | Memory of subagents that set `memory: project`. `memory: local` uses `.claude/agent-memory-local/`. | [Subagent Frontmatter](../extend/subagents/frontmatter.md) |
+| `.claude/output-styles/*.md` | <Documented /> | ✅ | A project output style. | [Output Styles](../configure/output-styles.md) |
+| `.mcp.json` | <Documented /> | ✅ | Project MCP servers. Claude Code asks you to approve them first. | [MCP Config](../extend/mcp/config.md) |
 
 ## Files in Your Home Folder
 
@@ -77,17 +77,17 @@ You usually commit these files, except the ones marked local.
 | Path | Status | You write? | What it is | Page |
 | --- | --- | --- | --- | --- |
 | `~/.claude.json` | <Documented /> | Mostly no | App state, sign-in data, personal and local MCP servers, and per-project state. Claude Code writes it. | [Extra Keys and Global Config](../configure/settings/extra-keys.md) |
-| `~/.claude/settings.json` | <Documented /> | Yes | Your user settings. | [Settings Files and Scopes](../configure/settings/index.md) |
-| `~/.claude/CLAUDE.md` | <Documented /> | Yes | Your personal instructions for every project. | [Memory and Rules](../configure/memory-and-rules.md) |
-| `~/.claude/rules/*.md` | <Documented /> | Yes | Your personal rules. They load before project rules. | [Memory and Rules](../configure/memory-and-rules.md) |
-| `~/.claude/skills/<name>/SKILL.md` | <Documented /> | Yes | Your personal skills. | [Skills and Commands](../extend/skills-and-commands/index.md) |
-| `~/.claude/skills/synced/` | <Documented /> | No | Skills from your claude.ai account. | [Skills and Commands](../extend/skills-and-commands/index.md) |
-| `~/.claude/skills/.trash/`, `~/.claude/plugins/.trash/` | <Documented /> | No | Synced items that were removed. Kept so you can recover them until the retention sweep deletes them. The sweep uses `cleanupPeriodDays`, which is 30 days by default. | [Skills and Commands](../extend/skills-and-commands/index.md) |
-| `~/.claude/commands/` | <Documented /> | Yes | Your personal slash commands. | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
-| `~/.claude/agents/*.md` | <Documented /> | Yes | Your personal subagents. | [Subagents](../extend/subagents/index.md) |
-| `~/.claude/output-styles/*.md` | <Documented /> | Yes | Your personal output styles. | [Output Styles](../configure/output-styles.md) |
-| `~/.claude/keybindings.json` | <Documented /> | Yes | Your keyboard shortcuts. Run `/keybindings` to open it. | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
-| `~/.claude/agent-memory/` | <Documented /> | No | Memory of subagents that set `memory: user`. | [Subagent Frontmatter](../extend/subagents/frontmatter.md) |
+| `~/.claude/settings.json` | <Documented /> | ✅ | Your user settings. | [Settings Files and Scopes](../configure/settings/index.md) |
+| `~/.claude/CLAUDE.md` | <Documented /> | ✅ | Your personal instructions for every project. | [Memory and Rules](../configure/memory-and-rules.md) |
+| `~/.claude/rules/*.md` | <Documented /> | ✅ | Your personal rules. They load before project rules. | [Memory and Rules](../configure/memory-and-rules.md) |
+| `~/.claude/skills/<name>/SKILL.md` | <Documented /> | ✅ | Your personal skills. | [Skills and Commands](../extend/skills-and-commands/index.md) |
+| `~/.claude/skills/synced/` | <Documented /> | ❌ | Skills from your claude.ai account. | [Skills and Commands](../extend/skills-and-commands/index.md) |
+| `~/.claude/skills/.trash/`, `~/.claude/plugins/.trash/` | <Documented /> | ❌ | Synced items that were removed. Kept so you can recover them until the retention sweep deletes them. The sweep uses `cleanupPeriodDays`, which is 30 days by default. | [Skills and Commands](../extend/skills-and-commands/index.md) |
+| `~/.claude/commands/` | <Documented /> | ✅ | Your personal slash commands. | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
+| `~/.claude/agents/*.md` | <Documented /> | ✅ | Your personal subagents. | [Subagents](../extend/subagents/index.md) |
+| `~/.claude/output-styles/*.md` | <Documented /> | ✅ | Your personal output styles. | [Output Styles](../configure/output-styles.md) |
+| `~/.claude/keybindings.json` | <Documented /> | ✅ | Your keyboard shortcuts. Run `/keybindings` to open it. | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
+| `~/.claude/agent-memory/` | <Documented /> | ❌ | Memory of subagents that set `memory: user`. | [Subagent Frontmatter](../extend/subagents/frontmatter.md) |
 
 ## Plugins and Marketplaces
 
@@ -115,23 +115,23 @@ Source: [Explore the .claude Directory](https://code.claude.com/docs/en/claude-d
 
 | Path | Status | What it is | Cleaned by age? |
 | --- | --- | --- | --- |
-| `projects/<project>/<session>.jsonl` | <Documented /> | The transcript of one session. | Yes |
-| `projects/<project>/<session>/subagents/` | <Documented /> | Subagent transcripts. | Yes |
-| `projects/<project>/<session>/tool-results/` | <Documented /> | Large tool outputs and MCP images. | Yes |
-| `projects/<project>/memory/` | <Documented /> | Auto memory. `MEMORY.md` is the index. | No |
-| `file-history/<session>/` | <Documented /> | Snapshots from before edits, for rewind. | Yes |
-| `plans/` | <Documented /> | Plan files from plan mode. | Yes |
-| `tasks/` | <Documented /> | Task lists. | Yes |
-| `dev-mods/<session>/` | <Documented /> | Mods that Claude wrote during a session. | Yes |
-| `uploads/<session>/` | <Documented /> | Files attached from the web or mobile app. | Yes |
-| `debug/` | <Documented /> | Debug logs, written while debug logging is on. | Yes |
-| `paste-cache/` | <Documented /> | Large pastes. | Yes |
-| `shell-snapshots/`, `session-env/` | <Documented /> | Shell setup and per-session metadata. | Yes |
-| `backups/` | <Documented /> | Copies of `~/.claude.json`. The five newest stay. | Yes |
-| `sessions/` | <Documented /> | One small file for each running session. | No |
+| `projects/<project>/<session>.jsonl` | <Documented /> | The transcript of one session. | ✅ |
+| `projects/<project>/<session>/subagents/` | <Documented /> | Subagent transcripts. | ✅ |
+| `projects/<project>/<session>/tool-results/` | <Documented /> | Large tool outputs and MCP images. | ✅ |
+| `projects/<project>/memory/` | <Documented /> | Auto memory. `MEMORY.md` is the index. | ❌ |
+| `file-history/<session>/` | <Documented /> | Snapshots from before edits, for rewind. | ✅ |
+| `plans/` | <Documented /> | Plan files from plan mode. | ✅ |
+| `tasks/` | <Documented /> | Task lists. | ✅ |
+| `dev-mods/<session>/` | <Documented /> | Mods that Claude wrote during a session. | ✅ |
+| `uploads/<session>/` | <Documented /> | Files attached from the web or mobile app. | ✅ |
+| `debug/` | <Documented /> | Debug logs, written while debug logging is on. | ✅ |
+| `paste-cache/` | <Documented /> | Large pastes. | ✅ |
+| `shell-snapshots/`, `session-env/` | <Documented /> | Shell setup and per-session metadata. | ✅ |
+| `backups/` | <Documented /> | Copies of `~/.claude.json`. The five newest stay. | ✅ |
+| `sessions/` | <Documented /> | One small file for each running session. | ❌ |
 | `history.jsonl` | <Documented /> | Every prompt you typed, for up-arrow and `Ctrl+R`. | Entries age out |
 | `feedback-bundles/`, `feedback/drafts/` | <Documented /> | Feedback archives and drafts that you have not sent. | Drafts age out |
-| `usage-data/` | <Documented /> | Reports from `/insights` and their cached data. | No |
+| `usage-data/` | <Documented /> | Reports from `/insights` and their cached data. | ❌ |
 
 The full list, the retention rules, and the controls are on [Sessions and Storage](../how-it-works/sessions-and-storage.md).
 The line format of a transcript is on [Transcript Format](../reference/transcript-format.md).
@@ -144,7 +144,7 @@ The line format of a transcript is on [Transcript Format](../reference/transcrip
 | `~/.claude/stats-cache.json` | <Documented /> | Totals shown by `/usage`. | [Sessions and Storage](../how-it-works/sessions-and-storage.md) |
 | `~/.claude/remote-settings.json` | <Documented /> | Cached server-managed settings, or `{}`. | [Enterprise Settings](../configure/settings/enterprise.md) |
 | `~/.claude/policy-limits.json` | <Documented /> | Cached organization limits. Some account types only. | [Enterprise Settings](../configure/settings/enterprise.md) |
-| `~/.claude/cache/changelog.md` | <Documented /> | A cached copy of the changelog for `/release-notes`. | [What Changed](what-changed.md) |
+| `~/.claude/cache/changelog.md` | <Documented /> | A cached copy of the [changelog](https://code.claude.com/docs/en/changelog) for `/release-notes`. | [What Changed](what-changed.md) |
 | `~/.claude/daemon/roster.json`, `~/.claude/jobs/<id>/state.json`, `~/.claude/jobs/<id>/tmp/` | <Documented /> | The list of running background sessions, the state of each session, and its scratch folder. Keep them. The official "Agent View" page describes them. | [Sessions and Storage](../how-it-works/sessions-and-storage.md) |
 | `state/`, `mods/`, `bridge-spawn/`, `seed-admin/`, `downloads/`, `cache/model-catalog/` | <Undocumented /> | Seen on a `2.1.303` machine or named in the program. No docs page describes them. | [Sessions and Storage](../how-it-works/sessions-and-storage.md) |
 

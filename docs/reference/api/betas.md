@@ -13,7 +13,7 @@ If a proxy rejects a request with a beta error, set `CLAUDE_CODE_DISABLE_EXPERIM
 | Question | Answer |
 | --- | --- |
 | Can you use it? | Claude Code sends the betas for you. |
-| Can you change it? | Yes. `ANTHROPIC_BETAS` adds values (comma list). The `--betas` flag adds values too. |
+| Can you change it? | ✅ Yes. `ANTHROPIC_BETAS` adds values (comma list). The `--betas` flag adds values too. |
 | Can you turn it on or off? | `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1` turns off the experimental betas. `DISABLE_INTERLEAVED_THINKING` turns off one. |
 | Where does it live? | The `anthropic-beta` header, or the `betas` field of the body on Bedrock. |
 | Status | <Documented /> <Undocumented /> |
@@ -21,7 +21,7 @@ If a proxy rejects a request with a beta error, set `CLAUDE_CODE_DISABLE_EXPERIM
 ## About the List
 
 Claude Code joins the active values into the `anthropic-beta` header (or into the `betas` field of the body on Bedrock).
-A row is <Documented /> when a docs page other than the changelog and the Agent SDK pages names the value. Few values have that.
+A row is <Documented /> when a docs page other than the [changelog](https://code.claude.com/docs/en/changelog) and the Agent SDK pages names the value. Few values have that.
 Source: [Environment Variables](https://code.claude.com/docs/en/env-vars) for `ANTHROPIC_BETAS` and `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS`, and the program for the rest.
 
 ## How Claude Code Builds the List
@@ -42,12 +42,12 @@ Then Claude Code ignores `ANTHROPIC_BETAS` and `--betas`, and it leaves out the 
 ```mermaid
 flowchart TD
   A[Betas for model and provider] --> B{Experimental betas off?}
-  B -->|No| C[Add ANTHROPIC_BETAS]
-  B -->|Yes| D[Skip ANTHROPIC_BETAS and --betas]
+  B -->|No| C["Add <code>ANTHROPIC_BETAS</code>"]
+  B -->|Yes| D["Skip <code>ANTHROPIC_BETAS</code> and <code>--betas</code>"]
   C --> E[Drop afk-mode and mid-conversation-system-2026-04-07]
   E --> F[Remove context-1m if the model has 1M]
   F --> G[Add claude-code-20250219 for agent queries]
-  G --> H[Add turn betas and --betas]
+  G --> H["Add turn betas and <code>--betas</code>"]
   D --> I[Send header]
   H --> I
 ```

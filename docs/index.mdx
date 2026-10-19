@@ -16,8 +16,8 @@ You can change almost every part of it with settings, hooks, plugins, skills, an
 
 ## What This Site Covers
 
-The official docs explain the features that Anthropic supports.
-This site goes further. It lists every surface you can use, change, or switch on and off, whether the official docs name it or not.
+The [official docs](https://code.claude.com/docs/en/overview) explain the features that Anthropic supports.
+This site goes further. It lists every surface you can use, change, or switch on and off, whether the [official docs](https://code.claude.com/docs/en/overview) name it or not.
 It also explains how the program works inside, so you can predict what a setting will do.
 
 Read [How to Read These Docs](start/how-to-read.md) for the full guide to badges and tables.
@@ -32,16 +32,17 @@ The loop stops when the model answers without asking for a tool.
 
 ```mermaid
 flowchart TD
-  Prompt[You type a prompt] --> Hooks1[UserPromptSubmit hooks]
+  Prompt[You type a prompt] --> Hooks1["<code>UserPromptSubmit</code> hooks"]
   Hooks1 --> Build[Build the request]
   Build --> Model[Send to the model and stream the reply]
   Model --> Ask{Does the model ask for a tool?}
   Ask -- No --> Stop[Stop hooks run]
   Stop --> Done[Answer shown and session saved]
   Ask -- Yes --> Perm{Permission rules}
-  Perm -- Deny --> Result[Tool result: denied]
+  Perm -- Deny --> Denied[Tool result: denied]
   Perm -- Allow or ask and approve --> Run[Run the tool]
-  Run --> Result
+  Run --> Result[Tool result]
+  Denied --> Build
   Result --> Build
 ```
 

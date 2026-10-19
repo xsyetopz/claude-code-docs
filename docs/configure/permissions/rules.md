@@ -12,8 +12,8 @@ For example, `Bash(git push:*)` in `deny` stops each `git push` command.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Add rules to `permissions.allow`, `permissions.ask`, or `permissions.deny`. |
-| Can you change it? | Yes. Edit a settings file, run `/permissions`, or pass `--allowedTools` and `--disallowedTools` for one session. |
+| Can you use it? | ✅ Yes. Add rules to `permissions.allow`, `permissions.ask`, or `permissions.deny`. |
+| Can you change it? | ✅ Yes. Edit a settings file, run `/permissions`, or pass `--allowedTools` and `--disallowedTools` for one session. |
 | Can you turn it on or off? | Remove the rule. `allowManagedPermissionRulesOnly` turns off rules from every scope except managed settings. |
 | Where does it live? | The `permissions` key of `~/.claude/settings.json`, `.claude/settings.json`, `.claude/settings.local.json`, and managed settings. |
 | Status | <Documented /> <Undocumented /> |

@@ -12,8 +12,8 @@ For example, `MCP_TIMEOUT=30000` gives a server 30 seconds to start.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. |
-| Can you change it? | Yes. Export the variable, or add it to `env` in settings. |
+| Can you use it? | ✅ Yes. |
+| Can you change it? | ✅ Yes. Export the variable, or add it to `env` in settings. |
 | Can you turn it on or off? | Some are switches, such as `ENABLE_CLAUDEAI_MCP_SERVERS` and `MCP_CONNECTION_NONBLOCKING`. |
 | Where does it live? | The shell env, or `env` in a settings file. |
 | Status | <Documented /> <Undocumented /> <Gated note="XAA vars" /> |
@@ -106,11 +106,11 @@ claude
 ```mermaid
 flowchart LR
   A[Session start] --> B[Batch connect: 3 local, 20 remote]
-  B --> C{MCP_TIMEOUT hit?}
+  B --> C{"<code>MCP_TIMEOUT</code> hit?"}
   C -->|yes| F[Mark failed]
   C -->|no| D[Connected]
-  D --> E[Tool call uses MCP_TOOL_TIMEOUT and idle timeout]
-  E --> G[Result checked against MAX_MCP_OUTPUT_TOKENS]
+  D --> E["Tool call uses <code>MCP_TOOL_TIMEOUT</code> and idle timeout"]
+  E --> G["Result checked against <code>MAX_MCP_OUTPUT_TOKENS</code>"]
 ```
 
 ## Related Pages

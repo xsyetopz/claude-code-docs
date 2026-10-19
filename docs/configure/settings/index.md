@@ -12,7 +12,7 @@ This page explains the files, the scopes, and which value wins. The other pages 
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Create or edit a settings file, or run `/config`. |
+| Can you use it? | ✅ Yes. Create or edit a settings file, or run `/config`. |
 | Can you change it? | Edit the JSON files below, pass `--settings`, or ask an administrator to deploy managed settings. |
 | Can you turn it on or off? | Each key is its own switch. `disableAllHooks` turns off hooks, the status line, and file suggestions at once. |
 | Where does it live? | `~/.claude/settings.json`, `.claude/settings.json`, `.claude/settings.local.json`, managed files, and `~/.claude.json` |
@@ -57,7 +57,7 @@ Each key has a row on one of these pages.
 ## How to Read the Key Tables
 
 - The `Status` column uses the badges from [How to Read These Docs](../../start/how-to-read.md).
-- `Default` says `Not stated` when neither the official docs nor the schema give a default.
+- `Type` shows ❓ when neither the official docs nor the schema give a type. `Default` shows `-` when no default is known.
 - `Where to Set It` says which files may set the key. `Any settings file` means the user, project, local, and managed files.
   `Settings files` means the settings files without a narrower scope in the source.
 - Many boolean keys are written as the thing to switch off, such as `spinnerTipsEnabled`. Read the row before you pick a value.
@@ -101,7 +101,7 @@ The highest level that sets a key wins.
 
 ```mermaid
 flowchart TB
-  M[Managed] --> C[--settings]
+  M[Managed] --> C["<code>--settings</code>"]
   C --> L[Project local]
   L --> P[Shared project]
   P --> U[User]

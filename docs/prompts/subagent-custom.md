@@ -10,8 +10,8 @@ The prompt of a subagent you defined in `.claude/agents/`. Save an agent file in
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. |
-| Can you change it? | Yes. You write the agent file. |
+| Can you use it? | ✅ Yes. |
+| Can you change it? | ✅ Yes. You write the agent file. |
 | Can you turn it on or off? | Add or remove the file. |
 | Where does it live? | `.claude/agents/*.md` or `~/.claude/agents/*.md`. |
 | Status | <Documented /> |

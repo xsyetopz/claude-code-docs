@@ -12,8 +12,8 @@ Use them to tune slow MCP servers or to lock down plugin loading.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. `MCP_TIMEOUT` and `MCP_TOOL_TIMEOUT` are common. |
-| Can you change it? | Yes. |
+| Can you use it? | ✅ Yes. `MCP_TIMEOUT` and `MCP_TOOL_TIMEOUT` are common. |
+| Can you change it? | ✅ Yes. |
 | Can you turn it on or off? | Switch rows take `1`. Unset the variable to restore the default. |
 | Where does it live? | Your shell or the `env` key of a settings file. |
 | Rows on this page | 90 variables |

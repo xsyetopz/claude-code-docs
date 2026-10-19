@@ -12,7 +12,7 @@ The `hooks`, `permissions`, and `statusLine` objects are large, so their own pag
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. |
+| Can you use it? | ✅ Yes. |
 | Can you change it? | Edit a settings file. Managed-only keys need a managed source. |
 | Can you turn it on or off? | `disableAllHooks`, `disableBundledSkills`, and `enabledPlugins` are switches. |
 | Where does it live? | `~/.claude/settings.json`, `.claude/settings.json`, `.claude/settings.local.json`, or managed settings |
@@ -54,7 +54,7 @@ Where to Set It tells you which files may set the key. See [Settings Files and S
 | `skipDangerousModePermissionPrompt` | <Documented /> | boolean | - | Skip the confirmation dialog before bypassPermissions mode. | User, local, or managed settings |
 | `statusLine` | <Documented /> | object | - | Run your own command to render a status line below the prompt. | Any settings file |
 | `strictKnownMarketplaces` | <Documented /> | array | - | Allowlist the marketplace sources users can add and install from. | Managed settings only |
-| `strictPluginOnlyCustomization` | <Documented /> | Not stated | - | Block skills, agents, hooks, and MCP servers from user and project sources. | Managed settings only |
+| `strictPluginOnlyCustomization` | <Documented /> | ❓ | - | Block skills, agents, hooks, and MCP servers from user and project sources. | Managed settings only |
 | `syncClaudeAiPlugins` | <Documented /> | boolean | - | Stop loading the plugins enabled on your claude.ai account and stop downloading new ones. | User, local, or managed settings |
 | `syncClaudeAiSkills` | <Documented /> | boolean | - | Stop loading the skills enabled on your claude.ai account and stop downloading new ones. | User, local, or managed settings |
 

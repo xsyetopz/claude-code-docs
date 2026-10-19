@@ -12,7 +12,7 @@ For example, exit code 2 with a message on `stderr` blocks a `PreToolUse` call a
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. |
+| Can you use it? | ✅ Yes. |
 | Can you change it? | You control the answer your hook gives. You do not control the input. |
 | Can you turn it on or off? | Not as a unit. Each event decides which fields it reads. |
 | Where does it live? | Input on `stdin` (command) or the POST body (HTTP). Output on `stdout`, `stderr`, and the exit code. |
@@ -127,8 +127,8 @@ Pick one style per hook. Use exit codes alone, or exit 0 with JSON. If you mix t
 flowchart TD
     A[Hook ends] --> B{Exit code}
     B -- 2 --> C{Event can block?}
-    C -- yes --> D[Block, stderr is the reason]
-    C -- no --> E[Show stderr by event rules]
+    C -- yes --> D["Block, <code>stderr</code> is the reason"]
+    C -- no --> E["Show <code>stderr</code> by event rules"]
     B -- 0 --> F{Output is one JSON object?}
     F -- yes --> G[Read fields, apply decision]
     F -- no --> H[Plain text, context on four events]

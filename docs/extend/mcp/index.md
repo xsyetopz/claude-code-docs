@@ -13,8 +13,8 @@ This page covers the big picture. The other pages list every option.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Add servers with `claude mcp add`, `.mcp.json`, or `--mcp-config`. |
-| Can you change it? | Yes. Config, settings, and env vars control servers, limits, and approvals. |
+| Can you use it? | ✅ Yes. Add servers with `claude mcp add`, `.mcp.json`, or `--mcp-config`. |
+| Can you change it? | ✅ Yes. Config, settings, and env vars control servers, limits, and approvals. |
 | Can you turn it on or off? | `/mcp` enable and disable, `disabledMcpjsonServers`, `--strict-mcp-config`, and the policy lists. |
 | Where does it live? | `.mcp.json`, `~/.claude.json`, plugin files, and managed settings |
 | Status | <Documented /> <Undocumented /> <Gated note="XAA needs CLAUDE_CODE_ENABLE_XAA" /> |

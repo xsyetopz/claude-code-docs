@@ -10,8 +10,8 @@ sidebar_position: 7
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. |
-| Can you change it? | Yes. Set or unset the env var. |
+| Can you use it? | ✅ Yes. |
+| Can you change it? | ✅ Yes. Set or unset the env var. |
 | Can you turn it on or off? | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1`. |
 | Where does it live? | Environment variable. |
 | Status | <Documented /> |

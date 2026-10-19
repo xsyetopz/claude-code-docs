@@ -11,8 +11,8 @@ Each method is also an event with the same name, such as `ui.log`, so a hook abo
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. `await $.ui.open({ id: "clock", title: "Clock" })` opens a pane. `$.ui.toast("Saved")` shows a short message. |
-| Can you change it? | Yes. Hook the matching event, or hook `ui.render` to redraw a part of the interface. |
+| Can you use it? | ✅ Yes. `await $.ui.open({ id: "clock", title: "Clock" })` opens a pane. `$.ui.toast("Saved")` shows a short message. |
+| Can you change it? | ✅ Yes. Hook the matching event, or hook `ui.render` to redraw a part of the interface. |
 | Can you turn it on or off? | Close a pane with `$.ui.close`. A `deny` from a hook refuses a call. |
 | Where does it live? | The hooks module. |
 | Status | <Documented /> |

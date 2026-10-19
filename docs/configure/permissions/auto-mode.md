@@ -12,8 +12,8 @@ You tune it with the `autoMode` setting.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Pick `auto` as the permission mode. |
-| Can you change it? | Yes. Set `autoMode.allow`, `soft_deny`, `hard_deny`, and `environment`. |
+| Can you use it? | ✅ Yes. Pick `auto` as the permission mode. |
+| Can you change it? | ✅ Yes. Set `autoMode.allow`, `soft_deny`, `hard_deny`, and `environment`. |
 | Can you turn it on or off? | `permissions.disableAutoMode: "disable"` turns it off. `permissions.defaultMode: "auto"` starts in it. |
 | Where does it live? | User settings, `--settings`, and managed settings. Project and local settings do not set it. |
 | Status | <Documented /> <Undocumented /> |
@@ -69,7 +69,7 @@ The plugin `settings.json` does not accept `autoMode`.
 :::note[Not Verified]
 The program lists trusted sources for the rules and logs an `untrusted_source` event.
 The old notes say only policy, user, and flag settings can set the rules.
-The official docs confirm this only for `classifyAllShell` (user and `--settings`).
+The [official docs](https://code.claude.com/docs/en/auto-mode-config) confirm this only for `classifyAllShell` (user and `--settings`).
 :::
 
 ## The `claude auto-mode` Commands

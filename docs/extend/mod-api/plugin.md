@@ -13,8 +13,8 @@ A plugin ships the types of its noun in the `.d.ts` file that `types` names in `
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Read `$.plugin.name` anywhere. Hook `plugin.register` and `engine.create`. |
-| Can you change it? | Yes. An `engine.create` hook can add nouns. A `plugin.register` hook can refuse a module. |
+| Can you use it? | ✅ Yes. Read `$.plugin.name` anywhere. Hook `plugin.register` and `engine.create`. |
+| Can you change it? | ✅ Yes. An `engine.create` hook can add nouns. A `plugin.register` hook can refuse a module. |
 | Can you turn it on or off? | Return `{ refuse }` from `plugin.register` to keep a module out. |
 | Where does it live? | The hooks module, plus the `types` file named in `plugin.json`. |
 | Status | <Documented /> |

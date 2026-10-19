@@ -13,8 +13,8 @@ For example, `{ "mcpServers": { "files": { "command": "npx", "args": ["server"] 
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. |
-| Can you change it? | Yes. Edit the file, or use `claude mcp add` and `add-json`. |
+| Can you use it? | ✅ Yes. |
+| Can you change it? | ✅ Yes. Edit the file, or use `claude mcp add` and `add-json`. |
 | Can you turn it on or off? | Remove the entry, or use `/mcp` to disable it. See [MCP Settings and Policy](settings.md). |
 | Where does it live? | `.mcp.json`, `~/.claude.json`, a plugin `.mcp.json`, or `mcpServers` in `plugin.json` |
 | Status | <Documented /> <Undocumented /> |

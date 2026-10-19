@@ -12,8 +12,8 @@ A variable here only works when the library code runs. Setting one can change be
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes, but the effect depends on the library and the feature that runs it. |
-| Can you change it? | Yes. Set it in your shell. |
+| Can you use it? | ✅ Yes, but the effect depends on the library and the feature that runs it. |
+| Can you change it? | ✅ Yes. Set it in your shell. |
 | Can you turn it on or off? | Unset the variable. |
 | Where does it live? | Your shell. |
 | Rows on this page | 126 variables |

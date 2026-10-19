@@ -10,7 +10,7 @@ The prompt that a `Explore` subagent gets. The main agent calls the `Agent` tool
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. The model starts subagents. |
+| Can you use it? | ✅ Yes. The model starts subagents. |
 | Can you change it? | Not the built-in text. You can write custom agents. |
 | Can you turn it on or off? | `--disallowedTools Agent` stops all subagents. |
 | Where does it live? | Built into the program. |

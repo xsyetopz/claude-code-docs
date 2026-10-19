@@ -12,8 +12,8 @@ Use them when you want the same model in every session or when a gateway needs c
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Export a variable or put it in `settings.json` under `env`. |
-| Can you change it? | Yes. A `--model` flag or `/model` overrides `ANTHROPIC_MODEL`. `CLAUDE_CODE_EFFORT_LEVEL` overrides `--effort` and `/effort`. |
+| Can you use it? | ✅ Yes. Export a variable or put it in `settings.json` under `env`. |
+| Can you change it? | ✅ Yes. A `--model` flag or `/model` overrides `ANTHROPIC_MODEL`. `CLAUDE_CODE_EFFORT_LEVEL` overrides `--effort` and `/effort`. |
 | Can you turn it on or off? | Unset or delete the variable. In `settings.json` you can set it to an empty string. |
 | Where does it live? | Your shell, or the `env` key of a settings file. |
 | Rows on this page | 84 variables |

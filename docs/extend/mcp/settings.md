@@ -12,7 +12,7 @@ For example, `{ "enableAllProjectMcpServers": true }` approves every server in a
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Most keys also work in your own settings. |
+| Can you use it? | ✅ Yes. Most keys also work in your own settings. |
 | Can you change it? | Edit settings files, or use managed settings for organization rules. |
 | Can you turn it on or off? | `disabledMcpjsonServers`, `enableAllProjectMcpServers`, `deniedMcpServers`, `--strict-mcp-config`, and `disableClaudeAiConnectors`. |
 | Where does it live? | Settings files, `~/.claude.json`, `.mcp.json`, and `managed-mcp.json` |
@@ -90,11 +90,11 @@ These keys sit under `projects["<path>"]`.
 
 ```mermaid
 flowchart TD
-  A[Server found in a source] --> B{In deniedMcpServers?}
+  A[Server found in a source] --> B{"In <code>deniedMcpServers</code>?"}
   B -->|yes| X[Blocked]
   B -->|no| C{Allowlist set and matches?}
   C -->|no, list set| X
-  C -->|yes or no list| D{From project .mcp.json?}
+  C -->|yes or no list| D{"From project <code>.mcp.json</code>?"}
   D -->|yes| E{Approved?}
   E -->|no| P[Pending approval]
   E -->|yes| G[Connect]

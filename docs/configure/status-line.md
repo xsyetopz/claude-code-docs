@@ -12,8 +12,8 @@ It does not use API tokens.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Run `/statusline` and describe what you want, or write a script yourself. |
-| Can you change it? | Yes. Edit the `statusLine` key in a settings file. |
+| Can you use it? | ✅ Yes. Run `/statusline` and describe what you want, or write a script yourself. |
+| Can you change it? | ✅ Yes. Edit the `statusLine` key in a settings file. |
 | Can you turn it on or off? | Remove `statusLine`, or run `/statusline delete`. `disableAllHooks: true` turns off custom ones. |
 | Where does it live? | The `statusLine` key of user, project, local, or managed settings, and the script it names. |
 | Status | <Documented /> <Undocumented /> <Differs /> |
@@ -84,7 +84,7 @@ Source for this list: the official [Customize Your Status Line](https://code.cla
 
 `subagentStatusLine` customizes each subagent row in the agent panel.
 Its command runs once per refresh tick and gets all visible rows as one JSON object.
-It prints one JSON line for each row it wants to override: `\{"id": "<task id>", "content": "<row body>"\}`.
+It prints one JSON line for each row it wants to override: `{"id": "<task id>", "content": "<row body>"}`.
 A row without `id` keeps the default. An empty `content` hides the row.
 The same trust, `disableAllHooks`, and `allowManagedHooksOnly` gates apply.
 A plugin can ship a default `subagentStatusLine` in its `settings.json`.
@@ -188,7 +188,7 @@ flowchart LR
   Event[Message, compact, mode change, vim toggle, timer] --> Deb[300 ms debounce]
   Deb --> Gate{Trusted and allowed?}
   Gate -->|no| Skip[No status line]
-  Gate -->|yes| Run[Run command with JSON on stdin]
+  Gate -->|yes| Run["Run command with JSON on <code>stdin</code>"]
   Run --> Ok{Exit 0 and output?}
   Ok -->|yes| Show[Show rows]
   Ok -->|no| Blank[Blank line]

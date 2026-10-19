@@ -18,8 +18,8 @@ Use it only in folders you trust.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. `claude -p "<prompt>"`, or send the prompt on stdin. |
-| Can you change it? | Yes. Flags set the output and input format, budget, schema, and permission handling. |
+| Can you use it? | ✅ Yes. `claude -p "<prompt>"`, or send the prompt on stdin. |
+| Can you change it? | ✅ Yes. Flags set the output and input format, budget, schema, and permission handling. |
 | Can you turn it on or off? | `-p` turns it on. `--bare` strips extras. `--no-session-persistence` saves nothing. |
 | Where does it live? | Flags on the `claude` command. Sessions still save to `~/.claude/projects/` unless you turn that off. |
 | Status | <Documented /> <Undocumented /> |
@@ -70,13 +70,13 @@ The second command prints a `system` line for `init`, then `stream_event` lines,
 
 ```mermaid
 flowchart LR
-  A[claude -p prompt] --> B[Skip trust dialog]
+  A["<code>claude -p prompt</code>"] --> B[Skip trust dialog]
   B --> C[Run the agent loop]
-  C --> D{--output-format}
-  D -->|text| E[Final text on stdout]
-  D -->|json| F[One result object]
-  D -->|stream-json| G[One JSON object per line]
-  H[stdin stream-json] -.->|messages and control requests| C
+  C --> D{"<code>--output-format</code>"}
+  D -->|"<code>text</code>"| E["Final text on <code>stdout</code>"]
+  D -->|"<code>json</code>"| F[One result object]
+  D -->|"<code>stream-json</code>"| G[One JSON object per line]
+  H["<code>stdin</code> stream-json"] -.->|messages and control requests| C
 ```
 
 The loop is the same as in interactive mode. See [Agent Loop](../../how-it-works/agent-loop.md).

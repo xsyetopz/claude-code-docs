@@ -13,8 +13,8 @@ This page walks through each stage and shows where you can step in.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Every prompt starts a turn. |
-| Can you change it? | Yes, at fixed points. Use hooks, mod events, permission rules, and a few env vars. |
+| Can you use it? | ✅ Yes. Every prompt starts a turn. |
+| Can you change it? | ✅ Yes, at fixed points. Use hooks, mod events, permission rules, and a few env vars. |
 | Can you turn it on or off? | Each hook and rule has its own switch. The loop itself always runs. |
 | Where does it live? | Inside the program. Hook settings are in `settings.json` files. |
 | Status | <Documented /> <Undocumented /> |
@@ -43,7 +43,7 @@ sequenceDiagram
 
 ## The Stages
 
-Sources: Hooks Reference (section "Hook lifecycle") and Mod API Reference in the official docs for the events. Source: the program for the rest.
+Sources: [Hooks Reference: Hook Lifecycle](https://code.claude.com/docs/en/hooks#hook-lifecycle) and [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference#events) for the events. Source: the program for the rest.
 
 ```mermaid
 flowchart TD
@@ -80,21 +80,21 @@ See the [Mod API](../extend/mod-api/index.md) pages in Extend.
 
 ## The Tool Stage
 
-Sources: Hooks Reference and Environment Variables in the official docs.
+Sources: [Hooks Reference](https://code.claude.com/docs/en/hooks) and [Environment Variables](https://code.claude.com/docs/en/env-vars).
 
 ```mermaid
 flowchart TD
   Call[Model asks for a tool] --> Perm[Permission rules and mode]
   Perm -- deny --> Denied[Tool result: denied]
-  Perm -- ask --> Req[PermissionRequest hook and prompt]
+  Perm -- ask --> Req["<code>PermissionRequest</code> hook and prompt"]
   Req -- reject --> Denied
-  Perm -- allow --> Pre[PreToolUse hook]
+  Perm -- allow --> Pre["<code>PreToolUse</code> hook"]
   Req -- approve --> Pre
   Pre -- block --> Denied
   Pre -- continue --> Run[Run the tool]
-  Run -- ok --> Post[PostToolUse hook]
-  Run -- error --> Fail[PostToolUseFailure hook]
-  Post --> Batch[PostToolBatch hook]
+  Run -- ok --> Post["<code>PostToolUse</code> hook"]
+  Run -- error --> Fail["<code>PostToolUseFailure</code> hook"]
+  Post --> Batch["<code>PostToolBatch</code> hook"]
   Fail --> Batch
   Denied --> Batch
   Batch --> Next[Back to the model]
@@ -121,9 +121,9 @@ The loop does not fail on every error. It tries to fix the problem and go on.
 | The model sends only thinking | <Undocumented /> | It sends one nudge. |
 | A safety refusal | <Documented /> | It runs again on the fallback model of that category. See [Models](models.md#fallback). |
 | The context is too long | <Documented /> | It lowers `max_tokens` or compacts. |
-| Autocompact refills 3 times in a row | <Documented /> | It ends the turn with an error that starts `Autocompact is thrashing`. See Troubleshooting in the official docs. |
+| Autocompact refills 3 times in a row | <Documented /> | It ends the turn with an error that starts `Autocompact is thrashing`. See [Troubleshooting](https://code.claude.com/docs/en/troubleshooting) in the official docs. |
 | A `Stop` hook blocks | <Documented /> | It feeds the reason back. After `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP` blocks in a row (default 8), it ends the turn. |
-| `--max-turns` is reached | <Documented /> | It ends the run. See the CLI Reference in the official docs. |
+| `--max-turns` is reached | <Documented /> | It ends the run. See the [CLI Reference](https://code.claude.com/docs/en/cli-reference) in the official docs. |
 
 ## How a Turn Ends
 

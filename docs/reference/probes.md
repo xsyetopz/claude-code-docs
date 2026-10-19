@@ -12,7 +12,7 @@ They show which environment variables and settings have an effect that you can s
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. You can repeat any probe with the method below. |
+| Can you use it? | ✅ Yes. You can repeat any probe with the method below. |
 | Can you change it? | Not applicable. This page records results. |
 | Can you turn it on or off? | Each row names the env var or flag that was set. |
 | Where does it live? | Results only. The tools to repeat them are in the repo. |

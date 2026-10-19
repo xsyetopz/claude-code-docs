@@ -13,8 +13,8 @@ For example, `"matcher": "Bash"` with `"if": "Bash(git push *)"` runs a hook onl
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. |
-| Can you change it? | Yes. Each field is set per handler or per matcher group. |
+| Can you use it? | ✅ Yes. |
+| Can you change it? | ✅ Yes. Each field is set per handler or per matcher group. |
 | Can you turn it on or off? | `disableAllHooks`, `allowManagedHooksOnly`, or remove the entry. |
 | Where does it live? | The `hooks` key of a settings file, plugin, skill, or subagent. |
 | Status | <Documented /> <Undocumented /> <Differs /> |

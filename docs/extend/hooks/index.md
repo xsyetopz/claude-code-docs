@@ -10,15 +10,15 @@ A hook can block a risky command, add context, or run a check every time.
 A prompt to Claude cannot promise that, but a hook can.
 
 Claude Code `2.1.303` has 33 hook events.
-The official docs and the program list the same 33 names.
+The [official docs](https://code.claude.com/docs/en/hooks) and the program list the same 33 names.
 
 ## At a Glance
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. |
-| Can you change it? | Yes. You write the hooks. |
-| Can you turn it on or off? | Yes. Remove the hook, or set `disableAllHooks` in settings. See [Configuration](configuration.md#settings-keys-and-trust). |
+| Can you use it? | ✅ Yes. |
+| Can you change it? | ✅ Yes. You write the hooks. |
+| Can you turn it on or off? | ✅ Yes. Remove the hook, or set `disableAllHooks` in settings. See [Configuration](configuration.md#settings-keys-and-trust). |
 | Where does it live? | Settings files, plugin `hooks/hooks.json`, and skill or subagent frontmatter. |
 | Events | 33 |
 | Handler types | 5 (`command`, `http`, `mcp_tool`, `prompt`, `agent`) |

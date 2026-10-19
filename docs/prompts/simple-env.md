@@ -10,8 +10,8 @@ sidebar_position: 10
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. |
-| Can you change it? | No. The two lines are fixed. |
+| Can you use it? | ✅ Yes. |
+| Can you change it? | ❌ No. The two lines are fixed. |
 | Can you turn it on or off? | `CLAUDE_CODE_SIMPLE=1`. |
 | Where does it live? | Environment variable. |
 | Status | <Documented /> |

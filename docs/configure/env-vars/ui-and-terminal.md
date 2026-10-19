@@ -12,8 +12,8 @@ Use them when your terminal draws the screen badly or you want a quieter interfa
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. |
-| Can you change it? | Yes. Restart `claude` after a change. |
+| Can you use it? | ✅ Yes. |
+| Can you change it? | ✅ Yes. Restart `claude` after a change. |
 | Can you turn it on or off? | Unset the variable, or set it to `0` where the row says so. |
 | Where does it live? | Your shell or the `env` key of a settings file. |
 | Rows on this page | 88 variables |

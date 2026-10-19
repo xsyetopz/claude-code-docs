@@ -12,8 +12,8 @@ They also cover LLM gateways that sit in front of a provider.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Set `CLAUDE_CODE_USE_BEDROCK`, `CLAUDE_CODE_USE_VERTEX`, or the Foundry switch to `1`. |
-| Can you change it? | Yes. Set region, project, and endpoint variables. |
+| Can you use it? | ✅ Yes. Set `CLAUDE_CODE_USE_BEDROCK`, `CLAUDE_CODE_USE_VERTEX`, or the Foundry switch to `1`. |
+| Can you change it? | ✅ Yes. Set region, project, and endpoint variables. |
 | Can you turn it on or off? | Unset the `CLAUDE_CODE_USE_*` variable. A stale shell export can be overridden with an empty string in `settings.json` `env`. |
 | Where does it live? | Your shell or the `env` key of a settings file. |
 | Rows on this page | 78 variables |

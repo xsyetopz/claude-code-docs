@@ -13,8 +13,8 @@ For example, `{ "name": "my-plugin", "version": "1.0.0" }` is a valid manifest.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. You write it by hand or start from `claude plugin init`. |
-| Can you change it? | Yes. Edit the file, then run `claude plugin validate`. |
+| Can you use it? | ✅ Yes. You write it by hand or start from `claude plugin init`. |
+| Can you change it? | ✅ Yes. Edit the file, then run `claude plugin validate`. |
 | Can you turn it on or off? | The plugin as a whole: `enabledPlugins`. A manifest can set `defaultEnabled` for users who set nothing. |
 | Where does it live? | `<plugin>/.claude-plugin/plugin.json` |
 | Status | <Documented /> <Undocumented /> |
@@ -79,23 +79,27 @@ The same option shape works inside `channels`.
 
 ## Components and Layout
 
-```text
-my-plugin/
-├── .claude-plugin/
-│   └── plugin.json
-├── skills/            one folder per skill, each with SKILL.md
-├── commands/          command files
-├── agents/            agent .md files
-├── hooks/hooks.json   hooks, inside a "hooks" wrapper
-├── output-styles/
-├── workflows/
-├── themes/
-├── bin/               programs added to the Bash tool PATH
-├── .mcp.json          MCP servers
-├── .lsp.json          language servers
-├── monitors/monitors.json
-└── settings.json      plugin settings
-```
+<FileTree>
+
+- `my-plugin/`
+  - `.claude-plugin/`
+    - `plugin.json`
+  - `skills/` one folder per skill, each with `SKILL.md`
+  - `commands/` command files
+  - `agents/` agent `.md` files
+  - `hooks/`
+    - `hooks.json` hooks, inside a `hooks` wrapper
+  - `output-styles/`
+  - `workflows/`
+  - `themes/`
+  - `bin/` programs added to the Bash tool `PATH`
+  - `.mcp.json` MCP servers
+  - `.lsp.json` language servers
+  - `monitors/`
+    - `monitors.json`
+  - `settings.json` plugin settings
+
+</FileTree>
 
 | Item | Status | What It Does | How It Works |
 | --- | --- | --- | --- |
@@ -142,7 +146,7 @@ Hooks of this plugin see `CLAUDE_PLUGIN_OPTION_REGION` and `CLAUDE_PLUGIN_OPTION
 
 ```mermaid
 flowchart TD
-  A[Plugin folder] --> B{plugin.json exists?}
+  A[Plugin folder] --> B{"<code>plugin.json</code> exists?"}
   B -->|no| D[Use default folders only]
   B -->|yes| C[Parse and strip unknown top-level keys]
   C --> V{Strict blocks valid?}
@@ -150,7 +154,7 @@ flowchart TD
   V -->|yes| D
   D --> E[Load config files first]
   E --> F[Apply manifest paths and inline values]
-  F --> G[Ask for userConfig values]
+  F --> G["Ask for <code>userConfig</code> values"]
 ```
 
 ## Related Pages

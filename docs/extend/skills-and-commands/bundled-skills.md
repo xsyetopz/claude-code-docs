@@ -12,8 +12,8 @@ For example, `/simplify` reviews changed code and fixes the problems it finds.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Type the name after `/`. |
-| Can you change it? | No. You can replace one by making your own skill with the same name. |
+| Can you use it? | ✅ Yes. Type the name after `/`. |
+| Can you change it? | ❌ No. You can replace one by making your own skill with the same name. |
 | Can you turn it on or off? | Setting `disableBundledSkills` or env var `CLAUDE_CODE_DISABLE_BUNDLED_SKILLS=1`. |
 | Where does it live? | Inside the program. |
 | Status | <Documented /> <Undocumented /> <Gated /> |

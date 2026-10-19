@@ -12,9 +12,9 @@ They help when a type error is hard to read.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes, as types. You rarely name them yourself. |
-| Can you change it? | No. These are types only. They describe data, and they do not hold settings. |
-| Can you turn it on or off? | No. A type has no switch. |
+| Can you use it? | ✅ Yes, as types. You rarely name them yourself. |
+| Can you change it? | ❌ No. These are types only. They describe data, and they do not hold settings. |
+| Can you turn it on or off? | ❌ No. A type has no switch. |
 | Where does it live? | The published type file `types-2.1.303.d.ts` and `.claude-plugin/types/claude-code/index.d.ts`. |
 | Status | <Documented /> |
 

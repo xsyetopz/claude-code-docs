@@ -33,6 +33,20 @@ Treat <Undocumented /> items with care.
 They work today, but nobody promises they will work in the next release.
 :::
 
+## Marks in Tables
+
+A table cell that answers a question uses one of three marks.
+
+| Mark | What it means |
+| --- | --- |
+| ✅ | Yes. |
+| ❌ | No. |
+| ❓ | Unknown. Neither the official docs nor the program say. |
+
+Text can follow a mark, such as "✅ Yes. Type `/` to see the list."
+A star after a mark, such as ✅\*, points to a note under the table that starts with the same star.
+The marks never replace the words in a heading or a link.
+
 ## At a Glance
 
 Every page about a surface starts with a short intro and then an At a Glance table.
@@ -40,7 +54,7 @@ The table answers five questions.
 
 | Question | What the answer tells you |
 | --- | --- |
-| Can you use it? | Yes, No, or Partly, and how to start. |
+| Can you use it? | ✅ Yes, ❌ No, or Partly, and how to start. |
 | Can you change it? | Where and how you change it. |
 | Can you turn it on or off? | The switch: a setting, an environment variable, or a flag. |
 | Where does it live? | The file paths or scopes that hold it. |

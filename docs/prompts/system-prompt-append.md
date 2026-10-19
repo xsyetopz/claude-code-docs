@@ -10,8 +10,8 @@ Both flags together. Run `claude --system-prompt "A" --append-system-prompt "B"`
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. |
-| Can you change it? | Yes. You give the text. |
+| Can you use it? | ✅ Yes. |
+| Can you change it? | ✅ Yes. You give the text. |
 | Can you turn it on or off? | The two flags. |
 | Where does it live? | Command-line flags. |
 | Status | <Documented /> |

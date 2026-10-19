@@ -13,8 +13,8 @@ The fields that every event shares are on [Input and Output](input-and-output.md
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. All 33 events can run hooks. |
-| Can you change it? | Yes. You choose which events to hook, and some events let you change the action. |
+| Can you use it? | ✅ Yes. All 33 events can run hooks. |
+| Can you change it? | ✅ Yes. You choose which events to hook, and some events let you change the action. |
 | Can you turn it on or off? | Add or remove the event key in the `hooks` map. |
 | Where does it live? | The event name is the first level of the `hooks` key. |
 | Status | <Documented /> <Undocumented /> <Differs /> <Gated /> |
@@ -46,39 +46,39 @@ echo "Open tickets: $(gh issue list --limit 5 --json title -q '.[].title' | past
 
 | Event | Group | Fires when | Matcher | Can block |
 | --- | --- | --- | --- | --- |
-| `PreToolUse` | Tool | Before a tool runs. | Tool name | Yes |
-| `PermissionRequest` | Tool | A permission prompt would show. | Tool name | No (use a decision) |
-| `PermissionDenied` | Tool | Auto mode denies a call. | Tool name | No |
-| `PostToolUse` | Tool result | A tool call succeeds. | Tool name | No |
-| `PostToolUseFailure` | Tool result | A tool call fails. | Tool name | No |
-| `PostToolBatch` | Tool result | All tool calls of a batch are done. | None | Yes |
-| `SessionStart` | Session | A session starts or resumes. | Start source | No |
-| `Setup` | Session | `--init-only`, or `--init` or `--maintenance` with `-p`. | CLI flag | No |
-| `SessionEnd` | Session | A session ends. | End reason | No |
-| `InstructionsLoaded` | Session | A `CLAUDE.md` or rules file loads. | Load reason | No |
-| `ConfigChange` | Session | A settings or skill file changes. | Config source | Yes |
-| `CwdChanged` | Session | A shell command changes the directory. | None | No |
-| `FileChanged` | Session | A watched file changes on disk. | File names | No |
-| `DirectoryAdded` | Session | A directory is added with `/add-dir`. | Add source | No |
-| `UserPromptSubmit` | Prompt | You submit a prompt. | None | Yes |
-| `UserPromptExpansion` | Prompt | A typed command expands to a prompt. | Command name | Yes |
-| `MessageDisplay` | Prompt | Assistant text streams to the screen. | None | No |
-| `Notification` | Prompt | Claude Code sends a notification. | Notification type | No |
-| `Stop` | Prompt | The main agent finishes. | None | Yes (keeps working) |
-| `StopFailure` | Prompt | The turn ends on an API error. | Error type | No |
-| `SubagentStart` | Agent | A subagent starts or resumes. | Agent type | No |
-| `SubagentStop` | Agent | A subagent finishes. | Agent type | Yes (keeps working) |
-| `TaskCreated` | Agent | `TaskCreate` makes a task. | None | Yes |
-| `TaskCompleted` | Agent | A task is marked done. | None | Yes |
-| `TeammateIdle` | Agent | A teammate is about to go idle. | None | Yes (keeps working) |
-| `PreCompact` | Other | Before a compaction. | Trigger | Yes |
-| `PostCompact` | Other | After a compaction. | Trigger | No |
-| `PreModelSwitch` | Other | Before a requested model switch. | Target model | Yes |
-| `PostModelSwitch` | Other | After the model changes. | Target model | No |
-| `Elicitation` | Other | An MCP server asks you for input. | Server name | Yes (declines) |
-| `ElicitationResult` | Other | You answered an MCP question. | Server name | Yes |
-| `WorktreeCreate` | Other | A worktree is needed. | None | Yes (fails) |
-| `WorktreeRemove` | Other | A hook-made worktree is cleaned up. | None | Yes (fails) |
+| `PreToolUse` | Tool | Before a tool runs. | Tool name | ✅ |
+| `PermissionRequest` | Tool | A permission prompt would show. | Tool name | ❌ (use a decision) |
+| `PermissionDenied` | Tool | Auto mode denies a call. | Tool name | ❌ |
+| `PostToolUse` | Tool result | A tool call succeeds. | Tool name | ❌ |
+| `PostToolUseFailure` | Tool result | A tool call fails. | Tool name | ❌ |
+| `PostToolBatch` | Tool result | All tool calls of a batch are done. | None | ✅ |
+| `SessionStart` | Session | A session starts or resumes. | Start source | ❌ |
+| `Setup` | Session | `--init-only`, or `--init` or `--maintenance` with `-p`. | CLI flag | ❌ |
+| `SessionEnd` | Session | A session ends. | End reason | ❌ |
+| `InstructionsLoaded` | Session | A `CLAUDE.md` or rules file loads. | Load reason | ❌ |
+| `ConfigChange` | Session | A settings or skill file changes. | Config source | ✅ |
+| `CwdChanged` | Session | A shell command changes the directory. | None | ❌ |
+| `FileChanged` | Session | A watched file changes on disk. | File names | ❌ |
+| `DirectoryAdded` | Session | A directory is added with `/add-dir`. | Add source | ❌ |
+| `UserPromptSubmit` | Prompt | You submit a prompt. | None | ✅ |
+| `UserPromptExpansion` | Prompt | A typed command expands to a prompt. | Command name | ✅ |
+| `MessageDisplay` | Prompt | Assistant text streams to the screen. | None | ❌ |
+| `Notification` | Prompt | Claude Code sends a notification. | Notification type | ❌ |
+| `Stop` | Prompt | The main agent finishes. | None | ✅ (keeps working) |
+| `StopFailure` | Prompt | The turn ends on an API error. | Error type | ❌ |
+| `SubagentStart` | Agent | A subagent starts or resumes. | Agent type | ❌ |
+| `SubagentStop` | Agent | A subagent finishes. | Agent type | ✅ (keeps working) |
+| `TaskCreated` | Agent | `TaskCreate` makes a task. | None | ✅ |
+| `TaskCompleted` | Agent | A task is marked done. | None | ✅ |
+| `TeammateIdle` | Agent | A teammate is about to go idle. | None | ✅ (keeps working) |
+| `PreCompact` | Other | Before a compaction. | Trigger | ✅ |
+| `PostCompact` | Other | After a compaction. | Trigger | ❌ |
+| `PreModelSwitch` | Other | Before a requested model switch. | Target model | ✅ |
+| `PostModelSwitch` | Other | After the model changes. | Target model | ❌ |
+| `Elicitation` | Other | An MCP server asks you for input. | Server name | ✅ (declines) |
+| `ElicitationResult` | Other | You answered an MCP question. | Server name | ✅ |
+| `WorktreeCreate` | Other | A worktree is needed. | None | ✅ (fails) |
+| `WorktreeRemove` | Other | A hook-made worktree is cleaned up. | None | ✅ (fails) |
 
 ## Tool Events
 

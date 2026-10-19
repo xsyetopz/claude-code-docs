@@ -14,7 +14,7 @@ This page covers the shared rules. The other pages list every tool and every par
 | Question | Answer |
 | --- | --- |
 | Can you use it? | Partly. Claude calls tools for you. You allow, ask, or deny them with permission rules. |
-| Can you change it? | Yes. Permission rules, subagent `tools` lists, and MCP servers change which tools Claude can use. |
+| Can you change it? | ✅ Yes. Permission rules, subagent `tools` lists, and MCP servers change which tools Claude can use. |
 | Can you turn it on or off? | `permissions.deny`, `ENABLE_TOOL_SEARCH`, and tool-specific env vars such as `CLAUDE_CODE_DISABLE_WEB_FETCH`. |
 | Where does it live? | Built into the program. MCP tools come from servers you configure. |
 | Status | <Documented /> <Undocumented /> <Differs /> <Gated note="many tools need a server-side flag" /> |
@@ -88,7 +88,7 @@ Claude Code checks these rules in order to decide if a tool is deferred.
 flowchart TD
   A[Tool offered] --> B{Hook or server override?}
   B -->|Yes| Z[Use that state]
-  B -->|No| C{alwaysLoad true?}
+  B -->|No| C{"<code>alwaysLoad</code> true?"}
   C -->|Yes| N[Not deferred]
   C -->|No| D{In never-defer set?}
   D -->|Yes| N
@@ -96,7 +96,7 @@ flowchart TD
   E -->|Yes| F[Deferred]
   E -->|No| G{In server defer list?}
   G -->|Yes| F
-  G -->|No| H[Use shouldDefer]
+  G -->|No| H["Use <code>shouldDefer</code>"]
 ```
 
 ### Switches for Tool Search

@@ -12,8 +12,8 @@ For example, an `allow` rule for `Bash(npm test)` runs the tests with no prompt,
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. It is always on. You see it as prompts, or as silent allows and denies. |
-| Can you change it? | Yes. Use rules, a permission mode, hooks, the sandbox, or the auto mode classifier. |
+| Can you use it? | ✅ Yes. It is always on. You see it as prompts, or as silent allows and denies. |
+| Can you change it? | ✅ Yes. Use rules, a permission mode, hooks, the sandbox, or the auto mode classifier. |
 | Can you turn it on or off? | You can loosen it (`bypassPermissions`) or lock it down (`dontAsk`, `--restricted`, managed settings). You cannot remove it. |
 | Where does it live? | The `permissions`, `sandbox`, and `autoMode` keys in settings files, plus CLI flags. |
 | Status | <Documented /> <Undocumented /> <Differs /> <Gated /> |

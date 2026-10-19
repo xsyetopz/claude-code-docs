@@ -13,7 +13,7 @@ This page shows the pieces, the processes, and the order of the startup.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Run `claude` in a folder. |
+| Can you use it? | ✅ Yes. Run `claude` in a folder. |
 | Can you change it? | Partly. You change the layers (settings, hooks, plugins), not the loop itself. |
 | Can you turn it on or off? | Each layer has its own switch. See the pages in Configure and Extend. |
 | Where does it live? | A program file in `~/.local/share/claude/versions/`, a launcher at `~/.local/bin/claude`, and data in `~/.claude/`. |
@@ -39,7 +39,7 @@ Source: [How Claude Code Works](https://code.claude.com/docs/en/how-claude-code-
 
 | Piece | Status | What it is |
 | --- | --- | --- |
-| Native binary | <Documented /> | One program file for each version. It lives in `~/.local/share/claude/versions/`, and a launcher at `~/.local/bin/claude` points to it. See Advanced Setup in the official docs. |
+| Native binary | <Documented /> | One program file for each version. It lives in `~/.local/share/claude/versions/`, and a launcher at `~/.local/bin/claude` points to it. See [Advanced Setup](https://code.claude.com/docs/en/setup) in the official docs. |
 | Bundled code | <Undocumented /> | The program carries its JavaScript inside the file and runs it with the Bun runtime. |
 | Command parser | <Undocumented /> | The `commander` library builds the tree of commands and flags. |
 | Terminal screen | <Undocumented /> | A React-based renderer draws the chat with `ink-box` and `ink-text` elements. |
@@ -47,19 +47,19 @@ Source: [How Claude Code Works](https://code.claude.com/docs/en/how-claude-code-
 | Tools | <Documented /> | File, search, shell, web, and agent tools. |
 | Extensions | <Documented /> | Hooks, skills, plugins, MCP, subagents, and mods. |
 | Feature flags | <Undocumented /> | The program asks a flag service (GrowthBook) which experiments are on for you. You cannot set them. |
-| Telemetry | <Documented /> | OpenTelemetry export is off until you set it up. See Monitoring in the official docs. |
+| Telemetry | <Documented /> | OpenTelemetry export is off until you set it up. See [Monitoring](https://code.claude.com/docs/en/monitoring-usage) in the official docs. |
 | Session store | <Documented /> | Transcripts live under `~/.claude/projects`. See [Sessions and Storage](sessions-and-storage.md). |
 
 ## Where It Runs
 
-The official docs list these places: the terminal, the desktop app, IDE extensions, `claude.ai/code`, Remote Control, Slack, and CI.
+The [official docs](https://code.claude.com/docs/en/how-claude-code-works#environments-and-interfaces) list these places: the terminal, the desktop app, IDE extensions, `claude.ai/code`, Remote Control, Slack, and CI.
 All of them run the same loop.
 The code can run on your machine, in the cloud, or on your machine under remote control.
-Source: How Claude Code Works, section "Environments and interfaces".
+Source: [How Claude Code Works: Environments and Interfaces](https://code.claude.com/docs/en/how-claude-code-works#environments-and-interfaces).
 
 The environment variable `CLAUDE_CODE_ENTRYPOINT` names the host.
 The program sets it when the host did not.
-The official Monitoring page shows some of the values as `app.entrypoint`.
+The official [Monitoring](https://code.claude.com/docs/en/monitoring-usage) page shows some of the values as `app.entrypoint`.
 
 | Value | Status | Set when |
 | --- | --- | --- |
@@ -77,18 +77,18 @@ flowchart TD
   Main[Main process] --> Sub[Subagent loops]
   Main --> Hook[Hook command processes]
   Main --> MCP[MCP server processes]
-  Main --> Rg[Search helper: ripgrep]
-  Sup[Supervisor: claude daemon] -.-> Main
+  Main --> Rg["Search helper: <code>ripgrep</code>"]
+  Sup["Supervisor: <code>claude daemon</code>"] -.-> Main
 ```
 
 | Process | Status | Role |
 | --- | --- | --- |
 | Main process | <Documented /> | One for each interactive or print session. |
-| Supervisor (`claude daemon`) | <Documented /> | Runs background sessions so they live on after you close the terminal. See Agent View in the official docs. |
+| Supervisor (`claude daemon`) | <Documented /> | Runs background sessions so they live on after you close the terminal. See [Manage Multiple Agents with Agent View](https://code.claude.com/docs/en/agent-view) in the official docs. |
 | Subagent | <Documented /> | A separate loop with its own context window. |
 | Hook command | <Documented /> | A child process for each command hook. |
 | MCP server | <Documented /> | A child process or a remote connection. |
-| Search helper | <Documented /> | A bundled `ripgrep`, unless `USE_BUILTIN_RIPGREP=0`. See Environment Variables in the official docs. |
+| Search helper | <Documented /> | A bundled `ripgrep`, unless `USE_BUILTIN_RIPGREP=0`. See [Environment Variables](https://code.claude.com/docs/en/env-vars) in the official docs. |
 
 The supervisor starts on demand and exits when the last client leaves.
 Its files are `~/.claude/daemon.json` and `~/.claude/daemon.log`.
@@ -132,7 +132,7 @@ sequenceDiagram
 | Interactive mode | <Undocumented /> | Draws the screen and waits for input. |
 
 `SessionStart` and `Setup` hooks run before the session MCP servers are ready.
-So an `mcp_tool` hook cannot run in them. See the Hooks Reference in the official docs.
+So an `mcp_tool` hook cannot run in them. See the [Hooks Reference](https://code.claude.com/docs/en/hooks) in the official docs.
 
 ## What You Can Change at Startup
 

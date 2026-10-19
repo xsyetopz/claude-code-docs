@@ -13,8 +13,8 @@ A manifest has no `mods` key.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Every noun of `$` is available in a hook. |
-| Can you change it? | Yes. A mod can add its own noun with an `engine.create` hook. |
+| Can you use it? | ✅ Yes. Every noun of `$` is available in a hook. |
+| Can you change it? | ✅ Yes. A mod can add its own noun with an `engine.create` hook. |
 | Can you turn it on or off? | `disableAllHooks`, `allowManagedHooksOnly`, `allowManagedModsOnly`, `--safe-mode`, `--bare`. |
 | Where does it live? | The plugin folder, `plugin.json`, `hooks/hooks.json`, and settings files. |
 | Status | <Documented /> <Gated note="Remote rollout switch for installed mods" /> |

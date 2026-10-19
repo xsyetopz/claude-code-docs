@@ -12,9 +12,9 @@ For example, `$.fs.read(...)` is both a call and the event `fs.read`, so a hook 
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes, as types. `import type { EventName, EventOf } from 'claude-code'`. The import is empty at run time. |
+| Can you use it? | ✅ Yes, as types. `import type { EventName, EventOf } from 'claude-code'`. The import is empty at run time. |
 | Can you change it? | A plugin adds its own nouns by declaration merging into `EngineInterface`. Otherwise these are types only. |
-| Can you turn it on or off? | No. A type has no switch. |
+| Can you turn it on or off? | ❌ No. A type has no switch. |
 | Where does it live? | The published type file `types-2.1.303.d.ts` and `.claude-plugin/types/claude-code/index.d.ts`. |
 | Status | <Documented /> |
 
@@ -49,10 +49,10 @@ After this, `voice.say` is also an event, and a hook can use `on('voice.say', ..
 
 ```mermaid
 flowchart LR
-  N[Event name] --> I[EventOf: input e]
-  N --> R[ResultOf: result of next]
+  N[Event name] --> I["<code>EventOf</code>: input e"]
+  N --> R["<code>ResultOf</code>: result of next"]
   N --> H[Events: hook signature]
-  N --> C[EventCalls: call on $]
+  N --> C["<code>EventCalls</code>: call on $"]
 ```
 
 ## Types without Fields

@@ -13,7 +13,7 @@ For example, `claude plugin list --json` prints your installs as JSON.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Shell commands, session commands, and launch flags. |
+| Can you use it? | ✅ Yes. Shell commands, session commands, and launch flags. |
 | Can you change it? | Flags change scope, output, and prompts. |
 | Can you turn it on or off? | `claude plugin enable` and `disable`. Managed `disableSideloadFlags` turns off the session flags. |
 | Where does it live? | State is in `~/.claude/plugins/` and in `enabledPlugins`. |
@@ -88,11 +88,11 @@ claude plugin update deploy-tools@team-tools --yes
 
 ```mermaid
 flowchart LR
-  A[claude plugin install] --> B[Policy check]
+  A["<code>claude plugin install</code>"] --> B[Policy check]
   B --> C[Fetch source to cache]
-  C --> D[Write installed_plugins.json]
-  D --> E[Set enabledPlugins in the scope]
-  E --> F[Next session or /reload-plugins]
+  C --> D["Write <code>installed_plugins.json</code>"]
+  D --> E["Set <code>enabledPlugins</code> in the scope"]
+  E --> F["Next session or <code>/reload-plugins</code>"]
 ```
 
 ## Related Pages

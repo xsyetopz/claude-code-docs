@@ -12,8 +12,8 @@ sidebar_position: 12
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. `const { agentId } = await $.agent.spawn({ prompt: "Read README.md." })` |
-| Can you change it? | Yes. Hook `agent.spawn` to pick a model or refuse. Hook `agent.offer` to hide a type. |
+| Can you use it? | ✅ Yes. `const { agentId } = await $.agent.spawn({ prompt: "Read README.md." })` |
+| Can you change it? | ✅ Yes. Hook `agent.spawn` to pick a model or refuse. Hook `agent.offer` to hide a type. |
 | Can you turn it on or off? | Return `{ isOffered: false }` or `{ deny }` from a hook. |
 | Where does it live? | The hooks module of a plugin. |
 | Status | <Documented /> |

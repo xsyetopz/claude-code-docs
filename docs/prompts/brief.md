@@ -10,8 +10,8 @@ sidebar_position: 30
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. |
-| Can you change it? | No. |
+| Can you use it? | ✅ Yes. |
+| Can you change it? | ❌ No. |
 | Can you turn it on or off? | `--brief`. |
 | Where does it live? | Command-line flag. |
 | Status | <Undocumented /> |

@@ -12,8 +12,8 @@ These five nouns reach the machine: `$.clock` for time and timers, `$.http` for 
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. `const { exitCode, stdout } = await $.process.run(["git", "status"])` |
-| Can you change it? | Yes. Hook the matching event to rewrite, refuse, or answer a call. |
+| Can you use it? | ✅ Yes. `const { exitCode, stdout } = await $.process.run(["git", "status"])` |
+| Can you change it? | ✅ Yes. Hook the matching event to rewrite, refuse, or answer a call. |
 | Can you turn it on or off? | A policy can refuse a call. For example, the organization's web-fetch policy can refuse `$.http.fetch`. |
 | Where does it live? | The hooks module. |
 | Status | <Documented /> |

@@ -6,14 +6,14 @@ sidebar_position: 2
 
 This guide tells you how to write a page for this site.
 Follow it so every page looks and reads the same.
-Run `bun run verify` before you open a pull request. It runs the linter, the checks, and the build.
+Run `bun run verify` before you open a pull request. It runs the type check, the format check, the code lint, markdownlint, the docs check, the schema check, and the build. Git hooks run on every commit, and commitlint checks the message.
 
 ## Core Rules
 
 1. Write only what a reader can use, change, or turn on and off.
 2. Rewrite sources in your own words. Do not copy.
 3. Never invent a fact. If you cannot check it, leave it out or put it in a Not Verified box.
-4. Use no emojis anywhere. Use badges instead.
+4. Use only the emojis that this guide allows (see Table Marks). Use badges for provenance.
 5. Do not use Anthropic or Claude logos, or any wording that says the site is official.
 
 ## Simple English
@@ -84,7 +84,7 @@ A surface page has this order.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Run `claude --example`. |
+| Can you use it? | ✅ Yes. Run `claude --example`. |
 | Can you change it? | Edit `~/.claude/settings.json`. |
 | Can you turn it on or off? | Set `exampleEnabled` to `false`. |
 | Where does it live? | `~/.claude/settings.json` (user scope) |
@@ -154,17 +154,47 @@ flowchart LR
 
 ### File Trees
 
-Use a `text` block.
+Do not draw trees with box characters. Wrap a nested list in the `<FileTree>` component.
+Write one item on each line. Give a folder a trailing `/`, and put a short note after the name.
 
 ````markdown
-```text
-~/.claude/
-├── settings.json
-└── skills/
-    └── my-skill/
-        └── SKILL.md
-```
+<FileTree>
+
+- `~/.claude/`
+  - `settings.json` your settings
+  - `skills/`
+    - `my-skill/`
+      - `SKILL.md`
+
+</FileTree>
 ````
+
+It looks like this.
+
+<FileTree>
+
+- `~/.claude/`
+  - `settings.json` your settings
+  - `skills/`
+    - `my-skill/`
+      - `SKILL.md`
+
+</FileTree>
+
+### Table Marks
+
+Use these marks in a table cell that is a yes, no, or unknown answer, such as an At a Glance answer or a boolean column.
+
+| Mark | Meaning | Write |
+| --- | --- | --- |
+| ✅ | Yes | `✅`, or `✅ Yes. <detail>` when text follows |
+| ❌ | No | `❌`, or `❌ No. <detail>` when text follows |
+| ❓ | Unknown or not stated | `❓` |
+
+- Do not use a mark where Yes or No is part of a value, such as a default that is literally "no".
+- Never put a mark in a heading, a sidebar label, or link text.
+- For a short clarification, put `\*` after the mark (`✅\*`) and write `\* The note.` right after the table. Use `\*\*` for a second note.
+- `bun run check:docs` rejects every emoji that is not on the allow-list in `tools/check-docs.ts`.
 
 ### Admonitions
 
@@ -196,7 +226,7 @@ Pages are MDX, not plain Markdown. These characters break the build when they si
 
 | Problem | Fix |
 | --- | --- |
-| `{` or `}` in text | Write `\{` and `\}`, or put the text in backticks. |
+| `{` or `}` in text | Put a backslash before it, or put the text in backticks. |
 | `<` in text, such as `<cwd>` | Put it in backticks, or write `&lt;`. |
 | `\|` in a table code cell | Write `\|`. |
 | A bare URL with angle brackets | Use a normal link: `[Title](https://example.com)`. |
@@ -207,7 +237,7 @@ Lines inside code fences are safe.
 ## Links
 
 - Link to other pages with a relative file path: `[Hooks](../extend/hooks/index.md)`.
-- Name official pages by their Title Case page names.
+- Name official pages by their Title Case page names, and link each one to its URL: `[Hooks Reference](https://code.claude.com/docs/en/hooks)`. Add `#anchor` when you name a section. Link the changelog, GitHub, and other outside sources the same way. "The program" stays plain text.
 - The build fails on a broken link or anchor. Fix it, do not remove it.
 
 ## Sources
@@ -225,6 +255,6 @@ Put anything you could not check in a `:::note[Not Verified]` box, or leave it o
 | Command | What it does |
 | --- | --- |
 | `bun run lint` | Runs markdownlint on `docs/**/*.{md,mdx}`. |
-| `bun run check` | Finds emojis, missing front matter, and Title Case errors. It prints `file:line`. |
+| `bun run check:docs` | Finds emojis that are not allowed, unlinked sources, missing front matter, and Title Case errors. It prints `file:line`. |
 | `bun run build` | Builds the site. Broken links and anchors fail the build. |
-| `bun run verify` | Runs all three. |
+| `bun run verify` | Runs every check above, the type check, the format and code lint, the schema check, and the build. |

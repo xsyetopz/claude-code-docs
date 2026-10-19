@@ -13,8 +13,8 @@ A tool or command that a mod registers is served by a hook on `tool.call` or `co
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. `await $.tool.list()`, `await $.command.register(...)`, `await $.config.set(...)`. |
-| Can you change it? | Yes. Hook the events to refuse a call, answer it, or rewrite it. |
+| Can you use it? | ✅ Yes. `await $.tool.list()`, `await $.command.register(...)`, `await $.config.set(...)`. |
+| Can you change it? | ✅ Yes. Hook the events to refuse a call, answer it, or rewrite it. |
 | Can you turn it on or off? | A `deny` from a `tool.call`, `tool.check`, or `config.set` hook stops the action. |
 | Where does it live? | The hooks module. A registered tool is named `mcp__<plugin>__<name>`. |
 | Status | <Documented /> |

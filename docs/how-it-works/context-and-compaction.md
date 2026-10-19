@@ -13,15 +13,15 @@ You can set when this happens, and you can say what the summary must keep.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Run `/compact` at any time. Auto compaction runs on its own. |
-| Can you change it? | Yes. Set the window, the percent, or the focus text. |
+| Can you use it? | ✅ Yes. Run `/compact` at any time. Auto compaction runs on its own. |
+| Can you change it? | ✅ Yes. Set the window, the percent, or the focus text. |
 | Can you turn it on or off? | `DISABLE_AUTO_COMPACT` turns off automatic compaction. `DISABLE_COMPACT` turns off all of it. |
 | Where does it live? | Settings (`autoCompactWindow`, `autoCompactEnabled`), env vars, and commands. The result is saved in the transcript as a `compact_boundary` entry. |
 | Status | <Documented /> <Undocumented /> |
 
 ## What Fills the Context
 
-Sources: How Claude Code Works (section "The context window") and Explore the Context Window, in the official docs.
+Sources: [How Claude Code Works: The Context Window](https://code.claude.com/docs/en/how-claude-code-works#the-context-window) and [Explore the Context Window](https://code.claude.com/docs/en/context-window).
 
 | Content | Status | Note |
 | --- | --- | --- |
@@ -69,11 +69,11 @@ Claude Code finds the window in this order:
 5. The default of the model
 
 The accepted window is from 100K to 1M tokens.
-Sources: Model Configuration (section "Context window and auto-compaction") in the official docs, and the program.
+Sources: [Model Configuration: Context Window and Auto-Compaction](https://code.claude.com/docs/en/model-config#context-window-and-auto-compaction) and the program.
 
 ## Controls
 
-Sources: Model Configuration (section "Set the auto-compact window") and Environment Variables, in the official docs.
+Sources: [Model Configuration: Set the Auto-Compact Window](https://code.claude.com/docs/en/model-config#set-the-auto-compact-window) and [Environment Variables](https://code.claude.com/docs/en/env-vars).
 
 | Item | Status | Effect |
 | --- | --- | --- |
@@ -98,7 +98,7 @@ Sources: Model Configuration (section "Set the auto-compact window") and Environ
 stateDiagram-v2
   [*] --> Normal
   Normal --> Automatic: Over the threshold
-  Normal --> Manual: You run /compact
+  Normal --> Manual: You run <code>/compact</code>
   Normal --> Reactive: API says prompt is too long
   Automatic --> Normal: Summary replaces history
   Manual --> Normal: Summary replaces history
@@ -118,7 +118,7 @@ stateDiagram-v2
 
 Auto compaction stops with an error when the context refills within 3 turns of the last compaction, 3 times in a row.
 The message starts `Autocompact is thrashing`.
-Sources: How Claude Code Works (section "When context fills up") and Troubleshooting, in the official docs.
+Sources: [How Claude Code Works: When Context Fills Up](https://code.claude.com/docs/en/how-claude-code-works#when-context-fills-up) and [Troubleshooting](https://code.claude.com/docs/en/troubleshooting).
 
 ## The Summary Prompt
 
@@ -141,7 +141,7 @@ See the captured [compaction prompt](../prompts/compact.md).
 
 ## What Survives
 
-Source: Explore the Context Window (section "What survives compaction") in the official docs.
+Source: [Explore the Context Window: What Survives Compaction](https://code.claude.com/docs/en/context-window#what-survives-compaction).
 
 | Content | Status | After compaction |
 | --- | --- | --- |

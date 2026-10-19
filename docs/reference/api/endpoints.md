@@ -13,7 +13,7 @@ If you run Claude Code behind a proxy, the proxy must pass `anthropic-version` a
 | Question | Answer |
 | --- | --- |
 | Can you use it? | Claude Code calls these for you. |
-| Can you change it? | Yes. Base URL variables pick the server. `ANTHROPIC_CUSTOM_HEADERS` adds headers. |
+| Can you change it? | ✅ Yes. Base URL variables pick the server. `ANTHROPIC_CUSTOM_HEADERS` adds headers. |
 | Can you turn it on or off? | `CLAUDE_CODE_GATEWAY_HINT_HEADERS`, `CLAUDE_CODE_ATTRIBUTION_HEADER=0`, `CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY=1`. |
 | Where does it live? | The model list is cached in `~/.claude/cache/gateway-models.json`. |
 | Status | <Documented /> <Undocumented /> |

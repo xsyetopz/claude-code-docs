@@ -12,8 +12,8 @@ They also control installs and auto updates.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. |
-| Can you change it? | Yes. Use absolute paths. |
+| Can you use it? | ✅ Yes. |
+| Can you change it? | ✅ Yes. Use absolute paths. |
 | Can you turn it on or off? | Unset the variable. For updates, set `DISABLE_AUTOUPDATER` to stop them. |
 | Where does it live? | Your shell. Project and local settings cannot set `CLAUDE_CONFIG_DIR`. |
 | Rows on this page | 78 variables |

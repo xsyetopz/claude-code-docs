@@ -13,8 +13,8 @@ A managed block ends the chain above every module.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. `on("classic.Stop", ($, e, next) => next(e))` sees every `Stop` event. |
-| Can you change it? | Yes. Return the result fields listed below, or use a glob such as `classic.*`. |
+| Can you use it? | ✅ Yes. `on("classic.Stop", ($, e, next) => next(e))` sees every `Stop` event. |
+| Can you change it? | ✅ Yes. Return the result fields listed below, or use a glob such as `classic.*`. |
 | Can you turn it on or off? | Remove the `on` call. `disableAllHooks` stops installed mods. |
 | Where does it live? | The hooks module. The same events come from `hooks` in settings. |
 | Status | <Documented /> |

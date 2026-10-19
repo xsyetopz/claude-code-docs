@@ -12,8 +12,8 @@ Examples are `HOME`, `PATH`, `EDITOR`, `TERM`, and `ALL_PROXY`. Claude Code read
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. You set them for your system anyway. |
-| Can you change it? | Yes, in your shell, or in the `env` key of a settings file. |
+| Can you use it? | ✅ Yes. You set them for your system anyway. |
+| Can you change it? | ✅ Yes, in your shell, or in the `env` key of a settings file. |
 | Can you turn it on or off? | Unset the variable. |
 | Where does it live? | Your shell or the system. |
 | Rows on this page | 130 variables |

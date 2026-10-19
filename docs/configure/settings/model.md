@@ -12,7 +12,7 @@ Several keys have a matching environment variable that wins over the key.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. |
+| Can you use it? | ✅ Yes. |
 | Can you change it? | Edit a settings file, or use `/model`. |
 | Can you turn it on or off? | `fastMode`, `alwaysThinkingEnabled`, and `enforceAvailableModels` switch features. |
 | Where does it live? | `~/.claude/settings.json`, `.claude/settings.json`, `.claude/settings.local.json`, or managed settings |
@@ -40,7 +40,7 @@ Where to Set It tells you which files may set the key. See [Settings Files and S
 | `modelOverrides` | <Documented /> | object | - | Map model IDs to your provider's IDs, such as Bedrock ARNs. Usually set in managed settings. | Any settings file |
 | `modelPicker` | <Documented /> | object | - | Choose which models the `/model` picker lists, in your own order and with your own labels. Read only from managed, `--settings`, and user settings. The first source that sets it wins whole. | User or managed settings |
 | `modelPricing` | <Documented /> | object | - | Report spend at your organization's contracted rates instead of list price. `overrides` maps a model ID to USD rates per million tokens. The figures stay estimates. | Managed settings only |
-| `modelSettings` | <Documented /> | Not stated | - | Keep a saved effort level or auto-compact window per model, or cap one model's effort. | Any settings file |
+| `modelSettings` | <Documented /> | ❓ | - | Keep a saved effort level or auto-compact window per model, or cap one model's effort. | Any settings file |
 | `promptCacheTtl` | <Documented /> | string | - | Choose the prompt cache lifetime for the main conversation. `5m` or `1h`. Unset is 1 hour on a subscription and 5 minutes on an API key or cloud provider. `CLAUDE_CODE_PROMPT_CACHE_TTL` wins. | Any settings file |
 | `showThinkingSummaries` | <Documented /> | boolean | - | See summaries of Claude's thinking instead of a collapsed stub. | Any settings file |
 | `subagentPromptCacheTtl` | <Documented /> | string | - | Choose the prompt cache lifetime for subagent requests. `5m` or `1h`. Unset is 5 minutes unless `ENABLE_PROMPT_CACHING_1H=1`. `CLAUDE_CODE_SUBAGENT_PROMPT_CACHE_TTL` wins. | Any settings file |

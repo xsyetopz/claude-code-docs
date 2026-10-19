@@ -7,13 +7,13 @@ sidebar_position: 5
 A transcript is a text file with one JSON object on each line.
 Each object is a message, or a note about the session.
 Claude Code appends a line as things happen, so a crash loses little.
-The official docs say the format is internal and changes between versions, so a script that reads it can break.
+The [official docs](https://code.claude.com/docs/en/claude-directory) say the format is internal and changes between versions, so a script that reads it can break.
 
 ## At a Glance
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes, read-only. Open the file with `jq` or any JSON Lines reader. |
+| Can you use it? | ✅ Yes, read-only. Open the file with `jq` or any JSON Lines reader. |
 | Can you change it? | Not safely. Claude Code owns the file. Use `/export` or print mode output for scripts. |
 | Can you turn it on or off? | `--no-session-persistence` (print mode) or `CLAUDE_CODE_SKIP_PROMPT_HISTORY` (any mode). |
 | Where does it live? | `~/.claude/projects/<project>/<session>.jsonl` |
@@ -21,20 +21,22 @@ The official docs say the format is internal and changes between versions, so a 
 
 ## Where Files Live
 
-Source: Explore the .claude Directory, section "Application data", in the official docs.
+Source: [Explore the .claude Directory: Application Data](https://code.claude.com/docs/en/claude-directory#application-data).
 
-```text
-~/.claude/
-├── history.jsonl                                every prompt you typed
-└── projects/
-    └── <project>/
-        ├── <session>.jsonl                      the transcript
-        ├── <session>.orphaned-<time>-<id>.jsonl set aside, not in the picker
-        ├── <session>.jsonl.superseded-<time>    set aside, not in the picker
-        └── <session>/
-            ├── subagents/                       one transcript per subagent
-            └── tool-results/                    large tool outputs and MCP images
-```
+<FileTree>
+
+- `~/.claude/`
+  - `history.jsonl` every prompt you typed
+  - `projects/`
+    - `<project>/`
+      - `<session>.jsonl` the transcript
+      - `<session>.orphaned-<time>-<id>.jsonl` set aside, not in the picker
+      - `<session>.jsonl.superseded-<time>` set aside, not in the picker
+      - `<session>/`
+        - `subagents/` one transcript per subagent
+        - `tool-results/` large tool outputs and MCP images
+
+</FileTree>
 
 The `<project>` name is the folder path with every character other than a letter or a digit changed to `-`.
 `CLAUDE_CONFIG_DIR` moves `~/.claude`. See [Sessions and Storage](../how-it-works/sessions-and-storage.md) for cleanup and resume rules.
@@ -46,12 +48,12 @@ A branch or a rewind makes a second child for one parent. The `last-prompt` line
 
 ```mermaid
 flowchart LR
-  U1[user] --> A1[assistant: tool_use]
-  A1 --> U2[user: tool_result]
+  U1[user] --> A1["assistant: <code>tool_use</code>"]
+  A1 --> U2["user: <code>tool_result</code>"]
   U2 --> A2[assistant: text]
   A1 -.-> AT[attachment]
-  A2 --> S[system: turn_duration]
-  A2 --> LP[last-prompt: leafUuid]
+  A2 --> S["system: <code>turn_duration</code>"]
+  A2 --> LP["last-prompt: <code>leafUuid</code>"]
 ```
 
 ## Common Fields

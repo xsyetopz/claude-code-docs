@@ -13,7 +13,7 @@ If you run Claude Code behind a gateway or proxy, read these pages first, becaus
 | Question | Answer |
 | --- | --- |
 | Can you use it? | Not directly. Claude Code makes these calls for you. You can watch them with a proxy or a local stub. |
-| Can you change it? | Yes. `ANTHROPIC_BASE_URL`, `ANTHROPIC_CUSTOM_HEADERS`, `ANTHROPIC_BETAS`, `--betas`, and provider variables change the calls. |
+| Can you change it? | ✅ Yes. `ANTHROPIC_BASE_URL`, `ANTHROPIC_CUSTOM_HEADERS`, `ANTHROPIC_BETAS`, `--betas`, and provider variables change the calls. |
 | Can you turn it on or off? | `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS`, `CLAUDE_CODE_GATEWAY_HINT_HEADERS`, `CLAUDE_CODE_ATTRIBUTION_HEADER=0`. |
 | Where does it live? | In the program. The gateway guide is the only official source. |
 | Status | <Documented /> <Undocumented /> |
@@ -39,9 +39,9 @@ claude
 
 ```mermaid
 flowchart LR
-  C[Claude Code] -->|/v1/messages + anthropic-beta| M[Model server or gateway]
+  C[Claude Code] -->|"<code>/v1/messages</code> + anthropic-beta"| M[Model server or gateway]
   C -->|oauth, policy, usage| A[Account servers]
-  C -->|/v1/metrics, /v1/logs, /v1/traces| O[OpenTelemetry collector]
+  C -->|"<code>/v1/metrics</code>, <code>/v1/logs</code>, <code>/v1/traces</code>"| O["OpenTelemetry collector"]
 ```
 
 ## Related Pages

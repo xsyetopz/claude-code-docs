@@ -13,7 +13,7 @@ For the places managed settings can come from, see the managed settings section 
 | Question | Answer |
 | --- | --- |
 | Can you use it? | Only if you manage a machine or organization. |
-| Can you change it? | Yes, in a managed settings source. |
+| Can you change it? | ✅ Yes, in a managed settings source. |
 | Can you turn it on or off? | `forceRemoteSettingsRefresh` and `wslInheritsWindowsSettings` are switches. |
 | Where does it live? | Managed settings (see [Managed Settings](index.md#managed-settings)) |
 | Status | <Documented /> <Undocumented /> |
@@ -28,8 +28,8 @@ Where to Set It tells you which files may set the key. See [Settings Files and S
 | `forceRemoteSettingsRefresh` | <Documented /> | boolean | - | Block startup until server-managed settings are freshly fetched. Claude Code exits if the fetch fails. | Managed settings only |
 | `managedSourcesBehavior` | <Documented /> | enum: `first-wins`, `merge` | - | Compose every managed source you deploy instead of using the highest-priority one alone. `first-wins` (the default) uses the highest source alone. `merge` combines them. | Managed settings only |
 | `parentSettingsBehavior` | <Documented /> | enum: `first-wins`, `merge` | - | Apply or drop restrictions an SDK or IDE host passes when you deploy managed settings. `first-wins` drops the parent tier. `merge` unions it in. | Managed settings only |
-| `policyHelper` | <Documented /> | Not stated | - | Run an executable that computes managed settings at startup. Honored only from admin-controlled policy sources. | Managed settings only |
-| `policyHelpers` | <Undocumented /> | Not stated | - | Give each platform its own policy helper: `macos`, `linux`, `windows`, `wsl`, or a static `default` payload. The first helper on the platform chain wins over `policyHelper`. | Settings files |
+| `policyHelper` | <Documented /> | ❓ | - | Run an executable that computes managed settings at startup. Honored only from admin-controlled policy sources. | Managed settings only |
+| `policyHelpers` | <Undocumented /> | ❓ | - | Give each platform its own policy helper: `macos`, `linux`, `windows`, `wsl`, or a static `default` payload. The first helper on the platform chain wins over `policyHelper`. | Settings files |
 | `requiredMaximumVersion` | <Documented /> | string | - | Refuse to start on a version newer than your organization allows. Claude Code exits at startup with install steps. Managed settings only. | Managed settings only |
 | `requiredMinimumVersion` | <Documented /> | string | - | Refuse to start on a version older than your organization requires. Claude Code exits at startup with update steps. Managed settings only. | Managed settings only |
 | `wslInheritsWindowsSettings` | <Documented /> | boolean | - | Have WSL read managed settings from the Windows policy chain. Set in an admin-only Windows source. No effect on native Windows. | Managed settings only |

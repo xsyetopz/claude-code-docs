@@ -12,7 +12,7 @@ Each command has its own `--help`.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Run `claude <command>`, or `claude <command> --help` for its options. |
+| Can you use it? | ✅ Yes. Run `claude <command>`, or `claude <command> --help` for its options. |
 | Can you change it? | Each command has its own flags. |
 | Can you turn it on or off? | Not as a group. A command runs only when you call it. |
 | Where does it live? | The `claude` program. |

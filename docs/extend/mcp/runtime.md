@@ -13,8 +13,8 @@ For example, `mcp__github__create_issue` is the `create_issue` tool of the `gith
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. It runs by itself once a server connects. |
-| Can you change it? | Yes. Per-server options, env vars, and permission rules. |
+| Can you use it? | ✅ Yes. It runs by itself once a server connects. |
+| Can you change it? | ✅ Yes. Per-server options, env vars, and permission rules. |
 | Can you turn it on or off? | `permissions.deny` for tools, `ENABLE_TOOL_SEARCH` for deferral, `CLAUDE_CODE_MCP_AUTO_BACKGROUND_MS` for background moves. |
 | Where does it live? | In the running session. Large results are saved under `tool-results`. |
 | Status | <Documented /> <Undocumented /> |
@@ -122,12 +122,12 @@ stateDiagram-v2
   Connecting --> Connected: handshake ok
   Connecting --> NeedsAuth: 401 or 403
   Connecting --> Failed: error after retries
-  Connected --> Connected: list_changed refresh
+  Connected --> Connected: <code>list_changed</code> refresh
   Connected --> Reconnecting: remote link drops
   Reconnecting --> Connected: retry works
   Reconnecting --> Failed: five tries used
   NeedsAuth --> Connecting: login done
-  Failed --> Connecting: /mcp reconnect
+  Failed --> Connecting: <code>/mcp</code> reconnect
 ```
 
 ## Related Pages

@@ -14,7 +14,7 @@ The Yes and No columns are explained on [Tools](index.md#how-to-read-the-tool-ta
 | Question | Answer |
 | --- | --- |
 | Can you use it? | Claude calls these tools. You can also read or edit files yourself and let Claude see the result. |
-| Can you change it? | Yes. Path rules in `permissions` allow, ask, or deny each tool. |
+| Can you change it? | ✅ Yes. Path rules in `permissions` allow, ask, or deny each tool. |
 | Can you turn it on or off? | Deny the tool name in `permissions.deny`, or leave it out of a subagent `tools` list. |
 | Where does it live? | Built into the program. |
 | Status | <Documented /> <Undocumented /> <Gated note="memory tools need a server-side flag" /> |
@@ -25,58 +25,58 @@ Source: [Tools Reference](https://code.claude.com/docs/en/tools-reference), [Con
 
 | Tool | Status | What It Does | How It Works | Available In | Read-Only | Parallel | Deferred |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `Read` | <Documented /> | Reads files, images, PDFs, and notebooks. | See [Read Parameters](#read-parameters). | Main session and subagents. Kept in background subagents. | Yes | Yes | No |
-| `Write` | <Documented /> | Creates or overwrites a file. | `file_path` (string, required, absolute), `content` (string, required), `machine` (optional). A deny rule wins. | Main session and subagents. Kept in background subagents. | No | No | No |
-| `Edit` | <Documented /> | Replaces an exact string in a file. | `file_path` (required), `old_string` (required), `new_string` (required, must differ), `replace_all` (boolean, default false), `machine` (optional). | Main session and subagents. Kept in background subagents. | No | No | No |
-| `NotebookEdit` | <Documented /> | Edits a cell of a Jupyter notebook. | See [NotebookEdit Parameters](#notebookedit-parameters). | Main session and subagents. Kept in background subagents. | No | No | Yes |
-| `Glob` | <Documented /> | Finds files by glob pattern. | `pattern` (string, required), `path` (string, optional, directory), `machine` (optional). | Main session and subagents. The docs say a subagent can get `Glob` and `Grep` when the main session lacks them (macOS, Linux, WSL). | Yes | Yes | No |
-| `Grep` | <Documented /> | Searches file contents with ripgrep. | See [Grep Parameters](#grep-parameters). | Same as `Glob`. | Yes | Yes | No |
-| `LSP` | <Documented /> | Code intelligence: definitions, references, symbols, hover, call hierarchy. | `operation`, `filePath` (required), `line` (int, 1 or more, required), `character` (int, 1 or more, required), `query` (optional, `workspaceSymbol` only). | Main session and subagents. Background subagents keep it since `2.1.280`. | Yes | Yes | Yes |
-| `memory_read` | <Undocumented /> <Gated note="hidden server-side flag" /> | Reads a document from a memory store. | `store` (string, required), `path` (string, required). | Not known | Yes | Yes | No |
-| `memory_write` | <Undocumented /> <Gated note="hidden server-side flag" /> | Saves a document to a memory store. | `store`, `path`, `content` (all strings, required; `content` replaces the whole document), `if_version` (string, max 64, version token for compare-and-set). | Not known | No | No | No |
-| `memory_list` | <Undocumented /> <Gated note="hidden server-side flag" /> | Lists memory stores and their documents. | `store` (optional), `path_prefix` (optional, directory-aligned), `cursor` (optional). | Not known | Yes | Yes | No |
+| `Read` | <Documented /> | Reads files, images, PDFs, and notebooks. | See [Read Parameters](#read-parameters). | Main session and subagents. Kept in background subagents. | ✅ | ✅ | ❌ |
+| `Write` | <Documented /> | Creates or overwrites a file. | `file_path` (string, required, absolute), `content` (string, required), `machine` (optional). A deny rule wins. | Main session and subagents. Kept in background subagents. | ❌ | ❌ | ❌ |
+| `Edit` | <Documented /> | Replaces an exact string in a file. | `file_path` (required), `old_string` (required), `new_string` (required, must differ), `replace_all` (boolean, default false), `machine` (optional). | Main session and subagents. Kept in background subagents. | ❌ | ❌ | ❌ |
+| `NotebookEdit` | <Documented /> | Edits a cell of a Jupyter notebook. | See [NotebookEdit Parameters](#notebookedit-parameters). | Main session and subagents. Kept in background subagents. | ❌ | ❌ | ✅ |
+| `Glob` | <Documented /> | Finds files by glob pattern. | `pattern` (string, required), `path` (string, optional, directory), `machine` (optional). | Main session and subagents. The docs say a subagent can get `Glob` and `Grep` when the main session lacks them (macOS, Linux, WSL). | ✅ | ✅ | ❌ |
+| `Grep` | <Documented /> | Searches file contents with ripgrep. | See [Grep Parameters](#grep-parameters). | Same as `Glob`. | ✅ | ✅ | ❌ |
+| `LSP` | <Documented /> | Code intelligence: definitions, references, symbols, hover, call hierarchy. | `operation`, `filePath` (required), `line` (int, 1 or more, required), `character` (int, 1 or more, required), `query` (optional, `workspaceSymbol` only). | Main session and subagents. Background subagents keep it since `2.1.280`. | ✅ | ✅ | ✅ |
+| `memory_read` | <Undocumented /> <Gated note="hidden server-side flag" /> | Reads a document from a memory store. | `store` (string, required), `path` (string, required). | ❓ | ✅ | ✅ | ❌ |
+| `memory_write` | <Undocumented /> <Gated note="hidden server-side flag" /> | Saves a document to a memory store. | `store`, `path`, `content` (all strings, required; `content` replaces the whole document), `if_version` (string, max 64, version token for compare-and-set). | ❓ | ❌ | ❌ | ❌ |
+| `memory_list` | <Undocumented /> <Gated note="hidden server-side flag" /> | Lists memory stores and their documents. | `store` (optional), `path_prefix` (optional, directory-aligned), `cursor` (optional). | ❓ | ✅ | ✅ | ❌ |
 
 ## Read Parameters
 
 | Parameter | What It Does | Required |
 | --- | --- | --- |
-| `file_path` | Absolute path of the file. | Yes |
-| `offset` | Line to start from, 0 or more. | No |
-| `limit` | Number of lines to read, more than 0. | No |
-| `pages` | PDF page range such as `1-5`, at most 20 pages at a time. | No |
-| `allow_large` | Reads a file or range over the usual size limits, as far as the context allows. | No |
-| `machine` | Name of an attached machine. Offered only when machines are attached. | No |
+| `file_path` | Absolute path of the file. | ✅ |
+| `offset` | Line to start from, 0 or more. | ❌ |
+| `limit` | Number of lines to read, more than 0. | ❌ |
+| `pages` | PDF page range such as `1-5`, at most 20 pages at a time. | ❌ |
+| `allow_large` | Reads a file or range over the usual size limits, as far as the context allows. | ❌ |
+| `machine` | Name of an attached machine. Offered only when machines are attached. | ❌ |
 
 ## NotebookEdit Parameters
 
 | Parameter | What It Does | Required |
 | --- | --- | --- |
-| `notebook_path` | Absolute path of the `.ipynb` file. | Yes |
-| `new_source` | The new source of the cell. | Yes |
-| `cell_id` | Cell to edit. For `insert`, the new cell goes after it. | No |
-| `cell_type` | `code` or `markdown`. Required for `insert`. | No |
-| `edit_mode` | `replace` (default), `insert`, or `delete`. | No |
+| `notebook_path` | Absolute path of the `.ipynb` file. | ✅ |
+| `new_source` | The new source of the cell. | ✅ |
+| `cell_id` | Cell to edit. For `insert`, the new cell goes after it. | ❌ |
+| `cell_type` | `code` or `markdown`. Required for `insert`. | ❌ |
+| `edit_mode` | `replace` (default), `insert`, or `delete`. | ❌ |
 
 ## Grep Parameters
 
 | Parameter | What It Does | Required |
 | --- | --- | --- |
-| `pattern` | The regular expression to search for. | Yes |
-| `path` | File or directory to search. | No |
-| `glob` | Glob filter such as `**/*.tsx`. | No |
-| `output_mode` | `content`, `files_with_matches` (default), or `count`. | No |
-| `-B` | Lines before each match. Needs `content` mode. | No |
-| `-A` | Lines after each match. Needs `content` mode. | No |
-| `-C` | Alias for `context`. | No |
-| `context` | Lines before and after each match. Needs `content` mode. | No |
-| `-n` | Shows line numbers. Needs `content` mode, default true. | No |
-| `-i` | Case-insensitive search. | No |
-| `-o` | Prints only the matched parts. Needs `content` mode. | No |
-| `type` | File type such as `js`, `py`, or `rust`. | No |
-| `head_limit` | Limits the first N entries. Default 250, `0` for no limit. | No |
-| `offset` | Skips the first N entries before `head_limit`. | No |
-| `multiline` | Lets `.` match newlines and patterns span lines. | No |
-| `machine` | Name of an attached machine. Offered only when machines are attached. | No |
+| `pattern` | The regular expression to search for. | ✅ |
+| `path` | File or directory to search. | ❌ |
+| `glob` | Glob filter such as `**/*.tsx`. | ❌ |
+| `output_mode` | `content`, `files_with_matches` (default), or `count`. | ❌ |
+| `-B` | Lines before each match. Needs `content` mode. | ❌ |
+| `-A` | Lines after each match. Needs `content` mode. | ❌ |
+| `-C` | Alias for `context`. | ❌ |
+| `context` | Lines before and after each match. Needs `content` mode. | ❌ |
+| `-n` | Shows line numbers. Needs `content` mode, default true. | ❌ |
+| `-i` | Case-insensitive search. | ❌ |
+| `-o` | Prints only the matched parts. Needs `content` mode. | ❌ |
+| `type` | File type such as `js`, `py`, or `rust`. | ❌ |
+| `head_limit` | Limits the first N entries. Default 250, `0` for no limit. | ❌ |
+| `offset` | Skips the first N entries before `head_limit`. | ❌ |
+| `multiline` | Lets `.` match newlines and patterns span lines. | ❌ |
+| `machine` | Name of an attached machine. Offered only when machines are attached. | ❌ |
 
 ## Example
 

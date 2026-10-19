@@ -12,8 +12,8 @@ A row with the Gated badge only works when a feature flag or server gate allows 
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. |
-| Can you change it? | Yes. |
+| Can you use it? | ✅ Yes. |
+| Can you change it? | ✅ Yes. |
 | Can you turn it on or off? | That is the point of this page. Most take `1` to turn on and `0` to turn off. |
 | Where does it live? | Your shell or the `env` key of a settings file. |
 | Rows on this page | 66 variables |

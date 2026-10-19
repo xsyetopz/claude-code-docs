@@ -12,7 +12,7 @@ The `env` and `sandbox` keys are objects that have their own pages elsewhere.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Every key here works today. |
+| Can you use it? | ✅ Yes. Every key here works today. |
 | Can you change it? | Edit a settings file by hand. |
 | Can you turn it on or off? | Boolean keys such as `autoMemoryEnabled` and `autoCompactEnabled` switch a feature. |
 | Where does it live? | `~/.claude/settings.json`, `.claude/settings.json`, `.claude/settings.local.json`, or managed settings |

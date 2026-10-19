@@ -11,8 +11,8 @@ Its events tell a mod when a session starts, ends, compacts, or gets a message.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. `await $.session.cwd()`, `await $.session.messages()`, and more. |
-| Can you change it? | Yes. Hook the events to rewrite a stored row, veto a compact, or consume a message. |
+| Can you use it? | ✅ Yes. `await $.session.cwd()`, `await $.session.messages()`, and more. |
+| Can you change it? | ✅ Yes. Hook the events to rewrite a stored row, veto a compact, or consume a message. |
 | Can you turn it on or off? | Return `{ skip }`, `{ consumed }`, or `{ deny }` from a hook to stop an action. |
 | Where does it live? | The hooks module. |
 | Status | <Documented /> |

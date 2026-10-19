@@ -13,8 +13,8 @@ The events themselves are on the page of their namespace. See the [Mod API Overv
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Export `register(on, options)` from the hooks module. |
-| Can you change it? | Yes. Pick events, add a matcher, and rewrite `e` before you call `next`. |
+| Can you use it? | ✅ Yes. Export `register(on, options)` from the hooks module. |
+| Can you change it? | ✅ Yes. Pick events, add a matcher, and rewrite `e` before you call `next`. |
 | Can you turn it on or off? | Remove the `on` call. `disableAllHooks` stops installed mods. |
 | Where does it live? | The hooks module named in `hooks/hooks.json`. |
 | Status | <Documented /> <Differs note="One item differs between the docs and the type file." /> |

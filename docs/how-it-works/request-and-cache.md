@@ -13,8 +13,8 @@ What you change in the request decides what the cache can reuse, so it decides s
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Every model call uses it. |
-| Can you change it? | Yes. Change the cache lifetime, add body fields, or turn caching off. |
+| Can you use it? | ✅ Yes. Every model call uses it. |
+| Can you change it? | ✅ Yes. Change the cache lifetime, add body fields, or turn caching off. |
 | Can you turn it on or off? | `DISABLE_PROMPT_CACHING`, and the per-family variants. |
 | Where does it live? | Built in memory for each call. A record is saved in the transcript as `api-request` lines. |
 | Status | <Documented /> <Undocumented /> |
@@ -23,7 +23,7 @@ What you change in the request decides what the cache can reuse, so it decides s
 
 The API reads the parts in this order: tools, then system, then messages.
 A change in an early part makes the later parts miss the cache.
-Source: How Claude Code Uses Prompt Caching, in the official docs.
+Source: [How Claude Code Uses Prompt Caching](https://code.claude.com/docs/en/prompt-caching).
 
 ```mermaid
 flowchart LR
@@ -50,7 +50,7 @@ The field list comes from the official docs and from an `api-request` line that 
 | `model` | <Documented /> | The model ID. |
 | `max_tokens` | <Documented /> | The output limit. `CLAUDE_CODE_MAX_OUTPUT_TOKENS` can change it up to the model cap. |
 | `thinking` | <Documented /> | The thinking mode, such as `{"type": "adaptive"}`. |
-| `output_config` | <Documented /> | The `effort` level, the format of structured output, and `task_budget`. See Gateway Compatibility Guide in the official docs. |
+| `output_config` | <Documented /> | The `effort` level, the format of structured output, and `task_budget`. See [Gateway Compatibility Guide](https://code.claude.com/docs/en/llm-gateway-protocol) in the official docs. |
 | `context_management` | <Documented /> | Edits that clear old thinking or old tool results. |
 | `betas` | <Documented /> | The list of beta values, sent in the `anthropic-beta` header. |
 | `safeguards` | <Undocumented /> | A list of safety checks, such as `dangerous_tool_use`, with the context that each check needs. |
@@ -92,7 +92,7 @@ sequenceDiagram
 
 ## Cache Lifetime
 
-Sources: How Claude Code Uses Prompt Caching (section "Cache lifetime") and Environment Variables, in the official docs.
+Sources: [How Claude Code Uses Prompt Caching: Cache Lifetime](https://code.claude.com/docs/en/prompt-caching#cache-lifetime) and [Environment Variables](https://code.claude.com/docs/en/env-vars).
 
 | Item | Status | Effect |
 | --- | --- | --- |
@@ -110,7 +110,7 @@ The cache is per machine and per folder, because the prompt holds memory paths a
 
 ## What Breaks the Cache
 
-Source: How Claude Code Uses Prompt Caching, in the official docs.
+Source: [How Claude Code Uses Prompt Caching](https://code.claude.com/docs/en/prompt-caching).
 
 | Action | Status | Effect |
 | --- | --- | --- |

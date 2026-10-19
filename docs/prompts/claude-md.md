@@ -10,8 +10,8 @@ Where project memory files land. Put a `CLAUDE.md` file in the project folder.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. |
-| Can you change it? | Yes. You write the file. |
+| Can you use it? | ✅ Yes. |
+| Can you change it? | ✅ Yes. You write the file. |
 | Can you turn it on or off? | Add or remove the file. `CLAUDE_CODE_DISABLE_CLAUDE_MDS=1` skips them. |
 | Where does it live? | `CLAUDE.md`, `.claude/CLAUDE.md`, `~/.claude/CLAUDE.md`. |
 | Status | <Documented /> |

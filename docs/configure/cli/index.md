@@ -12,8 +12,8 @@ Flags change one run. Subcommands do separate jobs, such as sign-in, plugins, an
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Run `claude` in a project folder. |
-| Can you change it? | Yes. Add flags for one run, or set the same choice in a settings file or an environment variable. |
+| Can you use it? | ✅ Yes. Run `claude` in a project folder. |
+| Can you change it? | ✅ Yes. Add flags for one run, or set the same choice in a settings file or an environment variable. |
 | Can you turn it on or off? | Each flag is its own switch. Flags win over settings for that run. |
 | Where does it live? | The `claude` program on your `PATH`. Run `claude --help` for the list. |
 | Status | <Documented /> <Undocumented /> |

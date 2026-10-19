@@ -13,8 +13,8 @@ The older `.claude/commands/` folder still works and acts like a skill.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Type `/` to see the list. |
-| Can you change it? | Yes. Write your own skills and commands. Built-in commands are fixed. |
+| Can you use it? | ✅ Yes. Type `/` to see the list. |
+| Can you change it? | ✅ Yes. Write your own skills and commands. Built-in commands are fixed. |
 | Can you turn it on or off? | `skillOverrides`, `disableBundledSkills`, `disableSkillShellExecution`, `--disable-slash-commands`, and the `disable-model-invocation` and `user-invocable` keys. |
 | Where does it live? | `~/.claude/skills/`, `.claude/skills/`, plugins, managed folders, and `.claude/commands/`. |
 | Status | <Documented /> <Undocumented /> <Differs /> <Gated /> |
@@ -87,8 +87,8 @@ When two skills share a name, the one in the higher place wins.
 
 ```mermaid
 flowchart TD
-    A[You type /name or Claude picks a skill] --> B[Find the skill by name and place]
-    B --> C[Read SKILL.md and frontmatter]
+    A["You type <code>/name</code> or Claude picks a skill"] --> B[Find the skill by name and place]
+    B --> C["Read <code>SKILL.md</code> and frontmatter"]
     C --> D[Fill arguments and variables]
     D --> E[Run shell injection blocks]
     E --> F{context is fork?}

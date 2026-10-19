@@ -13,8 +13,8 @@ For example, `{"type": "command", "command": "./check.sh"}` runs a script.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Five types work. |
-| Can you change it? | Yes. Set the fields in each `hooks` array entry. |
+| Can you use it? | ✅ Yes. Five types work. |
+| Can you change it? | ✅ Yes. Set the fields in each `hooks` array entry. |
 | Can you turn it on or off? | Remove the entry, or use `disableAllHooks`. |
 | Where does it live? | Inside the `hooks` array of a matcher group. |
 | Status | <Documented /> <Undocumented /> <Differs /> |

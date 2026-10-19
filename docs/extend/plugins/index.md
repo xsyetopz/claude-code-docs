@@ -13,8 +13,8 @@ This page gives the big picture. The other pages list every key, command, and pa
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Install with `claude plugin install` or the `/plugin` panel. |
-| Can you change it? | Yes. Write your own plugin folder and an optional marketplace file. |
+| Can you use it? | ✅ Yes. Install with `claude plugin install` or the `/plugin` panel. |
+| Can you change it? | ✅ Yes. Write your own plugin folder and an optional marketplace file. |
 | Can you turn it on or off? | `claude plugin enable` and `disable`, or `enabledPlugins` in settings. Managed settings can lock the rules. |
 | Where does it live? | `~/.claude/plugins/` for installs. `.claude-plugin/plugin.json` in the plugin folder. |
 | Status | <Documented /> <Undocumented /> |
@@ -74,12 +74,12 @@ claude plugin install my-plugin@my-marketplace --scope project
 
 ```mermaid
 flowchart LR
-  M[marketplace.json] -->|plugin entry and source| F[Fetch the source]
+  M["<code>marketplace.json</code>"] -->|plugin entry and source| F[Fetch the source]
   F --> C[Copy to the plugin cache]
-  C --> R[Install record in installed_plugins.json]
-  R --> E{enabledPlugins}
-  E -->|true| L[Load skills, hooks, MCP, and more]
-  E -->|false| X[Stay off]
+  C --> R["Install record in <code>installed_plugins.json</code>"]
+  R --> E{"<code>enabledPlugins</code>"}
+  E -->|"<code>true</code>"| L[Load skills, hooks, MCP, and more]
+  E -->|"<code>false</code>"| X[Stay off]
 ```
 
 Claude Code reads the marketplace, fetches the source of the plugin you pick, and copies it into a cache folder.

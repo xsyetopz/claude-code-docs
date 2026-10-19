@@ -11,9 +11,9 @@ They describe files, stored values, timers, web requests, child processes, and s
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes, as types. `import type` them from `claude-code`. |
-| Can you change it? | No. These are types only. They describe data, and they do not hold settings. |
-| Can you turn it on or off? | No. A type has no switch. |
+| Can you use it? | ✅ Yes, as types. `import type` them from `claude-code`. |
+| Can you change it? | ❌ No. These are types only. They describe data, and they do not hold settings. |
+| Can you turn it on or off? | ❌ No. A type has no switch. |
 | Where does it live? | The published type file `types-2.1.303.d.ts` and `.claude-plugin/types/claude-code/index.d.ts`. |
 | Status | <Documented /> |
 

@@ -12,8 +12,8 @@ Several are experimental and may change without notice.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. |
-| Can you change it? | Yes. |
+| Can you use it? | ✅ Yes. |
+| Can you change it? | ✅ Yes. |
 | Can you turn it on or off? | Switch rows take `1` or `0`. |
 | Where does it live? | Your shell or the `env` key of a settings file. |
 | Rows on this page | 77 variables |

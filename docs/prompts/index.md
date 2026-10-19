@@ -58,11 +58,11 @@ The chart shows what the captures prove. The order of the first three checks was
 
 ```mermaid
 flowchart TD
-  A["Start Claude Code"] --> B{"--bare or CLAUDE_CODE_SIMPLE=1?"}
+  A["Start Claude Code"] --> B{"<code>--bare</code> or <code>CLAUDE_CODE_SIMPLE</code>=1?"}
   B -- yes --> C["Bare: two-line body, empty environment message, 3 tools"]
-  B -- no --> D{"--system-prompt, --system-prompt-file, or --agent?"}
+  B -- no --> D{"<code>--system-prompt</code>, <code>--system-prompt-file</code>, or <code>--agent</code>?"}
   D -- yes --> E["Your text or the agent file replaces the body"]
-  D -- no --> F{"CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT"}
+  D -- no --> F{"<code>CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT</code>"}
   F -- "0" --> G["Full prompt"]
   F -- "1" --> H["Lean prompt"]
   F -- unset --> I{"Which model?"}
@@ -74,10 +74,10 @@ flowchart TD
   E --> L
   K -- "yes, keep-coding-instructions false" --> M["Style text added, Doing tasks removed on the full prompt"]
   K -- "yes, keep true, or no style" --> N["Style text added if set"]
-  M --> L{"--append-system-prompt?"}
+  M --> L{"<code>--append-system-prompt</code>?"}
   N --> L
   L -- yes --> O["Text added at the end, identity line changes"]
-  L -- no --> P{"--exclude-dynamic-system-prompt-sections?"}
+  L -- no --> P{"<code>--exclude-dynamic-system-prompt-sections</code>?"}
   O --> P
   P -- yes --> Q["Memory moves to the first user message"]
   P -- no --> R["Send request"]

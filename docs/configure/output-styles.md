@@ -13,8 +13,8 @@ For project facts, use [Memory and Rules](memory-and-rules.md). For actions that
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Run `/output-style`, or pick one in `/config`. |
-| Can you change it? | Yes. Set `outputStyle`, or write your own Markdown file. |
+| Can you use it? | ✅ Yes. Run `/output-style`, or pick one in `/config`. |
+| Can you change it? | ✅ Yes. Set `outputStyle`, or write your own Markdown file. |
 | Can you turn it on or off? | Pick `default`, or remove `outputStyle`. `CLAUDE_CODE_SAFE_MODE=1` skips all styles. |
 | Where does it live? | `~/.claude/output-styles/`, `.claude/output-styles/`, managed settings, and plugins. |
 | Status | <Documented /> <Undocumented /> |
@@ -94,12 +94,12 @@ Captured prompts for custom styles: [Custom Style](../prompts/style-custom.md), 
 - The active style text goes with every request. Source: the official [Output Styles](https://code.claude.com/docs/en/output-styles) page.
 - A style applies to the main thread and to a fork. Other subagents use their own system prompt. Source: the same page.
 - The style name shows in the status line field `output_style.name`. See [Status Line](status-line.md).
-- The SDK init message can report `outputStyle` as `null` or as `\{ name, isKeepingCodingInstructions \}`. Source: the program string `no { outputStyle } (null, or { name, isKeepingCodingInstructions })`.
+- The SDK init message can report `outputStyle` as `null` or as `{ name, isKeepingCodingInstructions }`. Source: the program string `no { outputStyle } (null, or { name, isKeepingCodingInstructions })`.
 
 ```mermaid
 flowchart LR
   Files[Style files and built-ins] --> Merge[Merge by name]
-  Merge --> Pick[outputStyle or /output-style]
+  Merge --> Pick["<code>outputStyle</code> or <code>/output-style</code>"]
   Pick --> Plug{force-for-plugin?}
   Plug -->|yes| Force[Plugin style wins]
   Plug -->|no| Use[Chosen style]

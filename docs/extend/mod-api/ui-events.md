@@ -11,8 +11,8 @@ The second table lists the events that the `$.ui` methods raise.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. `on('ui.render', { component: 'Spinner' }, ...)` |
-| Can you change it? | Yes. Return a new tree from `ui.render`, or rewrite `e` with `next({ ...e, ... })`. |
+| Can you use it? | ✅ Yes. `on('ui.render', { component: 'Spinner' }, ...)` |
+| Can you change it? | ✅ Yes. Return a new tree from `ui.render`, or rewrite `e` with `next({ ...e, ... })`. |
 | Can you turn it on or off? | A `deny` from a hook refuses a scroll, focus, or close. An invalid tree draws the engine's own drawing. |
 | Where does it live? | The hooks module. |
 | Status | <Documented /> |

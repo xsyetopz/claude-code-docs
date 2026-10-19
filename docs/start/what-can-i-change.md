@@ -12,7 +12,7 @@ Each row links to the page that lists every key, flag, or field.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Find your goal in a table below and follow the link. |
+| Can you use it? | ✅ Yes. Find your goal in a table below and follow the link. |
 | Can you change it? | Every row names the surface that changes the goal. |
 | Can you turn it on or off? | The "How" column names the switch. |
 | Where does it live? | The pages in Configure, Extend, and How It Works. |

@@ -12,8 +12,8 @@ Use them behind a company proxy or when you route traffic through a gateway.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. `HTTPS_PROXY`, `NO_PROXY`, and `ANTHROPIC_BASE_URL` are the usual ones. |
-| Can you change it? | Yes. Set a different value and restart `claude`. |
+| Can you use it? | ✅ Yes. `HTTPS_PROXY`, `NO_PROXY`, and `ANTHROPIC_BASE_URL` are the usual ones. |
+| Can you change it? | ✅ Yes. Set a different value and restart `claude`. |
 | Can you turn it on or off? | Unset the variable. |
 | Where does it live? | Your shell or the `env` key of a settings file. Project settings cannot set some endpoint variables before you trust the folder. |
 | Rows on this page | 64 variables |

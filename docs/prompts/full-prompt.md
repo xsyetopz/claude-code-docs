@@ -10,8 +10,8 @@ The long prompt, forced on a model that would get the lean one. Set `CLAUDE_CODE
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. |
-| Can you change it? | Yes. Set or unset the env var. |
+| Can you use it? | ✅ Yes. |
+| Can you change it? | ✅ Yes. Set or unset the env var. |
 | Can you turn it on or off? | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=0` (also `false`, `no`, `off`). |
 | Where does it live? | Environment variable. Put it under `env` in `settings.json` to keep it. |
 | Status | <Documented /> |

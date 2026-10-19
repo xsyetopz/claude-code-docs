@@ -13,9 +13,9 @@ Use them when you write a mod hook for an event such as `classic.Stop`.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes, as types. `import type { ClassicEventOf } from 'claude-code'`. The import is empty at run time. |
-| Can you change it? | No. These are types only. They describe data, and they do not hold settings. |
-| Can you turn it on or off? | No. A type has no switch. |
+| Can you use it? | ✅ Yes, as types. `import type { ClassicEventOf } from 'claude-code'`. The import is empty at run time. |
+| Can you change it? | ❌ No. These are types only. They describe data, and they do not hold settings. |
+| Can you turn it on or off? | ❌ No. A type has no switch. |
 | Where does it live? | The published type file `types-2.1.303.d.ts` and `.claude-plugin/types/claude-code/index.d.ts`. |
 | Status | <Documented /> |
 
@@ -35,9 +35,9 @@ The chain runs managed settings hooks first, then hooks modules, then the other 
 ```mermaid
 flowchart LR
   A[Engine reaches a classic hook point] --> B[Managed settings hooks]
-  B --> C[Hooks modules: classic.Event]
+  B --> C["Hooks modules: <code>classic.Event</code>"]
   C --> D[Other settings hooks]
-  D --> E[Result: ClassicResultOf]
+  D --> E["Result: <code>ClassicResultOf</code>"]
 ```
 
 ## Types without Fields

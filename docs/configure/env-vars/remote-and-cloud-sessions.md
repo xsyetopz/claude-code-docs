@@ -13,7 +13,7 @@ Most are set by the host, and Claude Code reads them. Set one yourself only when
 | Question | Answer |
 | --- | --- |
 | Can you use it? | Partly. Many are set by the host program that starts Claude Code. |
-| Can you change it? | Yes, if you control the process that starts Claude Code. |
+| Can you change it? | ✅ Yes, if you control the process that starts Claude Code. |
 | Can you turn it on or off? | Unset the variable. |
 | Where does it live? | The environment of the Claude Code process. |
 | Rows on this page | 137 variables |

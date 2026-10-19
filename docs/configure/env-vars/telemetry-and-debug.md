@@ -12,8 +12,8 @@ Use them to opt out of reporting or to send metrics to your own collector.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. |
-| Can you change it? | Yes. |
+| Can you use it? | ✅ Yes. |
+| Can you change it? | ✅ Yes. |
 | Can you turn it on or off? | `DISABLE_TELEMETRY` opts out when it has any non-empty value, even `0` or `false`. Unset it to turn telemetry back on. `DO_NOT_TRACK=1` has the same effect. |
 | Where does it live? | Your shell, or managed settings. OTEL exporter variables in project or local settings do not apply, apart from a few off values. |
 | Rows on this page | 139 variables |
@@ -180,12 +180,12 @@ The table is sorted by name. See [Environment Variables](index.md#how-to-read-th
 
 Telemetry features read their variables once at startup, so a change to `env` in a settings file needs a relaunch.
 `DISABLE_TELEMETRY` and `DO_NOT_TRACK` also turn off feature-flag fetching, so features that depend on server flags stop working.
-The official docs list the affected features under "Features that need feature-flag fetching".
+The official docs list the affected features under [Features That Need Feature-Flag Fetching](https://code.claude.com/docs/en/env-vars#features-that-need-feature-flag-fetching).
 
 ## Related Pages
 
 - [Environment Variables](index.md): how Claude Code reads variables and which value wins.
-- Monitoring usage (see the official docs)
+- [Monitoring](https://code.claude.com/docs/en/monitoring-usage) (see the official docs)
 - [Undocumented Items](../../reference/undocumented.md): every item that only the program shows.
 
 Source: the program (variable names found in the `2.1.303` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.

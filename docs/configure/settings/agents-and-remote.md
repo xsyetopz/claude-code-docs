@@ -12,7 +12,7 @@ Rows marked as undocumented can change in any release.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. |
+| Can you use it? | ✅ Yes. |
 | Can you change it? | Edit a settings file. |
 | Can you turn it on or off? | `disableRemoteControl`, `disableAgentView`, and `disableWorkflows` turn features off. |
 | Where does it live? | `~/.claude/settings.json`, `.claude/settings.json`, `.claude/settings.local.json`, or managed settings |

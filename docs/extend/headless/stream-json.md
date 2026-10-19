@@ -12,7 +12,7 @@ For example, `claude -p "Explain this repo" --output-format stream-json --verbos
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes, in print mode. |
+| Can you use it? | ✅ Yes, in print mode. |
 | Can you change it? | Flags add more lines: `--include-partial-messages`, `--include-hook-events`, `--forward-subagent-text`, `--replay-user-messages`. |
 | Can you turn it on or off? | `--output-format stream-json` and `--input-format stream-json`. |
 | Where does it live? | Stdout and stdin of the `claude -p` process. |
@@ -22,7 +22,7 @@ For example, `claude -p "Explain this repo" --output-format stream-json --verbos
 
 The tables list the message types that the bundled schema of `2.1.303` defines.
 Each row has a short form of the schema description. A row without a description says so.
-A type is marked <Documented /> when a docs page other than the changelog and the Agent SDK pages names it.
+A type is marked <Documented /> when a docs page other than the [changelog](https://code.claude.com/docs/en/changelog) and the Agent SDK pages names it.
 Source: [Run Claude Code Programmatically](https://code.claude.com/docs/en/headless), [CLI Reference](https://code.claude.com/docs/en/cli-reference), and the program (the message schema).
 A type written as `system` / `init` means `type` is `system` and `subtype` is `init`.
 

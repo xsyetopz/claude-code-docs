@@ -12,8 +12,8 @@ For example, a file with `name: reviewer` and `tools: Read, Grep` makes a read-o
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. |
-| Can you change it? | Yes. Edit the file, or pass `--agents` JSON. |
+| Can you use it? | ✅ Yes. |
+| Can you change it? | ✅ Yes. Edit the file, or pass `--agents` JSON. |
 | Can you turn it on or off? | Delete the file, or deny `Agent(name)` in `permissions.deny`. |
 | Where does it live? | `.claude/agents/`, `~/.claude/agents/`, a plugin `agents/` folder, or the `--agents` flag. |
 | Status | <Documented /> <Undocumented /> <Differs /> <Gated /> |

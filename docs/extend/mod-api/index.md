@@ -15,8 +15,8 @@ These pages cover `2.1.303`. Official pages: [Mods Overview](https://code.claude
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Put `modules` in `hooks/hooks.json` of a plugin and export `register` from the module. |
-| Can you change it? | Yes. Edit the module. Claude Code reloads it when you save. |
+| Can you use it? | ✅ Yes. Put `modules` in `hooks/hooks.json` of a plugin and export `register` from the module. |
+| Can you change it? | ✅ Yes. Edit the module. Claude Code reloads it when you save. |
 | Can you turn it on or off? | `disableAllHooks` stops installed mods. `--safe-mode` and `--bare` load none. See [Files, Nouns, and Gates](nouns-and-gates.md#gates-that-stop-mods). |
 | Where does it live? | A plugin folder: `.claude-plugin/plugin.json`, `hooks/hooks.json`, and the hooks module. |
 | Status | <Documented /> <Differs note="The docs add the re-entry value of next.error.kind, which the type file lacks." /> |
@@ -38,13 +38,16 @@ export function register(on) {
 
 A small mod has three files.
 
-```text
-first-mod/
-├── .claude-plugin/plugin.json
-└── hooks/
-    ├── hooks.json
-    └── register.js
-```
+<FileTree>
+
+- `first-mod/`
+  - `.claude-plugin/`
+    - `plugin.json`
+  - `hooks/`
+    - `hooks.json`
+    - `register.js`
+
+</FileTree>
 
 - `plugin.json` is the manifest of the plugin. It has a `name`, a `version`, and a `description`.
 - `hooks.json` holds `{ "modules": ["./register.js"] }`. That key makes the plugin a mod.
@@ -62,11 +65,11 @@ The docs build the same mod step by step in [Create a Mod](https://code.claude.c
 
 ```mermaid
 flowchart TD
-  A[hooks.json modules] --> B[Engine reads module source]
-  B --> C[plugin.register hooks may refuse it]
-  C --> D[engine.create builds the object $]
+  A["<code>hooks.json</code> modules"] --> B[Engine reads module source]
+  B --> C["<code>plugin.register</code> hooks may refuse it"]
+  C --> D["<code>engine.create</code> builds the object $"]
   D --> E[register on, options runs once]
-  E --> F[session.start fires]
+  E --> F["<code>session.start</code> fires"]
 ```
 
 1. The plugin has `hooks/hooks.json` with `modules`. It holds one path, relative to that file. A second entry is refused.

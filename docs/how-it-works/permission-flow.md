@@ -13,7 +13,7 @@ This page shows the order and where you can step in.
 | Question | Answer |
 | --- | --- |
 | Can you use it? | It runs for every tool call. You see it as a prompt, or as a silent allow or deny. |
-| Can you change it? | Yes. Change rules, the mode, hooks, or the sandbox. See the related pages. |
+| Can you change it? | ✅ Yes. Change rules, the mode, hooks, or the sandbox. See the related pages. |
 | Can you turn it on or off? | You cannot turn the flow off. `bypassPermissions` skips most checks, but not all. |
 | Where does it live? | Inside the program. The inputs come from settings files, flags, and hooks. |
 | Status | <Documented /> <Undocumented /> |
@@ -36,18 +36,18 @@ flowchart TD
   Call[Tool call] --> Deny{Explicit deny or ask rule?}
   Deny -->|deny| Denied[Denied]
   Deny -->|ask| Prompt
-  Deny -->|none| Hook[PreToolUse hooks]
+  Deny -->|none| Hook["<code>PreToolUse</code> hooks"]
   Hook -->|deny| Denied
   Hook -->|ask| Prompt
   Hook -->|allow or none| Allow{Allow rule, edit rule, read-only list, or sandbox auto-allow?}
   Allow -->|yes| Run[Allowed, tool runs]
   Allow -->|no| Mode{Permission mode}
-  Mode -->|default| Prompt[PermissionRequest hooks, then the dialog]
-  Mode -->|dontAsk| Denied
-  Mode -->|auto| Class[Auto mode classifier]
-  Mode -->|bypassPermissions| Run
+  Mode -->|"<code>default</code>"| Prompt["<code>PermissionRequest</code> hooks, then the dialog"]
+  Mode -->|"<code>dontAsk</code>"| Denied
+  Mode -->|"<code>auto</code>"| Class[Auto mode classifier]
+  Mode -->|"<code>bypassPermissions</code>"| Run
   Class -->|allow| Run
-  Class -->|block| Fired[PermissionDenied hook]
+  Class -->|block| Fired["<code>PermissionDenied</code> hook"]
   Class -->|unsure| Prompt
   Fired --> Denied
   Prompt -->|you allow| Run

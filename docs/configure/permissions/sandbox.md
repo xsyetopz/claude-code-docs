@@ -12,8 +12,8 @@ Permission rules decide whether a call runs. The sandbox limits what the call ca
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes, on macOS, Linux, and WSL. Set `sandbox.enabled` to `true`. |
-| Can you change it? | Yes. Edit the `sandbox` key in a settings file. |
+| Can you use it? | ✅ Yes, on macOS, Linux, and WSL. Set `sandbox.enabled` to `true`. |
+| Can you change it? | ✅ Yes. Edit the `sandbox` key in a settings file. |
 | Can you turn it on or off? | `sandbox.enabled`. It is `false` by default. Without its dependencies, a warning shows and commands run unsandboxed. |
 | Where does it live? | The `sandbox` key of any settings scope. Some keys work only in managed or user settings. |
 | Status | <Documented /> <Undocumented /> <Gated /> |
@@ -121,7 +121,7 @@ Source for all four: the program prompt and warning texts.
 
 ```mermaid
 flowchart LR
-  Call[Bash call] --> Perm[Permission flow]
+  Call["<code>Bash</code> call"] --> Perm[Permission flow]
   Perm -->|allowed| Sb{Sandbox on?}
   Sb -->|no| Run[Run as a normal process]
   Sb -->|yes| Ex{Excluded command?}

@@ -10,8 +10,8 @@ Adds your text to the end of the prompt. Run `claude --append-system-prompt "you
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. |
-| Can you change it? | Yes. You give the text. |
+| Can you use it? | ✅ Yes. |
+| Can you change it? | ✅ Yes. You give the text. |
 | Can you turn it on or off? | `--append-system-prompt` or `--append-system-prompt-file`. |
 | Where does it live? | Command-line flags. |
 | Status | <Documented /> |

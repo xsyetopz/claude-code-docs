@@ -12,8 +12,8 @@ Most people never set them. Hosts such as the Agent SDK set them for you.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes, if you write a host program. |
-| Can you change it? | Yes. Set them in the child process environment. |
+| Can you use it? | ✅ Yes, if you write a host program. |
+| Can you change it? | ✅ Yes. Set them in the child process environment. |
 | Can you turn it on or off? | Unset the variable. |
 | Where does it live? | The environment of the Claude Code process. Project `env` cannot set most of them before trust. |
 | Rows on this page | 21 variables |

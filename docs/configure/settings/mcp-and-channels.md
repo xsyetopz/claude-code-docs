@@ -12,7 +12,7 @@ Administrators use these keys to allow or block servers.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. |
+| Can you use it? | ✅ Yes. |
 | Can you change it? | Edit a settings file. Allow and block lists need a managed source to bind users. |
 | Can you turn it on or off? | `enableAllProjectMcpServers`, `disableClaudeAiConnectors`, and `channelsEnabled` are switches. |
 | Where does it live? | `~/.claude/settings.json`, `.claude/settings.json`, `.claude/settings.local.json`, or managed settings |

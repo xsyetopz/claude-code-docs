@@ -14,27 +14,27 @@ The full list of models, aliases, and providers is on [Models and Providers](../
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Every request names a model. |
-| Can you change it? | Yes. Change the model, the effort, the thinking mode, the fallback chain, and the retry rules. |
+| Can you use it? | ✅ Yes. Every request names a model. |
+| Can you change it? | ✅ Yes. Change the model, the effort, the thinking mode, the fallback chain, and the retry rules. |
 | Can you turn it on or off? | Thinking can be turned off on older models. Fallback is off until you set a chain. |
 | Where does it live? | `--model`, `ANTHROPIC_MODEL`, `/model`, and the settings `model`, `modelSettings`, `availableModels`, `fallbackModel`, `effortLevel`. |
 | Status | <Documented /> <Undocumented /> |
 
 ## Choosing the Model
 
-Sources: Model Configuration and Hooks Reference in the official docs.
+Sources: [Model Configuration](https://code.claude.com/docs/en/model-config) and [Hooks Reference](https://code.claude.com/docs/en/hooks).
 
 ```mermaid
 flowchart TD
-  A[Model request] --> B{/model chosen in the session?}
+  A[Model request] --> B{"<code>/model</code> chosen in the session?"}
   B -- yes --> Use[Use it]
-  B -- no --> C{--model flag?}
+  B -- no --> C{"<code>--model</code> flag?"}
   C -- yes --> Use
-  C -- no --> D{ANTHROPIC_MODEL set?}
+  C -- no --> D{"<code>ANTHROPIC_MODEL</code> set?"}
   D -- yes --> Use
   D -- no --> E{model setting?}
   E -- yes --> Use
-  E -- no --> E2{ANTHROPIC_DEFAULT_MODEL set?}
+  E -- no --> E2{"<code>ANTHROPIC_DEFAULT_MODEL</code> set?"}
   E2 -- yes --> Use
   E2 -- no --> F[Default alias, by account and provider]
   Use --> G{Alias or full name?}
@@ -64,7 +64,7 @@ A switch of the model is a cache miss. See [Request and Cache](request-and-cache
 
 The effort levels are `low`, `medium`, `high`, `xhigh`, and `max`.
 A level that the model does not accept runs as the highest accepted level below it.
-Source: Model Configuration in the official docs.
+Source: [Model Configuration](https://code.claude.com/docs/en/model-config).
 
 | Item | Status | What it does |
 | --- | --- | --- |
@@ -78,7 +78,7 @@ Source: Model Configuration in the official docs.
 
 ## Thinking
 
-Sources: Model Configuration and Environment Variables in the official docs.
+Sources: [Model Configuration](https://code.claude.com/docs/en/model-config) and [Environment Variables](https://code.claude.com/docs/en/env-vars).
 
 | Item | Status | What it does |
 | --- | --- | --- |
@@ -145,16 +145,16 @@ flowchart TD
 - A fallback chain (`--fallback-model`, `fallbackModel`) holds at most three models.
   It covers overload and server errors, and not auth, billing, rate-limit, request-size, or transport errors.
   The switch lasts for the current turn, and the next turn tries the main model first.
-  Source: Model Configuration, section "Fallback model chains", in the official docs.
+  Source: [Model Configuration: Fallback Model Chains](https://code.claude.com/docs/en/model-config#fallback-model-chains).
 - Content-based fallback applies to the Fable models, Opus 5.5, Sonnet 5.5, and Opus 5.
   A request that is flagged as biology or cybersecurity runs again on the fallback model of that category.
   The session then stays on that model.
-  Source: Model Configuration, section "Automatic model fallback", in the official docs.
+  Source: [Model Configuration: Automatic Model Fallback](https://code.claude.com/docs/en/model-config#automatic-model-fallback).
 - `CLAUDE_CODE_NO_MODEL_FALLBACK` forbids the substitution of a model (<Undocumented />, a message in the program names it).
 
 ## Retries and Timeouts
 
-Sources: Error Reference (section "Automatic retries") and Environment Variables, in the official docs.
+Sources: [Error Reference: Automatic Retries](https://code.claude.com/docs/en/errors#automatic-retries) and [Environment Variables](https://code.claude.com/docs/en/env-vars).
 
 | Item | Status | Default | Effect |
 | --- | --- | --- | --- |

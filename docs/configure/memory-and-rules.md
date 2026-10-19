@@ -13,8 +13,8 @@ Claude treats all of these as context, not as enforced configuration. The text a
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Write `CLAUDE.md` in your project, or run `/memory`. |
-| Can you change it? | Yes. Edit the files, or set `autoMemoryEnabled`, `autoMemoryDirectory`, and `claudeMdExcludes`. |
+| Can you use it? | ✅ Yes. Write `CLAUDE.md` in your project, or run `/memory`. |
+| Can you change it? | ✅ Yes. Edit the files, or set `autoMemoryEnabled`, `autoMemoryDirectory`, and `claudeMdExcludes`. |
 | Can you turn it on or off? | `autoMemoryEnabled`, `CLAUDE_CODE_DISABLE_AUTO_MEMORY=1`, and `CLAUDE_CODE_DISABLE_CLAUDE_MDS=1`. |
 | Where does it live? | `~/.claude/CLAUDE.md`, `./CLAUDE.md`, `.claude/rules/`, and `~/.claude/projects/<project>/memory/`. |
 | Status | <Documented /> <Undocumented /> <Differs /> |
@@ -122,12 +122,12 @@ See [The System Prompt](../how-it-works/system-prompt.md) and [Context and Compa
 
 ```mermaid
 flowchart TD
-  Start[Session start] --> Managed[Managed CLAUDE.md]
-  Managed --> User[User CLAUDE.md and rules]
-  User --> Proj[Project CLAUDE.md, CLAUDE.local.md, rules without paths]
-  Proj --> Auto[MEMORY.md index]
+  Start[Session start] --> Managed["Managed <code>CLAUDE.md</code>"]
+  Managed --> User["User <code>CLAUDE.md</code> and rules"]
+  User --> Proj["Project <code>CLAUDE.md</code>, <code>CLAUDE.local.md</code>, rules without paths"]
+  Proj --> Auto["<code>MEMORY.md</code> index"]
   Auto --> Msg[User message after the system prompt]
-  Read[Claude reads a file] --> Nest[Nested CLAUDE.md or paths rule]
+  Read[Claude reads a file] --> Nest["Nested <code>CLAUDE.md</code> or paths rule"]
   Nest --> Msg
 ```
 

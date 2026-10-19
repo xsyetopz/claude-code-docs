@@ -13,8 +13,8 @@ For example, `$ARGUMENTS` in a `SKILL.md` file becomes the text that you type af
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes, in any skill or custom command. |
-| Can you change it? | Yes. Write the placeholders in the skill body. |
+| Can you use it? | ✅ Yes, in any skill or custom command. |
+| Can you change it? | ✅ Yes. Write the placeholders in the skill body. |
 | Can you turn it on or off? | `disableSkillShellExecution` turns off shell injection. `disable-model-invocation` and `user-invocable` control who can run a skill. |
 | Where does it live? | The body of `SKILL.md`, and the frontmatter keys. |
 | Status | <Documented /> <Undocumented /> |

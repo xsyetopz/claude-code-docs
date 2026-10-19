@@ -13,7 +13,7 @@ Many commands are hidden unless your account, provider, or settings allow them.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Type the command in the prompt. Some also work in `-p` and the SDK. |
+| Can you use it? | ✅ Yes. Type the command in the prompt. Some also work in `-p` and the SDK. |
 | Can you change it? | No for built-in commands. You can add your own with [skills](index.md). |
 | Can you turn it on or off? | Some have an env var or setting. The Notes column names it. |
 | Where does it live? | Inside the program. |

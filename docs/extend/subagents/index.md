@@ -12,8 +12,8 @@ For example, Claude can send a code search to the `Explore` subagent and get bac
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Claude starts subagents with the `Agent` tool. You can also name one with `@`, or run one as the main session with `--agent`. |
-| Can you change it? | Yes. Write agent files, or pass `--agents` JSON. |
+| Can you use it? | ✅ Yes. Claude starts subagents with the `Agent` tool. You can also name one with `@`, or run one as the main session with `--agent`. |
+| Can you change it? | ✅ Yes. Write agent files, or pass `--agents` JSON. |
 | Can you turn it on or off? | Deny `Agent` or `Agent(name)` in `permissions.deny`. Env vars and settings in [Subagent Runtime](runtime.md#limits-and-switches) set limits. |
 | Where does it live? | `.claude/agents/`, `~/.claude/agents/`, plugins, managed settings, or `--agents`. |
 | Status | <Documented /> <Undocumented /> <Gated /> |

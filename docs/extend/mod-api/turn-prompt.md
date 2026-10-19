@@ -12,8 +12,8 @@ The events follow a turn from start to end, and they cover the system prompt, th
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. `void $.prompt.submit({ text: "List the TODOs." })` |
-| Can you change it? | Yes. Rewrite `e` with `next({ ...e, text })`, or answer in place of the engine. |
+| Can you use it? | ✅ Yes. `void $.prompt.submit({ text: "List the TODOs." })` |
+| Can you change it? | ✅ Yes. Rewrite `e` with `next({ ...e, text })`, or answer in place of the engine. |
 | Can you turn it on or off? | Return `{ drop }`, `{ deny }`, or `{ text: null }` from the right hook to stop or remove something. |
 | Where does it live? | The hooks module. |
 | Status | <Documented /> |

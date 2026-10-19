@@ -14,8 +14,8 @@ The engine alone draws the permission dialog. A mod adds context to it with `$.u
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Hook `ui.render` with `{ component: '<Site>' }`. |
-| Can you change it? | Yes. Rewrite `e.props` with `next`, or return your own tree. |
+| Can you use it? | ✅ Yes. Hook `ui.render` with `{ component: '<Site>' }`. |
+| Can you change it? | ✅ Yes. Rewrite `e.props` with `next`, or return your own tree. |
 | Can you turn it on or off? | Return the engine's tree (call `next(e)`) to leave a site as it is. |
 | Where does it live? | The hooks module. JSX needs a `.tsx` or `.jsx` file. |
 | Status | <Documented /> <Differs note="The type file says the VS Code extension attaches no surface yet. The docs say it draws from 2.1.299." /> |

@@ -13,15 +13,15 @@ This page explains how the prompt is built. The exact captured texts are on the 
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. It is sent on every request. |
-| Can you change it? | Yes. Add text, replace it, pick the short or full version, or rewrite sections with a mod. |
+| Can you use it? | ✅ Yes. It is sent on every request. |
+| Can you change it? | ✅ Yes. Add text, replace it, pick the short or full version, or rewrite sections with a mod. |
 | Can you turn it on or off? | You can replace it (`--system-prompt`), shrink it (`--bare`), or choose the version (`CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT`). |
 | Where does it live? | Built in memory for each session. Output styles and flags change it. |
 | Status | <Documented /> <Undocumented /> |
 
 ## Ways to Change It
 
-Sources: CLI Reference, Output Styles, and Environment Variables in the official docs.
+Sources: [CLI Reference](https://code.claude.com/docs/en/cli-reference), [Output Styles](https://code.claude.com/docs/en/output-styles), and [Environment Variables](https://code.claude.com/docs/en/env-vars).
 
 | Item | Status | What it does |
 | --- | --- | --- |
@@ -42,16 +42,16 @@ Sources: CLI Reference, Output Styles, and Environment Variables in the official
 
 ```mermaid
 flowchart TD
-  Pick{Which version?} -->|short| Lean[lean_body section]
-  Pick -->|full| Full[intro, system, doing_tasks, actions, tools, tone]
+  Pick{Which version?} -->|short| Lean["<code>lean_body</code> section"]
+  Pick -->|full| Full["intro, system, <code>doing_tasks</code>, actions, tools, tone"]
   Lean --> Shared[Shared sections]
   Full --> Shared
   Shared --> Session[Session sections]
-  Session --> Hook[prompt.section hooks, not for shared sections such as lean_body]
+  Session --> Hook["prompt.section hooks, not for shared sections such as <code>lean_body</code>"]
   Hook --> Compose[prompt.compose hooks, whole list]
   Compose --> Flags{Flags}
-  Flags -->|--system-prompt| Replace[Replace the body]
-  Flags -->|--append-system-prompt| Append[Add text at the end]
+  Flags -->|"<code>--system-prompt</code>"| Replace[Replace the body]
+  Flags -->|"<code>--append-system-prompt</code>"| Append[Add text at the end]
   Replace --> Send[Send as system blocks]
   Append --> Send
   Flags -->|none| Send
@@ -75,10 +75,10 @@ Captures of 2.1.303 show the following. See [Captured System Prompts](../prompts
 
 ```mermaid
 flowchart TD
-  A{--bare or CLAUDE_CODE_SIMPLE=1?} -->|yes| Bare[Bare: two-line body, 3 tools]
-  A -->|no| B{--system-prompt, --system-prompt-file, or --agent?}
+  A{"<code>--bare</code> or <code>CLAUDE_CODE_SIMPLE</code>=1?"} -->|yes| Bare[Bare: two-line body, 3 tools]
+  A -->|no| B{"<code>--system-prompt</code>, <code>--system-prompt-file</code>, or <code>--agent</code>?"}
   B -->|yes| Rep[Your text or the agent file replaces the body]
-  B -->|no| C{CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT}
+  B -->|no| C{"<code>CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT</code>"}
   C -->|0| FullP[Full prompt]
   C -->|1| Short[Short prompt]
   C -->|not set| D{Which model?}
@@ -96,7 +96,7 @@ flowchart TD
 The program also has name rules (a name that ends in `-eap`, or `claude-mythos-5`, gets the short prompt) and server-set client data for a model.
 Those rules were not tested with every model. The catalog flag `lean_prompt` is the model-side input. See [Models](models.md#capabilities).
 
-The official docs say that Haiku 4.5, Sonnet 5, Opus 4.7, and earlier models get the full prompt, and newer models get the short one.
+The [official docs](https://code.claude.com/docs/en/env-vars) say that Haiku 4.5, Sonnet 5, Opus 4.7, and earlier models get the full prompt, and newer models get the short one.
 The captures match this for Sonnet 5.5, Opus 5.5, and Haiku 5.5. The old wiki said Sonnet gets the full prompt, and that is wrong.
 
 Captured texts: [lean prompt](../prompts/default-lean.md), [Sonnet 5.5](../prompts/default-sonnet.md), [Haiku 5.5](../prompts/default-haiku.md), and the [full prompt](../prompts/full-prompt.md).
@@ -189,7 +189,7 @@ You cannot set an experiment, but the env vars in the table switch some of the s
 ## Bare Mode
 
 `--bare` and `CLAUDE_CODE_SIMPLE=1` give the same result: a two-line body (`CWD: <path>` and `Date: <date>`), 3 tools, and an empty environment message.
-Source: Run Claude Code Programmatically, section "Start faster with bare mode", in the official docs for the flag. The body comes from the captures (<Undocumented />).
+Source: [Run Claude Code Programmatically: Start Faster with Bare Mode](https://code.claude.com/docs/en/headless#start-faster-with-bare-mode) for the flag. The body comes from the captures (<Undocumented />).
 See the captured [bare mode prompt](../prompts/bare.md) and [simple mode env var](../prompts/simple-env.md).
 
 ## Subagent Prompt

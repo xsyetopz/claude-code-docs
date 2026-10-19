@@ -12,7 +12,7 @@ Claude Code runs the helper when it needs a fresh value.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. |
+| Can you use it? | ✅ Yes. |
 | Can you change it? | Edit a settings file. The helper keys point at your own command. |
 | Can you turn it on or off? | The `forceLogin*` keys restrict sign-in methods. |
 | Where does it live? | `~/.claude/settings.json`, `.claude/settings.json`, `.claude/settings.local.json`, or managed settings |
@@ -25,7 +25,7 @@ Where to Set It tells you which files may set the key. See [Settings Files and S
 
 | Key | Status | Type | Default | What It Does | Where to Set It |
 | --- | --- | --- | --- | --- | --- |
-| `allowedProviders` | <Documented /> | Not stated | - | Limit which API providers a machine may use. Managed settings only. | Managed settings only |
+| `allowedProviders` | <Documented /> | ❓ | - | Limit which API providers a machine may use. Managed settings only. | Managed settings only |
 | `apiKeyHelper` | <Documented /> | string | - | Generate the API credential with your own command. | Any settings file |
 | `awsAuthRefresh` | <Documented /> | string | - | Refresh expired Bedrock credentials in `.aws` with your own command. | Any settings file |
 | `awsCredentialExport` | <Documented /> | string | - | Supply Bedrock credentials as JSON from your own command. | Any settings file |

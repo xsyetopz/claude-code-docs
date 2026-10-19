@@ -14,7 +14,7 @@ Without the filter the mod fails `claude plugin validate`, and `*` does not sele
 | Question | Answer |
 | --- | --- |
 | Can you use it? | Partly. An installed mod can hook the events for the collector. Only built-ins and the engine make records that are sent. |
-| Can you change it? | Yes. A hook can rewrite what a record carries, never where it goes (`e.to` is pinned). |
+| Can you change it? | ✅ Yes. A hook can rewrite what a record carries, never where it goes (`e.to` is pinned). |
 | Can you turn it on or off? | A hook can return `{ deny }`. The built-in `cc-plugin-telemetry` sends the records. |
 | Where does it live? | The hooks module. The collector is the one the operator of the session configured. |
 | Status | <Documented /> |

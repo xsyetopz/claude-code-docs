@@ -13,8 +13,8 @@ This page lists every model, alias, and provider switch. For how the choice is m
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Run `claude --model opus` or type `/model` in a session. |
-| Can you change it? | Yes. Use `--model`, `ANTHROPIC_MODEL`, `ANTHROPIC_DEFAULT_*_MODEL`, or the `model` and `modelOverrides` settings. |
+| Can you use it? | ✅ Yes. Run `claude --model opus` or type `/model` in a session. |
+| Can you change it? | ✅ Yes. Use `--model`, `ANTHROPIC_MODEL`, `ANTHROPIC_DEFAULT_*_MODEL`, or the `model` and `modelOverrides` settings. |
 | Can you turn it on or off? | Pick a provider with `CLAUDE_CODE_USE_BEDROCK` and its siblings. Limit choices with `availableModels`. |
 | Where does it live? | `~/.claude/settings.json` (user), `.claude/settings.json` (project), managed settings, and your shell environment. |
 | Status | <Documented /> <Undocumented /> |
@@ -23,14 +23,14 @@ This page lists every model, alias, and provider switch. For how the choice is m
 
 ```mermaid
 flowchart LR
-  A["/model in a session"] --> B["--model flag"]
-  B --> C["ANTHROPIC_MODEL"]
+  A["<code>/model</code> in a session"] --> B["<code>--model</code> flag"]
+  B --> C["<code>ANTHROPIC_MODEL</code>"]
   C --> D["model setting"]
-  D --> E["ANTHROPIC_DEFAULT_MODEL"]
+  D --> E["<code>ANTHROPIC_DEFAULT_MODEL</code>"]
 ```
 
 The list runs from highest to lowest priority.
-Source: Model Configuration, section "Setting your model", in the official docs.
+Source: [Model Configuration: Setting Your Model](https://code.claude.com/docs/en/model-config#setting-your-model).
 
 | Item | Status | What it does |
 | --- | --- | --- |
@@ -65,7 +65,7 @@ The catalog holds `opus`, `sonnet`, `haiku`, and `fable`. The help text of `--mo
 | `opusplan` | <Documented /> | `opus` in plan mode, then `sonnet` to run the plan. | |
 | `sonnet[1m]`, `opus[1m]`, `fable[1m]` | <Documented /> | The alias with a 1M window. | No effect when the alias already has a native 1M window. |
 
-Sources: Model Configuration in the official docs for the aliases, and the program for the exceptions.
+Sources: [Model Configuration](https://code.claude.com/docs/en/model-config) for the aliases, and the program for the exceptions.
 Opus 5.5 needs Claude Code v2.1.280 or later, Sonnet 5.5 needs v2.1.284, Haiku 5.5 needs v2.1.293, and Fable 5.1 needs v2.1.257.
 
 ### Pin the Models Behind an Alias
@@ -270,7 +270,7 @@ A row is <Documented /> when a docs page such as Amazon Bedrock or Model Configu
 
 ### Vertex Region Variables
 
-Each model has an environment variable that sets its region on Vertex. Environment Variables in the official docs lists them.
+Each model has an environment variable that sets its region on Vertex. [Environment Variables](https://code.claude.com/docs/en/env-vars) in the official docs lists them.
 The Mythos models have none, because they have no Vertex name.
 
 | `id` | Status | Env var |

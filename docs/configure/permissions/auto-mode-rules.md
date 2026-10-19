@@ -13,8 +13,8 @@ For example, `Production Deploy` blocks a deploy to production until you ask for
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. They apply whenever the permission mode is `auto`. |
-| Can you change it? | Yes. Add or replace entries with the `autoMode` setting. Keep the defaults with `$defaults`. |
+| Can you use it? | ✅ Yes. They apply whenever the permission mode is `auto`. |
+| Can you change it? | ✅ Yes. Add or replace entries with the `autoMode` setting. Keep the defaults with `$defaults`. |
 | Can you turn it on or off? | Drop `$defaults` from a list to remove the built-in entries of that list. |
 | Where does it live? | Inside the program. `claude auto-mode defaults` prints them as JSON. |
 | Status | <Documented /> <Undocumented /> |

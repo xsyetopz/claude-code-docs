@@ -13,8 +13,8 @@ This page describes the options only. It does not walk through any account sign-
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes, for `http` and `sse` servers (OAuth) and for `http`, `sse`, and `ws` servers (headers). |
-| Can you change it? | Yes. Server `oauth` fields, `headers`, `headersHelper`, and env vars. |
+| Can you use it? | ✅ Yes, for `http` and `sse` servers (OAuth) and for `http`, `sse`, and `ws` servers (headers). |
+| Can you change it? | ✅ Yes. Server `oauth` fields, `headers`, `headersHelper`, and env vars. |
 | Can you turn it on or off? | `claude mcp logout`, `Clear authentication` in `/mcp`, `disableClaudeAiConnectors`, `ENABLE_CLAUDEAI_MCP_SERVERS`. |
 | Where does it live? | The server entry in a config file. Tokens are in secure storage. |
 | Status | <Documented /> <Undocumented /> <Gated note="XAA needs CLAUDE_CODE_ENABLE_XAA=1" /> |
@@ -28,7 +28,7 @@ Source: [Connect Claude Code to Tools via MCP](https://code.claude.com/docs/en/m
 | OAuth flow | <Documented /> | Signs in to a remote server. | A `401` or `403` marks a server as needing auth. `/mcp` or `claude mcp login` runs the flow. A `401` on a signed-in server refreshes the token and retries once. |
 | `oauth.clientId` | <Documented /> | Gives a pre-configured client ID. | For servers with no dynamic client registration. Claude Code also finds a Client ID Metadata Document (CIMD) on its own. |
 | `oauth.callbackPort` | <Documented /> | Fixes the callback port. | The redirect URI is `http://localhost:PORT/callback`. A positive integer. |
-| `oauth.authServerMetadataUrl` | <Documented /> | Skips the discovery chain. | Must start with `https://`. The default order is RFC 9728 `/.well-known/oauth-protected-resource`, then RFC 8414 `/.well-known/oauth-authorization-server`. |
+| `oauth.authServerMetadataUrl` | <Documented /> | Skips the discovery chain. | Must start with `https://`. The default order is [RFC 9728](https://www.rfc-editor.org/rfc/rfc9728) `/.well-known/oauth-protected-resource`, then [RFC 8414](https://www.rfc-editor.org/rfc/rfc8414) `/.well-known/oauth-authorization-server`. |
 | `oauth.scopes` | <Documented /> | Pins the requested scopes. | One space-separated string, at least one character. It beats the scopes in metadata. Claude Code adds `offline_access` if the server advertises it. |
 | `oauth.xaa` | <Gated note="CLAUDE_CODE_ENABLE_XAA=1" /> | Enables XAA for the server. | Boolean. Without the gate Claude Code says `Remove 'oauth.xaa'`. |
 | `--client-id`, `--client-secret`, `--callback-port` | <Documented /> | Set the OAuth fields when you add a server. | See [MCP Commands](cli.md#flags). The secret is set only at add time. |

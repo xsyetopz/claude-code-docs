@@ -13,8 +13,8 @@ A render hook that reads a state value is drawn again when the value changes.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. `await $.fs.read("README.md")`, then `await $.store.set("count", 1)`. |
-| Can you change it? | Yes. Hook the matching event to rewrite, refuse, or answer a call. |
+| Can you use it? | ✅ Yes. `await $.fs.read("README.md")`, then `await $.store.set("count", 1)`. |
+| Can you change it? | ✅ Yes. Hook the matching event to rewrite, refuse, or answer a call. |
 | Can you turn it on or off? | No switch. The limits apply: a file is at most 4 MiB, and `$.store` holds at most 4 MiB of JSON. |
 | Where does it live? | `$.fs` uses the real file system. `$.store` and `$.state` belong to the plugin. |
 | Status | <Documented /> |

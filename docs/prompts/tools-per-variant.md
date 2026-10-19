@@ -10,8 +10,8 @@ Tools are part of what the model reads. Each request carries a list of tools, an
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Every request carries the list. |
-| Can you change it? | Yes. Use `--tools`, `--allowedTools`, `--disallowedTools`, or settings. |
+| Can you use it? | ✅ Yes. Every request carries the list. |
+| Can you change it? | ✅ Yes. Use `--tools`, `--allowedTools`, `--disallowedTools`, or settings. |
 | Can you turn it on or off? | `--bare` and `CLAUDE_CODE_SIMPLE=1` cut the list to three tools. |
 | Where does it live? | Built into the program. |
 | Status | <Undocumented /> |

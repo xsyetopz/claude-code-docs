@@ -13,8 +13,8 @@ This page covers the flags, the files, and the cleanup rules. The line format is
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Every session is saved unless you turn it off. |
-| Can you change it? | Yes. Move the folder, change the retention, or skip saving. |
+| Can you use it? | ✅ Yes. Every session is saved unless you turn it off. |
+| Can you change it? | ✅ Yes. Move the folder, change the retention, or skip saving. |
 | Can you turn it on or off? | `--no-session-persistence` (print mode) or `CLAUDE_CODE_SKIP_PROMPT_HISTORY` (any mode). |
 | Where does it live? | `~/.claude/projects/<project>/<session>.jsonl` |
 | Status | <Documented /> <Undocumented /> |
@@ -23,22 +23,22 @@ This page covers the flags, the files, and the cleanup rules. The line format is
 
 ```mermaid
 stateDiagram-v2
-  [*] --> Active: claude starts
+  [*] --> Active: <code>claude</code> starts
   Active --> Saved: Each message is appended to the JSONL file
   Saved --> Active: More messages
   Active --> Closed: You exit
-  Closed --> Active: --continue or --resume
-  Closed --> Branch: /branch or --fork-session
+  Closed --> Active: <code>--continue</code> or <code>--resume</code>
+  Closed --> Branch: <code>/branch</code> or <code>--fork-session</code>
   Branch --> Active: New session ID, copied history
-  Closed --> Deleted: Older than cleanupPeriodDays
-  Closed --> Purged: claude purge
+  Closed --> Deleted: Older than <code>cleanupPeriodDays</code>
+  Closed --> Purged: <code>claude purge</code>
   Deleted --> [*]
   Purged --> [*]
 ```
 
 ## Resume and Branch
 
-Source: Manage Sessions in the official docs.
+Source: [Manage Sessions](https://code.claude.com/docs/en/sessions).
 
 | Item | Status | What it does |
 | --- | --- | --- |
@@ -62,51 +62,71 @@ If you resume one session in two terminals, the messages mix in one transcript.
 
 ## Where Files Live
 
-Source: Explore the .claude Directory (section "Application data") in the official docs.
+Source: [Explore the .claude Directory: Application Data](https://code.claude.com/docs/en/claude-directory#application-data).
 `CLAUDE_CONFIG_DIR` moves `~/.claude`.
 The `<project>` name is the folder path with every character other than a letter or a digit changed to `-`.
 A name over 200 characters is cut and gets a hash.
 `CLAUDE_CODE_PROJECT_DIR_NAME` sets the name by hand, and it needs `CLAUDE_CONFIG_DIR`.
 
-```text
-~/.claude/
-├── projects/
-│   └── <project>/
-│       ├── <session>.jsonl                  transcript
-│       ├── <session>.orphaned-<time>-<id>.jsonl   set aside, not in the picker
-│       ├── <session>.jsonl.superseded-<time>      set aside, not in the picker
-│       ├── <session>/
-│       │   ├── subagents/                   subagent transcripts
-│       │   └── tool-results/                large tool outputs and MCP images
-│       └── memory/                          auto memory (never cleaned)
-├── file-history/<session>/                  snapshots before edits
-├── plans/  debug/  paste-cache/  uploads/<session>/  dev-mods/<session>/  session-env/
-├── tasks/  shell-snapshots/  backups/       backups keeps 5 copies of ~/.claude.json
-├── sessions/                                one small file per running session
-├── history.jsonl                            every prompt you typed
-├── stats-cache.json  remote-settings.json  policy-limits.json  cache/changelog.md
-├── .credentials.json  agent-memory/  jobs/  daemon/
-└── settings.json  plugins/  skills/  agents/  CLAUDE.md
-```
+<FileTree>
+
+- `~/.claude/`
+  - `projects/`
+    - `<project>/`
+      - `<session>.jsonl` transcript
+      - `<session>.orphaned-<time>-<id>.jsonl` set aside, not in the picker
+      - `<session>.jsonl.superseded-<time>` set aside, not in the picker
+      - `<session>/`
+        - `subagents/` subagent transcripts
+        - `tool-results/` large tool outputs and MCP images
+      - `memory/` auto memory (never cleaned)
+  - `file-history/<session>/` snapshots before edits
+  - `plans/`
+  - `debug/`
+  - `paste-cache/`
+  - `uploads/<session>/`
+  - `dev-mods/<session>/`
+  - `session-env/`
+  - `tasks/`
+  - `shell-snapshots/`
+  - `backups/` keeps 5 copies of `~/.claude.json`
+  - `sessions/` one small file per running session
+  - `history.jsonl` every prompt you typed
+  - `stats-cache.json`
+  - `remote-settings.json`
+  - `policy-limits.json`
+  - `cache/`
+    - `changelog.md`
+  - `.credentials.json`
+  - `agent-memory/`
+  - `jobs/`
+  - `daemon/`
+  - `settings.json`
+  - `plugins/`
+  - `skills/`
+  - `agents/`
+  - `CLAUDE.md`
+
+</FileTree>
 
 The last column shows whether Claude Code deletes the item after `cleanupPeriodDays`.
 
 | Path under `~/.claude/` | Status | Content | Cleaned |
 | --- | --- | --- | --- |
-| `projects/<project>/<session>.jsonl` | <Documented /> | The transcript. | Yes |
-| `projects/<project>/<session>/subagents/` | <Documented /> | The transcripts of subagents. | Yes |
-| `projects/<project>/<session>/tool-results/` | <Documented /> | Large tool outputs and MCP images. | Yes |
-| `projects/<project>/memory/` | <Documented /> | Auto memory. | No |
-| `*.orphaned-<time>-<id>.jsonl`, `*.jsonl.superseded-<time>` | <Documented /> | Transcripts that Claude Code set aside. | Yes |
-| `file-history/<session>/` | <Documented /> | Snapshots from before edits, with the 100 newest checkpoints. | Yes |
-| `plans/`, `debug/`, `paste-cache/`, `uploads/<session>/`, `dev-mods/<session>/`, `session-env/` | <Documented /> | Plan files, debug logs, pastes, uploads, mods that Claude wrote, and session data. | Yes |
-| `tasks/`, `shell-snapshots/`, `backups/` | <Documented /> | Task lists, shell setup, and copies of `~/.claude.json` (5 are kept). | Yes |
-| `sessions/` | <Documented /> | One small file for each running session, removed at exit. | No |
-| `history.jsonl` | <Documented /> | Every prompt you typed. | No |
-| `stats-cache.json`, `remote-settings.json`, `policy-limits.json`, `cache/changelog.md` | <Documented /> | Usage totals, cached organization settings, organization limits, and the changelog. | No |
-| `.credentials.json`, `agent-memory/`, `jobs/`, `daemon/` | <Documented /> | Files that you should keep. | No |
-| `settings.json`, `plugins/`, `skills/`, `agents/`, `CLAUDE.md` | <Documented /> | Your configuration. | No |
-| `state/`, `mods/`, `bridge-spawn/`, `seed-admin/`, `downloads/`, `cache/model-catalog/` | <Undocumented /> | Seen on a 2.1.303 machine or named in the program. No docs page describes them. | Unknown |
+| `projects/<project>/<session>.jsonl` | <Documented /> | The transcript. | ✅ |
+| `projects/<project>/<session>/subagents/` | <Documented /> | The transcripts of subagents. | ✅ |
+| `projects/<project>/<session>/tool-results/` | <Documented /> | Large tool outputs and MCP images. | ✅ |
+| `projects/<project>/memory/` | <Documented /> | Auto memory. | ❌ |
+| `*.orphaned-<time>-<id>.jsonl`, `*.jsonl.superseded-<time>` | <Documented /> | Transcripts that Claude Code set aside. | ✅ |
+| `file-history/<session>/` | <Documented /> | Snapshots from before edits, with the 100 newest checkpoints. | ✅ |
+| `plans/`, `debug/`, `paste-cache/`, `uploads/<session>/`, `dev-mods/<session>/`, `session-env/` | <Documented /> | Plan files, debug logs, pastes, uploads, mods that Claude wrote, and session data. | ✅ |
+| `tasks/`, `shell-snapshots/`, `backups/` | <Documented /> | Task lists, shell setup, and copies of `~/.claude.json` (5 are kept). | ✅ |
+| `sessions/` | <Documented /> | One small file for each running session, removed at exit. | ❌ |
+| `history.jsonl` | <Documented /> | Every prompt you typed. | ❌ |
+| `stats-cache.json`, `remote-settings.json`, `policy-limits.json`, `cache/changelog.md` | <Documented /> | Usage totals, cached organization settings, organization limits, and the [changelog](https://code.claude.com/docs/en/changelog). | ❌ |
+| `.credentials.json`, `agent-memory/`, `jobs/`, `daemon/` | <Documented /> | Files that you should keep. | ❌ |
+| `settings.json`, `plugins/`, `skills/`, `agents/`, `CLAUDE.md` | <Documented /> | Your configuration. | ❌ |
+| `state/`, `mods/`, `bridge-spawn/`, `seed-admin/`, `downloads/`, `cache/model-catalog/` | <Undocumented /> | Seen on a 2.1.303 machine or named in the program. No docs page describes them. | ❓ |
 
 `~/.claude.json`, next to the folder, holds app state, the sign-in, and personal MCP servers.
 The default retention is 30 days, and the minimum is 1.

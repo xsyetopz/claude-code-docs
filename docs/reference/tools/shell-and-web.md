@@ -14,7 +14,7 @@ The Yes and No columns are explained on [Tools](index.md#how-to-read-the-tool-ta
 | Question | Answer |
 | --- | --- |
 | Can you use it? | Claude calls these tools. You approve or deny each call by rule or by prompt. |
-| Can you change it? | Yes. `Bash(...)` rules, the sandbox, and env vars set what a call may do. |
+| Can you change it? | ✅ Yes. `Bash(...)` rules, the sandbox, and env vars set what a call may do. |
 | Can you turn it on or off? | `CLAUDE_CODE_USE_POWERSHELL_TOOL`, `CLAUDE_CODE_DISABLE_WEB_FETCH=1`, `CLAUDE_CODE_DISABLE_BACKGROUND_TASKS=1`, or a deny rule. |
 | Where does it live? | Built into the program. |
 | Status | <Documented /> <Undocumented /> <Gated note="PowerShell, WebFetch switch, GetTask" /> |
@@ -25,25 +25,25 @@ Source: [Tools Reference](https://code.claude.com/docs/en/tools-reference), [Con
 
 | Tool | Status | What It Does | How It Works | Available In | Read-Only | Parallel | Deferred |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `Bash` | <Documented /> | Runs a shell command. | See [Bash Parameters](#bash-parameters). | Main session and subagents. Kept in background subagents. | No | No | No |
-| `PowerShell` | <Documented /> <Gated note="CLAUDE_CODE_USE_POWERSHELL_TOOL" /> | Runs a Windows PowerShell command. | Same parameters as `Bash`, but `command` is a PowerShell command and `description` has a shorter text. | Main session and subagents. Kept in background subagents. | No | No | No |
-| `Monitor` | <Documented /> | Streams the output of a background command or a WebSocket as notifications. | See [Monitor Parameters](#monitor-parameters). | Main session and subagents. Kept in background subagents. | No | Yes | Yes |
-| `WebFetch` | <Documented /> <Gated note="CLAUDE_CODE_DISABLE_WEB_FETCH=1 turns it off" /> | Fetches a URL and applies a prompt to the page text. | `url` (URL string, required), `prompt` (string, required), `offset` (int, 0 or more, optional, character offset for a long page). The off switch needs `2.1.285` or later. | Main session and subagents. Kept in background subagents. | Yes | Yes | Yes |
-| `WebSearch` | <Documented /> <Gated note="off for the gateway provider; Vertex depends on the model" /> | Searches the web. | `query` (string, at least 2 characters, required), `allowed_domains` (string array, optional), `blocked_domains` (string array, optional). | Main session and subagents. Kept in background subagents. | Yes | Yes | Yes |
-| `TaskStop` | <Documented /> | Stops a running background task. | `task_id` (string, optional; also takes a teammate or named background agent by ID or name), `shell_id` (string, optional, deprecated). | Main session and subagents. Kept in background subagents. | No | Yes | Yes |
-| `GetTask` | <Undocumented /> <Gated note="hidden server-side flag" /> | Checks a background shell command by task ID. | `taskId` (string, required). | Not known | Yes | Yes | No |
+| `Bash` | <Documented /> | Runs a shell command. | See [Bash Parameters](#bash-parameters). | Main session and subagents. Kept in background subagents. | ❌ | ❌ | ❌ |
+| `PowerShell` | <Documented /> <Gated note="CLAUDE_CODE_USE_POWERSHELL_TOOL" /> | Runs a Windows PowerShell command. | Same parameters as `Bash`, but `command` is a PowerShell command and `description` has a shorter text. | Main session and subagents. Kept in background subagents. | ❌ | ❌ | ❌ |
+| `Monitor` | <Documented /> | Streams the output of a background command or a WebSocket as notifications. | See [Monitor Parameters](#monitor-parameters). | Main session and subagents. Kept in background subagents. | ❌ | ✅ | ✅ |
+| `WebFetch` | <Documented /> <Gated note="CLAUDE_CODE_DISABLE_WEB_FETCH=1 turns it off" /> | Fetches a URL and applies a prompt to the page text. | `url` (URL string, required), `prompt` (string, required), `offset` (int, 0 or more, optional, character offset for a long page). The off switch needs `2.1.285` or later. | Main session and subagents. Kept in background subagents. | ✅ | ✅ | ✅ |
+| `WebSearch` | <Documented /> <Gated note="off for the gateway provider; Vertex depends on the model" /> | Searches the web. | `query` (string, at least 2 characters, required), `allowed_domains` (string array, optional), `blocked_domains` (string array, optional). | Main session and subagents. Kept in background subagents. | ✅ | ✅ | ✅ |
+| `TaskStop` | <Documented /> | Stops a running background task. | `task_id` (string, optional; also takes a teammate or named background agent by ID or name), `shell_id` (string, optional, deprecated). | Main session and subagents. Kept in background subagents. | ❌ | ✅ | ✅ |
+| `GetTask` | <Undocumented /> <Gated note="hidden server-side flag" /> | Checks a background shell command by task ID. | `taskId` (string, required). | ❓ | ✅ | ✅ | ❌ |
 
 ## Bash Parameters
 
 | Parameter | What It Does | Required |
 | --- | --- | --- |
-| `command` | The shell command to run. | Yes |
-| `timeout` | Time limit in milliseconds for a foreground command. | No |
-| `description` | A short note on what the command does. | No |
-| `run_in_background` | Starts the command as a background task and returns at once. | No |
-| `dangerouslyDisableSandbox` | Runs the command without the sandbox. | No |
-| `allowed_domains` | Network hosts that this command may reach. Offered only when the sandbox network lists are on. | No |
-| `machine` | Name of an attached machine to run the call on. Offered only when machines are attached. | No |
+| `command` | The shell command to run. | ✅ |
+| `timeout` | Time limit in milliseconds for a foreground command. | ❌ |
+| `description` | A short note on what the command does. | ❌ |
+| `run_in_background` | Starts the command as a background task and returns at once. | ❌ |
+| `dangerouslyDisableSandbox` | Runs the command without the sandbox. | ❌ |
+| `allowed_domains` | Network hosts that this command may reach. Offered only when the sandbox network lists are on. | ❌ |
+| `machine` | Name of an attached machine to run the call on. Offered only when machines are attached. | ❌ |
 
 `PowerShell` takes the same parameters, except that it has no `allowed_domains` unless the network lists are on.
 Source: the program (the `Bash` input schema).
@@ -52,12 +52,12 @@ Source: the program (the `Bash` input schema).
 
 | Parameter | What It Does | Required |
 | --- | --- | --- |
-| `description` | Short note on what is watched, shown in notifications. | Yes |
-| `command` | Shell command whose output lines become notifications. | No |
-| `ws` | WebSocket target to stream. Give exactly one of `command` or `ws`. | No |
-| `timeout_ms` | Kills the monitor after this time. At least 1000, with a default and a cap. | No |
-| `persistent` | Runs until `TaskStop` or the end of the session, with no timeout. | No |
-| `allowed_domains` | Network hosts for a `command` monitor, offered only when the sandbox network lists are on. | No |
+| `description` | Short note on what is watched, shown in notifications. | ✅ |
+| `command` | Shell command whose output lines become notifications. | ❌ |
+| `ws` | WebSocket target to stream. Give exactly one of `command` or `ws`. | ❌ |
+| `timeout_ms` | Kills the monitor after this time. At least 1000, with a default and a cap. | ❌ |
+| `persistent` | Runs until `TaskStop` or the end of the session, with no timeout. | ❌ |
+| `allowed_domains` | Network hosts for a `command` monitor, offered only when the sandbox network lists are on. | ❌ |
 
 Source: the program (the `Monitor` input schema).
 

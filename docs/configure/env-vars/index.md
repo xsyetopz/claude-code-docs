@@ -13,8 +13,8 @@ A few are in the official docs. Most are found only in the program.
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. Set a variable in your shell, or under `env` in a `settings.json` file. |
-| Can you change it? | Yes. Change the value, then restart `claude`. Values in a settings `env` block also apply to a running session when the file changes. |
+| Can you use it? | ✅ Yes. Set a variable in your shell, or under `env` in a `settings.json` file. |
+| Can you change it? | ✅ Yes. Change the value, then restart `claude`. Values in a settings `env` block also apply to a running session when the file changes. |
 | Can you turn it on or off? | Delete the variable. In a settings file you cannot remove one that your shell sets, but you can set it to an empty string. |
 | Where does it live? | Your shell, or the `env` key of `~/.claude/settings.json`, `.claude/settings.json`, `.claude/settings.local.json`, or managed settings. |
 | Status | <Documented /> <Undocumented /> <Differs /> <Gated /> |
@@ -41,7 +41,7 @@ flowchart TD
 
 ### Which Value Wins
 
-1. A value in a settings `env` block replaces the value from your shell in most sessions. The official docs list the sessions that keep the shell value.
+1. A value in a settings `env` block replaces the value from your shell in most sessions. The [official docs](https://code.claude.com/docs/en/settings-reference#how-env-values-interact-with-your-shell) list the sessions that keep the shell value.
 2. Between settings files, `env` values follow the normal settings order. A managed entry beats the same variable in user or project settings.
 3. Some behaviors have a variable, a settings key, and a flag. Which one wins differs for each pair. For example, `--model` and `/model` beat `ANTHROPIC_MODEL`, and `ANTHROPIC_MODEL` beats the `model` key. But `CLAUDE_CODE_EFFORT_LEVEL` beats `--effort` and `/effort`.
 4. Project and local settings cannot set some variables, such as `CLAUDE_CONFIG_DIR` and the OpenTelemetry exporter variables. Most other `env` values from a project wait until you trust the folder.
@@ -128,7 +128,7 @@ Every group page has the same columns.
 | Column | Meaning |
 | --- | --- |
 | Variable | The exact name. Names are case sensitive. |
-| Status | Badges. <Documented /> means the official docs name it. <Undocumented /> means only the program shows it. <Differs /> means the docs and the program disagree. <Gated /> means a feature flag or server gate is involved. |
+| Status | Badges. <Documented /> means the [official docs](https://code.claude.com/docs/en/env-vars) name it. <Undocumented /> means only the program shows it. <Differs /> means the docs and the program disagree. <Gated /> means a feature flag or server gate is involved. |
 | What it does | The effect, in plain words. |
 | Values and default | The accepted values and the default, as far as the program shows. A dash means the source gave no detail. |
 | Notes | Where it applies, and whether a project `env` block can set it before you trust the folder. |

@@ -12,8 +12,8 @@ Use them when long commands time out or when you need to limit what a tool can s
 
 | Question | Answer |
 | --- | --- |
-| Can you use it? | Yes. `BASH_DEFAULT_TIMEOUT_MS` and `BASH_MAX_OUTPUT_LENGTH` are common. |
-| Can you change it? | Yes. |
+| Can you use it? | ✅ Yes. `BASH_DEFAULT_TIMEOUT_MS` and `BASH_MAX_OUTPUT_LENGTH` are common. |
+| Can you change it? | ✅ Yes. |
 | Can you turn it on or off? | Switch rows take `1` or `0`. Unset the variable to restore the default. |
 | Where does it live? | Your shell or the `env` key of a settings file. |
 | Rows on this page | 101 variables |
@@ -107,7 +107,7 @@ The table is sorted by name. See [Environment Variables](index.md#how-to-read-th
 | `CLAUDE_CODE_SHELL` | <Documented /> | Sets the shell for Bash tool commands. It accepts a path to `bash` or `zsh`. An invalid path falls back to detection. | Text. The path must contain `bash` or `zsh` and run. Else Claude Code logs a message and detects a shell from `SHELL` and `PATH` | Bash tool |
 | `CLAUDE_CODE_SHELL_LAUNCHER_SCRIPT` | <Undocumented /> | Passes a launcher script to a PowerShell shell. The wrapper reads it, clears the variable, and runs it with `Invoke-Expression`. | Text. Set by Claude Code for the PowerShell child. The wrapper sets it to `$null` before running | PowerShell tool. Set by Claude Code |
 | `CLAUDE_CODE_SHELL_PREFIX` | <Documented /> | Wraps shell commands that Claude Code starts with a prefix program. Hooks, Bash, status line, and stdio MCP starts use it. | Text. The command is passed to the wrapper as one quoted argument. PowerShell and exec-form hooks skip it | Bash tool, hooks, status line, MCP stdio |
-| `CLAUDE_CODE_STRICT_INLINE_SHELL_RM_PROMPT` | <Undocumented /> <Gated note="Works only behind a feature flag or server gate" /> | Restores the strict `rm` permission prompt for inline shell `-c` scripts that build `rm` at run time. | On or off, on by default. Without it a feature flag (default true) picks the relaxed rule. The changelog names this variable | Bash tool permissions |
+| `CLAUDE_CODE_STRICT_INLINE_SHELL_RM_PROMPT` | <Undocumented /> <Gated note="Works only behind a feature flag or server gate" /> | Restores the strict `rm` permission prompt for inline shell `-c` scripts that build `rm` at run time. | On or off, on by default. Without it a feature flag (default true) picks the relaxed rule. The [changelog](https://code.claude.com/docs/en/changelog) names this variable | Bash tool permissions |
 | `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB` | <Documented /> <Differs note="The official docs and the program disagree. The row says how." /> | Strips credentials from the env of subprocesses such as Bash, hooks, and stdio MCP servers. | On, off, or unset. The default depends on the host (see Notes). `1` turns it on and `0` turns it off | Bash, hooks, MCP stdio. Docs omit the GitHub Actions and `local-agent` defaults |
 | `CLAUDE_CODE_TOOL_MEMORY_CGROUP_EXCLUDE` | <Documented /> | Lists process kinds that the tool memory cap leaves out. `mcp` is added unless another rule applies. | A comma-separated list. Without it, a feature flag or a built-in set applies | Linux and WSL |
 | `CLAUDE_CODE_TOOL_MEMORY_LIMIT` | <Documented /> <Differs note="The official docs and the program disagree. The row says how." /> | Caps memory for tool commands with a cgroup. Docs list `0` and `off` to turn it off. Code also accepts `none`. | Text. When unset, a feature flag decides, which docs do not say | Linux and WSL |
