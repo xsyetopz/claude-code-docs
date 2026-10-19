@@ -1,7 +1,14 @@
 // Usage: bun tools/capture-prompts/capture.ts [--only id,id] [--no-render]
 // Runs the installed Claude Code binary once per variant against a local fake Messages API.
 // Offline and free: fake API key, dead proxy, temp HOME/config/project. No request leaves the machine.
-import { mkdirSync, mkdtempSync, writeFileSync, readFileSync, rmSync, realpathSync } from "node:fs";
+import {
+  mkdirSync,
+  mkdtempSync,
+  writeFileSync,
+  readFileSync,
+  rmSync,
+  realpathSync,
+} from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { startStub, FAKE_KEY } from "./stub.ts";
@@ -12,7 +19,9 @@ export const CAPTURES = join(ROOT, "captures");
 const BIN = join(process.env.HOME!, ".local/share/claude/versions/2.1.303");
 
 const argv = process.argv.slice(2);
-const only = argv.includes("--only") ? argv[argv.indexOf("--only") + 1].split(",") : null;
+const only = argv.includes("--only")
+  ? argv[argv.indexOf("--only") + 1].split(",")
+  : null;
 
 async function run(v: Variant) {
   const dir = join(CAPTURES, v.id);
@@ -22,37 +31,78 @@ async function run(v: Variant) {
   const cfg = realpathSync(mkdtempSync(join(tmpdir(), "cap-cfg-")));
   const home = realpathSync(mkdtempSync(join(tmpdir(), "cap-home-")));
   const proj = realpathSync(mkdtempSync(join(tmpdir(), "cap-proj-")));
-  for (const [base, files] of [[cfg, v.cfgFiles], [proj, v.projFiles]] as const)
+  for (const [base, files] of [
+    [cfg, v.cfgFiles],
+    [proj, v.projFiles],
+  ] as const)
     for (const [n, c] of Object.entries(files ?? {})) {
       mkdirSync(dirname(join(base, n)), { recursive: true });
       writeFileSync(join(base, n), c);
     }
-  const genv = { GIT_CONFIG_GLOBAL: join(home, ".gitconfig"), GIT_AUTHOR_NAME: "t", GIT_AUTHOR_EMAIL: "t@example.com", GIT_COMMITTER_NAME: "t", GIT_COMMITTER_EMAIL: "t@example.com" };
+  const genv = {
+    GIT_CONFIG_GLOBAL: join(home, ".gitconfig"),
+    GIT_AUTHOR_NAME: "t",
+    GIT_AUTHOR_EMAIL: "t@example.com",
+    GIT_COMMITTER_NAME: "t",
+    GIT_COMMITTER_EMAIL: "t@example.com",
+  };
   if (v.git) {
-    for (const c of [["init", "-q"], ["add", "-A"], ["commit", "-q", "--allow-empty", "-m", "initial"]]) {
+    for (const c of [
+      ["init", "-q"],
+      ["add", "-A"],
+      ["commit", "-q", "--allow-empty", "-m", "initial"],
+    ]) {
       writeFileSync(join(proj, "README.md"), "probe\n");
-      Bun.spawnSync(["git", ...c], { cwd: proj, env: { PATH: process.env.PATH!, HOME: home, ...genv } });
+      Bun.spawnSync(["git", ...c], {
+        cwd: proj,
+        env: { PATH: process.env.PATH!, HOME: home, ...genv },
+      });
     }
     writeFileSync(join(proj, "dirty.txt"), "x\n"); // untracked file so the status is not empty
   }
   const stub = startStub({ log, tool: v.tool?.name, toolInput: v.tool?.input });
   const spawnOnce = async (prompt: string, extra: string[]) => {
     const p = Bun.spawn(
-      [BIN, "-p", prompt, "--output-format", "stream-json", "--verbose", "--model", v.model ?? "claude-opus-5-5", ...extra, ...(v.args ?? [])],
+      [
+        BIN,
+        "-p",
+        prompt,
+        "--output-format",
+        "stream-json",
+        "--verbose",
+        "--model",
+        v.model ?? "claude-opus-5-5",
+        ...extra,
+        ...(v.args ?? []),
+      ],
       {
-        cwd: proj, stdin: "ignore", stdout: "pipe", stderr: "pipe",
+        cwd: proj,
+        stdin: "ignore",
+        stdout: "pipe",
+        stderr: "pipe",
         env: {
-          PATH: process.env.PATH!, HOME: home, TMPDIR: tmpdir(), CLAUDE_CONFIG_DIR: cfg,
-          ANTHROPIC_API_KEY: FAKE_KEY, ANTHROPIC_BASE_URL: `http://127.0.0.1:${stub.port}`,
-          CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: "1", DISABLE_TELEMETRY: "1",
+          PATH: process.env.PATH!,
+          HOME: home,
+          TMPDIR: tmpdir(),
+          CLAUDE_CONFIG_DIR: cfg,
+          ANTHROPIC_API_KEY: FAKE_KEY,
+          ANTHROPIC_BASE_URL: `http://127.0.0.1:${stub.port}`,
+          CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: "1",
+          DISABLE_TELEMETRY: "1",
           // fail-closed net: anything proxied or direct to the real API breaks
-          HTTPS_PROXY: "http://127.0.0.1:9", HTTP_PROXY: "http://127.0.0.1:9", NO_PROXY: "127.0.0.1,localhost",
-          ...genv, ...(v.env ?? {}),
+          HTTPS_PROXY: "http://127.0.0.1:9",
+          HTTP_PROXY: "http://127.0.0.1:9",
+          NO_PROXY: "127.0.0.1,localhost",
+          ...genv,
+          ...(v.env ?? {}),
         },
       },
     );
     const t = setTimeout(() => p.kill(), 60000);
-    const [so, se] = await Promise.all([new Response(p.stdout).text(), new Response(p.stderr).text()]);
+    const [so, se] = await Promise.all([
+      new Response(p.stdout).text(),
+      new Response(p.stderr).text(),
+    ]);
     const code = await p.exited;
     clearTimeout(t);
     return { so, se, code };
@@ -66,17 +116,40 @@ async function run(v: Variant) {
   stub.stop(true);
   writeFileSync(join(dir, "stdout.txt"), so);
   writeFileSync(join(dir, "stderr.txt"), se);
-  writeFileSync(join(dir, "meta.json"), JSON.stringify({ id: v.id, exit: code, cwd: proj, cfg, home }, null, 1));
-  const reqs = readFileSync(log, "utf8").trim().split("\n").filter(Boolean).map((l) => JSON.parse(l));
-  const msgs = reqs.filter((r) => r.path?.startsWith("/v1/messages") && r.body?.messages);
+  writeFileSync(
+    join(dir, "meta.json"),
+    JSON.stringify({ id: v.id, exit: code, cwd: proj, cfg, home }, null, 1),
+  );
+  const reqs = readFileSync(log, "utf8")
+    .trim()
+    .split("\n")
+    .filter(Boolean)
+    .map((l) => JSON.parse(l));
+  const msgs = reqs.filter(
+    (r) => r.path?.startsWith("/v1/messages") && r.body?.messages,
+  );
   const bad = reqs.filter((r) => r.authIsFakeKey === false);
   const hosts = new Set(reqs.map((r) => r.headers?.host));
-  const leaked = [...hosts].filter((h) => h && !String(h).startsWith("127.0.0.1"));
-  console.log(`${v.id}: exit=${code} requests=${reqs.length} messages=${msgs.length} authFake=${bad.length === 0} hosts=${[...hosts].join(",")}`);
-  if (leaked.length || bad.length) { console.log("UNEXPECTED HOST OR CREDENTIAL"); process.exit(8); }
-  if (!msgs.length) console.log(`  WARNING: no message request. stderr: ${se.slice(0, 200)}`);
-  if (v.pick === "subagent" && !msgs.some((r) => JSON.stringify(r.body.messages).includes(SUB_MARK))) console.log("  WARNING: no subagent request");
-  rmSync(cfg, { recursive: true, force: true }); rmSync(home, { recursive: true, force: true }); rmSync(proj, { recursive: true, force: true });
+  const leaked = [...hosts].filter(
+    (h) => h && !String(h).startsWith("127.0.0.1"),
+  );
+  console.log(
+    `${v.id}: exit=${code} requests=${reqs.length} messages=${msgs.length} authFake=${bad.length === 0} hosts=${[...hosts].join(",")}`,
+  );
+  if (leaked.length || bad.length) {
+    console.log("UNEXPECTED HOST OR CREDENTIAL");
+    process.exit(8);
+  }
+  if (!msgs.length)
+    console.log(`  WARNING: no message request. stderr: ${se.slice(0, 200)}`);
+  if (
+    v.pick === "subagent" &&
+    !msgs.some((r) => JSON.stringify(r.body.messages).includes(SUB_MARK))
+  )
+    console.log("  WARNING: no subagent request");
+  rmSync(cfg, { recursive: true, force: true });
+  rmSync(home, { recursive: true, force: true });
+  rmSync(proj, { recursive: true, force: true });
 }
 
 if (import.meta.main) {

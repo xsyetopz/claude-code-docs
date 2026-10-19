@@ -2,12 +2,18 @@
 const C = (s: string) => "`" + s + "`";
 
 export const BADGE_NOTES: Record<string, string> = {
-  "default-sonnet": "The docs say Sonnet gets the full prompt. In 2.1.303 Sonnet 5.5 gets the lean one.",
-  "default-haiku": "The docs say Haiku gets the full prompt. In 2.1.303 Haiku 5.5 gets the lean one plus extra text.",
-  "full-prompt": "The docs say newer models get the short prompt and older ones get the full prompt. The switch works as the docs say, but the model defaults are not what the docs list.",
-  "simple-prompt-sonnet": "Changes nothing on Sonnet 5.5, because it already gets the short prompt.",
-  "simple-prompt-haiku": "Changes nothing on Haiku 5.5, because it already gets the short prompt.",
-  "simple-prompt-opus": "Changes nothing on Opus 5.5, because it already gets the short prompt.",
+  "default-sonnet":
+    "The docs say Sonnet gets the full prompt. In 2.1.303 Sonnet 5.5 gets the lean one.",
+  "default-haiku":
+    "The docs say Haiku gets the full prompt. In 2.1.303 Haiku 5.5 gets the lean one plus extra text.",
+  "full-prompt":
+    "The docs say newer models get the short prompt and older ones get the full prompt. The switch works as the docs say, but the model defaults are not what the docs list.",
+  "simple-prompt-sonnet":
+    "Changes nothing on Sonnet 5.5, because it already gets the short prompt.",
+  "simple-prompt-haiku":
+    "Changes nothing on Haiku 5.5, because it already gets the short prompt.",
+  "simple-prompt-opus":
+    "Changes nothing on Opus 5.5, because it already gets the short prompt.",
 };
 
 export const NOTES: Record<string, string[]> = {
@@ -17,38 +23,69 @@ export const NOTES: Record<string, string[]> = {
     "The first user message holds a reminder about the git attribution lines. Your own text comes after it.",
     "In `-p` mode, the identity line (`system[1]`) is the SDK line: `You are a Claude agent, built on Anthropic's Claude Agent SDK.` The interactive terminal app uses a different line. See [Captured System Prompts](./index.md#identity-line).",
   ],
-  "default-sonnet": ["Sonnet 5.5 gets the same lean prompt as Opus 5.5. Only the model name, the model ID, and the commit trailer change.", "The old wiki and the docs say Sonnet gets the full prompt. The capture shows it does not in 2.1.303."],
-  "default-haiku": ["Haiku 5.5 gets the lean prompt, then five extra paragraphs at the end of the body. They tell the model to finish the whole request, to avoid ending the turn early, and to act when it can name the likely reading of the request.", "The old wiki says the prompt for Haiku is the full one. The capture shows the lean prompt with extra text, not the full prompt."],
+  "default-sonnet": [
+    "Sonnet 5.5 gets the same lean prompt as Opus 5.5. Only the model name, the model ID, and the commit trailer change.",
+    "The old wiki and the docs say Sonnet gets the full prompt. The capture shows it does not in 2.1.303.",
+  ],
+  "default-haiku": [
+    "Haiku 5.5 gets the lean prompt, then five extra paragraphs at the end of the body. They tell the model to finish the whole request, to avoid ending the turn early, and to act when it can name the likely reading of the request.",
+    "The old wiki says the prompt for Haiku is the full one. The capture shows the lean prompt with extra text, not the full prompt.",
+  ],
   "full-prompt": [
     "The full prompt has many more headings: `System`, `Doing tasks`, `Executing actions with care`, `Using your tools`, `Tone and style`, `Text output`, `Session-specific guidance`, `auto memory`, `Environment`, and `Context management`.",
     "The `auto memory` section is much longer than the lean `Memory` section.",
     "The tool list is the same as the default.",
   ],
-  "simple-prompt-sonnet": ["The text and tools are the same as the default on Sonnet 5.5. In this release the \"short\" prompt is already what Sonnet gets."],
-  "simple-prompt-haiku": ["The text is the same as the default on Haiku 5.5. The extra paragraphs stay, so they are not part of the full or short switch."],
+  "simple-prompt-sonnet": [
+    'The text and tools are the same as the default on Sonnet 5.5. In this release the "short" prompt is already what Sonnet gets.',
+  ],
+  "simple-prompt-haiku": [
+    "The text is the same as the default on Haiku 5.5. The extra paragraphs stay, so they are not part of the full or short switch.",
+  ],
   "simple-prompt-opus": ["The text is the same as the default on Opus 5.5."],
-  "bare": [
+  bare: [
     "The body has two lines: `CWD: <cwd>` and `Date: <date>`. Nothing else.",
     "The environment message is empty, so no agent list and no skill list reach the model.",
     "Only three tools are sent. See [Tools per Variant](./tools-per-variant.md).",
     "The user message has no git attribution reminder.",
   ],
-  "simple-env": ["Same text and tools as `--bare`. `--bare` sets `CLAUDE_CODE_SIMPLE`, so the two are one switch in this capture."],
+  "simple-env": [
+    "Same text and tools as `--bare`. `--bare` sets `CLAUDE_CODE_SIMPLE`, so the two are one switch in this capture.",
+  ],
   "exclude-dynamic": [
     "The `Environment` and `Context management` sections stay in the body, so they can be cached across machines.",
     "The `Memory` section, with the memory folder path, moves into the first user message. The `Session-specific guidance` section is gone from the body.",
     "The fast-mode sentence is gone from the `Environment` section.",
     "The environment message (working folder, platform) stays in the same place as before.",
   ],
-  "exclude-dynamic-full": ["On the full prompt the flag moves the same kinds of text: the memory section goes to the first user message and the working-folder data stays out of the shared body."],
-  "style-explanatory": ["The first line of the body changes to say that the agent follows an \"Output Style\".", "The style text lands after the model line, in the same message as the environment details, under `# Output Style: Explanatory`.", "A short reminder, `Explanatory output style is active.`, goes in near the end of that message."],
-  "style-learning": ["The same places as `Explanatory`: the first body line, the style text, and the closing reminder.", "The style text asks the model to leave `TODO(human)` tasks for you."],
+  "exclude-dynamic-full": [
+    "On the full prompt the flag moves the same kinds of text: the memory section goes to the first user message and the working-folder data stays out of the shared body.",
+  ],
+  "style-explanatory": [
+    'The first line of the body changes to say that the agent follows an "Output Style".',
+    "The style text lands after the model line, in the same message as the environment details, under `# Output Style: Explanatory`.",
+    "A short reminder, `Explanatory output style is active.`, goes in near the end of that message.",
+  ],
+  "style-learning": [
+    "The same places as `Explanatory`: the first body line, the style text, and the closing reminder.",
+    "The style text asks the model to leave `TODO(human)` tasks for you.",
+  ],
   "style-proactive": ["The same places as the other built-in styles."],
   "style-concise": ["The same places as the other built-in styles."],
-  "style-custom": ["Your file body is put under `# Output Style: <name>` in the environment message. The front matter is not sent.", "The first line of the body changes, as with the built-in styles."],
-  "style-custom-full": ["Without `keep-coding-instructions`, the whole `Doing tasks` section is gone from the full prompt.", "Other full-prompt sections stay."],
-  "style-custom-keep": ["With `keep-coding-instructions: true`, the `Doing tasks` section stays. Compare with the previous page, where it is removed."],
-  "style-custom-keep-lean": ["On the lean prompt the key changes nothing. The wiki says this too (`keep-coding-instructions` has no effect on the short prompt), and the capture agrees."],
+  "style-custom": [
+    "Your file body is put under `# Output Style: <name>` in the environment message. The front matter is not sent.",
+    "The first line of the body changes, as with the built-in styles.",
+  ],
+  "style-custom-full": [
+    "Without `keep-coding-instructions`, the whole `Doing tasks` section is gone from the full prompt.",
+    "Other full-prompt sections stay.",
+  ],
+  "style-custom-keep": [
+    "With `keep-coding-instructions: true`, the `Doing tasks` section stays. Compare with the previous page, where it is removed.",
+  ],
+  "style-custom-keep-lean": [
+    "On the lean prompt the key changes nothing. The wiki says this too (`keep-coding-instructions` has no effect on the short prompt), and the capture agrees.",
+  ],
   "append-system-prompt": [
     "Your text goes at the very end of the body (`system[2]`), after a blank line.",
     "The identity line changes too. With an appended prompt in `-p` mode it reads `You are Claude Code, Anthropic's official CLI for Claude, running within the Claude Agent SDK.`",
@@ -58,23 +95,55 @@ export const NOTES: Record<string, string[]> = {
     "The attribution reminder and the environment message (agent types, skills, date) are still sent.",
     "The tool list is not changed.",
   ],
-  "system-prompt-append": ["The replacement text and the appended text sit together in the body. The diff is against the replace-only page."],
-  "claude-md": ["Project memory files arrive in the first user message, in a reminder that starts with `Codebase and user instructions are shown below.` They are not in `system`."],
-  "git-repo": ["Inside a repository, the first user message gets a `gitStatus` reminder: branch, short status, and recent commits. The environment message says `Is a git repository: true`.", "The commit hash is replaced with `<sha>`."],
-  "agent-main": ["The agent file body replaces the body (`system[2]`), like `--system-prompt`.", "The attribution reminder and the environment message are still sent."],
-  "mode-plan": ["Plan mode adds a long block of rules to the environment message: the plan file path, a five-phase workflow, and the `ExitPlanMode` rule.", "The plan file name is random in each run, so it shows as `<plan-name>`."],
-  "mode-acceptEdits": ["`acceptEdits` does not change the text. The mode only changes what asks for permission."],
-  "mode-dontAsk": ["`dontAsk` does not change the text. The mode only changes what asks for permission."],
-  "brief": ["`--brief` changes nothing in the text or the tools in this capture. The brief rules appear only when the `SendUserMessage` tool exists, and it is not in the tool list here.", "The old wiki lists `brief` as a section for `--brief`. The capture does not show it."],
-  "compact": [
+  "system-prompt-append": [
+    "The replacement text and the appended text sit together in the body. The diff is against the replace-only page.",
+  ],
+  "claude-md": [
+    "Project memory files arrive in the first user message, in a reminder that starts with `Codebase and user instructions are shown below.` They are not in `system`.",
+  ],
+  "git-repo": [
+    "Inside a repository, the first user message gets a `gitStatus` reminder: branch, short status, and recent commits. The environment message says `Is a git repository: true`.",
+    "The commit hash is replaced with `<sha>`.",
+  ],
+  "agent-main": [
+    "The agent file body replaces the body (`system[2]`), like `--system-prompt`.",
+    "The attribution reminder and the environment message are still sent.",
+  ],
+  "mode-plan": [
+    "Plan mode adds a long block of rules to the environment message: the plan file path, a five-phase workflow, and the `ExitPlanMode` rule.",
+    "The plan file name is random in each run, so it shows as `<plan-name>`.",
+  ],
+  "mode-acceptEdits": [
+    "`acceptEdits` does not change the text. The mode only changes what asks for permission.",
+  ],
+  "mode-dontAsk": [
+    "`dontAsk` does not change the text. The mode only changes what asks for permission.",
+  ],
+  brief: [
+    "`--brief` changes nothing in the text or the tools in this capture. The brief rules appear only when the `SendUserMessage` tool exists, and it is not in the tool list here.",
+    "The old wiki lists `brief` as a section for `--brief`. The capture does not show it.",
+  ],
+  compact: [
     "The capture runs twice in the same folders. The first run sends `hi`. The second run uses `--continue` and sends `/compact`.",
     "The page shows the second request. It has the normal system blocks, the earlier messages, and a last user message with the summary instructions (an `<analysis>` block, then a `<summary>` block).",
     "The summary request still sends the tool list, but the instructions say not to call tools.",
   ],
-  "subagent-general-purpose": ["A subagent gets its own body, not the main body. It starts with `You are an agent for Claude Code, Anthropic's official CLI for Claude.`", "Short notes follow the agent text: use absolute paths, no emojis, no colon before tool calls, and do not write report files.", "The environment message is still sent. The stub made the main agent call the `Agent` tool, so this is a real subagent request."],
-  "subagent-explore": ["The `Explore` agent is read-only. The body lists what it must not do, and it gets a shorter tool list.", "The same notes follow."],
-  "subagent-plan": ["The `Plan` agent is also read-only and asks for a step-by-step plan.", "The same notes follow."],
-  "subagent-custom": ["The body is your agent file text, then the same notes that every subagent gets. The file's front matter is not sent."],
+  "subagent-general-purpose": [
+    "A subagent gets its own body, not the main body. It starts with `You are an agent for Claude Code, Anthropic's official CLI for Claude.`",
+    "Short notes follow the agent text: use absolute paths, no emojis, no colon before tool calls, and do not write report files.",
+    "The environment message is still sent. The stub made the main agent call the `Agent` tool, so this is a real subagent request.",
+  ],
+  "subagent-explore": [
+    "The `Explore` agent is read-only. The body lists what it must not do, and it gets a shorter tool list.",
+    "The same notes follow.",
+  ],
+  "subagent-plan": [
+    "The `Plan` agent is also read-only and asks for a step-by-step plan.",
+    "The same notes follow.",
+  ],
+  "subagent-custom": [
+    "The body is your agent file text, then the same notes that every subagent gets. The file's front matter is not sent.",
+  ],
 };
 
 export const INDEX_FACTS = {
@@ -82,7 +151,7 @@ export const INDEX_FACTS = {
     "A system prompt is the text that Claude Code sends to the model before your first message. It tells the model who it is, how to behave, and what the session looks like. The model reads it on every request.",
     "Claude Code has no single system prompt. It builds one from parts. The parts depend on the model, on flags, on env vars, on your output style, and on whether the request comes from the main agent or a subagent. This section shows every variant that you can pick, in full, with a diff against the default.",
     "The text on these pages is Anthropic's. It is shown here only to describe how the program works. See the notice on the home page.",
-    "Status badges: <Documented /> means an official docs page names the switch. <Undocumented /> means only the program shows it. <Differs note=\"example\" /> means the docs and the program disagree. <Gated note=\"example\" /> means a flag or a server gate is needed.",
+    'Status badges: <Documented /> means an official docs page names the switch. <Undocumented /> means only the program shows it. <Differs note="example" /> means the docs and the program disagree. <Gated note="example" /> means a flag or a server gate is needed.',
   ],
   method: [
     "Every prompt on these pages was captured offline, with no model call and no cost.",
@@ -117,29 +186,29 @@ export const INDEX_FACTS = {
     "The chart shows what the captures prove. The order of the first three checks was not tested with every combination of flags.",
     "```mermaid",
     "flowchart TD",
-    "  A[\"Start Claude Code\"] --> B{\"--bare or CLAUDE_CODE_SIMPLE=1?\"}",
-    "  B -- yes --> C[\"Bare: two-line body, empty environment message, 3 tools\"]",
-    "  B -- no --> D{\"--system-prompt, --system-prompt-file, or --agent?\"}",
-    "  D -- yes --> E[\"Your text or the agent file replaces the body\"]",
-    "  D -- no --> F{\"CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT\"}",
-    "  F -- \"0\" --> G[\"Full prompt\"]",
-    "  F -- \"1\" --> H[\"Lean prompt\"]",
-    "  F -- unset --> I{\"Which model?\"}",
-    "  I -- \"Opus 5.5 or Sonnet 5.5\" --> H",
-    "  I -- \"Haiku 5.5\" --> J[\"Lean prompt plus extra paragraphs\"]",
-    "  G --> K{\"Output style set?\"}",
+    '  A["Start Claude Code"] --> B{"--bare or CLAUDE_CODE_SIMPLE=1?"}',
+    '  B -- yes --> C["Bare: two-line body, empty environment message, 3 tools"]',
+    '  B -- no --> D{"--system-prompt, --system-prompt-file, or --agent?"}',
+    '  D -- yes --> E["Your text or the agent file replaces the body"]',
+    '  D -- no --> F{"CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT"}',
+    '  F -- "0" --> G["Full prompt"]',
+    '  F -- "1" --> H["Lean prompt"]',
+    '  F -- unset --> I{"Which model?"}',
+    '  I -- "Opus 5.5 or Sonnet 5.5" --> H',
+    '  I -- "Haiku 5.5" --> J["Lean prompt plus extra paragraphs"]',
+    '  G --> K{"Output style set?"}',
     "  H --> K",
     "  J --> K",
     "  E --> L",
-    "  K -- \"yes, keep-coding-instructions false\" --> M[\"Style text added, Doing tasks removed on the full prompt\"]",
-    "  K -- \"yes, keep true, or no style\" --> N[\"Style text added if set\"]",
-    "  M --> L{\"--append-system-prompt?\"}",
+    '  K -- "yes, keep-coding-instructions false" --> M["Style text added, Doing tasks removed on the full prompt"]',
+    '  K -- "yes, keep true, or no style" --> N["Style text added if set"]',
+    '  M --> L{"--append-system-prompt?"}',
     "  N --> L",
-    "  L -- yes --> O[\"Text added at the end, identity line changes\"]",
-    "  L -- no --> P{\"--exclude-dynamic-system-prompt-sections?\"}",
+    '  L -- yes --> O["Text added at the end, identity line changes"]',
+    '  L -- no --> P{"--exclude-dynamic-system-prompt-sections?"}',
     "  O --> P",
-    "  P -- yes --> Q[\"Memory moves to the first user message\"]",
-    "  P -- no --> R[\"Send request\"]",
+    '  P -- yes --> Q["Memory moves to the first user message"]',
+    '  P -- no --> R["Send request"]',
     "  Q --> R",
     "  C --> R",
     "```",

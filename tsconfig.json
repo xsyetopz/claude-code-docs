@@ -33,8 +33,12 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "es2022",
-    "types": ["@docusaurus/module-type-aliases", "@docusaurus/theme-classic", "bun"],
-    "useDefineForClassFields": true,
+    "types": [
+      "@docusaurus/module-type-aliases",
+      "@docusaurus/theme-classic",
+      "bun"
+    ],
+    "useDefineForClassFields": true
   },
   "exclude": [".docusaurus", "build", "captures"]
 }
