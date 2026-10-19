@@ -24,6 +24,7 @@ bun run verify    # lint + check + build, run this before a pull request
 ## Contribute
 
 Read [CONTRIBUTING.md](CONTRIBUTING.md) and the Style Guide page at `docs/contributing/style-guide.md`.
+Follow the [Code of Conduct](CODE_OF_CONDUCT.md). Notable changes are listed in the [Changelog](CHANGELOG.md).
 
 The "only usable items" rule: list only things a user can use, change, or switch on and off.
 Leave out items that are removed, inert, test-only, or for Anthropic staff.
