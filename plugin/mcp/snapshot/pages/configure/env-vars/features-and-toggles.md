@@ -1,0 +1,120 @@
+---
+title: "Features and Toggles"
+description: "Environment variables that turn single features on or off, including server-gated features."
+url: https://xsyetopz.github.io/claude-code-docs/configure/env-vars/features-and-toggles
+source: docs/configure/env-vars/features-and-toggles.md
+---
+
+# Features and Toggles
+
+
+These variables flip one feature each.
+Some turn off a feature that is on by default. Others force on a feature that a server flag controls.
+A row with the Gated badge only works when a feature flag or server gate allows it, unless the variable overrides the gate.
+
+## At a Glance
+
+| Question | Answer |
+| --- | --- |
+| Can you use it? | ✅ Yes. |
+| Can you change it? | ✅ Yes. |
+| Can you turn it on or off? | That is the point of this page. Most take `1` to turn on and `0` to turn off. |
+| Where does it live? | Your shell or the `env` key of a settings file. |
+| Rows on this page | 66 variables |
+| Status | [Documented] [Undocumented] [Differs] [Gated] |
+
+## Example
+
+```bash
+export CLAUDE_CODE_SIMPLE=1
+claude
+```
+
+Claude Code starts in its minimal mode. This is the same mode that the `--bare` flag turns on.
+
+## Variables
+
+The table is sorted by name. The Gated badge tells you a flag or gate is involved. See [Environment Variables](https://xsyetopz.github.io/claude-code-docs/configure/env-vars.md#how-to-read-the-tables) for the columns.
+
+| Variable | Status | What it does | Values and default | Notes |
+| --- | --- | --- | --- | --- |
+| `AI_AGENT` | [Undocumented] | Carries an agent id for child tools. Claude Code fills it when it is unset or starts with `claude-code_` or `claude-code/`. | On or off | All sessions. Not set from project `env` before trust |
+| `BUN_CHROME_PATH` | [Undocumented] [Gated: Works only behind a feature flag or server gate] | Sets the Chrome binary for the artifact preview browser. It replaces the search for Playwright and system Chrome. | Text. Preview needs `CLAUDE_CODE_ARTIFACT_PREVIEW` or a feature flag and a build that includes it | Artifact preview (feature gated) |
+| `CLAUDE_CODE_ARTIFACT` | [Undocumented] [Gated: A feature flag or server gate decides by default. This variable overrides it] | Turns artifacts on or off. A falsy value turns them off. | On or off. First-party only. A truthy value overrides the SDK default-off | First-party provider. gated by a feature flag flag. Not set from project `env` before trust |
+| `CLAUDE_CODE_ARTIFACT_ASSETS` | [Undocumented] | Turns artifact asset uploads on or off. | On, off, or unset. Without it the agent mode or the host capabilities decide. The value also sets the reported source to `env` | Artifacts. Not set from project `env` before trust |
+| `CLAUDE_CODE_ARTIFACT_COMMENT_FAST_ACK` | [Undocumented] [Gated: Works only behind a feature flag or server gate] | Turns on a quick acknowledgement reply to artifact comments before the full reply. | On, off, or unset, `false` by default. Else a feature flag decides with default `false`. The ack text starts `I'm on it` | Artifacts with comment auto-react. gated by a feature flag flag. Not set from project `env` before trust |
+| `CLAUDE_CODE_ARTIFACT_COMMENT_RESPONDER` | [Undocumented] [Gated: Works only behind a feature flag or server gate] | Turns on responder dispatch for artifact comment threads. A classifier picks the lane `act` or `pipeline`. | On, off, or unset, `false` by default. Else a feature flag decides with default `false` | Artifacts with comment auto-react. gated by a feature flag flag. Not set from project `env` before trust |
+| `CLAUDE_CODE_ARTIFACT_COMMENTS` | [Documented] [Differs: The official docs and the program disagree. The row says how.] [Gated: Works only behind a feature flag or server gate] | Turns the reading of artifact comments on or off. | On, off, or unset, `false` by default. Docs only mention `0` to stop it | Artifacts. gated by a feature flag flag. Not set from project `env` before trust |
+| `CLAUDE_CODE_ARTIFACT_COMMENTS_AUTOREACT` | [Documented] [Differs: The official docs and the program disagree. The row says how.] [Gated: Works only behind a feature flag or server gate] | Lets Claude reply on its own to comments sent to it. | On, off, or unset, `false` by default. Docs only mention `0` to stop it | Artifacts. gated by a feature flag flag. Not set from project `env` before trust |
+| `CLAUDE_CODE_ARTIFACT_DB` | [Undocumented] | Turns the artifact database feature on or off. | On, off, or unset, on by default. A falsy value turns it off. The calls go to `/api/frame/db/agent` | Artifacts. Not set from project `env` before trust |
+| `CLAUDE_CODE_ARTIFACT_DB_STR_REPLACE` | [Undocumented] [Gated: Works only behind a feature flag or server gate] | Turns on the `str_replace` edit operation for artifact database documents. | On, off, or unset, `false` by default. Needs `CLAUDE_CODE_ARTIFACT_DB` on. Else a feature flag decides with default `false` | Artifacts. gated by a feature flag flag. Not set from project `env` before trust |
+| `CLAUDE_CODE_ARTIFACT_DELETE` | [Undocumented] [Gated: Works only behind a feature flag or server gate] | Turns on artifact delete. | On, off, or unset, `false` by default. Else a feature flag decides with default `false`. Remote sessions may disable it by another check | Artifacts. gated by a feature flag flag. Not set from project `env` before trust |
+| `CLAUDE_CODE_ARTIFACT_FRESH_READ` | [Undocumented] | Lets artifact reads fetch fresh data from the docs store. Set to `0` to turn this off. | On, off, or unset, on by default. Only the value `false` turns it off | Artifacts with the docs store. Not set from project `env` before trust |
+| `CLAUDE_CODE_ARTIFACT_HOT` | [Undocumented] [Gated: A feature flag or server gate decides by default. This variable overrides it] | Overrides a gate for artifact hot updates. No visible effect in a print-mode probe ([Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md)). | On, off, or unset, off by default. A session value `frozenHotUpdate` wins first | Artifacts, gated by a feature flag |
+| `CLAUDE_CODE_ARTIFACT_INHERITED_TYPE_GRANT` | [Undocumented] [Gated: A feature flag or server gate decides by default. This variable overrides it] | Overrides the artifact inherited-type-grant gate. Claude Code logs the result as a feature flag. | Off by default. Env read | Artifacts, gated by a feature flag |
+| `CLAUDE_CODE_ARTIFACT_MULTI_FILE` | [Undocumented] [Gated: A feature flag or server gate decides by default. This variable overrides it] | Forces the artifact multi-file gate on or off. No visible effect in a print-mode probe ([Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md)). | On, off, or unset, off by default | Artifacts, gated by a feature flag |
+| `CLAUDE_CODE_ARTIFACT_OPEN_ACTION` | [Undocumented] [Gated: A feature flag or server gate decides by default. This variable overrides it] | Forces the artifact open-action gate on or off. No visible effect in a print-mode probe ([Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md)). | On, off, or unset, off by default | Artifacts, gated by a feature flag |
+| `CLAUDE_CODE_ARTIFACT_OPENING_PREFETCH` | [Undocumented] | Set to `false` to turn off the artifact prefetch at session start. | On, off, or unset. Only `false` has an effect. Otherwise the result follows the artifact REPL tool and quickstart checks | Artifacts, when the base check passes |
+| `CLAUDE_CODE_ARTIFACT_PATH_PIN` | [Undocumented] | Turns the artifact path-pin check on or off. The check makes Claude read published files before it replaces or removes them. | On, off, or unset, `true` by default. A session value `frozenPathPin` wins first | Artifacts |
+| `CLAUDE_CODE_ARTIFACT_PIN` | [Undocumented] | Turns artifact pinning on or off. Pinning is also off in some cloud sessions. | On, off, or unset, `true` by default. Returns off in a `CLAUDE_CODE_REMOTE` session that is not a bound cloud session | Artifacts, local and cloud sessions |
+| `CLAUDE_CODE_ARTIFACT_PRESENCE` | [Undocumented] [Gated: A feature flag or server gate decides by default. This variable overrides it] | Forces the artifact presence connection on or off. Presence keeps one live connection for each artifact slug. | On, off, or unset, off by default | Artifacts, gated by a feature flag |
+| `CLAUDE_CODE_ARTIFACT_PREVIEW` | [Undocumented] | Set to `false` to turn off artifact preview. Set to `true` to force it on. | On, off, or unset. Unset means preview follows a browser check. In a `CLAUDE_CODE_REMOTE` session it may pick the emulator engine, else local Chrome | Artifacts, local and cloud sessions |
+| `CLAUDE_CODE_ARTIFACT_PREVIEW_EMULATOR` | [Undocumented] [Gated: Works only behind a feature flag or server gate] | Pins the artifact preview emulator off or on. | On, off, or unset. `false` pins it off. `true` pins it on if the emulator skill files pass a check | Cloud sessions, gated by a feature flag |
+| `CLAUDE_CODE_ARTIFACT_PUBLISH_EDITS` | [Documented] | Lets the artifact publish tool apply small edits to a file in the same call. Set to `0` to turn that off. | On, off, or unset, `true` by default | Artifacts |
+| `CLAUDE_CODE_ARTIFACT_SHARE` | [Undocumented] | Turns on artifact sharing when set to `true` in a cloud or desktop session. | On, off, or unset. Sharing needs `true` and a cloud or desktop surface. Presence of any value also marks the host contract | Cloud and desktop sessions |
+| `CLAUDE_CODE_ARTIFACT_START_KIT` | [Undocumented] [Gated: A feature flag or server gate decides by default. This variable overrides it] | Forces the artifact start kit gate on or off. No visible effect in a print-mode probe ([Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md)). | On, off, or unset, off by default | Artifacts, gated by a feature flag |
+| `CLAUDE_CODE_ARTIFACT_TOOLSET` | [Undocumented] [Gated: Works only behind a feature flag or server gate] | Picks the artifact tool set. When on, Claude loads the artifact tool through tool search. | On, off, or unset, off by default | Artifacts, gated by a feature flag |
+| `CLAUDE_CODE_ARTIFACT_TYPE_CATALOG` | [Undocumented] [Gated: A feature flag or server gate decides by default. This variable overrides it] | Forces the artifact type catalog gate on or off. | On, off, or unset, off by default | Artifacts, gated by a feature flag |
+| `CLAUDE_CODE_ARTIFACT_TYPE_CLOUD_CREATE` | [Undocumented] [Gated: A feature flag or server gate decides by default. This variable overrides it] | Forces on or off the creation of a new artifact from a type in cloud sessions. | On, off, or unset, off by default | Cloud sessions, gated by a feature flag |
+| `CLAUDE_CODE_ARTIFACT_TYPES` | [Undocumented] [Gated: A feature flag or server gate decides by default. This variable overrides it] | Forces the artifact types gate on or off. It works with the `/api/frame/types` endpoints. | On, off, or unset, off by default | Artifacts, gated by a feature flag |
+| `CLAUDE_CODE_ARTIFACT_VERIFY` | [Undocumented] [Gated: Works only behind a feature flag or server gate] | Turns on artifact verify reads from `/api/frame/diag`. It is always off in `CLAUDE_CODE_REMOTE` sessions. | On, off, or unset, off by default | Local sessions, gated by a feature flag |
+| `CLAUDE_CODE_ATTACHMENTS_BY_PATH` | [Undocumented] | Sends attachments by path. It sets the upload mode to `none` and keeps the file delivery tool on without the first-party check. | On or off, off by default. Also keeps tool results in subagents | All sessions |
+| `CLAUDE_CODE_ATTRIBUTION_ANNOUNCEMENT` | [Undocumented] [Gated: A feature flag or server gate decides by default. This variable overrides it] | Forces the attribution announcement on or off. | On, off, or unset, on by default. Cached per session | All sessions, gated by a feature flag |
+| `CLAUDE_CODE_BASALT_COVE` | [Undocumented] | Forces the `basalt_cove` client-data feature on. Probe: Adds a "Communicating with the user" section and a code-comment rule to the system prompt. See Probes. | On or off. Else the `basalt_cove` client-data entry decides | All sessions |
+| `CLAUDE_CODE_DISABLE_ARTIFACT` | [Documented] | Turns off the Artifact tool. No settings file can turn it back on. | On or off. Used as the `envDisableVar` next to the `enableArtifact` setting | All sessions. Project `env` can set it before trust |
+| `CLAUDE_CODE_DISABLE_PROACTIVITY` | [Undocumented] | Turns off the proactivity selector, which is on by default through a feature flag. | On or off. Claude Code passes `1` to background sessions it starts when set | All sessions |
+| `CLAUDE_CODE_FLAG_FETCH_WAIT_MS` | [Undocumented] | Sets how long a non-interactive start waits for the GrowthBook flag fetch. | A number of milliseconds, `3000` by default. Whole number of at least `0` | Non-interactive and remote startup |
+| `CLAUDE_CODE_GROWTHBOOK_KICK_FROM_INIT` | [Undocumented] | Starts the GrowthBook flag fetch during init. | On or off, off by default. Also recorded in the startup flag fetch event | Startup |
+| `CLAUDE_CODE_GROWTHBOOK_KICK_ON_WARM_CACHE` | [Undocumented] | Starts the GrowthBook flag fetch even when the disk cache is warm, for remote non-interactive starts. | On or off, off by default. Recorded in the startup flag fetch event | Remote non-interactive startup |
+| `CLAUDE_CODE_INCLUDE_PARTIAL_MESSAGES` | [Undocumented] | Turns on partial message streaming in print or SDK mode, as an OR with the matching CLI option. | On or off. Combined with a local flag value | Print and SDK modes |
+| `CLAUDE_CODE_MANAGED_CONFIG_PREFETCH` | [Undocumented] [Gated: A feature flag or server gate decides by default. This variable overrides it] | Forces the prefetch of managed config on or off. | On, off, or unset. Unset gives false unless a first-party login exists and a feature flag is not on | First-party logins |
+| `CLAUDE_CODE_PARSED_WILLOW` | [Undocumented] [Gated: A feature flag or server gate decides by default. This variable overrides it] | Overrides a feature flag, which defaults to on. No visible effect in a print-mode probe ([Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md)). | On, off, or unset. Wins over the flag when set | All sessions |
+| `CLAUDE_CODE_PER_TURN_TIMING` | [Undocumented] [Gated: Works only behind a feature flag or server gate] | Gates a per-turn timing feature for the model request. No visible effect in a print-mode probe ([Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md)). | Needs a model check and a `per_turn_timing` setting, else it falls back to `per_turn_effort` | All sessions |
+| `CLAUDE_CODE_PEWTER_OWL` | [Undocumented] [Gated: A feature flag or server gate decides by default. This variable overrides it] | Forces the `pewter_owl_tool` and `pewter_owl_brief` features on or off. It wins over a feature flag and a feature flags. | On, off, or unset. Without it the code checks non-interactive mode, a model allowlist (a feature flag), then the flag or client data | All sessions, gated by a feature flag |
+| `CLAUDE_CODE_PEWTER_OWL_TOOL` | [Undocumented] [Gated: A feature flag or server gate decides by default. This variable overrides it] | Forces only the `pewter_owl_tool` feature on or off. When `true` it also changes the turn-end check that uses a feature flag. | On, off, or unset. Wins over `CLAUDE_CODE_PEWTER_OWL` for this one feature | All sessions, gated by a feature flag |
+| `CLAUDE_CODE_POLISHED_DEWDROP` | [Undocumented] [Gated: A feature flag or server gate decides by default. This variable overrides it] | Overrides a feature flag. `drop` maps to `drop_block` and `block` maps to `error`. No visible effect in a print-mode probe ([Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md)). | `enum` of `drop`, `block`, `off`. Order is env, then client data, then the flag | All sessions |
+| `CLAUDE_CODE_PROJECTS_SESSION` | [Undocumented] | When `true` it turns on a URL cache state for the web fetch tool. It also joins an entrypoint check. No visible effect in a print-mode probe ([Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md)). | On or off | All sessions |
+| `CLAUDE_CODE_SAFE_MODE` | [Documented] | Starts safe mode. Config such as `CLAUDE.md`, skills, plugins, hooks, and MCP servers does not load. Managed policy still applies. | On or off. Boolean `1` or true. The `--safe-mode` flag sets it to `1` and also sets `CLAUDE_CODE_DISABLE_CLAUDE_MDS` to `1` | All sessions. The `--desktop` command refuses to run in safe mode |
+| `CLAUDE_CODE_SIMPLE` | [Documented] | Runs a minimal mode with Bash, read, and edit tools only. Hooks, skills, plugins, MCP discovery, auto memory, and `CLAUDE.md` do not load. | On or off. Boolean. The `--bare` flag sets it to `1` | All sessions. Set by Claude Code for `--bare` |
+| `CLAUDE_CODE_SLEEPY_SNOWFLAKE` | [Undocumented] [Gated: Works only behind a feature flag or server gate] | Sets the scope of a feature flag feature. No visible effect in a print-mode probe ([Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md)). | Text. Else a recorded value or the flag client data with `threads`, `all`, or `off` is used | All sessions, behind a feature flag |
+| `CLAUDE_CODE_SUPPRESS_SESSION_ATTRIBUTION` | [Undocumented] | Leaves the session URL out of attribution text such as commit and PR footers. | On or off. The `attribution.sessionUrl` setting set to false has the same effect | All sessions |
+| `CLAUDE_CODE_TODO_REMINDER_MODE` | [Undocumented] | Selects the todo reminder mode. Env wins over the feature flag. | One of a fixed set of values, `baseline` by default. Enum `baseline` or `off` | All sessions |
+| `CLAUDE_WORKFLOW_NAME_ONLY` | [Undocumented] | When on, workflow discovery returns only the built-in workflow list and scans no files. | - | - |
+| `CLAUDE_WORKSHOP_PROGRESS` | [Undocumented] | Turns the workshop authoring-progress hook off when set to a false value. | - | - |
+| `DISABLE_BRIEF_MODE_STOP_HOOK` | [Undocumented] | Stops the brief-mode check at the end of a turn. That check adds a reminder when the turn used no brief tool. No visible effect in a print-mode probe ([Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md)). | On or off | - |
+| `DISABLE_BUG_COMMAND` | [Documented] | Disables the bug report command. The message names this var. | On or off | - |
+| `DISABLE_DOCTOR_COMMAND` | [Documented] | Hides the `/doctor` command and its `/checkup` alias. | On or off | - |
+| `DISABLE_EXTRA_USAGE_COMMAND` | [Documented] | Hides the `/usage-credits` command. | On or off | - |
+| `DISABLE_FEEDBACK_COMMAND` | [Documented] | Disables the feedback command. | On or off | - |
+| `DISABLE_GROWTHBOOK` | [Documented] | Turns off GrowthBook flag fetching. Code defaults apply. | On or off | - |
+| `DISABLE_INSTALL_GITHUB_APP_COMMAND` | [Documented] | Hides the `/install-github-app` command. | On or off | - |
+| `DS_CHROMIUM_PATH` | [Undocumented] | Gives the Chromium path to Playwright in a bundled script that renders Storybook stories. | Text, browser by default. Unset means the Playwright default browser | Bundled design-system script only |
+| `OneDrive` | [Undocumented] [Gated: Works only behind a feature flag or server gate] | Adds the OneDrive `Documents` folder to the Windows profile folders that Claude Code checks for PowerShell profiles. | Text. Used only if the path exists | Windows only. Not set from project `env` before trust |
+| `OneDriveCommercial` | [Undocumented] [Gated: Works only behind a feature flag or server gate] | Adds the OneDrive for Business `Documents` folder to the Windows profile folders that Claude Code checks. | Text. Used only if the path exists. The docs for the managed path setting also list `%OneDriveCommercial%` | Windows only. Not set from project `env` before trust |
+| `OneDriveConsumer` | [Undocumented] [Gated: Works only behind a feature flag or server gate] | Adds the personal OneDrive `Documents` folder to the Windows profile folders that Claude Code checks. | Text. Used only if the path exists. The managed path setting text also lists `%OneDriveConsumer%` | Windows only. Not set from project `env` before trust |
+| `P4PORT` | [Undocumented] | Marks the repo as Perforce when set, and reports `hasP4Port` in diagnostics. | Text | All platforms. Not set from project `env` before trust |
+| `SAFEUSER` | [Undocumented] | Is shown as `SAFEUSER` in the context block of the commit and PR commands. | Text, empty by default | Commit and PR slash commands. Not set from project `env` before trust |
+
+## How It Works
+
+Claude Code asks a server for feature flags at startup. A flag turns a feature on or off for an account.
+Some variables override a flag. Others only work when the flag is already on.
+Turning telemetry off also stops flag fetching, which turns off the features that need it.
+
+## Related Pages
+
+- [Environment Variables](https://xsyetopz.github.io/claude-code-docs/configure/env-vars.md): how Claude Code reads variables and which value wins.
+- [Telemetry and Debug](https://xsyetopz.github.io/claude-code-docs/configure/env-vars/telemetry-and-debug.md)
+- [Undocumented Items](https://xsyetopz.github.io/claude-code-docs/reference/undocumented.md): every item that only the program shows.
+
+Source: the program (variable names found in the `2.1.303` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.

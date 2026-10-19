@@ -24,6 +24,8 @@ jobs:
         with:
           bun-version: 1.4.3
       - run: bun install --frozen-lockfile
+      - name: Install plugin server dependencies
+        run: bun install --cwd plugin/mcp --frozen-lockfile
       - name: Commitlint
         env:
           EVENT: ${{ github.event_name }}
@@ -66,6 +68,8 @@ jobs:
         run: bun run build
       - name: Llms check
         run: bun run llms:check
+      - name: Plugin check
+        run: bun run plugin:check
       - uses: actions/upload-pages-artifact@v3
         if: github.event_name != 'pull_request'
         with:

@@ -1,0 +1,42 @@
+<evaluation>
+  <qa_pair>
+    <question>In Claude Code 2.1.303, a hook handler of type "script" is rejected. What is the exact error text the program prints for it? Give only the text inside the backticks of the docs row, with the type name in double quotes.</question>
+    <answer>Unknown hook type "script"</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>A user sets statusLine.refreshInterval to 0 in settings. According to the docs, what is the effective re-run interval in milliseconds?</question>
+    <answer>1000</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Status line scripts re-run after a new assistant message or a permission mode change. How many milliseconds is that trigger debounced by, per the docs?</question>
+    <answer>300</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>For the hook events that have a lowered default timeout of 30 seconds (command, http, and mcp_tool handlers), how many events are listed?</question>
+    <answer>3</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Which plugin path variable, usable in hook commands and MCP stdio args, changes when the plugin updates, so a plugin must not write state there?</question>
+    <answer>${CLAUDE_PLUGIN_ROOT}</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Using the settings.json JSON Schema for this version, how many values does the enum of permissions.defaultMode allow?</question>
+    <answer>6</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>The docs say the word "manual" is accepted as an alias for one permission mode. Which mode name is it an alias of?</question>
+    <answer>default</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Which environment variable moves the whole .claude folder, and cannot be set from project or local settings files?</question>
+    <answer>CLAUDE_CONFIG_DIR</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>In which folder does Claude Code keep clones of added marketplaces? Give the path pattern with the placeholder as written in the docs.</question>
+    <answer>~/.claude/plugins/marketplaces/&lt;name&gt;</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Using the settings.json JSON Schema for this version, how many top-level properties does it define?</question>
+    <answer>169</answer>
+  </qa_pair>
+</evaluation>

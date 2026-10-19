@@ -1,0 +1,1274 @@
+[
+  {
+    "route": "/",
+    "title": "Overview",
+    "description": "What Claude Code is, what this community site covers, and a map of every surface you can use or change.",
+    "section": "Overview",
+    "md": "https://xsyetopz.github.io/claude-code-docs/index.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/"
+  },
+  {
+    "route": "/start/how-to-read",
+    "title": "How to Read These Docs",
+    "description": "What the badges mean, what the At a Glance table answers, where the facts come from, and which release this site covers.",
+    "section": "Start Here",
+    "md": "https://xsyetopz.github.io/claude-code-docs/start/how-to-read.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/start/how-to-read"
+  },
+  {
+    "route": "/start/what-can-i-change",
+    "title": "What Can I Change",
+    "description": "A task map that links each thing you may want to change to the setting, flag, hook, skill, plugin, or other surface that changes it.",
+    "section": "Start Here",
+    "md": "https://xsyetopz.github.io/claude-code-docs/start/what-can-i-change.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/start/what-can-i-change"
+  },
+  {
+    "route": "/start/files-on-disk",
+    "title": "Files on Disk",
+    "description": "Every file and folder that Claude Code reads or writes, with what it holds and the page that documents it.",
+    "section": "Start Here",
+    "md": "https://xsyetopz.github.io/claude-code-docs/start/files-on-disk.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/start/files-on-disk"
+  },
+  {
+    "route": "/start/what-changed",
+    "title": "What Changed",
+    "description": "What changed in the Claude Code releases near 2.1.303, newest first, as far as the changelog and a version comparison show.",
+    "section": "Start Here",
+    "md": "https://xsyetopz.github.io/claude-code-docs/start/what-changed.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/start/what-changed"
+  },
+  {
+    "route": "/start/use-with-agents",
+    "title": "Use These Docs with Agents",
+    "description": "How an AI agent can read this site as plain text, and how to install the cc-docs plugin that adds an MCP server and a skill.",
+    "section": "Start Here",
+    "md": "https://xsyetopz.github.io/claude-code-docs/start/use-with-agents.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/start/use-with-agents"
+  },
+  {
+    "route": "/how-it-works/architecture",
+    "title": "Architecture",
+    "description": "The pieces of Claude Code, its processes, where it runs, and the steps it takes when it starts.",
+    "section": "How It Works",
+    "md": "https://xsyetopz.github.io/claude-code-docs/how-it-works/architecture.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/how-it-works/architecture"
+  },
+  {
+    "route": "/how-it-works/agent-loop",
+    "title": "The Agent Loop",
+    "description": "How a turn runs from your prompt to the final answer, where each hook and mod event fires, how the loop recovers from errors, and why a turn ends.",
+    "section": "How It Works",
+    "md": "https://xsyetopz.github.io/claude-code-docs/how-it-works/agent-loop.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/how-it-works/agent-loop"
+  },
+  {
+    "route": "/how-it-works/request-and-cache",
+    "title": "Request and Cache",
+    "description": "What one request to the model holds, which cache markers it carries, how long the cache lives, and which actions break it.",
+    "section": "How It Works",
+    "md": "https://xsyetopz.github.io/claude-code-docs/how-it-works/request-and-cache.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/how-it-works/request-and-cache"
+  },
+  {
+    "route": "/how-it-works/system-prompt",
+    "title": "The System Prompt",
+    "description": "How Claude Code builds the system prompt from named sections, how it picks the short or full version, and every way to change it.",
+    "section": "How It Works",
+    "md": "https://xsyetopz.github.io/claude-code-docs/how-it-works/system-prompt.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/how-it-works/system-prompt"
+  },
+  {
+    "route": "/how-it-works/context-and-compaction",
+    "title": "Context and Compaction",
+    "description": "What fills the context window, when Claude Code compacts, the formulas for each level, the summary prompt, and what survives.",
+    "section": "How It Works",
+    "md": "https://xsyetopz.github.io/claude-code-docs/how-it-works/context-and-compaction.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/how-it-works/context-and-compaction"
+  },
+  {
+    "route": "/how-it-works/sessions-and-storage",
+    "title": "Sessions and Storage",
+    "description": "How Claude Code saves a session, how resume and branch work, what is restored, and where every file lives on disk.",
+    "section": "How It Works",
+    "md": "https://xsyetopz.github.io/claude-code-docs/how-it-works/sessions-and-storage.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/how-it-works/sessions-and-storage"
+  },
+  {
+    "route": "/how-it-works/models",
+    "title": "Models",
+    "description": "How Claude Code picks the model, effort, and thinking mode, what the capability flags do, how fallback and retries work, and which timeouts apply.",
+    "section": "How It Works",
+    "md": "https://xsyetopz.github.io/claude-code-docs/how-it-works/models.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/how-it-works/models"
+  },
+  {
+    "route": "/how-it-works/permission-flow",
+    "title": "Permission Flow",
+    "description": "How Claude Code decides to allow, ask about, or deny a tool call, in order, with hooks, modes, the sandbox, and the auto mode classifier.",
+    "section": "How It Works",
+    "md": "https://xsyetopz.github.io/claude-code-docs/how-it-works/permission-flow.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/how-it-works/permission-flow"
+  },
+  {
+    "route": "/configure/settings",
+    "title": "Settings Files and Scopes",
+    "description": "Where Claude Code settings live, which value wins, how managed settings arrive, and a map of every settings key page.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/settings.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/settings/"
+  },
+  {
+    "route": "/configure/settings/core",
+    "title": "Core Settings",
+    "description": "Keys for compaction, memory, cleanup, shell commands, files, the env block, the sandbox, and updates.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/settings/core.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/settings/core"
+  },
+  {
+    "route": "/configure/settings/model",
+    "title": "Model Settings",
+    "description": "Keys that choose the model, the effort level, thinking, fast mode, cache lifetime, and model allow and block lists.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/settings/model.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/settings/model"
+  },
+  {
+    "route": "/configure/settings/auth",
+    "title": "Auth Settings",
+    "description": "Keys that tell Claude Code how to sign in and how to get credentials from your own scripts.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/settings/auth.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/settings/auth"
+  },
+  {
+    "route": "/configure/settings/ui",
+    "title": "Interface Settings",
+    "description": "Keys that change the theme, spinner, notices, terminal display, voice, and feedback prompts.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/settings/ui.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/settings/ui"
+  },
+  {
+    "route": "/configure/settings/hooks-and-plugins",
+    "title": "Hooks, Plugins, and Skills Settings",
+    "description": "Keys for hooks, plugins, marketplaces, skills, permissions, the status line, and output styles.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/settings/hooks-and-plugins.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/settings/hooks-and-plugins"
+  },
+  {
+    "route": "/configure/settings/mcp-and-channels",
+    "title": "MCP and Channels Settings",
+    "description": "Keys that decide which MCP servers, claude.ai connectors, and channels Claude Code may use.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/settings/mcp-and-channels.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/settings/mcp-and-channels"
+  },
+  {
+    "route": "/configure/settings/agents-and-remote",
+    "title": "Agents and Remote Settings",
+    "description": "Keys for subagents, workflows, background work, Remote Control, push notifications, and peer sessions.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/settings/agents-and-remote.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/settings/agents-and-remote"
+  },
+  {
+    "route": "/configure/settings/enterprise",
+    "title": "Enterprise Settings",
+    "description": "Keys that control how managed settings arrive and which Claude Code versions may run.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/settings/enterprise.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/settings/enterprise"
+  },
+  {
+    "route": "/configure/settings/extra-keys",
+    "title": "Extra Keys and Global Config",
+    "description": "Keys the settings schema leaves out, desktop-only keys, and the keys of the global config file ~/.claude.json.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/settings/extra-keys.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/settings/extra-keys"
+  },
+  {
+    "route": "/configure/env-vars",
+    "title": "Environment Variables",
+    "description": "How Claude Code reads environment variables, which value wins, how to set them in settings.json, and a map of every variable group.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/env-vars.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/env-vars/"
+  },
+  {
+    "route": "/configure/env-vars/models-and-effort",
+    "title": "Models and Effort",
+    "description": "Environment variables that pick the model, pin model aliases, set thinking effort, and limit output size.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/env-vars/models-and-effort.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/env-vars/models-and-effort"
+  },
+  {
+    "route": "/configure/env-vars/auth-and-accounts",
+    "title": "Auth and Accounts",
+    "description": "Environment variables for API keys, login tokens, credential helpers, and account details.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/env-vars/auth-and-accounts.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/env-vars/auth-and-accounts"
+  },
+  {
+    "route": "/configure/env-vars/cloud-providers",
+    "title": "Cloud Providers",
+    "description": "Environment variables for Amazon Bedrock, Google Vertex AI, Microsoft Foundry, and gateway setups.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/env-vars/cloud-providers.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/env-vars/cloud-providers"
+  },
+  {
+    "route": "/configure/env-vars/network-and-proxy",
+    "title": "Network and Proxy",
+    "description": "Environment variables for API addresses, proxies, TLS certificates, time limits, and retries.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/env-vars/network-and-proxy.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/env-vars/network-and-proxy"
+  },
+  {
+    "route": "/configure/env-vars/context-and-compaction",
+    "title": "Context and Compaction",
+    "description": "Environment variables for the context window, compaction, memory, and the prompt cache.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/env-vars/context-and-compaction.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/env-vars/context-and-compaction"
+  },
+  {
+    "route": "/configure/env-vars/tools-and-bash",
+    "title": "Tools and Bash",
+    "description": "Environment variables for the Bash tool, file tools, search, permissions, and the sandbox.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/env-vars/tools-and-bash.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/env-vars/tools-and-bash"
+  },
+  {
+    "route": "/configure/env-vars/ui-and-terminal",
+    "title": "UI and Terminal",
+    "description": "Environment variables for the terminal screen, colors, voice, keys, and notifications.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/env-vars/ui-and-terminal.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/env-vars/ui-and-terminal"
+  },
+  {
+    "route": "/configure/env-vars/sessions-and-storage",
+    "title": "Sessions and Storage",
+    "description": "Environment variables for config folders, session files, resume, install, and updates.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/env-vars/sessions-and-storage.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/env-vars/sessions-and-storage"
+  },
+  {
+    "route": "/configure/env-vars/telemetry-and-debug",
+    "title": "Telemetry and Debug",
+    "description": "Environment variables for usage data, OpenTelemetry, debug logs, and error reports.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/env-vars/telemetry-and-debug.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/env-vars/telemetry-and-debug"
+  },
+  {
+    "route": "/configure/env-vars/plugins-and-mcp",
+    "title": "Plugins and MCP",
+    "description": "Environment variables for plugins, MCP servers, skills, hooks, and marketplaces.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/env-vars/plugins-and-mcp.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/env-vars/plugins-and-mcp"
+  },
+  {
+    "route": "/configure/env-vars/agents-and-teams",
+    "title": "Agents and Teams",
+    "description": "Environment variables for subagents, agent teams, background tasks, and workers.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/env-vars/agents-and-teams.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/env-vars/agents-and-teams"
+  },
+  {
+    "route": "/configure/env-vars/features-and-toggles",
+    "title": "Features and Toggles",
+    "description": "Environment variables that turn single features on or off, including server-gated features.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/env-vars/features-and-toggles.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/env-vars/features-and-toggles"
+  },
+  {
+    "route": "/configure/env-vars/remote-and-cloud-sessions",
+    "title": "Remote and Cloud Sessions",
+    "description": "Environment variables for cloud sessions, the bridge, the desktop app, Chrome, Cowork, and Slack.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/env-vars/remote-and-cloud-sessions.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/env-vars/remote-and-cloud-sessions"
+  },
+  {
+    "route": "/configure/env-vars/sdk-and-automation",
+    "title": "SDK and Automation",
+    "description": "Environment variables for programs that host Claude Code, the Agent SDK, and automation.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/env-vars/sdk-and-automation.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/env-vars/sdk-and-automation"
+  },
+  {
+    "route": "/configure/env-vars/system-and-third-party",
+    "title": "System and Third-Party",
+    "description": "Environment variables owned by your system or other tools that Claude Code reads, such as HOME, TERM, and ALL_PROXY.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/env-vars/system-and-third-party.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/env-vars/system-and-third-party"
+  },
+  {
+    "route": "/configure/env-vars/bundled-libraries",
+    "title": "Bundled Libraries",
+    "description": "Environment variables read only by libraries bundled inside Claude Code, such as the AWS SDK, gRPC, and cloud detectors.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/env-vars/bundled-libraries.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/env-vars/bundled-libraries"
+  },
+  {
+    "route": "/configure/cli",
+    "title": "CLI Overview",
+    "description": "How to start claude, what print mode does, and a map of the flags and subcommands of Claude Code 2.1.303.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/cli.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/cli/"
+  },
+  {
+    "route": "/configure/cli/flags",
+    "title": "All Flags",
+    "description": "Every claude flag in 2.1.303, with the ones that claude --help hides, grouped by job.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/cli/flags.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/cli/flags"
+  },
+  {
+    "route": "/configure/cli/subcommands",
+    "title": "Subcommands",
+    "description": "Every claude subcommand in 2.1.303, including background sessions, auth, plugins, and the hidden commands.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/cli/subcommands.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/cli/subcommands"
+  },
+  {
+    "route": "/configure/permissions",
+    "title": "Permissions Overview",
+    "description": "What permissions and the sandbox do, how the pages in this section fit together, and a first example.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/permissions.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/permissions/"
+  },
+  {
+    "route": "/configure/permissions/modes",
+    "title": "Permission Modes",
+    "description": "The six permission modes, how Claude Code picks one, the reasons it gives for a decision, and its built-in safety checks.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/permissions/modes.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/permissions/modes"
+  },
+  {
+    "route": "/configure/permissions/rules",
+    "title": "Permission Rules",
+    "description": "The rule syntax for allow, ask, and deny lists, every permissions key, the flags and hooks that touch permissions, and permission updates.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/permissions/rules.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/permissions/rules"
+  },
+  {
+    "route": "/configure/permissions/sandbox",
+    "title": "Sandbox",
+    "description": "Every sandbox.* setting, the environment variables around it, and how the operating-system wall limits Bash commands.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/permissions/sandbox.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/permissions/sandbox"
+  },
+  {
+    "route": "/configure/permissions/auto-mode",
+    "title": "Auto Mode",
+    "description": "How the auto mode classifier decides, the autoMode setting, the claude auto-mode commands, and the related environment variables.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/permissions/auto-mode.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/permissions/auto-mode"
+  },
+  {
+    "route": "/configure/permissions/auto-mode-rules",
+    "title": "Auto Mode Default Rules",
+    "description": "The default allow, hard deny, environment, and soft deny entries of the auto mode classifier, one row per rule.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/permissions/auto-mode-rules.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/permissions/auto-mode-rules"
+  },
+  {
+    "route": "/configure/memory-and-rules",
+    "title": "Memory and Rules",
+    "description": "Where CLAUDE.md files, rules, imports, and auto memory live, how they load, and their limits.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/memory-and-rules.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/memory-and-rules"
+  },
+  {
+    "route": "/configure/output-styles",
+    "title": "Output Styles",
+    "description": "The built-in output styles, how to switch them, how to write your own style file, and every frontmatter key.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/output-styles.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/output-styles"
+  },
+  {
+    "route": "/configure/status-line",
+    "title": "Status Line",
+    "description": "Show your own text under the prompt, with every setting, trigger, and JSON field that the status line command receives.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/status-line.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/status-line"
+  },
+  {
+    "route": "/configure/models-and-providers",
+    "title": "Models and Providers",
+    "description": "The model catalog, every alias, effort and thinking controls, provider names for Bedrock, Vertex, Foundry, and Mantle, gateways, pricing, and capability flags.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers"
+  },
+  {
+    "route": "/extend/hooks",
+    "title": "Hooks",
+    "description": "What hooks are, where you define them, and how Claude Code runs them at 33 points in a session.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/hooks.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/hooks/"
+  },
+  {
+    "route": "/extend/hooks/configuration",
+    "title": "Hook Configuration",
+    "description": "Matchers, the if filter, timeouts, failure handling, environment variables, settings keys, and trust rules for hooks.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/hooks/configuration.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/hooks/configuration"
+  },
+  {
+    "route": "/extend/hooks/handlers",
+    "title": "Hook Handlers",
+    "description": "The five hook handler types, command, http, mcp_tool, prompt, and agent, with every field.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/hooks/handlers.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/hooks/handlers"
+  },
+  {
+    "route": "/extend/hooks/events",
+    "title": "Hook Events",
+    "description": "All 33 hook events, when each fires, what input it gets, and which output fields it accepts.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/hooks/events.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/hooks/events"
+  },
+  {
+    "route": "/extend/hooks/input-and-output",
+    "title": "Hook Input and Output",
+    "description": "The JSON that hooks receive, the JSON and exit codes they answer with, and what each answer does.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/hooks/input-and-output.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/hooks/input-and-output"
+  },
+  {
+    "route": "/extend/skills-and-commands",
+    "title": "Skills and Commands",
+    "description": "What skills and slash commands are, where skill files live, how names clash, and how to turn skills on or off.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/skills-and-commands.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/skills-and-commands/"
+  },
+  {
+    "route": "/extend/skills-and-commands/frontmatter",
+    "title": "Skill Frontmatter",
+    "description": "Every key you can set at the top of a SKILL.md file, with rules for how Claude Code reads them.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/skills-and-commands/frontmatter.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/skills-and-commands/frontmatter"
+  },
+  {
+    "route": "/extend/skills-and-commands/substitutions",
+    "title": "Substitutions and Invocation",
+    "description": "Placeholders that Claude Code fills into a skill, shell injection, and the keys that control who can run a skill.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/skills-and-commands/substitutions.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/skills-and-commands/substitutions"
+  },
+  {
+    "route": "/extend/skills-and-commands/bundled-skills",
+    "title": "Bundled Skills",
+    "description": "Skills that ship inside Claude Code, what each one does, and how to turn them off.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/skills-and-commands/bundled-skills.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/skills-and-commands/bundled-skills"
+  },
+  {
+    "route": "/extend/skills-and-commands/slash-commands",
+    "title": "Slash Commands",
+    "description": "Every built-in slash command in Claude Code 2.1.303, grouped by job, with aliases, arguments, and gates.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/skills-and-commands/slash-commands.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/skills-and-commands/slash-commands"
+  },
+  {
+    "route": "/extend/subagents",
+    "title": "Subagents",
+    "description": "What subagents are, where agent files live, which one wins on a name clash, and how to start one.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/subagents.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/subagents/"
+  },
+  {
+    "route": "/extend/subagents/frontmatter",
+    "title": "Subagent Frontmatter",
+    "description": "Every key of a subagent file and of the --agents JSON, with rules for how Claude Code reads them.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/subagents/frontmatter.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/subagents/frontmatter"
+  },
+  {
+    "route": "/extend/subagents/runtime",
+    "title": "Subagent Runtime",
+    "description": "Built-in agents, tool filters, forks, background runs, depth and concurrency limits, and agent teams.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/subagents/runtime.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/subagents/runtime"
+  },
+  {
+    "route": "/extend/plugins",
+    "title": "Plugins",
+    "description": "What a plugin is, how plugin ids and scopes work, and a map of the plugin pages.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/plugins.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/plugins/"
+  },
+  {
+    "route": "/extend/plugins/manifest",
+    "title": "Plugin Manifest",
+    "description": "Every plugin.json key, every userConfig option, and the folder layout of a plugin.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/plugins/manifest.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/plugins/manifest"
+  },
+  {
+    "route": "/extend/plugins/marketplace",
+    "title": "Marketplaces",
+    "description": "Every marketplace.json key, every plugin source and marketplace source, and the settings keys that control marketplaces.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/plugins/marketplace.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/plugins/marketplace"
+  },
+  {
+    "route": "/extend/plugins/cli",
+    "title": "Plugin Commands",
+    "description": "Every claude plugin subcommand and flag, the /plugin and /reload-plugins commands, and the flags that load a plugin for one session.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/plugins/cli.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/plugins/cli"
+  },
+  {
+    "route": "/extend/plugins/loading",
+    "title": "Plugin Loading",
+    "description": "Where plugin files live, the variables a plugin can use, and the env vars and settings that change how plugins load.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/plugins/loading.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/plugins/loading"
+  },
+  {
+    "route": "/extend/mcp",
+    "title": "MCP",
+    "description": "What MCP is, the transports and scopes Claude Code supports, and a map of the MCP pages.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/mcp.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/mcp/"
+  },
+  {
+    "route": "/extend/mcp/config",
+    "title": "Server Configuration",
+    "description": "The .mcp.json shape, every server option for each transport, env var expansion, name rules, and scope precedence.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/mcp/config.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/mcp/config"
+  },
+  {
+    "route": "/extend/mcp/settings",
+    "title": "MCP Settings and Policy",
+    "description": "Settings keys, allow and deny lists, project approval, managed-mcp.json, and launch flags that decide which MCP servers can run.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/mcp/settings.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/mcp/settings"
+  },
+  {
+    "route": "/extend/mcp/cli",
+    "title": "MCP Commands",
+    "description": "Every claude mcp subcommand and flag, and the /mcp command inside a session.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/mcp/cli.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/mcp/cli"
+  },
+  {
+    "route": "/extend/mcp/auth",
+    "title": "MCP Authentication",
+    "description": "OAuth options, headersHelper, enterprise XAA sign-in, and claude.ai connectors for MCP servers.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/mcp/auth.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/mcp/auth"
+  },
+  {
+    "route": "/extend/mcp/runtime",
+    "title": "MCP Runtime",
+    "description": "Tool names, permission patterns, resources, prompts, elicitation, channels, output limits, timing, and recovery after a server connects.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/mcp/runtime.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/mcp/runtime"
+  },
+  {
+    "route": "/extend/mcp/env",
+    "title": "MCP Env Vars",
+    "description": "Every env var that changes how Claude Code starts, times out, limits, and authenticates MCP servers.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/mcp/env.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/mcp/env"
+  },
+  {
+    "route": "/extend/mod-api",
+    "title": "Mod API Overview",
+    "description": "What a mod is, how one loads, the commands for mod authors, and a map of every Mod API page.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/"
+  },
+  {
+    "route": "/extend/mod-api/hooks",
+    "title": "Hooks and the Hook Chain",
+    "description": "The register entry point, the on function, the arguments of a hook, what happens when a hook fails, and the time budgets.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/hooks.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/hooks"
+  },
+  {
+    "route": "/extend/mod-api/nouns-and-gates",
+    "title": "Files, Nouns, and Gates",
+    "description": "The files and manifest keys of a mod, every noun on the object $, the settings that stop mods, the limits, and the built-in mods.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/nouns-and-gates.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/nouns-and-gates"
+  },
+  {
+    "route": "/extend/mod-api/plugin",
+    "title": "Plugin and Engine",
+    "description": "The $.plugin noun, the plugin.register and engine.create events, and the types that describe a plugin and the engine object.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/plugin.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/plugin"
+  },
+  {
+    "route": "/extend/mod-api/ui",
+    "title": "UI Methods",
+    "description": "The $.ui noun that draws and manages the interface - transcript lines, toasts, panes, scroll, focus, and the clipboard.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/ui.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/ui"
+  },
+  {
+    "route": "/extend/mod-api/ui-events",
+    "title": "UI Events",
+    "description": "The events that fire when Claude Code draws part of the interface, when a person uses a control a mod drew, and when $.ui methods run.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/ui-events.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/ui-events"
+  },
+  {
+    "route": "/extend/mod-api/model-audio-mcp",
+    "title": "Model, Audio, and MCP",
+    "description": "The $.model, $.audio, and $.mcp nouns - ask a model, play or speak sound, and call a tool of a connected MCP server.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/model-audio-mcp.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/model-audio-mcp"
+  },
+  {
+    "route": "/extend/mod-api/ui-elements",
+    "title": "Surfaces, Elements, and Render Sites",
+    "description": "What a mod may draw and where - the surfaces, the 15 render sites with their props, and the JSX globals.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/ui-elements.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/ui-elements"
+  },
+  {
+    "route": "/extend/mod-api/session",
+    "title": "Session",
+    "description": "The $.session noun that reads the running session, compacts it, and sends messages, plus the session events.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/session.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/session"
+  },
+  {
+    "route": "/extend/mod-api/turn-prompt",
+    "title": "Turn and Prompt",
+    "description": "The $.turn and $.prompt nouns, and the events that follow a turn from start to end, including the system prompt, context blocks, and attachments.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/turn-prompt.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/turn-prompt"
+  },
+  {
+    "route": "/extend/mod-api/tool-command-config",
+    "title": "Tool, Command, and Config",
+    "description": "The $.tool, $.command, and $.config nouns that list, check, call, and register tools and slash commands, and change /config rows.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/tool-command-config.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/tool-command-config"
+  },
+  {
+    "route": "/extend/mod-api/agent",
+    "title": "Agent",
+    "description": "The $.agent noun that starts, lists, and registers subagents, the agent.offer and agent.spawn events, and the agent types.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/agent.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/agent"
+  },
+  {
+    "route": "/extend/mod-api/fs-store-state",
+    "title": "Files, Store, and State",
+    "description": "The $.fs, $.store, and $.state nouns, the state helpers you import from claude-code, and the events these calls raise.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/fs-store-state.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/fs-store-state"
+  },
+  {
+    "route": "/extend/mod-api/clock-http-process-env-settings",
+    "title": "Clock, HTTP, Process, Env, and Settings",
+    "description": "The five $ nouns that reach the machine - time and timers, web requests, commands, environment variables, and merged settings.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/clock-http-process-env-settings.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/clock-http-process-env-settings"
+  },
+  {
+    "route": "/extend/mod-api/telemetry",
+    "title": "Telemetry",
+    "description": "The $.telemetry noun, the telemetry.log and telemetry.mark events, and the record types.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/telemetry.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/telemetry"
+  },
+  {
+    "route": "/extend/mod-api/classic-events",
+    "title": "Classic Events",
+    "description": "How each settings hook event also appears to a mod as a classic event, with the fields and results of all 33 events.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/classic-events.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/classic-events"
+  },
+  {
+    "route": "/extend/mod-api/testing",
+    "title": "The Testing Module",
+    "description": "The claude-code/testing module that test files import, and the claude plugin test command that runs them.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/testing.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/testing"
+  },
+  {
+    "route": "/extend/mod-api/types",
+    "title": "Mod API Types",
+    "description": "A map of the type reference pages for the Mod API, from classic events to UI elements.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/types.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/types/"
+  },
+  {
+    "route": "/extend/mod-api/types/classic",
+    "title": "Classic Event Types",
+    "description": "Input and result types of the classic.* events, which mirror the settings hooks.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/types/classic.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/types/classic"
+  },
+  {
+    "route": "/extend/mod-api/types/events",
+    "title": "Event Table Types",
+    "description": "Types that map an event name to its input, its result, and its call on the object $.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/types/events.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/types/events"
+  },
+  {
+    "route": "/extend/mod-api/types/hooks",
+    "title": "Hook Machinery Types",
+    "description": "Types that describe how on, next, matchers, and traces are typed.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/types/hooks.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/types/hooks"
+  },
+  {
+    "route": "/extend/mod-api/types/infra",
+    "title": "Files, State, Clock, HTTP, Process, and Settings Types",
+    "description": "Types behind $.fs, $.store, $.state, $.clock, $.http, $.process, $.env, and $.settings.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/types/infra.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/types/infra"
+  },
+  {
+    "route": "/extend/mod-api/types/model",
+    "title": "Model, Audio, and MCP Types",
+    "description": "Types behind $.model, $.audio, and $.mcp.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/types/model.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/types/model"
+  },
+  {
+    "route": "/extend/mod-api/types/session",
+    "title": "Session Types",
+    "description": "Types behind $.session and the session.* events: messages, context size, cost, and rate limits.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/types/session.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/types/session"
+  },
+  {
+    "route": "/extend/mod-api/types/testing",
+    "title": "Testing Types",
+    "description": "Types of the claude-code/testing module: tests, mounted drawings, the mock clock, and matchers.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/types/testing.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/types/testing"
+  },
+  {
+    "route": "/extend/mod-api/types/tool-command-config",
+    "title": "Tool, Command, and Config Types",
+    "description": "Types behind $.tool, $.command, and $.config: tool calls, permission checks, command runs, and /config rows.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/types/tool-command-config.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/types/tool-command-config"
+  },
+  {
+    "route": "/extend/mod-api/types/turn-prompt",
+    "title": "Turn and Prompt Types",
+    "description": "Types behind $.turn, $.prompt, and their events: prompts, attachments, system prompt sections, and the prompt box.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/types/turn-prompt.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/types/turn-prompt"
+  },
+  {
+    "route": "/extend/mod-api/types/ui",
+    "title": "UI Types",
+    "description": "Types of $.ui, the element props, and the client modules: Box, Text, Button, panes, and render inputs.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/types/ui.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/mod-api/types/ui"
+  },
+  {
+    "route": "/extend/headless",
+    "title": "Headless and Print Mode",
+    "description": "Run Claude Code without the screen with -p, choose text, json, or stream-json output, and the flags that only work in print mode.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/headless.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/headless/"
+  },
+  {
+    "route": "/extend/headless/stream-json",
+    "title": "Stream JSON Messages",
+    "description": "Every message type that print mode writes with --output-format stream-json, and how stdin carries messages back.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/headless/stream-json.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/headless/stream-json"
+  },
+  {
+    "route": "/extend/headless/control-protocol",
+    "title": "Control Protocol",
+    "description": "Every control request subtype that a host program can send to a running Claude Code process on the stream-json channel.",
+    "section": "Extend",
+    "md": "https://xsyetopz.github.io/claude-code-docs/extend/headless/control-protocol.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/extend/headless/control-protocol"
+  },
+  {
+    "route": "/reference/tools",
+    "title": "Tools",
+    "description": "What a tool is, the flags every tool has, how tool search defers tools, and a map of the tool pages.",
+    "section": "Reference",
+    "md": "https://xsyetopz.github.io/claude-code-docs/reference/tools.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/reference/tools/"
+  },
+  {
+    "route": "/reference/tools/files",
+    "title": "Files, Search, and Memory",
+    "description": "Every parameter of Read, Write, Edit, NotebookEdit, Glob, Grep, LSP, and the memory tools.",
+    "section": "Reference",
+    "md": "https://xsyetopz.github.io/claude-code-docs/reference/tools/files.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/reference/tools/files"
+  },
+  {
+    "route": "/reference/tools/shell-and-web",
+    "title": "Shell, Web, and Background Tasks",
+    "description": "Every parameter of Bash, PowerShell, Monitor, WebFetch, WebSearch, TaskStop, and GetTask.",
+    "section": "Reference",
+    "md": "https://xsyetopz.github.io/claude-code-docs/reference/tools/shell-and-web.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/reference/tools/shell-and-web"
+  },
+  {
+    "route": "/reference/tools/agents-and-tasks",
+    "title": "Agents, Tasks, and Planning",
+    "description": "Every parameter of Agent, SendMessage, the task and cron tools, Workflow, worktree tools, plan mode, and AskUserQuestion.",
+    "section": "Reference",
+    "md": "https://xsyetopz.github.io/claude-code-docs/reference/tools/agents-and-tasks.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/reference/tools/agents-and-tasks"
+  },
+  {
+    "route": "/reference/tools/gated-and-other",
+    "title": "Gated and Surface-Specific Tools",
+    "description": "Tools that appear only behind a gate, a plan, or a session mode, plus StructuredOutput, WaitForMcpServers, and the MCP resource tools.",
+    "section": "Reference",
+    "md": "https://xsyetopz.github.io/claude-code-docs/reference/tools/gated-and-other.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/reference/tools/gated-and-other"
+  },
+  {
+    "route": "/reference/api",
+    "title": "API",
+    "description": "How Claude Code talks to the model server, which endpoints, headers, and betas it uses, and what a proxy must pass on.",
+    "section": "Reference",
+    "md": "https://xsyetopz.github.io/claude-code-docs/reference/api.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/reference/api/"
+  },
+  {
+    "route": "/reference/api/endpoints",
+    "title": "Endpoints and Headers",
+    "description": "The paths Claude Code calls, the headers it sends and reads, and the attribution block in the system prompt.",
+    "section": "Reference",
+    "md": "https://xsyetopz.github.io/claude-code-docs/reference/api/endpoints.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/reference/api/endpoints"
+  },
+  {
+    "route": "/reference/api/betas",
+    "title": "Betas",
+    "description": "Every anthropic-beta value in Claude Code 2.1.303, when it is sent, and how the list is built and turned off.",
+    "section": "Reference",
+    "md": "https://xsyetopz.github.io/claude-code-docs/reference/api/betas.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/reference/api/betas"
+  },
+  {
+    "route": "/reference/probes",
+    "title": "Probes",
+    "description": "Facts checked by running Claude Code 2.1.303 against a local stub, and the env vars and settings that changed what the program sent.",
+    "section": "Reference",
+    "md": "https://xsyetopz.github.io/claude-code-docs/reference/probes.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/reference/probes"
+  },
+  {
+    "route": "/reference/transcript-format",
+    "title": "Transcript Format",
+    "description": "The session JSONL file, where it lives, and every line type and field that Claude Code 2.1.303 writes.",
+    "section": "Reference",
+    "md": "https://xsyetopz.github.io/claude-code-docs/reference/transcript-format.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/reference/transcript-format"
+  },
+  {
+    "route": "/reference/schemas",
+    "title": "JSON Schemas",
+    "description": "JSON Schemas for Claude Code 2.1.303 config files, made from the validators inside the program, and how they differ from the SchemaStore copies.",
+    "section": "Reference",
+    "md": "https://xsyetopz.github.io/claude-code-docs/reference/schemas.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/reference/schemas"
+  },
+  {
+    "route": "/reference/undocumented",
+    "title": "Undocumented Items",
+    "description": "Every item that only the program shows, with a link to its page.",
+    "section": "Reference",
+    "md": "https://xsyetopz.github.io/claude-code-docs/reference/undocumented.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/reference/undocumented"
+  },
+  {
+    "route": "/prompts",
+    "title": "Captured System Prompts",
+    "description": "Every system prompt variant you can pick in Claude Code 2.1.303, captured offline and compared.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/"
+  },
+  {
+    "route": "/prompts/default-lean",
+    "title": "Default, Lean Prompt",
+    "description": "The prompt that Opus 5.5 gets with no flags.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/default-lean.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/default-lean"
+  },
+  {
+    "route": "/prompts/default-sonnet",
+    "title": "Default, Sonnet 5.5",
+    "description": "The prompt that Sonnet 5.5 gets with no flags.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/default-sonnet.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/default-sonnet"
+  },
+  {
+    "route": "/prompts/default-haiku",
+    "title": "Default, Haiku 5.5",
+    "description": "The prompt that Haiku 5.5 gets with no flags.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/default-haiku.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/default-haiku"
+  },
+  {
+    "route": "/prompts/full-prompt",
+    "title": "Full Prompt",
+    "description": "The long prompt, forced on a model that would get the lean one.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/full-prompt.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/full-prompt"
+  },
+  {
+    "route": "/prompts/simple-prompt-sonnet",
+    "title": "Simple Prompt Switch on Sonnet",
+    "description": "CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1 on Sonnet 5.5.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/simple-prompt-sonnet.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/simple-prompt-sonnet"
+  },
+  {
+    "route": "/prompts/simple-prompt-haiku",
+    "title": "Simple Prompt Switch on Haiku",
+    "description": "CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1 on Haiku 5.5.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/simple-prompt-haiku.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/simple-prompt-haiku"
+  },
+  {
+    "route": "/prompts/simple-prompt-opus",
+    "title": "Simple Prompt Switch on Opus",
+    "description": "CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1 on Opus 5.5.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/simple-prompt-opus.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/simple-prompt-opus"
+  },
+  {
+    "route": "/prompts/bare",
+    "title": "Bare Mode",
+    "description": "--bare: a two-line prompt and three tools.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/bare.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/bare"
+  },
+  {
+    "route": "/prompts/simple-env",
+    "title": "Simple Mode Env Var",
+    "description": "CLAUDE_CODE_SIMPLE=1: the same two-line prompt that --bare gives.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/simple-env.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/simple-env"
+  },
+  {
+    "route": "/prompts/exclude-dynamic",
+    "title": "Exclude Dynamic Sections",
+    "description": "Moves per-machine text from the system prompt into the first user message.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/exclude-dynamic.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/exclude-dynamic"
+  },
+  {
+    "route": "/prompts/exclude-dynamic-full",
+    "title": "Exclude Dynamic Sections, Full Prompt",
+    "description": "The same flag on the full prompt.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/exclude-dynamic-full.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/exclude-dynamic-full"
+  },
+  {
+    "route": "/prompts/style-explanatory",
+    "title": "Output Style, Explanatory",
+    "description": "The built-in Explanatory output style on the lean prompt.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/style-explanatory.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/style-explanatory"
+  },
+  {
+    "route": "/prompts/style-learning",
+    "title": "Output Style, Learning",
+    "description": "The built-in Learning output style on the lean prompt.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/style-learning.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/style-learning"
+  },
+  {
+    "route": "/prompts/style-proactive",
+    "title": "Output Style, Proactive",
+    "description": "The built-in Proactive output style on the lean prompt.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/style-proactive.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/style-proactive"
+  },
+  {
+    "route": "/prompts/style-concise",
+    "title": "Output Style, Concise",
+    "description": "The built-in Concise output style on the lean prompt.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/style-concise.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/style-concise"
+  },
+  {
+    "route": "/prompts/style-custom",
+    "title": "Custom Output Style",
+    "description": "A custom style file, without keep-coding-instructions, on the lean prompt.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/style-custom.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/style-custom"
+  },
+  {
+    "route": "/prompts/style-custom-full",
+    "title": "Custom Output Style on the Full Prompt",
+    "description": "A custom style without keep-coding-instructions, on the full prompt. The coding section is dropped.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/style-custom-full.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/style-custom-full"
+  },
+  {
+    "route": "/prompts/style-custom-keep",
+    "title": "Custom Output Style with Keep Coding Instructions",
+    "description": "A custom style with keep-coding-instructions: true, on the full prompt.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/style-custom-keep.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/style-custom-keep"
+  },
+  {
+    "route": "/prompts/style-custom-keep-lean",
+    "title": "Custom Output Style with Keep Coding Instructions, Lean Prompt",
+    "description": "The same keep flag on the lean prompt. The diff shows whether it does anything.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/style-custom-keep-lean.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/style-custom-keep-lean"
+  },
+  {
+    "route": "/prompts/append-system-prompt",
+    "title": "Append System Prompt",
+    "description": "Adds your text to the end of the prompt.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/append-system-prompt.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/append-system-prompt"
+  },
+  {
+    "route": "/prompts/system-prompt",
+    "title": "Replace System Prompt",
+    "description": "Replaces the body of the prompt with your text.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/system-prompt.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/system-prompt"
+  },
+  {
+    "route": "/prompts/system-prompt-append",
+    "title": "Replace and Append Together",
+    "description": "Both flags together.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/system-prompt-append.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/system-prompt-append"
+  },
+  {
+    "route": "/prompts/claude-md",
+    "title": "With a CLAUDE.md File",
+    "description": "Where project memory files land.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/claude-md.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/claude-md"
+  },
+  {
+    "route": "/prompts/git-repo",
+    "title": "Inside a Git Repository",
+    "description": "What changes when the project is a git repository.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/git-repo.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/git-repo"
+  },
+  {
+    "route": "/prompts/agent-main",
+    "title": "Main Thread Custom Agent",
+    "description": "Running the whole session as a custom agent.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/agent-main.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/agent-main"
+  },
+  {
+    "route": "/prompts/mode-plan",
+    "title": "Permission Mode, Plan",
+    "description": "Starts in plan permission mode.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/mode-plan.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/mode-plan"
+  },
+  {
+    "route": "/prompts/mode-acceptEdits",
+    "title": "Permission Mode, Accept Edits",
+    "description": "Starts in acceptEdits permission mode.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/mode-acceptEdits.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/mode-acceptEdits"
+  },
+  {
+    "route": "/prompts/mode-dontAsk",
+    "title": "Permission Mode, Don't Ask",
+    "description": "Starts in dontAsk permission mode.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/mode-dontAsk.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/mode-dontAsk"
+  },
+  {
+    "route": "/prompts/brief",
+    "title": "Brief Mode",
+    "description": "--brief adds rules for the SendUserMessage tool.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/brief.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/brief"
+  },
+  {
+    "route": "/prompts/compact",
+    "title": "Compaction Prompt",
+    "description": "The request that summarizes a conversation.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/compact.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/compact"
+  },
+  {
+    "route": "/prompts/subagent-general-purpose",
+    "title": "Subagent, General Purpose",
+    "description": "The prompt that a general-purpose subagent gets.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/subagent-general-purpose.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/subagent-general-purpose"
+  },
+  {
+    "route": "/prompts/subagent-explore",
+    "title": "Subagent, Explore",
+    "description": "The prompt that a Explore subagent gets.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/subagent-explore.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/subagent-explore"
+  },
+  {
+    "route": "/prompts/subagent-plan",
+    "title": "Subagent, Plan",
+    "description": "The prompt that a Plan subagent gets.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/subagent-plan.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/subagent-plan"
+  },
+  {
+    "route": "/prompts/subagent-custom",
+    "title": "Subagent, Custom Agent",
+    "description": "The prompt of a subagent you defined in .claude/agents/.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/subagent-custom.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/subagent-custom"
+  },
+  {
+    "route": "/prompts/tools-per-variant",
+    "title": "Tools per Variant",
+    "description": "Which tools each system prompt variant sends, and how the tool text differs.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/tools-per-variant.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/tools-per-variant"
+  },
+  {
+    "route": "/contributing/style-guide",
+    "title": "Style Guide",
+    "description": "The rules for writing pages on this site, with templates, examples, and the checks that enforce them.",
+    "section": "Contributing",
+    "md": "https://xsyetopz.github.io/claude-code-docs/contributing/style-guide.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/contributing/style-guide"
+  }
+]

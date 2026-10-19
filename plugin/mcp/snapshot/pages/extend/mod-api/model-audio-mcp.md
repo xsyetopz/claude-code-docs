@@ -1,0 +1,75 @@
+---
+title: "Model, Audio, and MCP"
+description: "The $.model, $.audio, and $.mcp nouns - ask a model, play or speak sound, and call a tool of a connected MCP server."
+url: https://xsyetopz.github.io/claude-code-docs/extend/mod-api/model-audio-mcp
+source: docs/extend/mod-api/model-audio-mcp.md
+---
+
+# Model, Audio, and MCP
+
+
+`$.model` asks a model with the credentials of the session.
+`$.audio` plays a sound or speaks text.
+`$.mcp` calls a tool of a connected MCP server.
+A model call bills to the plan or key of the person, so keep requests small.
+
+## At a Glance
+
+| Question | Answer |
+| --- | --- |
+| Can you use it? | ✅ Yes. `await $.model.complete({ model: 'haiku', prompt: 'Hi', maxTokens: 20 })` |
+| Can you change it? | ✅ Yes. Hook `model.complete`, `audio.play`, `mcp.call`, and the other events to rewrite, refuse, or answer. |
+| Can you turn it on or off? | A `deny` from a hook refuses a call. `maxTokens` is 1024 by default and goes up to 64000 or the output limit of the model. |
+| Where does it live? | The hooks module. |
+| Status | [Documented] |
+
+Official pages: [Use the Mods API](https://code.claude.com/docs/en/plugins/mods/api), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the program (`types-2.1.303.d.ts`).
+In a "Where it can be used" cell, "Run time" means in a hook, in a closure that a hook drew, or in a timer callback. It does not mean inside `register`.
+
+## Example
+
+This hook answers `/triage` by asking a small model for a label.
+
+```javascript
+on('command.run', { command: 'triage' }, async ($, e) => {
+  const r = await $.model.complete({
+    model: 'haiku',
+    system: 'Reply with one word: bug, feature, or question.',
+    prompt: e.args,
+    maxTokens: 20,
+  })
+  return { text: 'Label: ' + (r.isAnswered ? r.text.trim() : 'unknown') }
+})
+```
+
+## Members
+
+| Item | Status | What it does | How it works | Where it can be used |
+| --- | --- | --- | --- | --- |
+| `$.model.complete` | [Documented] | Runs one text completion through the session's own API client. Resolves the reply's text and cost, or why there is no text. | `(request, options?) => Promise<ModelCompleteResult>`. Asks the model once, with no tools and no history. Only a request that the engine refuses to send rejects. | Run time. |
+| `$.model.fork` | [Documented] | Runs one tool-less completion over the session's own transcript as the main thread last sent it, so the API serves that prefix from its cache. | `(request: ModelForkRequest) => Promise<ModelForkResult>`. Repeats the main thread's last request with your `prompt` added. Every tool is denied. Always resolves a result. | Run time. |
+| `$.model.classify` | [Documented] | Picks one of `labels` for `text` with one completion and a fixed classifier prompt. | `(text, labels, options?) => Promise<string \| undefined>`. Needs 2 or more labels. Resolves `undefined` if the model names none. | Run time. |
+| `$.audio.play` | [Documented] | Plays one audio clip, starting now. Clips do not queue, so two calls play together (a bed under speech). | `(clip, options?) => Promise<void>`. `afplay` plays it on macOS. Linux and Windows terminals play nothing. | Run time. |
+| `$.audio.speak` | [Documented] | Speaks `text` with the platform's own synthesizer (`say` on macOS). Plain text. | `(text, options?) => Promise<SpeakResult>`. Utterances queue. Rejects if there is no synthesizer. | Run time. |
+| `$.mcp.call` | [Documented] | Calls `tool` on one of the engine's connected MCP servers, with the engine's own connection. | `(server, tool, args?) => Promise<McpToolResult>`. No permission prompt appears, because the plugin's call is the grant. | Run time. |
+| `$.mcp.connect` | [Documented] | Connects one of the MCP servers that this plugin's own manifest lists, if the session has not already. | `(server) => Promise<McpConnectResult>`. Listing a server defers nothing, so refuse its calls at `tool.check` to hold them back. | The server key must be listed in this plugin's manifest. |
+
+## Events Raised by These Calls
+
+For each call, a hook above the caller returns `next(e)`, `{ deny: reason }`, or `{ value }`.
+
+| Item | Status | The argument | Input and value |
+| --- | --- | --- | --- |
+| `model.complete` | [Documented] | `$.model.complete(request, { signal })`. The signal does not cross. It aborts the call. | Input `ModelCompleteInput`. Value `ModelCompleteResult`. |
+| `model.classify` | [Documented] | `$.model.classify(text, labels, options)` | Input `{ text: string, labels: readonly string[], options?: ClassifyOptions }`. Value `string \| undefined`. |
+| `model.fork` | [Documented] | `$.model.fork(request)` | Input `ModelForkRequest`. Value `ModelForkResult`. |
+| `audio.play` | [Documented] | The clip and how to play it (`shouldLoop`, `gain`). | Input `{ clip: AudioClip, shouldLoop: boolean, gain?: number }`. Value `void`. |
+| `audio.speak` | [Documented] | `$.audio.speak(text, { voice })` | Input `SpeakRequest`. Value `SpeakResult`. |
+| `mcp.call` | [Documented] | `$.mcp.call(server, tool, args)` | Input `{ server: string, tool: string, args: Record<string, unknown> }`. Value `McpToolResult`. |
+| `mcp.connect` | [Documented] | `$.mcp.connect(server)` | Input `{ server: string }`. Value `McpConnectResult`. |
+
+## Related Pages
+
+- [Mod API Overview](https://xsyetopz.github.io/claude-code-docs/extend/mod-api.md)
+- [Tool, Command, and Config](https://xsyetopz.github.io/claude-code-docs/extend/mod-api/tool-command-config.md)
+- [Model, Audio, and MCP Types](https://xsyetopz.github.io/claude-code-docs/extend/mod-api/types/model.md) (requests, answers, and MCP types)

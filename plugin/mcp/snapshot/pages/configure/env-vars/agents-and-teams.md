@@ -1,0 +1,131 @@
+---
+title: "Agents and Teams"
+description: "Environment variables for subagents, agent teams, background tasks, and workers."
+url: https://xsyetopz.github.io/claude-code-docs/configure/env-vars/agents-and-teams
+source: docs/configure/env-vars/agents-and-teams.md
+---
+
+# Agents and Teams
+
+
+These variables control subagents, agent teams, background tasks, and workflows.
+They set limits, switch features on, and change how child agents behave.
+Several are experimental and may change without notice.
+
+## At a Glance
+
+| Question | Answer |
+| --- | --- |
+| Can you use it? | ✅ Yes. |
+| Can you change it? | ✅ Yes. |
+| Can you turn it on or off? | Switch rows take `1` or `0`. |
+| Where does it live? | Your shell or the `env` key of a settings file. |
+| Rows on this page | 77 variables |
+| Status | [Documented] [Undocumented] [Differs] [Gated] |
+
+## Example
+
+```bash
+export CLAUDE_CODE_DISABLE_BACKGROUND_TASKS=1
+claude
+```
+
+Claude Code does not start background tasks.
+
+## Variables
+
+The table is sorted by name. See [Environment Variables](https://xsyetopz.github.io/claude-code-docs/configure/env-vars.md#how-to-read-the-tables) for what each column and badge means.
+
+| Variable | Status | What it does | Values and default | Notes |
+| --- | --- | --- | --- | --- |
+| `CLAUDE_AGENT_SDK_DISABLE_BUILTIN_AGENTS` | [Documented] | Removes all built-in subagent types. The agent list is then empty. | On or off. Takes effect only in non-interactive mode | Non-interactive and SDK use. Not set from project `env` before trust |
+| `CLAUDE_AGENTS_AUTO_RELAUNCHED_AT` | [Undocumented] | Records when the agents view last auto-relaunched itself on the latest build. The view skips another auto relaunch for 6 hours. | A number. Claude Code sets it for the relaunched child. The view reads it with `Number()` | `claude agents` view. Not set from project `env` before trust |
+| `CLAUDE_ASYNC_AGENT_STALL_TIMEOUT_MS` | [Documented] | Sets the stall timeout for background subagents. | A number of milliseconds. Whole number from `1` to `2147483647`. Without it the default is `600000` with the stream watchdog off, else the stream idle timeout plus `300000`, capped at `2147483647` | Subagents. Not set from project `env` before trust |
+| `CLAUDE_AUTO_BACKGROUND_TASKS` | [Documented] | Moves a subagent to the background after about two minutes. | On or off. The code uses a `120000` ms delay when set. It also turns on the worker check-in schedule | Subagents and non-interactive mode. Project `env` can set it before trust |
+| `CLAUDE_BG_BACKEND` | [Undocumented] | Marks a session that runs under the background daemon. A daemon session handles `SIGHUP` and color output in its own way. | Text. The value `daemon` turns on the daemon paths. Set by Claude Code when it starts a background session | Background sessions. Not set from project `env` before trust |
+| `CLAUDE_BG_CARRIED_PROMPTS_SHA256` | [Undocumented] | Holds the hash of the carried prompts file for a respawned background session. | Text. Claude Code reads it once, then unsets it. The hash is checked against the carried prompts file | Background sessions. Not set from project `env` before trust |
+| `CLAUDE_BG_ISOLATION` | [Undocumented] | Sets worktree isolation for a background session. | Text. Else the job or the `worktree.bgIsolation` setting decides. Changes the prompt text | Background sessions. Not set from project `env` before trust |
+| `CLAUDE_BG_POST_CLEAR_RESPAWN` | [Undocumented] | Marks a respawn after a clear. The session then skips the `--agent` not-found check and the agent prompt step. | On or off. Claude Code sets `1` on respawn attempts after the first when the session id changed | Background sessions. Not set from project `env` before trust |
+| `CLAUDE_BG_RENDEZVOUS_SOCK` | [Undocumented] | Gives the path of the rendezvous socket for a background session. The session starts a server on it. | Text. Claude Code reads it once, deletes it, and removes the socket file | Background sessions. Not set from project `env` before trust |
+| `CLAUDE_BG_SOURCE` | [Undocumented] | Tells how a background session started. The value `spare` marks a pre-started spare. A telemetry event also records it. | Text. Free text is reported as `other` | Background sessions. Not set from project `env` before trust |
+| `CLAUDE_BG_STARTUP_WEDGE_MS` | [Undocumented] | Sets the time before the startup wedge watchdog fires for a background session. | A number of milliseconds, `45000` by default. Whole number, default `45000` when unset or `0` | Background sessions. Not set from project `env` before trust |
+| `CLAUDE_CODE_AGENT` | [Undocumented] | Holds the agent name of the main thread. Claude Code records it in the session registry file. | Text. Claude Code sets it from the `--agent` flag | All sessions. Not set from project `env` before trust |
+| `CLAUDE_CODE_AGENT_PROGRESS_SUMMARIES` | [Undocumented] | Turns on subagent progress summaries when the host check in the startup code passes. | On or off. A host check gates the call. Part of a list of host-controlled names | SDK and host sessions. Not set from project `env` before trust |
+| `CLAUDE_CODE_AGENT_VIEW_RELAUNCH` | [Undocumented] | Marks that the agents view was relaunched. The view reads it once and deletes it. | On or off. Set to `1` by Claude Code in the env of the relaunched child | `claude agents` view. Not set from project `env` before trust |
+| `CLAUDE_CODE_BG_TASKS_REPORT_RUNNING` | [Documented] | Controls whether a non-interactive session keeps a running status after a turn ends while background work lives. | On, off, or unset, on by default | Non-interactive sessions |
+| `CLAUDE_CODE_CALM_MOCHI` | [Undocumented] [Gated: Works only behind a feature flag or server gate] | Sets how a subagent token budget adds on top of the start budget. | Text. `forks` and `all` are valid, anything else means `none`. Works with a feature flag | Subagents, gated by a feature flag |
+| `CLAUDE_CODE_COMPILED_ACORN` | [Undocumented] [Gated: A feature flag or server gate decides by default. This variable overrides it] | Forces the bound Slack thread mode on or off. Claude Code then treats posts from that thread as relayed human messages. | Off by default. Env value, else a feature flag, default off. Needs a prior platform check | Bound Slack thread sessions, gated by a feature flag |
+| `CLAUDE_CODE_COORDINATOR_EXTRA_TOOLS` | [Undocumented] [Gated: Works only behind a feature flag or server gate] | Adds extra tool names to the tools that coordinator mode keeps. A tool matches when its name starts with a listed entry. | A comma-separated list, empty by default. Needs coordinator mode | Coordinator mode |
+| `CLAUDE_CODE_COORDINATOR_FORCE_WORKER_INHERIT_MODEL` | [Undocumented] [Gated: Works only behind a feature flag or server gate] | Makes workers inherit the session model. The coordinator prompt and the Agent tool then say the `model` parameter is ignored. | On or off, off by default. `CLAUDE_CODE_SUBAGENT_MODEL_FORCE` has the same effect on the prompt | Coordinator mode |
+| `CLAUDE_CODE_COORDINATOR_MODE` | [Undocumented] [Gated: Works only behind a feature flag or server gate] | Turns on coordinator mode, where the main session delegates work to workers. | On or off. Claude Code sets it to `1` or deletes it when the session mode switches | Disabled in some remote sessions unless `CLAUDE_CODE_REMOTE` is set |
+| `CLAUDE_CODE_COORDINATOR_PROPAGATE_NESTED_MEMORY` | [Undocumented] [Gated: Works only behind a feature flag or server gate] | In coordinator mode, copies the pending nested memory triggers from the parent context into a worker context. | On or off, off by default. Skips with a debug message if the parent has none | Coordinator mode |
+| `CLAUDE_CODE_DAEMON_COLD_START` | [Undocumented] [Gated: A feature flag or server gate decides by default. This variable overrides it] | Sets the cold start mode of the background service. Overrides the `daemonColdStart` setting. | Text. Else the setting, then a feature flag | Background service |
+| `CLAUDE_CODE_DISABLE_AGENT_VIEW` | [Documented] | Turns off background agents and agent view. Matches the `disableAgentView` setting. | On or off. The disable message names the variable | All sessions. Project `env` can set it before trust |
+| `CLAUDE_CODE_DISABLE_BACKGROUND_TASKS` | [Documented] | Turns off background tasks, including `run_in_background`, auto-backgrounding and `Ctrl+B`. | On or off. Also forced when another gate disables background work | All sessions. Project `env` can set it before trust |
+| `CLAUDE_CODE_DISABLE_BG_EXIT_HANDOFF` | [Documented] | Stops a background session from handing its running background work to the next process. | On or off. Checked in the exit handoff code of background sessions | Background sessions |
+| `CLAUDE_CODE_DISABLE_BG_STABLE_PATH` | [Undocumented] [Gated: Works only behind a feature flag or server gate] | Makes the background session pty host start from the running executable instead of a stable path lookup. | On or off. Removed from the child environment. Only used on macOS | MacOS background sessions |
+| `CLAUDE_CODE_DISABLE_CRON` | [Documented] | Turns off scheduled tasks and the cron tools. | On or off. Gates a feature flag check | All sessions. Project `env` can set it before trust |
+| `CLAUDE_CODE_DISABLE_EXPLORE_PLAN_AGENTS` | [Documented] | Turns off the built-in Explore and Plan subagents. | On or off. Claude Code reads it once and keeps the result for the session | All sessions. Project `env` can set it before trust |
+| `CLAUDE_CODE_ENABLE_APPEND_SUBAGENT_PROMPT` | [Undocumented] | Appends the `appendSubagentSystemPrompt` option text to the system prompt of every subagent. | On or off, off by default. Set to `1` by Claude Code when `--append-subagent-system-prompt` or the `-file` flag is used | `--print` mode only |
+| `CLAUDE_CODE_ENABLE_TASKS` | [Documented] | Selects the Task tools. Set to `0` to fall back to `TodoWrite`. | On, off, or unset, on by default. Only `false` disables | All sessions. Project `env` can set it before trust |
+| `CLAUDE_CODE_ENABLE_TODO_TOOLS` | [Documented] | Gives the task tools to every model, not only the default list. | On or off, off by default. Only `true` counts | All sessions |
+| `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` | [Documented] [Gated: Works only behind a feature flag or server gate] | Turns on agent teams. The `--agent-teams` flag does the same. | On or off, off by default. Also needs a feature flag, default on | All sessions. Project `env` can set it before trust |
+| `CLAUDE_CODE_EXPERIMENTAL_OBSERVER_AGENTS` | [Undocumented] [Gated: Works only behind a feature flag or server gate] | Turns on observer agents, which use the `observer` field of agent definitions. | On or off, off by default. Needs a feature flag, default on. Fan-out needs a feature flag | All sessions |
+| `CLAUDE_CODE_FLEET_PAST_SESSIONS` | [Undocumented] [Gated: Works only behind a feature flag or server gate] | Shows past sessions in the fleet agent view. | Second env accessor, checked against `true`. Else a feature flag | Agent view |
+| `CLAUDE_CODE_FLEETVIEW_SIMPLE` | [Undocumented] [Gated: Works only behind a feature flag or server gate] | Turns on the simple fleet view of the agent view. | On or off, off by default. Else a feature flag | Agent view |
+| `CLAUDE_CODE_FORK_SUBAGENT` | [Documented] [Gated: A feature flag or server gate decides by default. This variable overrides it] | Controls fork mode for subagents. `0` turns it off everywhere and `1` forces it on, also in `-p`. | On, off, or unset. Org setting `forkSubagentDisabled` wins. In non-interactive mode a true feature flag turns it off unless this is `1` | All sessions. Project `env` can set it before trust |
+| `CLAUDE_CODE_FORWARD_SUBAGENT_TEXT` | [Documented] | Emits subagent text and thinking blocks in stream-json output, like `--forward-subagent-text`. | On or off, off by default. OR-ed with the flag | `claude -p` with stream-json |
+| `CLAUDE_CODE_GOAL_CHECKIN_MINUTES` | [Documented] [Gated: Works only behind a feature flag or server gate] | Sets how long background work can defer a goal before Claude is asked to check on it. | A number, on by default. Whole number from `0` to `10080`, plain digits. `0` turns it off | Goal mode |
+| `CLAUDE_CODE_HARBOR_KITE` | [Undocumented] [Gated: Works only behind a feature flag or server gate] | Turns cross-session messaging on or off. | Text, on by default. Unset uses a feature flag, default on. Org setting `messagingBeyondOwnAgentsDisabled` wins | All sessions |
+| `CLAUDE_CODE_HARMONIC_RIDDLE` | [Undocumented] [Gated: Works only behind a feature flag or server gate] | Lowers the effort of a subagent that sets none. A level name sets that level and a negative integer steps down the effort list. | Text. Falls back to a feature flag. Applies only when it is lower than the subagent effort and that is not `low` | All sessions, subagents |
+| `CLAUDE_CODE_HOST_SCHEDULED_RUN` | [Undocumented] | Lets a local host declare that a run is one of its own scheduled runs, so it can name the run kind. | On or off. The run kind is kept only when it is 1 to 32 lowercase letters or underscores and the host started the process with `1` | Host apps (desktop scheduler) |
+| `CLAUDE_CODE_LOOP_KEEPALIVE` | [Undocumented] [Gated: Works only behind a feature flag or server gate] | Turns the keepalive of `/loop` on or off. At keepalive, the loop ends when the model declines to reschedule twice. | On, off, or unset, on by default. Unset follows a feature flag, default on | All sessions, `/loop` |
+| `CLAUDE_CODE_LOOP_PERSISTENT` | [Undocumented] [Gated: Works only behind a feature flag or server gate] | Selects the persistent autonomous loop preamble instead of the normal one. | On or off, off by default | All sessions, `/loop` |
+| `CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS` | [Documented] | Caps how many subagents run at once in a session. | A number, `20` by default. Whole number min `1`, digits only | All sessions, `Agent` tool |
+| `CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH` | [Documented] | Sets how many subagent layers may sit below the main conversation. | A number. Whole number min `1`, digits only. Unset reads a feature flag, whose fallback is `3` | All sessions, `Agent` tool |
+| `CLAUDE_CODE_MEMORY_SUBAGENT_APPEND` | [Undocumented] | When set, Claude Code skips one extra block that it adds to the subagent system prompt. No visible effect in a print-mode probe ([Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md)). | On or off. Unset adds the block, except for isolated contexts | Subagents |
+| `CLAUDE_CODE_PLAN_MODE_REQUIRED` | [Undocumented] | Sets `planModeRequired` for a teammate when no team context gives it. A true value makes the teammate plan first. | On or off. Project settings may set it before trust (`safe_env_allowlist_AS: true`) | Teammates and swarm sessions |
+| `CLAUDE_CODE_PLAN_V2_AGENT_COUNT` | [Undocumented] | Overrides the agent count of a plan v2 helper. Without it the count is 3 for max 20x, team, and enterprise plans, else 1. | A number. Whole number from 1 to 10. Other values are ignored | Plan mode |
+| `CLAUDE_CODE_PLAN_V2_EXPLORE_AGENT_COUNT` | [Undocumented] | Overrides the explore agent count of a plan v2 helper. Default is 3. | A number. Whole number from 1 to 10. Other values are ignored | Plan mode |
+| `CLAUDE_CODE_PRINT_BG_WAIT_CEILING_MS` | [Documented] | Sets the idle wait ceiling for background work after the last turn in `-p` mode. | A number of milliseconds. Whole number in ms of 0 or more. Docs default is `600000` | Non-interactive `-p` mode |
+| `CLAUDE_CODE_PROCESS_WRAPPER` | [Documented] | Starts the processes that Claude Code launches from its own binary through a corporate launcher. | Text. Argv prefix string | Background service and agent view |
+| `CLAUDE_CODE_SENDMESSAGE_HANDBACK` | [Undocumented] [Gated: A feature flag or server gate decides by default. This variable overrides it] | Forces the subagent final-report handback tool on or off in auto mode. The tool tells a subagent to deliver its report through it. | Read directly from the environment. When unset, a feature flag decides with a default of true | Subagents in auto mode. gated by a feature flag |
+| `CLAUDE_CODE_SESSION_ATTENDED` | [Undocumented] | Tells a child session that its parent session is attended by a person. Claude Code stores it as the spawned-by-attended flag. | On, off, or unset. Removed from the env passed to some child processes | Child sessions |
+| `CLAUDE_CODE_STREAMED_BUMBLEBEE` | [Undocumented] [Gated: A feature flag or server gate decides by default. This variable overrides it] | Forces a feature flag subagent budget note on or off. The note tells a subagent its token budget. | On, off, or unset. The note shows only when a budget value exists | Subagents. gated by a feature flag |
+| `CLAUDE_CODE_STREAMED_BUMBLEBEE_TEXT` | [Undocumented] [Gated: A feature flag or server gate decides by default. This variable overrides it] | Overrides the wording of the subagent budget note. The token `{N}` is replaced by the budget number. | Text. An empty or blank value is ignored. A feature flag is the fallback | Subagents. Needs the budget note on |
+| `CLAUDE_CODE_SUBAGENT_CACHE_EVICT` | [Undocumented] [Gated: A feature flag or server gate decides by default. This variable overrides it] | Forces on a feature flag behavior for subagent requests. No visible effect in a print-mode probe ([Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md)). | On or off, off by default. Applies only on a first-party provider path. The flag is the fallback and defaults to off | Subagents. gated by a feature flag |
+| `CLAUDE_CODE_SUBAGENT_CONFIG_WARNING` | [Undocumented] [Gated: Works only behind a feature flag or server gate] | Turns the subagent config check warning on with `1` or off with `0`. The check looks at `CLAUDE.md`, skills, and agents for subagents. | On, off, or unset. When unset, a feature flag config decides | Subagents. gated by a feature flag |
+| `CLAUDE_CODE_SUBAGENT_PROMPT_SNAPSHOT` | [Undocumented] | Marks a subagent to start with a system prompt snapshot. The snapshot flag is set on the subagent options. | On or off. It does not apply when another local condition holds. The effect of the snapshot was not read further | Subagents |
+| `CLAUDE_CODE_TASK_LIST_ID` | [Documented] | Sets the ID of the task list that the Task tools use, so several sessions share one list. | Text. Wins over team name and session id. When set, the carry-over of tasks to a forked session is skipped | Sessions with Task tools |
+| `CLAUDE_CODE_TEAM_TEARDOWN_PARK_TIMEOUT_MS` | [Documented] | Sets how long a non-interactive session waits at exit for its agent team to shut down. | A number of milliseconds, `10000` by default | Non-interactive sessions with agent teams |
+| `CLAUDE_CODE_WEB_FETCH_AGENT` | [Undocumented] [Gated: A feature flag or server gate decides by default. This variable overrides it] | Turns on the WebFetch agent path. Env wins over a feature flag. | On, off, or unset, off by default. Off when `CLAUDE_CODE_SIMPLE` or `CLAUDE_CODE_DISABLE_WEB_FETCH` is set | Default mode sessions |
+| `CLAUDE_CODE_WORKER_CHECKIN_SCHEDULE` | [Documented] | Sets waits between reminders to check on running background subagents. Needs `CLAUDE_AUTO_BACKGROUND_TASKS=1`. Docs only. The read site was not re-checked. | A comma-separated list. Unset gives no reminders | Background subagents |
+| `CLAUDE_CODE_WORKFLOW_MAX_CONCURRENT_AGENTS` | [Documented] | Sets how many agents one workflow run executes at once. | Plain digits 1 to 256. Logs the gate value when set | Workflows |
+| `CLAUDE_CODE_WORKFLOW_PREFIX_STAGGER_MS` | [Documented] | Sets how long a workflow agent waits for a same-prefix sibling before its first request. | A number of milliseconds. Integer, 0 or more. Forced to 0 when `DISABLE_PROMPT_CACHING` is set | Workflows |
+| `CLAUDE_CODE_WORKFLOW_PROMPT_PROVENANCE` | [Undocumented] [Gated: A feature flag or server gate decides by default. This variable overrides it] | Adds a provenance note to workflow prompts, such as that no user is present in a trigger run. Env wins over a feature flag. | On or off, on by default | Workflows |
+| `CLAUDE_CODE_WORKFLOW_SIZE_WARNING_AGENTS` | [Undocumented] | Sets the agent count where the workflow size warning fires. | A number. Integer, at least 1. Order: env, `workflowSizeGuideline`, a feature flag, built-in default | Workflows |
+| `CLAUDE_CODE_WORKFLOW_SIZE_WARNING_TOKENS` | [Undocumented] | Sets the token count where the workflow size warning fires. | A number. Integer, at least 1. Order: env, a feature flag, built-in default | Workflows |
+| `CLAUDE_CODE_WORKFLOWS` | [Undocumented] [Gated: Works only behind a feature flag or server gate] | `0` or false turns off workflows. `1` makes them available if the feature flag allows it. | On, off, or unset. Unset means the flag decides, and default-on is off for the `pro` plan | All sessions |
+| `CLAUDE_DISABLE_ADOPT` | [Documented] | Stops in-flight background work, and does not carry it over, when you background a session. | On or off. Any true value turns off adoption | Background sessions |
+| `CLAUDE_PTY_HEARTBEAT_MS` | [Undocumented] | Sets how often the PTY host pings its clients. A client that misses 3 pings is dropped. | A number of milliseconds | - |
+| `CLAUDE_PTY_HOST_EXEC` | [Undocumented] | Marks a PTY host started in exec mode. The host reads it, deletes it, and then removes the `CLAUDE_BG_SOCKET_TOKENS_PATH` file. | - | - |
+| `CLAUDE_PTY_HOST_NO_STABLE_PATH` | [Undocumented] | When `1`, the macOS re-exec skips the stable binary path and uses the current executable. | A path | - |
+| `CLAUDE_PTY_ORPHAN_CHECK_MS` | [Undocumented] | Sets the interval of the orphan watchdog of the PTY host. After 30 checks with a new parent and no client, the host stops its child. | A number of milliseconds | - |
+| `SELF_HOSTED_RUNNER_SESSION_IDLE_MS` | [Documented] [Gated: Works only behind a feature flag or server gate] | Sets the idle time in ms before the self-hosted runner releases a session. | Text. The `--release-idle-session-min` flag writes it as minutes times 60000. Help text says `0` disables | `claude self-hosted-runner` only |
+| `SELF_HOSTED_RUNNER_SESSION_STOP_GRACE_MS` | [Documented] [Gated: Works only behind a feature flag or server gate] | Sets how long the runner waits for the Claude process to exit after a session ends, before it force-kills it. | A number of milliseconds. The `--session-stop-grace-sec` flag writes it as seconds times 1000 and needs a positive value. The post-session hook runs after | `claude self-hosted-runner` only |
+| `SELF_HOSTED_RUNNER_STARTUP_TIMEOUT_MS` | [Documented] [Gated: Works only behind a feature flag or server gate] | Sets the startup timeout in ms for a runner session. | A number of milliseconds. Default is `900000` when unset or empty. A value of `0` or a bad number gives `0`, and the maximum is `2147483647` | `claude self-hosted-runner` only |
+| `SELF_HOSTED_RUNNER_TRUST_WORKSPACE` | [Documented] [Gated: Works only behind a feature flag or server gate] | Controls whether the runner trusts the session workspace. The help text says `0` turns it off. | On or off. Parsed as a boolean by a runner helper with a default. Help text: `SELF_HOSTED_RUNNER_TRUST_WORKSPACE=0` disables | `claude self-hosted-runner` only |
+
+## How It Works
+
+A subagent is a child session with its own prompt and tools.
+Some variables here pass to child sessions. Others change only the parent.
+The Notes column says which when the code shows it.
+
+## Related Pages
+
+- [Environment Variables](https://xsyetopz.github.io/claude-code-docs/configure/env-vars.md): how Claude Code reads variables and which value wins.
+- [Subagents](https://xsyetopz.github.io/claude-code-docs/extend/subagents.md)
+- [Undocumented Items](https://xsyetopz.github.io/claude-code-docs/reference/undocumented.md): every item that only the program shows.
+
+Source: the program (variable names found in the `2.1.303` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
