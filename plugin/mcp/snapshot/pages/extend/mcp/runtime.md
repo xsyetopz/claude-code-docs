@@ -87,7 +87,7 @@ Source: [Channels Reference](https://code.claude.com/docs/en/channels-reference)
 | `list_changed` | [Documented] | Refreshes tools, prompts, and resources. | Interactive sessions refresh all three. `-p` refreshes tools only. A failed refresh keeps the old lists. |
 | Stdio shutdown | [Documented] | Stops a stdio server. | On macOS and Linux: `SIGINT`, then `SIGTERM` after 100 ms, then `SIGKILL` after 400 ms more. |
 | `roots/list` | [Documented] | Tells servers which folders are allowed. | Answers with the launch folder and added folders. |
-| Tool search modes | [Documented] | Controls deferral. | `ENABLE_TOOL_SEARCH`: not set, `true`, `auto`, `auto:N`, or `false`. |
+| Tool search modes | [Documented] | Controls deferral. | `ENABLE_TOOL_SEARCH`: not set, `true`, `auto`, `auto:N`, or `false`. Since 2.1.304 tool search is on by default behind a custom `ANTHROPIC_BASE_URL`, and a 400 or 422 from the gateway is retried without it. |
 
 ## Example
 

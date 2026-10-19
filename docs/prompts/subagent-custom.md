@@ -15,10 +15,10 @@ The prompt of a subagent you defined in `.claude/agents/`. Save an agent file in
 | `system[2]` | 1,344 |
 | `messages[0].content[0]` | 592 |
 | `messages[0].content[1]` | 26 |
-| `messages[1].content[0]` | 6,802 |
+| `messages[1].content[0]` | 7,130 |
 | System blocks only | 1,505 |
-| Everything shown here | 9,215 |
-| Tools sent | 13 |
+| Everything shown here | 9,543 |
+| Tools sent | 8 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
 
@@ -32,7 +32,7 @@ The text below is every part of the request that Claude Code builds before your 
 
 ```text
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.303.<build>; cc_entrypoint=sdk-cli; cc_is_subagent=true;
+x-anthropic-billing-header: cc_version=2.1.304.<build>; cc_entrypoint=sdk-cli; cc_is_subagent=true;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -64,6 +64,15 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
 PROBE-SUBAGENT-TASK say hi
 
 === messages[1].content[0] (role: system) ===
+The following deferred tools are now available via ToolSearch. Their schemas are NOT loaded — calling them directly will fail with InputValidationError. Use ToolSearch with query "select:<name>[,<name>...]" to load tool schemas before calling them:
+EnterWorktree
+ExitWorktree
+NotebookEdit
+SendMessage
+TaskStop
+WebFetch
+WebSearch
+
 # Environment
 You have been invoked in the following environment: 
  - Primary working directory: <cwd>
@@ -89,7 +98,7 @@ TRIGGER — read BEFORE opening the target file; don't skip because it "looks li
 SKIP only when another provider is being worked on (overrides all triggers): OpenAI/GPT/Gemini/Llama/Mistral/Cohere/Ollama named in the query; OR `grep -rE 'openai|langchain_openai|google.generativeai|genai|mistralai|cohere|ollama'` over the project hits (run this grep FIRST if no provider named — don't Read the file).
 - workflow-authoring: Reference for writing a Workflow tool script (script API and gotchas, resume, quality patterns, worked examples). Load before authoring a script for a workflow the user already opted into; it does not itself authorize running one.
 - run: Launch and drive this project's app to see a change working. Use when asked to run, start, or screenshot the app, or to confirm a change works in the real app (not just tests). First looks for a project skill that already covers launching the app; otherwise falls back to built-in patterns per project type (CLI, server, TUI, Electron, browser-driven, library).
-- plugin-authoring: Make a mod: a change to Claude's own interface or behaviour, such as a live pane or panel, a band above the prompt, a status line, a toast, a slash command, or a hook on tool calls or prompts. Use to make, change or debug a mod or its hooks module.
+- plugin-authoring: Make a mod: a change to Claude's own interface or behaviour, such as a panel or pane that stays beside the chat and updates, a band, status line, toast, slash command, or hook on tool calls. Use to make, change or debug a mod or its hooks module.
 - init: Initialize a new CLAUDE.md file with codebase documentation
 - security-review: Complete a security review of the pending changes on the current branch
 
@@ -100,15 +109,15 @@ Today's date is <date>.
 
 The diff below starts from [Default, Lean Prompt](./default-lean.md). Lines that start with `-` are only in the baseline. Lines that start with `+` are only here.
 
-Lines added: 10. Lines removed: 62. Size change: -5,927 characters.
+Lines added: 19. Lines removed: 74. Size change: -5,958 characters.
 
 ````diff
 --- default-lean
 +++ subagent-custom
 @@ -1,64 +1,21 @@
  === system[0] (no cache marker) ===
--x-anthropic-billing-header: cc_version=2.1.303.<build>; cc_entrypoint=sdk-cli;
-+x-anthropic-billing-header: cc_version=2.1.303.<build>; cc_entrypoint=sdk-cli; cc_is_subagent=true;
+-x-anthropic-billing-header: cc_version=2.1.304.<build>; cc_entrypoint=sdk-cli;
++x-anthropic-billing-header: cc_version=2.1.304.<build>; cc_entrypoint=sdk-cli; cc_is_subagent=true;
  
  === system[1] (cache marker: {"type":"ephemeral"}) ===
  You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -179,7 +188,7 @@ Lines added: 10. Lines removed: 62. Size change: -5,927 characters.
  <total_tokens>15000000 tokens left</total_tokens>
  
  === messages[0].content[0] (role: user) ===
-@@ -71,7 +28,7 @@
+@@ -71,9 +28,18 @@
  </system-reminder>
  
  === messages[0].content[1] (role: user) ===
@@ -187,11 +196,34 @@ Lines added: 10. Lines removed: 62. Size change: -5,927 characters.
 +PROBE-SUBAGENT-TASK say hi
  
  === messages[1].content[0] (role: system) ===
++The following deferred tools are now available via ToolSearch. Their schemas are NOT loaded — calling them directly will fail with InputValidationError. Use ToolSearch with query "select:<name>[,<name>...]" to load tool schemas before calling them:
++EnterWorktree
++ExitWorktree
++NotebookEdit
++SendMessage
++TaskStop
++WebFetch
++WebSearch
++
  # Environment
-@@ -85,15 +42,6 @@
+ You have been invoked in the following environment: 
+  - Primary working directory: <cwd>
+@@ -85,27 +51,6 @@
  
  You are powered by the model named Opus 5.5. The exact model ID is claude-opus-5-5. Assistant knowledge cutoff is June 2026.
  
+-The following deferred tools are now available via ToolSearch. Their schemas are NOT loaded — calling them directly will fail with InputValidationError. Use ToolSearch with query "select:<name>[,<name>...]" to load tool schemas before calling them:
+-CronCreate
+-CronDelete
+-CronList
+-EnterWorktree
+-ExitWorktree
+-NotebookEdit
+-SendMessage
+-TaskStop
+-WebFetch
+-WebSearch
+-
 -Available agent types for the Agent tool:
 -- claude: Catch-all for any task that doesn't fit a more specific agent. FleetView's default when no agent name is typed. (Tools: *)
 -- Explore: Read-only search agent for broad fan-out searches — when answering means sweeping many files, directories, or naming conventions and you only need the conclusion, not the file dumps. It reads excerpts rather than whole files, so it locates code; it doesn't review or audit it. Specify search breadth: "medium" for moderate exploration, "very thorough" for multiple locations and naming conventions. (Tools: All tools except Agent, Artifact, ArtifactComments, ArtifactData, ArtifactCheck, ExitPlanMode, Edit, Write, NotebookEdit)
@@ -204,7 +236,7 @@ Lines added: 10. Lines removed: 62. Size change: -5,927 characters.
  The following skills are available for use with the Skill tool:
  
  - dataviz: Use this skill whenever you are about to create ANY chart, graph, plot, dashboard, or data visualization, in ANY output medium — an HTML or React artifact, inline SVG, plotting code in any library (matplotlib, plotly, d3, Recharts, …), an image/PNG you will render and upload, or a chart shared into Slack. Read it BEFORE writing the first line of chart code, choosing chart colors, building a stat tile / meter / KPI row, or laying out a dashboard. When the destination is a first-party document connector (host-designated, never self-described) that renders live charts, hand it the rows (inline, or as an uploaded data file the chart cites) rather than a rendered PNG/SVG — a picture of a chart loses hover, data inspection and per-value comments. Produces visualizations that read as one system — elegant, accessible, consistent in light and dark — using a brand-neutral placeholder palette you swap for your own. Teaches a design-system-agnostic method: a form heuristic, a color formula with a runnable validator, mark specs, and interaction rules. A validated default palette is documented in `references/palette.md` — swap that file's values for your brand's. Triggers on: "chart", "graph", "plot", "data viz", "visualization", "dashboard", "analytics", "visualize data", "categorical colors", "sequential / diverging palette", "stat tile", "sparkline", "heatmap", "legend", "axis", "tooltip", "chart colors", "color by series".
-@@ -112,6 +60,4 @@
+@@ -124,6 +69,4 @@
  - init: Initialize a new CLAUDE.md file with codebase documentation
  - security-review: Complete a security review of the pending changes on the current branch
  
@@ -213,4 +245,4 @@ Lines added: 10. Lines removed: 62. Size change: -5,927 characters.
  Today's date is <date>.
 ````
 
-Tool list: removes `CronCreate`, `CronDelete`, `CronList`, `ListAgents`, `ReportFindings`, `ScheduleWakeup`, `Workflow`. See [Tools per Variant](./tools-per-variant.md).
+Tool list: removes `ListAgents`, `ReportFindings`, `ScheduleWakeup`, `Workflow`. See [Tools per Variant](./tools-per-variant.md).

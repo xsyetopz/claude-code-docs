@@ -8,7 +8,7 @@ These variables change how Claude Code loads plugins, runs MCP servers, finds sk
 They set time limits, token limits, cache paths, and marketplace behavior.
 Use them to tune slow MCP servers or to lock down plugin loading.
 
-This page lists 90 variables. `MCP_TIMEOUT` and `MCP_TOOL_TIMEOUT` are common. Switch rows take `1`.
+This page lists 92 variables. `MCP_TIMEOUT` and `MCP_TOOL_TIMEOUT` are common. Switch rows take `1`.
 
 ## Example
 
@@ -84,6 +84,8 @@ The table is sorted by name. See [Environment Variables](index.md#how-to-read-th
 | `CLAUDE_CODE_SESSIONEND_HOOKS_TIMEOUT_MS` | <Documented /> | Overrides the time budget in ms for `SessionEnd` hooks. Without it the budget is 1.5 s, raised to the highest hook `timeout` up to 60 s. | A number of milliseconds. Integer 1 or more. Org-defined hooks read it through a managed-source path | Session exit, `/clear`, `/resume` |
 | `CLAUDE_CODE_SKILL_ATTRIBUTION` | <Undocumented /> | Supplies a JSON map that attributes skills to plugins or sources. Claude Code looks up each skill in it. | JSON text. Bad entries are logged and ignored. Removed from the env of child processes | Skill loading, hosts |
 | `CLAUDE_CODE_SKILL_PROPOSALS` | <Undocumented /> | Turns on the skill proposals tool and its prompt text, which let the model propose skills for the user to save. | On or off. Needs `CLAUDE_CODE_REMOTE_ENVIRONMENT_TYPE` to be set and skill sync to be off | Remote environments |
+| `CLAUDE_CODE_SKIP_PLUGIN_LOCAL_MCP_SERVERS` | <Undocumented /> | Loads only `sse`, `http`, and `ws` MCP servers from plugins, so local servers are skipped. The program logs "only sse, http and ws servers load while CLAUDE_CODE_SKIP_PLUGIN_LOCAL_MCP_SERVERS is set". | On or off | All plugin loading |
+| `CLAUDE_CODE_SKIP_PLUGIN_MCP_BUNDLES` | <Undocumented /> | Skips MCPB bundle sources of plugins. The program logs `Skipping MCPB source` and names this variable or `CLAUDE_CODE_SKIP_PLUGIN_LOCAL_MCP_SERVERS`. | On or off | All plugin loading |
 | `CLAUDE_CODE_SKIP_PLUGIN_MCP_SERVERS` | <Undocumented /> | Skips MCP server discovery for plugins, except for plugins in the `_EXCEPT` list. A Probes run saw an empty `mcp_servers` list. | On or off. The skip is logged per plugin | All plugin loading |
 | `CLAUDE_CODE_SKIP_PLUGIN_MCP_SERVERS_EXCEPT` | <Undocumented /> | Lists plugins that keep their MCP servers when `CLAUDE_CODE_SKIP_PLUGIN_MCP_SERVERS` is set. No visible effect in a print-mode probe ([Probes](../../reference/probes.md)). | A comma-separated list. Empty items are ignored | All plugin loading |
 | `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP` | <Documented /> | Sets how many times in a row a `Stop` or `SubagentStop` hook may block the turn end before Claude Code ends the turn anyway. | A number, `8` by default. Integer, default `8`. `0` turns the cap off | Stop and SubagentStop hooks |
@@ -133,4 +135,4 @@ Some variables are passed to MCP server and hook processes. Claude Code can stri
 - [Hooks](../../extend/hooks/index.md)
 - [Undocumented Items](../../reference/undocumented.md): every item that only the program shows.
 
-Source: the program (variable names found in the `2.1.303` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
+Source: the program (variable names found in the `2.1.304` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.

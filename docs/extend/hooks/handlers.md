@@ -47,13 +47,13 @@ Only names in `allowedEnvVars` are filled into headers. Other references become 
 | `prompt` | <Documented /> | One model call that returns `ok`. | 12 events, plus `PermissionRequest`. |
 | 🧪 `agent` | <Documented /> | A subagent that checks a condition. Up to 50 turns. Experimental, and the docs say it may change. | 12 events. Not `PermissionRequest`. |
 | `callback` | <Undocumented /> | A function that an SDK host or a mod registers. | Events that run device hooks. It is not a config key. |
-| `script` | <Differs note="Rejected in 2.1.303. Do not use." /> | Some text names this type. | `2.1.303` rejects it with `Unknown hook type "script"`. A `script` entry under `PreToolUse` also disables the whole settings file it sits in. |
+| `script` | <Differs note="Rejected in 2.1.304. Do not use." /> | Some text names this type. | `2.1.304` rejects it with `Unknown hook type "script"`. A `script` entry under `PreToolUse` also disables the whole settings file it sits in. |
 
 The 12 events of `prompt` and `agent` are `PermissionDenied`, `PostToolBatch`, `PostToolUse`, `PostToolUseFailure`, `PreToolUse`, `Stop`, `SubagentStop`, `TaskCompleted`, `TaskCreated`, `TeammateIdle`, `UserPromptExpansion`, and `UserPromptSubmit`.
 `SessionStart` and `Setup` accept `command` and `mcp_tool` only.
 
 :::warning
-A `script` hook never runs in `2.1.303`. Worse, one `script` entry under `PreToolUse` turns off every hook in that settings file.
+A `script` hook never runs in `2.1.304`. Worse, one `script` entry under `PreToolUse` turns off every hook in that settings file.
 Source: a probe of the program (see [Probes](../../reference/probes.md)).
 :::
 

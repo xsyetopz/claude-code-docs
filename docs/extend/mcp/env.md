@@ -64,6 +64,8 @@ Only the program shows these. They can change without notice.
 | --- | --- | --- | --- |
 | `ENABLE_MCP_LARGE_OUTPUT_FILES` | <Undocumented /> | Switch for result files. | `false` truncates instead of saving a file. |
 | `CLAUDE_CODE_MCP_APPS_HOST` | <Undocumented /> | Declares MCP Apps support. | `true` adds the `io.modelcontextprotocol/ui` extension to the client capabilities. |
+| `CLAUDE_CODE_SKIP_PLUGIN_LOCAL_MCP_SERVERS` | <Undocumented /> | Skips local plugin servers. | Only `sse`, `http`, and `ws` servers load while it is set. |
+| `CLAUDE_CODE_SKIP_PLUGIN_MCP_BUNDLES` | <Undocumented /> | Skips MCPB sources of plugins. | The log says `Skipping MCPB source`. |
 | `CLAUDE_CODE_SKIP_PLUGIN_MCP_SERVERS` | <Undocumented /> | Skips plugin servers. | The log says `(CLAUDE_CODE_SKIP_PLUGIN_MCP_SERVERS is set)`. |
 | `CLAUDE_CODE_SKIP_PLUGIN_MCP_SERVERS_EXCEPT` | <Undocumented /> | Exempts plugin servers from the skip. | The log says `exempted via`. |
 | `CLAUDE_CODE_ENABLE_REFRESH_MCP_TOOLS` | <Undocumented /> | Adds a refresh tool. | Adds one more tool to the tool list when set. |

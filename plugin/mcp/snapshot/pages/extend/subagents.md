@@ -53,7 +53,7 @@ Claude can now send review work to `reviewer`. You can also write `@reviewer che
 | `permissions.deny` with `Agent(name)` | [Documented] | Disables one agent type. | `Agent(fork)` blocks forks. Deny `Agent` to stop all delegation. `Task(...)` is an alias. |
 | `Task` alias | [Documented] | The old name of `Agent` (before 2.1.63). | Works in rules and agent files. |
 | `/subtask` | [Documented] | Starts a fork by hand (2.1.212). | On 2.1.161 to 2.1.211 the command was `/fork`. |
-| Description cost | [Documented] | Subagent descriptions count toward context. | The docs describe a startup warning when descriptions of non-built-in agents pass 15,000 tokens. Not verified in `2.1.303`. |
+| Description cost | [Documented] | Subagent descriptions count toward context. | The docs describe a startup warning when descriptions of non-built-in agents pass 15,000 tokens. Not verified in `2.1.304`. |
 
 ## Agent Locations and Priority
 

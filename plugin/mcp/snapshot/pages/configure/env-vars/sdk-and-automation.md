@@ -12,7 +12,7 @@ These variables help a program that runs Claude Code as a child process.
 They say which surface started it, how session events reach the host, and which binary the Agent SDK looks for.
 Most people never set them. Hosts such as the Agent SDK set them for you.
 
-This page lists 21 variables. These are for a host program that starts Claude Code. Set them in the child process environment. Project `env` cannot set most of them before trust.
+This page lists 22 variables. These are for a host program that starts Claude Code. Set them in the child process environment. Project `env` cannot set most of them before trust.
 
 ## Example
 
@@ -44,6 +44,7 @@ The table is sorted by name. See [Environment Variables](https://xsyetopz.github
 | `CLAUDE_CODE_LARCH_CISTERN` | [Undocumented] [Gated: A feature flag or server gate decides by default. This variable overrides it] | Overrides the `larch_cistern` experiment value for the model. Probe: Adds a "Corrections" section to the system prompt (avoid excessive self-correction). See Probes. | On or off. Passed to the same per-model helper as `CLAUDE_CODE_AMBER_ASTROLABE`. A false value counts as unset | All sessions |
 | `CLAUDE_CODE_POLL_EVENTS` | [Undocumented] | Lets a host send poll events to the session as `<event>` envelopes. The code rejects them when the host did not set it. | On or off. Poll events also need permission mode `auto` | SDK and host sessions |
 | `CLAUDE_CODE_REMOVE_PROMPT_STRINGS` | [Undocumented] | Removes listed strings from prompts for prompt ablation tests. It overrides the `remove_prompt_strings` client data. | JSON text. A bad value logs a warning. Telemetry event a feature flag | All sessions |
+| `CLAUDE_CODE_SDK_READS_STARTUP_MARKS` | [Undocumented] | Tells Claude Code that the SDK host reads startup marks. The Agent SDK sets it for `startup()` and `prewarm()`. The CLI then writes lines with a `startup_mark` field. | On or off | SDK and print mode |
 | `CLAUDE_CODE_SDK_READS_SESSION_STATE` | [Undocumented] | Tells Claude Code that the SDK host reads session state. Claude Code then sends `session_state_changed` events marked `sdk_host_only`. | On or off. Set by Claude Code to `1` in the SDK child env unless the host already set it | SDK and print mode. Set by Claude Code |
 | `CLAUDE_CODE_SIMULATE_PROXY_USAGE` | [Undocumented] | Simulates proxy use in request shaping. Claude Code then skips steps such as the thinking display update. A Probes run saw no `anthropic-beta` header. | On or off | API requests |
 | `CLAUDE_CODE_SUPERVISED` | [Undocumented] | Tells Claude Code that a supervisor restarts it. On an uncaught exception it then exits at once instead of staying alive. | On or off | Supervised or managed runs |
@@ -63,4 +64,4 @@ Other variables here switch on extra stream events or tell Claude Code that a su
 - [Remote and Cloud Sessions](https://xsyetopz.github.io/claude-code-docs/configure/env-vars/remote-and-cloud-sessions.md)
 - [Undocumented Items](https://xsyetopz.github.io/claude-code-docs/reference/undocumented.md): every item that only the program shows.
 
-Source: the program (variable names found in the `2.1.303` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
+Source: the program (variable names found in the `2.1.304` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.

@@ -4,7 +4,7 @@
   "owner": {
     "name": "xsyetopz"
   },
-  "description": "The Claude Code Docs as a plugin: an MCP server and a skill that answer questions about Claude Code 2.1.303.",
+  "description": "The Claude Code Docs as a plugin: an MCP server and a skill that answer questions about Claude Code 2.1.304.",
   "metadata": {
     "version": "0.1.0"
   },
@@ -12,7 +12,7 @@
     {
       "name": "cc-docs",
       "source": "./plugin",
-      "description": "MCP server and skill for the Claude Code Docs (version 2.1.303). Search and read pages, list sections, and get the JSON Schemas, offline from a bundled snapshot.",
+      "description": "MCP server and skill for the Claude Code Docs (version 2.1.304). Search and read pages, list sections, and get the JSON Schemas, offline from a bundled snapshot.",
       "category": "documentation"
     }
   ]

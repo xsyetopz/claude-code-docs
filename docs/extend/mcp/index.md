@@ -57,10 +57,10 @@ A scope says where a server is stored and who sees it.
 claude mcp add --transport http sentry https://mcp.sentry.dev/mcp
 
 # Local server with an env var (use -- before the command)
-claude mcp add my-server -e API_KEY=xxx -- npx my-mcp-server
+claude mcp add my-server -e API_KEY=xxx -- bunx my-mcp-server
 
 # Shared with the team through .mcp.json
-claude mcp add --scope project files -- npx @example/files-server
+claude mcp add --scope project files -- bunx @example/files-server
 ```
 
 ## How It Works

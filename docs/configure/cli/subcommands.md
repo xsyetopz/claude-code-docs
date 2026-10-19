@@ -1,6 +1,6 @@
 ---
 title: Subcommands
-description: Every claude subcommand in 2.1.303, including background sessions, auth, plugins, and the hidden commands.
+description: Every claude subcommand in 2.1.304, including background sessions, auth, plugins, and the hidden commands.
 sidebar_position: 3
 ---
 
@@ -21,7 +21,7 @@ claude stop <id>                        # stop it, keep the conversation
 
 ## Commands
 
-Source: the text of `claude <command> --help` in `2.1.303`.
+Source: the text of `claude <command> --help` in `2.1.304`.
 
 | Command | Status | What it does |
 | --- | --- | --- |
@@ -39,7 +39,7 @@ Source: the text of `claude <command> --help` in `2.1.303`.
 | `claude gateway --config <yaml>` | <Documented /> | Runs the enterprise gateway. |
 | `claude import [codex\|gemini\|cursor]` | <Documented /> | Imports the config of another agent, with `--dry-run` and `--yes`. |
 | `claude install [stable\|latest\|version]` | <Documented /> | Installs the native build, with `--force`. |
-| `claude update` (alias `upgrade`) | <Documented /> | Updates Claude Code. |
+| `claude update` (alias `upgrade`) | <Documented /> | Updates Claude Code. Package-manager installs update through the package manager. |
 | `claude mcp ...` | <Documented /> | Manages MCP servers (see [MCP](../../extend/mcp/cli.md)). |
 | `claude plugin ...` (alias `plugins`) | <Documented /> | Manages plugins (see [Plugins](../../extend/plugins/cli.md)). |
 | `claude plugin test [dir]` | <Documented /> | Runs the tests of a mod. |

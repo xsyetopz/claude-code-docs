@@ -15,7 +15,7 @@ Without the filter the mod fails `claude plugin validate`, and `*` does not sele
 
 A hook can return `{ deny }`. The built-in `cc-plugin-telemetry` sends the records. The collector is the one the operator of the session configured.
 
-Official page: [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the program (`types-2.1.303.d.ts`).
+Official page: [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the program (`types-2.1.304.d.ts`).
 
 ## Example
 

@@ -58,6 +58,8 @@ Hooks on `turn.step` and `process.spawn` are async generators.
 A hook that throws, overruns its budget, or returns a wrong shape is skipped.
 The hooks beneath and the engine run in its place, or its last `next` result stands.
 So a guard fails open unless its registration carries a `.catch` that refuses in its place.
+
+Since 2.1.304, when a plugin that runs first skips one of your mod's hooks, the transcript shows a line naming the event and the plugin: `its <event> hook was skipped. "<plugin>" runs first and sent the event on past it.` (the program's text).
 The type file gives this advice at each event where an answer can refuse.
 
 | Event | Status | What happens when the hook fails | The advice |

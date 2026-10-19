@@ -168,4 +168,4 @@ Rows describe what the library does with the name, not what Claude Code does.
 - [Telemetry and Debug](https://xsyetopz.github.io/claude-code-docs/configure/env-vars/telemetry-and-debug.md)
 - [Undocumented Items](https://xsyetopz.github.io/claude-code-docs/reference/undocumented.md): every item that only the program shows.
 
-Source: the program (variable names found in the `2.1.303` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
+Source: the program (variable names found in the `2.1.304` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.

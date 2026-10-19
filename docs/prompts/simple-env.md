@@ -32,12 +32,12 @@ This variant sends exactly the same text and tools as [Bare Mode](./bare.md). Th
 
 The diff below starts from [Default, Lean Prompt](./default-lean.md). Lines that start with `-` are only in the baseline. Lines that start with `+` are only here.
 
-Lines added: 2. Lines removed: 105. Size change: -14,780 characters.
+Lines added: 2. Lines removed: 117. Size change: -15,139 characters.
 
 ````diff
 --- default-lean
 +++ simple-env
-@@ -5,113 +5,8 @@
+@@ -5,125 +5,8 @@
  You are a Claude agent, built on Anthropic's Claude Agent SDK.
  
  === system[2] (cache marker: {"type":"ephemeral"}) ===
@@ -123,6 +123,18 @@ Lines added: 2. Lines removed: 105. Size change: -14,780 characters.
 -
 -You are powered by the model named Opus 5.5. The exact model ID is claude-opus-5-5. Assistant knowledge cutoff is June 2026.
 -
+-The following deferred tools are now available via ToolSearch. Their schemas are NOT loaded — calling them directly will fail with InputValidationError. Use ToolSearch with query "select:<name>[,<name>...]" to load tool schemas before calling them:
+-CronCreate
+-CronDelete
+-CronList
+-EnterWorktree
+-ExitWorktree
+-NotebookEdit
+-SendMessage
+-TaskStop
+-WebFetch
+-WebSearch
+-
 -Available agent types for the Agent tool:
 -- claude: Catch-all for any task that doesn't fit a more specific agent. FleetView's default when no agent name is typed. (Tools: *)
 -- Explore: Read-only search agent for broad fan-out searches — when answering means sweeping many files, directories, or naming conventions and you only need the conclusion, not the file dumps. It reads excerpts rather than whole files, so it locates code; it doesn't review or audit it. Specify search breadth: "medium" for moderate exploration, "very thorough" for multiple locations and naming conventions. (Tools: All tools except Agent, Artifact, ArtifactComments, ArtifactData, ArtifactCheck, ExitPlanMode, Edit, Write, NotebookEdit)
@@ -146,7 +158,7 @@ Lines added: 2. Lines removed: 105. Size change: -14,780 characters.
 -SKIP only when another provider is being worked on (overrides all triggers): OpenAI/GPT/Gemini/Llama/Mistral/Cohere/Ollama named in the query; OR `grep -rE 'openai|langchain_openai|google.generativeai|genai|mistralai|cohere|ollama'` over the project hits (run this grep FIRST if no provider named — don't Read the file).
 -- workflow-authoring: Reference for writing a Workflow tool script (script API and gotchas, resume, quality patterns, worked examples). Load before authoring a script for a workflow the user already opted into; it does not itself authorize running one.
 -- run: Launch and drive this project's app to see a change working. Use when asked to run, start, or screenshot the app, or to confirm a change works in the real app (not just tests). First looks for a project skill that already covers launching the app; otherwise falls back to built-in patterns per project type (CLI, server, TUI, Electron, browser-driven, library).
--- plugin-authoring: Make a mod: a change to Claude's own interface or behaviour, such as a live pane or panel, a band above the prompt, a status line, a toast, a slash command, or a hook on tool calls or prompts. Use to make, change or debug a mod or its hooks module.
+-- plugin-authoring: Make a mod: a change to Claude's own interface or behaviour, such as a panel or pane that stays beside the chat and updates, a band, status line, toast, slash command, or hook on tool calls. Use to make, change or debug a mod or its hooks module.
 -- init: Initialize a new CLAUDE.md file with codebase documentation
 -- security-review: Complete a security review of the pending changes on the current branch
 -
@@ -155,4 +167,4 @@ Lines added: 2. Lines removed: 105. Size change: -14,780 characters.
 -Today's date is <date>.
 ````
 
-Tool list: removes `Agent`, `CronCreate`, `CronDelete`, `CronList`, `EnterWorktree`, `ExitWorktree`, `ListAgents`, `NotebookEdit`, `ReportFindings`, `ScheduleWakeup`, `SendMessage`, `Skill`, `TaskStop`, `WebFetch`, `WebSearch`, `Workflow`, `Write`. changes the text or schema of `Bash`, `Edit`, `Read`. See [Tools per Variant](./tools-per-variant.md).
+Tool list: removes `Agent`, `ListAgents`, `ReportFindings`, `ScheduleWakeup`, `Skill`, `ToolSearch`, `Workflow`, `DeferredToolPlaceholder`, `Write`. changes the text or schema of `Bash`, `Edit`, `Read`. See [Tools per Variant](./tools-per-variant.md).

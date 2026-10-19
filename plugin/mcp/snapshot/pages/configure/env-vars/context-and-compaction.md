@@ -35,7 +35,7 @@ The table is sorted by name. See [Environment Variables](https://xsyetopz.github
 | `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` | [Documented] | Lowers the percentage of the window at which auto-compaction starts. | Text. Also used for the fork compaction check | Main sessions and subagents. Project `env` can set it before trust |
 | `CLAUDE_BG_MEMORY_TOGGLED_OFF` | [Undocumented] | Tells a background session that memory was turned off. The session then calls its memory-off handler. | Text. Acts only when the value is `1` and `CLAUDE_CODE_SESSION_KIND` is `bg`. The dispatcher sets it | Background sessions. Not set from project `env` before trust |
 | `CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD` | [Documented] | Loads memory files from `--add-dir` directories. | On or off. The remote `add_directory` request also needs it set in the container | All sessions. Not set from project `env` before trust |
-| `CLAUDE_CODE_AUTO_COMPACT_WINDOW` | [Documented] | Sets the auto-compact window in tokens. It is capped at the model context window. | Text. Invalid values are ignored. Project `env` may set it before trust | All sessions, allowed in. Project `env` can set it before trust |
+| `CLAUDE_CODE_AUTO_COMPACT_WINDOW` | [Documented] | Sets the auto-compact window in tokens. It is capped at the model context window. | Text. Accepts `k` and `M` suffixes, such as `200k`, like `--autocompact` (since [2.1.304](https://github.com/anthropics/claude-code/releases/tag/v2.1.304)). Claude Code warns when a value is out of range or ignored. Project `env` may set it before trust | All sessions, allowed in. Project `env` can set it before trust |
 | `CLAUDE_CODE_BLOCKING_LIMIT_OVERRIDE` | [Undocumented] | Overrides the context blocking limit for tests. Claude Code passes it as `testBlockingOverride`. | A number | All sessions |
 | `CLAUDE_CODE_DISABLE_1M_CONTEXT` | [Documented] | Turns off 1M context. Removes `[1m]` model variants and keeps 1M models at 200K. | On or off. Warns about a missing auto compact window when set | All sessions |
 | `CLAUDE_CODE_DISABLE_ATTACHMENTS` | [Documented] | Turns off attachment processing, so `@` mentions stay plain text. Also turns off kept deferred tools. | On or off. Docs: ignored in project and local settings | All sessions |
@@ -80,7 +80,7 @@ The table is sorted by name. See [Environment Variables](https://xsyetopz.github
 | `DISABLE_PROMPT_CACHING_MYTHOS` | [Undocumented] | Turns off prompt caching for models that the Mythos check matches. | On or off | - |
 | `MAX_MCP_OUTPUT_TOKENS` | [Documented] | Sets the token limit for one MCP tool result. | A number | - |
 | `SLASH_COMMAND_TOOL_CHAR_BUDGET` | [Documented] | Overrides the character budget for the skill listing shown to the model. | A number, 1 by default. Integer, min `1`. If set, it wins over the dynamic budget (context window times 4 times a fraction, default 1%) | All sessions |
-| `USE_API_CONTEXT_MANAGEMENT` | [Undocumented] [Gated: Works only behind a feature flag or server gate] | Would turn on the API context-management beta. It is inert in 2.1.303. | On or off. The code ANDs it with a constant false, so it has no effect | Inert, first-party models |
+| `USE_API_CONTEXT_MANAGEMENT` | [Undocumented] [Gated: Works only behind a feature flag or server gate] | Would turn on the API context-management beta. It is inert in 2.1.304. | On or off. The code ANDs it with a constant false, so it has no effect | Inert, first-party models |
 
 ## How It Works
 
@@ -96,4 +96,4 @@ See [Context and Compaction](https://xsyetopz.github.io/claude-code-docs/how-it-
 - [Models and Effort](https://xsyetopz.github.io/claude-code-docs/configure/env-vars/models-and-effort.md)
 - [Undocumented Items](https://xsyetopz.github.io/claude-code-docs/reference/undocumented.md): every item that only the program shows.
 
-Source: the program (variable names found in the `2.1.303` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
+Source: the program (variable names found in the `2.1.304` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.

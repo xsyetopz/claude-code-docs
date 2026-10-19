@@ -15,7 +15,7 @@ Add rules to `permissions.allow`, `permissions.ask`, or `permissions.deny` in a 
 ```json title=".claude/settings.json"
 {
   "permissions": {
-    "allow": ["Bash(npm test)", "Bash(git diff *)", "Read(src/**)"],
+    "allow": ["Bash(bun test)", "Bash(git diff *)", "Read(src/**)"],
     "ask": ["Bash(git commit *)"],
     "deny": ["Bash(git push:*)", "Read(.env)", "WebFetch"],
     "additionalDirectories": ["../shared-lib"]
@@ -57,7 +57,7 @@ Source: the program text `tool name case-sensitive, non-empty content with no le
 
 | Form | Status | What it matches | Notes |
 | --- | --- | --- | --- |
-| `Bash(npm test)`, `PowerShell(...)` | <Documented /> | Shell commands by pattern. | `*` is a wildcard. `\*` is a literal star. A pattern that ends in a space and one star also matches the bare command. |
+| `Bash(bun test)`, `PowerShell(...)` | <Documented /> | Shell commands by pattern. | `*` is a wildcard. `\*` is a literal star. A pattern that ends in a space and one star also matches the bare command. |
 | `Bash(git push:*)` | <Documented /> | The legacy prefix form. | The suffix `:*` matches the prefix before it. Use `Bash(git push *)` in new rules. |
 | `Read(src/**)`, `Edit(...)` | <Documented /> | Files by glob. | `**` crosses folders. A rule that starts with `/` anchors at the primary working folder. |
 | `WebFetch(domain:example.com)` | <Documented /> | One host. | The prefix `domain:` is required. `domain:*.example.com` is allowed. A full URL is rejected. |
@@ -94,7 +94,7 @@ A `PermissionUpdate` changes rules or the mode. Hooks and SDK hosts send and rec
 | `destination` | `userSettings`, `projectSettings`, `localSettings`, `session`, `cliArg` |
 | rule value | An object with `toolName` and `ruleContent`. |
 
-Source: `PermissionUpdate` in the program types (`types-2.1.303.d.ts`).
+Source: `PermissionUpdate` in the program types (`types-2.1.304.d.ts`).
 
 ## How It Works
 

@@ -11,6 +11,7 @@ import {
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
+import { CLAUDE_CODE_VERSION } from "../../src/version.ts";
 import { FAKE_KEY, startStub } from "./stub.ts";
 import { SUB_MARK, VARIANTS, type Variant } from "./variants.ts";
 
@@ -22,7 +23,10 @@ function requireEnv(name: string): string {
   return v;
 }
 
-const BIN = join(requireEnv("HOME"), ".local/share/claude/versions/2.1.303");
+const BIN = join(
+  requireEnv("HOME"),
+  `.local/share/claude/versions/${CLAUDE_CODE_VERSION}`,
+);
 
 const argv = process.argv.slice(2);
 const only = argv.includes("--only")

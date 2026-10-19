@@ -1,6 +1,6 @@
 ---
 title: "JSON Schemas"
-description: "JSON Schemas for Claude Code 2.1.303 config files, made from the validators inside the program, and how they differ from the SchemaStore copies."
+description: "JSON Schemas for Claude Code 2.1.304 config files, made from the validators inside the program, and how they differ from the SchemaStore copies."
 url: https://xsyetopz.github.io/claude-code-docs/reference/schemas
 source: docs/reference/schemas.md
 ---
@@ -8,7 +8,7 @@ source: docs/reference/schemas.md
 # JSON Schemas
 
 
-This site publishes six JSON Schemas for the config files that Claude Code `2.1.303` checks with its own validators.
+This site publishes six JSON Schemas for the config files that Claude Code `2.1.304` checks with its own validators.
 They are made by running the program's own schema code, so they list every key that this release knows.
 Paste the `$schema` URL into a file and your editor can suggest keys and flag mistakes.
 
@@ -41,7 +41,7 @@ Those keys carry `"x-managed-only": true`.
 ```json
 {
   "$schema": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-settings.json",
-  "permissions": { "allow": ["Bash(npm test)"] },
+  "permissions": { "allow": ["Bash(bun test)"] },
   "syncClaudeAiSkills": true
 }
 ```
@@ -62,7 +62,7 @@ Two parts need extra steps:
 ## Regenerate
 
 ```sh
-bun run schemas        # rewrite schemas/*.json from the installed 2.1.303 program
+bun run schemas        # rewrite schemas/*.json from the installed 2.1.304 program
 bun run schemas:check  # check the files, and check the good and bad examples in tools/schemas/fixtures
 ```
 
@@ -90,7 +90,7 @@ We compared the files with the copies on [SchemaStore](https://json.schemastore.
 | Plugin hooks | none | 5 | SchemaStore has no schema for this file. |
 
 SchemaStore has 25 settings keys that this site's settings schema does not. 12 of them are managed-only keys, such as `policyHelper` and `allowManagedHooksOnly`, which this site's managed schema has.
-The other 13 are not in the `2.1.303` validator at all, for example `autoConnectIde`, `diffTool`, `skippedPlugins`, and `sshHostAllowlist`. They may be older or newer than this release.
+The other 13 are not in the `2.1.304` validator at all, for example `autoConnectIde`, `diffTool`, `skippedPlugins`, and `sshHostAllowlist`. They may be older or newer than this release.
 
 SchemaStore also has [`claude-code-launch.json`](https://json.schemastore.org/claude-code-launch.json), the Launch Preview file for preview servers in Claude Code Desktop.
 This site has no copy of it. We found no validator for that file in the `claude` program, and it belongs to the Desktop app, so there is nothing to export from the binary.

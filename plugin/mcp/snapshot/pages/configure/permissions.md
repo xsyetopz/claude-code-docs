@@ -10,7 +10,7 @@ source: docs/configure/permissions/index.md
 
 Permissions decide which tool calls Claude Code may run, which need a prompt, and which it must refuse.
 The sandbox adds a second wall around `Bash` commands, enforced by the operating system.
-For example, an `allow` rule for `Bash(npm test)` runs the tests with no prompt, and the sandbox still limits what that command can reach.
+For example, an `allow` rule for `Bash(bun test)` runs the tests with no prompt, and the sandbox still limits what that command can reach.
 
 ## At a Glance
 
@@ -39,14 +39,14 @@ For example, an `allow` rule for `Bash(npm test)` runs the tests with no prompt,
 {
   "permissions": {
     "defaultMode": "default",
-    "allow": ["Bash(npm test)", "Read(src/**)"],
+    "allow": ["Bash(bun test)", "Read(src/**)"],
     "deny": ["Bash(git push:*)"]
   },
   "sandbox": { "enabled": true }
 }
 ```
 
-`npm test` runs without a prompt. `git push` is blocked. Other commands prompt you, and `Bash` runs in the sandbox.
+`bun test` runs without a prompt. `git push` is blocked. Other commands prompt you, and `Bash` runs in the sandbox.
 
 ## Marks and Sources
 

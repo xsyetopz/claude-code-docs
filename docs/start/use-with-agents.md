@@ -48,7 +48,7 @@ The plugin adds two things.
 
 | Part | What it does |
 | --- | --- |
-| The MCP server `claude-code-docs` | Gives Claude four read-only tools. It runs with plain `node`. You need no `npm install`. |
+| The MCP server `claude-code-docs` | Gives Claude four read-only tools. It runs with plain `bun`. You need no `bun install`. |
 | The skill `claude-code-docs` | Tells Claude to look up settings, environment variables, hooks, and other Claude Code details here instead of from memory. It names the version and the badge meaning in each answer. |
 
 The skill uses the MCP tools when they exist. If they do not, it fetches `llms.txt` and the page `.md` files.
@@ -84,7 +84,7 @@ In Claude Code, you can add it by hand with `claude mcp add claude-code-docs -- 
 
 ## Refresh from the Site
 
-The bundled copy covers Claude Code 2.1.303 and changes only when you update the plugin.
+The bundled copy covers Claude Code 2.1.304 and changes only when you update the plugin.
 You can ask the server to fetch newer pages instead.
 
 | Variable | What it does |

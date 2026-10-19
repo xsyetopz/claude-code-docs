@@ -1,6 +1,6 @@
 ---
 title: "What Changed"
-description: "What changed in the Claude Code releases near 2.1.303, newest first, as far as the changelog and a version comparison show."
+description: "What changed in the Claude Code releases near 2.1.304, newest first, as far as the changelog and a version comparison show."
 url: https://xsyetopz.github.io/claude-code-docs/start/what-changed
 source: docs/start/what-changed.md
 ---
@@ -8,7 +8,7 @@ source: docs/start/what-changed.md
 # What Changed
 
 
-This page lists changes in the last few releases before `2.1.303`.
+This page lists changes in the last few releases up to `2.1.304`.
 It is short on purpose. The site only repeats what its sources say, and it does not guess.
 For every fix and small change, read the official [Changelog](https://code.claude.com/docs/en/changelog).
 
@@ -26,7 +26,30 @@ For every fix and small change, read the official [Changelog](https://code.claud
 
 Run `claude --version`.
 The `/release-notes` command shows a cached copy of the [changelog](https://code.claude.com/docs/en/changelog).
-This site covers `2.1.303`, the version shown in the navbar.
+This site covers `2.1.304`, the version shown in the navbar.
+
+## Version 2.1.304
+
+Released October 19, 2026. Source: [release notes](https://github.com/anthropics/claude-code/releases/tag/v2.1.304).
+Rows marked with the program come from a comparison of the `2.1.303` and `2.1.304` programs.
+
+| Change | Status | What it means for you | Where to read more |
+| --- | --- | --- | --- |
+| Tool search on by default | [Documented] | Tool search is on behind a custom `ANTHROPIC_BASE_URL`. A 400 or 422 from the gateway is retried without it. The site's captures use a local stub as `ANTHROPIC_BASE_URL`, so the main prompt there now lists 12 tools, not 20. | [Tools Reference](https://xsyetopz.github.io/claude-code-docs/reference/tools.md) and [Tools per Variant](https://xsyetopz.github.io/claude-code-docs/prompts/tools-per-variant.md) |
+| `/auto-mode-setup` | [Documented] | A guided setup that reads your project and recent sessions. It is now on Bedrock, Vertex, Foundry, a Claude apps gateway, and with telemetry off. | [Auto Mode](https://xsyetopz.github.io/claude-code-docs/configure/permissions/auto-mode.md) |
+| `/claude-api managed-agents-secure` | [Documented] | Compares a Managed Agents agent's settings with Anthropic's security guide. It changes nothing. | [Bundled Skills](https://xsyetopz.github.io/claude-code-docs/extend/skills-and-commands/bundled-skills.md) |
+| `/artifacts` delete | [Documented] | The confirmation shows numbered choices: 1 or Enter keeps, 2 deletes. | [Slash Commands](https://xsyetopz.github.io/claude-code-docs/extend/skills-and-commands/slash-commands.md) |
+| `--disable-slash-commands` | [Documented] | The help text now says it disables skills and commands. | [Skills and Commands](https://xsyetopz.github.io/claude-code-docs/extend/skills-and-commands.md) |
+| Mounted drive `rm -r` prompt | [Documented] | `rm -r` of a mounted drive or a folder at its top level (`/Volumes`, `/media`, `/mnt/c`) gets a safety prompt. The program has an env var `CLAUDE_CODE_DISABLE_MOUNTED_DRIVE_RM_PROMPT` that skips this check. | [Tools and Bash Variables](https://xsyetopz.github.io/claude-code-docs/configure/env-vars/tools-and-bash.md) |
+| `denyRead` brackets on Linux | [Documented] | A `sandbox.filesystem.denyRead` glob such as `[user-id]` no longer stops sandboxed commands from starting. | [Sandbox](https://xsyetopz.github.io/claude-code-docs/configure/permissions/sandbox.md) |
+| `CLAUDE_CODE_AUTO_COMPACT_WINDOW` | [Documented] | Accepts `k` and `M` suffixes, and warns when a value is out of range or ignored. | [Context and Compaction Variables](https://xsyetopz.github.io/claude-code-docs/configure/env-vars/context-and-compaction.md) |
+| Plugin MCP switches | [Undocumented] | The program has `CLAUDE_CODE_SKIP_PLUGIN_LOCAL_MCP_SERVERS` (only `sse`, `http`, and `ws` plugin servers load) and `CLAUDE_CODE_SKIP_PLUGIN_MCP_BUNDLES`. | [Plugins and MCP Variables](https://xsyetopz.github.io/claude-code-docs/configure/env-vars/plugins-and-mcp.md) |
+| Low disk and memory warnings | [Undocumented] | The program reads `CLAUDE_CODE_WARN_DISK_FREE_GIB` and `CLAUDE_CODE_WARN_MEMORY_FREE_GIB`, both `0` by default. | [Remote and Cloud Sessions](https://xsyetopz.github.io/claude-code-docs/configure/env-vars/remote-and-cloud-sessions.md) |
+| Mod API changes | [Documented] | `decider: "person"` on `tool.check`, `e.isReadOnly`, and `settings.read` hooks that get each settings layer. | [Mod API](https://xsyetopz.github.io/claude-code-docs/extend/mod-api.md) |
+| Fixes | [Documented] | `/usage` names when a rate limit ends. `/effort status` no longer guesses for `auto` or `unset`. Self-paced `/loop` wakeups at the 1-hour maximum no longer miss the prompt cache. | [Slash Commands](https://xsyetopz.github.io/claude-code-docs/extend/skills-and-commands/slash-commands.md) |
+
+The release also changes the `claude --help` text, adds a resume warning on Pro and Max plans, and has many more fixes.
+Read the [release notes](https://github.com/anthropics/claude-code/releases/tag/v2.1.304) for the full list.
 
 ## Version 2.1.303
 
@@ -99,7 +122,7 @@ Released October 14, 2026. Source: [Changelog](https://code.claude.com/docs/en/c
 This site does not cover versions before `2.1.300` in detail.
 The official [Changelog](https://code.claude.com/docs/en/changelog) lists them, and the weekly [What's New](https://code.claude.com/docs/en/whats-new) digest covers the larger features.
 
-> **Not Verified:** The rows above come from the [official changelog](https://code.claude.com/docs/en/changelog) text and from a comparison of the `2.1.302` and `2.1.303` programs.
+> **Not Verified:** The rows above come from the [official changelog](https://code.claude.com/docs/en/changelog) text and from comparisons of the `2.1.302`, `2.1.303`, and `2.1.304` programs.
 > This site did not re-test each [changelog](https://code.claude.com/docs/en/changelog) row against the program, so a row marked [Documented] means the [changelog](https://code.claude.com/docs/en/changelog) names it.
 
 ## Example

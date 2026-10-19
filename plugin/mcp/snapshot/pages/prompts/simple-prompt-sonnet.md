@@ -19,10 +19,10 @@ source: docs/prompts/simple-prompt-sonnet.md
 | `system[2]` | 5,627 |
 | `messages[0].content[0]` | 594 |
 | `messages[0].content[1]` | 2 |
-| `messages[1].content[0]` | 8,495 |
+| `messages[1].content[0]` | 8,854 |
 | System blocks only | 5,767 |
-| Everything shown here | 15,148 |
-| Tools sent | 20 |
+| Everything shown here | 15,507 |
+| Tools sent | 12 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
 

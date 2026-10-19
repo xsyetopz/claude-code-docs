@@ -1,11 +1,11 @@
 ---
 name: claude-code-docs
-description: Look up how Claude Code really works, using the Claude Code Docs for version 2.1.303. Use this whenever the user asks about Claude Code settings, settings.json keys, environment variables, CLI flags, permissions, hooks, plugins, skills, subagents, MCP configuration, status line, output styles, files Claude Code reads or writes, internals, or undocumented or version-specific behavior, even if they do not name the docs. Prefer it over memory, because these pages check the real program against the official docs.
+description: Look up how Claude Code really works, using the Claude Code Docs for version 2.1.304. Use this whenever the user asks about Claude Code settings, settings.json keys, environment variables, CLI flags, permissions, hooks, plugins, skills, subagents, MCP configuration, status line, output styles, files Claude Code reads or writes, internals, or undocumented or version-specific behavior, even if they do not name the docs. Prefer it over memory, because these pages check the real program against the official docs.
 ---
 
 # Claude Code Docs
 
-The Claude Code Docs describe what Claude Code 2.1.303 does, checked against the program and not only against the official docs. Use them instead of memory for any detail that the user may act on: a key name, a default, an environment variable, a hook field. Memory of these details is often stale or wrong.
+The Claude Code Docs describe what Claude Code 2.1.304 does, checked against the program and not only against the official docs. Use them instead of memory for any detail that the user may act on: a key name, a default, an environment variable, a hook field. Memory of these details is often stale or wrong.
 
 ## Find the answer
 
@@ -31,6 +31,6 @@ Tables have a Status column. State the badge when you report a fact, because it 
 
 ## Answer
 
-- Say which version the answer is for: Claude Code 2.1.303. If the user runs another version, say the page may not match it.
+- Say which version the answer is for: Claude Code 2.1.304. If the user runs another version, say the page may not match it.
 - Cite the page (its URL) next to each fact.
 - If the docs do not cover the question, say so. Do not fill the gap from memory as if it were documented.

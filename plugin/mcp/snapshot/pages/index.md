@@ -8,7 +8,7 @@ source: docs/index.mdx
 
 # Every Part of Claude Code You Can Use or Change
 
-Unofficial community docs for version `2.1.303`, built from the official docs and the program itself. Not made by or tied to Anthropic. For supported behavior, check the official docs first.
+Unofficial community docs for version `2.1.304`, built from the official docs and the program itself. Not made by or tied to Anthropic. For supported behavior, check the official docs first.
 
 - [Documented] An official docs page names it.
 - [Undocumented] Only the program shows it. It can change without notice.

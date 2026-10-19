@@ -249,7 +249,7 @@ What a `tool.call` hook returns and what `next(e)` and `$.tool.call(input)` reso
 
 ### `ToolCheckInput`
 
-The input of `tool.check`: the tool, its arguments, the organization's ceiling if it set one, and on a real call its id and the loop's `agentId`. All fields are pinned. A hook decides about the call and does not change it. Used by `tool.check`.
+The input of `tool.check`: the tool, its arguments, the organization's ceiling if it set one, whether the call is read-only, and on a real call its id and the loop's `agentId`. All fields are pinned. A hook decides about the call and does not change it. Used by `tool.check`.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
@@ -257,6 +257,7 @@ The input of `tool.check`: the tool, its arguments, the organization's ceiling i
 | `input` | <Documented /> | The tool's arguments as the permission decision reads them (`{ command }` for Bash, `{ file_path, ... }` for the file tools). | Type: `unknown`. |
 | `tool_use_id` | <Documented /> | The call being decided, on a real call only, absent on a query. | Type: `string`. Optional. `next.origin` names who raised it: `{ plugin: 'engine', tier: 'core' }` for the model's own call, the plugin for its `$.tool.call` or its query. |
 | `agentId` | <Documented /> | The id of the loop the call is decided in, on a real call inside a subagent's or a teammate's loop: the one its `tool.call` carried. | Type: `string`. Optional. Absent on the main loop and on a query. Which loop, not which plugin caused the call (that is `next.origin`). |
+| `isReadOnly` | <Documented /> | Set when the tool call is read-only (new in 2.1.304). | Type: `true`. Optional. The program passes it on as the read-only flag of the permission decision. |
 | `ceiling` | <Documented /> | The most permissive verdict the organization lets a call of the tool reach (`ask`), as its administrators set it on a connector's tool. | Type: `ToolCheckDecision`. Optional. Set by the engine, from the tool, never by a query, and pinned. A hook's own `ceiling`, on its answer, is dropped. Absent where none is set. |
 
 ### `ToolCheckResult`
@@ -270,7 +271,7 @@ What a `tool.check` hook returns and what `next(e)` resolves to: the verdict, wh
 | `rule` | <Documented /> | The settings rule that decided, as written (`Bash(git push:*)`). | Type: `string`. Optional. Absent for a mode or a tool's own check. |
 | `hook` | <Documented /> | The classic hook event that decided, or whose ask the verdict was reached under (`PreToolUse`), whoever configured the hook. | Type: `string`. Optional. Absent on a `$.tool.check` query, which runs no classic hook. |
 | `setting` | <Documented /> | The key of the option whose own check asked, whoever configured it (`permissions.blockReadsOutsideWorkingDirectories`). | Type: `string`. Optional. From core, for the read block: its ask on a shell command that reads outside the working directories or, the block on, leaves the sandbox. |
-| `decider` | <Documented /> | Who an ask is put to, where that is not a dialog here: `host`, a hosted session's permission callback or the cloud session a served call is for. | Type: `ToolCheckDecider`. Optional. From core, only where a host would be asked. Names who decided. |
+| `decider` | <Documented /> | Who an ask is put to, where that is not a dialog here: `host`, a hosted session's permission callback or the cloud session a served call is for, or `person` (new in 2.1.304). | Type: `ToolCheckDecider`. Optional. From core, only where a host would be asked. Names who decided. With `person`, only the permission dialog or a host's callback can approve the ask. Where nobody can be asked (`dontAsk` mode, avoid-prompts, headless), the ask is refused with the mod's reason (the program turns the decision into `deny`). Otherwise the ask goes to a person only and the "always allow" rule option is not offered. |
 | `ceiling` | <Documented /> | The most permissive verdict the organization lets a call of the tool reach (`ask`), as its administrators set it on a connector's tool. | Type: `ToolCheckDecision`. Optional. Set by the engine from the tool. A hook's own `ceiling` is dropped. |
 
 ### `ToolDescribeInput`

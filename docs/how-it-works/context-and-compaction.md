@@ -29,7 +29,7 @@ Sources: [How Claude Code Works: The Context Window](https://code.claude.com/doc
 | `CLAUDE.md`, rules, and auto memory | <Documented /> | The first 200 lines or 25 KB of `MEMORY.md` load. |
 | Skill descriptions | <Documented /> | The body of a skill loads only when the skill runs. |
 | Messages, tool results, and file reads | <Documented /> | This is the part that grows. |
-| Attachments that Claude Code adds | <Undocumented /> | A transcript of 2.1.303 shows types such as `total_tokens_reminder`, `output_style`, `queued_command`, `nested_memory`, `skill_listing`, and `edited_text_file`. |
+| Attachments that Claude Code adds | <Undocumented /> | A transcript of 2.1.304 shows types such as `total_tokens_reminder`, `output_style`, `queued_command`, `nested_memory`, `skill_listing`, and `edited_text_file`. |
 
 The mod event `prompt.attachment` can rewrite or drop one attachment.
 
@@ -81,7 +81,7 @@ Sources: [Model Configuration: Set the Auto-Compact Window](https://code.claude.
 | `/autocompact <size\|auto>` | <Documented /> | Saves the window for the current model. |
 | `--autocompact <auto\|tokens>` | <Documented /> | Sets the window for one launch. |
 | `autoCompactWindow`, `autoCompactEnabled` | <Documented /> | Settings. `autoCompactWindow` also works in the frontmatter of a subagent. |
-| `CLAUDE_CODE_AUTO_COMPACT_WINDOW` | <Documented /> | Sets the window. It wins over the command, the flag, and the setting. |
+| `CLAUDE_CODE_AUTO_COMPACT_WINDOW` | <Documented /> | Sets the window. It wins over the command, the flag, and the setting. Accepts `k` and `M` suffixes since 2.1.304. |
 | `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` | <Documented /> | Sets the percent of the effective window. |
 | `DISABLE_AUTO_COMPACT`, `DISABLE_COMPACT` | <Documented /> | Turn off automatic compaction, or all compaction. |
 | `CLAUDE_CODE_MAX_CONTEXT_TOKENS` | <Documented /> | Sets the window for a model ID that Claude Code does not know. |

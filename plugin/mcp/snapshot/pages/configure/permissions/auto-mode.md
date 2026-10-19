@@ -74,7 +74,7 @@ The plugin `settings.json` does not accept `autoMode`.
 | `claude auto-mode config` | [Documented] | Prints the effective config as JSON | Your settings where set, defaults elsewhere | CLI |
 | `claude auto-mode critique` | [Documented] | Asks a model to review your custom rules | Option `--model <model>`. It checks clarity, completeness, conflicts, and actionability | CLI |
 | `claude auto-mode reset` | [Documented] | Removes `autoMode` from the user settings file | Option `-y, --yes` skips the prompt | CLI |
-| `/auto-mode-setup` | [Documented] | Scans the project and proposes `autoMode` rules | Shows `Auto-mode setup proposal is ready for review` | Interactive |
+| `/auto-mode-setup` | [Documented] | Scans the project and recent sessions, and proposes `autoMode` rules | Shows `Auto-mode setup proposal is ready for review`. Since `2.1.304` it is also on Bedrock, Vertex, Foundry, a Claude apps gateway, and with telemetry off. `skillOverrides["auto-mode-setup"]: "off"` turns it off (the program). | Interactive |
 
 The `config` output tags custom rules as `(custom rules added alongside the defaults)` or `(custom rules replacing defaults)`.
 

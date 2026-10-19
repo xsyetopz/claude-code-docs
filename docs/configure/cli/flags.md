@@ -1,6 +1,6 @@
 ---
 title: All Flags
-description: Every claude flag in 2.1.303, with the ones that claude --help hides, grouped by job.
+description: Every claude flag in 2.1.304, with the ones that claude --help hides, grouped by job.
 sidebar_position: 2
 ---
 
@@ -40,7 +40,7 @@ Flags that choose how a run starts and how print mode reads input and writes out
 | `-p, --print` | <Documented /> | ✅ | Prints the answer and exits, which suits pipes, and the trust dialog is skipped in this mode. |
 | `--output-format <format>` | <Documented /> | ✅ | Sets the output of print mode to `text`, `json`, or `stream-json`. |
 | `--input-format <format>` | <Documented /> | ✅ | Sets the input of print mode to `text` or `stream-json`. |
-| `--json-schema <schema>` | <Documented /> | ✅ | Checks the final answer against a JSON Schema. |
+| `--json-schema <schema>` | <Documented /> | ✅ | Checks the final answer against a JSON Schema. It works only with `--print`. |
 | `--include-hook-events` | <Documented /> | ✅ | Adds the hook events to the stream, with `--output-format=stream-json`. |
 | `--include-partial-messages` | <Documented /> | ✅ | Adds partial message chunks to the stream, with `--print` and `stream-json`. |
 | `--forward-subagent-text` | <Documented /> | ✅ | Adds the text of subagents to the stream as `assistant` and `user` messages, with `--print` and `stream-json`. |
@@ -71,7 +71,7 @@ Flags that strip your setup down, load extra settings, or turn on logs.
 | --- | --- | --- | --- |
 | `-h, --help` | <Documented /> | ✅ | Shows the help text and exits. |
 | `-v, --version` | <Documented /> | ✅ | Prints the version number. |
-| `-d, --debug [filter]` | <Documented /> | ✅ | Turns on debug logs, and an optional filter picks the categories. |
+| `-d, --debug [filter]` | <Documented /> | ✅ | Turns on debug logs, and an optional filter picks the categories, such as `--debug=hooks,mcp` or `--debug='!hooks,!mcp'`. |
 | `-d2e, --debug-to-stderr` | <Undocumented /> | ❌ | Turns on debug mode and writes to stderr, and the flag is deprecated. |
 | `--debug-file <path>` | <Documented /> | ✅ | Writes the debug logs to a file and turns on debug mode. |
 | `--verbose` | <Documented /> | ✅ | Overrides the verbose setting of your config. |
@@ -95,7 +95,7 @@ Flags that set the permission mode and the tools the model may use. See [Permiss
 | `--allow-dangerously-skip-permissions` | <Documented /> | ✅ | Makes skipping all permission checks a choice, without turning it on. |
 | `--allowedTools, --allowed-tools <tools...>` | <Documented /> | ✅ | Lists the tools that run without a permission prompt. |
 | `--disallowedTools, --disallowed-tools <tools...>` | <Documented /> | ✅ | Lists the tools that the model cannot use. |
-| `--tools <tools...>` | <Documented /> | ✅ | Lists the built-in tools that the model can use. |
+| `--tools <tools...>` | <Documented /> | ✅ | Lists the built-in tools that the model can use. `"default"` uses the default set. |
 | `--permission-prompts <target>` | <Documented /> | ✅ | Sets who answers permission prompts: `host` or `none`. |
 | `--permission-prompt-tool <tool>` | <Documented /> | ❌ | Names an MCP tool that answers permission prompts, with `--print` only. |
 | `--plan-mode-instructions <instructions>` | <Undocumented /> | ❌ | Replaces the default steps of plan mode with your own text. |
@@ -141,7 +141,7 @@ Flags that continue, fork, name, or rewind a session, or run it in a worktree or
 | Flag | Status | In `--help` | What it does |
 | --- | --- | --- | --- |
 | `-c, --continue` | <Documented /> | ✅ | Continues the newest conversation of the current folder. |
-| `-r, --resume [value]` | <Documented /> | ✅ | Resumes a conversation by session ID, or opens the picker. |
+| `-r, --resume [value]` | <Documented /> | ✅ | Resumes a conversation by session ID or name, or opens the picker. |
 | `--fork-session` | <Documented /> | ✅ | Creates a new session ID when you resume, with `--resume` or `--continue`. |
 | `--from-pr [value]` | <Documented /> | ✅ | Resumes a session that links to a pull request. |
 | `--session-id <uuid>` | <Documented /> | ✅ | Uses a UUID that you give as the session ID. |
@@ -167,7 +167,7 @@ Flags that add agents, plugins, MCP servers, folders, and files.
 | `--plugin-dir <path>` | <Documented /> | ✅ | Loads a plugin from a folder or a `.zip` file for this session only. |
 | `--plugin-url <url>` | <Documented /> | ✅ | Fetches a plugin `.zip` file from a URL for this session only. |
 | `--plugin-dir-no-mcp <path>` | <Undocumented /> | ❌ | Works like `--plugin-dir` but does not read the `.mcp.json` of the plugin. |
-| `--disable-slash-commands` | <Documented /> | ✅ | Turns off all skills. |
+| `--disable-slash-commands` | <Documented /> | ✅ | Turns off all skills and commands. |
 | `--add-dir <directories...>` | <Documented /> | ✅ | Gives the tools access to more folders. |
 | `--brief` | <Undocumented /> | ✅ | Turns on the `SendUserMessage` tool so the agent can message the user. |
 | `--file <specs...>` | <Undocumented /> | ✅ | Downloads file resources at startup, in the form `file_id:relative_path`. |

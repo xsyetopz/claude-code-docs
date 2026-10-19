@@ -1,6 +1,6 @@
 ---
 title: "Slash Commands"
-description: "Every built-in slash command in Claude Code 2.1.303, grouped by job, with aliases, arguments, and gates."
+description: "Every built-in slash command in Claude Code 2.1.304, grouped by job, with aliases, arguments, and gates."
 url: https://xsyetopz.github.io/claude-code-docs/extend/skills-and-commands/slash-commands
 source: docs/extend/skills-and-commands/slash-commands.md
 ---
@@ -65,7 +65,7 @@ Each line is a separate command. The text after the name is the argument.
 | `/focus` `[on\|off]` | [Documented] | Toggles focus view: only your prompt, a summary, and the reply. | Needs the fullscreen renderer (`/tui fullscreen` or `CLAUDE_CODE_NO_FLICKER=1`). The setting `viewMode: "focus"` does the same. |
 | `/diff` | [Documented] | Shows uncommitted changes and per-turn diffs. | Panel. Off when a mod provides its own diff view. |
 | `/model` `<model> or [model]` | [Documented] | Sets the model. | Panel and text form. See [Models](https://xsyetopz.github.io/claude-code-docs/how-it-works/models.md). |
-| `/effort` `[levels] or <levels>` | [Documented] | Sets the effort level. | Panel and text form. |
+| `/effort` `[levels] or <levels>` | [Documented] | Sets the effort level. | Panel and text form. Since `2.1.304`, `/effort status` no longer shows a guessed level when `CLAUDE_CODE_EFFORT_LEVEL` is `auto` or `unset`. |
 | `/fast` `[on\|off]` | [Gated: First-party provider, and env var CLAUDE_CODE_DISABLE_FAST_MODE not set.] | Toggles fast mode. | Panel and text form. |
 | 🧪 `/advisor` `[model\|off]` | [Gated: On when env CLAUDE_CODE_ENABLE_EXPERIMENTAL_ADVISOR_TOOL is set, otherwise server flag tengu_sage_compass2] | Lets Claude consult a stronger model at key moments. | Panel and text form. See [`CLAUDE_CODE_ENABLE_EXPERIMENTAL_ADVISOR_TOOL`](https://xsyetopz.github.io/claude-code-docs/configure/env-vars/models-and-effort.md). |
 
@@ -93,11 +93,11 @@ Each line is a separate command. The text after the name is the argument.
 | `/keybindings` | [Documented] | Opens your keyboard shortcuts file. | Interactive only. Needs keybinding customization on. |
 | `/ide` `[open]` | [Documented] | Manages IDE integrations and shows status. | Panel. |
 | `/init` | [Documented] | Creates a `CLAUDE.md` file with codebase notes. | A prompt command. With env var `CLAUDE_CODE_NEW_INIT` it also sets up skills and hooks. Claude can call it through the `Skill` tool. |
-| `/auto-mode-setup` `[--request-id <uuid>] (--wizard ... --propose \| --expect-sha256 <hex> --apply-file <path>)` | [Gated: An environment-onboarding policy flag.] | Teaches auto mode about your environment, with optional rule changes. | Panel. The text form is non-interactive. |
+| `/auto-mode-setup` `[--request-id <uuid>] (--wizard ... --propose \| --expect-sha256 <hex> --apply-file <path>)` | [Gated: An environment-onboarding policy flag.] | Teaches auto mode about your environment, with optional rule changes. It reads your project and recent sessions. | Panel. The text form is non-interactive. Since `2.1.304` it is also on Bedrock, Vertex, Foundry, a Claude apps gateway, and with telemetry off. `skillOverrides["auto-mode-setup"]: "off"` turns it off (the program). |
 | `/import` `[codex\|gemini\|cursor] [--dry-run]` | [Gated: Server flag tengu_import, off by default. You cannot turn it on] | Imports config from another AI coding agent. | Panel and text form. |
 | `/help` | [Documented] | Shows help and the command list. | Panel. Terminal only. |
 | `/status` | [Documented] | Shows version, model, account, API connectivity, and tool status. | Panel. Lists skills whose `allowed-tools` were ignored. |
-| `/usage` (aliases `/cost`, `/stats`) | [Documented] | Shows session cost, plan use, and activity stats. | Panel and text form. |
+| `/usage` (aliases `/cost`, `/stats`) | [Documented] | Shows session cost, plan use, and activity stats. | Panel and text form. Since `2.1.304` it says when a rate limit ends. |
 | `/release-notes` | [Documented] | Shows release notes. | Panel. |
 | `/statusline` | [Documented] | Sets up the status line. | A prompt command. Not in safe mode. Interactive only. |
 | `/sandbox` `exclude "command pattern"` (Windows also `install`) | [Gated: Hidden when the platform is not supported or not in the enabled list.] | Shows sandbox state and opens its settings. | Panel. |
@@ -136,7 +136,7 @@ Each line is a separate command. The text after the name is the argument.
 | `/autofix-pr` | [Gated: Availability claude-ai and console-profile. Policy allow_remote_sessions.] | Watches the current pull request and fixes issues. | Panel. |
 | `/daemon` | [Undocumented] | Manages background services and routines. | Panel. |
 | `/workflows` | [Gated: Setting disableWorkflows and env var CLAUDE_CODE_DISABLE_WORKFLOWS.] | Browses running and finished workflows. | Panel. |
-| `/artifacts` | [Gated: An artifacts feature check and a flag.] | Browses your published and shared artifacts. | Panel. |
+| `/artifacts` | [Gated: An artifacts feature check and a flag.] | Browses your published and shared artifacts. | Panel. Since `2.1.304` the delete confirmation is numbered: 1 or Enter keeps, 2 deletes. `y`, `n`, and Esc still work. |
 | `/design-consent`, `/design-revoke` | [Gated: Policy allow_design_sync.] | Grants or revokes agent access to your Design projects. | Hidden text commands. |
 | `/design-login` | [Gated: Policy allow_design_sync.] | Authorizes design-system access for `/design-sync`. | Panel. |
 | `/voice` `[hold\|tap\|off]` | [Gated: Availability claude-ai.] | Toggles voice mode. | Text command. |

@@ -247,7 +247,7 @@ Handler: `command` only.
 | --- | --- | --- | --- |
 | `Setup` event | [Gated: Fires only with the --init-only, --init, or --maintenance CLI flags.] | Event | See the flags above. |
 | `trigger` | [Documented] | Input | `init` or `maintenance`. It is also the matcher. |
-| `additionalContext` | [Differs: Docs: all JSON fields of Setup are dropped on every exit code. The program output schema lists additionalContext for Setup.] | Output | Treat it as not delivered. Not verified in `2.1.303`. |
+| `additionalContext` | [Differs: Docs: all JSON fields of Setup are dropped on every exit code. The program output schema lists additionalContext for Setup.] | Output | Treat it as not delivered. Not verified in `2.1.304`. |
 | `CLAUDE_ENV_FILE` | [Documented] | Environment | Persists environment variables, as for `SessionStart`. |
 
 ### SessionEnd

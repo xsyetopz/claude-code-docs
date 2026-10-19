@@ -20,10 +20,10 @@ This page shows the order and where you can step in.
 
 ## Example
 
-You set `deny: ["Bash(git push:*)"]` and `allow: ["Bash(npm test)"]`, and you run in `default` mode.
+You set `deny: ["Bash(git push:*)"]` and `allow: ["Bash(bun test)"]`, and you run in `default` mode.
 
 1. Claude asks to run `git push origin main`. The `deny` rule matches, so the call is denied. No prompt shows.
-2. Claude asks to run `npm test`. No deny or ask rule matches. The `allow` rule matches, so it runs.
+2. Claude asks to run `bun test`. No deny or ask rule matches. The `allow` rule matches, so it runs.
 3. Claude asks to run `rm -rf build`. No rule matches. The mode is `default`, so you get a prompt.
 
 ## The Order of Checks
@@ -57,13 +57,15 @@ flowchart TD
 ### Step by Step
 
 1. **Explicit `deny` and `ask` rules** apply first, before workspace trust. Source: the official [Settings Reference](https://code.claude.com/docs/en/settings-reference).
-2. **`PreToolUse` hooks** can allow, deny, or ask. A hook `allow` does not override a `deny` or `ask` rule. Source: the program (`types-2.1.303.d.ts` and the text `hook allows approve the command`).
+2. **`PreToolUse` hooks** can allow, deny, or ask. A hook `allow` does not override a `deny` or `ask` rule. Source: the program (`types-2.1.304.d.ts` and the text `hook allows approve the command`).
 3. **Allow sources** let the call run: `allow` rules, the rules of `acceptEdits`, and read-only command lists.
    Program texts: `Read-only command is allowed` and `Auto-allowed with sandbox (autoAllowBashIfSandboxed enabled)`.
 4. **The mode decides the rest.** `default` prompts. `dontAsk` denies. `auto` asks the classifier. `bypassPermissions` allows. The other modes follow the rules on [Permission Modes](../configure/permissions/modes.md).
 5. **A prompt runs `PermissionRequest` hooks first.** Then the dialog shows.
    `Notification` hooks fire for unanswered requests in SDK hosts. `CLAUDE_CODE_DISABLE_PERMISSION_PROMPT_NOTIFY_HOOKS=1` stops that.
 6. **An auto mode denial fires `PermissionDenied`.** The hook can ask for a retry.
+
+A safety check covers `rm -r` on a mounted drive, the folder that holds mounted drives (`/Volumes`, `/media`, WSL `/mnt/c`), or a top-level file or folder of a drive. Since 2.1.304 the program says it "requires explicit approval and cannot be auto-allowed by permission rules". `CLAUDE_CODE_DISABLE_MOUNTED_DRIVE_RM_PROMPT` turns this prompt off ([Tools and Bash](../configure/env-vars/tools-and-bash.md)).
 
 Built-in safety checks, called circuit breakers, can also force a prompt. Some are immune to `bypassPermissions`. See [Permission Modes](../configure/permissions/modes.md#safety-checks). The diagram leaves them out because the program does not show where they run.
 

@@ -1,10 +1,10 @@
 ---
 title: Probes
-description: Facts checked by running Claude Code 2.1.303 against a local stub, and the env vars and settings that changed what the program sent.
+description: Facts checked by running Claude Code 2.1.304 against a local stub, and the env vars and settings that changed what the program sent.
 sidebar_position: 5
 ---
 
-A probe is a small test that runs Claude Code `2.1.303` and checks what one setting changes.
+A probe is a small test that runs Claude Code `2.1.304` and checks what one setting changes.
 The probes ran against a local stub of the Messages API, so they cost nothing and sent no data to Anthropic.
 They show which environment variables and settings have an effect that you can see.
 
@@ -20,7 +20,7 @@ They show which environment variables and settings have an effect that you can s
 
 ## How We Probed
 
-1. We ran the unmodified `2.1.303` program with `claude -p "hi" --output-format stream-json --verbose`.
+1. We ran the unmodified `2.1.304` program with `claude -p "hi" --output-format stream-json --verbose`.
 2. We gave each run a fresh config folder, a fresh home folder, a fake API key, and a base URL that points to the local stub.
 3. We turned off telemetry and other optional traffic. We pointed the proxy settings to a closed port, so a stray request to `api.anthropic.com` fails.
 4. The stub answered `POST /v1/messages` as a stream or as JSON. It sent one scripted tool call and then plain text. It wrote the method, path, headers, and body of each request to a log.
@@ -67,7 +67,7 @@ An item is <Differs /> when the result differs from the docs.
 
 ## Request Details
 
-- `cc_version=2.1.303.914`: the suffix `914` stayed the same in all runs.
+- `cc_version=2.1.304.914`: the suffix `914` stayed the same in all runs.
 - `/v1/messages/cache_touch`: never called. The program sends it only when the response has `anthropic-cache-keepalive: active` for a request with the `cache-keepalive-2026-09-03` beta.
   That beta needs a 1-hour cache TTL for a subscriber login, `allow_cache_keepalive`, and a server-side flag.
   The body is `{"request_id": ...}`. Touches repeat every 30 s by default (10 to 120).

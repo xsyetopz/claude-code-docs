@@ -1,6 +1,6 @@
 ---
 title: "CLI Overview"
-description: "How to start claude, what print mode does, and a map of the flags and subcommands of Claude Code 2.1.303."
+description: "How to start claude, what print mode does, and a map of the flags and subcommands of Claude Code 2.1.304."
 url: https://xsyetopz.github.io/claude-code-docs/configure/cli/
 source: docs/configure/cli/index.md
 ---
@@ -88,7 +88,7 @@ flowchart TD
   One --> Loop
 ```
 
-Source: the program (`claude --help`, `2.1.303`).
+Source: the program (`claude --help`, `2.1.304`).
 
 ## Related Pages
 

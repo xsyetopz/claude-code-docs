@@ -126,7 +126,7 @@ The last column shows whether Claude Code deletes the item after `cleanupPeriodD
 | `stats-cache.json`, `remote-settings.json`, `policy-limits.json`, `cache/changelog.md` | [Documented] | Usage totals, cached organization settings, organization limits, and the [changelog](https://code.claude.com/docs/en/changelog). | ❌ |
 | `.credentials.json`, `agent-memory/`, `jobs/`, `daemon/` | [Documented] | Files that you should keep. | ❌ |
 | `settings.json`, `plugins/`, `skills/`, `agents/`, `CLAUDE.md` | [Documented] | Your configuration. | ❌ |
-| `state/`, `mods/`, `bridge-spawn/`, `seed-admin/`, `downloads/`, `cache/model-catalog/` | [Undocumented] | Seen on a 2.1.303 machine or named in the program. No docs page describes them. | ❓ |
+| `state/`, `mods/`, `bridge-spawn/`, `seed-admin/`, `downloads/`, `cache/model-catalog/` | [Undocumented] | Seen on a 2.1.304 machine or named in the program. No docs page describes them. | ❓ |
 
 `~/.claude.json`, next to the folder, holds app state, the sign-in, and personal MCP servers.
 The default retention is 30 days, and the minimum is 1.

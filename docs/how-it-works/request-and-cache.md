@@ -43,7 +43,7 @@ Project context changes at session start, at `/clear`, and at `/compact`.
 
 ## Body Fields
 
-The field list comes from the official docs and from an `api-request` line that version 2.1.303 wrote to a local transcript.
+The field list comes from the official docs and from an `api-request` line that version 2.1.304 wrote to a local transcript.
 
 | Field | Status | Content |
 | --- | --- | --- |

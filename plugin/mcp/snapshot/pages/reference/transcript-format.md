@@ -1,6 +1,6 @@
 ---
 title: "Transcript Format"
-description: "The session JSONL file, where it lives, and every line type and field that Claude Code 2.1.303 writes."
+description: "The session JSONL file, where it lives, and every line type and field that Claude Code 2.1.304 writes."
 url: https://xsyetopz.github.io/claude-code-docs/reference/transcript-format
 source: docs/reference/transcript-format.md
 ---
@@ -78,7 +78,7 @@ These keys appear on `user`, `assistant`, `attachment`, and `system` lines.
 ## Line Types
 
 All rows are [Undocumented], because no docs page lists the line types.
-The key lists come from a transcript that 2.1.303 wrote, and the meanings from the program and its type file where they are clear.
+The key lists come from a transcript that 2.1.304 wrote, and the meanings from the program and its type file where they are clear.
 
 | `type` | Main keys | Meaning |
 | --- | --- | --- |
@@ -176,7 +176,7 @@ Content block types seen: `text`, `thinking`, `tool_use` (in `assistant` lines),
 ## `attachment` Types
 
 An `attachment` line holds an object in `attachment` with a `type` key.
-Types seen in a 2.1.303 transcript:
+Types seen in a 2.1.304 transcript:
 
 | `attachment.type` | Meaning |
 | --- | --- |

@@ -8,7 +8,7 @@ These variables change how tools run.
 They set Bash time limits and output size, shell choice, search behavior, permission helpers, and the sandbox.
 Use them when long commands time out or when you need to limit what a tool can see.
 
-This page lists 101 variables. `BASH_DEFAULT_TIMEOUT_MS` and `BASH_MAX_OUTPUT_LENGTH` are common. Switch rows take `1` or `0`.
+This page lists 102 variables. `BASH_DEFAULT_TIMEOUT_MS` and `BASH_MAX_OUTPUT_LENGTH` are common. Switch rows take `1` or `0`.
 
 ## Example
 
@@ -61,6 +61,7 @@ The table is sorted by name. See [Environment Variables](index.md#how-to-read-th
 | `CLAUDE_CODE_DISABLE_BG_SHELL_PRESSURE_REAP` | <Documented /> | Stops Claude Code from ending background shells under critical memory pressure. | On or off. The prompt says it works only from the launch environment | MacOS and Linux |
 | `CLAUDE_CODE_DISABLE_DANGEROUS_RM_TIMEOUT` | <Documented /> | Turns off the time limit on critical-path removal prompts. | On or off. Forces a feature flag timeout config to disabled | All sessions |
 | `CLAUDE_CODE_DISABLE_INLINE_SHELL_RM_PROMPT` | <Documented /> | Stops Claude Code from reading `bash -c` scripts for critical-path removal prompts. | On or off. The check returns null at once when set | All sessions |
+| `CLAUDE_CODE_DISABLE_MOUNTED_DRIVE_RM_PROMPT` | <Undocumented /> | Turns off the prompt for `rm -r` on a mounted drive, the folder that holds mounted drives, or a top-level file or folder of a drive. Since 2.1.304 these paths (such as `/Volumes`, `/media`, and WSL `/mnt/c`) get a prompt that permission rules cannot auto-allow. | On or off. The program skips the check when it is set | Bash tool |
 | `CLAUDE_CODE_DISABLE_POWERSHELL_CMD_RM_DENY` | <Documented /> | Turns off the PowerShell check that denies `rd`, `rmdir`, `del` and `erase` on system paths. | On or off. Without it a feature flag decides | PowerShell tool |
 | `CLAUDE_CODE_DISABLE_SUBSTITUTION_RM_PROMPT` | <Documented /> | Turns off the critical-path check for a recursive `rm` whose target is only command substitution output. | On or off. Checked together with a feature flag | Bash tool |
 | `CLAUDE_CODE_DISABLE_WEB_FETCH` | <Documented /> | Turns off the `WebFetch` tool. `WebSearch` stays on. | On or off. Docs: needs v2.1.285 or later. Also disables the web fetch agent | All sessions |
@@ -112,7 +113,7 @@ The table is sorted by name. See [Environment Variables](index.md#how-to-read-th
 | `CLAUDE_ENV_FILE` | <Documented /> | Names a shell script that runs before each Bash command in the same shell. | Text. Read and trimmed. Hooks for `SessionStart`, `Setup`, `CwdChanged`, and `FileChanged` get a path set by Claude Code | Bash tool and hooks |
 | `CLAUDE_PID` | <Documented /> | Holds the process ID of Claude Code. Child commands use it to find the parent process. | - | - |
 | `CLAUDECODE` | <Documented /> | Marks a process as running inside Claude Code. Claude Code also reads it to detect a child session and to skip prompt history. | On or off. Set to `1` by Claude Code for shell snapshots, hook and tool subprocesses, and stdio MCP servers | All sessions |
-| `ENABLE_TOOL_SEARCH` | <Documented /> | Sets MCP tool search mode. Unset defers tools, except on a non-first-party `ANTHROPIC_BASE_URL`, where tools load up front. | Text. `true` defer, `false` upfront, `auto` or `auto:N` use a percent threshold. `0` and `100` map to defer and upfront | All sessions. Project `env` can set it before trust |
+| `ENABLE_TOOL_SEARCH` | <Documented /> | Sets MCP tool search mode. Unset defers tools, including behind a custom `ANTHROPIC_BASE_URL` since 2.1.304. If the gateway answers 400 or 422, Claude Code retries without tool search. | Text. `true` defer, `false` upfront, `auto` or `auto:N` use a percent threshold. `0` and `100` map to defer and upfront | All sessions. Project `env` can set it before trust |
 | `GCM_INTERACTIVE` | <Documented /> | Claude Code sets a default for git child processes so Git Credential Manager does not prompt. | Set by Claude Code when unset in the child env. The default value comes from a table that was not read | Git child processes |
 | `GIT_ASKPASS` | <Documented /> | Claude Code passes the user value to git child processes. It falls back to a default and then to an empty string. | Text. If unset, `SSH_ASKPASS` is handed on in its place in one path. Claude Code also sets it | Git child processes. Not set from project `env` before trust |
 | `GIT_CONFIG_COUNT` | <Documented /> | Claude Code reads the count and appends its own `GIT_CONFIG_KEY_n` and `GIT_CONFIG_VALUE_n` pairs for git child processes. | A number. Parsed as a plain integer string. Also set by Claude Code in a child env | Git child processes. Not set from project `env` before trust |
@@ -144,4 +145,4 @@ Some variables also pass into the child shell, so a tool you run sees them too.
 - [Permissions](../permissions/index.md)
 - [Undocumented Items](../../reference/undocumented.md): every item that only the program shows.
 
-Source: the program (variable names found in the `2.1.303` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
+Source: the program (variable names found in the `2.1.304` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.

@@ -72,7 +72,7 @@ These keys sit under `projects["<path>"]`.
     { "serverUrl": "https://*.example.com/*" }
   ],
   "deniedMcpServers": [
-    { "serverCommand": ["npx", "untrusted-server"] }
+    { "serverCommand": ["bunx", "untrusted-server"] }
   ],
   "disableClaudeAiConnectors": true
 }

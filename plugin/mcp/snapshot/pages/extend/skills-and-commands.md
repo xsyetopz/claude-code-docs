@@ -81,7 +81,7 @@ When two skills share a name, the one in the higher place wins.
 | --- | --- | --- | --- |
 | Live change detection | [Documented] | Reloads `SKILL.md` text when it changes. | Not in bare mode. A new top-level skills folder needs `/reload-skills`. Changes to `hooks/`, `.mcp.json`, `agents/`, and `output-styles/` need `/reload-plugins`. |
 | Skill listing budget | [Documented] | Caps how much skill text goes into context. | 1 percent of the window (`skillListingBudgetFraction`). Each entry is cut at 1,536 characters (`skillListingMaxDescChars`). The env var `SLASH_COMMAND_TOOL_CHAR_BUDGET` sets a fixed count. |
-| `--disable-slash-commands` | [Documented] | Turns off all skills. | A CLI flag. Its help text is "Disable all skills". |
+| `--disable-slash-commands` | [Documented] | Turns off all skills and commands. | A CLI flag. Its help text is "Disable all skills and commands" since `2.1.304`. |
 | Setting `skillOverrides` | [Documented] | Sets the visibility of each skill. | Values: `on`, `name-only`, `user-invocable-only`, `off`. Plugin skills are not affected. |
 | Setting `disableBundledSkills` | [Documented] | Removes bundled skills. | Same as `CLAUDE_CODE_DISABLE_BUNDLED_SKILLS=1`. Built-in commands stay. See [Bundled Skills](https://xsyetopz.github.io/claude-code-docs/extend/skills-and-commands/bundled-skills.md#controls). |
 | Setting `disableSkillShellExecution` | [Documented] | Turns off `` !`cmd` `` injection. | See [Substitutions](https://xsyetopz.github.io/claude-code-docs/extend/skills-and-commands/substitutions.md#shell-injection). |

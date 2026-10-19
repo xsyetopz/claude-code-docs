@@ -58,7 +58,7 @@ const schemas = readdirSync(schemaDir)
 for (const f of schemas)
   copyFileSync(join(schemaDir, f), join(out, "schemas", f));
 
-// Claude Code version, read from the generated schema title: "... (Claude Code 2.1.303)".
+// Claude Code version, read from the generated schema title: "... (Claude Code 2.1.304)".
 const title = String(
   JSON.parse(
     readFileSync(join(schemaDir, "claude-code-plugin-manifest.json"), "utf8"),

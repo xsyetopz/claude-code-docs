@@ -9,7 +9,7 @@ Claude Code calls the code when an event happens, such as a tool call or a submi
 The code can watch the event, change it, or answer it.
 The object `$` is the Mod API, and the type file that Claude Code publishes marks it as early access, so it may change between releases.
 
-These pages cover `2.1.303`. Official pages: [Mods Overview](https://code.claude.com/docs/en/plugins/mods/overview), [Create a Mod](https://code.claude.com/docs/en/plugins/mods/create), [Use the Mods API](https://code.claude.com/docs/en/plugins/mods/api), [React to Events](https://code.claude.com/docs/en/plugins/mods/events), [Draw in the Interface](https://code.claude.com/docs/en/plugins/mods/interface), [Test a Mod](https://code.claude.com/docs/en/plugins/mods/test), [Troubleshoot a Mod](https://code.claude.com/docs/en/plugins/mods/troubleshoot), and [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference).
+These pages cover `2.1.304`. Official pages: [Mods Overview](https://code.claude.com/docs/en/plugins/mods/overview), [Create a Mod](https://code.claude.com/docs/en/plugins/mods/create), [Use the Mods API](https://code.claude.com/docs/en/plugins/mods/api), [React to Events](https://code.claude.com/docs/en/plugins/mods/events), [Draw in the Interface](https://code.claude.com/docs/en/plugins/mods/interface), [Test a Mod](https://code.claude.com/docs/en/plugins/mods/test), [Troubleshoot a Mod](https://code.claude.com/docs/en/plugins/mods/troubleshoot), and [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference).
 
 ## At a Glance
 
@@ -104,7 +104,7 @@ The docs list the causes in [Troubleshoot a Mod](https://code.claude.com/docs/en
 - The Gated badge means a flag or a gate controls the item.
 - In a "Where it can be used" cell, "Run time" means in a hook, in a closure that a hook drew, or in a timer callback. It does not mean inside `register`.
 - Most calls on `$` are also events with the same name, such as `fs.read`. A hook on that event can pass the call on, refuse it with `{ deny }`, or answer it with `{ value }`.
-- Source for these pages: the program (`types-2.1.303.d.ts`) and the docs pages above.
+- Source for these pages: the program (`types-2.1.304.d.ts`) and the docs pages above.
 
 ## Pages of the Mod API
 

@@ -9,7 +9,7 @@ The second table lists the events that the `$.ui` methods raise.
 
 A `deny` from a hook refuses a scroll, focus, or close. An invalid tree draws the engine's own drawing.
 
-Official pages: [Draw in the Interface](https://code.claude.com/docs/en/plugins/mods/interface), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the program (`types-2.1.303.d.ts`).
+Official pages: [Draw in the Interface](https://code.claude.com/docs/en/plugins/mods/interface), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the program (`types-2.1.304.d.ts`).
 
 ## Example
 
@@ -28,7 +28,7 @@ on('ui.render', { component: 'Spinner' }, async ($, e, next) =>
 | --- | --- | --- | --- | --- |
 | `ui.render` | <Documented /> | Fires when the engine is about to draw a component: once for each input value (props, viewport width), at plugin load, or on `$.ui.invalidate("ui.render")`. | Input `RenderInput`. Result `RenderElement`: the tree to draw. `next(e)` gives the engine's drawing. An invalid tree draws the engine's drawing. | `on('ui.render', ...)`. In tests: `$.ui.render(...)` on the test engine (not on a hook's `$`). |
 | `ui.resolve` | <Documented /> | Fires when the plugins load (not on each draw), once for each surface, component, and plugin. `e` names the surface and component, never the props. | Input `ResolveInput`. Result `ElementTable`: the element table of the surface. A hook may restyle an element or leave one out. | `on('ui.resolve', ...)`. Also `$.ui.resolve(...)`. |
-| `ui.press` | <Documented /> | Fires when a `Button` that a render hook drew is pressed on a surface. `e` is `{ plugin, element, component, surface }`. `element` is the button's `key`. | Input `UiPressArgument`. Result `{ element }`. `next(e)` lets the press through. Returning `{ element }` takes it. | `on('ui.press', ...)`. |
+| `ui.press` | <Documented /> | Fires when a `Button` that a render hook drew is pressed on a surface. `e` is `{ plugin, element, component, surface }`. `element` is the button's `key`. Set a `key` on buttons that share a label: until 2.1.304 a click was lost when same-label buttons with no `key` were redrawn unchanged. | Input `UiPressArgument`. Result `{ element }`. `next(e)` lets the press through. Returning `{ element }` takes it. | `on('ui.press', ...)`. |
 | `ui.input` | <Documented /> | Fires when an `Input` that a render hook drew changes or is submitted. `e` is `{ plugin, element, component, surface, kind, value }`. | Input `UiInputArgument`. Result `{ element, value }`. `next({ ...e, value })` rewrites the typing. | `on('ui.input', ...)`. |
 | `ui.select` | <Documented /> | Fires when a `Select` that a render hook drew is picked from. `e` is `{ plugin, element, component, surface, value }`. | Input `UiSelectArgument`. Result `{ element, value }`. `next({ ...e, value })` rewrites the pick. | `on('ui.select', ...)`. |
 | `ui.message` | <Documented /> | Fires when a `Client` that this plugin drew posts from its surface module (`surface.post(data)`). Only this plugin's hooks see it. | Input `UiMessageArgument`. Result `{ props? }`. `next({ ...e, data })` rewrites the data. One call for each instance in each frame. | `on('ui.message', ...)`. |

@@ -1,6 +1,6 @@
 ---
 title: "Betas"
-description: "Every anthropic-beta value in Claude Code 2.1.303, when it is sent, and how the list is built and turned off."
+description: "Every anthropic-beta value in Claude Code 2.1.304, when it is sent, and how the list is built and turned off."
 url: https://xsyetopz.github.io/claude-code-docs/reference/api/betas
 source: docs/reference/api/betas.md
 ---
@@ -119,7 +119,7 @@ Claude Code does not put them in the model request. All of them are [Undocumente
 
 ## Observed Request
 
-A transcript of `2.1.303` records each request in an `api-request` line.
+A transcript of `2.1.304` records each request in an `api-request` line.
 One such line, read on a local machine with the model `claude-opus-5-5`, held 20 betas.
 The list ran from `claude-code-20250219` and `oauth-2025-04-20` to `message-threads-2026-08-12`.
 This is one observation and not a rule. See [Transcript Format](https://xsyetopz.github.io/claude-code-docs/reference/transcript-format.md).

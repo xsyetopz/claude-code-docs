@@ -7,7 +7,7 @@ sidebar_position: 2
 An MCP server is a program that gives Claude new tools.
 You write its config in `.mcp.json` or in `~/.claude.json`.
 Each transport takes its own options, and values can use `${VAR}` expansion.
-For example, `{ "mcpServers": { "files": { "command": "npx", "args": ["server"] } } }` starts a local server.
+For example, `{ "mcpServers": { "files": { "command": "bunx", "args": ["server"] } } }` starts a local server.
 
 Edit the file, or use `claude mcp add` and `add-json`. To turn a server off, remove the entry or use `/mcp`. See [MCP Settings and Policy](settings.md). Servers live in `.mcp.json`, `~/.claude.json`, a plugin `.mcp.json`, or `mcpServers` in `plugin.json`.
 
@@ -40,7 +40,7 @@ Source: [Connect Claude Code to Tools via MCP](https://code.claude.com/docs/en/m
 | `headersHelper` | <Documented /> | A command that prints headers. | Runs in a shell on each connect. The output is a JSON object. See [MCP Authentication](auth.md#headershelper). | `http`, `sse`, `ws` |
 | `oauth` | <Documented /> | OAuth client settings. | Object with `clientId`, `callbackPort`, `authServerMetadataUrl`, `scopes`. See [MCP Authentication](auth.md#oauth-options). | `http`, `sse` |
 | `timeout` | <Documented /> | Wall-clock limit of one tool call, in ms. | A positive integer. A value below 1000 is ignored. It overrides `MCP_TOOL_TIMEOUT` for this server. It is a floor for the idle timeout. | All |
-| `alwaysLoad` | <Documented /> | Skips tool search deferral. | `true` loads all tools upfront and makes startup wait for the server (5 s cap). `false` defers all tools, even those the author marked (`2.1.287` and later). | All |
+| `alwaysLoad` | <Documented /> | Skips tool search deferral. | `true` loads all tools upfront and makes startup wait for the server (5 s cap). `false` defers all tools, even those the author marked (`2.1.287` and later). In cloud sessions, a new conversation's first turn does not wait for local (stdio) servers of plugins synced from claude.ai unless the server sets `alwaysLoad: true` (since 2.1.304). | All |
 | `role` | <Documented /> | Sets the coordinator-mode role. | Only `"comms"`. It marks the server the coordinator uses to talk to the user. | `stdio`, `sse`, `http`, `ws`, IDE types |
 | `tools` | <Documented /> | A per-tool policy list. | Array of `{ name, permission_policy }`. The policy is `always_allow`, `always_ask`, or `always_deny`. A host sets it with `mcp_set_servers`. | `sse`, `http`, `sdk` |
 | `name` | <Documented /> | Names the in-process server. | A string. | `sdk` |
@@ -96,7 +96,7 @@ Values in `command`, `args`, `env`, `url`, and `headers` can read env vars.
       "timeout": 120000
     },
     "files": {
-      "command": "npx",
+      "command": "bunx",
       "args": ["@example/files-server", "${CLAUDE_PROJECT_DIR:-.}"],
       "env": { "LOG_LEVEL": "info" },
       "alwaysLoad": true

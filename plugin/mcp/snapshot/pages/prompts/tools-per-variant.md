@@ -12,29 +12,21 @@ Tools are part of what the model reads. Each request carries a list of tools, an
 
 ## Default Tool List
 
-The default list has 20 tools on Opus 5.5. The columns show the length of the description and of the JSON schema, in characters.
+The default list has 12 tools on Opus 5.5. The columns show the length of the description and of the JSON schema, in characters.
 
 | Tool | Description | Schema |
 | --- | --- | --- |
 | `Agent` | 1,989 | 1,942 |
 | `Bash` | 1,406 | 1,720 |
-| `CronCreate` | 3,123 | 958 |
-| `CronDelete` | 167 | 206 |
-| `CronList` | 106 | 119 |
 | `Edit` | 360 | 552 |
-| `EnterWorktree` | 3,220 | 687 |
-| `ExitWorktree` | 1,923 | 481 |
 | `ListAgents` | 777 | 316 |
-| `NotebookEdit` | 619 | 940 |
 | `Read` | 790 | 1,071 |
 | `ReportFindings` | 574 | 1,545 |
 | `ScheduleWakeup` | 3,396 | 1,392 |
-| `SendMessage` | 4,259 | 1,291 |
 | `Skill` | 1,417 | 327 |
-| `TaskStop` | 364 | 366 |
-| `WebFetch` | 469 | 554 |
-| `WebSearch` | 334 | 468 |
+| `ToolSearch` | 953 | 406 |
 | `Workflow` | 3,480 | 1,775 |
+| `DeferredToolPlaceholder` | 83 | 33 |
 | `Write` | 240 | 348 |
 
 ## Differences by Variant
@@ -43,17 +35,17 @@ Each row compares one variant to the default list. Variants with the same tools 
 
 | Variant | Tools | Difference |
 | --- | --- | --- |
-| [Full Prompt](https://xsyetopz.github.io/claude-code-docs/prompts/full-prompt.md) | 20 | changes the text or schema of `Agent`, `Bash`, `Edit`, `Read`, `WebFetch`, `WebSearch`, `Write`. |
-| [Bare Mode](https://xsyetopz.github.io/claude-code-docs/prompts/bare.md) | 3 | removes `Agent`, `CronCreate`, `CronDelete`, `CronList`, `EnterWorktree`, `ExitWorktree`, `ListAgents`, `NotebookEdit`, `ReportFindings`, `ScheduleWakeup`, `SendMessage`, `Skill`, `TaskStop`, `WebFetch`, `WebSearch`, `Workflow`, `Write`. changes the text or schema of `Bash`, `Edit`, `Read`. |
-| [Simple Mode Env Var](https://xsyetopz.github.io/claude-code-docs/prompts/simple-env.md) | 3 | removes `Agent`, `CronCreate`, `CronDelete`, `CronList`, `EnterWorktree`, `ExitWorktree`, `ListAgents`, `NotebookEdit`, `ReportFindings`, `ScheduleWakeup`, `SendMessage`, `Skill`, `TaskStop`, `WebFetch`, `WebSearch`, `Workflow`, `Write`. changes the text or schema of `Bash`, `Edit`, `Read`. |
-| [Exclude Dynamic Sections, Full Prompt](https://xsyetopz.github.io/claude-code-docs/prompts/exclude-dynamic-full.md) | 20 | changes the text or schema of `Agent`, `Bash`, `Edit`, `Read`, `WebFetch`, `WebSearch`, `Write`. |
-| [Custom Output Style on the Full Prompt](https://xsyetopz.github.io/claude-code-docs/prompts/style-custom-full.md) | 20 | changes the text or schema of `Agent`, `Bash`, `Edit`, `Read`, `WebFetch`, `WebSearch`, `Write`. |
-| [Custom Output Style with Keep Coding Instructions](https://xsyetopz.github.io/claude-code-docs/prompts/style-custom-keep.md) | 20 | changes the text or schema of `Agent`, `Bash`, `Edit`, `Read`, `WebFetch`, `WebSearch`, `Write`. |
-| [Permission Mode, Plan](https://xsyetopz.github.io/claude-code-docs/prompts/mode-plan.md) | 20 | changes the text or schema of `Bash`. |
-| [Subagent, General Purpose](https://xsyetopz.github.io/claude-code-docs/prompts/subagent-general-purpose.md) | 13 | removes `CronCreate`, `CronDelete`, `CronList`, `ListAgents`, `ReportFindings`, `ScheduleWakeup`, `Workflow`. |
-| [Subagent, Explore](https://xsyetopz.github.io/claude-code-docs/prompts/subagent-explore.md) | 9 | removes `Agent`, `CronCreate`, `CronDelete`, `CronList`, `Edit`, `ListAgents`, `NotebookEdit`, `ReportFindings`, `ScheduleWakeup`, `Workflow`, `Write`. |
-| [Subagent, Plan](https://xsyetopz.github.io/claude-code-docs/prompts/subagent-plan.md) | 9 | removes `Agent`, `CronCreate`, `CronDelete`, `CronList`, `Edit`, `ListAgents`, `NotebookEdit`, `ReportFindings`, `ScheduleWakeup`, `Workflow`, `Write`. |
-| [Subagent, Custom Agent](https://xsyetopz.github.io/claude-code-docs/prompts/subagent-custom.md) | 13 | removes `CronCreate`, `CronDelete`, `CronList`, `ListAgents`, `ReportFindings`, `ScheduleWakeup`, `Workflow`. |
+| [Full Prompt](https://xsyetopz.github.io/claude-code-docs/prompts/full-prompt.md) | 12 | changes the text or schema of `Agent`, `Bash`, `Edit`, `Read`, `Write`. |
+| [Bare Mode](https://xsyetopz.github.io/claude-code-docs/prompts/bare.md) | 3 | removes `Agent`, `ListAgents`, `ReportFindings`, `ScheduleWakeup`, `Skill`, `ToolSearch`, `Workflow`, `DeferredToolPlaceholder`, `Write`. changes the text or schema of `Bash`, `Edit`, `Read`. |
+| [Simple Mode Env Var](https://xsyetopz.github.io/claude-code-docs/prompts/simple-env.md) | 3 | removes `Agent`, `ListAgents`, `ReportFindings`, `ScheduleWakeup`, `Skill`, `ToolSearch`, `Workflow`, `DeferredToolPlaceholder`, `Write`. changes the text or schema of `Bash`, `Edit`, `Read`. |
+| [Exclude Dynamic Sections, Full Prompt](https://xsyetopz.github.io/claude-code-docs/prompts/exclude-dynamic-full.md) | 12 | changes the text or schema of `Agent`, `Bash`, `Edit`, `Read`, `Write`. |
+| [Custom Output Style on the Full Prompt](https://xsyetopz.github.io/claude-code-docs/prompts/style-custom-full.md) | 12 | changes the text or schema of `Agent`, `Bash`, `Edit`, `Read`, `Write`. |
+| [Custom Output Style with Keep Coding Instructions](https://xsyetopz.github.io/claude-code-docs/prompts/style-custom-keep.md) | 12 | changes the text or schema of `Agent`, `Bash`, `Edit`, `Read`, `Write`. |
+| [Permission Mode, Plan](https://xsyetopz.github.io/claude-code-docs/prompts/mode-plan.md) | 12 | changes the text or schema of `Bash`. |
+| [Subagent, General Purpose](https://xsyetopz.github.io/claude-code-docs/prompts/subagent-general-purpose.md) | 8 | removes `ListAgents`, `ReportFindings`, `ScheduleWakeup`, `Workflow`. |
+| [Subagent, Explore](https://xsyetopz.github.io/claude-code-docs/prompts/subagent-explore.md) | 5 | removes `Agent`, `Edit`, `ListAgents`, `ReportFindings`, `ScheduleWakeup`, `Workflow`, `Write`. |
+| [Subagent, Plan](https://xsyetopz.github.io/claude-code-docs/prompts/subagent-plan.md) | 5 | removes `Agent`, `Edit`, `ListAgents`, `ReportFindings`, `ScheduleWakeup`, `Workflow`, `Write`. |
+| [Subagent, Custom Agent](https://xsyetopz.github.io/claude-code-docs/prompts/subagent-custom.md) | 8 | removes `ListAgents`, `ReportFindings`, `ScheduleWakeup`, `Workflow`. |
 
 ## Same Tools as the Default
 

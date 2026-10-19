@@ -30,13 +30,15 @@ claude -p "/debug the login test fails on CI"
 | Skill | Status | What it does | Notes |
 | --- | --- | --- | --- |
 | `/doctor` (alias `/checkup`) | <Documented /> | Checks your setup: install, unused extensions, `CLAUDE.md`, hooks, permissions. `/doctor prompt-audit` audits instructions. | Hidden by env var `DISABLE_DOCTOR_COMMAND` or `skillOverrides` `"doctor": "off"`. Needs a workspace. Interactive. |
-| `/claude-api` | <Documented /> | A reference for the Claude API and Managed Agents in your language. | Subcommands: `migrate`, `upgrade`, `managed-agents-onboard`, `prompt-audit`, `cost-optimize`, `build-eval`, `hillclimb`, `preserved-thinking-migration`. |
+| `/claude-api` | <Documented /> | A reference for the Claude API and Managed Agents in your language. | Subcommands: `migrate`, `upgrade`, `managed-agents-onboard`, `prompt-audit`, `cost-optimize`, `build-eval`, `hillclimb`, `preserved-thinking-migration`, `managed-agents-secure`. |
+| `/claude-api managed-agents-secure` | <Documented /> | Compares a Managed Agents agent's settings with Anthropic's published security guide. It changes nothing. | New in `2.1.304`. It is unavailable when Claude Code's check on its `ant` commands does not run. Source: the [release notes](https://github.com/anthropics/claude-code/releases/tag/v2.1.304) and the program. |
 | `/debug` `[issue description]` | <Documented /> | Turns on debug logging and investigates. | `disableModelInvocation`. Allowed tools: `Read`, `Grep`, `Glob`. |
 | `/batch` `<instruction>` | <Documented /> | Plans a large change and runs 5 to 30 worktree agents that open pull requests. | `disableModelInvocation`. |
 | `/run` | <Documented /> | Launches your app so you can see a change work. | Reads a recorded `run-<name>` skill if one exists. |
 | `/run-skill-generator` | <Documented /> | Records how to run the project as `.claude/skills/run-<name>/`. | `disableModelInvocation`. |
 | `/verify` | <Documented /> | Builds and runs the app to check a change. | Records its recipe in `.claude/skills/verify/SKILL.md`. |
 | `/code-review` (alias `/review`), `/loop`, `/simplify`, `/workflow-authoring` | <Documented /> | Named in the docs. | `/workflow-authoring` needs dynamic workflows. |
+| `/plugin-authoring` | <Documented /> | Helps you write and share a mod or plugin. | Since `2.1.304`, sharing no longer stops at the secret scan on machines with managed settings or on Team and Enterprise plans. Source: the [release notes](https://github.com/anthropics/claude-code/releases/tag/v2.1.304). |
 | `/update-config` | <Documented /> | Edits `settings.json`: hooks, permissions, environment variables. | Registered as a bundled skill. |
 | `/fewer-permission-prompts` | <Documented /> | Scans transcripts and adds a read-only allowlist to `.claude/settings.json`. | Needs a workspace. |
 | `/security-review` | <Documented /> | Reviews pending branch changes for security risks. | A `prompt` command that Claude can also call through the `Skill` tool. Git repositories. |

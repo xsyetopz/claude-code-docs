@@ -9,8 +9,8 @@ source: docs/configure/env-vars/index.md
 
 
 An environment variable is a named setting that a program reads when it starts.
-Claude Code `2.1.303` reads well over a thousand of them.
-This section lists 1399 that you can use, split into groups so you can find them.
+Claude Code `2.1.304` reads well over a thousand of them.
+This section lists 1405 that you can use, split into groups so you can find them.
 A few are in the official docs. Most are found only in the program.
 
 ## At a Glance
@@ -113,15 +113,15 @@ Numeric variables, such as timeouts and token budgets, accept forms like `2e3` (
 | [Cloud Providers](https://xsyetopz.github.io/claude-code-docs/configure/env-vars/cloud-providers.md) | Environment variables for Amazon Bedrock, Google Vertex AI, Microsoft Foundry, and gateway setups | 78 |
 | [Network and Proxy](https://xsyetopz.github.io/claude-code-docs/configure/env-vars/network-and-proxy.md) | Environment variables for API addresses, proxies, TLS certificates, time limits, and retries | 64 |
 | [Context and Compaction](https://xsyetopz.github.io/claude-code-docs/configure/env-vars/context-and-compaction.md) | Environment variables for the context window, compaction, memory, and the prompt cache | 49 |
-| [Tools and Bash](https://xsyetopz.github.io/claude-code-docs/configure/env-vars/tools-and-bash.md) | Environment variables for the Bash tool, file tools, search, permissions, and the sandbox | 101 |
+| [Tools and Bash](https://xsyetopz.github.io/claude-code-docs/configure/env-vars/tools-and-bash.md) | Environment variables for the Bash tool, file tools, search, permissions, and the sandbox | 102 |
 | [UI and Terminal](https://xsyetopz.github.io/claude-code-docs/configure/env-vars/ui-and-terminal.md) | Environment variables for the terminal screen, colors, voice, keys, and notifications | 88 |
 | [Sessions and Storage](https://xsyetopz.github.io/claude-code-docs/configure/env-vars/sessions-and-storage.md) | Environment variables for config folders, session files, resume, install, and updates | 78 |
 | [Telemetry and Debug](https://xsyetopz.github.io/claude-code-docs/configure/env-vars/telemetry-and-debug.md) | Environment variables for usage data, OpenTelemetry, debug logs, and error reports | 139 |
-| [Plugins and MCP](https://xsyetopz.github.io/claude-code-docs/configure/env-vars/plugins-and-mcp.md) | Environment variables for plugins, MCP servers, skills, hooks, and marketplaces | 90 |
+| [Plugins and MCP](https://xsyetopz.github.io/claude-code-docs/configure/env-vars/plugins-and-mcp.md) | Environment variables for plugins, MCP servers, skills, hooks, and marketplaces | 92 |
 | [Agents and Teams](https://xsyetopz.github.io/claude-code-docs/configure/env-vars/agents-and-teams.md) | Environment variables for subagents, agent teams, background tasks, and workers | 77 |
 | [Features and Toggles](https://xsyetopz.github.io/claude-code-docs/configure/env-vars/features-and-toggles.md) | Environment variables that turn single features on or off, including server-gated features | 66 |
-| [Remote and Cloud Sessions](https://xsyetopz.github.io/claude-code-docs/configure/env-vars/remote-and-cloud-sessions.md) | Environment variables for cloud sessions, the bridge, the desktop app, Chrome, Cowork, and Slack | 137 |
-| [SDK and Automation](https://xsyetopz.github.io/claude-code-docs/configure/env-vars/sdk-and-automation.md) | Environment variables for programs that host Claude Code, the Agent SDK, and automation | 21 |
+| [Remote and Cloud Sessions](https://xsyetopz.github.io/claude-code-docs/configure/env-vars/remote-and-cloud-sessions.md) | Environment variables for cloud sessions, the bridge, the desktop app, Chrome, Cowork, and Slack | 139 |
+| [SDK and Automation](https://xsyetopz.github.io/claude-code-docs/configure/env-vars/sdk-and-automation.md) | Environment variables for programs that host Claude Code, the Agent SDK, and automation | 22 |
 | [System and Third-Party](https://xsyetopz.github.io/claude-code-docs/configure/env-vars/system-and-third-party.md) | Environment variables owned by your system or other tools that Claude Code reads, such as HOME, TERM, and ALL_PROXY | 130 |
 | [Bundled Libraries](https://xsyetopz.github.io/claude-code-docs/configure/env-vars/bundled-libraries.md) | Environment variables read only by libraries bundled inside Claude Code, such as the AWS SDK, gRPC, and cloud detectors | 126 |
 
@@ -138,7 +138,7 @@ Every group page has the same columns.
 | Notes | Where it applies, and whether a project `env` block can set it before you trust the folder. |
 
 > **Warning:** Treat [Undocumented] and [Gated] rows with care.
-> They work in `2.1.303`, but nothing promises they will work in the next release.
+> They work in `2.1.304`, but nothing promises they will work in the next release.
 
 Some rows mention a probe. That means a run of the real binary against a local stub showed what the variable changed in the request. No model call leaves the machine in a probe. A run with no visible effect does not prove that a variable does nothing.
 

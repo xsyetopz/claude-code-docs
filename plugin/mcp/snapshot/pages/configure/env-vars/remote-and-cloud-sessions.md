@@ -12,7 +12,7 @@ These variables matter when Claude Code runs away from your terminal.
 They cover cloud sessions, the remote bridge, the desktop app, the Chrome extension, Cowork, and Slack.
 Most are set by the host, and Claude Code reads them. Set one yourself only when you run your own host.
 
-This page lists 137 variables. Many are set by the host program that starts Claude Code, so you can change them only if you control that process. They live in the environment of the Claude Code process.
+This page lists 139 variables. Many are set by the host program that starts Claude Code, so you can change them only if you control that process. They live in the environment of the Claude Code process.
 
 ## Example
 
@@ -117,6 +117,8 @@ The table is sorted by name. See [Environment Variables](https://xsyetopz.github
 | `CLAUDE_CODE_SYSTEM_PROMPT_GB_FEATURE` | [Undocumented] [Gated: Works only behind a feature flag or server gate] | Names a GrowthBook feature whose string value replaces the system prompt on each turn. An empty value keeps the normal prompt. | Text. Read only when `CLAUDE_CODE_REMOTE` is set. The feature name goes to a flag lookup | Remote sessions |
 | `CLAUDE_CODE_TEE_SDK_STDOUT` | [Undocumented] | Sets the `teeStdout` option of the remote I/O transport. The effect of that option is not shown here. | On or off. Claude Code sets it to `1` for self-hosted runner children | Remote I/O and self-hosted runner |
 | `CLAUDE_CODE_USE_CCR_V2` | [Undocumented] | Marks a child as a CCR v2 session. | On or off. Set by Claude Code to `1` in the environment of self-hosted runner children | Self-hosted runner |
+| `CLAUDE_CODE_WARN_DISK_FREE_GIB` | [Undocumented] | Sets a low free disk level in GiB. The program reads it as `diskLowGib` and forwards it to the remote env. | A number, `0` by default | Likely remote or cloud sessions. Not set from project `env` before trust |
+| `CLAUDE_CODE_WARN_MEMORY_FREE_GIB` | [Undocumented] | Sets a low free memory level in GiB. The program reads it as `memoryLowGib` and forwards it to the remote env. | A number, `0` by default | Likely remote or cloud sessions. Not set from project `env` before trust |
 | `CLAUDE_CODE_WEBFETCH_USE_CCR_PROXY` | [Undocumented] | Sends `WebFetch` through the CCR proxy when a CCR session is available. | On or off. Works only with the first-party provider | Cloud sessions, first-party |
 | `CLAUDE_CODE_WEBSEARCH_USE_CCR_PROXY` | [Undocumented] | Sends `WebSearch` through the CCR proxy when a CCR session is available. | On or off. Works only with the first-party provider | Cloud sessions, first-party |
 | `CLAUDE_CODE_WORKER_EPOCH` | [Undocumented] | Counts worker restarts. A value above `1` marks a restored worker, so tools are not announced again. | A number, `1` by default. Integer, default `1`. Also passed in the init data when the remote check is true | Remote workers |
@@ -178,4 +180,4 @@ Check the Notes column: some variables are set by Claude Code itself and are not
 - [SDK and Automation](https://xsyetopz.github.io/claude-code-docs/configure/env-vars/sdk-and-automation.md)
 - [Undocumented Items](https://xsyetopz.github.io/claude-code-docs/reference/undocumented.md): every item that only the program shows.
 
-Source: the program (variable names found in the `2.1.303` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
+Source: the program (variable names found in the `2.1.304` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.

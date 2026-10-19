@@ -11,7 +11,7 @@ A tool or command that a mod registers is served by a hook on `tool.call` or `co
 
 A `deny` from a `tool.call`, `tool.check`, or `config.set` hook stops the action. A registered tool is named `mcp__<plugin>__<name>`.
 
-Official pages: [Use the Mods API](https://code.claude.com/docs/en/plugins/mods/api), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the program (`types-2.1.303.d.ts`).
+Official pages: [Use the Mods API](https://code.claude.com/docs/en/plugins/mods/api), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the program (`types-2.1.304.d.ts`).
 In a "Where it can be used" cell, "Run time" means in a hook, in a closure that a hook drew, or in a timer callback. It does not mean inside `register`.
 
 ## Example
@@ -45,7 +45,7 @@ on('command.run', { command: 'standup' }, async ($, e) => ({ text: 'Summary for 
 | Item | Status | What it does | How it works | Where it can be used |
 | --- | --- | --- | --- | --- |
 | `tool.call` | <Documented /> | Fires when the engine is about to run a tool. Each `next(e)` runs the hooks beneath, then core (the permission prompt, the tool). | Input `ToolCallInput`. Result `{ result, context? }` or `{ deny }`. `{ deny: reason }` refuses the call. A guard that fails is skipped and the tool runs. | `on('tool.call', ...)`. Also `$.tool.call(...)`. |
-| `tool.check` | <Documented /> | Fires when the engine decides whether a tool call may run, after the `tool.call` and `PreToolUse` hooks and before the mode settles an ask. | Input `ToolCheckInput`. Result `{ decision, reason?, ... }`. `next(e)` gives the engine's verdict. A guard that fails is skipped, so add a `.catch`. | `on('tool.check', ...)`. Also `$.tool.check(...)`. |
+| `tool.check` | <Documented /> | Fires when the engine decides whether a tool call may run, after the `tool.call` and `PreToolUse` hooks and before the mode settles an ask. | Input `ToolCheckInput`, which carries `isReadOnly` when the call is read-only (new in 2.1.304). Result `{ decision, reason?, ... }`. An ask may carry `decider: "person"` (new in 2.1.304): only the permission dialog or a host's callback can approve it, and where nobody can be asked (`dontAsk` mode, avoid-prompts, headless) it is refused with the mod's reason. `next(e)` gives the engine's verdict. A guard that fails is skipped, so add a `.catch`. | `on('tool.check', ...)`. Also `$.tool.check(...)`. |
 | `tool.describe` | <Documented /> | Fires when the engine first renders the tool's schema in a session. `next(e)` resolves to `{ description, isDeferred? }`. | Input `ToolDescribeInput`. The answer is cached until `$.ui.invalidate("tool.describe")`. | `on('tool.describe', ...)`. In tests: `$.tool.describe(...)` on the test engine (not on a hook's `$`). |
 | `command.run` | <Documented /> | Fires when a slash command is about to run. `next(e)` resolves to `{ text }`, its output. | Input `CommandRunInput`. Rewrite `args` with `next`, or return `{ text }` to answer in its place. | `on('command.run', ...)`. Also `$.command.run(...)`. |
 | `command.describe` | <Documented /> | Fires once for each command, when the engine lists it for the typeahead and `/help`. `next(e)` resolves to `{ description, argumentHint, isHidden }`. | Input `CommandDescribeInput`. Cached for the session until `$.ui.invalidate("command.describe")`. | `on('command.describe', ...)`. In tests: `$.command.describe(...)` on the test engine (not on a hook's `$`). |

@@ -18,7 +18,7 @@ Items that the docs name but describe wrongly are in [Behaves Differently From t
 | Group | Count |
 | --- | --- |
 | [Settings Keys](#settings-keys) | 25 |
-| [Environment Variables](#environment-variables) | 862 |
+| [Environment Variables](#environment-variables) | 868 |
 | [CLI Flags and Subcommands](#cli-flags-and-subcommands) | 53 |
 | [Permissions](#permissions) | 121 |
 | [Hooks](#hooks) | 14 |
@@ -26,7 +26,7 @@ Items that the docs name but describe wrongly are in [Behaves Differently From t
 | [Skills](#skills) | 7 |
 | [Subagents](#subagents) | 7 |
 | [Plugins](#plugins) | 10 |
-| [MCP](#mcp) | 35 |
+| [MCP](#mcp) | 37 |
 | [Tools](#tools) | 29 |
 | [API Endpoints and Betas](#api-endpoints-and-betas) | 54 |
 | [System Prompt](#system-prompt) | 34 |
@@ -34,7 +34,7 @@ Items that the docs name but describe wrongly are in [Behaves Differently From t
 | [Headless Protocol](#headless-protocol) | 155 |
 | [Mod API](#mod-api) | 0 |
 | [Other](#other) | 110 |
-| Total | 1534 |
+| Total | 1542 |
 
 ## Settings Keys
 
@@ -74,7 +74,7 @@ Count: 25.
 
 There are too many to list one by one. Each page below holds a table, and every undocumented variable in it has the Undocumented badge. The pages sort variables by what they do.
 
-Count: 862.
+Count: 868.
 
 | Page | Undocumented Rows |
 | --- | --- |
@@ -86,13 +86,13 @@ Count: 862.
 | [Features and Toggles](../configure/env-vars/features-and-toggles.md) | 54 |
 | [Models and Effort](../configure/env-vars/models-and-effort.md) | 31 |
 | [Network and Proxy](../configure/env-vars/network-and-proxy.md) | 22 |
-| [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) | 43 |
-| [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) | 96 |
-| [SDK and Automation](../configure/env-vars/sdk-and-automation.md) | 20 |
+| [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) | 45 |
+| [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) | 98 |
+| [SDK and Automation](../configure/env-vars/sdk-and-automation.md) | 21 |
 | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) | 48 |
 | [System and Third-Party](../configure/env-vars/system-and-third-party.md) | 104 |
 | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) | 77 |
-| [Tools and Bash](../configure/env-vars/tools-and-bash.md) | 52 |
+| [Tools and Bash](../configure/env-vars/tools-and-bash.md) | 53 |
 | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) | 44 |
 
 ## CLI Flags and Subcommands
@@ -286,7 +286,7 @@ Count: 10.
 | `plugins/known_marketplaces.json` | [Plugin Loading](../extend/plugins/loading.md#paths) (Paths) |
 | `installed`, `marketplaces`, `flagged`, and 2 more | [Plugin Loading](../extend/plugins/loading.md#paths) (Paths) |
 | `CLAUDE_CODE_PLUGIN_USE_ZIP_CACHE`, `CLAUDE_CODE_PLUGIN_BINARY_ASSETS`, `CLAUDE_CODE_PLUGIN_ATTRIBUTION`, and 2 more | [Plugin Loading](../extend/plugins/loading.md#env-vars) (Env Vars) |
-| `CLAUDE_CODE_SKIP_PLUGIN_MCP_SERVERS`, `CLAUDE_CODE_SKIP_PLUGIN_MCP_SERVERS_EXCEPT` | [Plugin Loading](../extend/plugins/loading.md#env-vars) (Env Vars) |
+| `CLAUDE_CODE_SKIP_PLUGIN_MCP_SERVERS`, `CLAUDE_CODE_SKIP_PLUGIN_MCP_SERVERS_EXCEPT`, `CLAUDE_CODE_SKIP_PLUGIN_LOCAL_MCP_SERVERS`, `CLAUDE_CODE_SKIP_PLUGIN_MCP_BUNDLES` | [Plugin Loading](../extend/plugins/loading.md#env-vars) (Env Vars) |
 | `experimental.syntaxHighlighting.hljsLanguages` | [Plugin Manifest](../extend/plugins/manifest.md#top-level-keys) (Top-Level Keys) |
 | `binaries` | [Plugin Manifest](../extend/plugins/manifest.md#top-level-keys) (Top-Level Keys) |
 | `unsupported` | [Marketplaces](../extend/plugins/marketplace.md#plugin-sources) (Plugin Sources) |
@@ -295,7 +295,7 @@ Count: 10.
 
 Server types, scopes, options, and variables for MCP.
 
-Count: 35.
+Count: 37.
 
 | Item | Where |
 | --- | --- |
@@ -312,6 +312,8 @@ Count: 35.
 | `CLAUDE_CODE_MCP_APPS_HOST` | [MCP Env Vars](../extend/mcp/env.md#undocumented-variables) (Undocumented Variables) |
 | `CLAUDE_CODE_SKIP_PLUGIN_MCP_SERVERS` | [MCP Env Vars](../extend/mcp/env.md#undocumented-variables) (Undocumented Variables) |
 | `CLAUDE_CODE_SKIP_PLUGIN_MCP_SERVERS_EXCEPT` | [MCP Env Vars](../extend/mcp/env.md#undocumented-variables) (Undocumented Variables) |
+| `CLAUDE_CODE_SKIP_PLUGIN_LOCAL_MCP_SERVERS` | [MCP Env Vars](../extend/mcp/env.md#undocumented-variables) (Undocumented Variables) |
+| `CLAUDE_CODE_SKIP_PLUGIN_MCP_BUNDLES` | [MCP Env Vars](../extend/mcp/env.md#undocumented-variables) (Undocumented Variables) |
 | `CLAUDE_CODE_ENABLE_REFRESH_MCP_TOOLS` | [MCP Env Vars](../extend/mcp/env.md#undocumented-variables) (Undocumented Variables) |
 | `MCP_TRUNCATION_PROMPT_OVERRIDE` | [MCP Env Vars](../extend/mcp/env.md#undocumented-variables) (Undocumented Variables) |
 | `MCP_OAUTH_CLIENT_METADATA_URL` | [MCP Env Vars](../extend/mcp/env.md#undocumented-variables) (Undocumented Variables) |

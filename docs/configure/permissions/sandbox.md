@@ -105,6 +105,7 @@ Source: the program. See also [Environment Variables](../env-vars/index.md).
 - The `Bash` tool takes `dangerouslyDisableSandbox: true`. The tool prompt tells the model to use it only after a violation that blocks the task. `sandbox.allowUnsandboxedCommands: false` ignores it.
 - A call with `allowed_domains` goes to the [auto mode](auto-mode.md) classifier. Allow rules do not approve those hosts.
 - The sandbox creates empty placeholder files such as `.mcp.json` in places where none exists.
+- Since `2.1.304`, sandboxed commands start on Linux when a `sandbox.filesystem.denyRead` glob has brackets that are not a character class, such as a `[user-id]` route folder. Source: the [release notes](https://github.com/anthropics/claude-code/releases/tag/v2.1.304).
 - Linux ignores glob patterns in `Edit` and `Read` rules for the sandbox, and shows a warning.
 
 Source for all four: the program prompt and warning texts.

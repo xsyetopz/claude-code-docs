@@ -439,7 +439,7 @@ function toolDiff(a: Tool[], b: Tool[]): string {
   const L: string[] = [
     "---",
     `title: "Captured System Prompts"`,
-    `description: "Every system prompt variant you can pick in Claude Code 2.1.303, captured offline and compared."`,
+    `description: "Every system prompt variant you can pick in Claude Code 2.1.304, captured offline and compared."`,
     `sidebar_position: 1`,
     "---",
     "",

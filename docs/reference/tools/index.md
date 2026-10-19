@@ -30,7 +30,7 @@ This page covers the shared rules. The other pages list every tool and every par
 
 ## How to Read the Tool Tables
 
-The inventory for `2.1.303` lists 70 tools. The program holds a few more, such as `Agent`, `Monitor`, `ToolSearch`, `ScheduleWakeup`, and `StructuredOutput`.
+The inventory for `2.1.304` lists 70 tools. The program holds a few more, such as `Agent`, `Monitor`, `ToolSearch`, `ScheduleWakeup`, and `StructuredOutput`.
 Each tool table has three Yes or No columns.
 
 | Column | Yes Means | No Means |
@@ -62,7 +62,7 @@ Source: [Tools Reference](https://code.claude.com/docs/en/tools-reference), [Cre
 | Item | Status | What It Does | How It Works |
 | --- | --- | --- | --- |
 | `ToolSearch` | <Documented /> | Loads the full schema of deferred tools. | `query` (string, required) and `max_results` (int, optional, default 5). The result lists `matches`, `total_deferred_tools`, `pending_mcp_servers`, and `failed_mcp_servers`. Works in the main session and in subagents. |
-| `max_results` | <Differs /> | An old `2.1.296` capture showed it as required. | In `2.1.303` it is optional with the default `5`. |
+| `max_results` | <Differs /> | An old `2.1.296` capture showed it as required. | In `2.1.304` it is optional with the default `5`. |
 | Query `select:A,B` | <Undocumented /> | Fetches the named tools. | The prompt gives `select:Read,Edit,Grep`. A tool that is already loaded returns a note. |
 | Query keywords | <Undocumented /> | Searches by keyword and returns up to `max_results` matches. | The prompt gives `notebook jupyter`. |
 | Query `+term rest` | <Undocumented /> | Requires `term` in the tool name and ranks by the rest. | The prompt gives `+slack send`. |
@@ -105,7 +105,7 @@ Source: [Connect Claude Code to Tools via MCP](https://code.claude.com/docs/en/m
 
 | Item | Status | What It Does | How It Works |
 | --- | --- | --- | --- |
-| `ENABLE_TOOL_SEARCH` unset | <Documented /> | MCP tools are deferred. | With a non-first-party `ANTHROPIC_BASE_URL` they load at the start. |
+| `ENABLE_TOOL_SEARCH` unset | <Documented /> | MCP tools are deferred. | Since `2.1.304` this also holds behind a custom `ANTHROPIC_BASE_URL`. If the gateway answers 400 or 422, Claude Code retries the request without tool search. Source: the program and the [release notes](https://github.com/anthropics/claude-code/releases/tag/v2.1.304). |
 | `ENABLE_TOOL_SEARCH=true` | <Documented /> | MCP tools stay deferred, also on a proxy host. | - |
 | `ENABLE_TOOL_SEARCH=auto` and `auto:N` | <Documented /> | Tools load at the start while their definitions fit in N percent of the window. | The default is 10. `auto:0` acts like `true`. `auto:100` acts like `false`. N stays between 0 and 100. |
 | `ENABLE_TOOL_SEARCH=false` | <Documented /> | Every MCP tool loads at the start. | - |
@@ -119,7 +119,8 @@ Source: [Connect Claude Code to Tools via MCP](https://code.claude.com/docs/en/m
 - Deferred: `WebFetch`, `WebSearch`, `NotebookEdit`, `TodoWrite`, `LSP`, `Monitor`, `EnterPlanMode`, `ExitPlanMode`, `EnterWorktree`, `ExitWorktree`, `TaskCreate`, `TaskGet`, `TaskUpdate`, `TaskList`, `TaskStop`, `SendMessage`, `SendFile`, `CronCreate`, `CronDelete`, `CronList`, `PushNotification`, `RemoteTrigger`, `EndConversation`, `ProposeGoal`, `FetchInboxMessage`, `PublishPlugin`, `OfferChromeSetup`, `DesignSync`, `SearchMcpRegistry`, `SuggestConnectors`, `ListConnectors`, the three MCP resource tools, and the nine self-hosted runner tools.
 - A runtime check decides: `SuggestPluginInstall`, `SuggestSkills`, `SendUserFile`.
 - Not deferred: `Read`, `Write`, `Edit`, `Glob`, `Grep`, `Bash`, `PowerShell`, `Agent`, `Skill`, `AskUserQuestion`, `ListAgents`, `Workflow`, `ReportFindings`, `ToolSearch`, `StructuredOutput`, `SubagentHandback`, `ScheduleWakeup`, `memory_*`, and the rest of the gated tools.
-- The old capture of `2.1.296` lacked `Glob` and `Grep`. In `2.1.303` they are not deferred.
+- The old capture of `2.1.296` lacked `Glob` and `Grep`. In `2.1.304` they are not deferred.
+- In the `2.1.304` capture, the main prompt lists 12 tools (the site's captures use a local stub as `ANTHROPIC_BASE_URL`, and tool search is on behind a custom base URL, so it is not 20 as before). `CronCreate`, `CronDelete`, `CronList`, `EnterWorktree`, `ExitWorktree`, `NotebookEdit`, `SendMessage`, `TaskStop`, `WebFetch`, and `WebSearch` sit behind `ToolSearch`. See [Tools per Variant](../../prompts/tools-per-variant.md).
 
 ## Example
 
