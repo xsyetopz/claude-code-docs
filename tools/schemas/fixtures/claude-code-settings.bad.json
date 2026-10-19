@@ -1,0 +1,5 @@
+{
+  "env": { "FOO": 1 },
+  "permissions": { "allow": "Bash" },
+  "syncClaudeAiSkills": "yes"
+}

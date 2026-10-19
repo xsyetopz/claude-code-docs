@@ -1,0 +1,4 @@
+{
+  "$schema": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-keybindings.json",
+  "bindings": [{ "context": "Chat", "bindings": { "ctrl+k": "chat:submit" } }]
+}

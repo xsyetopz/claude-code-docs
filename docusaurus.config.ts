@@ -1,115 +1,138 @@
-import {themes as prismThemes} from 'prism-react-renderer';
-import type {Config} from '@docusaurus/types';
-import type * as Preset from '@docusaurus/preset-classic';
-import {CLAUDE_CODE_VERSION} from './src/version';
+import { cp } from "node:fs/promises";
+import { join } from "node:path";
+import type * as Preset from "@docusaurus/preset-classic";
+import type { Config, Plugin } from "@docusaurus/types";
+import { themes as prismThemes } from "prism-react-renderer";
+import { CLAUDE_CODE_VERSION } from "./src/version";
 
-const REPO = 'https://github.com/xsyetopz/claude-code-docs';
-const DISCLAIMER = 'Unofficial. Not made by or tied to Anthropic.';
+const REPO = "https://github.com/xsyetopz/claude-code-docs";
+const DISCLAIMER = "Unofficial. Not made by or tied to Anthropic.";
+
+// Serves schemas/ at <baseUrl>schemas/ so the $id and $schema URLs resolve after deploy.
+const schemasPlugin = (): Plugin => ({
+  name: "serve-schemas",
+  async postBuild({ outDir }) {
+    await cp(join(__dirname, "schemas"), join(outDir, "schemas"), {
+      recursive: true,
+    });
+  },
+});
 
 const config: Config = {
-  title: 'Claude Code Community Docs',
+  title: "Claude Code Community Docs",
   tagline: DISCLAIMER,
-  favicon: 'img/logo.svg',
-  url: 'https://xsyetopz.github.io',
-  baseUrl: '/claude-code-docs/',
-  organizationName: 'xsyetopz',
-  projectName: 'claude-code-docs',
+  favicon: "img/logo.svg",
+  url: "https://xsyetopz.github.io",
+  baseUrl: "/claude-code-docs/",
+  organizationName: "xsyetopz",
+  projectName: "claude-code-docs",
   trailingSlash: false,
 
-  onBrokenLinks: 'throw',
-  onBrokenAnchors: 'throw',
+  onBrokenLinks: "throw",
+  onBrokenAnchors: "throw",
 
-  customFields: {claudeCodeVersion: CLAUDE_CODE_VERSION},
+  customFields: { claudeCodeVersion: CLAUDE_CODE_VERSION },
 
-  i18n: {defaultLocale: 'en', locales: ['en']},
+  i18n: { defaultLocale: "en", locales: ["en"] },
 
   markdown: {
     mermaid: true,
     hooks: {
-      onBrokenMarkdownLinks: 'throw',
-      onBrokenMarkdownImages: 'throw',
+      onBrokenMarkdownLinks: "throw",
+      onBrokenMarkdownImages: "throw",
     },
   },
 
   themes: [
-    '@docusaurus/theme-mermaid',
+    "@docusaurus/theme-mermaid",
     [
-      '@easyops-cn/docusaurus-search-local',
+      "@easyops-cn/docusaurus-search-local",
       {
         hashed: true,
-        docsRouteBasePath: '/',
+        docsRouteBasePath: "/",
         indexBlog: false,
         highlightSearchTermsOnTargetPage: true,
       },
     ],
   ],
 
+  plugins: [schemasPlugin],
+
   presets: [
     [
-      'classic',
+      "classic",
       {
         docs: {
-          routeBasePath: '/',
-          sidebarPath: './sidebars.ts',
+          routeBasePath: "/",
+          sidebarPath: "./sidebars.ts",
           editUrl: `${REPO}/edit/main/`,
         },
         blog: false,
-        theme: {customCss: './src/css/custom.css'},
+        theme: { customCss: "./src/css/custom.css" },
       } satisfies Preset.Options,
     ],
   ],
 
   themeConfig: {
-    colorMode: {defaultMode: 'light', respectPrefersColorScheme: true},
+    colorMode: { defaultMode: "light", respectPrefersColorScheme: true },
     announcementBar: {
-      id: 'unofficial',
+      id: "unofficial",
       content: `${DISCLAIMER} A community project that describes Claude Code ${CLAUDE_CODE_VERSION}.`,
       isCloseable: false,
-      backgroundColor: '#141413',
-      textColor: '#faf9f5',
+      backgroundColor: "#141413",
+      textColor: "#faf9f5",
     },
     navbar: {
-      title: 'Claude Code Community Docs',
-      logo: {alt: 'Docs icon', src: 'img/logo.svg'},
+      title: "Claude Code Community Docs",
+      logo: { alt: "Docs icon", src: "img/logo.svg" },
       items: [
-        {type: 'docSidebar', sidebarId: 'docs', position: 'left', label: 'Docs'},
-        {to: '/prompts', label: 'System Prompts', position: 'left'},
-        {to: '/reference/undocumented', label: 'Undocumented', position: 'left'},
         {
-          to: '/start/what-changed',
-          label: `Tracks ${CLAUDE_CODE_VERSION}`,
-          position: 'right',
-          className: 'navbar-version',
+          type: "docSidebar",
+          sidebarId: "docs",
+          position: "left",
+          label: "Docs",
         },
-        {href: REPO, label: 'GitHub', position: 'right'},
+        { to: "/prompts", label: "System Prompts", position: "left" },
+        {
+          to: "/reference/undocumented",
+          label: "Undocumented",
+          position: "left",
+        },
+        {
+          to: "/start/what-changed",
+          label: `Tracks ${CLAUDE_CODE_VERSION}`,
+          position: "right",
+          className: "navbar-version",
+        },
+        { href: REPO, label: "GitHub", position: "right" },
       ],
     },
     footer: {
-      style: 'dark',
+      style: "dark",
       links: [
         {
-          title: 'Docs',
+          title: "Docs",
           items: [
-            {label: 'Start Here', to: '/start/how-to-read'},
-            {label: 'How It Works', to: '/how-it-works/architecture'},
-            {label: 'Style Guide', to: '/contributing/style-guide'},
+            { label: "Start Here", to: "/start/how-to-read" },
+            { label: "How It Works", to: "/how-it-works/architecture" },
+            { label: "Style Guide", to: "/contributing/style-guide" },
           ],
         },
         {
-          title: 'Project',
-          items: [{label: 'GitHub', href: REPO}],
+          title: "Project",
+          items: [{ label: "GitHub", href: REPO }],
         },
       ],
       copyright: `${DISCLAIMER} This is a community project. "Claude" and "Claude Code" name the product it describes. Docs: CC BY 4.0. Code: MIT.`,
     },
     mermaid: {
-      theme: {light: 'neutral', dark: 'dark'},
-      options: {themeVariables: {fontFamily: 'Lora, Georgia, serif'}},
+      theme: { light: "neutral", dark: "dark" },
+      options: { themeVariables: { fontFamily: "Lora, Georgia, serif" } },
     },
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
-      additionalLanguages: ['bash', 'json', 'diff', 'toml', 'yaml'],
+      additionalLanguages: ["bash", "json", "diff", "toml", "yaml"],
     },
   } satisfies Preset.ThemeConfig,
 };
