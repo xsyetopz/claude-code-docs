@@ -1,3 +1,4 @@
+// @bun
 var __create = Object.create;
 var __getProtoOf = Object.getPrototypeOf;
 var __defProp = Object.defineProperty;
@@ -25306,7 +25307,7 @@ var EMPTY_COMPLETION_RESULT = {
 };
 
 // plugin/mcp/node_modules/@modelcontextprotocol/sdk/dist/esm/server/stdio.js
-import process2 from "node:process";
+import process2 from "process";
 
 // plugin/mcp/node_modules/@modelcontextprotocol/sdk/dist/esm/shared/stdio.js
 var STDIO_DEFAULT_MAX_BUFFER_SIZE = 10 * 1024 * 1024;
@@ -30805,10 +30806,10 @@ import {
   readFileSync,
   statSync,
   writeFileSync
-} from "node:fs";
-import { homedir } from "node:os";
-import { dirname, join, resolve, sep } from "node:path";
-import { fileURLToPath } from "node:url";
+} from "fs";
+import { homedir } from "os";
+import { dirname, join, resolve, sep } from "path";
+import { fileURLToPath } from "url";
 var SITE = "https://xsyetopz.github.io/claude-code-docs";
 function fetchBase() {
   const raw = process.env["CLAUDE_CODE_DOCS_SITE"];

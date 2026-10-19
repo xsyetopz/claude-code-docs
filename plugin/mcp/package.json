@@ -6,7 +6,7 @@
   "type": "module",
   "description": "MCP server for the Claude Code Docs. Source for dist/server.js, which is committed.",
   "scripts": {
-    "build": "bun build src/server.ts --target=node --outfile=dist/server.js"
+    "build": "bun build src/server.ts --target=bun --outfile=dist/server.js"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.32.1",

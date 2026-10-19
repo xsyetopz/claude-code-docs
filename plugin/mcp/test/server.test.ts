@@ -20,7 +20,7 @@ async function connect(env: Record<string, string> = {}) {
   );
   await c.connect(
     new StdioClientTransport({
-      command: "node",
+      command: "bun",
       args: [SERVER],
       env: { ...clean, ...env },
     }),

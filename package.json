@@ -23,7 +23,7 @@
     "typecheck": "bun --check",
     "format:check": "biome format .",
     "plugin:snapshot": "bun tools/plugin-snapshot.ts",
-    "plugin:build": "bun build plugin/mcp/src/server.ts --target=node --outfile=plugin/mcp/dist/server.js",
+    "plugin:build": "bun build plugin/mcp/src/server.ts --target=bun --outfile=plugin/mcp/dist/server.js",
     "plugin:check": "bun tools/plugin/check.ts"
   },
   "dependencies": {

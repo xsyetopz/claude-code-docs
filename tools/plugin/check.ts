@@ -121,7 +121,7 @@ if (existsSync(join(ROOT, "build", "llms-manifest.json"))) {
         "bun",
         "build",
         "plugin/mcp/src/server.ts",
-        "--target=node",
+        "--target=bun",
         `--outfile=${bundle}`,
       ],
       { cwd: ROOT },

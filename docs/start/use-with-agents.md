@@ -73,14 +73,14 @@ Clone the repo, then point the client at the built file.
 {
   "mcpServers": {
     "claude-code-docs": {
-      "command": "node",
+      "command": "bun",
       "args": ["/path/to/claude-code-docs/plugin/mcp/dist/server.js"]
     }
   }
 }
 ```
 
-In Claude Code, you can add it by hand with `claude mcp add claude-code-docs -- node /path/to/claude-code-docs/plugin/mcp/dist/server.js`.
+In Claude Code, you can add it by hand with `claude mcp add claude-code-docs -- bun /path/to/claude-code-docs/plugin/mcp/dist/server.js`.
 
 ## Refresh from the Site
 
