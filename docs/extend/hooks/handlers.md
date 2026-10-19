@@ -53,7 +53,7 @@ Only names in `allowedEnvVars` are filled into headers. Other references become 
 | `http` | <Documented /> | Sends the input as JSON in a POST to a URL. The result is the response body, and needs a 2xx status. | 31 events. Not `SessionStart` and not `Setup`. |
 | `mcp_tool` | <Documented /> | Calls a tool on a configured MCP server. The text result is read like `stdout`. A result with `isError: true` is a non-blocking error. | 33 events, but skipped on `Setup` and on `SessionStart` at launch. |
 | `prompt` | <Documented /> | One model call that returns `ok`. | 12 events, plus `PermissionRequest`. |
-| `agent` | <Documented /> | A subagent that checks a condition. Up to 50 turns. Experimental, and the docs say it may change. | 12 events. Not `PermissionRequest`. |
+| 🧪 `agent` | <Documented /> | A subagent that checks a condition. Up to 50 turns. Experimental, and the docs say it may change. | 12 events. Not `PermissionRequest`. |
 | `callback` | <Undocumented /> | A function that an SDK host or a mod registers. | Events that run device hooks. It is not a config key. |
 | `script` | <Differs note="Rejected in 2.1.303. Do not use." /> | Some text names this type. | `2.1.303` rejects it with `Unknown hook type "script"`. A `script` entry under `PreToolUse` also disables the whole settings file it sits in. |
 

@@ -599,7 +599,7 @@ The props of `Text`: colors, styles, and the size, weight, face and digits each 
 | `weight` | <Documented /> | How heavy the text is, drawn at the nearest weight the surface has. | Type: `'regular' \| 'medium' \| 'semibold' \| 'bold'`. Optional. Absent, the enclosing Text's. The terminal draws `semibold` and `bold` as bold and cannot draw a lighter weight inside a bold Text. |
 | `mono` | <Documented /> | The surface's monospaced face at the same size. The terminal is always monospaced and ignores it. | Type: `boolean`. Optional. |
 | `tabular` | <Documented /> | Digits of one width, for a number that changes by itself on screen (a timer, a percentage) or numbers stacked in a column to line up. | Type: `boolean`. Optional. The terminal's digits are already one cell each. |
-| `bold` | <Documented /> | The older spelling of a semibold weight. | Type: `boolean`. Optional. Deprecated: Use `weight`. `bold: true` is read as `weight: 'semibold'`, and an explicit `weight` outranks it, a `hover`'s `bold` still applies. |
+| ⛔ `bold` | <Documented /> | The older spelling of a semibold weight. | Type: `boolean`. Optional. Deprecated: Use `weight`. `bold: true` is read as `weight: 'semibold'`, and an explicit `weight` outranks it, a `hover`'s `bold` still applies. |
 | `italic` | <Documented /> | Not described in the type file. | Type: `boolean`. Optional. |
 | `underline` | <Documented /> | Not described in the type file. | Type: `boolean`. Optional. |
 | `strikethrough` | <Documented /> | Not described in the type file. | Type: `boolean`. Optional. |

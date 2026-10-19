@@ -47,6 +47,12 @@ phase 2 adds the D6 set). Emojis never in headings, sidebar labels, or link text
 
 ## D6. Phase 2 Markers (after phase 1 ships)
 
-Pick a small set by convention, each with one meaning, documented in the legend. Candidates:
-⚠️ caution/side effect, 🔒 managed-only (enterprise policy) settings, 🧪 experimental, ⛔ deprecated/removed,
-💡 tip. Do not duplicate the provenance badges (Documented/Undocumented/Differs/Gated stay badges).
+Final set (4), each with one meaning, before the item name in a table cell (or start of a note), then a space.
+Never in headings, sidebar labels, link text, or code. Provenance badges stay the primary status.
+- 🔒 managed-only: key has `x-managed-only` in `schemas/claude-code-managed-settings.json`. Applied to rows in `docs/configure/settings/*`.
+- 🧪 experimental: name contains EXPERIMENTAL/`experimental`, or program/official docs say experimental or beta. Not a `<Gated />` replacement.
+- ⛔ deprecated: program/official docs say deprecated and the row names the replacement.
+- ⚠️ caution: deletes data, skips a safety check or permission, or sends data off-machine. Sparingly.
+Dropped: 💡 tip (admonitions cover it). Screen readers say "locked", "test tube", "no entry", "warning": acceptable
+because the row text states the meaning and the legend defines it. ⚠️ and ⛔ may carry U+FE0F; the allow-list holds
+U+FE0F plus U+1F512, U+1F9EA, U+26D4, U+26A0.

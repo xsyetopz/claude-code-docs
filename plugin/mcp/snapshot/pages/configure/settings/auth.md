@@ -29,14 +29,14 @@ Where to Set It tells you which files may set the key. See [Settings Files and S
 
 | Key | Status | Type | Default | What It Does | Where to Set It |
 | --- | --- | --- | --- | --- | --- |
-| `allowedProviders` | [Documented] | ❓ | - | Limit which API providers a machine may use. Managed settings only. | Managed settings only |
+| 🔒 `allowedProviders` | [Documented] | ❓ | - | Limit which API providers a machine may use. Managed settings only. | Managed settings only |
 | `apiKeyHelper` | [Documented] | string | - | Generate the API credential with your own command. | Any settings file |
 | `awsAuthRefresh` | [Documented] | string | - | Refresh expired Bedrock credentials in `.aws` with your own command. | Any settings file |
 | `awsCredentialExport` | [Documented] | string | - | Supply Bedrock credentials as JSON from your own command. | Any settings file |
 | `forceLoginGatewayUrl` | [Documented] | string | - | Set the gateway URL the login screen connects to. Pairs with `forceLoginMethod: "gateway"`. Claude Code ignores it in project, local, flag, and server-managed settings. | User or managed settings |
 | `forceLoginMethod` | [Documented] | enum: `claudeai`, `console`, `gateway` | - | Restrict login to claude.ai, Claude Console, or a cloud gateway. | Any settings file |
 | `forceLoginOrgUUID` | [Documented] | array or string | - | Pin claude.ai logins to your organization. Takes one UUID or an array. In managed settings, login fails for any other account. | Any settings file |
-| `gatewayInternalNetworks` | [Documented] | array of string | - | Let `/login` reach a cloud gateway on public IPv4 space your organization uses internally. Up to 4 IPv4 blocks, each `/8` to `/32`. | Managed settings only |
+| 🔒 `gatewayInternalNetworks` | [Documented] | array of string | - | Let `/login` reach a cloud gateway on public IPv4 space your organization uses internally. Up to 4 IPv4 blocks, each `/8` to `/32`. | Managed settings only |
 | `gcpAuthRefresh` | [Documented] | string | - | Refresh Google Cloud credentials with your own command. | Any settings file |
 | `otelHeadersHelper` | [Documented] | string | - | Generate rotating OpenTelemetry headers with your own command. | Any settings file |
 | `proxyAuthHelper` | [Documented] | string | - | Run your own command that prints a `Proxy-Authorization` header value. Read from the highest-priority source only. | Settings files |

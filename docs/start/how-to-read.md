@@ -47,6 +47,20 @@ Text can follow a mark, such as "✅ Yes. Type `/` to see the list."
 A star after a mark, such as ✅\*, points to a note under the table that starts with the same star.
 The marks never replace the words in a heading or a link.
 
+## Markers Before a Name
+
+Four more marks can stand before an item name in a table cell, or at the start of a note.
+Each has one meaning. A mark adds a fact that the badges above do not carry. It never replaces a badge.
+
+| Mark | What it means |
+| --- | --- |
+| 🔒 | Managed only. The setting works only in managed (organization policy) settings. The source is the `x-managed-only` flag in the managed settings schema. |
+| 🧪 | Experimental. The program or the official docs call it experimental or beta. |
+| ⛔ | Deprecated. The row names what replaces it. |
+| ⚠️ | Caution. It has a side effect to notice: it deletes data, skips a safety check or permission, or sends data off your machine. |
+
+A screen reader reads the picture name, such as "locked" or "warning". The row text always says the same thing in words, so nothing depends on the picture.
+
 ## At a Glance
 
 Every page about a surface starts with a short intro and then an At a Glance table.

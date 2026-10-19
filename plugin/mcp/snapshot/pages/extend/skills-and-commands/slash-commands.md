@@ -75,7 +75,7 @@ Each line is a separate command. The text after the name is the argument.
 | `/model` `<model> or [model]` | [Documented] | Sets the model. | Panel and text form. See [Models](https://xsyetopz.github.io/claude-code-docs/how-it-works/models.md). |
 | `/effort` `[levels] or <levels>` | [Documented] | Sets the effort level. | Panel and text form. |
 | `/fast` `[on\|off]` | [Gated: First-party provider, and env var CLAUDE_CODE_DISABLE_FAST_MODE not set.] | Toggles fast mode. | Panel and text form. |
-| `/advisor` `[model\|off]` | [Gated: On when env CLAUDE_CODE_ENABLE_EXPERIMENTAL_ADVISOR_TOOL is set, otherwise server flag tengu_sage_compass2] | Lets Claude consult a stronger model at key moments. | Panel and text form. See [`CLAUDE_CODE_ENABLE_EXPERIMENTAL_ADVISOR_TOOL`](https://xsyetopz.github.io/claude-code-docs/configure/env-vars/models-and-effort.md). |
+| 🧪 `/advisor` `[model\|off]` | [Gated: On when env CLAUDE_CODE_ENABLE_EXPERIMENTAL_ADVISOR_TOOL is set, otherwise server flag tengu_sage_compass2] | Lets Claude consult a stronger model at key moments. | Panel and text form. See [`CLAUDE_CODE_ENABLE_EXPERIMENTAL_ADVISOR_TOOL`](https://xsyetopz.github.io/claude-code-docs/configure/env-vars/models-and-effort.md). |
 
 ## Setup, Interface, and Config Commands
 

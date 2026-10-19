@@ -28,8 +28,8 @@ Where to Set It tells you which files may set the key. See [Settings Files and S
 | `advisorModel` | <Documented /> | string | - | Pick which model answers when Claude asks the advisor tool. | Any settings file |
 | `alwaysThinkingEnabled` | <Documented /> | boolean | - | Turn extended thinking off for every session. | Any settings file |
 | `availableModels` | <Documented /> | array of string | - | Restrict which models people can pick. Accepts family aliases (`opus`), version prefixes (`opus-4-5`), and full model IDs. An empty array leaves only the default model. | Any settings file |
-| `availableModelsMatch` | <Documented /> | enum: `prefix`, `exact` | - | Make each `availableModels` model ID entry permit only the version it names. `prefix` is the default. `exact` stops an entry from allowing other versions. | Managed settings only |
-| `deniedModels` | <Documented /> | array of string | - | Block specific models, even ones `availableModels` permits. A family alias blocks the family. Claude Code does not start if no allowed model is left for Default. | Managed settings only |
+| 🔒 `availableModelsMatch` | <Documented /> | enum: `prefix`, `exact` | - | Make each `availableModels` model ID entry permit only the version it names. `prefix` is the default. `exact` stops an entry from allowing other versions. | Managed settings only |
+| 🔒 `deniedModels` | <Documented /> | array of string | - | Block specific models, even ones `availableModels` permits. A family alias blocks the family. Claude Code does not start if no allowed model is left for Default. | Managed settings only |
 | `effortLevel` | <Documented /> | enum: `low`, `medium`, `high`, `xhigh` | - | Set a default effort level for models without a saved level of their own. Saved for supported models. | Any settings file |
 | `enforceAvailableModels` | <Documented /> | boolean | - | Keep the `/model` Default choice inside your `availableModels` allowlist. Has no effect when `availableModels` is unset or empty. | Any settings file |
 | `fallbackModel` | <Documented /> | array of string | - | Name backup models for when the primary is overloaded. Models are tried in order. The `--fallback-model` flag wins. `default` expands to the default model. | Any settings file |
@@ -39,7 +39,7 @@ Where to Set It tells you which files may set the key. See [Settings Files and S
 | `model` | <Documented /> | string | - | Change the model Claude Code starts with. | Any settings file |
 | `modelOverrides` | <Documented /> | object | - | Map model IDs to your provider's IDs, such as Bedrock ARNs. Usually set in managed settings. | Any settings file |
 | `modelPicker` | <Documented /> | object | - | Choose which models the `/model` picker lists, in your own order and with your own labels. Read only from managed, `--settings`, and user settings. The first source that sets it wins whole. | User or managed settings |
-| `modelPricing` | <Documented /> | object | - | Report spend at your organization's contracted rates instead of list price. `overrides` maps a model ID to USD rates per million tokens. The figures stay estimates. | Managed settings only |
+| 🔒 `modelPricing` | <Documented /> | object | - | Report spend at your organization's contracted rates instead of list price. `overrides` maps a model ID to USD rates per million tokens. The figures stay estimates. | Managed settings only |
 | `modelSettings` | <Documented /> | ❓ | - | Keep a saved effort level or auto-compact window per model, or cap one model's effort. | Any settings file |
 | `promptCacheTtl` | <Documented /> | string | - | Choose the prompt cache lifetime for the main conversation. `5m` or `1h`. Unset is 1 hour on a subscription and 5 minutes on an API key or cloud provider. `CLAUDE_CODE_PROMPT_CACHE_TTL` wins. | Any settings file |
 | `showThinkingSummaries` | <Documented /> | boolean | - | See summaries of Claude's thinking instead of a collapsed stub. | Any settings file |

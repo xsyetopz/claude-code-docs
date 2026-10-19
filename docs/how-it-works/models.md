@@ -85,7 +85,7 @@ Sources: [Model Configuration](https://code.claude.com/docs/en/model-config) and
 | `thinking: {type: "adaptive"}` | <Documented /> | Lets the model choose how long it thinks. Newer models always use it. |
 | `--thinking <enabled\|adaptive\|disabled>` | <Undocumented /> | A hidden flag for print mode. `enabled` means the same as `adaptive`. |
 | `--thinking-display <summarized\|omitted\|highlights>` | <Undocumented /> | A hidden flag that sets how the thinking text comes back. |
-| `--max-thinking-tokens` | <Undocumented /> | A hidden flag that is deprecated. Use `--thinking` instead. |
+| ⛔ `--max-thinking-tokens` | <Undocumented /> | A hidden flag that is deprecated. Use `--thinking` instead. |
 | `MAX_THINKING_TOKENS` | <Documented /> | Sets a fixed thinking budget. `0` turns thinking off on the Anthropic API. |
 | `CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING` | <Documented /> | Goes back to the fixed budget on Opus 4.6 and Sonnet 4.6. |
 | `CLAUDE_CODE_DISABLE_THINKING` | <Documented /> | Leaves out the `thinking` field, for proxies that reject it. |

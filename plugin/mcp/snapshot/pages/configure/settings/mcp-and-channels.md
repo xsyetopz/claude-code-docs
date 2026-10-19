@@ -29,11 +29,11 @@ Where to Set It tells you which files may set the key. See [Settings Files and S
 
 | Key | Status | Type | Default | What It Does | Where to Set It |
 | --- | --- | --- | --- | --- | --- |
-| `allowAllClaudeAiMcps` | [Documented] | boolean | - | Load the claude.ai connectors Claude Code fetches itself alongside a deployed `managed-mcp.json`. | Managed settings only |
-| `allowClaudeInChromeWithManagedMcp` | [Documented] | boolean | - | Let the built-in Claude in Chrome server run alongside a deployed `managed-mcp.json`. | Managed settings only |
+| 🔒 `allowAllClaudeAiMcps` | [Documented] | boolean | - | Load the claude.ai connectors Claude Code fetches itself alongside a deployed `managed-mcp.json`. | Managed settings only |
+| 🔒 `allowClaudeInChromeWithManagedMcp` | [Documented] | boolean | - | Let the built-in Claude in Chrome server run alongside a deployed `managed-mcp.json`. | Managed settings only |
 | `allowedChannelPlugins` | [Documented] | array | - | Replace the default allowlist of channel plugins that can push messages. | Managed settings only |
 | `allowedMcpServers` | [Documented] | array | - | Allowlist which MCP servers users can add. | Any settings file |
-| `allowManagedMcpServersOnly` | [Documented] | boolean | - | Make the managed MCP allowlist the only one that applies. | Managed settings only |
+| 🔒 `allowManagedMcpServersOnly` | [Documented] | boolean | - | Make the managed MCP allowlist the only one that applies. | Managed settings only |
 | `channelsEnabled` | [Documented] | boolean | - | Allow channels for your organization. | Managed settings only |
 | `deniedMcpServers` | [Documented] | array | - | Block specific MCP servers by URL, command, or name. | Any settings file |
 | `disableClaudeAiConnectors` | [Documented] | boolean | - | Turn off claude.ai connectors so Claude Code doesn't fetch them. | Any settings file |

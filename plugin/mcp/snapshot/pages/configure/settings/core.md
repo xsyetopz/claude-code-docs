@@ -40,18 +40,18 @@ Where to Set It tells you which files may set the key. See [Settings Files and S
 | `awaySummaryEnabled` | [Documented] | boolean | - | Turn off the session recap shown when you come back to the terminal. The recap shows after 5 or more minutes away. | Any settings file |
 | `bashEditDiffEnabled` | [Documented] | boolean | On when the Bash tool handles file edits | Record the files that changed while a Bash command ran in every permission mode. Outside auto and `bypassPermissions` modes, only user or managed settings can turn it on. | User or managed settings |
 | `bashOutputMaxChars` | [Documented] | integer | `30000` | Set how much of a successful command's output Claude receives inline. Clamped to `4000`-`128000`. Longer output goes to a file and Claude gets a preview. | Any settings file |
-| `claudeMd` | [Documented] | string | - | Inject organization-wide CLAUDE.md instructions from managed settings. Only managed settings honor it. | Managed settings only |
+| 🔒 `claudeMd` | [Documented] | string | - | Inject organization-wide CLAUDE.md instructions from managed settings. Only managed settings honor it. | Managed settings only |
 | `claudeMdExcludes` | [Documented] | array of string | - | Skip specific CLAUDE.md files when memory loads. Takes glob patterns or absolute paths. Managed files cannot be excluded. | Any settings file |
 | `cleanupPeriodDays` | [Documented] | integer | 30 | Choose how many days Claude Code keeps transcripts before deleting them. The minimum is `1`. `--no-session-persistence` turns off transcript writes. | Any settings file |
 | `defaultShell` | [Documented] | enum: `bash`, `powershell` | `bash` | Choose whether Bash or PowerShell runs the shell commands you type with the `!` prefix. | Any settings file |
 | `desktopSessionCleanupPeriodDays` | [Documented] | integer | - | Set an age limit in days for Claude Desktop and Cowork transcripts. `0` (the default) means no ceiling. Ignored when org policy sets `cleanupPeriodDays`. | User or managed settings |
-| `disableArtifact` | [Documented] | boolean | - | Deprecated, so use `enableArtifact` to turn the Artifact tool off. `true` still turns the tool off. `false` is ignored. | Any settings file |
+| ⛔ `disableArtifact` | [Documented] | boolean | - | Deprecated, so use `enableArtifact` to turn the Artifact tool off. `true` still turns the tool off. `false` is ignored. | Any settings file |
 | `enableArtifact` | [Documented] | boolean | On once the feature is available | Turn the `Artifact` tool on or off. A `false` in any file turns it off, and no file can turn it back on. | Any settings file |
 | `env` | [Documented] | object | - | Set environment variables for every session and its subprocesses. | Any settings file |
 | `fileCheckpointingEnabled` | [Documented] | boolean | - | Turn off or on the file snapshots that `/rewind` restores. | Any settings file |
 | `fileSuggestion` | [Documented] | object | - | Supply `@` file autocomplete from your own command. | Any settings file |
 | `idleCompaction` | [Documented] | boolean | - | Stop Claude Code from compacting a long conversation while your terminal session is idle. Setting `true` does not turn idle compaction on. | Any settings file |
-| `includeCoAuthoredBy` | [Documented] | boolean | `true` | Deprecated, so use `attribution` to hide or change commit and PR attribution. | Any settings file |
+| ⛔ `includeCoAuthoredBy` | [Documented] | boolean | `true` | Deprecated, so use `attribution` to hide or change commit and PR attribution. | Any settings file |
 | `includeGitInstructions` | [Documented] | boolean | `true` | Remove the built-in commit and PR instructions from Claude's context. | Any settings file |
 | `language` | [Documented] | string | - | Have Claude respond in a language other than English. | Any settings file |
 | `minimumVersion` | [Documented] | string | - | Keep auto-updates from installing anything below a version. | Any settings file |

@@ -60,10 +60,10 @@ The last column says where the key may appear: the manifest, a marketplace entry
 | `lspServers` | [Documented] | Gives language server config. | Fields: `command`, `extensionToLanguage`, `args`, `transport`, `env`, `initializationOptions`, `settings`, `workspaceFolder`, `startupTimeout`, `shutdownTimeout`, `requestTimeout`, `restartOnCrash`, `maxRestarts`, `diagnostics`. | Manifest |
 | `outputStyles` | [Documented] | Lists style files or folders. | Replaces `output-styles/`. | Manifest |
 | `workflows` | [Documented] | Lists workflow `.js` files or folders. | Replaces `workflows/`. | Manifest |
-| `experimental.themes` | [Documented] | Lists theme files or folders. | Replaces `themes/`. A top-level `themes` key still loads and gives a warning. | Manifest |
-| `experimental.monitors` | [Documented] | Declares background watchers. | Items: `name`, `command`, `description`, `when` (`always` or `on-skill-invoke:<skill>`). Interactive sessions only. | Manifest |
-| `experimental.evals` | [Documented] | Names the eval folder. | Default `evals/`. Used by `claude plugin eval`. | Manifest |
-| `experimental.syntaxHighlighting.hljsLanguages` | [Undocumented] | Adds highlight.js languages. | Up to 16 items. `id` matches `^[a-z][a-z0-9_-]*$` (64 characters at most). `remote` is `npm:<pkg>[@ver]` or `github:<owner>/<repo>@<ref>#<path>.js`. `integrity` is an SRI hash with `sha256-`, `sha384-`, or `sha512-`. Strict. | Manifest |
+| 🧪 `experimental.themes` | [Documented] | Lists theme files or folders. | Replaces `themes/`. A top-level `themes` key still loads and gives a warning. | Manifest |
+| 🧪 `experimental.monitors` | [Documented] | Declares background watchers. | Items: `name`, `command`, `description`, `when` (`always` or `on-skill-invoke:<skill>`). Interactive sessions only. | Manifest |
+| 🧪 `experimental.evals` | [Documented] | Names the eval folder. | Default `evals/`. Used by `claude plugin eval`. | Manifest |
+| 🧪 `experimental.syntaxHighlighting.hljsLanguages` | [Undocumented] | Adds highlight.js languages. | Up to 16 items. `id` matches `^[a-z][a-z0-9_-]*$` (64 characters at most). `remote` is `npm:<pkg>[@ver]` or `github:<owner>/<repo>@<ref>#<path>.js`. `integrity` is an SRI hash with `sha256-`, `sha384-`, or `sha512-`. Strict. | Manifest |
 | `binaries` | [Undocumented] | Lists files fetched into `bin/` at install. | A map of base name to `{ "sha256": <64 hex> }`. At most 64 entries. Names match `^[a-z0-9](?:[a-z0-9._-]*[a-z0-9_-])?$`. The env var `CLAUDE_CODE_PLUGIN_BINARY_ASSETS` also exists. | Manifest |
 
 ## `userConfig` Option Keys

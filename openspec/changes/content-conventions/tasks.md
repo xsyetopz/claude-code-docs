@@ -11,4 +11,4 @@
 
 ## 2. Phase 2
 
-- [ ] 2.1 Extra markers (D6) applied where they fit; legend updated; verify; reviewer; commit
+- [x] 2.1 Extra markers (D6) applied where they fit; legend updated; verify; reviewer; commit

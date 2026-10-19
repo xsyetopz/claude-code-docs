@@ -25,8 +25,18 @@ const REQUIRE_LOWER = new Set(["with", "without"]);
 const EMOJI =
   /\p{Extended_Pictographic}|\u{FE0F}|\u{20E3}|[\u{1F1E6}-\u{1F1FF}]/gu;
 
-// Emojis that docs may use (content-conventions D4/D5). Phase 2 adds more.
-const ALLOWED_EMOJI = new Set(["\uFE0F", "\u2705", "\u274C", "\u2753"]); // check mark, cross mark, question mark
+// Emojis that docs may use (content-conventions D4/D5/D6). U+FE0F is the
+// variation selector that follows U+26A0 (and may follow U+26D4).
+const ALLOWED_EMOJI = new Set([
+  "\uFE0F",
+  "\u2705", // check mark: yes
+  "\u274C", // cross mark: no
+  "\u2753", // question mark: unknown
+  "\u{1F512}", // lock: managed settings only
+  "\u{1F9EA}", // test tube: experimental
+  "\u26D4", // no entry: deprecated
+  "\u26A0", // warning sign: caution
+]);
 const emojiIn = (s: string) => [...s.matchAll(EMOJI)].map((m) => m[0]);
 const badEmoji = (s: string) => emojiIn(s).filter((e) => !ALLOWED_EMOJI.has(e));
 

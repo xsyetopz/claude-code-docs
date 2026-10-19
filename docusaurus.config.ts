@@ -4,6 +4,7 @@ import type * as Preset from "@docusaurus/preset-classic";
 import type { Config, Plugin } from "@docusaurus/types";
 import { themes as prismThemes } from "prism-react-renderer";
 import llmsTxtPlugin from "./src/plugins/llms-txt";
+import rehypeCodeWbr from "./src/plugins/rehype-code-wbr";
 import { CLAUDE_CODE_VERSION } from "./src/version";
 
 const REPO = "https://github.com/xsyetopz/claude-code-docs";
@@ -67,6 +68,7 @@ const config: Config = {
           routeBasePath: "/",
           sidebarPath: "./sidebars.ts",
           editUrl: `${REPO}/edit/main/`,
+          rehypePlugins: [rehypeCodeWbr],
         },
         blog: false,
         theme: { customCss: "./src/css/custom.css" },

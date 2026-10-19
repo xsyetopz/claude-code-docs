@@ -76,7 +76,7 @@ Opus 5.5 needs Claude Code v2.1.280 or later, Sonnet 5.5 needs v2.1.284, Haiku 5
 | `ANTHROPIC_DEFAULT_SONNET_MODEL` | <Documented /> | The model for `sonnet`, and for `opusplan` outside plan mode. |
 | `ANTHROPIC_DEFAULT_HAIKU_MODEL` | <Documented /> | The model for `haiku` and for background work. |
 | `ANTHROPIC_DEFAULT_FABLE_MODEL` | <Documented /> | The model for `fable`. It also marks the ID as a Fable model for fallback. |
-| `ANTHROPIC_SMALL_FAST_MODEL` | <Documented /> | Deprecated. Use `ANTHROPIC_DEFAULT_HAIKU_MODEL`. |
+| ⛔ `ANTHROPIC_SMALL_FAST_MODEL` | <Documented /> | Deprecated. Use `ANTHROPIC_DEFAULT_HAIKU_MODEL`. |
 | `ANTHROPIC_DEFAULT_<FAMILY>_MODEL_NAME` | <Documented /> | The display name of the pinned model in the picker. Works on third-party providers and gateways. |
 | `ANTHROPIC_DEFAULT_<FAMILY>_MODEL_DESCRIPTION` | <Documented /> | The description in the picker. |
 | `ANTHROPIC_DEFAULT_<FAMILY>_MODEL_SUPPORTED_CAPABILITIES` | <Documented /> | A comma list that tells Claude Code what the pinned model supports. Values: `effort`, `xhigh_effort`, `max_effort`, `thinking`, `adaptive_thinking`, `interleaved_thinking`. |

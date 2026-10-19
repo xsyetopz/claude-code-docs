@@ -49,7 +49,7 @@ Official pages: [Configure Permissions](https://code.claude.com/docs/en/permissi
 | `plan` | [Documented] | Analysis only, no edits | Picker text: `plan mode (research and propose changes without making them)`. With auto mode available, plan mode uses auto mode semantics unless `useAutoModeDuringPlan` is `false` | Same |
 | `auto` | [Documented] | A classifier screens each action | Picker text: `auto (no routine prompts, a reviewer model screens actions)`. See [Auto Mode](https://xsyetopz.github.io/claude-code-docs/configure/permissions/auto-mode.md) | Same. Not from project or local `defaultMode` |
 | `dontAsk` | [Documented] | Denies what would prompt | Picker text: `don't ask (auto-deny anything that would prompt)`. The deny reason says `Claude Code is running in don't ask mode` | Same |
-| `bypassPermissions` | [Documented] | Skips permission checks | Picker text: `BYPASS PERMISSIONS (no further prompts)`. Explicit `deny` rules still apply. Safety checks marked bypass-immune still ask | Needs `--dangerously-skip-permissions` or `--allow-dangerously-skip-permissions`. Not from project or local `defaultMode` |
+| ⚠️ `bypassPermissions` | [Documented] | Skips permission checks | Picker text: `BYPASS PERMISSIONS (no further prompts)`. Explicit `deny` rules still apply. Safety checks marked bypass-immune still ask | Needs `--dangerously-skip-permissions` or `--allow-dangerously-skip-permissions`. Not from project or local `defaultMode` |
 
 Captured system prompts for some modes: [Plan](https://xsyetopz.github.io/claude-code-docs/prompts/mode-plan.md), [Accept Edits](https://xsyetopz.github.io/claude-code-docs/prompts/mode-acceptEdits.md), and [Don't Ask](https://xsyetopz.github.io/claude-code-docs/prompts/mode-dontAsk.md).
 

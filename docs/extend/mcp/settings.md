@@ -60,7 +60,7 @@ These keys sit under `projects["<path>"]`.
 | `--strict-mcp-config` | <Documented /> | Uses only the `--mcp-config` servers. | Skips the approval prompt for project servers it does not load (`2.1.246` and later). |
 | `--plugin-dir-no-mcp <path>` | <Undocumented /> | Loads an inline plugin without its MCP servers. | Hidden flag. The SDK form is `skipMcpDiscovery`. |
 | `--channels <servers...>` | <Documented /> | Registers channel notifications of the listed servers. | Hidden flag. Space-separated names. See [MCP Runtime](runtime.md#elicitation-and-channels). |
-| `--dangerously-load-development-channels <servers...>` | <Documented /> | Loads channel servers that are not on the allowlist. | Hidden flag for local channel development. Shows a confirmation dialog. |
+| ⚠️ `--dangerously-load-development-channels <servers...>` | <Documented /> | Loads channel servers that are not on the allowlist. | Hidden flag for local channel development. Shows a confirmation dialog. |
 | `--setting-sources` | <Documented /> | Excludes project settings. | Keeps a project `.mcp.json` out. |
 
 ## Approval Rules

@@ -46,7 +46,7 @@ An entry also accepts every [`plugin.json` key](manifest.md#top-level-keys) exce
 | `headers`, `headersHelper` | <Documented /> | Add headers to an archive download. | Needs `2.1.238` or later. `headersHelper` needs `strict: false`. Only for `archive` sources. |
 | `defaultEnabled`, `displayName`, `dependencies`, `metadata` | <Documented /> | Work as in the manifest. | Entry values override the manifest for display and `defaultEnabled`. |
 | `relevance` | <Documented /> | Says when to suggest the plugin. | `topic` (64 characters) and `signals`: `cli`, `hosts`, `filesRead`, `manifestDeps` (`file` and `pattern`), `cwd`. Each list has a limit of 10 or 20 items. Needs the setting `pluginSuggestionMarketplaces`. |
-| `experimental` | <Documented /> | Holds component declarations. | `validate` warns when it is not an object. |
+| 🧪 `experimental` | <Documented /> | Holds component declarations. | `validate` warns when it is not an object. |
 
 ## Plugin Sources
 

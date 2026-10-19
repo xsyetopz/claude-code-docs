@@ -99,7 +99,7 @@ Flags that set the permission mode and the tools the model may use. See [Permiss
 | --- | --- | --- | --- |
 | `--permission-mode <mode>` | <Documented /> | ✅ | Sets the permission mode of the session. |
 | `--inherit-permission-mode <mode>` | <Undocumented /> | ❌ | Sets a permission mode from a parent session, used only when nothing else sets one. |
-| `--dangerously-skip-permissions` | <Documented /> | ✅ | Skips all permission checks, and you should use it only in a sandbox with no internet access. |
+| ⚠️ `--dangerously-skip-permissions` | <Documented /> | ✅ | Skips all permission checks, and you should use it only in a sandbox with no internet access. |
 | `--allow-dangerously-skip-permissions` | <Documented /> | ✅ | Makes skipping all permission checks a choice, without turning it on. |
 | `--allowedTools, --allowed-tools <tools...>` | <Documented /> | ✅ | Lists the tools that run without a permission prompt. |
 | `--disallowedTools, --disallowed-tools <tools...>` | <Documented /> | ✅ | Lists the tools that the model cannot use. |
@@ -121,7 +121,7 @@ Flags that pick the model and set how hard it thinks.
 | `--advisor <model>` | <Documented /> | ❌ | Turns on the server-side advisor tool with the model that you name. |
 | `--thinking <mode>` | <Undocumented /> | ❌ | Sets the thinking mode: `enabled` (the same as `adaptive`) or `disabled`. |
 | `--thinking-display <display>` | <Undocumented /> | ❌ | Sets how the thinking text appears in the response. |
-| `--max-thinking-tokens <tokens>` | <Undocumented /> | ❌ | Sets a thinking token limit, and the flag is deprecated in favor of `--thinking`. |
+| ⛔ `--max-thinking-tokens <tokens>` | <Undocumented /> | ❌ | Sets a thinking token limit, and the flag is deprecated in favor of `--thinking`. |
 | `--task-budget <tokens>` | <Undocumented /> | ❌ | Sets a task budget in tokens on the API side (`output_config.task_budget`). |
 | `--fast-mode <on\|off>` | <Undocumented /> | ❌ | Turns fast mode on or off. |
 | `--include-unsupported-models` | <Undocumented /> | ❌ | Offers models that your account can use and this version does not know. |
@@ -180,7 +180,7 @@ Flags that add agents, plugins, MCP servers, folders, and files.
 | `--brief` | <Undocumented /> | ✅ | Turns on the `SendUserMessage` tool so the agent can message the user. |
 | `--file <specs...>` | <Undocumented /> | ✅ | Downloads file resources at startup, in the form `file_id:relative_path`. |
 | `--channels <servers...>` | <Documented /> | ❌ | Lists the MCP servers whose channel notifications may register this session. |
-| `--dangerously-load-development-channels <servers...>` | <Documented /> | ❌ | Loads channel servers that are not on the allowlist, for local development only. |
+| ⚠️ `--dangerously-load-development-channels <servers...>` | <Documented /> | ❌ | Loads channel servers that are not on the allowlist, for local development only. |
 | `--watch-artifact <artifact>` | <Undocumented /> | ❌ | Watches a Claude artifact for new versions and comments. |
 | `--watch-artifact-no-autoreact <artifact>` | <Undocumented /> | ❌ | Watches an artifact and does not react to it by itself. |
 | `--messaging-socket-path <path>` | <Undocumented /> | ❌ | Sets the socket or pipe path of the cross-session messaging server. |
@@ -230,8 +230,8 @@ Flags for cloud sessions and Remote Control.
 | `--remote-control [name]` | <Documented /> | ✅ | Starts an interactive session with Remote Control turned on. |
 | `--rc [name]` | <Documented /> | ❌ | Is an alias for `--remote-control`. |
 | `--remote-control-session-name-prefix <prefix>` | <Documented /> | ✅ | Sets the prefix of the names that Remote Control makes, and the default is the host name. |
-| `--remote [description\|session_id\|url]` | <Documented /> | ❌ | Is a deprecated alias for `--cloud`. |
-| `--pool <pool_id>` | <Undocumented /> | ❌ | Is a deprecated alias for `--environment`. |
+| ⛔ `--remote [description\|session_id\|url]` | <Documented /> | ❌ | Is a deprecated alias for `--cloud`. |
+| ⛔ `--pool <pool_id>` | <Undocumented /> | ❌ | Is a deprecated alias for `--environment`. |
 | `--correlation-id <id>` | <Undocumented /> | ❌ | Sets an ID that goes back to the environment orchestrator, and it needs `--environment`. |
 | `--ref <ref>` | <Documented /> | ❌ | Sets the branch, tag, or SHA to check out in the remote session, and it needs `--cloud` or `--environment`. |
 | `--on-branch <branch>` | <Undocumented /> | ❌ | Works directly on a branch in the remote session, with checkout and push. |

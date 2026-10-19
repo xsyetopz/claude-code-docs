@@ -196,6 +196,23 @@ Use these marks in a table cell that is a yes, no, or unknown answer, such as an
 - For a short clarification, put `\*` after the mark (`✅\*`) and write `\* The note.` right after the table. Use `\*\*` for a second note.
 - `bun run check:docs` rejects every emoji that is not on the allow-list in `tools/check-docs.ts`.
 
+### Name Markers
+
+Put one of these before the item name in a table cell, or at the start of a note, followed by a space.
+Each has one meaning, and a provenance badge stays the primary status.
+
+| Mark | Meaning | Use it when |
+| --- | --- | --- |
+| 🔒 | Managed only | The schema has `x-managed-only: true` for the key |
+| 🧪 | Experimental | The key name has `EXPERIMENTAL` or `experimental`, or the program or the vendor pages call it experimental or beta |
+| ⛔ | Deprecated | The program or the vendor pages call it deprecated, and the row names the replacement |
+| ⚠️ | Caution | It deletes data, skips a safety check or permission, or sends data off the machine. Use it sparingly. Long warnings stay admonitions |
+
+- Never put a name marker in a heading, a sidebar label, link text, or code.
+- Never invent a status. Cite the source in the row or the page.
+- `🧪` does not replace `<Gated />`. Use it only where "experimental" is the stated status.
+- Screen readers say "locked", "test tube", "no entry", and "warning". The row text must say the meaning in words too.
+
 ### Admonitions
 
 Use `:::tip`, `:::note`, `:::warning`, and `:::danger`. Add a title in brackets if it helps.

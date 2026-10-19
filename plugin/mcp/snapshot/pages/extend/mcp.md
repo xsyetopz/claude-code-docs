@@ -32,7 +32,7 @@ Source: [Connect Claude Code to Tools via MCP](https://code.claude.com/docs/en/m
 | --- | --- | --- | --- |
 | `stdio` | [Documented] | Runs a local process. | The default when `type` is missing. Needs `command`. Claude Code sets `CLAUDE_PROJECT_DIR` in the process env. |
 | `http` | [Documented] | Talks to a remote server over streamable HTTP. | The recommended remote transport. `streamable-http` is an alias. Supports OAuth and `headers`. |
-| `sse` | [Documented] | Talks to a remote server over server-sent events. | Deprecated. `--transport http` tries HTTP first and falls back to SSE (`2.1.265` and later). |
+| ⛔ `sse` | [Documented] | Talks to a remote server over server-sent events. | Deprecated. `--transport http` tries HTTP first and falls back to SSE (`2.1.265` and later). |
 | `ws` | [Documented] | Talks to a remote server over WebSocket. | Header-only auth, no OAuth. `claude mcp add --transport` does not accept it. The first connect is not retried. Use it in `.mcp.json`, `add-json`, plugins, and agent files. |
 | `sdk` | [Documented] | An in-process server of an SDK host. | Only an SDK host can register it. Claude Code skips it in `.mcp.json` and settings. |
 | `sse-ide` | [Undocumented] | A server of an IDE extension over SSE. | Has `ideName` and `ideRunningInWindows`. The idle timeout does not apply. |

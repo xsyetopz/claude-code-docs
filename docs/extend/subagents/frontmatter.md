@@ -54,7 +54,7 @@ claude --agents '{
 | `isolation` | <Documented /> | Runs the agent in a temporary git worktree. | The docs name `worktree`. The program schema also accepts `remote`. The worktree branches from the default branch. |
 | `color` | <Documented /> | The display color. | `red`, `blue`, `green`, `yellow`, `purple`, `orange`, `pink`, `cyan`. |
 | `initialPrompt` | <Documented /> | The first user turn when the agent is the main session. | Used with `--agent` or the `agent` setting. Commands and skills are processed. Not read when the agent starts as a subagent. |
-| `experimental` | <Documented /> | A map of experimental options. | `cacheTtl`: `5m` or `1h` sets the prompt cache TTL when no `subagentPromptCacheTtl` setting or env var is set. `1h` is ignored in subscription overage. Unknown keys are ignored. |
+| 🧪 `experimental` | <Documented /> | A map of experimental options. | `cacheTtl`: `5m` or `1h` sets the prompt cache TTL when no `subagentPromptCacheTtl` setting or env var is set. `1h` is ignored in subscription overage. Unknown keys are ignored. |
 | `observer` | <Undocumented /> <Gated note="Probably CLAUDE_CODE_EXPERIMENTAL_OBSERVER_AGENTS. Name only, not verified." /> | An agent type that starts as a background observer whenever this agent runs. | A trimmed string. Message kinds `observer` and `observer-activity` exist. |
 | `observerMessage` | <Undocumented /> <Gated note="Same gate as observer." /> | Text added to each activity digest sent to the observer. | A string. It follows the default text. |
 | `observeSubagents` | <Undocumented /> <Gated note="Same gate as observer." /> | Whether subagents inherit the observer. | A boolean, default true. `false` stops inheritance. |
