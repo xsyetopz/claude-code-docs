@@ -1,32 +1,24 @@
 ---
 title: Overview
 description: What Claude Code is, what this community site covers, and a map of every surface you can use or change.
+hide_title: true
 slug: /
 sidebar_position: 1
 ---
 
-import { CLAUDE_CODE_VERSION } from '@site/src/version';
+import Hero from '@site/src/components/Hero';
+
+<Hero />
 
 Claude Code is a coding assistant that runs in your terminal, your editor, and the cloud.
 You tell it a task in plain words. It reads your files, runs commands, and edits code to finish the task.
 You can change almost every part of it with settings, hooks, plugins, skills, and MCP servers.
-
-:::note[Unofficial Site]
-This is a community project. It is not made by or tied to Anthropic.
-It describes Claude Code version <code>{CLAUDE_CODE_VERSION}</code>, the newest release, and nothing older.
-For supported behavior, check the official docs first.
-:::
 
 ## What This Site Covers
 
 The official docs explain the features that Anthropic supports.
 This site goes further. It lists every surface you can use, change, or switch on and off, whether the official docs name it or not.
 It also explains how the program works inside, so you can predict what a setting will do.
-
-- Items that an official docs page names carry the <Documented /> badge.
-- Items that only the program shows carry the <Undocumented /> badge. They can change without notice.
-- Items where the docs and the program disagree carry the <Differs /> badge.
-- Items that work only behind a flag or a server gate carry the <Gated /> badge.
 
 Read [How to Read These Docs](start/how-to-read.md) for the full guide to badges and tables.
 The text uses Simple English: short sentences and common words.

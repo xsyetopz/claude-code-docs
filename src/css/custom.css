@@ -4,6 +4,8 @@
 @import '@fontsource/lora/400.css';
 @import '@fontsource/lora/400-italic.css';
 @import '@fontsource/lora/600.css';
+@import '@fontsource/ibm-plex-mono/400.css';
+@import '@fontsource/ibm-plex-mono/500.css';
 
 /* Anthropic brand palette (used with permission). Link orange is darkened
    for WCAG AA: #a8502f on #faf9f5 is 5.17:1; brand #d97757 is only ~2.9:1. */
@@ -18,6 +20,7 @@
 
   --ifm-font-family-base: 'Lora', Georgia, serif;
   --ifm-heading-font-family: 'Poppins', Arial, sans-serif;
+  --ifm-font-family-monospace: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
   --ifm-font-size-base: 106%;
   --ifm-line-height-base: 1.7;
   --ifm-heading-font-weight: 600;
@@ -36,9 +39,9 @@
   --ifm-color-emphasis-200: #e8e6dc;
   --ifm-color-emphasis-300: #b0aea5;
   --ifm-toc-border-color: #b0aea5;
-  --ifm-table-stripe-background: #e8e6dc;
-  --ifm-table-border-color: #b0aea5;
-  --ifm-code-background: #e8e6dc;
+  --ifm-table-stripe-background: transparent;
+  --ifm-table-border-color: #d3d0c4;
+  --ifm-code-background: #efede4;
   --ifm-code-font-size: 92%;
   --ifm-navbar-background-color: #faf9f5;
   --docusaurus-highlighted-code-line-bg: rgba(217, 119, 87, 0.15);
@@ -56,7 +59,7 @@
 }
 
 /* Dark: #e08a6c on #141413 is 7.04:1. */
-[data-theme='dark'] {
+html[data-theme='dark'] {
   --ifm-color-primary: #e08a6c;
   --ifm-color-primary-dark: #d38266;
   --ifm-color-primary-darker: #ca7c61;
@@ -71,8 +74,8 @@
   --ifm-color-emphasis-200: #2b2b28;
   --ifm-color-emphasis-300: #3d3d3a;
   --ifm-toc-border-color: #3d3d3a;
-  --ifm-table-stripe-background: #1f1f1d;
-  --ifm-table-border-color: #3d3d3a;
+  --ifm-table-stripe-background: transparent;
+  --ifm-table-border-color: #2b2b28;
   --ifm-code-background: #1f1f1d;
   --ifm-navbar-background-color: #141413;
   --docusaurus-highlighted-code-line-bg: rgba(224, 138, 108, 0.18);
@@ -105,35 +108,19 @@
   font-size: 0.9rem;
 }
 
-[data-theme='light'] .theme-doc-sidebar-container {
+html[data-theme='light'] .theme-doc-sidebar-container {
   --ifm-menu-color-background-hover: #e8e6dc;
   --ifm-menu-color-background-active: #e8e6dc;
 }
 
-div[class^='announcementBar_'] {
-  --site-announcement-bar-background: #141413;
-  --site-announcement-bar-color: #faf9f5;
-  background-color: #141413;
-  color: #faf9f5;
+.theme-announcement-bar {
   font-weight: 600;
   font-family: var(--ifm-heading-font-family);
 }
 
-[data-theme='dark'] div[class^='announcementBar_'] {
-  background-color: #1f1f1d;
-}
-
-/* Admonitions: blue for info/note, green for tip/success. */
-.alert--info {
-  --ifm-alert-background-color: rgba(106, 155, 204, 0.14);
-  --ifm-alert-border-color: #6a9bcc;
-  --ifm-alert-foreground-color: var(--ifm-font-color-base);
-}
-
-.alert--success {
-  --ifm-alert-background-color: rgba(120, 140, 93, 0.16);
-  --ifm-alert-border-color: #788c5d;
-  --ifm-alert-foreground-color: var(--ifm-font-color-base);
+/* Config sets an inline background, so the dark lift needs !important. */
+html[data-theme='dark'] .theme-announcement-bar {
+  background-color: #1f1f1d !important;
 }
 
 .navbar-version {
@@ -145,14 +132,297 @@ div[class^='announcementBar_'] {
   --ifm-footer-background-color: #141413;
 }
 
-table {
-  display: table;
-  width: 100%;
+/* Type scale */
+.markdown h1,
+h1.hero__title {
+  font-size: clamp(2.2rem, 4vw, 3rem);
+  font-weight: 600;
+  letter-spacing: -0.015em;
 }
 
-/* Light mode: links on Light Gray (#e8e6dc) need a darker orange for 4.5:1 contrast. */
-[data-theme='light'] a code,
-[data-theme='light'] table tr:nth-child(2n) a,
-[data-theme='light'] :not(pre) > code a {
-  color: #9a4829;
+.markdown h2 {
+  font-size: 1.75rem;
+  margin-top: 2.5em;
+}
+
+.markdown h3 {
+  font-size: 1.25rem;
+}
+
+.markdown h4 {
+  font-size: 1.05rem;
+}
+
+/* Prose measure */
+.markdown > p,
+.markdown > ul,
+.markdown > ol,
+.markdown > blockquote,
+.markdown > .theme-admonition {
+  max-width: 70ch;
+}
+
+/* Tables */
+.markdown table {
+  width: 100%;
+  border-radius: 0;
+  border: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.markdown table th {
+  text-align: left;
+  font-family: var(--ifm-heading-font-family);
+  font-weight: 600;
+  font-size: 0.8rem;
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid var(--ifm-color-emphasis-300);
+}
+
+.markdown table td {
+  border: 0;
+  border-bottom: 1px solid var(--ifm-table-border-color);
+}
+
+.markdown table thead {
+  background: transparent;
+}
+
+.markdown td code {
+  overflow-wrap: anywhere;
+}
+
+.markdown table tr {
+  background: transparent;
+  border: 0;
+}
+
+/* Admonitions */
+.theme-admonition {
+  --ifm-alert-border-radius: 6px;
+  --ifm-alert-border-left-width: 3px;
+  --ifm-alert-foreground-color: var(--ifm-font-color-base);
+  border: 0;
+  border-left: 3px solid var(--ifm-alert-border-color);
+  border-radius: 6px;
+  box-shadow: none;
+}
+
+.theme-admonition [class*='admonitionHeading'] {
+  font-family: var(--ifm-heading-font-family);
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.alert--info {
+  --ifm-alert-background-color: rgba(106, 155, 204, 0.14);
+  --ifm-alert-border-color: #6a9bcc;
+}
+
+.alert--success {
+  --ifm-alert-background-color: rgba(120, 140, 93, 0.16);
+  --ifm-alert-border-color: #788c5d;
+}
+
+.alert--secondary {
+  --ifm-alert-background-color: rgba(176, 174, 165, 0.2);
+  --ifm-alert-border-color: #b0aea5;
+}
+
+.alert--warning {
+  --ifm-alert-background-color: rgba(217, 119, 87, 0.14);
+  --ifm-alert-border-color: #d97757;
+  --ifm-alert-foreground-color: var(--ifm-font-color-base);
+}
+
+.alert--danger {
+  --ifm-alert-background-color: rgba(168, 48, 40, 0.12);
+  --ifm-alert-border-color: #a83028;
+  --ifm-alert-foreground-color: var(--ifm-font-color-base);
+}
+
+html[data-theme='dark'] .alert--danger {
+  --ifm-alert-background-color: rgba(200, 70, 60, 0.18);
+  --ifm-alert-border-color: #c8463c;
+}
+
+/* Breadcrumbs */
+.breadcrumbs__link {
+  background: transparent;
+  padding: 0;
+  font-size: 0.8rem;
+  color: var(--ifm-font-color-secondary);
+}
+
+.breadcrumbs__item--active .breadcrumbs__link {
+  color: var(--ifm-font-color-base);
+  background: transparent;
+}
+
+/* Code */
+.markdown :not(pre) > code {
+  padding: 0.1rem 0.3rem;
+  border: 0;
+}
+
+div[class*='codeBlockContainer'] {
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 6px;
+  box-shadow: none;
+}
+
+code,
+kbd,
+pre {
+  font-family: var(--ifm-font-family-monospace);
+}
+
+/* Sidebar */
+.theme-doc-sidebar-container .menu__link--active:not(.menu__link--sublist) {
+  background: transparent;
+  color: var(--ifm-font-color-base);
+  font-weight: 600;
+  box-shadow: inset 2px 0 0 var(--cc-orange);
+}
+
+.theme-doc-sidebar-container .menu__link:hover {
+  background: var(--ifm-menu-color-background-hover);
+}
+
+/* Focus */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+.cc-badge:focus-visible {
+  outline: 2px solid var(--ifm-link-color);
+  outline-offset: 2px;
+}
+
+/* Provenance badges: the glyph is a decorative pseudo-element. */
+.cc-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.05rem 0.55rem;
+  border-radius: 3px;
+  font-family: var(--ifm-heading-font-family);
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.6;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: help;
+  margin-right: 0.25rem;
+}
+
+.cc-badge::before {
+  content: '';
+  flex: none;
+  box-sizing: border-box;
+  width: 0.6em;
+  height: 0.6em;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.cc-badge--undocumented::before {
+  background: transparent;
+  border: 0.12em solid currentColor;
+}
+
+.cc-badge--differs::before {
+  background: linear-gradient(90deg, currentColor 50%, transparent 50%);
+  border: 0.12em solid currentColor;
+}
+
+.cc-badge--gated::before {
+  background: transparent;
+  border: 0.12em dashed currentColor;
+  border-radius: 0;
+}
+
+.cc-badge--documented {
+  background: var(--cc-badge-documented-bg);
+  color: var(--cc-badge-documented-fg);
+}
+
+.cc-badge--undocumented {
+  background: var(--cc-badge-undocumented-bg);
+  color: var(--cc-badge-undocumented-fg);
+}
+
+.cc-badge--differs {
+  background: var(--cc-badge-differs-bg);
+  color: var(--cc-badge-differs-fg);
+}
+
+.cc-badge--gated {
+  background: var(--cc-badge-gated-bg);
+  color: var(--cc-badge-gated-fg);
+}
+
+/* Overview hero */
+.cc-hero {
+  margin-bottom: 2.5rem;
+}
+
+.cc-hero h1 {
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  font-weight: 700;
+  line-height: 1.15;
+  max-width: 20ch;
+}
+
+.cc-hero__lede {
+  max-width: 60ch;
+  font-size: 1.1rem;
+}
+
+.cc-hero__key {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.cc-hero__key li {
+  display: grid;
+  grid-template-columns: 9.5rem 1fr;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.cc-hero__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  font-family: var(--ifm-heading-font-family);
+  font-weight: 600;
+}
+
+@media (max-width: 480px) {
+  .cc-hero__key li {
+    grid-template-columns: 1fr;
+    gap: 0.2rem;
+  }
+}
+
+.cc-hero__key .cc-badge {
+  justify-self: start;
+}
+
+/* Below 997px the title is visually hidden but still names the home link. */
+@media (max-width: 996px) {
+  .navbar__title {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
 }

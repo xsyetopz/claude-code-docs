@@ -65,6 +65,8 @@ const config: Config = {
       id: 'unofficial',
       content: `${DISCLAIMER} A community project that describes Claude Code ${CLAUDE_CODE_VERSION}.`,
       isCloseable: false,
+      backgroundColor: '#141413',
+      textColor: '#faf9f5',
     },
     navbar: {
       title: 'Claude Code Community Docs',
