@@ -1,0 +1,122 @@
+---
+title: Auth and Accounts
+description: Environment variables for API keys, login tokens, credential helpers, and account details.
+sidebar_position: 3
+---
+
+These variables tell Claude Code who you are.
+They carry API keys, bearer tokens, OAuth data, and the commands that fetch credentials for you.
+Put secrets in your shell or a secrets manager, not in a file you commit.
+
+## At a Glance
+
+| Question | Answer |
+| --- | --- |
+| Can you use it? | Yes. `ANTHROPIC_API_KEY` and `ANTHROPIC_AUTH_TOKEN` are the common ones. |
+| Can you change it? | Yes. Set a different variable, or run `/login` for a stored login. |
+| Can you turn it on or off? | Unset the variable to stop using it. |
+| Where does it live? | Your shell or the `env` key of a settings file. Project settings cannot set some of them before you trust the folder. |
+| Rows on this page | 71 variables |
+| Status | <Documented /> <Undocumented /> <Differs /> <Gated /> |
+
+## Example
+
+```bash
+export ANTHROPIC_API_KEY="sk-ant-your-key"
+claude
+```
+
+Claude Code sends the key as the `x-api-key` header.
+
+## Variables
+
+The table is sorted by name. See [Environment Variables](index.md#how-to-read-the-tables) for what each column and badge means.
+
+| Variable | Status | What it does | Values and default | Notes |
+| --- | --- | --- | --- | --- |
+| `ANTHROPIC_API_KEY` | <Documented /> | Sets the API key that Claude Code sends to the API. It takes precedence over a profile sign-in. | Text | All sessions. Not set from project `env` before trust |
+| `ANTHROPIC_AUTH_TOKEN` | <Documented /> | Sets the `Authorization` header to `Bearer` plus the value. Also counts as a credential for gateway model discovery. | Text. Read on each access | All sessions. Not set from project `env` before trust |
+| `ANTHROPIC_AWS_API_KEY` | <Documented /> | Workspace API key for Claude Platform on AWS. When it is set, Claude Code skips the AWS credential chain for that client. | Text. Code removes it for a moment while it builds a client that uses the AWS chain | Provider `anthropicAws`. Not set from project `env` before trust |
+| `ANTHROPIC_CONFIG_DIR` | <Documented /> | Sets the directory for Anthropic profile files. Claude Code reads `configs` and `credentials` files from it. | Text. Wins over `XDG_CONFIG_HOME`. Unused when a helper returns null for the current mode | Profile and federation sign-in, all. Not set from project `env` before trust |
+| `ANTHROPIC_FEDERATION_RULE_ID` | <Documented /> | Federation rule ID for workload identity federation. With `ANTHROPIC_ORGANIZATION_ID` it selects the `env-quad` federation credential. | Text. `ANTHROPIC_WORKSPACE_ID` is an optional third value | All sessions. Not set from project `env` before trust |
+| `ANTHROPIC_FOUNDRY_API_KEY` | <Documented /> | API key for Microsoft Foundry. When it is set, Claude Code does not build the Azure default credential. | Text. The Foundry client reads the key. `ANTHROPIC_FOUNDRY_AUTH_TOKEN` wins over it | Provider `foundry`. Project `env` can set it before trust |
+| `ANTHROPIC_FOUNDRY_AUTH_TOKEN` | <Documented /> | Bearer token for Microsoft Foundry. It wins over the API key and over the Azure default credential. | Text. The token provider returns it on each request | Provider `foundry`. Not set from project `env` before trust |
+| `ANTHROPIC_IDENTITY_TOKEN` | <Documented /> | The bundled SDK uses it as the OIDC identity token for workload identity federation when no config file gives one. | Text. Used with `ANTHROPIC_FEDERATION_RULE_ID` and `ANTHROPIC_ORGANIZATION_ID`. Also in a list of secret-like env names | Bundled SDK federation sign-in. Not set from project `env` before trust |
+| `ANTHROPIC_IDENTITY_TOKEN_FILE` | <Documented /> | The bundled SDK reads the OIDC identity token from this file path for workload identity federation. | Text. Becomes `identity_token` with source `file`. Used when the org ID and rule ID are set and no config file exists | Bundled SDK federation sign-in. Not set from project `env` before trust |
+| `ANTHROPIC_ORGANIZATION_ID` | <Documented /> | Organization ID for workload identity federation. Set it with `ANTHROPIC_FEDERATION_RULE_ID`. | Text. Together they form the `env-quad` federation identity. The SDK also reads it as a fallback | All sessions. Not set from project `env` before trust |
+| `ANTHROPIC_PROFILE` | <Documented /> | Names the Anthropic profile to sign in with. | Text, profile by default. An explicit value makes the profile mode `profile-explicit` | All sessions. Not set from project `env` before trust |
+| `ANTHROPIC_SCOPE` | <Undocumented /> | The bundled SDK sends it as the OAuth `scope` in workload identity federation. A config file value wins. | Text. Fills `authentication.scope` when the config does not set it | Bundled SDK federation sign-in. Not set from project `env` before trust |
+| `ANTHROPIC_SERVICE_ACCOUNT_ID` | <Undocumented /> | The bundled SDK uses it as `service_account_id` in workload identity federation. | Text. Fills `authentication.service_account_id` when the config does not set it | Bundled SDK federation sign-in. Not set from project `env` before trust |
+| `ANTHROPIC_WORKSPACE_ID` | <Documented /> | Workspace ID for workload identity federation. It is optional in the `env-quad` identity. | Text. The SDK also reads it as a fallback | All sessions. Not set from project `env` before trust |
+| `AWS_BEARER_TOKEN_BEDROCK` | <Documented /> | Amazon Bedrock API key. Claude Code sends it as a `Bearer` token and skips the AWS credential chain. | Text. Used for Bedrock and Mantle clients | Providers `bedrock` and `mantle`. Not set from project `env` before trust |
+| `CLAUDE_BG_AUTH_SNAPSHOT_PATH` | <Undocumented /> | Points to a JSON file with a gateway token or access token for a background session. | Text. Claude Code reads the file once, deletes the file, and removes the var. Retries if the file is busy | Background sessions. Not set from project `env` before trust |
+| `CLAUDE_BG_CLAIM_AUTH` | <Undocumented /> | Carries the claim token for a spare background session. | Text. A tokens file can replace it | Spare background sessions. Not set from project `env` before trust |
+| `CLAUDE_BG_DISPATCHER_RATE_LIMIT_TIER` | <Undocumented /> | Passes the rate limit tier of the dispatcher account to a background session. | Text. Used only when `CLAUDE_CODE_SESSION_KIND` is `bg`. The dispatcher sets it | Background sessions. Not set from project `env` before trust |
+| `CLAUDE_BG_DISPATCHER_SUBSCRIPTION_TYPE` | <Undocumented /> | Passes the subscription type of the dispatcher account to a background session. | Text. Used only when `CLAUDE_CODE_SESSION_KIND` is `bg`. The dispatcher sets it | Background sessions. Not set from project `env` before trust |
+| `CLAUDE_BG_PTY_AUTH` | <Undocumented /> | Holds the shared secret for the PTY link of a background session. | Text. Claude Code generates and sets it. It is removed from child env in exec mode | Background sessions. Not set from project `env` before trust |
+| `CLAUDE_BG_RV_AUTH` | <Undocumented /> | Holds the shared secret for the rendezvous socket of a background session. | Text. Claude Code sets it. The session reads it once and deletes it | Background sessions. Not set from project `env` before trust |
+| `CLAUDE_BG_SOCKET_TOKENS_PATH` | <Undocumented /> | Points to a tokens file with the rendezvous and claim secrets for a background session. | Text. Claude Code reads the file once, deletes the file, and removes the var | Background sessions. Not set from project `env` before trust |
+| `CLAUDE_CODE_ACCOUNT_UUID` | <Documented /> | Gives the account UUID when the host supplies the account. It fills account info and telemetry ids. | Text. With `CLAUDE_CODE_USER_EMAIL` and `CLAUDE_CODE_ORGANIZATION_UUID` it builds the account record in some host modes | Host-managed and SDK sessions. Not set from project `env` before trust |
+| `CLAUDE_CODE_API_KEY_FILE_DESCRIPTOR` | <Undocumented /> | Names a file descriptor from which Claude Code reads the API key at startup. | A number. A reader function runs at startup when it is set. The debug auth dump shows if it is set | SDK and host launches. Not set from project `env` before trust |
+| `CLAUDE_CODE_API_KEY_HELPER_TTL_MS` | <Documented /> | Sets how often Claude Code refreshes credentials from `apiKeyHelper`. | A number of milliseconds, stays by default. Whole number of `0` or more. A negative value logs an error and the built-in default stays | All sessions with `apiKeyHelper`. Project `env` can set it before trust |
+| `CLAUDE_CODE_ARTIFACTS_API_TOKEN` | <Undocumented /> | Gives a bearer token for requests to the artifacts frame host. | Text. Sent as `Authorization: Bearer` plus the value, only when the frame host mode is active | Artifacts frame requests. Not set from project `env` before trust |
+| `CLAUDE_CODE_AUTH_FAIL_EXIT_MS` | <Undocumented /> | Makes a remote child session exit when an OAuth 401 stays unrecovered for this long. The runner then restarts it with fresh credentials. | A number of milliseconds, `600000` by default. Whole number, minimum `0`. A value of `0` turns the exit off | Remote child sessions |
+| `CLAUDE_CODE_CUSTOM_OAUTH_URL` | <Undocumented /> | Replaces the OAuth base URL and endpoints with a custom host. Throws if the URL is not on the approved endpoint list. | Text. A trailing slash is removed. Only fedstart style hosts pass the check | All sessions, first-party auth |
+| `CLAUDE_CODE_DESIGN_OAUTH_CLIENT_ID` | <Undocumented /> | Sets the OAuth client id for Claude Design login. A build without a registered client shows an error that asks for this variable. | Text. A value starting with `00000000-` counts as unset | Claude Design login |
+| `CLAUDE_CODE_DISABLE_AUTH_REFRESH_LOCK` | <Documented /> | Makes each process run `gcpAuthRefresh` or `awsAuthRefresh` itself without the cross-process lock. | On or off. Code gates the auth refresh lock on its negation | Bedrock and Vertex with auth refresh |
+| `CLAUDE_CODE_ENABLE_PROXY_AUTH_HELPER` | <Undocumented /> | Turns on the `proxyAuthHelper` setting so a helper command can mint proxy auth headers. | On or off, off by default. Cache TTL comes from `CLAUDE_CODE_PROXY_AUTH_HELPER_TTL_MS`, default `300000` | Proxy setups |
+| `CLAUDE_CODE_ENABLE_XAA` | <Undocumented /> | Turns on XAA for MCP OAuth and unlocks the `xaaIdp` setting. | On or off, off by default. Without it, MCP OAuth with `oauth.xaa` fails with `XAA is not enabled` | MCP OAuth |
+| `CLAUDE_CODE_FEDERATION_CACHE_DIR` | <Undocumented /> | Sets the directory for the workload identity federation token cache. | Text. Default is a `credentials/federation` folder in the config dir | Federated auth, eval harness copies it |
+| `CLAUDE_CODE_FORCE_WINDOWS_CREDMAN` | <Undocumented /> <Gated note="A feature flag or server gate decides by default. This variable overrides it" /> | Forces the Windows Credential Manager path on when set to `1`. | Text. Else the cached a feature flag decides | Windows |
+| `CLAUDE_CODE_GATEWAY_TOKEN_FILE_DESCRIPTOR` | <Undocumented /> | Reads the gateway token from this open file descriptor, then removes the var from the env. | A number. Ignored with `CLAUDE_CODE_REMOTE` or an IPC channel | Hosts that spawn Claude Code |
+| `CLAUDE_CODE_HOST_AUTH_ENV_VAR` | <Undocumented /> | Names the env var that holds the credential a host app supplies. Its presence counts as host-managed auth. | Text. Reserved names are skipped. Removed from some child envs | Host apps that embed Claude Code |
+| `CLAUDE_CODE_HOST_AUTH_REFRESH_TIMEOUT_MS` | <Undocumented /> | Passes a timeout to the request that asks the SDK host to refresh the auth token. | A number of milliseconds. Used only when `CLAUDE_CODE_SDK_HAS_HOST_AUTH_REFRESH` is set. An invalid value means no timeout | SDK host, stream-json print mode |
+| `CLAUDE_CODE_HOST_CREDS_FILE` | <Undocumented /> | Names a credentials file that a host app owns. Claude Code tests paths against it and adds it to a path list built with the sandbox rules. | Text. Also turns on the gateway lineage check together with `CLAUDE_CODE_HOST_GATEWAY_LINEAGE`. Its name is kept from children | Host apps with a gateway |
+| `CLAUDE_CODE_HOST_GATEWAY_LINEAGE` | <Undocumented /> | Marks a session as gateway-managed by the host. It counts only when `CLAUDE_CODE_HOST_CREDS_FILE` is also set. | On or off. Claude Code sets it to `1` for child processes when its lineage check passes. It is removed in other child envs | Host apps with a gateway, set by Claude Code |
+| `CLAUDE_CODE_OAUTH_CLIENT_ID` | <Undocumented /> | Overrides the OAuth client id for login and for refresh-token login. | Text. When set it also clears the registered plugin and project scope flags | All sessions, OAuth |
+| `CLAUDE_CODE_OAUTH_REFRESH_TOKEN` | <Documented /> | Lets `claude auth login` exchange a refresh token with no browser. Needs `CLAUDE_CODE_OAUTH_SCOPES`. | Text. Startup stops with an error when the scopes are missing. A used token cannot be reused | `claude auth login` |
+| `CLAUDE_CODE_OAUTH_SCOPES` | <Documented /> | Gives the scopes that the refresh token was issued with. It also sets the scopes of `CLAUDE_CODE_OAUTH_TOKEN`. | Text, scope by default. Docs mention only the refresh token use | All sessions, OAuth |
+| `CLAUDE_CODE_OAUTH_TOKEN` | <Documented /> | Gives an OAuth access token for claude.ai auth that wins over stored login. | Text. Counts as an auth source. Dropped from shell child envs | All sessions, SDK and automation |
+| `CLAUDE_CODE_OAUTH_TOKEN_FILE_DESCRIPTOR` | <Undocumented /> | Counts as an OAuth token source like `CLAUDE_CODE_OAUTH_TOKEN`. The code shown only tests that it is set. | Text. Remote sessions print `set` or `unset` for it in an error message | All sessions, remote sessions |
+| `CLAUDE_CODE_ORGANIZATION_UUID` | <Undocumented /> | Sets the organization UUID. Sent as `X-Organization-Uuid` with a `sk-ant-sid` session key and used as the org ID before the OAuth profile lookup. | Text. With `CLAUDE_CODE_ACCOUNT_UUID` and `CLAUDE_CODE_USER_EMAIL` it builds the `oauthAccount`. A self-hosted runner passes it to sessions | All sessions, mostly cloud and runner sessions |
+| `CLAUDE_CODE_PROXY_AUTH_HELPER_TTL_MS` | <Undocumented /> | Sets the time-to-live of the proxy auth helper result. The helper itself needs `CLAUDE_CODE_ENABLE_PROXY_AUTH_HELPER`. | A number of milliseconds, constant by default. Whole number in ms of 0 or more. Negative or unset gives an internal default constant | All sessions, when the proxy auth helper is on |
+| `CLAUDE_CODE_RATE_LIMIT_TIER` | <Undocumented /> | Gives the rate limit tier for a token from `CLAUDE_CODE_OAUTH_TOKEN`. | Text. Set by Claude Code from a background auth snapshot. Used with `CLAUDE_CODE_SUBSCRIPTION_TYPE` | Sessions using an env OAuth token |
+| `CLAUDE_CODE_SDK_HAS_HOST_AUTH_REFRESH` | <Undocumented /> | Tells Claude Code that the SDK host can refresh host auth tokens. Claude Code then asks the host for a new token when needed. | Set by Claude Code in the SDK child env to `1` when the host supports it. The wait uses `CLAUDE_CODE_HOST_AUTH_REFRESH_TIMEOUT_MS` | SDK and print mode. Set by Claude Code |
+| `CLAUDE_CODE_SDK_HAS_OAUTH_REFRESH` | <Undocumented /> | Tells Claude Code that the SDK host can refresh the OAuth token. Claude Code then requests a refresh from the host. | Set by Claude Code in the SDK child env to `1` when the host supports it. It takes effect only for some entrypoints | SDK and print mode. Set by Claude Code |
+| `CLAUDE_CODE_SESSION_ACCESS_TOKEN` | <Documented /> | Holds the session access token for remote sessions. It is sent as `Authorization: Bearer`, or as a cookie when it starts with `sk-ant-sid`. | Text. Falls back to the token file | Remote and ingress sessions. Set by Claude Code on refresh |
+| `CLAUDE_CODE_SUBSCRIPTION_TYPE` | <Undocumented /> | Gives the subscription type for a token supplied through `CLAUDE_CODE_OAUTH_TOKEN`. Claude Code also sets it from a background auth snapshot. | Text. It is used with `CLAUDE_CODE_RATE_LIMIT_TIER` | OAuth token auth and background sessions |
+| `CLAUDE_CODE_USER_EMAIL` | <Undocumented /> | Supplies the account email when a host passes the account by env. It is also used as `user.email` in telemetry and in the user context. | Text. Account use needs `CLAUDE_CODE_ACCOUNT_UUID` and `CLAUDE_CODE_ORGANIZATION_UUID` too | SDK hosts and remote runs |
+| `CLAUDE_CODE_WEBSOCKET_AUTH_FILE_DESCRIPTOR` | <Undocumented /> | Names a file descriptor that holds the WebSocket session token. Claude Code reads the token at startup. | Text. Read next to the API key and gateway descriptor reads | Remote and SDK URL sessions |
+| `CLAUDE_LOCAL_OAUTH_API_BASE` | <Undocumented /> | Sets the API base URL in the local OAuth config. | Text, `http` by default. Trailing slash removed | Local OAuth config |
+| `CLAUDE_LOCAL_OAUTH_APPS_BASE` | <Undocumented /> | Sets the claude.ai origin and authorize URL in the local OAuth config. | Text, `http` by default. Trailing slash removed | Local OAuth config |
+| `CLAUDE_LOCAL_OAUTH_CONSOLE_BASE` | <Undocumented /> | Sets the console authorize URL in the local OAuth config. | Text, `http` by default. Trailing slash removed | Local OAuth config |
+| `CLAUDE_SECURESTORAGE_CONFIG_DIR` | <Undocumented /> | Overrides the config directory that names the secure-storage credentials entry. | A path | - |
+| `CLAUDE_SESSION_INGRESS_TOKEN_FILE` | <Documented /> | Sets the path of the file that holds the session ingress token. A set value also makes the entrypoint `remote`. | A path | - |
+| `CLAUDE_TRUSTED_DEVICE_TOKEN` | <Undocumented /> | Supplies the trusted device token. It wins over the stored token and stops trusted-device enrollment. | Text (a secret) | - |
+| `DISABLE_LOGIN_COMMAND` | <Documented /> | Hides the `/login` command. | On or off | - |
+| `DISABLE_LOGOUT_COMMAND` | <Documented /> | Hides the `/logout` command. | On or off | - |
+| `GH_ENTERPRISE_TOKEN` | <Documented /> | Token for a GitHub Enterprise host. Used when `GH_HOST` names that host. Claude Code blanks it when it runs `gh`. | Text. The scrub list was not checked | GitHub features. Not set from project `env` before trust |
+| `GH_TOKEN` | <Documented /> | Token for github.com. Claude Code uses it first for GitHub API calls and blanks it when it runs `gh`. | Text. The scrub list was not checked | GitHub features. Not set from project `env` before trust |
+| `GITHUB_ENTERPRISE_TOKEN` | <Documented /> | Second name for the GitHub Enterprise token, after `GH_ENTERPRISE_TOKEN`. Claude Code blanks it when it runs `gh`. | Text. The scrub list was not checked | GitHub features. Not set from project `env` before trust |
+| `GITHUB_TOKEN` | <Documented /> | Second name for the github.com token, after `GH_TOKEN`. Claude Code blanks it when it runs `gh`. | Text. The scrub list was not checked | GitHub features. Not set from project `env` before trust |
+| `MCP_CLIENT_SECRET` | <Documented /> | Gives the OAuth client secret for MCP servers with pre-set credentials, without a prompt. | Text (a secret) | - |
+| `MCP_OAUTH_CALLBACK_PORT` | <Documented /> | Fixes the port of the MCP OAuth redirect callback. | A number | - |
+| `MCP_OAUTH_CLIENT_METADATA_URL` | <Undocumented /> | Overrides the OAuth client metadata document URL that MCP OAuth uses. | A URL | - |
+| `MCP_XAA_IDP_CLIENT_SECRET` | <Undocumented /> | Gives the identity provider client secret for the MCP cross-app access (XAA) setup command. | Text (a secret) | - |
+| `USE_LOCAL_OAUTH` | <Undocumented /> | Points OAuth and bridge URLs at a local server. It switches the bridge to `ws://localhost:8765` and trusts localhost hosts. | On or off. Used in a dev OAuth and bridge setup. Not for normal use | All sessions, development only |
+| `USE_STAGING_OAUTH` | <Undocumented /> | Points OAuth and bridge URLs at staging. The bridge uses `wss://bridge-staging.claudeusercontent.com`. | On or off. Claude Code sets it to `1` for remote sessions when the `api_base_url` contains `staging` | All sessions, set by Claude Code for staging cloud |
+
+## How It Works
+
+When several credentials exist, Claude Code uses the first one in its own order.
+The official docs list the order on the Authentication page.
+`ANTHROPIC_API_KEY` takes precedence over a profile sign-in.
+Some variables on this page are set by Claude Code for remote sessions and refreshed by it. Do not set those by hand.
+
+## Related Pages
+
+- [Environment Variables](index.md): how Claude Code reads variables and which value wins.
+- [Settings: Auth Keys](../settings/auth.md)
+- [Undocumented Items](../../reference/undocumented.md): every item that only the program shows.
+
+Source: the program (variable names found in the `2.1.303` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.

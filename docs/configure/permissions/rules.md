@@ -1,0 +1,116 @@
+---
+title: Permission Rules
+description: The rule syntax for allow, ask, and deny lists, every permissions key, the flags and hooks that touch permissions, and permission updates.
+sidebar_position: 3
+---
+
+A permission rule names a tool, and it can name a pattern for that tool.
+Three lists hold the rules. `allow` runs a call with no prompt. `ask` always prompts. `deny` blocks the call.
+For example, `Bash(git push:*)` in `deny` stops each `git push` command.
+
+## At a Glance
+
+| Question | Answer |
+| --- | --- |
+| Can you use it? | Yes. Add rules to `permissions.allow`, `permissions.ask`, or `permissions.deny`. |
+| Can you change it? | Yes. Edit a settings file, run `/permissions`, or pass `--allowedTools` and `--disallowedTools` for one session. |
+| Can you turn it on or off? | Remove the rule. `allowManagedPermissionRulesOnly` turns off rules from every scope except managed settings. |
+| Where does it live? | The `permissions` key of `~/.claude/settings.json`, `.claude/settings.json`, `.claude/settings.local.json`, and managed settings. |
+| Status | <Documented /> <Undocumented /> |
+
+## Example
+
+```json title=".claude/settings.json"
+{
+  "permissions": {
+    "allow": ["Bash(npm test)", "Bash(git diff *)", "Read(src/**)"],
+    "ask": ["Bash(git commit *)"],
+    "deny": ["Bash(git push:*)", "Read(.env)", "WebFetch"],
+    "additionalDirectories": ["../shared-lib"]
+  }
+}
+```
+
+## The `permissions` Keys
+
+Lists from all scopes merge. Official pages: [Configure Permissions](https://code.claude.com/docs/en/permissions) and [Choose a Permission Mode](https://code.claude.com/docs/en/permission-modes).
+
+| Item | Status | What it does | How it works | Where to set it |
+| --- | --- | --- | --- | --- |
+| `permissions.allow` | <Documented /> | List of rules for allowed operations | Lists from all scopes merge. Project `allow` rules wait for workspace trust. `allowManagedPermissionRulesOnly` limits them to managed settings | Each settings scope |
+| `permissions.ask` | <Documented /> | List of rules that always prompt | `ask` and `deny` rules apply at once, before trust. An `allow` rule in a local file does not outrank an `ask` rule from a project or managed file | Each settings scope |
+| `permissions.deny` | <Documented /> | List of rules for denied operations | A bare tool name hides the tool from the model. See Tools | Each settings scope |
+| `permissions.defaultMode` | <Documented /> | Default permission mode | `manual` is an alias of `default`. `auto` and `bypassPermissions` do not take effect from project or local settings | User, managed, `--settings` |
+| `permissions.disableBypassPermissionsMode` | <Documented /> | Value `disable` removes `bypassPermissions` | Checked when a session starts in or can return to that mode | Mainly managed settings |
+| `permissions.blockReadsOutsideWorkingDirectories` | <Documented /> | Refuses `Read`, `Grep`, `Glob`, and `LSP` reads outside the working directories in each mode | `true` from any scope wins, also over a managed `false`. Needs `2.1.257` | Each settings scope |
+| `permissions.additionalDirectories` | <Documented /> | Extra directories in the permission scope | Applies after workspace trust. `--add-dir` and `/add-dir` do the same for one session | Each settings scope |
+| `permissions.disableAutoMode` | <Documented /> | Value `disable` turns auto mode off | The reason text is `disableAutoMode in settings`. See [Auto Mode](auto-mode.md) | Settings, mainly managed |
+
+## Related Top-Level Keys
+
+| Item | Status | What it does | How it works | Where to set it |
+| --- | --- | --- | --- | --- |
+| `allowManagedPermissionRulesOnly` | <Documented /> | Only managed settings supply permission rules | Rules from other scopes are ignored with a notice that names this key | Managed settings |
+| `skipDangerousModePermissionPrompt` | <Documented /> | The user accepted the bypass dialog | Boolean | User settings |
+| `skipAutoPermissionPrompt` | <Documented /> | The user accepted the auto mode opt-in dialog | Boolean | Settings |
+| `useAutoModeDuringPlan` | <Documented /> | Plan mode uses auto mode semantics when auto mode is available | Default `true`. A `false` from managed, `--settings`, user, or local settings wins | Settings |
+| `autoMode` | <Documented /> | Classifier rules | See [Auto Mode](auto-mode.md) | User, `--settings`, managed |
+| `sandbox` | <Documented /> | Bash sandbox | See [Sandbox](sandbox.md) | Each settings scope |
+
+## Rule Syntax
+
+A rule has the form `Tool` or `Tool(content)`.
+The tool name is case-sensitive. The content has no space at its start or end inside the parentheses.
+Source: the program text `tool name case-sensitive, non-empty content with no leading/trailing whitespace inside the parens`.
+
+| Form | Status | What it matches | Notes |
+| --- | --- | --- | --- |
+| `Bash(npm test)`, `PowerShell(...)` | <Documented /> | Shell commands by pattern. | `*` is a wildcard. `\*` is a literal star. A pattern that ends in a space and one star also matches the bare command. |
+| `Bash(git push:*)` | <Documented /> | The legacy prefix form. | The suffix `:*` matches the prefix before it. Use `Bash(git push *)` in new rules. |
+| `Read(src/**)`, `Edit(...)` | <Documented /> | Files by glob. | `**` crosses folders. A rule that starts with `/` anchors at the primary working folder. |
+| `WebFetch(domain:example.com)` | <Documented /> | One host. | The prefix `domain:` is required. `domain:*.example.com` is allowed. A full URL is rejected. |
+| `WebSearch(terms)` | <Documented /> | Exact search terms. | Wildcards `*` and `?` are rejected. |
+| `mcp__server`, `mcp__server__tool` | <Undocumented /> | All tools of one MCP server, or one tool. | The program pattern is `^mcp__[\w-]+(?:__(?:[\w.-]+\|\*))?$`. |
+| `Skill(name)` | <Documented /> | One skill. | The program text is `Skill execution blocked by permission rules`. |
+| `Bash` (no content) | <Documented /> | The whole tool. | In `deny`, a bare tool name hides the tool from the model. |
+
+:::tip
+Explicit `deny` and `ask` rules apply before `allow` rules.
+See [Permission Flow](../../how-it-works/permission-flow.md).
+:::
+
+## Flags and Hooks That Touch Permissions
+
+| Item | Status | What it does | How it works | Where to set it |
+| --- | --- | --- | --- | --- |
+| `--permission-mode <mode>` | <Documented /> | Sets the mode for one session | Choices `acceptEdits`, `auto`, `bypassPermissions`, `manual`, `dontAsk`, `plan` | CLI |
+| `--allowedTools`, `--disallowedTools` | <Documented /> | Allow or deny tool rules for one session | Comma or space separated, such as `"Bash(git *) Edit"` | CLI |
+| `--dangerously-skip-permissions` | <Documented /> | Same as `--permission-mode bypassPermissions` | Use only in sandboxes with no internet | CLI |
+| `--allow-dangerously-skip-permissions` | <Documented /> | Makes bypass available without enabling it | Mode can be chosen later | CLI |
+| `--permission-prompts <host\|none>` | <Documented /> | Who answers prompts with `--print` | `none` denies every prompt. The mode still decides the rest | CLI print mode |
+| `--restricted` | <Documented /> | Restricted mode | Refuses `bypassPermissions`, confines file tools to the working directories. Env `CLAUDE_CODE_RESTRICTED=1` | CLI |
+| `PermissionRequest` hook | <Documented /> | Answers a prompt | Output `decision.behavior` is `allow` (with `updatedInput`, `updatedPermissions`) or `deny` (`message`, `interrupt`) | Hooks |
+| `PermissionDenied` hook | <Documented /> | Fires on an auto mode denial | Output `retry` | Hooks |
+
+## Permission Updates
+
+A `PermissionUpdate` changes rules or the mode. Hooks and SDK hosts send and receive them.
+
+| Field | Values |
+| --- | --- |
+| `type` | `addRules`, `replaceRules`, `removeRules`, `setMode`, `addDirectories`, `removeDirectories` |
+| `destination` | `userSettings`, `projectSettings`, `localSettings`, `session`, `cliArg` |
+| rule value | An object with `toolName` and `ruleContent`. |
+
+Source: `PermissionUpdate` in the program types (`types-2.1.303.d.ts`).
+
+## How It Works
+
+[Permission Flow](../../how-it-works/permission-flow.md) shows how Claude Code walks the lists, the hooks, and the mode.
+
+## Related Pages
+
+- [Permission Modes](modes.md)
+- [Sandbox](sandbox.md)
+- [Auto Mode](auto-mode.md)
+- [All Flags](../cli/flags.md)

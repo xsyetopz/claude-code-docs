@@ -1,0 +1,86 @@
+---
+title: Overview
+description: What Claude Code is, what this community site covers, and a map of every surface you can use or change.
+slug: /
+sidebar_position: 1
+---
+
+import { CLAUDE_CODE_VERSION } from '@site/src/version';
+
+Claude Code is a coding assistant that runs in your terminal, your editor, and the cloud.
+You tell it a task in plain words. It reads your files, runs commands, and edits code to finish the task.
+You can change almost every part of it with settings, hooks, plugins, skills, and MCP servers.
+
+:::note[Unofficial Site]
+This is a community project. It is not made by or tied to Anthropic.
+It describes Claude Code version <code>{CLAUDE_CODE_VERSION}</code>, the newest release, and nothing older.
+For supported behavior, check the official docs first.
+:::
+
+## What This Site Covers
+
+The official docs explain the features that Anthropic supports.
+This site goes further. It lists every surface you can use, change, or switch on and off, whether the official docs name it or not.
+It also explains how the program works inside, so you can predict what a setting will do.
+
+- Items that an official docs page names carry the <Documented /> badge.
+- Items that only the program shows carry the <Undocumented /> badge. They can change without notice.
+- Items where the docs and the program disagree carry the <Differs /> badge.
+- Items that work only behind a flag or a server gate carry the <Gated /> badge.
+
+Read [How to Read These Docs](start/how-to-read.md) for the full guide to badges and tables.
+The text uses Simple English: short sentences and common words.
+
+## Claude Code in One Minute
+
+Claude Code is one program that runs a loop.
+You send a prompt. The program builds a request and sends it to a model. The model either answers or asks for a tool.
+If it asks for a tool, Claude Code checks your permission rules, runs the tool, and sends the result back.
+The loop stops when the model answers without asking for a tool.
+
+```mermaid
+flowchart TD
+  Prompt[You type a prompt] --> Hooks1[UserPromptSubmit hooks]
+  Hooks1 --> Build[Build the request]
+  Build --> Model[Send to the model and stream the reply]
+  Model --> Ask{Does the model ask for a tool?}
+  Ask -- No --> Stop[Stop hooks run]
+  Stop --> Done[Answer shown and session saved]
+  Ask -- Yes --> Perm{Permission rules}
+  Perm -- Deny --> Result[Tool result: denied]
+  Perm -- Allow or ask and approve --> Run[Run the tool]
+  Run --> Result
+  Result --> Build
+```
+
+Along the way, Claude Code saves the conversation to a file in `~/.claude/projects/`, so you can resume it later.
+When the conversation gets too long, it asks the model for a short summary and goes on from the summary.
+
+| Step | What happens | Learn more |
+| --- | --- | --- |
+| Start | The program reads your settings, memory files, plugins, and MCP servers. | [Architecture](how-it-works/architecture.md) |
+| Turn | Your prompt becomes a request, the model streams a reply, and tools run. | [The Agent Loop](how-it-works/agent-loop.md) |
+| Request | The request holds tools, the system prompt, and the conversation, with cache markers. | [Request and Cache](how-it-works/request-and-cache.md) |
+| Prompt | The first text the model reads is built from named sections. | [The System Prompt](how-it-works/system-prompt.md) |
+| Context | Old messages are summarized when the window fills up. | [Context and Compaction](how-it-works/context-and-compaction.md) |
+| Save | Each message is appended to a JSONL file. | [Sessions and Storage](how-it-works/sessions-and-storage.md) |
+| Model | The model, effort, thinking, and retries are chosen. | [Models](how-it-works/models.md) |
+
+## Map of the Site
+
+| Section | What you find there | Start with |
+| --- | --- | --- |
+| Start Here | How to read the badges, a map of what you can change, the files Claude Code keeps, and breaking changes per release. | [How to Read These Docs](start/how-to-read.md) and [What Changed](start/what-changed.md) |
+| How It Works | The harness in depth: architecture, the agent loop, requests and cache, the system prompt, compaction, sessions, models, and permissions. | [Architecture](how-it-works/architecture.md) |
+| Configure | Settings keys, environment variables, command line flags, permissions, memory, output styles, the status line, and models and providers. | [Models and Providers](configure/models-and-providers.md) |
+| Extend | Hooks, skills and commands, subagents, plugins, MCP servers, the Mod API, and headless mode. | Hooks and Plugins |
+| Reference | Every tool and parameter, API endpoints and betas, the transcript format, probes, and an index of undocumented items. | [Transcript Format](reference/transcript-format.md) and [Undocumented Items](reference/undocumented.md) |
+| System Prompts | The full text of each system prompt variant, captured offline, with sizes and diffs. | [Captured System Prompts](prompts/index.md) |
+
+## Where to Go Next
+
+- To change how Claude Code behaves, begin with [Models and Providers](configure/models-and-providers.md) and the Settings pages.
+- To write a hook or a plugin, read [The Agent Loop](how-it-works/agent-loop.md) first. It shows where each hook event fires.
+- To understand cost and speed, read [Request and Cache](how-it-works/request-and-cache.md).
+- To see exactly what the model reads, open [Captured System Prompts](prompts/index.md).
+- To help improve this site, read the [Style Guide](contributing/style-guide.md).

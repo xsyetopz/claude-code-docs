@@ -1,0 +1,40 @@
+{
+  "name": "claude-code-docs",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "packageManager": "bun@1.4.3",
+  "scripts": {
+    "start": "docusaurus start",
+    "build": "docusaurus build",
+    "serve": "docusaurus serve",
+    "clear": "docusaurus clear",
+    "lint": "markdownlint-cli2 \"docs/**/*.{md,mdx}\"",
+    "check": "bun tools/check-docs.ts",
+    "verify": "bun run lint && bun run check && bun run build",
+    "verify:locked": "sh tools/build-locked.sh"
+  },
+  "dependencies": {
+    "@docusaurus/core": "^3.10",
+    "@docusaurus/preset-classic": "^3.10",
+    "@docusaurus/theme-mermaid": "^3.10",
+    "@easyops-cn/docusaurus-search-local": "^0.55.3",
+    "@fontsource/lora": "^5.3.0",
+    "@fontsource/poppins": "^5.3.0",
+    "@mdx-js/react": "^3.1.1",
+    "@mermaid-js/layout-elk": "^1.0.1",
+    "clsx": "^2.1.1",
+    "prism-react-renderer": "^2.4.1",
+    "react": "^19",
+    "react-dom": "^19"
+  },
+  "devDependencies": {
+    "@docusaurus/module-type-aliases": "^3.10",
+    "@docusaurus/tsconfig": "^3.10",
+    "@docusaurus/types": "^3.10",
+    "@types/bun": "^1.4.3",
+    "@types/react": "^19.3.0",
+    "markdownlint-cli2": "^0.23.3",
+    "typescript": "^7.0.2"
+  }
+}
