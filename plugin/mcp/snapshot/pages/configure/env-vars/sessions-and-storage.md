@@ -29,7 +29,7 @@ The table is sorted by name. See [Environment Variables](https://xsyetopz.github
 
 | Variable | Status | What it does | Values and default | Notes |
 | --- | --- | --- | --- | --- |
-| `BUN_INSTALL` | [Undocumented] | Names the Bun install folder. Claude Code uses it to detect a Bun global install and pick `bun` or `npm` for update commands. | Text. Checked against `<value>/install/global/` in the executable path | Auto-update and install detection |
+| `BUN_INSTALL` | [Undocumented] | Names the Bun install folder. Claude Code uses it to detect a Bun global install and pick `bun` or `npm` as the package manager for update and install-prefix commands. | Text. Checked against `<value>/install/global/` in the executable path | Auto-update and install detection |
 | `CLAUDE_AFTER_LAST_COMPACT` | [Undocumented] | Asks the session logs API for only the lines after the last compaction. | On or off. Truthy value adds the query param `after_last_compact=true` to the session logs fetch | Remote session log fetch. Not set from project `env` before trust |
 | `CLAUDE_BG_TCC_DISCLAIMED` | [Undocumented] | Marks that a macOS process already re-executed with disclaimed responsibility. This avoids a second re-exec. | Text. Set to `1` by Claude Code before `execve`. The new process reads it, then deletes it | MacOS background sessions. Not set from project `env` before trust |
 | `CLAUDE_BG_WORKSPACE_TRUSTED` | [Undocumented] | Tells a background session that the workspace was already trusted. Project settings env and hooks then stay on. | On or off. The dispatcher sets `1`. The session also checks the stored trust record | Background sessions. Not set from project `env` before trust |

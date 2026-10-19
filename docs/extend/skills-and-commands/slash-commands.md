@@ -158,7 +158,7 @@ It only shows when all of these are true:
 
 - You are in an interactive terminal (not `-p`).
 - You run macOS or Linux.
-- You use the native install (the binary is under `~/.local/share/claude/versions/`, so not npm).
+- You use the native install (the binary is under `~/.local/share/claude/versions/`, or `$XDG_DATA_HOME/claude/versions/`; a package-manager global install does not count).
 - You are not in a teammate agent or a remote session, and slash commands are not disabled.
 - A server-side feature flag is on for you. Some users never see it.
 
