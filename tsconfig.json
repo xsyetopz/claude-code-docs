@@ -40,5 +40,5 @@
     ],
     "useDefineForClassFields": true
   },
-  "exclude": [".docusaurus", "build", "captures"]
+  "exclude": [".docusaurus", "build", "captures", "**/dist"]
 }

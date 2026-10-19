@@ -18,11 +18,54 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.4.3
       - run: bun install --frozen-lockfile
-      - run: bun run verify
+      - name: Commitlint
+        env:
+          EVENT: ${{ github.event_name }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          BEFORE_SHA: ${{ github.event.before }}
+        run: |
+          if [ "$EVENT" = "pull_request" ]; then
+            from="$BASE_SHA"; to="$HEAD_SHA"
+          elif [ "$EVENT" = "push" ] && [ -n "$BEFORE_SHA" ] && ! echo "$BEFORE_SHA" | grep -qE '^0+$'; then
+            from="$BEFORE_SHA"; to="$GITHUB_SHA"
+          else
+            # First push: lint from the commit that added lefthook.yml (gates apply from then).
+            base="$(git log --diff-filter=A --format=%H -- lefthook.yml | tail -n 1)"
+            if [ -n "$base" ] && git rev-parse -q --verify "$base^" >/dev/null; then
+              from="$base^"
+            else
+              # No usable base: lint every commit, root included (a range would skip the root).
+              for sha in $(git rev-list --reverse "$GITHUB_SHA"); do
+                git log -1 --format=%B "$sha" | bunx commitlint || exit 1
+              done
+              exit 0
+            fi
+            to="$GITHUB_SHA"
+          fi
+          bunx commitlint --from "$from" --to "$to"
+      - name: Typecheck
+        run: bun run typecheck
+      - name: Format
+        run: bun run format:check
+      - name: Lint code
+        run: bun run lint:code
+      - name: Lint markdown
+        run: bun run lint
+      - name: Docs check
+        run: bun run check:docs
+      - name: Schemas check
+        run: bun run schemas:check
+      - name: Build
+        run: bun run build
+      - name: Llms check
+        run: bun run llms:check
       - uses: actions/upload-pages-artifact@v3
         if: github.event_name != 'pull_request'
         with:

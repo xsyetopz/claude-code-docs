@@ -5,14 +5,14 @@
 import {
   existsSync,
   mkdirSync,
-  readFileSync,
-  writeFileSync,
-  rmSync,
   readdirSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
 } from "node:fs";
 import { join } from "node:path";
-import { VARIANTS, SUB_MARK, type Variant } from "./variants.ts";
-import { NOTES, INDEX_FACTS, BADGE_NOTES } from "./notes.ts";
+import { BADGE_NOTES, INDEX_FACTS, NOTES } from "./notes.ts";
+import { SUB_MARK, VARIANTS, type Variant } from "./variants.ts";
 
 const ROOT = join(import.meta.dir, "..", "..");
 const CAPTURES = join(ROOT, "captures");
@@ -21,6 +21,12 @@ const DOCS = join(ROOT, "docs", "prompts");
 mkdirSync(OUT, { recursive: true });
 mkdirSync(DOCS, { recursive: true });
 
+type ApiBlock = {
+  type: string;
+  text: string;
+  input?: unknown;
+  content?: unknown;
+};
 type Part = { label: string; text: string };
 type Tool = { name: string; desc: number; schema: number };
 type Cap = {
@@ -71,7 +77,7 @@ function normalizer(meta: { cwd: string; cfg: string; home: string }) {
 
 function blocks(content: unknown): string[] {
   if (typeof content === "string") return [content];
-  return (content as any[]).map((c) =>
+  return (content as ApiBlock[]).map((c) =>
     c.type === "text"
       ? c.text
       : `[${c.type}] ${JSON.stringify(c.input ?? c.content ?? c).slice(0, 400)}`,
@@ -108,30 +114,34 @@ function load(v: Variant): Cap {
     };
   const b = r.body;
   const parts: Part[] = [];
-  const sys: any[] =
+  const sys: { text: string; cache_control?: unknown }[] =
     typeof b.system === "string" ? [{ text: b.system }] : (b.system ?? []);
-  sys.forEach((s, i) =>
+  for (const [i, s] of sys.entries()) {
     parts.push({
       label: `system[${i}] (${s.cache_control ? "cache marker: " + JSON.stringify(s.cache_control) : "no cache marker"})`,
       text: n(s.text),
-    }),
-  );
-  b.messages.forEach((m: any, i: number) =>
-    blocks(m.content).forEach((t, j) =>
+    });
+  }
+  for (const [i, m] of (
+    b.messages as { role: string; content: unknown }[]
+  ).entries()) {
+    for (const [j, t] of blocks(m.content).entries()) {
       parts.push({
         label: `messages[${i}].content[${j}] (role: ${m.role})`,
         text: n(t),
-      }),
-    ),
-  );
+      });
+    }
+  }
   const text = parts
     .map((p) => `=== ${p.label} ===\n${p.text.replace(/\s+$/, "")}\n`)
     .join("\n");
-  const tools: Tool[] = (b.tools ?? []).map((t: any) => ({
-    name: t.name,
-    desc: (t.description ?? "").length,
-    schema: JSON.stringify(t.input_schema ?? {}).length,
-  }));
+  const tools: Tool[] = (b.tools ?? []).map(
+    (t: { name: string; description?: string; input_schema?: unknown }) => ({
+      name: t.name,
+      desc: (t.description ?? "").length,
+      schema: JSON.stringify(t.input_schema ?? {}).length,
+    }),
+  );
   const sections = [
     ...new Set(
       sys.flatMap((s) =>
@@ -244,7 +254,8 @@ const seen = new Map<string, string>();
 const dupOf = new Map<string, string>();
 for (const [id, c] of caps) {
   const h = Bun.hash(c.text + JSON.stringify(c.tools)).toString();
-  if (seen.has(h)) dupOf.set(id, seen.get(h)!);
+  const first = seen.get(h);
+  if (first !== undefined) dupOf.set(id, first);
   else seen.set(h, id);
 }
 
@@ -281,11 +292,11 @@ for (const [id, c] of caps) {
     .filter((p) => p.label.startsWith("system["))
     .reduce((s, p) => s + p.text.length, 0);
   lines.push("## Size", "", "| Part | Characters |", "| --- | --- |");
-  c.parts.forEach((p) =>
+  for (const p of c.parts) {
     lines.push(
       `| \`${p.label.replace(/ \(.*/, "")}\` | ${fmt(p.text.length)} |`,
-    ),
-  );
+    );
+  }
   lines.push(
     `| System blocks only | ${fmt(sysChars)} |`,
     `| Everything shown here | ${fmt(c.chars)} |`,
@@ -304,7 +315,7 @@ for (const [id, c] of caps) {
     lines.push(
       "## Full Text",
       "",
-      `This variant sends exactly the same text and tools as [${caps.get(dup)!.v.title}](./${dup}.md). The page for that variant has the full text.`,
+      `This variant sends exactly the same text and tools as [${caps.get(dup)?.v.title ?? dup}](./${dup}.md). The page for that variant has the full text.`,
       "",
     );
   } else {
@@ -364,12 +375,12 @@ function toolDiff(a: Tool[], b: Tool[]): string {
   const rem = a.filter((t) => !bn.has(t.name)).map((t) => t.name),
     add = b.filter((t) => !an.has(t.name)).map((t) => t.name);
   const chg = b
-    .filter(
-      (t) =>
-        an.has(t.name) &&
-        (an.get(t.name)!.desc !== t.desc ||
-          an.get(t.name)!.schema !== t.schema),
-    )
+    .filter((t) => {
+      const old = an.get(t.name);
+      return (
+        old !== undefined && (old.desc !== t.desc || old.schema !== t.schema)
+      );
+    })
     .map((t) => t.name);
   const out: string[] = [];
   if (add.length) out.push(`adds ${add.map((x) => "`" + x + "`").join(", ")}.`);
@@ -384,7 +395,8 @@ function toolDiff(a: Tool[], b: Tool[]): string {
 
 // tools-per-variant
 {
-  const def = caps.get("default-lean")!;
+  const def = caps.get("default-lean");
+  if (!def) throw new Error("missing default-lean capture");
   const L: string[] = [
     "---",
     `title: "Tools per Variant"`,

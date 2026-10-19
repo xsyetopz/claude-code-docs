@@ -4,19 +4,25 @@
 import {
   mkdirSync,
   mkdtempSync,
-  writeFileSync,
   readFileSync,
-  rmSync,
   realpathSync,
+  rmSync,
+  writeFileSync,
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
-import { startStub, FAKE_KEY } from "./stub.ts";
-import { VARIANTS, SUB_MARK, type Variant } from "./variants.ts";
+import { FAKE_KEY, startStub } from "./stub.ts";
+import { SUB_MARK, VARIANTS, type Variant } from "./variants.ts";
 
 export const ROOT = join(import.meta.dir, "..", "..");
 export const CAPTURES = join(ROOT, "captures");
-const BIN = join(process.env.HOME!, ".local/share/claude/versions/2.1.303");
+function requireEnv(name: string): string {
+  const v = process.env[name];
+  if (!v) throw new Error(`${name} is not set`);
+  return v;
+}
+
+const BIN = join(requireEnv("HOME"), ".local/share/claude/versions/2.1.303");
 
 const argv = process.argv.slice(2);
 const only = argv.includes("--only")
@@ -55,7 +61,7 @@ async function run(v: Variant) {
       writeFileSync(join(proj, "README.md"), "probe\n");
       Bun.spawnSync(["git", ...c], {
         cwd: proj,
-        env: { PATH: process.env.PATH!, HOME: home, ...genv },
+        env: { PATH: requireEnv("PATH"), HOME: home, ...genv },
       });
     }
     writeFileSync(join(proj, "dirty.txt"), "x\n"); // untracked file so the status is not empty
@@ -81,7 +87,7 @@ async function run(v: Variant) {
         stdout: "pipe",
         stderr: "pipe",
         env: {
-          PATH: process.env.PATH!,
+          PATH: requireEnv("PATH"),
           HOME: home,
           TMPDIR: tmpdir(),
           CLAUDE_CONFIG_DIR: cfg,

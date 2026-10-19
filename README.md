@@ -18,7 +18,7 @@ bun install
 bun run start     # dev server
 bun run build     # production build into build/
 bun run serve     # serve the build
-bun run verify    # lint + check + build, run this before a pull request
+bun run verify    # typecheck + format + lint + checks + build, run this before a pull request
 ```
 
 ## Contribute

@@ -6,7 +6,9 @@ Not made by or tied to Anthropic. Hosted at <https://xsyetopz.github.io/claude-c
 ## Commands
 
 - Bun `1.4.3`. `bun install`, `bun run start` (dev server).
-- `bun run verify:locked`: the one check (lint, docs check, schema check, build). No `tsc`.
+- `bun run verify:locked`: the one check (every gate plus build).
+- Gates: `typecheck` (`bun --check`, Bun's built-in), `format:check`/`format` (Biome), `lint:code` (Biome lint), `lint` (markdownlint), `check:docs`, `schemas:check`.
+- `bun install` installs lefthook hooks: pre-commit runs the gates on staged files, commit-msg runs commitlint, pre-push runs `verify:locked`.
 - `bun run schemas`: regenerate `schemas/` from the installed Claude Code binary.
 
 ## Layout

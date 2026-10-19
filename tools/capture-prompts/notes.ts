@@ -1,5 +1,4 @@
 // Hand-written text for the pages. Facts here come from the captures; the wiki is cited where a capture disagrees.
-const C = (s: string) => "`" + s + "`";
 
 export const BADGE_NOTES: Record<string, string> = {
   "default-sonnet":

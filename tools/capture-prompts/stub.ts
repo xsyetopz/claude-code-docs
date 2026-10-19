@@ -6,7 +6,7 @@ import { appendFileSync } from "node:fs";
 export const FAKE_KEY = "sk-ant-fake-probe";
 export type StubOpts = {
   log: string;
-  tool?: string;
+  tool?: string | undefined;
   toolInput?: unknown;
   text?: string;
 };
@@ -14,16 +14,29 @@ export type StubOpts = {
 const sse = (ev: string, d: unknown) =>
   `event: ${ev}\ndata: ${JSON.stringify(d)}\n\n`;
 
-function reply(body: any, o: StubOpts) {
-  const msgs: any[] = body?.messages ?? [];
+type Block = {
+  type: string;
+  text?: string;
+  input?: unknown;
+  [k: string]: unknown;
+};
+type ApiBody = {
+  model?: string;
+  stream?: boolean;
+  messages?: { content?: unknown }[];
+  tools?: { name: string }[];
+};
+
+function reply(body: ApiBody | null | undefined, o: StubOpts) {
+  const msgs = body?.messages ?? [];
   const hasResult = msgs.some(
     (m) =>
       Array.isArray(m?.content) &&
-      m.content.some((b: any) => b.type === "tool_result"),
+      (m.content as Block[]).some((b) => b.type === "tool_result"),
   );
-  const toolNames: string[] = (body?.tools ?? []).map((t: any) => t.name);
+  const toolNames: string[] = (body?.tools ?? []).map((t) => t.name);
   const useTool = o.tool && !hasResult && toolNames.includes(o.tool);
-  const content = useTool
+  const content: Block[] = useTool
     ? [
         {
           type: "tool_use",
@@ -50,12 +63,12 @@ function reply(body: any, o: StubOpts) {
   };
 }
 
-function stream(m: any) {
+function stream(m: ReturnType<typeof reply>) {
   let out = sse("message_start", {
     type: "message_start",
     message: { ...m, content: [], stop_reason: null },
   });
-  m.content.forEach((b: any, i: number) => {
+  m.content.forEach((b, i) => {
     if (b.type === "text") {
       out += sse("content_block_start", {
         type: "content_block_start",
@@ -126,8 +139,8 @@ export function startStub(o: StubOpts) {
         }) + "\n",
       );
       if (url.pathname === "/v1/messages" && req.method === "POST") {
-        const m = reply(body, o);
-        if ((body as any)?.stream)
+        const m = reply(body as ApiBody | null, o);
+        if ((body as ApiBody | null)?.stream)
           return new Response(stream(m), {
             headers: { "content-type": "text/event-stream" },
           });
