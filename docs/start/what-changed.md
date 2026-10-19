@@ -68,7 +68,7 @@ Released October 15, 2026. Source: [Changelog](https://code.claude.com/docs/en/c
 | Change | Status | What it means for you | Where to read more |
 | --- | --- | --- | --- |
 | `CLAUDE_CODE_RETRY_WATCHDOG_MAX_USAGE_LIMIT_WAIT_MS` added | <Documented /> | Unattended retry mode ends a request at a usage limit that resets too far away. | [Environment Variables](../configure/env-vars/index.md) |
-| Vim `%` motion | <Documented /> | Jumps to the matching bracket, alone or with `d`, `c`, or `y`. | Interactive Mode page in the official docs |
+| Vim `%` motion | <Documented /> | Jumps to the matching bracket, alone or with `d`, `c`, or `y`. | [Changelog](https://code.claude.com/docs/en/changelog) (the changelog entry for 2.1.301) |
 | Mod `Input` gets `rows` | <Documented /> | A text field of several lines. Enter submits. | [Mod API UI](../extend/mod-api/ui.md) |
 | Mod hook `.catch` runs less often | <Documented /> | It runs only when the hook throws or times out. | [Mod API Hooks](../extend/mod-api/hooks.md) |
 | Mod `$.env.set` result | <Documented /> | It resolves with `{}` once set, or with `{ deny }` and a reason. | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/clock-http-process-env-settings.md) |

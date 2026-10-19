@@ -62,7 +62,7 @@ Source: [Environment Variables](https://code.claude.com/docs/en/env-vars) and th
 | `CLAUDE_CODE_PLUGIN_KEEP_MARKETPLACE_ON_FAILURE` | <Documented /> | Keeps the old checkout when a refresh fails. | Set to `1`. |
 | `CLAUDE_CODE_PLUGIN_PREFER_HTTPS` | <Documented /> | Clones GitHub shorthand over HTTPS. | Set to `1`. |
 | `CLAUDE_CODE_PLUGIN_SEED_DIR` | <Documented /> | Gives read-only seed folders. | Registers marketplaces at start and uses the plugins already cached there. |
-| `CLAUDE_CODE_PLUGIN_DIR_WATCH` | <Documented /> | Reloads a mod when its file changes. | On by default in interactive sessions. |
+| `CLAUDE_CODE_PLUGIN_DIR_WATCH` | <Documented /> | Reloads a mod when its file changes. | On by default in interactive sessions and off in non-interactive ones. `0` turns it off everywhere. |
 | `FORCE_AUTOUPDATE_PLUGINS` | <Documented /> | Updates plugins even when `DISABLE_AUTOUPDATER` is set. | Set to `1`. |
 | `CLAUDE_CODE_SYNC_PLUGINS`, `CLAUDE_CODE_SYNC_PLUGIN_INSTALL` and their `_TIMEOUT_MS` forms | <Documented /> | Sync claude.ai plugins in headless runs. | The exact effects are not documented. In print mode, `CLAUDE_CODE_SYNC_PLUGIN_INSTALL` makes the stream carry [`plugin_install`](../headless/stream-json.md) messages. |
 | `CLAUDE_CODE_PLUGIN_USE_ZIP_CACHE`, `CLAUDE_CODE_PLUGIN_BINARY_ASSETS`, `CLAUDE_CODE_PLUGIN_ATTRIBUTION`, `CLAUDE_CODE_PLUGIN_ARCHIVE_URL`, `CLAUDE_CODE_PLUGIN_NAME` | <Undocumented /> | Plugin env names found in the program. | Only the names are known. A message in the program mentions "zip cache mode". |
@@ -76,7 +76,7 @@ Source: [Environment Variables](https://code.claude.com/docs/en/env-vars) and th
 | `pluginConfigs` | <Documented /> | Stores saved options by plugin id. | Holds `options` and `mcpServers`. |
 | `strictPluginOnlyCustomization` | <Documented /> | Limits customization to plugins. | Managed. An array of surfaces such as `skills` or `hooks`, or `true`. |
 | `disableSideloadFlags` | <Documented /> | Rejects the sideload flags. | Managed. Covers `--plugin-dir`, `--plugin-url`, `--agents`, `--mcp-config`. |
-| `prependPlugins`, `appendPlugins` | <Documented /> | Set the hook order of managed plugins. | Managed. Listed ids run outermost or innermost. |
+| `prependPlugins`, `appendPlugins` | <Differs note="Docs say user or managed scope. The schema says managed only." /> | Set the hook order of managed plugins. | Managed only, per the schema. Listed ids run outermost or innermost. See [Hooks and Plugins Settings](../../configure/settings/hooks-and-plugins.md). |
 | `allowedChannelPlugins`, `pluginTrustMessage` | <Documented /> | Allow channel plugins, and add trust text. | Managed. |
 
 Marketplace keys are on the [Marketplaces](marketplace.md#settings-keys) page.

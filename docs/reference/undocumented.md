@@ -208,7 +208,7 @@ The 85 default auto mode rules are all listed on [Auto Mode Default Rules](../co
 
 Hook settings, events, fields, and handler types.
 
-Count: 14.
+Count: 16.
 
 | Item | Where |
 | --- | --- |
@@ -216,7 +216,9 @@ Count: 14.
 | `onFailure` has no effect | [Hook Configuration](../extend/hooks/configuration.md#failure-handling) (Failure Handling) |
 | `CLAUDE_CODE_RESTRICT_PERSONAL_CONFIG` | [Hook Configuration](../extend/hooks/configuration.md#failure-handling) (Failure Handling) |
 | `CLAUDE_CODE_HOOKS_SAME_THREAD` | [Hook Configuration](../extend/hooks/configuration.md#environment-variables-for-hooks) (Environment Variables for Hooks) |
-| `CLAUDE_CODE_DISABLE_HOOK_FORWARDING`, `CLAUDE_CODE_RESUME_SESSIONSTART_HOOKS_WAIT_MS`, `DISABLE_BRIEF_MODE_STOP_HOOK` | [Hook Configuration](../extend/hooks/configuration.md#environment-variables-for-hooks) (Environment Variables for Hooks) |
+| `CLAUDE_CODE_DISABLE_HOOK_FORWARDING` | [Hook Configuration](../extend/hooks/configuration.md#environment-variables-for-hooks) (Environment Variables for Hooks) |
+| `CLAUDE_CODE_RESUME_SESSIONSTART_HOOKS_WAIT_MS` | [Hook Configuration](../extend/hooks/configuration.md#environment-variables-for-hooks) (Environment Variables for Hooks) |
+| `DISABLE_BRIEF_MODE_STOP_HOOK` | [Hook Configuration](../extend/hooks/configuration.md#environment-variables-for-hooks) (Environment Variables for Hooks) |
 | `permissionDisplay` | [Hook Events](../extend/hooks/events.md#pretooluse) (PreToolUse) |
 | `source` | [Hook Events](../extend/hooks/events.md#userpromptsubmit) (UserPromptSubmit) |
 | `auth_storage_failure`, `computer_use_enter`, `computer_use_exit`, and 3 more | [Hook Events](../extend/hooks/events.md#notification) (Notification) |
