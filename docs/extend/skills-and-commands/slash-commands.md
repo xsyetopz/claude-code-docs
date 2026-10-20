@@ -187,9 +187,24 @@ A yes sends `DELETE /api/frame/<slug>`. The program retries once on `409`, `429`
 
 Reset times look like `Resets 11:26am (Europe/Tallinn)`. Minutes are dropped on the hour. A date is added when the reset is more than 24 hours away, and weekly rows always show the date.
 
-When the usage endpoint is rate limited, the panel shows `Showing last-known usage (rate limited until <time>)`. The end time comes from `Retry-After`, with a 5-minute default and a 1-hour cap. With no end time, it shows `Usage endpoint is rate limited. Please try again in a moment.`
+When the usage endpoint is rate limited, `/usage` says so. What you see depends on the data it already has. A run against a local stub that answered `429` showed these texts. The time is 12-hour, rounded up to the next minute, with no zone and no date. This differs from the `Resets` lines.
 
-Source: the program. The delete prompt, the footer keys, and `Artifact deleted` were also seen in a live run. The `Resets` lines were seen against a local stub with fake subscriber credentials.
+| Data Before the `429` | What `/usage` Shows |
+| --- | --- |
+| None | `Error: Usage endpoint is rate limited until 10:44am.` |
+| None, and the reply is a `200` with an `error` of type `rate_limit_error` | `Error: Usage endpoint is rate limited. Please try again in a moment.` |
+| Bars from the `anthropic-ratelimit-unified-5h` and `-7d` headers | The bars, then `Per-model breakdown unavailable (rate limited until 10:43am)` |
+| The same, plus `7d_oi` headers | An extra `Current week (<model>)` row, then `Partial usage data (rate limited until 10:47am)` |
+| A saved cache that is 10 minutes old | The cached bars, then `Showing last-known usage as of 10m ago (rate limited until 10:45am)` |
+| The same cache, with the `200` reply | `Showing last-known usage as of 10m ago (rate limited — try again in a moment)` |
+
+The end time comes from `Retry-After`. A `Retry-After` of `1800` gave 30 minutes, and a missing one gave the 5-minute default. The program caps the hold at 1 hour. Claude Code keeps the hold in memory for each token, so a new process asks again. A saved cache younger than 60 seconds is shown without a request. The `200` reply has no end time, because only the `429` path reads the hold.
+
+With `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` set, the panel shows `Failed to load usage data` and sends no request.
+
+Not seen live, so these come from the program: the `(could not refresh)` ending, which the program uses when the request fails for a reason other than a rate limit, the form `Showing last-known usage (rate limited until <time>)` without `as of`, and a `403` response.
+
+Source: the program. The delete prompt, the footer keys, and `Artifact deleted` were also seen in a live run. The `Resets` lines and the rate-limit texts above were seen against a local stub with fake subscriber credentials.
 
 ## Related Pages
 

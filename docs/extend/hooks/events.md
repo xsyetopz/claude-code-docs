@@ -394,13 +394,21 @@ Handlers: `command`, `http`, `mcp_tool`.
 | `agent_needs_input`, `agent_completed` | <Documented /> | Type | Background session events in agent view. `agent_needs_input` for a teammate setup question needs 2.1.248. `agent_needs_input` was seen live for the auto mode classifier billing notice (message `Auto mode has a classifier billing notice to acknowledge`) that shows the first time auto mode runs with a custom base URL. `agent_completed` was not seen (it needs a background session). |
 | `quota_auto_resume_fired`, `quota_auto_resume_stale`, `quota_auto_resume_disabled` | <Documented /> | Type | Usage limit wait events. Need 2.1.234. Not seen live: they need a login. |
 | `plugin_notification` | <Undocumented /> | Type | Sent by the mod call `$.ui.notify`. Seen live: the hook got `message`, `title`, and `notification_type`, even with no notification channel. |
-| `auth_storage_failure` | <Undocumented /> | Type | Sent after the OAuth token exchange, when storage fails. Message: `Claude Code login needs attention: credentials may not have been saved`, or `Claude Code login needs attention: credentials could not be saved`. |
-| `worker_permission_prompt` | <Undocumented /> | Type | Sent by the team lead's inbox poller. Messages: `<worker> needs permission for <tool>`, or `<worker> needs network access to <host>`. |
-| `push_notification` | <Undocumented /> | Type | Sent with the message from the `PushNotification` tool. Skipped when the config is off (`config_off`) or the user is present (`user_present`). Setting `CLAUDE_CODE_DISABLE_NOTIFICATION_PRESENCE_CHECK` turns off the presence check. |
-| `computer_use_enter` | <Undocumented /> | Type | Message when computer use starts: `Claude is using your computer · press Esc to stop` (or `Ctrl+C`). |
-| `computer_use_exit` | <Undocumented /> | Type | Message when computer use ends: `Claude is done using your computer`. |
+| `auth_storage_failure` | <Undocumented /> | Type | Sent after the OAuth token exchange, when saving the credentials fails. Not seen live. Message: `Claude Code login needs attention: credentials may not have been saved`, or `Claude Code login needs attention: credentials could not be saved`. |
+| `worker_permission_prompt` | <Undocumented /> <Gated note="Set CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 or use --agent-teams" /> | Type | Sent by the team lead's inbox poller when a teammate asks for permission. Needs agent teams and at least one teammate. It fires only when the lead is idle and shows no dialog. Seen live: the message was `A subagent needs permission for Bash`, with no `title`. A normal `permission_prompt` followed when the dialog showed. The message `<worker> needs network access to <host>` comes from the program and was not run. |
+| `push_notification` | <Undocumented /> <Gated note="The PushNotification tool is behind a server-side flag that is off by default" /> | Type | Sent with the message from the `PushNotification` tool. Skipped when the config is off (`config_off`) or the user is present (`user_present`). Setting `CLAUDE_CODE_DISABLE_NOTIFICATION_PRESENCE_CHECK` turns off the presence check. Seen live: the input had the common fields, `message`, and `notification_type`, with no `title`. When skipped, the hook does not fire (from the program; not run). |
+| `computer_use_enter` | <Undocumented /> <Gated note="Needs a Pro or Max plan, a server flag, and not HIPAA" /> | Type | Not seen live. Message when computer use starts: `Claude is using your computer · press Esc to stop` (or `Ctrl+C`). |
+| `computer_use_exit` | <Undocumented /> <Gated note="Needs a Pro or Max plan, a server flag, and not HIPAA" /> | Type | Not seen live. Sent at the end of a turn that sent `computer_use_enter`. Message when computer use ends: `Claude is done using your computer`. |
 
-The five rows after `plugin_notification` come from the program and were not seen live. The program runs Notification hooks for each type in the table above before it chooses a notification channel. The program also lists `model_refusal_fallback` as a type.
+Seen live: `push_notification` and `worker_permission_prompt`. See [Probes](../../reference/probes.md#notification-types) for how they were triggered.
+
+These come from the program and were not seen live:
+
+- `auth_storage_failure` fires only after a real OAuth login. A probe cannot point the token request at a local server, and on macOS the save goes to the real keychain, so it was not run.
+- `computer_use_enter` and `computer_use_exit` fire when the program takes the computer-use lock, The program seems to take it only for tools that act on the screen, so this was not run. The probe enabled the built-in computer-use server, but its listing and wait calls did not fire the hook.
+- The network form of `worker_permission_prompt` was not run.
+
+The program also lists `model_refusal_fallback` as a type, but the probe found no code that sends a Notification with it (a reading of the program, not a live result). The same name is a system message subtype (see [Stream JSON](../headless/stream-json.md)) for a retry on a fallback model after a refusal. The program runs Notification hooks for each type that is sent before it chooses a notification channel.
 
 ### `Stop`
 

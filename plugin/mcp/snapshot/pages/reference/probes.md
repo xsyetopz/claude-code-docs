@@ -78,6 +78,23 @@ With `--permission-mode auto` and a `Bash` call, the stub got classifier request
 The debug log says `server_no_result` and falls back to billed local classifier requests.
 Neither classifier variable changed that.
 
+### `autoMode.classifyAllShell`
+
+We ran `claude -p --permission-mode auto` against the stub with the command `curl -s http://127.0.0.1:9/x` and a user allow rule `Bash(curl -s http://127.0.0.1:9/x)`. The count is the stub requests that carried the classifier system prompt. A managed folder needed `sudo`, so the user ran the managed cases.
+
+| Settings | Classifier Requests |
+| --- | --- |
+| No allow rule | 1 |
+| Allow rule, flag unset | 0 |
+| Allow rule, user `true` or `--settings` `true` | 1 |
+| Allow rule, user `false` or `--settings` `false` | 0 |
+| User `false` and `--settings` `true`, or the reverse | 1 |
+| Managed `false`, with user or `--settings` `true` | 1 |
+| Managed `false`, with user or `--settings` `false`, or neither | 0 |
+| Managed `true`, with user `false`, `--settings` `false`, or neither | 1 |
+
+Any `true` in user, `--settings`, or managed settings turns the flag on. `false` is the same as unset. The program reads no project or local source. Not seen: the setting in project or local settings (the program ignores them; not run).
+
 ## Subagents and Hooks
 
 Follow-up probes used the same stub, a fake key, a temp home folder, and `-p --output-format stream-json --verbose`. The stub scripted `Agent`, `Workflow`, `Bash`, and `Skill` calls, so each subagent request could be logged. No login was used, so cloud paths were not run. The interactive screen has its own section below.
@@ -165,12 +182,25 @@ These runs used the real `2.1.304` binary in a pseudo-terminal (a Python `pty` d
 | `statusLine` and `subagentStatusLine` commands that log their input | [Undocumented] | `subagentStatusLine` ran on a fixed 5-second tick and got no `COLUMNS` or `LINES`. `statusLine` got `transcript_path` from the first run and `prompt_id` after the first prompt. Runs paused under dialogs. See [Status Line](https://xsyetopz.github.io/claude-code-docs/configure/status-line.md). |
 | Instruction file size warning with 45.6k, 156.0k, and four 34.4k files | [Undocumented] | A banner under the header at start and a line in `/status`. The 40k, 120k total, and 150k (Opus 5.5) limits held. See [Memory and Rules](https://xsyetopz.github.io/claude-code-docs/configure/memory-and-rules.md). |
 | `PostToolUse` hook logging for `Read`, `Write`, `Edit`, `Bash`, and an MCP tool | [Undocumented] | Same shapes as the `-p` probe (no `contentNotInModelContext` on `Edit`). See [Hook Events](https://xsyetopz.github.io/claude-code-docs/extend/hooks/events.md#posttooluse-tool_response-shapes). |
+| `/usage` when the usage endpoint answers `429`, with fake subscriber credentials and a local TLS stub behind a proxy (without `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC`) | [Undocumented] | Six texts, such as `Error: Usage endpoint is rate limited until 10:44am.` and `Showing last-known usage as of 10m ago (rate limited until 10:45am)`. See [Slash Commands](https://xsyetopz.github.io/claude-code-docs/extend/skills-and-commands/slash-commands.md). With `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` set, the panel showed `Failed to load usage data` and sent no request. Not seen: the `(could not refresh)` variants, the form without `as of`, and the `403` path. |
 | A mod that calls `$.ui.notify` | [Undocumented] | The hook got `message`, `title`, and `notification_type` (type `plugin_notification`), even with no notification channel. See [Hook Events](https://xsyetopz.github.io/claude-code-docs/extend/hooks/events.md#notification). |
+
+### Notification Types
+
+Follow-up probes ran the interactive screen with a hook that logs each `Notification` input. The same stub and fake key were used, with a temp home and config folder.
+
+| What We Ran | Status | What We Saw |
+| --- | --- | --- |
+| `PushNotification` tool call `{message, status: "proactive"}` | [Undocumented] [Gated: The tool is behind a server-side flag that is off by default] | The hook got `session_id`, `transcript_path`, `cwd`, `prompt_id`, `hook_event_name`, `message` (`probe push`), and `notification_type` `push_notification`. No `title`. The tool result was `Terminal notification sent.` The flag is `tengu_kairos_push_notifications`. The probe forced it through cached feature flags in the temp config, with `CLAUDE_CODE_GB_DISK_CACHE_WHEN_TELEMETRY_OFF=1`, `ENABLE_TOOL_SEARCH=false` (the tool is deferred), and `CLAUDE_CODE_DISABLE_NOTIFICATION_PRESENCE_CHECK=1`. A run without the presence-check variable was not done. |
+| Agent teams (`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`), one named background teammate, and a hand-written `permission_request` in `<config>/teams/<team>/inboxes/team-lead.json` | [Undocumented] [Gated: Set CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 or use --agent-teams] | The hook got `worker_permission_prompt` with the message `A subagent needs permission for Bash` (the name part was `A subagent`, not the teammate name) and no `title`. A normal `permission_prompt` (`Claude needs your permission`) followed when the dialog showed `Bash command · from a subagent`. The lead's poller starts only when a teammate exists, and it sends the notification only when the lead is idle with no dialog shown. The network form, `<name> needs network access to <host>`, was not run. |
+| Built-in computer-use MCP server, enabled in `/mcp` | [Undocumented] [Gated: Needs a Pro or Max plan, a server flag, and not HIPAA] | It connected with its tools. `list_granted_applications` and `wait` calls did not fire the hook. The program sends `computer_use_enter` when it takes the computer-use lock, so the probe stopped before any action that controls the screen. Not seen. |
+| Search of the program for `model_refusal_fallback` | [Undocumented] | The name is in the `notification_type` list, but no code sends a Notification with it. The only other use is a system message subtype. This is a reading of the program, not a live run. |
+| `auth_storage_failure` | [Undocumented] | Not run. The token URL cannot point at localhost (`CLAUDE_CODE_CUSTOM_OAUTH_URL` allows only three Anthropic hosts), and on macOS the save goes to the real keychain. |
 
 Not run, because they need a login, a cloud or remote session, or another host:
 
 - `callback` hook forwarding for cloud sessions.
-- The `Notification` types `auth_success`, `agent_completed`, `quota_auto_resume_fired`, `quota_auto_resume_stale`, `quota_auto_resume_disabled`, `auth_storage_failure`, `computer_use_enter`, `computer_use_exit`, `push_notification`, and `worker_permission_prompt`.
+- The `Notification` types `auth_success`, `agent_completed`, `quota_auto_resume_fired`, `quota_auto_resume_stale`, and `quota_auto_resume_disabled`. The other types are in [Notification Types](#notification-types).
 - Cloud and Cowork memory variables.
 - `Glob`, `Grep`, `NotebookEdit`, `WebFetch`, and `WebSearch` in the `PostToolUse` shape probe.
 

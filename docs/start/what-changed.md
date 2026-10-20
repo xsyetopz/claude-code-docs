@@ -121,9 +121,9 @@ We also ran these against a local stub with a fake key:
 
 The `/artifacts` delete confirmation was seen live. The panel asks `Delete <title>? This cannot be undone.` It offers `No, keep it` and `Yes, delete it`, and the footer shows `y` to delete and `n` to keep. Choosing yes shows `Artifact deleted`. With an API key and no login, `/artifacts` says `Unknown command`. In print mode with `CLAUDE_CODE_OAUTH_TOKEN` it says `/artifacts isn't available in this environment.` In the interactive screen with that token it opens a panel with the tabs `All`, `Mine`, and `Shared`, and an empty list says `No artifacts yet. Publish one with the Artifact tool.`
 
-`/usage` shows only session cost and tokens with an API key or `CLAUDE_CODE_OAUTH_TOKEN`, even after real calls. The rate-limit section needs a claude.ai login with the `user:inference` and `user:profile` scopes (the program). A local stub with fake subscriber credentials showed the `Resets` lines. The `rate limited until <time>` text is new in `2.1.304`. It appears only when the usage endpoint is rate limited (the program).
+`/usage` shows only session cost and tokens with an API key or `CLAUDE_CODE_OAUTH_TOKEN`, even after real calls. The rate-limit section needs a claude.ai login with the `user:inference` and `user:profile` scopes (the program). A local stub with fake subscriber credentials showed the `Resets` lines. The `rate limited until <time>` text is new in `2.1.304`. It appears only when the usage endpoint is rate limited (the program). A stub that answered `429` showed it, in four forms. See [Slash Commands](../extend/skills-and-commands/slash-commands.md). With `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` set, `/usage` shows `Failed to load usage data` and sends no request.
 
-For the `/artifacts` and `/usage` rows, <Documented /> means the release notes name them. The live runs did not see the rate-limit end-time text.
+For the `/artifacts` and `/usage` rows, <Documented /> means the release notes name them. A local stub saw the rate-limit end-time text. The live runs with a real token did not.
 :::
 
 ## Example

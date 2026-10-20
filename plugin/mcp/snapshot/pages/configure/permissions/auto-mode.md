@@ -57,7 +57,7 @@ Official pages: [Choose a Permission Mode](https://code.claude.com/docs/en/permi
 | `autoMode.soft_deny` | [Documented] | Block rules that user intent can clear | Same list rules | Same |
 | `autoMode.hard_deny` | [Documented] | Block rules that no intent clears | Same list rules | Same |
 | `autoMode.environment` | [Documented] | Facts about your setup and trusted resources | Same list rules | Same |
-| `autoMode.classifyAllShell` | [Documented] | Suspends every `Bash` and `PowerShell` allow rule in auto mode | All shell commands go to the classifier. Default `false`. `true` from `~/.claude/settings.json` or `--settings` wins over a managed `false` | User, `--settings` |
+| `autoMode.classifyAllShell` | [Documented] | Suspends every `Bash` and `PowerShell` allow rule in auto mode | All shell commands go to the classifier. Default `false`. The program reads user, `--settings`, and managed settings, and the flag is on if any of them is `true`. `false` is the same as unset, so it cannot turn the flag off. Project and local settings are not read | User, `--settings`, managed |
 | `permissions.disableAutoMode` | [Documented] | Turns auto mode off | Value `disable` | Settings |
 | `skipAutoPermissionPrompt` | [Documented] | The user accepted the opt-in dialog | Boolean | Settings |
 | `useAutoModeDuringPlan` | [Documented] | Plan mode uses auto semantics | Default `true` | Settings |
@@ -66,7 +66,7 @@ Official pages: [Choose a Permission Mode](https://code.claude.com/docs/en/permi
 The plugin `settings.json` does not accept `autoMode`.
 
 > **Which Sources Count:** A probe ran `claude auto-mode config` with `autoMode.allow` set in each source. Rules from user settings and from a `--settings` file applied. Rules in `.claude/settings.json` and `.claude/settings.local.json` were ignored. The program logs `tengu_settings_auto_mode_untrusted_source_ignored` for them. Its message says only policy, user, and flag settings may set the rules. Managed settings also applied, from `managed-settings.json` and `managed-settings.d/`. Lists from all sources are joined. User or `--settings` rules come first, and managed rules come after. `$defaults` expands where it sits. A list with no `$defaults` in any source has no built-in rules. `classifyAllShell` is not in the `auto-mode config` output, so this run did not check it. See [Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md#configure-and-memory).
-> The [official docs](https://code.claude.com/docs/en/auto-mode-config) confirm this only for `classifyAllShell` (user and `--settings`).
+> The [official docs](https://code.claude.com/docs/en/auto-mode-config) confirm this only for `classifyAllShell` (user and `--settings`). A separate probe checked `classifyAllShell` by counting classifier requests for a `curl` command that a user allow rule covered. The count was 1 with `true` in user settings or `--settings`, and 0 with `false` or unset. A managed `false` with `true` in user settings or `--settings` gave 1. A managed `true` gave 1 in every case, even with `false` in user settings or `--settings`. The program reads no other source. See [Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md#auto-mode).
 
 ## The `claude auto-mode` Commands
 
