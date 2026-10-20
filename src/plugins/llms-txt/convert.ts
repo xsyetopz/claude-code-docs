@@ -4,8 +4,18 @@ import { CLAUDE_CODE_VERSION } from "../../version";
 
 export type LinkResolver = (target: string) => string | undefined;
 
+const BADGE_LABELS: Record<string, string> = {
+  Documented: "Documented",
+  Undocumented: "Undocumented",
+  Differs: "Differs",
+  Gated: "Gated",
+  ManagedOnly: "Managed Only",
+  Experimental: "Experimental",
+  Deprecated: "Deprecated",
+  Caution: "Caution",
+};
 const BADGE =
-  /<(Documented|Undocumented|Differs|Gated)(?:\s+note=(?:\{?"([^"]*)"\}?))?\s*\/>/g;
+  /<(Documented|Undocumented|Differs|Gated|ManagedOnly|Experimental|Deprecated|Caution)(?:\s+note=(?:\{?"([^"]*)"\}?))?\s*\/>/g;
 const FENCE = /^\s*(`{3,}|~{3,})/;
 const ADMONITION = /^:::(\w+)(?:\[(.*)\])?\s*$/;
 const MARK = "\u0000";
@@ -20,31 +30,36 @@ export const HERO_TEXT = [
   "- [Undocumented] Only the program shows it. It can change without notice.",
   "- [Differs] The docs and the program disagree. The row says how.",
   "- [Gated] It works only behind a flag or a server gate.",
+  "- [Managed Only] It works only in managed (organization policy) settings.",
+  "- [Experimental] The program or the official docs call it experimental or beta.",
+  "- [Deprecated] The program or the official docs call it deprecated.",
+  "- [Caution] It deletes data, skips a safety check, or sends data off your machine.",
 ].join("\n");
 
-export function stripFrontMatter(raw: string): string {
+export const stripFrontMatter = (raw: string): string => {
   const text = raw.replace(/\r\n/g, "\n");
   if (!text.startsWith("---\n")) return text;
   const end = text.indexOf("\n---", 3);
   if (end === -1) return text;
   return text.slice(text.indexOf("\n", end + 1) + 1);
-}
+};
 
 /** Converts prose outside code spans. `inTable` keeps `\|` escaped. */
-function convertInline(
+const convertInline = (
   line: string,
   inTable: boolean,
   resolve: LinkResolver,
-): string {
+): string => {
   const spans: string[] = [];
   let out = line.replace(/(`+)(?!`)[\s\S]*?[^`]\1(?!`)/g, (m) => {
     spans.push(m);
     return `${MARK}${spans.length - 1}${MARK}`;
   });
   out = out
-    .replace(BADGE, (_m, kind: string, note?: string) =>
-      note ? `[${kind}: ${note}]` : `[${kind}]`,
-    )
+    .replace(BADGE, (_m, kind: string, note?: string) => {
+      const label = BADGE_LABELS[kind] ?? kind;
+      return note ? `[${label}: ${note}]` : `[${label}]`;
+    })
     .replace(/\{CLAUDE_CODE_VERSION\}/g, CLAUDE_CODE_VERSION)
     .replace(/\\([{}])/g, "$1")
     .replace(/\]\(([^)\s]+)((?:\s+"[^"]*")?)\)/g, (m, target: string) => {
@@ -54,9 +69,9 @@ function convertInline(
   if (!inTable) out = out.replace(/\\\|/g, "|");
   const restore = new RegExp(`${MARK}(\\d+)${MARK}`, "g");
   return out.replace(restore, (_m, i: string) => spans[Number(i)] ?? "");
-}
+};
 
-export function convertBody(source: string, resolve: LinkResolver): string {
+export const convertBody = (source: string, resolve: LinkResolver): string => {
   const out: string[] = [];
   let fence: { char: string; len: number } | undefined;
   let admonition = false;
@@ -122,4 +137,4 @@ export function convertBody(source: string, resolve: LinkResolver): string {
   }
   while (out.at(-1) === "") out.pop();
   return out.join("\n");
-}
+};

@@ -5,3 +5,6 @@ captures/
 .env
 node_modules
 HANDOVER.md
+
+# check-examples scratch (removed after each run)
+tools/.examples-tmp/

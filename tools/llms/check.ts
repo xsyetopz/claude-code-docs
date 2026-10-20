@@ -21,14 +21,14 @@ const read = (name: string): string => {
   return readFileSync(path, "utf8");
 };
 
-function walk(dir: string, out: string[] = []): string[] {
+const walk = (dir: string, out: string[] = []): string[] => {
   for (const name of readdirSync(dir).sort()) {
     const path = join(dir, name);
     if (statSync(path).isDirectory()) walk(path, out);
     else if (/\.mdx?$/.test(name)) out.push(path);
   }
   return out;
-}
+};
 
 const llms = read("llms.txt");
 if (problems.length > 0) {
@@ -72,6 +72,8 @@ for (const entry of manifest) {
   const prose = text
     .replace(/^\s*(`{3,}|~{3,})[\s\S]*?^\s*\1.*$/gm, "")
     .replace(/(`+)[^`][\s\S]*?\1/g, "");
+  const jsx = /<[A-Z]\w*[ />]/.exec(prose);
+  if (jsx) fail(`build/${file} keeps a JSX tag: ${jsx[0]}`);
   for (const m of prose.matchAll(/\]\(([^)\s]+)/g)) {
     const target = m[1] ?? "";
     if (!/^(https?:|mailto:|#)/.test(target))

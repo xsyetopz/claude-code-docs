@@ -5,7 +5,8 @@
 // 4. A `Source:` line or an "in the official docs" mention names a page only as a markdown link.
 // 5. No emoji in a heading or in link text.
 import { readdirSync, readFileSync, statSync } from "node:fs";
-import { join, relative } from "node:path";
+import { join, relative, sep } from "node:path";
+import { normalizeHost } from "./capture-prompts/normalize.ts";
 
 const ROOT = join(import.meta.dir, "..");
 const DOC_EXT = /\.(md|mdx)$/;
@@ -25,17 +26,11 @@ const REQUIRE_LOWER = new Set(["with", "without"]);
 const EMOJI =
   /\p{Extended_Pictographic}|\u{FE0F}|\u{20E3}|[\u{1F1E6}-\u{1F1FF}]/gu;
 
-// Emojis that docs may use (content-conventions D4/D5/D6). U+FE0F is the
-// variation selector that follows U+26A0 (and may follow U+26D4).
+// Emojis that docs may use: the yes/no marks in table cells. The status
+// labels (managed only, experimental, deprecated, caution) are components.
 const ALLOWED_EMOJI = new Set([
-  "\uFE0F",
   "\u2705", // check mark: yes
   "\u274C", // cross mark: no
-  "\u2753", // question mark: unknown
-  "\u{1F512}", // lock: managed settings only
-  "\u{1F9EA}", // test tube: experimental
-  "\u26D4", // no entry: deprecated
-  "\u26A0", // warning sign: caution
 ]);
 const emojiIn = (s: string) => [...s.matchAll(EMOJI)].map((m) => m[0]);
 const badEmoji = (s: string) => emojiIn(s).filter((e) => !ALLOWED_EMOJI.has(e));
@@ -49,7 +44,7 @@ const problems: Problem[] = [];
 const report = (file: string, line: number, message: string) =>
   problems.push({ file: relative(ROOT, file), line, message });
 
-function walk(dir: string, out: string[] = []): string[] {
+const walk = (dir: string, out: string[] = []): string[] => {
   let names: string[];
   try {
     names = readdirSync(dir);
@@ -63,11 +58,11 @@ function walk(dir: string, out: string[] = []): string[] {
     else out.push(path);
   }
   return out;
-}
+};
 
-function parseFrontMatter(
+const parseFrontMatter = (
   text: string,
-): { data: Record<string, string>; bodyStart: number } | null {
+): { data: Record<string, string>; bodyStart: number } | null => {
   const lines = text.split("\n");
   if (lines[0]?.trim() !== "---") return null;
   const data: Record<string, string> = {};
@@ -81,10 +76,57 @@ function parseFrontMatter(
     }
   }
   return null;
-}
+};
+
+// Brand and product words that look like camelCase but are not code.
+const BRAND_WORDS = new Set([
+  "SchemaStore",
+  "GitHub",
+  "GitLab",
+  "JavaScript",
+  "TypeScript",
+  "PowerShell",
+  "OpenTelemetry",
+  "OAuth",
+  "macOS",
+  "iOS",
+  "iTerm2",
+  "VSCode",
+  "JetBrains",
+]);
+
+const CODE_LIKE = [
+  /(^|\s)--[a-z][\w-]*/, // --flag
+  /\b[A-Z][A-Z0-9]*(?:_[A-Z0-9]+)+\b/, // UPPER_SNAKE
+  /\b[\w-]+\.(?:json|jsonl|md|mdx|ts|toml|yaml|yml)\b/, // file names
+  /^\/[a-z][\w-]*/, // leading /command
+  /\$\./, // $. JSONPath
+  /\b(?!(?:e\.g|i\.e)\b)[a-z][a-z0-9_]*\.[a-z][a-z0-9_]*\b/, // dotted.name
+  /\b[a-z][a-z0-9]*_[a-z0-9_]+\b/, // snake_case
+];
+const CAMEL =
+  /\b[A-Za-z]*[a-z][A-Za-z0-9]*[A-Z][A-Za-z0-9]*\b|\b[A-Z][a-z0-9]+[A-Z][A-Za-z0-9]*\b/g;
+
+/** Returns code-like tokens in a heading that sit outside backticks. */
+export const bareCodeTokens = (raw: string): string[] => {
+  const text = raw
+    .replace(/\s*\{#[^}]*\}\s*$/, "")
+    .replace(/`[^`]*`/g, "")
+    .replace(/!?\[([^\]]*)\]\([^)]*\)/g, "$1")
+    .replace(/<[^>]+>/g, "")
+    .trim();
+  const found: string[] = [];
+  for (const re of CODE_LIKE) {
+    const m = re.exec(text);
+    if (m) found.push(m[0].trim());
+  }
+  for (const m of text.matchAll(CAMEL))
+    if (!BRAND_WORDS.has(m[0])) found.push(m[0]);
+  return found;
+};
 
 /** Returns the words that break the rule, or an empty list. */
-export function titleCaseProblems(raw: string): string[] {
+export const titleCaseProblems = (raw: string): string[] => {
   const text = raw
     .replace(/\s*\{#[^}]*\}\s*$/, "")
     .replace(/`[^`]*`/g, "X") // code spans are always fine
@@ -108,14 +150,17 @@ export function titleCaseProblems(raw: string): string[] {
     bad.push(bare);
   });
   return bad;
-}
+};
 
 const EMOJI_FILES = [
   ...walk(join(ROOT, "docs")),
   ...walk(join(ROOT, "src")),
 ].filter((f) => TEXT_EXT.test(f));
 
-for (const file of EMOJI_FILES) {
+// docs/prompts/ holds verbatim program text, so it is exempt.
+const CAPTURES = join(ROOT, "docs", "prompts") + sep;
+
+for (const file of EMOJI_FILES.filter((f) => !f.startsWith(CAPTURES))) {
   readFileSync(file, "utf8")
     .split("\n")
     .forEach((line, i) => {
@@ -159,6 +204,19 @@ for (const file of walk(join(ROOT, "docs")).filter((f) => DOC_EXT.test(f))) {
     const bad = titleCaseProblems(fm.data["title"]);
     if (bad.length)
       report(file, 1, `title not in Title Case: ${bad.join(", ")}`);
+  }
+  if (file.startsWith(CAPTURES) && fm.data["generated"] === "false") {
+    const n = normalizeHost(text);
+    if (n !== text) {
+      const a = text.split("\n");
+      const b = n.split("\n");
+      const at = a.findIndex((l, i) => l !== b[i]);
+      report(
+        file,
+        at + 1,
+        "hand-written prompt page has host data (platform, OS version, build suffix, or temp path); use the placeholders from tools/capture-prompts/normalize.ts",
+      );
+    }
   }
   const lines = text.split("\n");
   let fence: { ch: string; len: number } | null = null;
@@ -212,12 +270,31 @@ for (const file of walk(join(ROOT, "docs")).filter((f) => DOC_EXT.test(f))) {
     for (const m of line.matchAll(/\[([^\]]*)\]\([^)]*\)/g)) {
       if (emojiIn(m[1]).length) report(file, i + 1, "emoji in link text");
     }
+    const t = /^\s*:::[a-z]+(?:\[(.*)\]|[ \t]+(\S.*?))\s*$/.exec(line);
+    if (t && !file.startsWith(CAPTURES)) {
+      const code = bareCodeTokens(t[1] ?? t[2] ?? "");
+      if (code.length)
+        report(
+          file,
+          i + 1,
+          `admonition title has code outside backticks: ${code.join(", ")}`,
+        );
+    }
     const h = /^#{1,6}\s+(.*?)\s*#*\s*$/.exec(line);
     if (h) {
       if (emojiIn(h[1]).length) report(file, i + 1, "emoji in a heading");
       const bad = titleCaseProblems(h[1]);
       if (bad.length)
         report(file, i + 1, `heading not in Title Case: ${bad.join(", ")}`);
+      if (!file.startsWith(CAPTURES)) {
+        const code = bareCodeTokens(h[1]);
+        if (code.length)
+          report(
+            file,
+            i + 1,
+            `heading has code outside backticks: ${code.join(", ")}`,
+          );
+      }
     }
   }
 }

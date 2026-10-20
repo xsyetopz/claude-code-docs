@@ -98,6 +98,8 @@ export default function llmsTxtPlugin(context: LoadContext): Plugin {
       for (const page of pages) {
         const raw = await readFile(join(siteDir, page.repoPath), "utf8");
         const resolve = (target: string) => {
+          // A site-absolute link (a category page has no .md) becomes the full page URL.
+          if (/^\/(?!\/)/.test(target)) return `${base}${target.slice(1)}`;
           if (/^[a-z][a-z0-9+.-]*:|^#|^\//.test(target)) return undefined;
           const [file = "", hash] = target.split("#");
           if (/\.(?!mdx?$)\w+$/.test(posix.basename(file))) return undefined;
@@ -141,7 +143,7 @@ export default function llmsTxtPlugin(context: LoadContext): Plugin {
       const lines = [
         `# ${TITLE}`,
         "",
-        `> Unofficial community docs for Claude Code ${CLAUDE_CODE_VERSION}, built from the official docs and the program itself. Not made by or tied to Anthropic. Each item is marked [Documented], [Undocumented], [Differs], or [Gated].`,
+        `> Unofficial community docs for Claude Code ${CLAUDE_CODE_VERSION}, built from the official docs and the program itself. Not made by or tied to Anthropic. Each item is marked [Documented], [Undocumented], [Differs], [Gated], [Managed Only], [Experimental], [Deprecated], or [Caution].`,
         "",
         `Every page below is plain markdown with a small front matter block. The full text of all pages is in llms-full.txt. Pages track version ${CLAUDE_CODE_VERSION} only. For supported behavior, check the official docs first.`,
         "",
