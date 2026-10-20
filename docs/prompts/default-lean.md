@@ -111,7 +111,7 @@ hi
 
 === messages[1].content[0] (role: system) ===
 # Environment
-You have been invoked in the following environment: 
+You have been invoked in the following environment:
  - Primary working directory: <cwd>
  - Is a git repository: false
  - Platform: <platform>

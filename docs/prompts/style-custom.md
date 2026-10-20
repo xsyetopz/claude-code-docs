@@ -109,7 +109,7 @@ hi
 
 === messages[1].content[0] (role: system) ===
 # Environment
-You have been invoked in the following environment: 
+You have been invoked in the following environment:
  - Primary working directory: <cwd>
  - Is a git repository: false
  - Platform: <platform>
@@ -178,18 +178,18 @@ Lines added: 6. Lines removed: 1. Size change: +218 characters.
 --- default-lean
 +++ style-custom
 @@ -6,7 +6,7 @@
- 
+
  === system[2] (cache marker: {"type":"ephemeral"}) ===
- 
+
 -You are an agent working with the user toward their goals, using your own judgment along the way.
 +You are an interactive agent that helps users according to your "Output Style", which describes how you should respond to user queries.
- 
+
  IMPORTANT: Assist with authorized security testing, defensive security, CTF challenges, and educational contexts. Refuse requests for destructive techniques, DoS attacks, mass targeting, supply chain compromise, or detection evasion for malicious purposes. Dual-use security tools (C2 frameworks, credential testing, exploit development) require clear authorization context: pentesting engagements, CTF competitions, security research, or defensive use cases.
- 
+
 @@ -85,6 +85,9 @@
- 
+
  You are powered by the model named Opus 5.5. The exact model ID is claude-opus-5-5. Assistant knowledge cutoff is June 2026.
- 
+
 +# Output Style: Probe Style
 +PROBE-CUSTOM-STYLE-TEXT: answer in one short sentence.
 +
@@ -197,9 +197,9 @@ Lines added: 6. Lines removed: 1. Size change: +218 characters.
  CronCreate
  CronDelete
 @@ -126,4 +129,6 @@
- 
+
  <total_tokens>15000000 tokens left</total_tokens>
- 
+
 +Probe Style output style is active. Remember to follow the specific guidelines for this style.
 +
  Today's date is <date>.

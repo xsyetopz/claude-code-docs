@@ -130,6 +130,93 @@ export const NOTES: Record<string, string[]> = {
   "subagent-custom": [
     "The body is your agent file text, then the same notes that every subagent gets. The file's front matter is not sent.",
   ],
+  "subagent-statusline-setup": [
+    "The `statusline-setup` agent is built in. It starts with `You are a status line setup agent for Claude Code.` and has two tools, `Read` and `Edit`.",
+    "To replace it, save an agent file with `name: statusline-setup`. Your file wins over the built-in one. See [Override a Built-in Agent with a File](./override-agent-file.md).",
+  ],
+  "subagent-claude": [
+    'The `claude` agent is the catch-all agent for the agent view ("FleetView"). Its body is a block of rules for a background job, not the usual `You are an agent for Claude Code` text.',
+    "It is listed only when the agent view is on. `CLAUDE_CODE_DISABLE_AGENT_VIEW=1` or the `disableAgentView` setting removes it.",
+  ],
+  "subagent-web-fetch": [
+    "The web-reading agent is off by default. `CLAUDE_CODE_WEB_FETCH_AGENT=1` adds it, and it has one tool, `WebFetch`.",
+    "Its body tells the model to treat fetched pages as untrusted data and to report back to the caller.",
+  ],
+  "override-agent-file": [
+    "The request has your file body and the usual subagent notes. The built-in `Explore` text is gone. The file set no `tools`, so the agent is not held to the read-only list of `Explore` (8 tools here against 5).",
+    "Agent sources are merged by name in this order, and the later one wins: built-in, plugin, user (`~/.claude/agents`), project (`.claude/agents`), `--agents`, managed settings. This is static evidence from the program. The test here shows the project file winning over the built-in agent.",
+  ],
+  "override-agents-flag": [
+    "`--agents` takes JSON keyed by agent name. A key that equals a built-in name (`general-purpose` here) replaces the built-in agent for that run.",
+    "The `--agents` source ranks above project and user files in the merge order, and below managed settings.",
+  ],
+  "override-append-subagent": [
+    "Your text lands at the end of the subagent body, after the usual notes. The built-in `Explore` text stays.",
+    "The flag is hidden from `--help` and works only with `-p`. It also reaches subagents of subagents.",
+  ],
+  "subagent-with-prompt-flags": [
+    "`--system-prompt` and `--append-system-prompt` change the main agent only. The `Explore` subagent keeps its own body and none of your text.",
+  ],
+  "disable-explore-plan": [
+    "The `Explore` and `Plan` lines leave the agent list that the model reads. The other agents stay.",
+  ],
+  "disable-builtin-agents": [
+    "In print mode, the whole `Available agent types` list is gone. The `Agent` tool stays but its text changes.",
+  ],
+  "command-init": [
+    "The `/init` text goes into a user message after a `<command-name>` marker. The system blocks do not change.",
+    "A file named `.claude/commands/init.md` takes its place. See [Override /init with a Command File](./override-command-init.md).",
+  ],
+  "command-security-review": [
+    "Like `/init`, the text goes into a user message. The system blocks do not change.",
+  ],
+  "command-simplify": [
+    "`/simplify` is a built-in skill. Its text arrives in a user message after a `<command-name>` marker, with the same system blocks as the default.",
+  ],
+  "command-debug": [
+    "`/debug` is a built-in skill. Its text arrives in a user message, with the same system blocks as the default.",
+  ],
+  "override-command-init": [
+    "A command file with the same name as a built-in command replaces its text. The `/init` text is gone and only your file body is sent.",
+  ],
+  "override-skill-simplify": [
+    "A skill folder with the same name as a built-in skill replaces its text. The skill wrapper adds a `Base directory for this skill` line before your file body.",
+  ],
+  "hook-prompt": [
+    "A hook of `type: prompt` makes a request with no tools. The system text is fixed. Your `prompt` goes in the user message, with `$ARGUMENTS` filled with the hook input JSON.",
+    'The reply must be JSON, `{"ok": true}` or `{"ok": false}` with a `reason`.',
+  ],
+  "hook-prompt-stop": [
+    "On the `Stop` event the system text is different: it asks the model to read the transcript and judge a stop condition. The request has more messages.",
+  ],
+  "hook-agent": [
+    "A hook of `type: agent` starts a small agent with tools and a `StructuredOutput` tool for the result. The system text is fixed and names the event (`PreToolUse` here).",
+    "Your `prompt` goes in the user message. The model defaults to Haiku, and you can set `model` in the hook.",
+  ],
+  "auto-classifier": [
+    "In auto mode, the program sends each tool call to a classifier. The first stage is a separate request with the system text `You are a security monitor for autonomous AI coding agents.` and no tools.",
+    "The main request also carries a `safeguards` field with a `classifier_context` object. It holds the rules and the `auto_mode` lists. This field is not part of the text shown here.",
+    "The stub gave no classifier result, so the program fell back to local classifier requests. It sent the same request more than once.",
+  ],
+  "auto-classifier-custom": [
+    "Your `allow`, `hard_deny`, and `environment` entries are added at the place of `$defaults`. Entries before `$defaults` come first.",
+    "`soft_deny` had no `$defaults`, so the built-in soft block rules were replaced. The diff shows them removed.",
+    "The same `auto_mode` object is also in `safeguards.classifier_context` of the main request.",
+  ],
+  "compact-custom": [
+    "Text after `/compact` goes under `Additional Instructions:` at the end. Text that a `PreCompact` hook prints on stdout goes in the same place, after your text.",
+    "The program does not copy a `## Compact Instructions` section of `CLAUDE.md` into the compaction text. The compaction text only asks the model to follow such a section if it finds one in the included context, and the section reaches the model through the `CLAUDE.md` reminder.",
+  ],
+  "plan-mode-instructions": [
+    "The flag replaces the workflow phases of the plan mode reminder. The read-only rules at the top and the `ExitPlanMode` rules at the end stay.",
+  ],
+  "git-instructions-off": [
+    "The commit and pull request rules live in the `Bash` tool description, so the tool list changes too. The git status reminder is still sent.",
+  ],
+  "memory-off": ["The whole memory section is gone from the system body."],
+  "style-override-builtin": [
+    "A custom style file with `name: Explanatory` wins over the built-in `Explanatory` style. Only your file body is sent.",
+  ],
 };
 
 export const INDEX_FACTS = {
@@ -172,11 +259,11 @@ export const INDEX_FACTS = {
     "The chart shows what the captures prove. The order of the first three checks was not tested with every combination of flags.",
     "```mermaid",
     "flowchart TD",
-    '  A["Start Claude Code"] --> B{"--bare or CLAUDE_CODE_SIMPLE=1?"}',
+    '  A["Start Claude Code"] --> B{"<code>--bare</code> or <code>CLAUDE_CODE_SIMPLE</code>=1?"}',
     '  B -- yes --> C["Bare: two-line body, empty environment message, 3 tools"]',
-    '  B -- no --> D{"--system-prompt, --system-prompt-file, or --agent?"}',
+    '  B -- no --> D{"<code>--system-prompt</code>, <code>--system-prompt-file</code>, or <code>--agent</code>?"}',
     '  D -- yes --> E["Your text or the agent file replaces the body"]',
-    '  D -- no --> F{"CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT"}',
+    '  D -- no --> F{"<code>CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT</code>"}',
     '  F -- "0" --> G["Full prompt"]',
     '  F -- "1" --> H["Lean prompt"]',
     '  F -- unset --> I{"Which model?"}',
@@ -188,10 +275,10 @@ export const INDEX_FACTS = {
     "  E --> L",
     '  K -- "yes, keep-coding-instructions false" --> M["Style text added, Doing tasks removed on the full prompt"]',
     '  K -- "yes, keep true, or no style" --> N["Style text added if set"]',
-    '  M --> L{"--append-system-prompt?"}',
+    '  M --> L{"<code>--append-system-prompt</code>?"}',
     "  N --> L",
     '  L -- yes --> O["Text added at the end, identity line changes"]',
-    '  L -- no --> P{"--exclude-dynamic-system-prompt-sections?"}',
+    '  L -- no --> P{"<code>--exclude-dynamic-system-prompt-sections</code>?"}',
     "  O --> P",
     '  P -- yes --> Q["Memory moves to the first user message"]',
     '  P -- no --> R["Send request"]',

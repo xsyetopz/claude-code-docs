@@ -27,7 +27,7 @@ type ApiBody = {
   tools?: { name: string }[];
 };
 
-function reply(body: ApiBody | null | undefined, o: StubOpts) {
+const reply = (body: ApiBody | null | undefined, o: StubOpts) => {
   const msgs = body?.messages ?? [];
   const hasResult = msgs.some(
     (m) =>
@@ -61,9 +61,9 @@ function reply(body: ApiBody | null | undefined, o: StubOpts) {
       cache_read_input_tokens: 0,
     },
   };
-}
+};
 
-function stream(m: ReturnType<typeof reply>) {
+const stream = (m: ReturnType<typeof reply>) => {
   let out = sse("message_start", {
     type: "message_start",
     message: { ...m, content: [], stop_reason: null },
@@ -104,9 +104,9 @@ function stream(m: ReturnType<typeof reply>) {
   });
   out += sse("message_stop", { type: "message_stop" });
   return out;
-}
+};
 
-export function startStub(o: StubOpts) {
+export const startStub = (o: StubOpts) => {
   return Bun.serve({
     port: 0,
     hostname: "127.0.0.1",
@@ -154,4 +154,4 @@ export function startStub(o: StubOpts) {
       });
     },
   });
-}
+};

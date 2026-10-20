@@ -56,7 +56,7 @@ hi
 
 === messages[1].content[0] (role: system) ===
 # Environment
-You have been invoked in the following environment: 
+You have been invoked in the following environment:
  - Primary working directory: <cwd>
  - Is a git repository: false
  - Platform: <platform>
@@ -121,10 +121,10 @@ Lines added: 1. Lines removed: 53. Size change: -5,601 characters.
 +++ system-prompt
 @@ -5,62 +5,8 @@
  You are a Claude agent, built on Anthropic's Claude Agent SDK.
- 
+
  === system[2] (cache marker: {"type":"ephemeral"}) ===
 +REPLACEMENT-TEXT-FROM-FLAG
- 
+
 -You are an agent working with the user toward their goals, using your own judgment along the way.
 -
 -IMPORTANT: Assist with authorized security testing, defensive security, CTF challenges, and educational contexts. Refuse requests for destructive techniques, DoS attacks, mass targeting, supply chain compromise, or detection evasion for malicious purposes. Dual-use security tools (C2 frameworks, credential testing, exploit development) require clear authorization context: pentesting engagements, CTF competitions, security research, or defensive use cases.

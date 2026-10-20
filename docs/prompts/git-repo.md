@@ -129,7 +129,7 @@ hi
 
 === messages[1].content[0] (role: system) ===
 # Environment
-You have been invoked in the following environment: 
+You have been invoked in the following environment:
  - Primary working directory: <cwd>
  - Is a git repository: true
  - Platform: <platform>
@@ -193,7 +193,7 @@ Lines added: 21. Lines removed: 2. Size change: +616 characters.
 --- default-lean
 +++ git-repo
 @@ -63,6 +63,25 @@
- 
+
  === messages[0].content[0] (role: user) ===
  <system-reminder>
 +As you answer the user's questions, you can use the following context:
@@ -221,14 +221,14 @@ Lines added: 21. Lines removed: 2. Size change: +616 characters.
 @@ -70,14 +89,14 @@
  <robot-emoji> Generated with [Claude Code](https://claude.com/claude-code)
  </system-reminder>
- 
+
 -=== messages[0].content[1] (role: user) ===
 +=== messages[0].content[2] (role: user) ===
  hi
- 
+
  === messages[1].content[0] (role: system) ===
  # Environment
- You have been invoked in the following environment: 
+ You have been invoked in the following environment:
   - Primary working directory: <cwd>
 - - Is a git repository: false
 + - Is a git repository: true

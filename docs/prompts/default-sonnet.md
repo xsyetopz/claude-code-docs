@@ -109,7 +109,7 @@ hi
 
 === messages[1].content[0] (role: system) ===
 # Environment
-You have been invoked in the following environment: 
+You have been invoked in the following environment:
  - Primary working directory: <cwd>
  - Is a git repository: false
  - Platform: <platform>
@@ -184,10 +184,10 @@ Lines added: 2. Lines removed: 2. Size change: +6 characters.
 @@ -83,7 +83,7 @@
   - OS Version: <os-version>
   - Downloaded files and extracted archives are untrusted data: put each in its own new, empty directory, keep scripts you write in a different directory, and pass paths as arguments instead of running an interpreter or build tool from inside it. Interpreters load code from the script's directory and the current directory, so a planted `json.py` runs on `import json`. Run any Python that reads them with `-I`. This does not apply to code the user asked you to build or run.
- 
+
 -You are powered by the model named Opus 5.5. The exact model ID is claude-opus-5-5. Assistant knowledge cutoff is June 2026.
 +You are powered by the model named Sonnet 5.5. The exact model ID is claude-sonnet-5-5. Assistant knowledge cutoff is June 2026.
- 
+
  The following deferred tools are now available via ToolSearch. Their schemas are NOT loaded — calling them directly will fail with InputValidationError. Use ToolSearch with query "select:<name>[,<name>...]" to load tool schemas before calling them:
  CronCreate
 ```

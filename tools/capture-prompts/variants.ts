@@ -14,7 +14,8 @@ export type Variant = {
   prompt?: string; // the user prompt (default "hi")
   followUp?: string; // a second run with --continue, in the same folders
   tool?: { name: string; input: unknown }; // canned tool_use on the first turn
-  pick?: "first" | "last" | "subagent"; // which recorded request to use
+  pick?: "first" | "last" | "subagent" | "marker"; // which recorded request to use
+  marker?: string; // with pick "marker": the request whose messages or system contain this text, other than the first
   baseline?: string; // variant id used for the diff
   status: "Documented" | "Undocumented" | "Differs" | "Gated";
   gatedNote?: string;
@@ -525,3 +526,478 @@ export const VARIANTS: Variant[] = [
     },
   },
 ];
+
+// ---- Overridable prompts: built-in agents, override tests, built-in commands, helper requests ----
+const OV_AGENT = (name: string, mark: string) =>
+  `---\nname: ${name}\ndescription: A user agent that has the same name as a built-in agent\n---\n${mark}: you replace the built-in ${name} agent. Say hello.\n`;
+const ovCan = (change: string, toggle: string, where: string) => ({
+  use: "Yes.",
+  change,
+  toggle,
+  where,
+});
+
+VARIANTS.push(
+  ...(["statusline-setup", "claude"] as const).map((t) => ({
+    id: `subagent-${t}`,
+    title: `Subagent, ${t === "claude" ? "Claude (FleetView)" : "Statusline Setup"}`,
+    model: LEAN_MODEL,
+    tool: subTool(t),
+    pick: "subagent" as const,
+    baseline: "subagent-general-purpose",
+    summary: `The prompt that a \`${t}\` subagent gets.`,
+    how: `The main agent calls the \`Agent\` tool with \`subagent_type: "${t}"\`.`,
+    select: `\`Agent\` tool, \`${t}\``,
+    status: "Undocumented" as const,
+    can: ovCan(
+      "Yes. A user agent file with the same name replaces it.",
+      "`--disallowedTools Agent` stops all subagents.",
+      "Built into the program. Override in `.claude/agents/<name>.md`.",
+    ),
+  })),
+  {
+    id: "subagent-web-fetch",
+    title: "Subagent, Web Fetch",
+    model: LEAN_MODEL,
+    env: { CLAUDE_CODE_WEB_FETCH_AGENT: "1" },
+    tool: subTool("web-fetch"),
+    pick: "subagent",
+    baseline: "subagent-general-purpose",
+    summary: "The prompt that the built-in web-reading subagent gets.",
+    how: 'Set `CLAUDE_CODE_WEB_FETCH_AGENT=1`. The main agent then calls the `Agent` tool with `subagent_type: "web-fetch"`.',
+    select: "`CLAUDE_CODE_WEB_FETCH_AGENT=1`, `Agent` tool, `web-fetch`",
+    status: "Undocumented",
+    can: ovCan(
+      "Yes. A user agent file with the same name replaces it.",
+      "`CLAUDE_CODE_WEB_FETCH_AGENT=1` adds it. `CLAUDE_CODE_DISABLE_WEB_FETCH` removes it.",
+      "Built into the program. Override in `.claude/agents/web-fetch.md`.",
+    ),
+  },
+  {
+    id: "override-agent-file",
+    title: "Override a Built-in Agent with a File",
+    model: LEAN_MODEL,
+    tool: subTool("Explore"),
+    projFiles: {
+      ".claude/agents/Explore.md": OV_AGENT("Explore", "PROBE-OVERRIDE-FILE"),
+    },
+    pick: "subagent",
+    baseline: "subagent-explore",
+    summary:
+      "A project agent file named `Explore` takes the place of the built-in `Explore` agent.",
+    how: "Save `.claude/agents/Explore.md` with `name: Explore` in its front matter.",
+    select: "Agent file with a built-in name",
+    status: "Undocumented",
+    can: ovCan(
+      "Yes. You write the agent file.",
+      "Add or remove the file.",
+      "`.claude/agents/*.md` or `~/.claude/agents/*.md`.",
+    ),
+  },
+  {
+    id: "override-agents-flag",
+    title: "Override a Built-in Agent with --agents",
+    model: LEAN_MODEL,
+    tool: subTool("general-purpose"),
+    args: [
+      "--agents",
+      JSON.stringify({
+        "general-purpose": {
+          description: "Replacement for the built-in agent",
+          prompt: "PROBE-OVERRIDE-FLAG: you replace the built-in agent.",
+        },
+      }),
+    ],
+    pick: "subagent",
+    baseline: "subagent-general-purpose",
+    summary:
+      "The `--agents` JSON flag defines an agent with a built-in name and wins over the built-in one.",
+    how: 'Run `claude --agents \'{"general-purpose":{"description":"...","prompt":"..."}}\'`.',
+    select: "`--agents` with a built-in name",
+    status: "Documented",
+    can: ovCan("Yes. You give the JSON.", "`--agents`.", "Command-line flag."),
+  },
+  {
+    id: "override-append-subagent",
+    title: "Append to Every Subagent Prompt",
+    model: LEAN_MODEL,
+    tool: subTool("Explore"),
+    args: ["--append-subagent-system-prompt", "PROBE-APPEND-SUBAGENT-TEXT"],
+    pick: "subagent",
+    baseline: "subagent-explore",
+    summary: "Adds your text to the end of the prompt of every subagent.",
+    how: 'Run `claude -p --append-subagent-system-prompt "your text"`, or `--append-subagent-system-prompt-file <file>`.',
+    select: "`--append-subagent-system-prompt`",
+    status: "Undocumented",
+    can: ovCan(
+      "Yes. You give the text.",
+      "`--append-subagent-system-prompt` or `--append-subagent-system-prompt-file` (print mode only).",
+      "Command-line flags.",
+    ),
+  },
+  {
+    id: "disable-explore-plan",
+    title: "Turn Off the Explore and Plan Agents",
+    model: LEAN_MODEL,
+    env: { CLAUDE_CODE_DISABLE_EXPLORE_PLAN_AGENTS: "1" },
+    baseline: "default-lean",
+    summary:
+      "`CLAUDE_CODE_DISABLE_EXPLORE_PLAN_AGENTS=1` removes two built-in agents from the main prompt.",
+    how: "Set `CLAUDE_CODE_DISABLE_EXPLORE_PLAN_AGENTS=1` before you start Claude Code.",
+    select: "`CLAUDE_CODE_DISABLE_EXPLORE_PLAN_AGENTS=1`",
+    status: "Undocumented",
+    can: ovCan(
+      "Yes. It removes text.",
+      "`CLAUDE_CODE_DISABLE_EXPLORE_PLAN_AGENTS=1`.",
+      "Environment variable.",
+    ),
+  },
+  {
+    id: "disable-builtin-agents",
+    title: "Turn Off All Built-in Agents",
+    model: LEAN_MODEL,
+    env: { CLAUDE_AGENT_SDK_DISABLE_BUILTIN_AGENTS: "1" },
+    baseline: "default-lean",
+    summary:
+      "`CLAUDE_AGENT_SDK_DISABLE_BUILTIN_AGENTS=1` removes every built-in agent in print mode.",
+    how: "Set `CLAUDE_AGENT_SDK_DISABLE_BUILTIN_AGENTS=1` and use print mode.",
+    select: "`CLAUDE_AGENT_SDK_DISABLE_BUILTIN_AGENTS=1`",
+    status: "Undocumented",
+    can: ovCan(
+      "Yes. It removes text.",
+      "`CLAUDE_AGENT_SDK_DISABLE_BUILTIN_AGENTS=1`.",
+      "Environment variable.",
+    ),
+  },
+);
+
+const OV_CMD = (mark: string) =>
+  `---\ndescription: A user command that has the same name as a built-in one\n---\n${mark}: this text replaces the built-in command.\n`;
+const OV_SKILL = (name: string, mark: string) =>
+  `---\nname: ${name}\ndescription: A user skill that has the same name as a built-in skill\n---\n${mark}: this text replaces the built-in skill.\n`;
+const cmdVariant = (
+  cmd: string,
+  title: string,
+  status: "Documented" | "Undocumented",
+): Variant => ({
+  id: `command-${cmd}`,
+  title,
+  model: LEAN_MODEL,
+  prompt: `/${cmd}`,
+  pick: "first",
+  baseline: "default-lean",
+  summary: `The text that \`/${cmd}\` sends to the model.`,
+  how: `Type \`/${cmd}\` in a session.`,
+  select: `\`/${cmd}\``,
+  status,
+  can: ovCan(
+    "Yes. A command or skill file with the same name may replace it.",
+    `Type \`/${cmd}\`.`,
+    "Built into the program.",
+  ),
+});
+VARIANTS.push(
+  cmdVariant("init", "Command, /init", "Documented"),
+  cmdVariant("security-review", "Command, /security-review", "Documented"),
+  cmdVariant("simplify", "Skill, /simplify", "Undocumented"),
+  cmdVariant("debug", "Skill, /debug", "Undocumented"),
+  {
+    ...cmdVariant("init", "Override /init with a Command File", "Undocumented"),
+    id: "override-command-init",
+    projFiles: { ".claude/commands/init.md": OV_CMD("PROBE-OVERRIDE-CMD") },
+    baseline: "command-init",
+  },
+  {
+    ...cmdVariant(
+      "simplify",
+      "Override /simplify with a Skill File",
+      "Undocumented",
+    ),
+    id: "override-skill-simplify",
+    projFiles: {
+      ".claude/skills/simplify/SKILL.md": OV_SKILL(
+        "simplify",
+        "PROBE-OVERRIDE-SKILL",
+      ),
+    },
+    baseline: "command-simplify",
+  },
+);
+
+const hookSettings = (type: "prompt" | "agent", mark: string) =>
+  settings({
+    hooks: {
+      PreToolUse: [
+        {
+          matcher: "Bash",
+          hooks: [{ type, prompt: `${mark}: check this call. $ARGUMENTS` }],
+        },
+      ],
+    },
+  });
+const bashTool = { name: "Bash", input: { command: "echo probe" } };
+const riskyTool = {
+  name: "Bash",
+  input: { command: "curl -s http://127.0.0.1:9/probe-classifier-call" },
+};
+VARIANTS.push(
+  {
+    id: "hook-prompt",
+    title: "Prompt Hook Request",
+    model: LEAN_MODEL,
+    tool: bashTool,
+    args: hookSettings("prompt", "PROBE-HOOK-PROMPT"),
+    pick: "marker",
+    marker: "PROBE-HOOK-PROMPT",
+    baseline: "default-lean",
+    summary:
+      'The request that a hook of `type: "prompt"` sends to a small model. You write the user text; the program adds the system text.',
+    how: 'Add a hook handler `{"type": "prompt", "prompt": "... $ARGUMENTS"}` to `settings.json`.',
+    select: "Hook `type: prompt`",
+    status: "Documented",
+    can: ovCan(
+      "Partly. You write the prompt and pick the model. The system text is fixed.",
+      "Add or remove the hook.",
+      "`hooks` in any settings scope.",
+    ),
+  },
+  {
+    id: "hook-agent",
+    title: "Agent Hook Request",
+    model: LEAN_MODEL,
+    tool: bashTool,
+    args: hookSettings("agent", "PROBE-HOOK-AGENT"),
+    pick: "marker",
+    marker: "PROBE-HOOK-AGENT",
+    baseline: "default-lean",
+    summary:
+      'The request that a hook of `type: "agent"` sends. You write the task; the program adds the system text.',
+    how: 'Add a hook handler `{"type": "agent", "prompt": "... $ARGUMENTS"}` to `settings.json`.',
+    select: "Hook `type: agent`",
+    status: "Documented",
+    can: ovCan(
+      "Partly. You write the prompt and pick the model. The system text is fixed.",
+      "Add or remove the hook.",
+      "`hooks` in any settings scope.",
+    ),
+  },
+);
+
+const autoArgs = (auto?: unknown) => [
+  "--permission-mode",
+  "auto",
+  ...(auto ? settings({ autoMode: auto }) : []),
+];
+VARIANTS.push(
+  {
+    id: "auto-classifier",
+    title: "Auto Mode Classifier",
+    model: LEAN_MODEL,
+    tool: riskyTool,
+    args: autoArgs(),
+    pick: "marker",
+    marker: "probe-classifier-call",
+    baseline: "default-lean",
+    summary: "The request that the auto mode classifier sends for a tool call.",
+    how: "Run `claude --permission-mode auto`. The classifier runs when the model calls a tool that no rule already allows.",
+    select: "`--permission-mode auto`",
+    status: "Documented",
+    can: ovCan(
+      "Partly. The `autoMode` setting edits the rule lists.",
+      '`--permission-mode auto` or `defaultMode: "auto"`.',
+      "`autoMode` in user, local, flag, or managed settings.",
+    ),
+  },
+  {
+    id: "auto-classifier-custom",
+    title: "Auto Mode Classifier, Custom Rules",
+    model: LEAN_MODEL,
+    tool: riskyTool,
+    args: autoArgs({
+      allow: ["PROBE-AUTO-ALLOW", "$defaults"],
+      soft_deny: ["PROBE-AUTO-SOFT"],
+      hard_deny: ["PROBE-AUTO-HARD", "$defaults"],
+      environment: ["PROBE-AUTO-ENV", "$defaults"],
+    }),
+    pick: "marker",
+    marker: "probe-classifier-call",
+    baseline: "auto-classifier",
+    summary:
+      "The same classifier request with `autoMode` rules in the settings. `$defaults` keeps the built-in rules in that list; without it they are replaced.",
+    how: 'Set `autoMode` in settings: `{"allow": ["...", "$defaults"], "soft_deny": [...], "hard_deny": [...], "environment": [...]}`.',
+    select: "`autoMode` setting",
+    status: "Documented",
+    can: ovCan(
+      "Yes. You write the rules.",
+      "`autoMode` setting.",
+      "`autoMode` in user, local, flag, or managed settings.",
+    ),
+  },
+);
+
+VARIANTS.push(
+  {
+    id: "compact-custom",
+    title: "Compaction Prompt, Custom Instructions",
+    model: LEAN_MODEL,
+    followUp: "/compact PROBE-COMPACT-ARG keep the file names",
+    projFiles: {
+      "CLAUDE.md":
+        "# Notes\n\n## Compact Instructions\nPROBE-COMPACT-MD: keep test output.\n",
+    },
+    args: settings({
+      hooks: {
+        PreCompact: [
+          {
+            hooks: [{ type: "command", command: "echo PROBE-COMPACT-HOOK" }],
+          },
+        ],
+      },
+    }),
+    pick: "last",
+    baseline: "compact",
+    summary:
+      "The compaction request with the three ways to add your own instructions.",
+    how: "Add text after `/compact`, add a `## Compact Instructions` section to `CLAUDE.md`, or print text from a `PreCompact` hook.",
+    select: "`/compact <text>`, CLAUDE.md, or `PreCompact` hook",
+    status: "Documented",
+    can: ovCan(
+      "Yes. You add focus text. The base summary rules stay.",
+      "`/compact <text>`.",
+      "The command line, `CLAUDE.md`, or a `PreCompact` hook.",
+    ),
+  },
+  {
+    id: "plan-mode-instructions",
+    title: "Plan Mode, Custom Workflow",
+    model: LEAN_MODEL,
+    args: [
+      "--permission-mode",
+      "plan",
+      "--plan-mode-instructions",
+      "PROBE-PLAN-WORKFLOW: write a one-line plan.",
+    ],
+    baseline: "mode-plan",
+    summary:
+      "`--plan-mode-instructions` replaces the workflow phases in the plan mode reminder.",
+    how: 'Run `claude --permission-mode plan --plan-mode-instructions "your workflow"`.',
+    select: "`--plan-mode-instructions`",
+    status: "Undocumented",
+    can: ovCan(
+      "Yes. You give the workflow text. The read-only rules and the `ExitPlanMode` rule stay.",
+      "`--plan-mode-instructions`.",
+      "Command-line flag.",
+    ),
+  },
+  {
+    id: "git-instructions-off",
+    title: "Git Instructions Turned Off",
+    model: LEAN_MODEL,
+    git: true,
+    args: settings({ includeGitInstructions: false }),
+    baseline: "git-repo",
+    summary:
+      "`includeGitInstructions: false` removes the built-in commit and pull request rules.",
+    how: 'Set `"includeGitInstructions": false` in `settings.json`, or set `CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS=1`.',
+    select: "`includeGitInstructions: false`",
+    status: "Documented",
+    can: ovCan(
+      "Yes. It removes text.",
+      "`includeGitInstructions` or `CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS=1`.",
+      "Any settings scope, or an environment variable.",
+    ),
+  },
+  {
+    id: "memory-off",
+    title: "Auto Memory Turned Off",
+    model: LEAN_MODEL,
+    env: { CLAUDE_CODE_DISABLE_AUTO_MEMORY: "1" },
+    baseline: "default-lean",
+    summary: "`CLAUDE_CODE_DISABLE_AUTO_MEMORY=1` removes the memory section.",
+    how: 'Set `CLAUDE_CODE_DISABLE_AUTO_MEMORY=1`, or `"autoMemoryEnabled": false` in `settings.json`.',
+    select: "`CLAUDE_CODE_DISABLE_AUTO_MEMORY=1`",
+    status: "Documented",
+    can: ovCan(
+      "Yes. It removes text.",
+      "`CLAUDE_CODE_DISABLE_AUTO_MEMORY=1` or `autoMemoryEnabled`.",
+      "Environment variable or any settings scope.",
+    ),
+  },
+  {
+    id: "style-override-builtin",
+    title: "Custom Output Style with a Built-in Name",
+    model: LEAN_MODEL,
+    args: settings({ outputStyle: "Explanatory" }),
+    cfgFiles: {
+      "output-styles/explanatory.md":
+        "---\nname: Explanatory\ndescription: A user style with a built-in name\n---\nPROBE-STYLE-OVERRIDE: answer in one short sentence.\n",
+    },
+    baseline: "style-explanatory",
+    summary:
+      "A style file named `Explanatory` takes the place of the built-in style.",
+    how: "Save `~/.claude/output-styles/explanatory.md` with `name: Explanatory` in its front matter.",
+    select: "Style file with a built-in name",
+    status: "Undocumented",
+    can: ovCan(
+      "Yes. You write the file.",
+      "`/output-style` or the `outputStyle` setting.",
+      "`~/.claude/output-styles/*.md` or `.claude/output-styles/*.md`.",
+    ),
+  },
+);
+
+VARIANTS.push(
+  {
+    id: "subagent-with-prompt-flags",
+    title: "Subagent with --system-prompt and --append-system-prompt",
+    model: LEAN_MODEL,
+    args: [
+      "--system-prompt",
+      "REPLACEMENT-TEXT-FROM-FLAG",
+      "--append-system-prompt",
+      "APPENDED-TEXT-FROM-FLAG",
+    ],
+    tool: subTool("Explore"),
+    pick: "subagent",
+    baseline: "subagent-explore",
+    summary:
+      "Shows whether the main-thread prompt flags reach a built-in subagent.",
+    how: 'Run `claude --system-prompt "A" --append-system-prompt "B"`, then let the model start the `Explore` agent.',
+    select: "Prompt flags plus a subagent",
+    status: "Undocumented",
+    can: ovCan(
+      "Not for the subagent. Use `--append-subagent-system-prompt`.",
+      "The flags.",
+      "Command-line flags.",
+    ),
+  },
+  {
+    id: "hook-prompt-stop",
+    title: "Prompt Hook on Stop",
+    model: LEAN_MODEL,
+    args: settings({
+      hooks: {
+        Stop: [
+          {
+            hooks: [
+              { type: "prompt", prompt: "PROBE-HOOK-STOP: is the work done?" },
+            ],
+          },
+        ],
+      },
+    }),
+    pick: "marker",
+    marker: "PROBE-HOOK-STOP",
+    baseline: "hook-prompt",
+    summary:
+      "A prompt hook on the `Stop` event gets a different system text from a tool hook.",
+    how: 'Add a `{"type": "prompt", "prompt": "..."}` handler under `Stop` in `settings.json`.',
+    select: "Hook `type: prompt` on `Stop`",
+    status: "Documented",
+    can: ovCan(
+      "Partly. You write the prompt and pick the model. The system text is fixed.",
+      "Add or remove the hook.",
+      "`hooks` in any settings scope.",
+    ),
+  },
+);

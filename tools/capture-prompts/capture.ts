@@ -17,11 +17,11 @@ import { SUB_MARK, VARIANTS, type Variant } from "./variants.ts";
 
 export const ROOT = join(import.meta.dir, "..", "..");
 export const CAPTURES = join(ROOT, "captures");
-function requireEnv(name: string): string {
+const requireEnv = (name: string): string => {
   const v = process.env[name];
   if (!v) throw new Error(`${name} is not set`);
   return v;
-}
+};
 
 const BIN = join(
   requireEnv("HOME"),
@@ -33,7 +33,7 @@ const only = argv.includes("--only")
   ? argv[argv.indexOf("--only") + 1].split(",")
   : null;
 
-async function run(v: Variant) {
+const run = async (v: Variant) => {
   const dir = join(CAPTURES, v.id);
   mkdirSync(dir, { recursive: true });
   const log = join(dir, "requests.jsonl");
@@ -160,7 +160,7 @@ async function run(v: Variant) {
   rmSync(cfg, { recursive: true, force: true });
   rmSync(home, { recursive: true, force: true });
   rmSync(proj, { recursive: true, force: true });
-}
+};
 
 if (import.meta.main) {
   for (const v of VARIANTS) if (!only || only.includes(v.id)) await run(v);

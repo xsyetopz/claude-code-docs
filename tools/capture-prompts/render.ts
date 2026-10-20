@@ -11,6 +11,7 @@ import {
   writeFileSync,
 } from "node:fs";
 import { join } from "node:path";
+import { normalizeHost } from "./normalize.ts";
 import { BADGE_NOTES, INDEX_FACTS, NOTES } from "./notes.ts";
 import { SUB_MARK, VARIANTS, type Variant } from "./variants.ts";
 
@@ -42,7 +43,7 @@ type Cap = {
 
 const esc = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
-function normalizer(meta: { cwd: string; cfg: string; home: string }) {
+const normalizer = (meta: { cwd: string; cfg: string; home: string }) => {
   const slug = (p: string) => p.replace(/[^a-zA-Z0-9]/g, "-");
   const pairs: [RegExp, string][] = [];
   for (const [p, ph] of [
@@ -63,28 +64,24 @@ function normalizer(meta: { cwd: string; cfg: string; home: string }) {
   return (s: string) => {
     let t = s;
     for (const [re, r] of pairs) t = t.replace(re, r);
-    return t
+    return normalizeHost(t)
       .replace(/\d{4}-\d\d-\d\d/g, "<date>")
-      .replace(/- Platform: .*/g, "- Platform: <platform>")
-      .replace(/- Shell: .*/g, "- Shell: <shell>")
-      .replace(/- OS Version: .*/g, "- OS Version: <os-version>")
-      .replace(/cc_version=(\d+\.\d+\.\d+)\.\w+/g, "cc_version=$1.<build>")
       .replace(/\b[0-9a-f]{7,40}\b(?= initial)/g, "<sha>")
       .replace(/\u{1F916}/gu, "<robot-emoji>")
       .replace(/\/plans\/[a-z]+(-[a-z]+)*\.md/g, "/plans/<plan-name>.md");
   };
-}
+};
 
-function blocks(content: unknown): string[] {
+const blocks = (content: unknown): string[] => {
   if (typeof content === "string") return [content];
   return (content as ApiBlock[]).map((c) =>
     c.type === "text"
       ? c.text
       : `[${c.type}] ${JSON.stringify(c.input ?? c.content ?? c).slice(0, 400)}`,
   );
-}
+};
 
-function load(v: Variant): Cap {
+const load = (v: Variant): Cap => {
   const dir = join(CAPTURES, v.id);
   const meta = JSON.parse(readFileSync(join(dir, "meta.json"), "utf8"));
   const n = normalizer(meta);
@@ -101,6 +98,14 @@ function load(v: Variant): Cap {
       const j = JSON.stringify(q.body.messages);
       return j.includes(SUB_MARK) && !j.includes("tool_result");
     });
+  if (v.pick === "marker")
+    r = reqs.find(
+      (q, i) =>
+        i > 0 &&
+        JSON.stringify([q.body.system, q.body.messages]).includes(
+          v.marker ?? "",
+        ),
+    );
   if (!r)
     return {
       v,
@@ -159,9 +164,9 @@ function load(v: Variant): Cap {
     model: b.model,
     ok: true,
   };
-}
+};
 
-function udiff(a: string, b: string, la: string, lb: string): string {
+const udiff = (a: string, b: string, la: string, lb: string): string => {
   const fa = join(OUT, ".a.tmp"),
     fb = join(OUT, ".b.tmp");
   writeFileSync(fa, a);
@@ -170,7 +175,7 @@ function udiff(a: string, b: string, la: string, lb: string): string {
   rmSync(fa);
   rmSync(fb);
   return r.stdout.toString();
-}
+};
 
 const fence = (body: string, lang: string) => {
   const longest = Math.max(
@@ -190,7 +195,7 @@ const badge = (v: Variant) => {
 const yaml = (s: string) => JSON.stringify(s);
 
 // join text lines: blank line between paragraphs, none inside lists, tables, and code fences
-function para(lines: string[]): string[] {
+const para = (lines: string[]): string[] => {
   const out: string[] = [];
   let fenced = false;
   const kind = (l: string) =>
@@ -231,7 +236,31 @@ function para(lines: string[]): string[] {
     prev = k;
   }
   return out;
-}
+};
+
+const toolDiff = (a: Tool[], b: Tool[]): string => {
+  const an = new Map(a.map((t) => [t.name, t])),
+    bn = new Map(b.map((t) => [t.name, t]));
+  const rem = a.filter((t) => !bn.has(t.name)).map((t) => t.name),
+    add = b.filter((t) => !an.has(t.name)).map((t) => t.name);
+  const chg = b
+    .filter((t) => {
+      const old = an.get(t.name);
+      return (
+        old !== undefined && (old.desc !== t.desc || old.schema !== t.schema)
+      );
+    })
+    .map((t) => t.name);
+  const out: string[] = [];
+  if (add.length) out.push(`adds ${add.map((x) => "`" + x + "`").join(", ")}.`);
+  if (rem.length)
+    out.push(`removes ${rem.map((x) => "`" + x + "`").join(", ")}.`);
+  if (chg.length)
+    out.push(
+      `changes the text or schema of ${chg.map((x) => "`" + x + "`").join(", ")}.`,
+    );
+  return out.join(" ");
+};
 
 const caps = new Map<string, Cap>();
 for (const v of VARIANTS) {
@@ -247,7 +276,59 @@ for (const v of VARIANTS) {
   caps.set(v.id, c);
   writeFileSync(join(OUT, `${v.id}.txt`), c.text);
 }
-for (const f of readdirSync(DOCS)) if (f.endsWith(".md")) rmSync(join(DOCS, f));
+
+// Hand-written pages carry `generated: false` in their front matter. The
+// generator never deletes them. Their optional `index` block adds rows to index.md.
+type IndexRow = {
+  after?: string;
+  change: string;
+  toggle: string;
+  where: string;
+  status: string;
+  select?: string;
+  chars?: number;
+  tools?: number;
+  sections?: string;
+};
+type HandPage = { id: string; title: string; row?: IndexRow | undefined };
+type FrontMatter = { title?: string; generated?: boolean; index?: IndexRow };
+const frontMatter = (file: string): FrontMatter => {
+  const raw = readFileSync(file, "utf8")
+    .replace(/^\uFEFF/, "")
+    .replace(/\r\n/g, "\n");
+  const m = /^---\n([\s\S]*?)\n---\n/.exec(raw);
+  return m?.[1] ? (Bun.YAML.parse(m[1]) as FrontMatter) : {};
+};
+const hand: HandPage[] = [];
+for (const f of readdirSync(DOCS).sort()) {
+  if (!f.endsWith(".md")) continue;
+  const fm = frontMatter(join(DOCS, f));
+  if (fm.generated === false) {
+    const id = f.replace(/\.md$/, "");
+    if (VARIANTS.some((v) => v.id === id))
+      throw new Error(
+        `docs/prompts/${f} is hand-written (generated: false) but its name collides with variant id "${id}".`,
+      );
+    hand.push({
+      id,
+      title: String(fm.title),
+      row: fm.index,
+    });
+  } else rmSync(join(DOCS, f));
+}
+// hand-written rows go after the generated row named in `after`, else at the end
+const handRows = (afterId?: string) =>
+  hand.filter(
+    (h) =>
+      h.row &&
+      (afterId === undefined
+        ? !h.row.after || !caps.has(h.row.after)
+        : h.row.after === afterId),
+  );
+const handGlance = (h: HandPage) =>
+  `| ${handLink(h)} | ${h.row?.change} | ${h.row?.toggle} | ${h.row?.where} | <${h.row?.status} /> |`;
+const handLink = (h: HandPage) => `[${h.title}](./${h.id}.md)`;
+const stripTrailing = (s: string) => s.replace(/[ \t]+$/gm, "");
 
 // duplicates: same normalized text as an earlier variant
 const seen = new Map<string, string>();
@@ -354,31 +435,7 @@ for (const [id, c] of caps) {
       "",
     );
   }
-  writeFileSync(join(DOCS, `${id}.md`), lines.join("\n"));
-}
-
-function toolDiff(a: Tool[], b: Tool[]): string {
-  const an = new Map(a.map((t) => [t.name, t])),
-    bn = new Map(b.map((t) => [t.name, t]));
-  const rem = a.filter((t) => !bn.has(t.name)).map((t) => t.name),
-    add = b.filter((t) => !an.has(t.name)).map((t) => t.name);
-  const chg = b
-    .filter((t) => {
-      const old = an.get(t.name);
-      return (
-        old !== undefined && (old.desc !== t.desc || old.schema !== t.schema)
-      );
-    })
-    .map((t) => t.name);
-  const out: string[] = [];
-  if (add.length) out.push(`adds ${add.map((x) => "`" + x + "`").join(", ")}.`);
-  if (rem.length)
-    out.push(`removes ${rem.map((x) => "`" + x + "`").join(", ")}.`);
-  if (chg.length)
-    out.push(
-      `changes the text or schema of ${chg.map((x) => "`" + x + "`").join(", ")}.`,
-    );
-  return out.join(" ");
+  writeFileSync(join(DOCS, `${id}.md`), stripTrailing(lines.join("\n")));
 }
 
 // tools-per-variant
@@ -431,7 +488,10 @@ function toolDiff(a: Tool[], b: Tool[]): string {
       ),
       "",
     );
-  writeFileSync(join(DOCS, "tools-per-variant.md"), L.join("\n"));
+  writeFileSync(
+    join(DOCS, "tools-per-variant.md"),
+    stripTrailing(L.join("\n")),
+  );
 }
 
 // index
@@ -451,14 +511,18 @@ function toolDiff(a: Tool[], b: Tool[]): string {
     "",
     "| Prompt | Can You Change It? | Turn On or Off | Where It Lives | Status |",
     "| --- | --- | --- | --- | --- |",
-    ...[...caps].map(([id, c]) => {
+    ...[...caps].flatMap(([id, c]) => {
       const u = c.v.can.use.replace(/^✅? ?Yes\.?\s*/, "").replace(/\.$/, "");
       const name = `[${c.v.title}](./${id}.md)${u ? ` (${u})` : ""}`;
       const ch = c.v.can.change.replace(/^(Yes|No)\b/, (m) =>
         m === "Yes" ? "✅ Yes" : "❌ No",
       );
-      return `| ${name} | ${ch} | ${c.v.can.toggle} | ${c.v.can.where} | ${badge(c.v)} |`;
+      return [
+        `| ${name} | ${ch} | ${c.v.can.toggle} | ${c.v.can.where} | ${badge(c.v)} |`,
+        ...handRows(id).map(handGlance),
+      ];
     }),
+    ...handRows().map(handGlance),
     "| [Tools per Variant](./tools-per-variant.md) (Every request carries the list) | ✅ Yes. Use `--tools`, `--allowedTools`, `--disallowedTools`, or settings. | `--bare` and `CLAUDE_CODE_SIMPLE=1` cut the list to three tools. | Built into the program. | <Undocumented /> |",
     "",
     "## How the Captures Were Made",
@@ -480,6 +544,11 @@ function toolDiff(a: Tool[], b: Tool[]): string {
     "| Variant | How to select it | Characters | Tools | Sections |",
     "| --- | --- | --- | --- | --- |",
   ];
+  const handAll = (h: HandPage) =>
+    `| ${handLink(h)} | ${h.row?.select} | ${fmt(h.row?.chars ?? 0)} | ${h.row?.tools} | ${h.row?.sections} |`;
+  const hasSelect = (h: HandPage) => h.row?.select !== undefined;
+  const allRows = (afterId?: string) =>
+    handRows(afterId).filter(hasSelect).map(handAll);
   for (const [id, c] of caps) {
     const dup = dupOf.get(id);
     const secs = c.sections.length
@@ -487,8 +556,10 @@ function toolDiff(a: Tool[], b: Tool[]): string {
       : "none";
     L.push(
       `| [${c.v.title}](./${id}.md)${dup ? " (same text as " + dup + ")" : ""} | ${c.v.select} | ${fmt(c.chars)} | ${c.tools.length} | ${secs} |`,
+      ...allRows(id),
     );
   }
+  L.push(...allRows());
   L.push(
     "",
     "See also [Tools per Variant](./tools-per-variant.md).",
@@ -500,7 +571,7 @@ function toolDiff(a: Tool[], b: Tool[]): string {
     ...para(INDEX_FACTS.regen),
     "",
   );
-  writeFileSync(join(DOCS, "index.md"), L.join("\n"));
+  writeFileSync(join(DOCS, "index.md"), stripTrailing(L.join("\n")));
 }
 console.log(
   `rendered ${caps.size} variants, ${dupOf.size} duplicates: ${[...dupOf].map(([a, b]) => a + "=" + b).join(" ")}`,
