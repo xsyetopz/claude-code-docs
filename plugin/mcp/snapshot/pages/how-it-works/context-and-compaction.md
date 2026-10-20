@@ -92,11 +92,11 @@ Sources: [Model Configuration: Set the Auto-Compact Window](https://code.claude.
 ```mermaid
 stateDiagram-v2
   [*] --> Normal
-  Normal --> Automatic: Over the threshold
+  Normal --> Automatic: Over the<br/>threshold
   Normal --> Manual: You run <code>/compact</code>
   Normal --> Reactive: API says prompt<br/>is too long
-  Automatic --> Normal: Summary replaces history
-  Manual --> Normal: Summary replaces history
+  Automatic --> Normal: Summary replaces<br/>history
+  Manual --> Normal: Summary replaces<br/>history
   Reactive --> Normal: Summary replaces history,<br/>request retried
   Automatic --> Thrashing: Refilled 3 times<br/>in a row
   Thrashing --> [*]: Turn ends<br/>with an error

@@ -156,12 +156,12 @@ Pick one style per hook. Use exit codes alone, or exit 0 with JSON. If you mix t
 flowchart TD
     A[Hook ends] --> B{Exit code}
     B -- 2 --> C{Event can block?}
-    C -- yes --> D["Block, <code>stderr</code> is the reason"]
-    C -- no --> E["Show <code>stderr</code> by event rules"]
-    B -- 0 --> F{Output is one JSON object?}
-    F -- yes --> G[Read fields, apply decision]
-    F -- no --> H[Plain text, context on four events]
-    B -- other --> I[Non-blocking error, action goes on]
+    C -- yes --> D["Block, <code>stderr</code><br/>is the reason"]
+    C -- no --> E["Show <code>stderr</code><br/>by event rules"]
+    B -- 0 --> F{"Output is one<br/>JSON object?"}
+    F -- yes --> G["Read fields,<br/>apply decision"]
+    F -- no --> H["Plain text, context<br/>on four events"]
+    B -- other --> I["Non-blocking error,<br/>action goes on"]
 ```
 
 ## Related Pages

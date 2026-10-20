@@ -123,13 +123,21 @@ sequenceDiagram
   participant U as You
   participant C as Claude Code
   participant P as Policy lists
-  participant S as Marketplace source
-  U->>C: plugin marketplace add owner/repo
-  C->>P: Check strict and blocked lists
+  U->>C: plugin marketplace add<br/>owner/repo
+  C->>P: Check strict and<br/>blocked lists
   P-->>C: Allowed
-  C->>S: Clone or fetch marketplace.json
-  Note over C: Save to known_marketplaces.json
-  U->>C: plugin install name@marketplace
+```
+
+Then Claude Code downloads the marketplace and saves it. Later, `plugin install` fetches the plugin from that marketplace.
+
+```mermaid
+sequenceDiagram
+  participant U as You
+  participant C as Claude Code
+  participant S as Marketplace source
+  C->>S: Clone or fetch<br/>marketplace.json
+  Note over C: Save to<br/>known_marketplaces.json
+  U->>C: plugin install<br/>name@marketplace
   C->>S: Fetch the entry source
 ```
 

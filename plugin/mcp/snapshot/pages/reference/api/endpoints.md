@@ -119,7 +119,7 @@ sequenceDiagram
   participant C as Claude Code
   participant G as Gateway
   participant M as Model server
-  C->>G: POST /v1/messages?beta=true (anthropic-version, anthropic-beta, x-claude-code-*)
+  C->>G: POST /v1/messages?beta=true<br/>(anthropic-version, anthropic-beta,<br/>x-claude-code-*)
   G->>M: Same headers, same body
   M-->>G: text/event-stream
   G-->>C: Stream, retry-after on errors

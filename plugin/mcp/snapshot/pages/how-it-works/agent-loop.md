@@ -20,16 +20,33 @@ sequenceDiagram
   participant You
   participant CC as Claude Code
   participant Model
-  participant Tool
   You->>CC: Prompt
   Note over CC: UserPromptSubmit hooks
-  CC->>Model: Request (system, tools, messages)
-  Model-->>CC: Streamed reply with a tool_use block
-  Note over CC: Permission check and PreToolUse hooks
+  CC->>Model: Request<br/>(system, tools, messages)
+  Model-->>CC: Streamed reply with<br/>a tool_use block
+  Note over CC: Permission check and<br/>PreToolUse hooks
+```
+
+Then Claude Code runs the tool and sends the result back to the model.
+
+```mermaid
+sequenceDiagram
+  participant CC as Claude Code
+  participant Model
+  participant Tool
   CC->>Tool: Run the tool
   Tool-->>CC: Result
   Note over CC: PostToolUse hooks
   CC->>Model: Request with the tool result
+```
+
+The turn ends when the model answers without a tool call.
+
+```mermaid
+sequenceDiagram
+  participant You
+  participant CC as Claude Code
+  participant Model
   Model-->>CC: Final text, no tool call
   Note over CC: Stop hooks
   CC-->>You: Answer

@@ -92,16 +92,23 @@ It runs before your first prompt, so a slow step here makes every launch slow.
 sequenceDiagram
   participant P as Process
   participant S as Settings and storage
-  participant X as Plugins and MCP
-  participant U as Screen or output
   Note over P: Set entry point, build command tree
   P->>S: Read device settings and keychain
-  P->>S: Init: config, storage, flag fetch
-  P->>S: Managed settings and policy checks
-  P->>X: Read plugin folders, start plugin load
-  P->>X: Run SessionStart hooks (not on resume)
-  P->>X: Connect MCP servers, then claude.ai connectors
-  P->>U: Print mode runs the turn, or interactive mode draws the screen
+  P->>S: Init: config, storage,<br/>flag fetch
+  P->>S: Managed settings and<br/>policy checks
+```
+
+Then the process loads plugins and servers and starts the turn or the screen.
+
+```mermaid
+sequenceDiagram
+  participant P as Process
+  participant X as Plugins and MCP
+  participant U as Screen or output
+  P->>X: Read plugin folders,<br/>start plugin load
+  P->>X: Run SessionStart hooks<br/>(not on resume)
+  P->>X: Connect MCP servers, then<br/>claude.ai connectors
+  P->>U: Print mode runs the turn, or<br/>interactive mode draws the screen
 ```
 
 | Step | Status | What happens |

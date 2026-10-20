@@ -27,15 +27,21 @@ Source: the official [Environment Variables](https://code.claude.com/docs/en/env
 
 ```mermaid
 flowchart TD
-  Shell[Your shell environment] --> Proc[Claude Code process environment]
-  User[User settings env] --> Merge[Settings env merge]
-  Project[Project settings env] --> Merge
-  Local[Local settings env] --> Merge
-  Managed[Managed settings env] --> Merge
+  Shell["Your shell<br/>environment"] --> Proc["Claude Code process<br/>environment"]
+  User["User settings env"] --> Merge["Settings env<br/>merge"]
+  Project["Project settings env"] --> Merge
+  Local["Local settings env"] --> Merge
+  Managed["Managed settings env"] --> Merge
   Merge -->|"replaces shell value<br/>in most sessions"| Proc
-  Proc --> Read[Feature reads the variable]
-  Flag[CLI flag or slash command] -->|"wins for<br/>some pairs"| Read
-  Key[Dedicated settings key] -->|"variable or key first,<br/>per pair"| Read
+```
+
+A feature then reads the variable from the process environment. For some variables, a CLI flag or a settings key can win instead.
+
+```mermaid
+flowchart TD
+  Proc["Claude Code process<br/>environment"] --> Read[Feature reads the variable]
+  Flag["CLI flag or<br/>slash command"] -->|"wins for<br/>some pairs"| Read
+  Key["Dedicated<br/>settings key"] -->|"variable or key first,<br/>per pair"| Read
   Read --> Effect[Behavior changes]
 ```
 

@@ -131,26 +131,26 @@ The chart shows what the captures prove. The order of the first three checks was
 
 ```mermaid
 flowchart TD
-  A["Start Claude Code"] --> B{"<code>--bare</code> or <code>CLAUDE_CODE_SIMPLE</code>=1?"}
-  B -- yes --> C["Bare: two-line body, empty environment message, 3 tools"]
-  B -- no --> D{"<code>--system-prompt</code>, <code>--system-prompt-file</code>, or <code>--agent</code>?"}
-  D -- yes --> E["Your text or the agent file replaces the body"]
+  A["Start Claude Code"] --> B{"<code>--bare</code> or<br/><code>CLAUDE_CODE_SIMPLE</code>=1?"}
+  B -- yes --> C["Bare: two-line body,<br/>empty environment message,<br/>3 tools"]
+  B -- no --> D{"<code>--system-prompt</code>,<br/><code>--system-prompt-file</code>,<br/>or <code>--agent</code>?"}
+  D -- yes --> E["Your text or the agent file<br/>replaces the body"]
   D -- no --> F{"<code>CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT</code>"}
   F -- "0" --> G["Full prompt"]
   F -- "1" --> H["Lean prompt"]
   F -- unset --> I{"Which model?"}
-  I -- "Opus 5.5 or Sonnet 5.5" --> H
-  I -- "Haiku 5.5" --> J["Lean prompt plus extra paragraphs"]
+  I -- "Opus 5.5 or<br/>Sonnet 5.5" --> H
+  I -- "Haiku 5.5" --> J["Lean prompt plus<br/>extra paragraphs"]
   G --> K{"Output style set?"}
   H --> K
   J --> K
   E --> L
-  K -- "yes, keep-coding-instructions false" --> M["Style text added, Doing tasks removed on the full prompt"]
-  K -- "yes, keep true, or no style" --> N["Style text added if set"]
+  K -- "yes, keep-coding-instructions<br/>false" --> M["Style text added, Doing tasks<br/>removed on the<br/>full prompt"]
+  K -- "yes, keep true,<br/>or no style" --> N["Style text added if set"]
   M --> L{"<code>--append-system-prompt</code>?"}
   N --> L
-  L -- yes --> O["Text added at the end, identity line changes"]
-  L -- no --> P{"<code>--exclude-dynamic-system-prompt-sections</code>?"}
+  L -- yes --> O["Text added at the end,<br/>identity line changes"]
+  L -- no --> P{"Exclude flag:<br/><code>--exclude-dynamic-system-prompt-sections</code>?"}
   O --> P
   P -- yes --> Q["Memory moves to the first user message"]
   P -- no --> R["Send request"]

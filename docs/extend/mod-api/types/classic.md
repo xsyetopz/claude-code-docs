@@ -23,11 +23,11 @@ Every settings hook event has a twin event under `classic`. The twin fires where
 The chain runs managed settings hooks first, then hooks modules, then the other settings hooks. A managed block ends the chain above every module.
 
 ```mermaid
-flowchart LR
-  A[Engine reaches a classic hook point] --> B[Managed settings hooks]
-  B --> C["Hooks modules: <code>classic.Event</code>"]
-  C --> D[Other settings hooks]
-  D --> E["Result: <code>ClassicResultOf</code>"]
+flowchart TD
+  A["Engine reaches<br/>a classic hook point"] --> B["Managed<br/>settings hooks"]
+  B --> C["Hooks modules:<br/><code>classic.Event</code>"]
+  C --> D["Other<br/>settings hooks"]
+  D --> E["Result:<br/><code>ClassicResultOf</code>"]
 ```
 
 ## Types without Fields
