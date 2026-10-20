@@ -22,7 +22,7 @@ This page explains the files, the scopes, and which value wins. The other pages 
 | Where does it live? | `~/.claude/settings.json`, `.claude/settings.json`, `.claude/settings.local.json`, managed files, and `~/.claude.json` |
 | Status | [Documented] [Undocumented] [Differs: appendPlugins and prependPlugins] |
 
-The managed schema of `2.1.305` lists 186 keys. The user schema lists 163, and the other 23 are managed-only.
+The managed schema of `2.1.305` lists 193 top-level keys. The user schema lists 170, and the other 23 are managed-only.
 Source: the program (the published settings schemas).
 
 ## Example
