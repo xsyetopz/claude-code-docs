@@ -10,7 +10,7 @@ type Node = {
 
 const BREAK = /(?<=[_./:-])(?=[^_./:-])|(?<=[a-z0-9])(?=[A-Z])/g;
 
-function split(value: string): Node[] {
+const split = (value: string): Node[] => {
   const parts = value.split(BREAK);
   const out: Node[] = [];
   parts.forEach((part, i) => {
@@ -18,18 +18,18 @@ function split(value: string): Node[] {
     out.push({ type: "text", value: part });
   });
   return out;
-}
+};
 
-function wrapCode(node: Node): void {
+const wrapCode = (node: Node): void => {
   if (!node.children) return;
   // Flag it so the theme keeps rendering it as inline code (see MDXComponents).
   node.properties = { ...node.properties, dataWbr: "true" };
   node.children = node.children.flatMap((c) =>
     c.type === "text" && c.value ? split(c.value) : [c],
   );
-}
+};
 
-function walk(node: Node, inCell: boolean): void {
+const walk = (node: Node, inCell: boolean): void => {
   if (!node.children) return;
   for (const child of node.children) {
     if (child.type !== "element") continue;
@@ -37,8 +37,10 @@ function walk(node: Node, inCell: boolean): void {
     if (cell && child.tagName === "code") wrapCode(child);
     else walk(child, cell);
   }
-}
+};
 
-export default function rehypeCodeWbr() {
+const rehypeCodeWbr = () => {
   return (tree: Node) => walk(tree, false);
-}
+};
+
+export default rehypeCodeWbr;

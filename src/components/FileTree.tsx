@@ -2,7 +2,7 @@ import React from "react";
 
 // Marks every inline code item that ends in "/" as a folder, so CSS can set
 // folders apart from files without color.
-function mark(node: React.ReactNode): React.ReactNode {
+const mark = (node: React.ReactNode): React.ReactNode => {
   return React.Children.map(node, (child) => {
     if (
       !React.isValidElement<{ children?: React.ReactNode; className?: string }>(
@@ -33,12 +33,14 @@ function mark(node: React.ReactNode): React.ReactNode {
       ? child
       : React.cloneElement(child, {}, mark(children));
   });
-}
+};
 
-export default function FileTree({
+const FileTree = ({
   children,
 }: {
   children?: React.ReactNode;
-}): React.JSX.Element {
+}): React.JSX.Element => {
   return <div className="cc-filetree">{mark(children)}</div>;
-}
+};
+
+export default FileTree;

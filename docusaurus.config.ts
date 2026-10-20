@@ -5,6 +5,7 @@ import type { Config, Plugin } from "@docusaurus/types";
 import { themes as prismThemes } from "prism-react-renderer";
 import llmsTxtPlugin from "./src/plugins/llms-txt";
 import rehypeCodeWbr from "./src/plugins/rehype-code-wbr";
+import rehypeTableMarks from "./src/plugins/rehype-table-marks";
 import { CLAUDE_CODE_VERSION } from "./src/version";
 
 const REPO = "https://github.com/xsyetopz/claude-code-docs";
@@ -68,7 +69,7 @@ const config: Config = {
           routeBasePath: "/",
           sidebarPath: "./sidebars.ts",
           editUrl: `${REPO}/edit/main/`,
-          rehypePlugins: [rehypeCodeWbr],
+          rehypePlugins: [rehypeCodeWbr, rehypeTableMarks],
         },
         blog: false,
         theme: { customCss: "./src/css/custom.css" },
@@ -130,7 +131,33 @@ const config: Config = {
     },
     mermaid: {
       theme: { light: "neutral", dark: "dark" },
-      options: { themeVariables: { fontFamily: "Lora, Georgia, serif" } },
+      options: {
+        fontFamily: "Lora, Georgia, serif",
+        themeVariables: {
+          fontFamily: "Lora, Georgia, serif",
+          fontSize: "16px",
+        },
+        flowchart: {
+          htmlLabels: true,
+          useMaxWidth: true,
+          wrappingWidth: 200,
+          padding: 12,
+          nodeSpacing: 32,
+          rankSpacing: 40,
+          curve: "basis",
+        },
+        sequence: {
+          useMaxWidth: true,
+          wrap: false,
+          mirrorActors: false,
+          actorMargin: 80,
+          messageMargin: 40,
+          noteMargin: 12,
+          boxMargin: 10,
+          width: 160,
+        },
+        state: { useMaxWidth: true },
+      },
     },
     prism: {
       theme: prismThemes.github,

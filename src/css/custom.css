@@ -56,6 +56,14 @@
   --cc-badge-differs-fg: #7a3519;
   --cc-badge-gated-bg: #e8e6dc;
   --cc-badge-gated-fg: #3d3d3a;
+  --cc-badge-managed-only-bg: #e9e1f0;
+  --cc-badge-managed-only-fg: #4a2f6b;
+  --cc-badge-experimental-bg: #d9ece9;
+  --cc-badge-experimental-fg: #1f4f4a;
+  --cc-badge-deprecated-bg: #ece6e6;
+  --cc-badge-deprecated-fg: #6b2a2a;
+  --cc-badge-caution-bg: #f5e9c4;
+  --cc-badge-caution-fg: #6a4a00;
 }
 
 /* Dark: #e08a6c on #141413 is 7.04:1. */
@@ -87,6 +95,14 @@ html[data-theme='dark'] {
   --cc-badge-differs-fg: #f5d0c1;
   --cc-badge-gated-bg: #3d3d3a;
   --cc-badge-gated-fg: #e8e6dc;
+  --cc-badge-managed-only-bg: #3b2c4f;
+  --cc-badge-managed-only-fg: #e1d4f2;
+  --cc-badge-experimental-bg: #1f4440;
+  --cc-badge-experimental-fg: #cdeae6;
+  --cc-badge-deprecated-bg: #4d2f2f;
+  --cc-badge-deprecated-fg: #f1d3d3;
+  --cc-badge-caution-bg: #54420f;
+  --cc-badge-caution-fg: #f5e3b0;
 }
 
 .navbar__title,
@@ -375,6 +391,59 @@ input:focus-visible,
   color: var(--cc-badge-gated-fg);
 }
 
+/* Label badges: outlined, with a square, diamond, bar, or triangle glyph. */
+.cc-badge--managed-only,
+.cc-badge--experimental,
+.cc-badge--deprecated,
+.cc-badge--caution {
+  border: 1px solid currentColor;
+}
+
+.cc-badge--managed-only::before {
+  border-radius: 0;
+}
+
+.cc-badge--experimental::before {
+  border-radius: 0;
+  transform: rotate(45deg) scale(0.85);
+}
+
+.cc-badge--deprecated::before {
+  height: 0.15em;
+  width: 0.7em;
+  border-radius: 0;
+}
+
+.cc-badge--caution::before {
+  border-radius: 0;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.cc-badge--managed-only {
+  background: var(--cc-badge-managed-only-bg);
+  color: var(--cc-badge-managed-only-fg);
+}
+
+.cc-badge--experimental {
+  background: var(--cc-badge-experimental-bg);
+  color: var(--cc-badge-experimental-fg);
+}
+
+.cc-badge--deprecated {
+  background: var(--cc-badge-deprecated-bg);
+  color: var(--cc-badge-deprecated-fg);
+}
+
+.cc-badge--caution {
+  background: var(--cc-badge-caution-bg);
+  color: var(--cc-badge-caution-fg);
+}
+
+/* Yes/No glyphs from rehype-table-marks. */
+.cc-mark {
+  font-style: normal;
+}
+
 /* Overview hero */
 .cc-hero {
   margin-bottom: 2.5rem;
@@ -511,13 +580,57 @@ input:focus-visible,
   font-weight: 500;
 }
 
-/* Mermaid labels: <code> in a flowchart label renders as a code span. The
-   mono font can load after Mermaid measures a label, so let it overflow a
-   little instead of clipping. */
-.docusaurus-mermaid-container foreignObject {
-  overflow: visible;
+/* Mermaid diagrams. The wrapper in src/theme/Mermaid loads the fonts before
+   Mermaid measures labels, and keeps a diagram from shrinking below about 12px
+   text: wider ones scroll inside this box. */
+.cc-mermaid-scroll {
+  overflow-x: auto;
+  margin: 0;
+  margin-bottom: var(--ifm-leading);
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
-.docusaurus-mermaid-container foreignObject code {
+.cc-mermaid-scroll:focus-visible {
+  outline: 2px solid var(--ifm-color-primary);
+  outline-offset: 2px;
+}
+
+.cc-mermaid-scroll .docusaurus-mermaid-container {
+  margin: 0;
+}
+
+.cc-mermaid-scroll .docusaurus-mermaid-container svg {
+  height: auto;
+}
+
+/* A lifeline can cross a message label that spans two gaps. A halo in the page
+   color keeps the line from cutting through the letters. Note text is left out:
+   a note box has its own fill. */
+.docusaurus-mermaid-container .messageText,
+.docusaurus-mermaid-container .loopText,
+.docusaurus-mermaid-container .loopText > tspan {
+  paint-order: stroke;
+  stroke: var(--ifm-background-color);
+  stroke-width: 5px;
+  stroke-linejoin: round;
+}
+
+/* Mermaid measures a label in a scratch element on the page, then paints it
+   in the container. Page-wide code styles (padding, font size) differ between
+   the two places, which made code spans 5px wider at paint than at measure and
+   clipped the label. Give code the same plain style in both places. */
+.docusaurus-mermaid-container.docusaurus-mermaid-container code,
+[id^='dmermaid'][id^='dmermaid'] code,
+[id^='mermaid'][id^='mermaid'] code {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.9em;
+  font-weight: 400;
+  letter-spacing: normal;
   white-space: nowrap;
 }

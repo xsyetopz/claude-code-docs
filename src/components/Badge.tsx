@@ -1,6 +1,14 @@
 import type React from "react";
 
-type Kind = "documented" | "undocumented" | "differs" | "gated";
+type Kind =
+  | "documented"
+  | "undocumented"
+  | "differs"
+  | "gated"
+  | "managed-only"
+  | "experimental"
+  | "deprecated"
+  | "caution";
 
 const META: Record<Kind, { label: string; tip: string }> = {
   documented: {
@@ -16,9 +24,25 @@ const META: Record<Kind, { label: string; tip: string }> = {
     tip: "The official docs and the program disagree. The row says how.",
   },
   gated: { label: "Gated", tip: "Works only behind a flag or a server gate." },
+  "managed-only": {
+    label: "Managed Only",
+    tip: "Works only in managed (organization policy) settings.",
+  },
+  experimental: {
+    label: "Experimental",
+    tip: "The program or the official docs call this experimental or beta.",
+  },
+  deprecated: {
+    label: "Deprecated",
+    tip: "The program or the official docs call this deprecated.",
+  },
+  caution: {
+    label: "Caution",
+    tip: "It deletes data, skips a safety check, or sends data off your machine.",
+  },
 };
 
-export function makeBadge(kind: Kind) {
+export const makeBadge = (kind: Kind) => {
   const { label, tip } = META[kind];
   return function BadgeComponent({
     note,
@@ -32,4 +56,4 @@ export function makeBadge(kind: Kind) {
       </span>
     );
   };
-}
+};
