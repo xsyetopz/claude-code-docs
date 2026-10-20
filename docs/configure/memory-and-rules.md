@@ -45,7 +45,7 @@ Official page: [How Claude Remembers Your Project](https://code.claude.com/docs/
 
 | Item | Status | What it does | How it works | Where to set it |
 | --- | --- | --- | --- | --- |
-| Managed `CLAUDE.md` | <Documented /> | Organization instructions | `/Library/Application Support/ClaudeCode/CLAUDE.md` (macOS), `/etc/claude-code/CLAUDE.md` (Linux and WSL), `C:\Program Files\ClaudeCode\CLAUDE.md` (Windows). Cannot be excluded | Machine |
+| Managed `CLAUDE.md` | <Documented /> | Organization instructions | `/Library/Application Support/ClaudeCode/CLAUDE.md` (macOS), `/etc/claude-code/CLAUDE.md` (Linux and WSL), `C:\Program Files\ClaudeCode\CLAUDE.md` (Windows). Loads first, then `~/.claude/CLAUDE.md`, then project files. `claudeMdExcludes` cannot exclude it, not even by its absolute path (checked; see [Probes](../reference/probes.md#managed-folder-probe)) | Machine |
 | `claudeMd` setting | <Documented /> | Managed `CLAUDE.md` text inside managed settings | Same precedence as the managed file. Honored only from managed settings | `managed-settings.json` |
 | `~/.claude/CLAUDE.md` | <Documented /> | Personal instructions | Loads for all projects. Imports in it need no approval dialog | User |
 | `~/.claude/rules/*.md` | <Documented /> | Personal rules | Load before project rules. No override between the two sets | User |

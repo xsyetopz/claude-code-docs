@@ -111,7 +111,7 @@ flowchart TD
   Use --> Prompt
 ```
 
-> **Note:** A probe set `outputStyle` in user settings and added a plugin style with `force-for-plugin: true`. The system prompt used the forced style and not the configured one. The `init` event still showed the setting's name. With several forced styles, the first wins and a warning lists all. In a user style, `force-for-plugin` is ignored. A managed `outputStyle` was not run, because the managed folder needs `sudo`. See [Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md#configure-and-memory).
+> **Note:** A probe set `outputStyle` in user settings and added a plugin style with `force-for-plugin: true`. The system prompt used the forced style and not the configured one. The `init` event still showed the setting's name. With several forced styles, the first wins and a warning lists all. In a user style, `force-for-plugin` is ignored. A managed `outputStyle` with its style file in the managed folder won over user, project, local, and `--settings` values. See [Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md#configure-and-memory) and [Managed Folder Probe](https://xsyetopz.github.io/claude-code-docs/reference/probes.md#managed-folder-probe).
 > The captures linked above hold the full text of each built-in style prompt. We compared them with the strings in the program: the only difference is the blank lines that the capture adds after the style header and between paragraphs.
 
 ## Related Pages

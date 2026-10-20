@@ -44,7 +44,7 @@ These keys sit under `projects["<path>"]`.
 | --- | --- | --- | --- |
 | `.mcp.json` | [Documented] | Holds project servers. | At the project root. Interactive sessions ask for approval. `claude -p`, the SDK, and cloud sessions load it without a prompt. |
 | `~/.claude.json` | [Documented] | Holds local and user servers. | Written by `claude mcp add`. |
-| `managed-mcp.json` | [Documented] | A fixed server set from the organization. | Gives the organization exclusive control. Claude Code warns and ignores other sources. Claude in Chrome and connectors stay blocked unless the two `allow` keys above are set. |
+| `managed-mcp.json` | [Documented] | A fixed server set from the organization. | Gives the organization exclusive control. Claude Code ignores other sources. In the probe, user and project servers were dropped with no warning, which matches the [official page](https://code.claude.com/docs/en/managed-mcp#disable-mcp-entirely) (see [Managed Folder Probe](https://xsyetopz.github.io/claude-code-docs/reference/probes.md#managed-folder-probe)). Claude in Chrome and connectors stay blocked unless the two `allow` keys above are set. |
 | `--mcp-config <configs...>` | [Documented] | Loads servers from files or strings. | Space-separated. Scope `dynamic`. `headersHelper` runs in the primary working folder. |
 | `--strict-mcp-config` | [Documented] | Uses only the `--mcp-config` servers. | Skips the approval prompt for project servers it does not load (`2.1.246` and later). |
 | `--plugin-dir-no-mcp <path>` | [Undocumented] | Loads an inline plugin without its MCP servers. | Hidden flag. The SDK form is `skipMcpDiscovery`. |

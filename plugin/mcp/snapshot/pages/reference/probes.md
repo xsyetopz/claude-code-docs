@@ -116,7 +116,7 @@ These runs used a live subscription login on `2.1.304`, not the stub, with a fre
 
 ## Static and Print Probes
 
-These runs used the same stub, a fake key, a temp home folder, and a dead proxy, plus static reading of the program. Nothing was run with a login or with `sudo`.
+These runs used the same stub, a fake key, a temp home folder, and a dead proxy, plus static reading of the program. Nothing was run with a login or with `sudo`. The [Managed Folder Probe](#managed-folder-probe) is the one section that used `sudo`.
 
 | What We Ran | Status | What We Saw |
 | --- | --- | --- |
@@ -131,6 +131,24 @@ These runs used the same stub, a fake key, a temp home folder, and a dead proxy,
 | Skill variables in the `init` skill list | [Documented] | `CLAUDE_CODE_DISABLE_CLAUDE_API_SKILL` removed `claude-api`. The other four had no visible effect. |
 | `CLAUDE_CODE_MANAGED_SETTINGS_PATH` | [Undocumented] | Ignored. The log still read the machine default managed folder. |
 | `/status` size warning with a 45,000-character `CLAUDE.md` in `-p`, `claude doctor`, and `get_status` | [Undocumented] | No warning in these three. It shows in the interactive screen (see [Interactive Probes](#interactive-probes)). |
+
+## Managed Folder Probe
+
+These runs used the real `2.1.304` binary on macOS with the stub, a fake key, and a temp home and config folder. The managed folder `/Library/Application Support/ClaudeCode` was made with `sudo` (owner `root:wheel`). It held `CLAUDE.md`, a rule, a skill, an output style, `managed-settings.json`, a `managed-settings.d/` drop-in, and `managed-mcp.json` with one stdio server. Each run also had a user server and a project `.mcp.json` server. A baseline ran without the folder. Runs used `-p --output-format stream-json`, plus `claude mcp list` and `claude mcp get`.
+
+| What We Ran | Status | What We Saw |
+| --- | --- | --- |
+| `managed-mcp.json` with a user server and a project server | [Documented] | Only the managed server started. The user and project servers were not started and not in `init` (the baseline started both). `claude mcp list` showed only the managed server. `claude mcp get` on a user server exited 1 with `No MCP server named "user_srv". Configured servers: managed_srv`. |
+| `claude mcp get` on the managed server | [Undocumented] | `Scope: Enterprise config (managed by your organization)`, and the removal hint names the `managed-mcp.json` path. |
+| `--mcp-config <file>` with `managed-mcp.json` present | [Documented] | Exit 1 with `You cannot dynamically configure MCP servers when an enterprise MCP config is present`. No `init` event. See [Servers passed with `--mcp-config`](https://code.claude.com/docs/en/managed-mcp#servers-passed-with---mcp-config-or---strict-mcp-config). |
+| Managed `outputStyle` with a style file in the managed `.claude/output-styles/` | [Documented] | The `init` event named the style and its text was in the request. It won over `outputStyle` in user settings, `.claude/settings.json`, `.claude/settings.local.json`, and `--settings`. |
+| A skill in the managed `.claude/skills/`, with and without `CLAUDE_CODE_DISABLE_POLICY_SKILLS=1` | [Documented] | The skill was listed and its description was in the request. The variable removed it. Nothing else changed. |
+| Managed `CLAUDE.md` with user and project `CLAUDE.md` | [Documented] | Order in the request: managed, then `~/.claude/CLAUDE.md`, then project `CLAUDE.md`. |
+| `claudeMdExcludes` of `**/CLAUDE.md`, the managed absolute path, and `<managed>/**`, in user or project settings | [Documented] | User and project `CLAUDE.md` were removed. The managed `CLAUDE.md` still loaded. |
+| Managed `.claude/rules/*.md` | [Undocumented] | It loaded, and `claudeMdExcludes` with `<managed>/**` did not remove it. |
+| A `managed-settings.d/` drop-in that denies `NotebookEdit` | [Documented] | `NotebookEdit` was gone from the tool list (present in the baseline). |
+| The prompt note "not verified as your organization's policy" | [Undocumented] | It did not appear with a root-owned folder. The program text says it is added for managed files that the session's own account could write (not run). |
+| User agent with `mcpServers` frontmatter, no `--mcp-config` | [Undocumented] | The agent ran, but its server did not start (without the managed folder it did). A notice said `probe-agent agent MCP server blocked by enterprise MCP config: agent_srv`. |
 
 ## Interactive Probes
 
@@ -156,7 +174,6 @@ Not run, because they need a login, a cloud or remote session, or another host:
 
 ## What We Did Not Probe
 
-- The managed folder (`managed-mcp.json`, managed `outputStyle`, policy skills) needs `sudo`.
 - Cloud hook forwarding (`callback`) and the post-turn memory pass need a cloud session.
 - Chrome variables need the extension.
 - Remote, CCR, and cloud variables need a remote session.
