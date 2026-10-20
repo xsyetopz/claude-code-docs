@@ -77,7 +77,7 @@ claude plugin install my-plugin@my-marketplace --scope project
 ## How It Works
 
 ```mermaid
-flowchart LR
+flowchart TD
   M["<code>marketplace.json</code>"] -->|plugin entry and source| F[Fetch the source]
   F --> C[Copy to the plugin cache]
   C --> R["Install record in <code>installed_plugins.json</code>"]

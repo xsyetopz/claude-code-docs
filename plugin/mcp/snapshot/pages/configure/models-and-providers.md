@@ -26,7 +26,7 @@ This page lists every model, alias, and provider switch. For how the choice is m
 ## Choose a Model
 
 ```mermaid
-flowchart LR
+flowchart TD
   A["<code>/model</code> in a session"] --> B["<code>--model</code> flag"]
   B --> C["<code>ANTHROPIC_MODEL</code>"]
   C --> D["model setting"]
@@ -60,7 +60,7 @@ The catalog holds `opus`, `sonnet`, `haiku`, and `fable`. The help text of `--mo
 
 | Alias | Status | Resolves to | Exceptions |
 | --- | --- | --- | --- |
-| `default` | [Documented] | Clears the override. The model is the runtime default for your account. | Not an alias in the strict sense. |
+| `default` | [Documented] | Clears the override. The model is then the runtime default for your account: Opus 5.5 on the Anthropic API, on the paid plans, and on AWS and Google Cloud. | Not an alias in the strict sense. |
 | `opus` | [Documented] | `claude-opus-5-5` | Foundry uses `claude-opus-4-6`. Gateways use `claude-opus-4-7`. |
 | `sonnet` | [Documented] | `claude-sonnet-5-5` | Bedrock, Vertex, Foundry, and Mantle use `claude-sonnet-4-5`. Claude Platform on AWS and gateways use `claude-sonnet-4-6`. |
 | `haiku` | [Documented] | `claude-haiku-5-5` | Every other provider uses `claude-haiku-4-5`. |
@@ -80,7 +80,7 @@ Opus 5.5 needs Claude Code v2.1.280 or later, Sonnet 5.5 needs v2.1.284, Haiku 5
 | `ANTHROPIC_DEFAULT_SONNET_MODEL` | [Documented] | The model for `sonnet`, and for `opusplan` outside plan mode. |
 | `ANTHROPIC_DEFAULT_HAIKU_MODEL` | [Documented] | The model for `haiku` and for background work. |
 | `ANTHROPIC_DEFAULT_FABLE_MODEL` | [Documented] | The model for `fable`. It also marks the ID as a Fable model for fallback. |
-| ⛔ `ANTHROPIC_SMALL_FAST_MODEL` | [Documented] | Deprecated. Use `ANTHROPIC_DEFAULT_HAIKU_MODEL`. |
+| `ANTHROPIC_SMALL_FAST_MODEL` | [Documented] [Deprecated: Use ANTHROPIC_DEFAULT_HAIKU_MODEL] | Deprecated. Use `ANTHROPIC_DEFAULT_HAIKU_MODEL`. |
 | `ANTHROPIC_DEFAULT_<FAMILY>_MODEL_NAME` | [Documented] | The display name of the pinned model in the picker. Works on third-party providers and gateways. |
 | `ANTHROPIC_DEFAULT_<FAMILY>_MODEL_DESCRIPTION` | [Documented] | The description in the picker. |
 | `ANTHROPIC_DEFAULT_<FAMILY>_MODEL_SUPPORTED_CAPABILITIES` | [Documented] | A comma list that tells Claude Code what the pinned model supports. Values: `effort`, `xhigh_effort`, `max_effort`, `thinking`, `adaptive_thinking`, `interleaved_thinking`. |
@@ -92,37 +92,37 @@ A native 1M model runs with 1M with no suffix when the pinned ID contains its An
 ## Catalog
 
 The catalog is a JavaScript object in the program with the comment `Hand-maintained baked-in model catalog`.
-It holds the provider names, the window, the output limits, the price, and the capability flags of each model.
+It holds the provider names, the window, the output limits, the price, the default effort, and the capability flags of each model.
 A row is [Documented] when an official docs page names the model. It is [Undocumented] when no page names it.
 The docs do not list the catalog fields, so the window, the limits, and the prices are program facts for all rows.
 
 "Larger window" says how to get a bigger one: `native 1M` means the model has 1M already, `context-1m` is the beta that asks the API for it, and `[1m]` is the suffix for `--model`.
-"Output" shows the default and the highest output limit in tokens. "Price" shows dollars for one million input and output tokens.
+"Output" shows the default and the highest output limit in tokens. Prices are in [Pricing](#pricing) and default efforts are in [Effort](#effort).
 
-| `id` | Status | Name | Knowledge cutoff | Window | Larger window | Output | Default effort | Price |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `claude-3-5-haiku` | [Undocumented] | Haiku 3.5 | - | not set | - | 8,192 / 8,192 | - | $0.8 / $4 |
-| `claude-haiku-4-5` | [Documented] | Haiku 4.5 | February 2025 | 200,000 | `[1m]` suffix | 32,000 / 64,000 | - | $1 / $5 |
-| `claude-haiku-5-5` | [Documented] | Haiku 5.5 | June 2026 | 1,000,000 | native 1M, `context-1m` | 128,000 / 128,000 | `medium` | $0.1 / $0.5 |
-| `claude-3-5-sonnet` | [Undocumented] | Sonnet 3.5 | - | not set | - | 8,192 / 8,192 | - | $3 / $15 |
-| `claude-3-7-sonnet` | [Undocumented] | Sonnet 3.7 | - | not set | - | 32,000 / 64,000 | - | $3 / $15 |
-| `claude-sonnet-4-0` | [Undocumented] | Sonnet 4 | January 2025 | 200,000 | `context-1m`, `[1m]` | 32,000 / 64,000 | - | $3 / $15 |
-| `claude-sonnet-4-5` | [Documented] | Sonnet 4.5 | January 2025 | 200,000 | `context-1m`, `[1m]` | 32,000 / 64,000 | - | $3 / $15 |
-| `claude-sonnet-4-6` | [Documented] | Sonnet 4.6 | August 2025 | 200,000 | `context-1m`, `[1m]` | 32,000 / 128,000 | - | $3 / $15 |
-| `claude-sonnet-5` | [Documented] | Sonnet 5 | January 2026 | 1,000,000 | native 1M, `context-1m` | 64,000 / 128,000 | `high` | $2 / $10 |
-| `claude-sonnet-5-5` | [Documented] | Sonnet 5.5 | June 2026 | 1,000,000 | native 1M, `context-1m` | 128,000 / 128,000 | `medium` | $2 / $10 |
-| `claude-opus-4-0` | [Undocumented] | Opus 4 | January 2025 | 200,000 | `[1m]` suffix | 32,000 / 32,000 | - | $15 / $75 |
-| `claude-opus-4-1` | [Documented] | Opus 4.1 | January 2025 | 200,000 | `[1m]` suffix | 32,000 / 32,000 | - | $15 / $75 |
-| `claude-opus-4-5` | [Documented] | Opus 4.5 | May 2025 | 200,000 | `[1m]` suffix | 32,000 / 64,000 | - | $5 / $25 |
-| `claude-opus-4-6` | [Documented] | Opus 4.6 | May 2025 | 200,000 | `context-1m`, `[1m]` | 64,000 / 128,000 | - | $5 / $25 |
-| `claude-opus-4-7` | [Documented] | Opus 4.7 | January 2026 | 1,000,000 | native 1M, `context-1m`, `[1m]` | 64,000 / 128,000 | `xhigh` | $5 / $25 |
-| `claude-opus-4-8` | [Documented] | Opus 4.8 | January 2026 | 1,000,000 | native 1M, `context-1m`, `[1m]` | 64,000 / 128,000 | `high` | $5 / $25 |
-| `claude-opus-5` | [Documented] | Opus 5 | May 2026 | 1,000,000 | native 1M, `context-1m`, `[1m]` | 64,000 / 128,000 | `high` | $5 / $25 |
-| `claude-opus-5-5` | [Documented] | Opus 5.5 | June 2026 | 1,000,000 | native 1M, `context-1m`, `[1m]` | 128,000 / 128,000 | `medium` | $4 / $20 |
-| `claude-fable-5` | [Documented] | Fable 5 | January 2026 | 1,000,000 | native 1M, `context-1m` | 64,000 / 128,000 | `high` | $10 / $50 |
-| `claude-fable-5-1` | [Documented] | Fable 5.1 | June 2026 | 1,000,000 | native 1M, `context-1m` | 64,000 / 128,000 | `high` | $10 / $50 |
-| `claude-mythos-5` | [Documented] | Mythos 5 | January 2026 | 1,000,000 | native 1M, `context-1m` | 64,000 / 128,000 | - | $10 / $50 |
-| `claude-mythos-5-1` | [Undocumented] | Mythos 5.1 | June 2026 | 1,000,000 | native 1M, `context-1m` | 64,000 / 128,000 | `high` | $10 / $50 |
+| `id` | Status | Name | Knowledge cutoff | Window | Larger window | Output |
+| --- | --- | --- | --- | --- | --- | --- |
+| `claude-3-5-haiku` | [Undocumented] | Haiku 3.5 | - | not set | - | 8,192 / 8,192 |
+| `claude-haiku-4-5` | [Documented] | Haiku 4.5 | February 2025 | 200,000 | `[1m]` suffix | 32,000 / 64,000 |
+| `claude-haiku-5-5` | [Documented] | Haiku 5.5 | June 2026 | 1,000,000 | native 1M, `context-1m` | 128,000 / 128,000 |
+| `claude-3-5-sonnet` | [Undocumented] | Sonnet 3.5 | - | not set | - | 8,192 / 8,192 |
+| `claude-3-7-sonnet` | [Undocumented] | Sonnet 3.7 | - | not set | - | 32,000 / 64,000 |
+| `claude-sonnet-4-0` | [Undocumented] | Sonnet 4 | January 2025 | 200,000 | `context-1m`, `[1m]` | 32,000 / 64,000 |
+| `claude-sonnet-4-5` | [Documented] | Sonnet 4.5 | January 2025 | 200,000 | `context-1m`, `[1m]` | 32,000 / 64,000 |
+| `claude-sonnet-4-6` | [Documented] | Sonnet 4.6 | August 2025 | 200,000 | `context-1m`, `[1m]` | 32,000 / 128,000 |
+| `claude-sonnet-5` | [Documented] | Sonnet 5 | January 2026 | 1,000,000 | native 1M, `context-1m` | 64,000 / 128,000 |
+| `claude-sonnet-5-5` | [Documented] | Sonnet 5.5 | June 2026 | 1,000,000 | native 1M, `context-1m` | 128,000 / 128,000 |
+| `claude-opus-4-0` | [Undocumented] | Opus 4 | January 2025 | 200,000 | `[1m]` suffix | 32,000 / 32,000 |
+| `claude-opus-4-1` | [Documented] | Opus 4.1 | January 2025 | 200,000 | `[1m]` suffix | 32,000 / 32,000 |
+| `claude-opus-4-5` | [Documented] | Opus 4.5 | May 2025 | 200,000 | `[1m]` suffix | 32,000 / 64,000 |
+| `claude-opus-4-6` | [Documented] | Opus 4.6 | May 2025 | 200,000 | `context-1m`, `[1m]` | 64,000 / 128,000 |
+| `claude-opus-4-7` | [Documented] | Opus 4.7 | January 2026 | 1,000,000 | native 1M, `context-1m`, `[1m]` | 64,000 / 128,000 |
+| `claude-opus-4-8` | [Documented] | Opus 4.8 | January 2026 | 1,000,000 | native 1M, `context-1m`, `[1m]` | 64,000 / 128,000 |
+| `claude-opus-5` | [Documented] | Opus 5 | May 2026 | 1,000,000 | native 1M, `context-1m`, `[1m]` | 64,000 / 128,000 |
+| `claude-opus-5-5` | [Documented] | Opus 5.5 | June 2026 | 1,000,000 | native 1M, `context-1m`, `[1m]` | 128,000 / 128,000 |
+| `claude-fable-5` | [Documented] | Fable 5 | January 2026 | 1,000,000 | native 1M, `context-1m` | 64,000 / 128,000 |
+| `claude-fable-5-1` | [Documented] | Fable 5.1 | June 2026 | 1,000,000 | native 1M, `context-1m` | 64,000 / 128,000 |
+| `claude-mythos-5` | [Documented] | Mythos 5 | January 2026 | 1,000,000 | native 1M, `context-1m` | 64,000 / 128,000 |
+| `claude-mythos-5-1` | [Undocumented] | Mythos 5.1 | June 2026 | 1,000,000 | native 1M, `context-1m` | 64,000 / 128,000 |
 
 Notes:
 
@@ -163,7 +163,10 @@ It comes from the catalog ([Undocumented]). `claude-opus-4-7` has the default `x
 | `--effort <level>` | [Documented] | Sets the effort for a session. `ultracode` sets `xhigh` and turns on the workflow mode. |
 | `CLAUDE_CODE_EFFORT_LEVEL` | [Documented] | Sets the effort. It wins over `--effort`, `/effort`, and settings. `auto` uses the model default. |
 | `effortLevel`, `maxEffortLevel`, `modelSettings` | [Documented] | Settings for the default level and a cap. |
+| `output_config.effort` | [Documented] | The request field that carries the level. |
+| `per-turn-control-2026-07-01` | [Undocumented] | A beta that lets some models take the effort with each message. |
 | `ultrathink` | [Documented] | A word in a prompt that asks for deeper thinking on that turn only. |
+| Default effort | [Documented] | `high`, except `medium` for Opus 5.5, Sonnet 5.5, and Haiku 5.5, and `xhigh` for Opus 4.7. |
 
 | `id` | Default effort | Index (`low`, `medium`, `high`, `xhigh`, `max`) |
 | --- | --- | --- |
@@ -180,30 +183,35 @@ It comes from the catalog ([Undocumented]). `claude-opus-4-7` has the default `x
 
 ## Thinking
 
+Sources: [Model Configuration](https://code.claude.com/docs/en/model-config) and [Environment Variables](https://code.claude.com/docs/en/env-vars).
+
 | Item | Status | What it does |
 | --- | --- | --- |
+| `thinking: {type: "adaptive"}` | [Documented] | Lets the model choose how long it thinks. Newer models always use it. |
 | `MAX_THINKING_TOKENS` | [Documented] | Sets a fixed thinking budget. `0` turns thinking off on the Anthropic API. It cannot turn thinking off on Opus 5.5, Sonnet 5.5, Haiku 5.5, and the Fable models. |
 | `CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING` | [Documented] | Goes back to the fixed budget on Opus 4.6 and Sonnet 4.6. No effect on newer models. |
 | `CLAUDE_CODE_DISABLE_THINKING` | [Documented] | Leaves out the `thinking` field, for proxies that reject it. |
 | `alwaysThinkingEnabled`, `showThinkingSummaries` | [Documented] | Settings for thinking. `Option+T` or `Alt+T` toggles it. |
 | `--thinking <enabled\|adaptive\|disabled>` | [Undocumented] | Hidden print-mode flag. `enabled` equals `adaptive`. |
 | `--thinking-display <summarized\|omitted\|highlights>` | [Undocumented] | Hidden flag. Sets how thinking text comes back. |
-| `--max-thinking-tokens` | [Undocumented] | Hidden and deprecated. Use `--thinking`. |
+| `--max-thinking-tokens` | [Undocumented] [Deprecated: Use --thinking] | Hidden and deprecated. Use `--thinking`. |
 
 ## Fallback and Retries
+
+Sources: [Model Configuration](https://code.claude.com/docs/en/model-config) and [Error Reference: Automatic Retries](https://code.claude.com/docs/en/errors#automatic-retries).
 
 | Item | Status | What it does |
 | --- | --- | --- |
 | `--fallback-model <model...>`, `fallbackModel` | [Documented] | A chain of up to three models for overload and server errors. |
 | `CLAUDE_CODE_NO_MODEL_FALLBACK` | [Undocumented] | Forbids the substitution of a model. |
 | `CLAUDE_CODE_MAX_RETRIES` | [Documented] | Number of retries. Default 10, up to 15. |
-| `CLAUDE_CODE_RETRY_WATCHDOG` | [Documented] | Retries `429` and `529` without end. |
+| `CLAUDE_CODE_RETRY_WATCHDOG` | [Documented] | Retries `429` and `529` errors without end and removes the cap. Off by default. |
 | `CLAUDE_CODE_OVERLOADED_RETRY_BASE_DELAY_MS`, `CLAUDE_CODE_OVERLOADED_RETRY_MAX_DELAY_MS` | [Documented] | Start and longest wait after a `529`. Defaults 500 and 32000. |
 | `API_TIMEOUT_MS` | [Documented] | Request timeout. Default 600000. |
-| `CLAUDE_STREAM_IDLE_TIMEOUT_MS`, `CLAUDE_STREAM_FIRST_BYTE_TIMEOUT_MS` | [Documented] | Stream silence and first-byte deadlines. |
-| `CLAUDE_CODE_DISABLE_NONSTREAMING_FALLBACK` | [Documented] | Stops the retry without streaming. |
+| `CLAUDE_STREAM_IDLE_TIMEOUT_MS`, `CLAUDE_STREAM_FIRST_BYTE_TIMEOUT_MS` | [Documented] | Stream silence and first-byte deadlines. The program sets the defaults. A value below 5 minutes for `CLAUDE_STREAM_IDLE_TIMEOUT_MS` counts as 5 minutes. |
+| `CLAUDE_CODE_DISABLE_NONSTREAMING_FALLBACK` | [Documented] | Stops the retry without streaming after a stream fails. Off by default. |
 
-The rules for these are on [Models](https://xsyetopz.github.io/claude-code-docs/how-it-works/models.md#fallback).
+The rules for these are on [Models](https://xsyetopz.github.io/claude-code-docs/how-it-works/models.md#fallback) and [Retries and Timeouts](https://xsyetopz.github.io/claude-code-docs/how-it-works/models.md#retries-and-timeouts).
 
 ## Providers
 
@@ -309,9 +317,38 @@ A gateway that does not serve `claude-fable-5-1` rejects it, so the `fable` alia
 
 ## Capabilities
 
-Each catalog model has capability flags, for example `effort`, `max_effort`, `adaptive_thinking`, `lean_prompt`, `per_turn_effort`, and `fast_mode`.
-They switch features on for a model. The full list with counts is on [Models](https://xsyetopz.github.io/claude-code-docs/how-it-works/models.md#capabilities).
+The model catalog gives each model a list of capability flags.
+The code tests a flag to switch a feature on for that model.
+The docs do not list these flags, so every row is [Undocumented].
+The meaning is given only where the docs or a string in the program make it clear.
+The column "Models" counts the models that have the flag.
 For pinned models on third-party providers, you can state the capabilities yourself with `_SUPPORTED_CAPABILITIES` (see above).
+
+| Flag | Status | What it does | Models |
+| --- | --- | --- | --- |
+| `context_management` | [Undocumented] | The model works with the `context-management-2025-06-27` beta. | 18 |
+| `effort` | [Undocumented] | The model accepts the `effort` setting. | 12 |
+| `max_effort` | [Undocumented] | The model accepts the level `max`. | 12 |
+| `xhigh_effort` | [Undocumented] | The model accepts the level `xhigh`. | 10 |
+| `adaptive_thinking` | [Undocumented] | The model accepts adaptive thinking. | 12 |
+| `mid_conv_tool_change` | [Undocumented] | The tool list can change in the middle of a conversation. | 8 |
+| `rejects_disabled_thinking` | [Undocumented] | Thinking cannot be turned off, as the docs say for `MAX_THINKING_TOKENS`. | 6 |
+| `per_turn_effort` | [Undocumented] | The model can take the effort with each message. | 4 |
+| `per_turn_timing` | [Undocumented] | The model can take the current time with each message. | 4 |
+| `lean_prompt` | [Undocumented] | The model-side input for the short system prompt. See [The System Prompt](https://xsyetopz.github.io/claude-code-docs/how-it-works/system-prompt.md#short-or-full-prompt). | 8 |
+| `org_locked_thinking` | [Undocumented] | The organization locks the thinking setting. | 2 |
+| `haiku_5_5_early_stopping_guidance` | [Undocumented] | Claude Code adds guidance against early stopping. | 1 |
+| `refusal_fallback` | [Undocumented] | A refused request can run again on a fallback model. | 5 |
+| `silent_turn_reminder` | [Undocumented] | Claude Code adds a reminder after a turn with no text. | 1 |
+| `fast_mode` | [Undocumented] | The model supports `/fast`. | 3 |
+| `thinking_disabled_effort_cap` | [Undocumented] | The program does not state the purpose. | 1 |
+| `opus_5_prompt_bundle` | [Undocumented] | The model gets the prompt sections for Opus 5. | 1 |
+| `opus_5_5_prompt_bundle` | [Undocumented] | The model gets the prompt sections for Opus 5.5. | 1 |
+| `fable_5_mitigations` | [Undocumented] | The model gets extra safety text for Fable 5. | 3 |
+| `fable_5_1_prompt_bundle` | [Undocumented] | The model gets the prompt sections for Fable 5.1. | 2 |
+
+The flags `effort`, `max_effort`, `xhigh_effort`, and `adaptive_thinking` say which effort levels and which thinking mode a model accepts.
+The betas `per-turn-control-2026-07-01` and `timing-2026-09-09` match the flags `per_turn_effort` and `per_turn_timing`.
 
 ## Example
 

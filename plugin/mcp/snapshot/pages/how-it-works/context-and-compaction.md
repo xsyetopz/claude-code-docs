@@ -13,16 +13,6 @@ When a session gets close to the limit, Claude Code compacts it:
 it asks the model for a summary and goes on from the summary.
 You can set when this happens, and you can say what the summary must keep.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. Run `/compact` at any time. Auto compaction runs on its own. |
-| Can you change it? | ✅ Yes. Set the window, the percent, or the focus text. |
-| Can you turn it on or off? | `DISABLE_AUTO_COMPACT` turns off automatic compaction. `DISABLE_COMPACT` turns off all of it. |
-| Where does it live? | Settings (`autoCompactWindow`, `autoCompactEnabled`), env vars, and commands. The result is saved in the transcript as a `compact_boundary` entry. |
-| Status | [Documented] [Undocumented] |
-
 ## What Fills the Context
 
 Sources: [How Claude Code Works: The Context Window](https://code.claude.com/docs/en/how-claude-code-works#the-context-window) and [Explore the Context Window](https://code.claude.com/docs/en/context-window).
@@ -36,6 +26,7 @@ Sources: [How Claude Code Works: The Context Window](https://code.claude.com/doc
 | Attachments that Claude Code adds | [Undocumented] | A transcript of 2.1.304 shows types such as `total_tokens_reminder`, `output_style`, `queued_command`, `nested_memory`, `skill_listing`, and `edited_text_file`. |
 
 The mod event `prompt.attachment` can rewrite or drop one attachment.
+For measured token counts of an empty session and ways to shrink it, see [Context Budget](https://xsyetopz.github.io/claude-code-docs/how-it-works/context-budget.md).
 
 ## When Compaction Runs
 
@@ -43,7 +34,7 @@ Let `window` be the window of the model, or the window you set.
 Let `out` be the smaller of the model output limit and `20000`.
 
 ```mermaid
-flowchart LR
+flowchart TD
   A[0 tokens] --> W[Warning level]
   W --> T[Compact threshold]
   T --> B[Blocked level]
@@ -103,12 +94,12 @@ stateDiagram-v2
   [*] --> Normal
   Normal --> Automatic: Over the threshold
   Normal --> Manual: You run <code>/compact</code>
-  Normal --> Reactive: API says prompt is too long
+  Normal --> Reactive: API says prompt<br/>is too long
   Automatic --> Normal: Summary replaces history
   Manual --> Normal: Summary replaces history
-  Reactive --> Normal: Summary replaces history, request retried
-  Automatic --> Thrashing: Refilled 3 times in a row
-  Thrashing --> [*]: Turn ends with an error
+  Reactive --> Normal: Summary replaces history,<br/>request retried
+  Automatic --> Thrashing: Refilled 3 times<br/>in a row
+  Thrashing --> [*]: Turn ends<br/>with an error
 ```
 
 | Kind | Status | How it works |

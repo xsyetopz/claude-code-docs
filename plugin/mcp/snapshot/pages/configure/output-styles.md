@@ -77,7 +77,7 @@ The captured prompts are on these pages: [Proactive](https://xsyetopz.github.io/
 | Managed `.claude/output-styles` | [Documented] | Policy styles | Inside the managed settings directory | Managed |
 | Plugin `output-styles/` | [Documented] | Plugin styles | See Plugins | Plugin |
 | `outputStylesPath`, `outputStylesPaths` | [Undocumented] | Manifest key for style files or directories | When set, the `output-styles/` directory is not auto-loaded | Plugin manifest |
-| Merge order | [Undocumented] | For the same name the later source wins | The order in the bundle is built-in, one more list (inferred: plugin styles), user, project, then policy | All |
+| Merge order | [Undocumented] | For the same name the later source wins | Built-in, plugin, user, project, then policy. Plugin style names start with the plugin name and a colon, so they do not clash with the others. With safe mode on, only the built-ins load | All |
 | File reading | [Documented] | Styles load when Claude Code starts | A new file needs a restart in the terminal | Terminal |
 
 ## Frontmatter Keys
@@ -101,7 +101,7 @@ Captured prompts for custom styles: [Custom Style](https://xsyetopz.github.io/cl
 - The SDK init message can report `outputStyle` as `null` or as `{ name, isKeepingCodingInstructions }`. Source: the program string `no { outputStyle } (null, or { name, isKeepingCodingInstructions })`.
 
 ```mermaid
-flowchart LR
+flowchart TD
   Files[Style files and built-ins] --> Merge[Merge by name]
   Merge --> Pick["<code>outputStyle</code> or <code>/output-style</code>"]
   Pick --> Plug{force-for-plugin?}
@@ -111,7 +111,8 @@ flowchart LR
   Use --> Prompt
 ```
 
-> **Not Verified:** The full text of each built-in style prompt (see the captures linked above). How `force-for-plugin` ranks against an `outputStyle` set by managed settings.
+> **Note:** A probe set `outputStyle` in user settings and added a plugin style with `force-for-plugin: true`. The system prompt used the forced style and not the configured one. The `init` event still showed the setting's name. With several forced styles, the first wins and a warning lists all. In a user style, `force-for-plugin` is ignored. A managed `outputStyle` was not run, because the managed folder needs `sudo`. See [Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md#configure-and-memory).
+> The captures linked above hold the full text of each built-in style prompt. We compared them with the strings in the program: the only difference is the blank lines that the capture adds after the style header and between paragraphs.
 
 ## Related Pages
 

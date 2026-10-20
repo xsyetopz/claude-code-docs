@@ -32,7 +32,7 @@ Source: [Connect Claude Code to Tools via MCP](https://code.claude.com/docs/en/m
 | --- | --- | --- | --- |
 | `stdio` | [Documented] | Runs a local process. | The default when `type` is missing. Needs `command`. Claude Code sets `CLAUDE_PROJECT_DIR` in the process env. |
 | `http` | [Documented] | Talks to a remote server over streamable HTTP. | The recommended remote transport. `streamable-http` is an alias. Supports OAuth and `headers`. |
-| ⛔ `sse` | [Documented] | Talks to a remote server over server-sent events. | Deprecated. `--transport http` tries HTTP first and falls back to SSE (`2.1.265` and later). |
+| `sse` | [Documented] [Deprecated: Use --transport http] | Talks to a remote server over server-sent events. | Deprecated. `--transport http` tries HTTP first and falls back to SSE (`2.1.265` and later). |
 | `ws` | [Documented] | Talks to a remote server over WebSocket. | Header-only auth, no OAuth. `claude mcp add --transport` does not accept it. The first connect is not retried. Use it in `.mcp.json`, `add-json`, plugins, and agent files. |
 | `sdk` | [Documented] | An in-process server of an SDK host. | Only an SDK host can register it. Claude Code skips it in `.mcp.json` and settings. |
 | `sse-ide` | [Undocumented] | A server of an IDE extension over SSE. | Has `ideName` and `ideRunningInWindows`. The idle timeout does not apply. |
@@ -50,9 +50,12 @@ A scope says where a server is stored and who sees it.
 | `user` | [Documented] | A server for all your projects. | Stored in `~/.claude.json` under `mcpServers`. |
 | Plugin | [Documented] | Servers that a plugin bundles. | Named `plugin:<plugin>:<server>`. Tools are `mcp__plugin_<plugin>_<server>__<tool>`. |
 | claude.ai connectors | [Documented] | Servers you added in claude.ai. | Fetched at start for a claude.ai login. Lowest precedence. |
-| `managed` | [Documented] | Servers your organization provides. | From `managedMcpServers` or `managed-mcp.json`. Ranks above every other source (`2.1.259` and later). |
-| `dynamic` | [Undocumented] | Servers passed at run time. | Used for `--mcp-config` and for the remote copy from `CLAUDE_CODE_REMOTE_MCP_CONFIG`. |
-| `enterprise`, `agent` | [Undocumented] | Other scope names in the program. | The full scope list is `local`, `user`, `project`, `dynamic`, `enterprise`, `claudeai`, `managed`, `agent`. Their use is unknown. |
+| `managed` | [Documented] | Servers your organization provides. | From the `managedMcpServers` key in managed settings (the `managed-mcp.json` file gets the `enterprise` scope; source: the program). Ranks above every other source (`2.1.259` and later). |
+| `dynamic` | [Undocumented] | Servers passed at run time. | Used for `--mcp-config`, for the remote copy from `CLAUDE_CODE_REMOTE_MCP_CONFIG`, and for plugin servers. |
+| `enterprise` | [Undocumented] | The servers in `managed-mcp.json`. | Read from the managed settings folder. While the file exists it has exclusive control of MCP servers, and agent frontmatter servers are blocked. Read from the program; not run, because the managed folder needs `sudo`. |
+| `agent` | [Undocumented] | A server in an agent's `mcpServers` frontmatter. | Starts when that agent runs and stops when it ends. Project agents (`.claude/agents/`) are skipped in a folder you have not trusted. Blocked by `--strict-mcp-config` and `--bare`. Checked in `-p` with a user agent. |
+
+The full scope list is `local`, `user`, `project`, `dynamic`, `enterprise`, `claudeai`, `managed`, `agent`. Plugin servers also use `dynamic`.
 
 ## Example
 

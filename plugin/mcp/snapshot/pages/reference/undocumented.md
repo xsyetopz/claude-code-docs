@@ -22,22 +22,22 @@ Items that the docs name but describe wrongly are in [Behaves Differently From t
 | --- | --- |
 | [Settings Keys](#settings-keys) | 25 |
 | [Environment Variables](#environment-variables) | 868 |
-| [CLI Flags and Subcommands](#cli-flags-and-subcommands) | 53 |
+| [CLI Flags and Subcommands](#cli-flags-and-subcommands) | 52 |
 | [Permissions](#permissions) | 121 |
-| [Hooks](#hooks) | 14 |
+| [Hooks](#hooks) | 13 |
 | [Commands](#commands) | 2 |
 | [Skills](#skills) | 7 |
 | [Subagents](#subagents) | 7 |
-| [Plugins](#plugins) | 10 |
-| [MCP](#mcp) | 37 |
+| [Plugins](#plugins) | 9 |
+| [MCP](#mcp) | 32 |
 | [Tools](#tools) | 29 |
 | [API Endpoints and Betas](#api-endpoints-and-betas) | 54 |
 | [System Prompt](#system-prompt) | 34 |
-| [Transcript and Sessions](#transcript-and-sessions) | 16 |
+| [Transcript and Sessions](#transcript-and-sessions) | 13 |
 | [Headless Protocol](#headless-protocol) | 155 |
 | [Mod API](#mod-api) | 0 |
-| [Other](#other) | 110 |
-| Total | 1542 |
+| [Other](#other) | 97 |
+| Total | 1518 |
 
 ## Settings Keys
 
@@ -54,8 +54,8 @@ Count: 25.
 | `remoteControl` | [Agents and Remote Settings](https://xsyetopz.github.io/claude-code-docs/configure/settings/agents-and-remote.md#keys) (Keys) |
 | `remoteTools` | [Agents and Remote Settings](https://xsyetopz.github.io/claude-code-docs/configure/settings/agents-and-remote.md#keys) (Keys) |
 | `skipWorkflowUsageWarning` | [Agents and Remote Settings](https://xsyetopz.github.io/claude-code-docs/configure/settings/agents-and-remote.md#keys) (Keys) |
-| `xaaIdp` | [Auth Settings](https://xsyetopz.github.io/claude-code-docs/configure/settings/auth.md#keys) (Keys) |
-| `autoDreamEnabled` | [Core Settings](https://xsyetopz.github.io/claude-code-docs/configure/settings/core.md#keys) (Keys) |
+| `xaaIdp` | [Auth Settings](https://xsyetopz.github.io/claude-code-docs/configure/settings/auth.md#keys) (Keys); [MCP Settings and Policy](https://xsyetopz.github.io/claude-code-docs/extend/mcp/settings.md#settings-keys) (Settings Keys) |
+| `autoDreamEnabled` | [Core Settings](https://xsyetopz.github.io/claude-code-docs/configure/settings/core.md#keys) (Keys); [Memory and Rules](https://xsyetopz.github.io/claude-code-docs/configure/memory-and-rules.md#auto-memory) (Auto Memory) |
 | `precomputeCompactionEnabled` | [Core Settings](https://xsyetopz.github.io/claude-code-docs/configure/settings/core.md#keys) (Keys) |
 | `todoFeatureEnabled` | [Core Settings](https://xsyetopz.github.io/claude-code-docs/configure/settings/core.md#keys) (Keys) |
 | `policyHelpers` | [Enterprise Settings](https://xsyetopz.github.io/claude-code-docs/configure/settings/enterprise.md#keys) (Keys) |
@@ -106,7 +106,7 @@ Count: 53.
 
 | Item | Where |
 | --- | --- |
-| `--plugin-dir-no-mcp <path>` | [Plugin Commands](https://xsyetopz.github.io/claude-code-docs/extend/plugins/cli.md#session-flags) (Session Flags) |
+| `--plugin-dir-no-mcp <path>` | [Plugin Commands](https://xsyetopz.github.io/claude-code-docs/extend/plugins/cli.md#session-flags) (Session Flags); [All Flags](https://xsyetopz.github.io/claude-code-docs/configure/cli/flags.md#agents-plugins-mcp-and-context) (Agents, Plugins, MCP, and Context); [MCP Settings and Policy](https://xsyetopz.github.io/claude-code-docs/extend/mcp/settings.md#files-and-flags) (Files and Flags) |
 | `--session-mirror` | [All Flags](https://xsyetopz.github.io/claude-code-docs/configure/cli/flags.md#start-and-print-mode) (Start and Print Mode) |
 | `--await-claim` | [All Flags](https://xsyetopz.github.io/claude-code-docs/configure/cli/flags.md#start-and-print-mode) (Start and Print Mode) |
 | `--await-initialize` | [All Flags](https://xsyetopz.github.io/claude-code-docs/configure/cli/flags.md#start-and-print-mode) (Start and Print Mode) |
@@ -126,12 +126,11 @@ Count: 53.
 | `--max-thinking-tokens <tokens>` | [All Flags](https://xsyetopz.github.io/claude-code-docs/configure/cli/flags.md#model-and-thinking) (Model and Thinking) |
 | `--task-budget <tokens>` | [All Flags](https://xsyetopz.github.io/claude-code-docs/configure/cli/flags.md#model-and-thinking) (Model and Thinking) |
 | `--fast-mode <on\|off>` | [All Flags](https://xsyetopz.github.io/claude-code-docs/configure/cli/flags.md#model-and-thinking) (Model and Thinking) |
-| `--include-unsupported-models` | [All Flags](https://xsyetopz.github.io/claude-code-docs/configure/cli/flags.md#model-and-thinking) (Model and Thinking) |
-| `--resume-session-at <message id>` | [All Flags](https://xsyetopz.github.io/claude-code-docs/configure/cli/flags.md#sessions-and-worktrees) (Sessions and Worktrees) |
+| `--include-unsupported-models` | [All Flags](https://xsyetopz.github.io/claude-code-docs/configure/cli/flags.md#model-and-thinking) (Model and Thinking); [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#choose-a-model) (Choose a Model) |
+| `--resume-session-at <message id>` | [All Flags](https://xsyetopz.github.io/claude-code-docs/configure/cli/flags.md#sessions-and-worktrees) (Sessions and Worktrees); [Sessions and Storage](https://xsyetopz.github.io/claude-code-docs/how-it-works/sessions-and-storage.md#resume-and-branch) (Resume and Branch) |
 | `--resume-drops-turn <message id>` | [All Flags](https://xsyetopz.github.io/claude-code-docs/configure/cli/flags.md#sessions-and-worktrees) (Sessions and Worktrees) |
-| `--reply-on-resume` | [All Flags](https://xsyetopz.github.io/claude-code-docs/configure/cli/flags.md#sessions-and-worktrees) (Sessions and Worktrees) |
-| `--rewind-files <user-message-id>` | [All Flags](https://xsyetopz.github.io/claude-code-docs/configure/cli/flags.md#sessions-and-worktrees) (Sessions and Worktrees) |
-| `--plugin-dir-no-mcp <path>` | [All Flags](https://xsyetopz.github.io/claude-code-docs/configure/cli/flags.md#agents-plugins-mcp-and-context) (Agents, Plugins, MCP, and Context) |
+| `--reply-on-resume` | [All Flags](https://xsyetopz.github.io/claude-code-docs/configure/cli/flags.md#sessions-and-worktrees) (Sessions and Worktrees); [Sessions and Storage](https://xsyetopz.github.io/claude-code-docs/how-it-works/sessions-and-storage.md#resume-and-branch) (Resume and Branch) |
+| `--rewind-files <user-message-id>` | [All Flags](https://xsyetopz.github.io/claude-code-docs/configure/cli/flags.md#sessions-and-worktrees) (Sessions and Worktrees); [Sessions and Storage](https://xsyetopz.github.io/claude-code-docs/how-it-works/sessions-and-storage.md#resume-and-branch) (Resume and Branch) |
 | `--brief` | [All Flags](https://xsyetopz.github.io/claude-code-docs/configure/cli/flags.md#agents-plugins-mcp-and-context) (Agents, Plugins, MCP, and Context) |
 | `--file <specs...>` | [All Flags](https://xsyetopz.github.io/claude-code-docs/configure/cli/flags.md#agents-plugins-mcp-and-context) (Agents, Plugins, MCP, and Context) |
 | `--watch-artifact <artifact>` | [All Flags](https://xsyetopz.github.io/claude-code-docs/configure/cli/flags.md#agents-plugins-mcp-and-context) (Agents, Plugins, MCP, and Context) |
@@ -179,7 +178,7 @@ The 85 default auto mode rules are all listed on [Auto Mode Default Rules](https
 | `CLAUDE_CHROME_CLASSIFIER_FLOOR`, `CLAUDE_CHROME_PERMISSION_MODE` | [Auto Mode](https://xsyetopz.github.io/claude-code-docs/configure/permissions/auto-mode.md#environment-variables) (Environment Variables) |
 | `CLAUDE_BG_SESSION_PERMISSION_RULES` | [Auto Mode](https://xsyetopz.github.io/claude-code-docs/configure/permissions/auto-mode.md#environment-variables) (Environment Variables) |
 | `CLAUDE_CODE_PARKED_PERMISSION_WAIT_MS` | [Auto Mode](https://xsyetopz.github.io/claude-code-docs/configure/permissions/auto-mode.md#environment-variables) (Environment Variables) |
-| `CLAUDE_CODE_RESTRICT_PERSONAL_CONFIG` | [Auto Mode](https://xsyetopz.github.io/claude-code-docs/configure/permissions/auto-mode.md#environment-variables) (Environment Variables) |
+| `CLAUDE_CODE_RESTRICT_PERSONAL_CONFIG` | [Auto Mode](https://xsyetopz.github.io/claude-code-docs/configure/permissions/auto-mode.md#environment-variables) (Environment Variables); [Hook Configuration](https://xsyetopz.github.io/claude-code-docs/extend/hooks/configuration.md#failure-handling) (Failure Handling) |
 | `rule` | [Permission Modes](https://xsyetopz.github.io/claude-code-docs/configure/permissions/modes.md#decision-reasons) (Decision Reasons) |
 | `mode` | [Permission Modes](https://xsyetopz.github.io/claude-code-docs/configure/permissions/modes.md#decision-reasons) (Decision Reasons) |
 | `subcommandResults` | [Permission Modes](https://xsyetopz.github.io/claude-code-docs/configure/permissions/modes.md#decision-reasons) (Decision Reasons) |
@@ -217,7 +216,6 @@ Count: 16.
 | --- | --- |
 | `asyncTimeout` | [Hook Configuration](https://xsyetopz.github.io/claude-code-docs/extend/hooks/configuration.md#timeouts) (Timeouts) |
 | `onFailure` has no effect | [Hook Configuration](https://xsyetopz.github.io/claude-code-docs/extend/hooks/configuration.md#failure-handling) (Failure Handling) |
-| `CLAUDE_CODE_RESTRICT_PERSONAL_CONFIG` | [Hook Configuration](https://xsyetopz.github.io/claude-code-docs/extend/hooks/configuration.md#failure-handling) (Failure Handling) |
 | `CLAUDE_CODE_HOOKS_SAME_THREAD` | [Hook Configuration](https://xsyetopz.github.io/claude-code-docs/extend/hooks/configuration.md#environment-variables-for-hooks) (Environment Variables for Hooks) |
 | `CLAUDE_CODE_DISABLE_HOOK_FORWARDING` | [Hook Configuration](https://xsyetopz.github.io/claude-code-docs/extend/hooks/configuration.md#environment-variables-for-hooks) (Environment Variables for Hooks) |
 | `CLAUDE_CODE_RESUME_SESSIONSTART_HOOKS_WAIT_MS` | [Hook Configuration](https://xsyetopz.github.io/claude-code-docs/extend/hooks/configuration.md#environment-variables-for-hooks) (Environment Variables for Hooks) |
@@ -283,7 +281,6 @@ Count: 10.
 
 | Item | Where |
 | --- | --- |
-| `--plugin-dir-no-mcp <path>` | [Plugin Commands](https://xsyetopz.github.io/claude-code-docs/extend/plugins/cli.md#session-flags) (Session Flags) |
 | `plugins/cache/<marketplace>/<plugin>/<version>/` | [Plugin Loading](https://xsyetopz.github.io/claude-code-docs/extend/plugins/loading.md#paths) (Paths) |
 | `plugins/installed_plugins.json` | [Plugin Loading](https://xsyetopz.github.io/claude-code-docs/extend/plugins/loading.md#paths) (Paths) |
 | `plugins/known_marketplaces.json` | [Plugin Loading](https://xsyetopz.github.io/claude-code-docs/extend/plugins/loading.md#paths) (Paths) |
@@ -302,7 +299,7 @@ Count: 37.
 
 | Item | Where |
 | --- | --- |
-| `MCP_OAUTH_CLIENT_METADATA_URL` | [MCP Authentication](https://xsyetopz.github.io/claude-code-docs/extend/mcp/auth.md#oauth-options) (OAuth Options) |
+| `MCP_OAUTH_CLIENT_METADATA_URL` | [MCP Authentication](https://xsyetopz.github.io/claude-code-docs/extend/mcp/auth.md#oauth-options) (OAuth Options); [MCP Env Vars](https://xsyetopz.github.io/claude-code-docs/extend/mcp/env.md#undocumented-variables) (Undocumented Variables) |
 | `bareElicitationCapability` | [Server Configuration](https://xsyetopz.github.io/claude-code-docs/extend/mcp/config.md#server-options) (Server Options) |
 | `discoveryCache` | [Server Configuration](https://xsyetopz.github.io/claude-code-docs/extend/mcp/config.md#server-options) (Server Options) |
 | `request_timeout_ms` | [Server Configuration](https://xsyetopz.github.io/claude-code-docs/extend/mcp/config.md#server-options) (Server Options) |
@@ -311,15 +308,14 @@ Count: 37.
 | `ideName`, `ideRunningInWindows`, `authToken` | [Server Configuration](https://xsyetopz.github.io/claude-code-docs/extend/mcp/config.md#server-options) (Server Options) |
 | `cachedInitResponse`, `cachedDiscoverResponse`, `discoverSupport`, and 2 more | [Server Configuration](https://xsyetopz.github.io/claude-code-docs/extend/mcp/config.md#server-options) (Server Options) |
 | Blocked names | [Server Configuration](https://xsyetopz.github.io/claude-code-docs/extend/mcp/config.md#names) (Names) |
-| `ENABLE_MCP_LARGE_OUTPUT_FILES` | [MCP Env Vars](https://xsyetopz.github.io/claude-code-docs/extend/mcp/env.md#undocumented-variables) (Undocumented Variables) |
-| `CLAUDE_CODE_MCP_APPS_HOST` | [MCP Env Vars](https://xsyetopz.github.io/claude-code-docs/extend/mcp/env.md#undocumented-variables) (Undocumented Variables) |
-| `CLAUDE_CODE_SKIP_PLUGIN_MCP_SERVERS` | [MCP Env Vars](https://xsyetopz.github.io/claude-code-docs/extend/mcp/env.md#undocumented-variables) (Undocumented Variables) |
+| `ENABLE_MCP_LARGE_OUTPUT_FILES` | [MCP Env Vars](https://xsyetopz.github.io/claude-code-docs/extend/mcp/env.md#undocumented-variables) (Undocumented Variables); [MCP Runtime](https://xsyetopz.github.io/claude-code-docs/extend/mcp/runtime.md#limits) (Limits) |
+| `CLAUDE_CODE_MCP_APPS_HOST` | [MCP Env Vars](https://xsyetopz.github.io/claude-code-docs/extend/mcp/env.md#undocumented-variables) (Undocumented Variables); [MCP Runtime](https://xsyetopz.github.io/claude-code-docs/extend/mcp/runtime.md#resources-and-prompts) (Resources and Prompts) |
+| `CLAUDE_CODE_SKIP_PLUGIN_MCP_SERVERS` | [MCP Env Vars](https://xsyetopz.github.io/claude-code-docs/extend/mcp/env.md#undocumented-variables) (Undocumented Variables); [Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md#effects-and-differences) (Effects and Differences) |
 | `CLAUDE_CODE_SKIP_PLUGIN_MCP_SERVERS_EXCEPT` | [MCP Env Vars](https://xsyetopz.github.io/claude-code-docs/extend/mcp/env.md#undocumented-variables) (Undocumented Variables) |
 | `CLAUDE_CODE_SKIP_PLUGIN_LOCAL_MCP_SERVERS` | [MCP Env Vars](https://xsyetopz.github.io/claude-code-docs/extend/mcp/env.md#undocumented-variables) (Undocumented Variables) |
 | `CLAUDE_CODE_SKIP_PLUGIN_MCP_BUNDLES` | [MCP Env Vars](https://xsyetopz.github.io/claude-code-docs/extend/mcp/env.md#undocumented-variables) (Undocumented Variables) |
 | `CLAUDE_CODE_ENABLE_REFRESH_MCP_TOOLS` | [MCP Env Vars](https://xsyetopz.github.io/claude-code-docs/extend/mcp/env.md#undocumented-variables) (Undocumented Variables) |
 | `MCP_TRUNCATION_PROMPT_OVERRIDE` | [MCP Env Vars](https://xsyetopz.github.io/claude-code-docs/extend/mcp/env.md#undocumented-variables) (Undocumented Variables) |
-| `MCP_OAUTH_CLIENT_METADATA_URL` | [MCP Env Vars](https://xsyetopz.github.io/claude-code-docs/extend/mcp/env.md#undocumented-variables) (Undocumented Variables) |
 | `CLAUDE_CODE_SYNC_PLUGINS_MCP_TIMEOUT_MS` | [MCP Env Vars](https://xsyetopz.github.io/claude-code-docs/extend/mcp/env.md#undocumented-variables) (Undocumented Variables) |
 | `CLAUDE_CODE_MCP_CONNECTOR_PREWAIT_MS` | [MCP Env Vars](https://xsyetopz.github.io/claude-code-docs/extend/mcp/env.md#undocumented-variables) (Undocumented Variables) |
 | `CLAUDE_CODE_MCP_PREWAIT_SERVERS`, `CLAUDE_CODE_MCP_PREWAIT_SERVERS_MS` | [MCP Env Vars](https://xsyetopz.github.io/claude-code-docs/extend/mcp/env.md#undocumented-variables) (Undocumented Variables) |
@@ -335,10 +331,6 @@ Count: 37.
 | `SearchMcpRegistry`, `SuggestConnectors`, `ListConnectors` | [MCP Runtime](https://xsyetopz.github.io/claude-code-docs/extend/mcp/runtime.md#tools-and-names) (Tools and Names) |
 | `ReadMcpResourceDirTool` | [MCP Runtime](https://xsyetopz.github.io/claude-code-docs/extend/mcp/runtime.md#resources-and-prompts) (Resources and Prompts) |
 | Old tool names | [MCP Runtime](https://xsyetopz.github.io/claude-code-docs/extend/mcp/runtime.md#resources-and-prompts) (Resources and Prompts) |
-| `CLAUDE_CODE_MCP_APPS_HOST` | [MCP Runtime](https://xsyetopz.github.io/claude-code-docs/extend/mcp/runtime.md#resources-and-prompts) (Resources and Prompts) |
-| `ENABLE_MCP_LARGE_OUTPUT_FILES` | [MCP Runtime](https://xsyetopz.github.io/claude-code-docs/extend/mcp/runtime.md#limits) (Limits) |
-| `xaaIdp` | [MCP Settings and Policy](https://xsyetopz.github.io/claude-code-docs/extend/mcp/settings.md#settings-keys) (Settings Keys) |
-| `--plugin-dir-no-mcp <path>` | [MCP Settings and Policy](https://xsyetopz.github.io/claude-code-docs/extend/mcp/settings.md#files-and-flags) (Files and Flags) |
 
 ## Tools
 
@@ -410,7 +402,7 @@ Count: 54.
 | `mcp-servers-2025-12-04` | [Betas](https://xsyetopz.github.io/claude-code-docs/reference/api/betas.md#registry) (Registry) |
 | `files-api-2025-04-14` | [Betas](https://xsyetopz.github.io/claude-code-docs/reference/api/betas.md#registry) (Registry) |
 | `environments-2025-11-01` | [Betas](https://xsyetopz.github.io/claude-code-docs/reference/api/betas.md#registry) (Registry) |
-| `per-turn-control-2026-07-01` | [Betas](https://xsyetopz.github.io/claude-code-docs/reference/api/betas.md#registry) (Registry) |
+| `per-turn-control-2026-07-01` | [Betas](https://xsyetopz.github.io/claude-code-docs/reference/api/betas.md#registry) (Registry); [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#effort) (Effort) |
 | `timing-2026-09-09` | [Betas](https://xsyetopz.github.io/claude-code-docs/reference/api/betas.md#registry) (Registry) |
 | `mid-conversation-tool-changes-2026-07-01` | [Betas](https://xsyetopz.github.io/claude-code-docs/reference/api/betas.md#registry) (Registry) |
 | `inline-tools-2026-09-15` | [Betas](https://xsyetopz.github.io/claude-code-docs/reference/api/betas.md#registry) (Registry) |
@@ -472,7 +464,7 @@ Count: 34.
 | `memory` | [The System Prompt](https://xsyetopz.github.io/claude-code-docs/how-it-works/system-prompt.md#session-sections) (Session Sections) |
 | `env_info_simple` | [The System Prompt](https://xsyetopz.github.io/claude-code-docs/how-it-works/system-prompt.md#session-sections) (Session Sections) |
 | `env_info_static` | [The System Prompt](https://xsyetopz.github.io/claude-code-docs/how-it-works/system-prompt.md#session-sections) (Session Sections) |
-| `context_management` | [The System Prompt](https://xsyetopz.github.io/claude-code-docs/how-it-works/system-prompt.md#session-sections) (Session Sections) |
+| `context_management` | [The System Prompt](https://xsyetopz.github.io/claude-code-docs/how-it-works/system-prompt.md#session-sections) (Session Sections); [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#capabilities) (Capabilities) |
 | `brief` | [The System Prompt](https://xsyetopz.github.io/claude-code-docs/how-it-works/system-prompt.md#session-sections) (Session Sections) |
 | `focus_mode` | [The System Prompt](https://xsyetopz.github.io/claude-code-docs/how-it-works/system-prompt.md#session-sections) (Session Sections) |
 | Default, Lean Prompt | [Captured System Prompts](https://xsyetopz.github.io/claude-code-docs/prompts.md#all-variants) (All Variants) |
@@ -492,9 +484,6 @@ Count: 16.
 
 | Item | Where |
 | --- | --- |
-| `--resume-session-at <message id>` | [Sessions and Storage](https://xsyetopz.github.io/claude-code-docs/how-it-works/sessions-and-storage.md#resume-and-branch) (Resume and Branch) |
-| `--reply-on-resume` | [Sessions and Storage](https://xsyetopz.github.io/claude-code-docs/how-it-works/sessions-and-storage.md#resume-and-branch) (Resume and Branch) |
-| `--rewind-files <user-message-id>` | [Sessions and Storage](https://xsyetopz.github.io/claude-code-docs/how-it-works/sessions-and-storage.md#resume-and-branch) (Resume and Branch) |
 | `state/`, `mods/`, `bridge-spawn/`, and 3 more | [Sessions and Storage](https://xsyetopz.github.io/claude-code-docs/how-it-works/sessions-and-storage.md#where-files-live) (Where Files Live) |
 | `type` | [Transcript Format](https://xsyetopz.github.io/claude-code-docs/reference/transcript-format.md#common-fields) (Common Fields) |
 | `uuid` | [Transcript Format](https://xsyetopz.github.io/claude-code-docs/reference/transcript-format.md#common-fields) (Common Fields) |
@@ -534,17 +523,15 @@ Count: 110.
 
 | Item | Where |
 | --- | --- |
-| `autoDreamEnabled` | [Memory and Rules](https://xsyetopz.github.io/claude-code-docs/configure/memory-and-rules.md#auto-memory) (Auto Memory) |
 | `/pause-memory` | [Memory and Rules](https://xsyetopz.github.io/claude-code-docs/configure/memory-and-rules.md#auto-memory) (Auto Memory) |
 | `CLAUDE_CODE_REMOTE_MEMORY_DIR`, `CLAUDE_CODE_POST_TURN_MEMORY`, `CLAUDE_COWORK_MEMORY_*`, `CLAUDE_MEMORY_STORES` | [Memory and Rules](https://xsyetopz.github.io/claude-code-docs/configure/memory-and-rules.md#auto-memory) (Auto Memory) |
 | `InstructionFileKind` | [Memory and Rules](https://xsyetopz.github.io/claude-code-docs/configure/memory-and-rules.md#the-instructionsloaded-hook) (The InstructionsLoaded Hook) |
-| `--include-unsupported-models` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#choose-a-model) (Choose a Model) |
-| `claude-3-5-haiku` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#catalog) (Catalog) |
-| `claude-3-5-sonnet` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#catalog) (Catalog) |
-| `claude-3-7-sonnet` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#catalog) (Catalog) |
-| `claude-sonnet-4-0` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#catalog) (Catalog) |
-| `claude-opus-4-0` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#catalog) (Catalog) |
-| `claude-mythos-5-1` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#catalog) (Catalog) |
+| `claude-3-5-haiku` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#catalog) (Catalog); [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#provider-names) (Provider Names) |
+| `claude-3-5-sonnet` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#catalog) (Catalog); [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#provider-names) (Provider Names) |
+| `claude-3-7-sonnet` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#catalog) (Catalog); [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#provider-names) (Provider Names) |
+| `claude-sonnet-4-0` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#catalog) (Catalog); [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#provider-names) (Provider Names) |
+| `claude-opus-4-0` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#catalog) (Catalog); [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#provider-names) (Provider Names) |
+| `claude-mythos-5-1` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#catalog) (Catalog); [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#provider-names) (Provider Names) |
 | `--thinking <enabled\|adaptive\|disabled>` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#thinking) (Thinking) |
 | `--thinking-display <summarized\|omitted\|highlights>` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#thinking) (Thinking) |
 | `--max-thinking-tokens` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#thinking) (Thinking) |
@@ -553,12 +540,6 @@ Count: 110.
 | `CLAUDE_CODE_USE_GATEWAY` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#providers) (Providers) |
 | `ANTHROPIC_GOOGLE_CLOUD_BASE_URL`, `_LOCATION`, `_PROJECT`, `_WORKSPACE_ID` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#endpoint-and-region-variables) (Endpoint and Region Variables) |
 | `CLAUDE_CODE_SKIP_ANTHROPIC_GOOGLE_CLOUD_AUTH` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#endpoint-and-region-variables) (Endpoint and Region Variables) |
-| `claude-3-5-haiku` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#provider-names) (Provider Names) |
-| `claude-3-5-sonnet` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#provider-names) (Provider Names) |
-| `claude-3-7-sonnet` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#provider-names) (Provider Names) |
-| `claude-sonnet-4-0` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#provider-names) (Provider Names) |
-| `claude-opus-4-0` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#provider-names) (Provider Names) |
-| `claude-mythos-5-1` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#provider-names) (Provider Names) |
 | Custom style over Remote Control | [Output Styles](https://xsyetopz.github.io/claude-code-docs/configure/output-styles.md#the-outputstyle-setting-and-switching) (The outputStyle Setting and Switching) |
 | `outputStylesPath`, `outputStylesPaths` | [Output Styles](https://xsyetopz.github.io/claude-code-docs/configure/output-styles.md#locations-and-precedence) (Locations and Precedence) |
 | Merge order | [Output Styles](https://xsyetopz.github.io/claude-code-docs/configure/output-styles.md#locations-and-precedence) (Locations and Precedence) |
@@ -600,31 +581,27 @@ Count: 110.
 | Precomputed | [Context and Compaction](https://xsyetopz.github.io/claude-code-docs/how-it-works/context-and-compaction.md#kinds-of-compaction) (Kinds of Compaction) |
 | Larger-model retry | [Context and Compaction](https://xsyetopz.github.io/claude-code-docs/how-it-works/context-and-compaction.md#kinds-of-compaction) (Kinds of Compaction) |
 | Server side | [Context and Compaction](https://xsyetopz.github.io/claude-code-docs/how-it-works/context-and-compaction.md#kinds-of-compaction) (Kinds of Compaction) |
-| `--include-unsupported-models` | [Models](https://xsyetopz.github.io/claude-code-docs/how-it-works/models.md#choosing-the-model) (Choosing the Model) |
-| `per-turn-control-2026-07-01` | [Models](https://xsyetopz.github.io/claude-code-docs/how-it-works/models.md#effort) (Effort) |
-| `--thinking <enabled\|adaptive\|disabled>` | [Models](https://xsyetopz.github.io/claude-code-docs/how-it-works/models.md#thinking) (Thinking) |
-| `--thinking-display <summarized\|omitted\|highlights>` | [Models](https://xsyetopz.github.io/claude-code-docs/how-it-works/models.md#thinking) (Thinking) |
-| `--max-thinking-tokens` | [Models](https://xsyetopz.github.io/claude-code-docs/how-it-works/models.md#thinking) (Thinking) |
-| `context_management` | [Models](https://xsyetopz.github.io/claude-code-docs/how-it-works/models.md#capabilities) (Capabilities) |
-| `effort` | [Models](https://xsyetopz.github.io/claude-code-docs/how-it-works/models.md#capabilities) (Capabilities) |
-| `max_effort` | [Models](https://xsyetopz.github.io/claude-code-docs/how-it-works/models.md#capabilities) (Capabilities) |
-| `xhigh_effort` | [Models](https://xsyetopz.github.io/claude-code-docs/how-it-works/models.md#capabilities) (Capabilities) |
-| `adaptive_thinking` | [Models](https://xsyetopz.github.io/claude-code-docs/how-it-works/models.md#capabilities) (Capabilities) |
-| `mid_conv_tool_change` | [Models](https://xsyetopz.github.io/claude-code-docs/how-it-works/models.md#capabilities) (Capabilities) |
-| `rejects_disabled_thinking` | [Models](https://xsyetopz.github.io/claude-code-docs/how-it-works/models.md#capabilities) (Capabilities) |
-| `per_turn_effort` | [Models](https://xsyetopz.github.io/claude-code-docs/how-it-works/models.md#capabilities) (Capabilities) |
-| `per_turn_timing` | [Models](https://xsyetopz.github.io/claude-code-docs/how-it-works/models.md#capabilities) (Capabilities) |
-| `lean_prompt` | [Models](https://xsyetopz.github.io/claude-code-docs/how-it-works/models.md#capabilities) (Capabilities) |
-| `org_locked_thinking` | [Models](https://xsyetopz.github.io/claude-code-docs/how-it-works/models.md#capabilities) (Capabilities) |
-| `haiku_5_5_early_stopping_guidance` | [Models](https://xsyetopz.github.io/claude-code-docs/how-it-works/models.md#capabilities) (Capabilities) |
-| `refusal_fallback` | [Models](https://xsyetopz.github.io/claude-code-docs/how-it-works/models.md#capabilities) (Capabilities) |
-| `silent_turn_reminder` | [Models](https://xsyetopz.github.io/claude-code-docs/how-it-works/models.md#capabilities) (Capabilities) |
-| `fast_mode` | [Models](https://xsyetopz.github.io/claude-code-docs/how-it-works/models.md#capabilities) (Capabilities) |
-| `thinking_disabled_effort_cap` | [Models](https://xsyetopz.github.io/claude-code-docs/how-it-works/models.md#capabilities) (Capabilities) |
-| `opus_5_prompt_bundle` | [Models](https://xsyetopz.github.io/claude-code-docs/how-it-works/models.md#capabilities) (Capabilities) |
-| `opus_5_5_prompt_bundle` | [Models](https://xsyetopz.github.io/claude-code-docs/how-it-works/models.md#capabilities) (Capabilities) |
-| `fable_5_mitigations` | [Models](https://xsyetopz.github.io/claude-code-docs/how-it-works/models.md#capabilities) (Capabilities) |
-| `fable_5_1_prompt_bundle` | [Models](https://xsyetopz.github.io/claude-code-docs/how-it-works/models.md#capabilities) (Capabilities) |
+| `--thinking <enabled\|adaptive\|disabled>` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#thinking) (Thinking) |
+| `--thinking-display <summarized\|omitted\|highlights>` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#thinking) (Thinking) |
+| `effort` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#capabilities) (Capabilities) |
+| `max_effort` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#capabilities) (Capabilities) |
+| `xhigh_effort` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#capabilities) (Capabilities) |
+| `adaptive_thinking` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#capabilities) (Capabilities) |
+| `mid_conv_tool_change` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#capabilities) (Capabilities) |
+| `rejects_disabled_thinking` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#capabilities) (Capabilities) |
+| `per_turn_effort` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#capabilities) (Capabilities) |
+| `per_turn_timing` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#capabilities) (Capabilities) |
+| `lean_prompt` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#capabilities) (Capabilities) |
+| `org_locked_thinking` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#capabilities) (Capabilities) |
+| `haiku_5_5_early_stopping_guidance` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#capabilities) (Capabilities) |
+| `refusal_fallback` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#capabilities) (Capabilities) |
+| `silent_turn_reminder` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#capabilities) (Capabilities) |
+| `fast_mode` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#capabilities) (Capabilities) |
+| `thinking_disabled_effort_cap` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#capabilities) (Capabilities) |
+| `opus_5_prompt_bundle` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#capabilities) (Capabilities) |
+| `opus_5_5_prompt_bundle` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#capabilities) (Capabilities) |
+| `fable_5_mitigations` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#capabilities) (Capabilities) |
+| `fable_5_1_prompt_bundle` | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md#capabilities) (Capabilities) |
 | `safeguards` | [Request and Cache](https://xsyetopz.github.io/claude-code-docs/how-it-works/request-and-cache.md#body-fields) (Body Fields) |
 | `system[0]` (attribution line) | [Request and Cache](https://xsyetopz.github.io/claude-code-docs/how-it-works/request-and-cache.md#system-blocks-and-cache-markers) (System Blocks and Cache Markers) |
 | `system[1]` (identity line) | [Request and Cache](https://xsyetopz.github.io/claude-code-docs/how-it-works/request-and-cache.md#system-blocks-and-cache-markers) (System Blocks and Cache Markers) |
@@ -641,7 +618,6 @@ Count: 110.
 | `CLAUDE_CODE_LARCH_CISTERN` | [Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md#effects-and-differences) (Effects and Differences) |
 | `CLAUDE_CODE_PLUGIN_DIRS` | [Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md#effects-and-differences) (Effects and Differences) |
 | `CLAUDE_CODE_SIMULATE_PROXY_USAGE` | [Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md#effects-and-differences) (Effects and Differences) |
-| `CLAUDE_CODE_SKIP_PLUGIN_MCP_SERVERS` | [Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md#effects-and-differences) (Effects and Differences) |
 | `CLAUDE_CODE_SYNC_PLUGIN_INSTALL` | [Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md#effects-and-differences) (Effects and Differences) |
 | `CLAUDE_CODE_USE_COWORK_PLUGINS` | [Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md#effects-and-differences) (Effects and Differences) |
 

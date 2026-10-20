@@ -16,7 +16,7 @@ They describe files, stored values, timers, web requests, child processes, and s
 This call runs a child process and reads its exit code and output. The types below describe the input and the result.
 
 ```ts
-const { exitCode, stdout } = await $.process.run(["git", "status"])
+const { exitCode, stdout } = await $.process.run(["git", "status"]);
 ```
 
 ## Types without Fields

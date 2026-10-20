@@ -65,13 +65,50 @@ Every event accepts these keys. Some events drop them, and [Events](https://xsye
 | --- | --- | --- | --- |
 | `continue` | [Documented] | `false` stops Claude after the hook. | Beats event decisions. Ignored by `TaskCreated`, and by `TaskCompleted` when it comes from `TaskUpdate`. |
 | `stopReason` | [Documented] | The message to show when `continue` is `false`. | Stays in the conversation. |
-| `systemMessage` | [Documented] | A warning for you. | Some events drop it or send it somewhere else. |
+| `systemMessage` | [Documented] | A warning for you. | Some events drop it or send it somewhere else. See the table below. |
 | `terminalSequence` | [Documented] | An escape sequence that Claude Code writes for you. | Allowed: OSC `0`, `1`, `2`, `9`, `99`, `777`, and BEL. Interactive mode only. Works on events that drop other fields. Not for `WorktreeCreate` command hooks. |
 | `decision` | [Differs: Docs: only block. Program enum: approve or block for any event. On PreToolUse both are deprecated.] | A top-level block. | See Decision Patterns below. |
 | `reason` | [Documented] | The text for the block. | You or Claude sees it, by event. |
 | `hookSpecificOutput` | [Documented] | An event-specific object. | Needs `hookEventName` set to the event name. |
 | `{"async":true,"asyncTimeout":n}` | [Undocumented] | A first reply that moves the hook to the background. | See [Configuration](https://xsyetopz.github.io/claude-code-docs/extend/hooks/configuration.md#timeouts). Command hooks only. |
 | 10,000 character cap | [Documented] | Applies to `additionalContext`, `systemMessage`, `initialUserMessage`, and plain `stdout`. | Each string alone. Over the cap, Claude Code saves it to a file, and the model gets the path and the first 2,000 characters. |
+
+### What `continue` and `systemMessage` Do per Event
+
+A probe ran a command hook on each event in `-p` mode. "Stops" means the model made no more requests. Some messages show only in the interactive screen, so "Not shown" means not shown in `-p` `stream-json`. Source: [Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md#subagents-and-hooks).
+
+| Event | `continue: false` | `systemMessage` |
+| --- | --- | --- |
+| `SessionStart` | Not honored. The session went on. | Not shown. |
+| `UserPromptSubmit` | Honored. No model request. The result is `Operation stopped by hook: <stopReason>`. | Shown as `UserPromptSubmit says: ...`, but not together with a stop. |
+| `UserPromptExpansion` | Honored, with the same result text. | Shown as `UserPromptExpansion says: ...`. |
+| `PreToolUse` | Honored. The loop stops after the hook. The `stopReason` is not shown. | Shown as `PreToolUse:Bash says: ...`. |
+| `PostToolUse` | Honored. The loop stops. | Shown only without a stop. |
+| `PostToolUseFailure` | Not honored. | Shown. |
+| `PostToolBatch` | Honored. | Shown. |
+| `Stop` | The text `Stop hook stopped continuation: <stopReason>` enters the conversation. | Shown as `Stop says: ...`. |
+| `SubagentStart`, `SubagentStop`, `SessionEnd` | The hook ran. No visible effect. | Not shown. |
+| `InstructionsLoaded`, `Setup` | No effect. | Not shown. |
+
+`PermissionRequest`, `PermissionDenied`, `Notification`, and `PreCompact` do not fire in `-p`. They fired in a probe of the interactive screen (2.1.304, local stub, fake key). The rows below are from that run. Source: [Interactive Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md#interactive-probes).
+
+| Event | `continue: false` | `systemMessage` |
+| --- | --- | --- |
+| `PermissionRequest` | Not honored. A hook that also allowed the call still ran the tool. Use `hookSpecificOutput.decision.behavior`. | Not shown on screen or in the transcript. |
+| `PermissionDenied` | Not honored. The model made its next request. | Not shown. |
+| `Notification` | Not honored. The permission dialog stayed open and worked. | Not shown. |
+| `PreCompact` | Not honored. Compaction ran and `PostCompact` fired. Block it with `decision: "block"` or exit 2. | Not parsed. The raw `stdout` JSON is printed on the hook's `completed successfully` line. |
+
+### What Fires and What Is Honored in the Interactive Screen
+
+| Event | When it fires | What a reply does |
+| --- | --- | --- |
+| `PermissionRequest` | Before the permission dialog opens, in the same second as `PreToolUse`. It also fires in `auto` mode, but only when auto mode falls back to a dialog (checked after 3 blocked actions in a row). It did not fire for a plain auto mode denial. | `decision.behavior: "allow"`: no dialog, the tool ran, the line says `Allowed by PermissionRequest hook`. `"deny"` with `message`: no dialog, not run, the model gets the `message` text, the line says `Denied by PermissionRequest hook`. `deny` with `interrupt: true`: not run, the turn stops with `Interrupted`. Exit 2 with no output and a top-level `decision: "block"` are ignored: the normal dialog opens. `{}` or no output: the normal dialog. |
+| `PermissionDenied` | Only for an auto mode denial. A manual "No" in the dialog does not fire it. The input has `tool_use_id` and `reason` (`mcp_server` is absent for a built-in tool). | `hookSpecificOutput.retry: true` had no visible effect; the model's tool result did not change. A denial with a real classifier verdict was not tested (the stub cannot return one). |
+| `Notification` | The permission dialog fires it after about 6 seconds. Answer sooner and it never fires. The input has `notification_type` and `message` (no `title` in these runs). | Cannot change the dialog. For `idle_prompt` nothing visible changed. |
+| `PreCompact` | On `/compact`, with `trigger: "manual"` and `custom_instructions`. With too few messages (`Not enough messages to compact.`) it does not fire. `PostCompact` follows with `compact_summary`. | `decision: "block"` with `reason`: `Compaction blocked by PreCompact hook: [cmd]: <reason>`. Exit 2: `Compaction blocked by PreCompact hook: [cmd]`. |
+
+An auto mode run with a custom base URL shows a classifier billing notice first. It fires a `Notification` with `notification_type: "agent_needs_input"`.
 
 ## Decision Patterns
 
@@ -137,4 +174,4 @@ flowchart TD
 - [Agent Loop](https://xsyetopz.github.io/claude-code-docs/how-it-works/agent-loop.md): a `PreToolUse` exit 2 example in context.
 
 Source: [Hooks Reference](https://code.claude.com/docs/en/hooks) and the program (`BaseHookInput`, `McpServerProvenance`, `ClassicResultFields`, and the hook output schema).
-The exit code 2 table was checked against the Hooks Reference. Not verified: the exact list of events for which the program honors `continue` and `systemMessage`.
+The exit code 2 table was checked against the Hooks Reference. The `continue` and `systemMessage` results come from probes in `-p` mode with a local stub (see [Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md#subagents-and-hooks)).

@@ -29,14 +29,14 @@ flowchart LR
   G[Your goal] --> C{Kind of change}
   C -->|A value| S[Settings key or env var]
   C -->|One run| F[CLI flag]
-  C -->|Run code on an event| H[Hook]
-  C -->|Teach Claude a task| K[Skill or command]
+  C -->|"Run code<br/>on an event"| H[Hook]
+  C -->|"Teach Claude<br/>a task"| K[Skill or command]
   C -->|Split off work| A[Subagent]
-  C -->|Add outside tools| M[MCP server]
-  C -->|Change tone or layout| O[Output style or status line]
-  C -->|Give standing advice| R[Memory and rules]
+  C -->|"Add outside<br/>tools"| M[MCP server]
+  C -->|"Change tone<br/>or layout"| O[Output style or status line]
+  C -->|"Give standing<br/>advice"| R[Memory and rules]
   C -->|Bundle and share| P[Plugin]
-  C -->|Change the program itself| X[Mod API]
+  C -->|"Change the<br/>program itself"| X[Mod API]
 ```
 
 | Surface | Use it when | Page |

@@ -22,7 +22,9 @@ In a "Where it can be used" cell, "Run time" means in a hook, in a closure that 
 This hook sends every subagent that does not name a model to `haiku`.
 
 ```javascript
-on('agent.spawn', async ($, e, next) => next(e.model ? e : { ...e, model: 'haiku' }))
+on("agent.spawn", async ($, e, next) =>
+  next(e.model ? e : { ...e, model: "haiku" }),
+);
 ```
 
 ## Members of the Agent Noun

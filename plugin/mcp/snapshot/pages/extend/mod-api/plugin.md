@@ -22,16 +22,16 @@ Official page: [Mods Reference](https://code.claude.com/docs/en/plugins/mods/ref
 This hook keeps user mods out.
 
 ```javascript
-on('plugin.register', { tier: 'user' }, () => ({ refuse: 'managed only' }))
+on("plugin.register", { tier: "user" }, () => ({ refuse: "managed only" }));
 ```
 
 This `engine.create` hook adds a noun.
 
 ```javascript
-on('engine.create', async ($, e, next) => {
-  const built = await next(e)
-  return { ...built, voice: { say: async (text) => {} } }
-})
+on("engine.create", async ($, e, next) => {
+  const built = await next(e);
+  return { ...built, voice: { say: async (text) => {} } };
+});
 ```
 
 ## Members of the Plugin Noun

@@ -23,11 +23,17 @@ In a "Where it can be used" cell, "Run time" means in a hook, in a closure that 
 This mod adds a `/standup` command.
 
 ```javascript
-on('session.start', async ($, e, next) => {
-  await $.command.register({ name: 'standup', description: 'Summarize what changed today', argumentHint: '[days]' })
-  return next(e)
-})
-on('command.run', { command: 'standup' }, async ($, e) => ({ text: 'Summary for ' + (e.args || '1') + ' day(s)' }))
+on("session.start", async ($, e, next) => {
+  await $.command.register({
+    name: "standup",
+    description: "Summarize what changed today",
+    argumentHint: "[days]",
+  });
+  return next(e);
+});
+on("command.run", { command: "standup" }, async ($, e) => ({
+  text: `Summary for ${e.args || "1"} day(s)`,
+}));
 ```
 
 ## Members

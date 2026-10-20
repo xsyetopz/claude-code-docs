@@ -112,7 +112,7 @@ Values in `command`, `args`, `env`, `url`, and `headers` can read env vars.
 ## How It Works
 
 ```mermaid
-flowchart LR
+flowchart TD
   A[Entry in a file] --> B[Expand env vars]
   B --> C[Check name and type rules]
   C --> D[Apply precedence by name or endpoint]

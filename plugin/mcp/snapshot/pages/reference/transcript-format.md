@@ -47,7 +47,7 @@ Most lines carry `uuid` and `parentUuid`. The `parentUuid` field points to the l
 A branch or a rewind makes a second child for one parent. The `last-prompt` line holds a `leafUuid` that marks the tip the picker uses.
 
 ```mermaid
-flowchart LR
+flowchart TD
   U1[user] --> A1["assistant: <code>tool_use</code>"]
   A1 --> U2["user: <code>tool_result</code>"]
   U2 --> A2[assistant: text]
@@ -97,18 +97,46 @@ The key lists come from a transcript that 2.1.304 wrote, and the meanings from t
 | `mode` | `mode` | The mode of the session. Seen value: `normal`. |
 | `permission-mode` | `permissionMode` | The permission mode. Seen value: `auto`. |
 | `cost-state` | `totalCostUSD`, `totalAPIDuration`, `totalAPIDurationWithoutRetries`, `totalToolDuration`, `totalDuration`, `totalLinesAdded`, `totalLinesRemoved`, `modelUsage`, `hasUnknownModelCost`, `startTime` | Totals for cost and time. |
-| `atis-latch` | `atis` | A latch value. No source states its purpose. |
+| `atis-latch` | `atis` | The `atis` value of the session's feature-flag client, kept once per conversation so it stays the same, and sent as the `x-cc-atis` header. Empty without a flag value (it was empty in our stub run). |
 
 Lines of types `file-history-snapshot`, `file-history-delta`, `last-prompt`, `ai-title`, `mode`, `permission-mode`, `cost-state`, `atis-latch`, and `queue-operation` carry `sessionId` but not the chain fields.
 
 ### Other Types in the Writer
 
-These names are in the program next to the writer.
-No example line was read, so there is no verified meaning.
+These names are in the program next to the writer. The meanings come from the writer and reader code (source: the program), not from example lines.
 
-`custom-title`, `agent-name`, `agent-color`, `agent-setting`, `tag`, `worktree-state`, `pr-link`, `bridge-session`, `content-replacement`, `attribution-snapshot`, `fork-context-ref`, `observer-ref`, `isolation-latch`, `memory-mode`, `proactivity`, `dev-mods`, `language`, `frame-link`, `ended-by-model`, `line-withheld`, and `artifact-autoreact-ledger`.
+| `type` | Main keys | Meaning |
+| --- | --- | --- |
+| `custom-title` | `customTitle` | The title you set, for example with `/rename`. |
+| `agent-name`, `agent-color` | | The name and color of the session's agent. Set by `/rename`, `/color`, or an agent. |
+| `agent-setting` | | The agent definition that the session runs as, for example from `--agent`. |
+| `tag` | `tag` | A tag on the session. |
+| `worktree-state` | `worktreeSession` | The worktree that the session works in. `null` after it ends. |
+| `pr-link` | `prNumber`, `prUrl`, `prRepository`, `timestamp` | Ties the session to a pull request. |
+| `bridge-session` | `bridgeSessionId`, `lastSequenceNum`, `sessionGroupingId`, owner ids | The Remote Control link. |
+| `content-replacement` | `replacements`, `agentId` | Records which large tool results were replaced by a short stand-in, so a resume uses the same stand-ins. |
+| `attribution-snapshot` | | A snapshot of file-contribution data for commits. Only the type is clear. A large one is trimmed on load. |
+| `fork-context-ref` | `agentId`, `parentSessionId`, `parentLastUuid`, `contextLength` | A forked agent's pointer to its parent. The fork reads the parent's lines and does not copy them. |
+| `observer-ref` | `observerTaskId`, `observerAgentType`, `agentId`, `timestamp` | An observer agent's pointer. |
+| `isolation-latch` | `side` | Records a one-time choice about where the session runs, kept for resume. |
+| `memory-mode` | `mode`, `afterUuid`, `reason`, `account` | A stamp that auto memory switched mode. One per switch. |
+| `dev-mods` | `folder` | The folder of a mod under development that the session uses. |
+| `frame-link` | `path`, `frameUrl`, `title`, `artifactCount` | A link from the session to an artifact page. |
+| `ended-by-model` | `timestamp` | Marks that the model ended the session. |
+| `line-withheld` | `bytes` | Not a stored type. A line that could not be read or was too large is swapped for `{"type":"line-withheld","bytes":N}` when a transcript is uploaded. |
+| `artifact-autoreact-ledger` | `artifacts`, `accountUuid`, `v` | Bookkeeping for automatic replies to artifact comments. |
+| `relocated` | `relocatedCwd` | The working folder was moved. |
+| `summary` | `leafUuid` | A summary line. |
+| `continued-in` | `continuedInSessionId` | Points to the session that continued this one. |
+| `history-suppression`, `artifact-comment-monitor` | | Also in the program's table. No further meaning was read. |
 
-> **Not Verified:** The meaning of the types in the list above, and of `atis-latch`, is not verified.
+`proactivity` and `language` are not line types. They are kinds of `attachment` (`attachment.type`). `proactivity` carries `status`, `level`, and `tools`. `language` carries the reply `language`.
+
+On resume the program applies a replay policy to each type. Unknown types add up.
+
+- Last line wins: most types in the lists above, including `atis-latch`.
+- Add up: `content-replacement`, `fork-context-ref`, `frame-link`, `artifact-comment-monitor`, and `memory-mode`.
+- Dropped at a compact boundary: `progress`, `file-history-snapshot`, `file-history-delta`, `last-prompt`, `continued-in`, `api-request-shape`, `api-request-blob`, and `api-request`.
 
 ## The `message` Object
 

@@ -16,7 +16,7 @@ They describe the request and the answer of a model call, the cache marks of a p
 This call asks a model for one answer. The types below describe the request and the result.
 
 ```ts
-const r = await $.model.complete({ model: "haiku", prompt, effort: "low" })
+const r = await $.model.complete({ model: "haiku", prompt, effort: "low" });
 ```
 
 ## Types without Fields

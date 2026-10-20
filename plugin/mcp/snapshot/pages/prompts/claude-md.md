@@ -122,7 +122,7 @@ hi
 
 === messages[1].content[0] (role: system) ===
 # Environment
-You have been invoked in the following environment: 
+You have been invoked in the following environment:
  - Primary working directory: <cwd>
  - Is a git repository: false
  - Platform: <platform>
@@ -186,7 +186,7 @@ Lines added: 10. Lines removed: 1. Size change: +389 characters.
 --- default-lean
 +++ claude-md
 @@ -63,6 +63,15 @@
- 
+
  === messages[0].content[0] (role: user) ===
  <system-reminder>
 +Codebase and user instructions are shown below. Be sure to adhere to these instructions. IMPORTANT: These instructions OVERRIDE any default behavior and you MUST follow them exactly as written.
@@ -204,11 +204,11 @@ Lines added: 10. Lines removed: 1. Size change: +389 characters.
 @@ -70,7 +79,7 @@
  <robot-emoji> Generated with [Claude Code](https://claude.com/claude-code)
  </system-reminder>
- 
+
 -=== messages[0].content[1] (role: user) ===
 +=== messages[0].content[2] (role: user) ===
  hi
- 
+
  === messages[1].content[0] (role: system) ===
 ```
 

@@ -12,16 +12,6 @@ Before a tool runs, Claude Code decides one of three things: allow it, ask you, 
 Several parts take a turn: rules, hooks, the permission mode, safety checks, and sometimes a classifier model.
 This page shows the order and where you can step in.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | It runs for every tool call. You see it as a prompt, or as a silent allow or deny. |
-| Can you change it? | ✅ Yes. Change rules, the mode, hooks, or the sandbox. See the related pages. |
-| Can you turn it on or off? | You cannot turn the flow off. `bypassPermissions` skips most checks, but not all. |
-| Where does it live? | Inside the program. The inputs come from settings files, flags, and hooks. |
-| Status | [Documented] [Undocumented] |
-
 ## Example
 
 You set `deny: ["Bash(git push:*)"]` and `allow: ["Bash(bun test)"]`, and you run in `default` mode.

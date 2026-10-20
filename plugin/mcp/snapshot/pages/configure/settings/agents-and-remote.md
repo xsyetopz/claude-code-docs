@@ -25,7 +25,7 @@ Where to Set It tells you which files may set the key. See [Settings Files and S
 | `agentPushNotifEnabled` | [Documented] | boolean | - | Let Claude send a push notification to your phone when it decides to. | Any settings file |
 | `askUserQuestionTimeout` | [Documented] | enum: `60s`, `5m`, `10m`, `never` | `never` | Let an unanswered question auto-continue after idle time. Auto-continue runs only when you set `60s`, `5m`, or `10m`. | User or managed settings |
 | `autoContinueAtUsageLimit` | [Documented] | boolean | - | Wait in the open session and continue the task automatically after a claude.ai usage limit resets. | User or managed settings |
-| ⚠️ `autoUploadSessions` | [Undocumented] | boolean | - | Mirror local sessions to claude.ai as view-only, with no remote control. | Settings files |
+| `autoUploadSessions` | [Undocumented] [Caution] | boolean | - | Mirror local sessions to claude.ai as view-only, with no remote control. | Settings files |
 | `crossSessionInbound` | [Documented] | string | - | Choose what happens to messages from your other sessions. `accept` delivers, `hold` parks them for review, `refuse` opts out. | Any settings file |
 | `daemonColdStart` | [Undocumented] | enum: `transient`, `ask` | - | Choose what happens when no background service runs: `transient` starts one for this login session, and `ask` offers a permanent install. | Settings files |
 | `dialogExpiry` | [Documented] | enum: `60s`, `5m`, `10m`, `never` | `5m` | Set how long Claude Code waits for Remote Control or an SDK host to answer a forwarded dialog before it cancels the dialog. `never` removes the deadline. `CLAUDE_CODE_USER_DIALOG_TIMEOUT_MS` wins. | User or managed settings |

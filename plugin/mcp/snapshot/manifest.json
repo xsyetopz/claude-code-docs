@@ -88,6 +88,14 @@
     "url": "https://xsyetopz.github.io/claude-code-docs/how-it-works/context-and-compaction"
   },
   {
+    "route": "/how-it-works/context-budget",
+    "title": "Context Budget",
+    "description": "What an empty Claude Code session holds, what each tool costs, what else changes the budget, and how to keep it small.",
+    "section": "How It Works",
+    "md": "https://xsyetopz.github.io/claude-code-docs/how-it-works/context-budget.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/how-it-works/context-budget"
+  },
+  {
     "route": "/how-it-works/sessions-and-storage",
     "title": "Sessions and Storage",
     "description": "How Claude Code saves a session, how resume and branch work, what is restored, and where every file lives on disk.",
@@ -984,6 +992,14 @@
     "url": "https://xsyetopz.github.io/claude-code-docs/prompts/"
   },
   {
+    "route": "/prompts/override",
+    "title": "Override a Prompt",
+    "description": "Which built-in prompt texts in Claude Code 2.1.304 you can replace, append to, or turn off, and how.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/override.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/override"
+  },
+  {
     "route": "/prompts/default-lean",
     "title": "Default, Lean Prompt",
     "description": "The prompt that Opus 5.5 gets with no flags.",
@@ -1256,12 +1272,444 @@
     "url": "https://xsyetopz.github.io/claude-code-docs/prompts/subagent-custom"
   },
   {
+    "route": "/prompts/subagent-statusline-setup",
+    "title": "Subagent, Statusline Setup",
+    "description": "The prompt that a statusline-setup subagent gets.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/subagent-statusline-setup.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/subagent-statusline-setup"
+  },
+  {
+    "route": "/prompts/subagent-claude",
+    "title": "Subagent, Claude (FleetView)",
+    "description": "The prompt that a claude subagent gets.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/subagent-claude.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/subagent-claude"
+  },
+  {
+    "route": "/prompts/subagent-web-fetch",
+    "title": "Subagent, Web Fetch",
+    "description": "The prompt that the built-in web-reading subagent gets.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/subagent-web-fetch.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/subagent-web-fetch"
+  },
+  {
+    "route": "/prompts/override-agent-file",
+    "title": "Override a Built-in Agent with a File",
+    "description": "A project agent file named Explore takes the place of the built-in Explore agent.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/override-agent-file.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/override-agent-file"
+  },
+  {
+    "route": "/prompts/override-agents-flag",
+    "title": "Override a Built-in Agent with --agents",
+    "description": "The --agents JSON flag defines an agent with a built-in name and wins over the built-in one.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/override-agents-flag.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/override-agents-flag"
+  },
+  {
+    "route": "/prompts/override-append-subagent",
+    "title": "Append to Every Subagent Prompt",
+    "description": "Adds your text to the end of the prompt of every subagent.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/override-append-subagent.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/override-append-subagent"
+  },
+  {
+    "route": "/prompts/disable-explore-plan",
+    "title": "Turn Off the Explore and Plan Agents",
+    "description": "CLAUDE_CODE_DISABLE_EXPLORE_PLAN_AGENTS=1 removes two built-in agents from the main prompt.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/disable-explore-plan.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/disable-explore-plan"
+  },
+  {
+    "route": "/prompts/disable-builtin-agents",
+    "title": "Turn Off All Built-in Agents",
+    "description": "CLAUDE_AGENT_SDK_DISABLE_BUILTIN_AGENTS=1 removes every built-in agent in print mode.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/disable-builtin-agents.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/disable-builtin-agents"
+  },
+  {
+    "route": "/prompts/command-init",
+    "title": "Command, /init",
+    "description": "The text that /init sends to the model.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/command-init.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/command-init"
+  },
+  {
+    "route": "/prompts/command-security-review",
+    "title": "Command, /security-review",
+    "description": "The text that /security-review sends to the model.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/command-security-review.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/command-security-review"
+  },
+  {
+    "route": "/prompts/command-simplify",
+    "title": "Skill, /simplify",
+    "description": "The text that /simplify sends to the model.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/command-simplify.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/command-simplify"
+  },
+  {
+    "route": "/prompts/command-debug",
+    "title": "Skill, /debug",
+    "description": "The text that /debug sends to the model.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/command-debug.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/command-debug"
+  },
+  {
+    "route": "/prompts/override-command-init",
+    "title": "Override /init with a Command File",
+    "description": "The text that /init sends to the model.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/override-command-init.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/override-command-init"
+  },
+  {
+    "route": "/prompts/override-skill-simplify",
+    "title": "Override /simplify with a Skill File",
+    "description": "The text that /simplify sends to the model.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/override-skill-simplify.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/override-skill-simplify"
+  },
+  {
+    "route": "/prompts/hook-prompt",
+    "title": "Prompt Hook Request",
+    "description": "The request that a hook of type: \"prompt\" sends to a small model. You write the user text; the program adds the system text.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/hook-prompt.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/hook-prompt"
+  },
+  {
+    "route": "/prompts/hook-agent",
+    "title": "Agent Hook Request",
+    "description": "The request that a hook of type: \"agent\" sends. You write the task; the program adds the system text.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/hook-agent.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/hook-agent"
+  },
+  {
+    "route": "/prompts/auto-classifier",
+    "title": "Auto Mode Classifier",
+    "description": "The request that the auto mode classifier sends for a tool call.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/auto-classifier.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/auto-classifier"
+  },
+  {
+    "route": "/prompts/auto-classifier-custom",
+    "title": "Auto Mode Classifier, Custom Rules",
+    "description": "The same classifier request with autoMode rules in the settings. $defaults keeps the built-in rules in that list; without it they are replaced.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/auto-classifier-custom.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/auto-classifier-custom"
+  },
+  {
+    "route": "/prompts/compact-custom",
+    "title": "Compaction Prompt, Custom Instructions",
+    "description": "The compaction request with the three ways to add your own instructions.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/compact-custom.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/compact-custom"
+  },
+  {
+    "route": "/prompts/plan-mode-instructions",
+    "title": "Plan Mode, Custom Workflow",
+    "description": "--plan-mode-instructions replaces the workflow phases in the plan mode reminder.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/plan-mode-instructions.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/plan-mode-instructions"
+  },
+  {
+    "route": "/prompts/git-instructions-off",
+    "title": "Git Instructions Turned Off",
+    "description": "includeGitInstructions: false removes the built-in commit and pull request rules.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/git-instructions-off.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/git-instructions-off"
+  },
+  {
+    "route": "/prompts/memory-off",
+    "title": "Auto Memory Turned Off",
+    "description": "CLAUDE_CODE_DISABLE_AUTO_MEMORY=1 removes the memory section.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/memory-off.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/memory-off"
+  },
+  {
+    "route": "/prompts/style-override-builtin",
+    "title": "Custom Output Style with a Built-in Name",
+    "description": "A style file named Explanatory takes the place of the built-in style.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/style-override-builtin.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/style-override-builtin"
+  },
+  {
+    "route": "/prompts/subagent-with-prompt-flags",
+    "title": "Subagent with --system-prompt and --append-system-prompt",
+    "description": "Shows whether the main-thread prompt flags reach a built-in subagent.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/subagent-with-prompt-flags.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/subagent-with-prompt-flags"
+  },
+  {
+    "route": "/prompts/hook-prompt-stop",
+    "title": "Prompt Hook on Stop",
+    "description": "A prompt hook on the Stop event gets a different system text from a tool hook.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/hook-prompt-stop.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/hook-prompt-stop"
+  },
+  {
     "route": "/prompts/tools-per-variant",
     "title": "Tools per Variant",
     "description": "Which tools each system prompt variant sends, and how the tool text differs.",
     "section": "System Prompts",
     "md": "https://xsyetopz.github.io/claude-code-docs/prompts/tools-per-variant.md",
     "url": "https://xsyetopz.github.io/claude-code-docs/prompts/tools-per-variant"
+  },
+  {
+    "route": "/prompts/subagent-claude-code-guide",
+    "title": "Subagent, Claude Code Guide",
+    "description": "The prompt that the built-in Claude Code guide subagent gets, captured from an interactive session.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/subagent-claude-code-guide.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/subagent-claude-code-guide"
+  },
+  {
+    "route": "/prompts/subagent-comment-thread-analyst",
+    "title": "Subagent, Comment Thread Analyst",
+    "description": "Verbatim text of the built-in comment thread analyst subagent, captured from the program.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/subagent-comment-thread-analyst.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/subagent-comment-thread-analyst"
+  },
+  {
+    "route": "/prompts/subagent-workflow",
+    "title": "Subagent, Workflow Orchestration",
+    "description": "Verbatim text sent to subagents that a workflow orchestration script starts.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/subagent-workflow.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/subagent-workflow"
+  },
+  {
+    "route": "/prompts/skill-batch",
+    "title": "Skill, /batch",
+    "description": "Verbatim text of the built-in /batch skill, captured from the program.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/skill-batch.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/skill-batch"
+  },
+  {
+    "route": "/prompts/skill-claude-api",
+    "title": "Skill, /claude-api",
+    "description": "Verbatim text of the built-in /claude-api skill, captured from the program.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/skill-claude-api.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/skill-claude-api"
+  },
+  {
+    "route": "/prompts/skill-code-review",
+    "title": "Skill, /code-review",
+    "description": "Verbatim text of the built-in /code-review skill, captured from the program.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/skill-code-review.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/skill-code-review"
+  },
+  {
+    "route": "/prompts/skill-dataviz",
+    "title": "Skill, /dataviz",
+    "description": "Verbatim text of the built-in /dataviz skill, captured from the program.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/skill-dataviz.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/skill-dataviz"
+  },
+  {
+    "route": "/prompts/skill-deep-research",
+    "title": "Skill, /deep-research",
+    "description": "Verbatim text of the built-in /deep-research skill, captured from the program.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/skill-deep-research.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/skill-deep-research"
+  },
+  {
+    "route": "/prompts/skill-doctor",
+    "title": "Skill, /doctor",
+    "description": "Verbatim text of the built-in /doctor skill, captured from the program.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/skill-doctor.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/skill-doctor"
+  },
+  {
+    "route": "/prompts/skill-fewer-permission-prompts",
+    "title": "Skill, /fewer-permission-prompts",
+    "description": "Verbatim text of the built-in /fewer-permission-prompts skill, captured from the program.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/skill-fewer-permission-prompts.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/skill-fewer-permission-prompts"
+  },
+  {
+    "route": "/prompts/skill-goal",
+    "title": "Skill, /goal",
+    "description": "Verbatim text of the built-in /goal skill, captured from the program.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/skill-goal.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/skill-goal"
+  },
+  {
+    "route": "/prompts/skill-insights",
+    "title": "Skill, /insights",
+    "description": "Verbatim text of the built-in /insights skill, captured from the program.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/skill-insights.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/skill-insights"
+  },
+  {
+    "route": "/prompts/skill-loop",
+    "title": "Skill, /loop",
+    "description": "Verbatim text of the built-in /loop skill, captured from the program.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/skill-loop.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/skill-loop"
+  },
+  {
+    "route": "/prompts/skill-plugin-authoring",
+    "title": "Skill, /plugin-authoring",
+    "description": "Verbatim text of the built-in /plugin-authoring skill, captured from the program.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/skill-plugin-authoring.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/skill-plugin-authoring"
+  },
+  {
+    "route": "/prompts/skill-run",
+    "title": "Skill, /run",
+    "description": "Verbatim text of the built-in /run skill, captured from the program.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/skill-run.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/skill-run"
+  },
+  {
+    "route": "/prompts/skill-run-skill-generator",
+    "title": "Skill, /run-skill-generator",
+    "description": "Verbatim text of the built-in /run-skill-generator skill, captured from the program.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/skill-run-skill-generator.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/skill-run-skill-generator"
+  },
+  {
+    "route": "/prompts/skill-team-onboarding",
+    "title": "Skill, /team-onboarding",
+    "description": "Verbatim text of the built-in /team-onboarding skill, captured from the program.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/skill-team-onboarding.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/skill-team-onboarding"
+  },
+  {
+    "route": "/prompts/skill-update-config",
+    "title": "Skill, /update-config",
+    "description": "Verbatim text of the built-in /update-config skill, captured from the program.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/skill-update-config.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/skill-update-config"
+  },
+  {
+    "route": "/prompts/skill-verify",
+    "title": "Skill, /verify",
+    "description": "Verbatim text of the built-in /verify skill, captured from the program.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/skill-verify.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/skill-verify"
+  },
+  {
+    "route": "/prompts/skill-workflow-authoring",
+    "title": "Skill, /workflow-authoring",
+    "description": "Verbatim text of the built-in /workflow-authoring skill, captured from the program.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/skill-workflow-authoring.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/skill-workflow-authoring"
+  },
+  {
+    "route": "/prompts/team-onboarding-guide",
+    "title": "Team Onboarding Guide",
+    "description": "Verbatim prompt that writes a team onboarding guide, captured from the program.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/team-onboarding-guide.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/team-onboarding-guide"
+  },
+  {
+    "route": "/prompts/coordinator-mode",
+    "title": "Coordinator Mode",
+    "description": "Verbatim main prompt for coordinator mode, captured from the program.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/coordinator-mode.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/coordinator-mode"
+  },
+  {
+    "route": "/prompts/coordinator-worker",
+    "title": "Coordinator Worker",
+    "description": "Verbatim prompt for a worker agent that the coordinator starts.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/coordinator-worker.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/coordinator-worker"
+  },
+  {
+    "route": "/prompts/memory-extraction",
+    "title": "Memory Extraction",
+    "description": "Verbatim prompt for the memory extraction subagent, captured from the program.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/memory-extraction.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/memory-extraction"
+  },
+  {
+    "route": "/prompts/memory-selection",
+    "title": "Memory Selection",
+    "description": "Verbatim prompt that selects saved memories, captured from the program.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/memory-selection.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/memory-selection"
+  },
+  {
+    "route": "/prompts/observer",
+    "title": "Observer Prompt",
+    "description": "Verbatim base prompt for experimental observer agents, captured from the program.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/observer.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/observer"
+  },
+  {
+    "route": "/prompts/session-naming",
+    "title": "Session Naming",
+    "description": "Verbatim prompt that names a coding session, captured from the program.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/session-naming.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/session-naming"
+  },
+  {
+    "route": "/prompts/title-and-branch-name",
+    "title": "Session Title and Branch Name",
+    "description": "Verbatim prompt that writes a session title and a git branch name, captured from the program.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/title-and-branch-name.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/title-and-branch-name"
+  },
+  {
+    "route": "/prompts/surface-cli",
+    "title": "Surface Prompt, CLI",
+    "description": "Verbatim environment text the program adds when it runs as the CLI in a terminal.",
+    "section": "System Prompts",
+    "md": "https://xsyetopz.github.io/claude-code-docs/prompts/surface-cli.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/prompts/surface-cli"
   },
   {
     "route": "/contributing/style-guide",

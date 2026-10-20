@@ -110,7 +110,7 @@ sequenceDiagram
   participant S as MCP server
   C->>S: Connect with headers or helper output
   S-->>C: 401 or 403
-  C->>C: Mark as needing authentication
+  Note over C: Mark as needing authentication
   Note over C: You run /mcp or claude mcp login
   C->>S: OAuth flow
   S-->>C: Token

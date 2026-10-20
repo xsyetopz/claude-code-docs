@@ -21,10 +21,10 @@ In a "Where it can be used" cell, "Run time" means in a hook, in a closure that 
 This hook shows a toast when a session starts.
 
 ```javascript
-on('session.start', async ($, e, next) => {
-  $.ui.toast('Session started')
-  return next(e)
-})
+on("session.start", async ($, e, next) => {
+  $.ui.toast("Session started");
+  return next(e);
+});
 ```
 
 ## Members
@@ -39,7 +39,7 @@ on('session.start', async ($, e, next) => {
 | `$.session.id` | [Documented] | Returns the session id (the transcript file's name). | `() => Promise<string>`. | Run time. |
 | `$.session.repo` | [Documented] | Returns the git repository the session runs in, read from the working copy on each call. `null` when the directory is not in one. | `() => Promise<SessionRepo \| null>`. | Run time. |
 | `$.session.surfaces` | [Documented] | Returns every surface the session draws on, each once: `terminal` first, then remote ones in the order they attached. | `() => Promise<readonly RenderSurface[]>`. Never rejects. Empty in a plain `-p` run. | Run time. |
-| ⛔ `$.session.surface` | [Documented] | Returns the first of `$.session.surfaces()`, or `null` where nothing draws. | `() => Promise<RenderSurface \| null>`. Deprecated. Use `surfaces()`, because a session may draw on several surfaces. | Run time. |
+| `$.session.surface` | [Documented] [Deprecated: Use surfaces()] | Returns the first of `$.session.surfaces()`, or `null` where nothing draws. | `() => Promise<RenderSurface \| null>`. Deprecated. Use `surfaces()`, because a session may draw on several surfaces. | Run time. |
 | `$.session.usage` | [Documented] | Returns when the session began, the context window fill, the rate-limit windows, and the cost, as the status line has them. | `(args?) => Promise<SessionUsage>`. A plain call costs nothing. `breakdown: "full"` uses the token-count API. `"summary"` estimates locally. | Run time. |
 | `$.session.version` | [Documented] | Returns the version of the engine, the release it is built from, and when it was built. | `() => Promise<SessionVersion>`: `version`, `base` (absent unless the version is a release), `builtAt`. Works in every mode. | Run time. |
 | `$.session.compact` | [Documented] | Compacts the conversation. It is the event `session.compact` with `trigger` `plugin`, the same call `/compact` makes. | `(input?) => Promise<SessionCompactResult>`. Runs the hooks, then core. Resolves `{ skip }` if a hook vetoed it. Rejects while a turn runs. | Between turns. |
@@ -72,7 +72,7 @@ For each call, a hook above the caller returns `next(e)`, `{ deny: reason }`, or
 | `session.turns` | [Documented] | `$.session.turns()` | Input `NoArgs`. Value `number`. |
 | `session.messages` | [Documented] | `$.session.messages(args)`: `{}` for the main conversation, `{ agentId }` for an agent, `as` for the form. | Input `SessionMessagesArgs`. Value `SessionMessagesValue`. |
 | `session.repo` | [Documented] | `$.session.repo()` | Input `NoArgs`. Value `SessionRepo \| null`. |
-| ⛔ `session.surface` | [Documented] | `$.session.surface()`. Deprecated: hook `session.surfaces` instead. | Input `NoArgs`. Value `RenderSurface \| null`. |
+| `session.surface` | [Documented] [Deprecated: Hook session.surfaces instead] | `$.session.surface()`. Deprecated: hook `session.surfaces` instead. | Input `NoArgs`. Value `RenderSurface \| null`. |
 | `session.surfaces` | [Documented] | `$.session.surfaces()` | Input `NoArgs`. Value `readonly RenderSurface[]`. |
 | `session.identity` | [Documented] | `$.session.identity()` | Input `NoArgs`. Value `SessionIdentity`. |
 | `session.authorize` | [Documented] | `$.session.authorize()` | Input `NoArgs`. Value `SessionAuthorization`: `{ handle, kind }`, or `null` when the session holds no first-party credential. |

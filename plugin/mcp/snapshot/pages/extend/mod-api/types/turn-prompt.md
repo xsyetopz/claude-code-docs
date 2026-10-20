@@ -16,12 +16,12 @@ They describe prompts, attachments, system prompt sections, and the prompt box.
 The first line reads the prompt box. The second submits text as if the user typed it. The third logs server tool uses of a model step.
 
 ```ts
-const { text, cursor } = await $.prompt.read()
-await $.prompt.submit({ text: "what the person typed", asUser: true })
-for (const use of response.serverToolUses ?? []) $.ui.log(use.name)
+const { text, cursor } = await $.prompt.read();
+await $.prompt.submit({ text: "what the person typed", asUser: true });
+for (const use of response.serverToolUses ?? []) $.ui.log(use.name);
 ```
 
-> **Shared Sections Skip prompt.section:** A `prompt.section` hook does not fire once per named section. From 2.1.302 to 2.1.304, the engine builds shared sections such as `lean_body` without a `prompt.section` call, so a hook does not see them.
+> **Shared Sections Skip `prompt.section`:** A `prompt.section` hook does not fire once per named section. From 2.1.302 to 2.1.304, the engine builds shared sections such as `lean_body` without a `prompt.section` call, so a hook does not see them.
 > A `prompt.compose` hook does see them. See [System Prompt](https://xsyetopz.github.io/claude-code-docs/how-it-works/system-prompt.md).
 
 ## Types without Fields

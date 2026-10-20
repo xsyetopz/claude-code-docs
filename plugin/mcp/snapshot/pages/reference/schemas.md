@@ -12,16 +12,6 @@ This site publishes six JSON Schemas for the config files that Claude Code `2.1.
 They are made by running the program's own schema code, so they list every key that this release knows.
 Paste the `$schema` URL into a file and your editor can suggest keys and flag mistakes.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. Add a `$schema` line to the file. |
-| Can you change it? | Not by hand. The files are generated; run `bun run schemas` to rebuild them. |
-| Can you turn it on or off? | Not applicable. A `$schema` key is ignored when the program loads the file. |
-| Where does it live? | `schemas/` in the repo, and `/schemas/` on this site. |
-| Status | [Undocumented] |
-
 ## The Schemas
 
 | File kind | Where the file lives | `$schema` URL |

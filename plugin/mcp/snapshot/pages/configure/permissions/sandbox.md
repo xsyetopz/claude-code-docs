@@ -44,7 +44,7 @@ Official pages: [Configure the Sandboxed Bash Tool](https://code.claude.com/docs
 | `sandbox.enabled` | [Documented] | Runs `Bash` in the sandbox | Default `false`. Without dependencies, a warning shows and commands run unsandboxed | Each scope |
 | `sandbox.failIfUnavailable` | [Documented] | Exit at startup if the sandbox cannot start | Default `false`. For managed hard gates | Each scope |
 | `sandbox.autoAllowBashIfSandboxed` | [Documented] | Auto-allows sandboxed commands | Reason text `Auto-allowed with sandbox`. Default `true` per the `filesystem.disabled` text | Each scope |
-| ⚠️ `sandbox.allowUnsandboxedCommands` | [Documented] | Lets a call use `dangerouslyDisableSandbox` | Default `true`. When `false`, the parameter is ignored. A `false` from managed, `--settings`, or user settings holds | Each scope |
+| `sandbox.allowUnsandboxedCommands` | [Documented] [Caution] | Lets a call use `dangerouslyDisableSandbox` | Default `true`. When `false`, the parameter is ignored. A `false` from managed, `--settings`, or user settings holds | Each scope |
 | `sandbox.excludedCommands` | [Documented] | Patterns that run outside the sandbox | `Bash` rule syntax. A convenience, not a boundary: the permission flow still applies. Only managed, `--settings`, and user entries count | Merged |
 | `sandbox.ignoreViolations` | [Documented] | Map of command patterns (`*` for all) to paths whose violations are not reported | Merged across scopes | Each scope |
 | `sandbox.enableWeakerNestedSandbox` | [Documented] | Linux: no fresh `/proc` mount | For hosts like unprivileged Docker. Reduces security. Default `false` | Each scope |
@@ -67,7 +67,7 @@ Official pages: [Configure the Sandboxed Bash Tool](https://code.claude.com/docs
 | `sandbox.network.allowLocalBinding` | [Documented] | macOS: bind to localhost ports | Boolean | Each scope |
 | `sandbox.network.allowMachLookup` | [Documented] | macOS: extra XPC or Mach names | Trailing `*` prefix match. For iOS Simulator or Playwright | Merged |
 | `sandbox.network.httpProxyPort`, `sandbox.network.socksProxyPort` | [Documented] | Use your own proxy | Local TCP port | Each scope |
-| 🧪 `sandbox.network.tlsTerminate.caCertPath`, `.caKeyPath` | [Gated: Marked EXPERIMENTAL in the settings schema] | Experimental TLS termination | Lets the filter see HTTPS bodies. Omit both for an ephemeral CA. Gate: marked `[EXPERIMENTAL]` | User, managed, `--settings` |
+| `sandbox.network.tlsTerminate.caCertPath`, `.caKeyPath` | [Gated: Marked EXPERIMENTAL in the settings schema] [Experimental] | Experimental TLS termination | Lets the filter see HTTPS bodies. Omit both for an ephemeral CA. Gate: marked `[EXPERIMENTAL]` | User, managed, `--settings` |
 
 ## Filesystem Keys
 
@@ -117,7 +117,7 @@ Source for all four: the program prompt and warning texts.
 ## How It Works
 
 ```mermaid
-flowchart LR
+flowchart TD
   Call["<code>Bash</code> call"] --> Perm[Permission flow]
   Perm -->|allowed| Sb{Sandbox on?}
   Sb -->|no| Run[Run as a normal process]

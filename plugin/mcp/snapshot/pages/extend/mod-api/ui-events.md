@@ -20,10 +20,17 @@ Official pages: [Draw in the Interface](https://code.claude.com/docs/en/plugins/
 This hook adds a count to the spinner.
 
 ```javascript
-let calls = 0
-on('tool.call', ($, e, next) => { calls += 1; return next(e) })
-on('ui.render', { component: 'Spinner' }, async ($, e, next) =>
-  next({ ...e, props: { ...e.props, suffix: ' · tool calls: ' + calls + '…' } }))
+let calls = 0;
+on("tool.call", ($, e, next) => {
+  calls += 1;
+  return next(e);
+});
+on("ui.render", { component: "Spinner" }, async ($, e, next) =>
+  next({
+    ...e,
+    props: { ...e.props, suffix: ` · tool calls: ${calls}…` },
+  }),
+);
 ```
 
 ## Engine Events

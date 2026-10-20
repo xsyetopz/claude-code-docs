@@ -60,7 +60,7 @@ hi
 
 === messages[1].content[0] (role: system) ===
 # Environment
-You have been invoked in the following environment: 
+You have been invoked in the following environment:
  - Primary working directory: <cwd>
  - Is a git repository: false
  - Platform: <platform>
@@ -125,14 +125,14 @@ Lines added: 3. Lines removed: 1. Size change: +57 characters.
 +++ system-prompt-append
 @@ -2,11 +2,13 @@
  x-anthropic-billing-header: cc_version=2.1.304.<build>; cc_entrypoint=sdk-cli;
- 
+
  === system[1] (cache marker: {"type":"ephemeral"}) ===
 -You are a Claude agent, built on Anthropic's Claude Agent SDK.
 +You are Claude Code, Anthropic's official CLI for Claude, running within the Claude Agent SDK.
- 
+
  === system[2] (cache marker: {"type":"ephemeral"}) ===
  REPLACEMENT-TEXT-FROM-FLAG
- 
+
 +APPENDED-TEXT-FROM-FLAG
 +
  === messages[0].content[0] (role: user) ===

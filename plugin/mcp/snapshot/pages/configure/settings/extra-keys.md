@@ -46,7 +46,7 @@ The first rows are sub-keys of an object key. The last rows are read only by the
 | `disableBrowserExternalNavigation` | [Documented] | boolean | Unset, so external browsing is on | Turn off external browsing in the desktop Browser pane. Only `true` takes effect. | Managed settings only |
 | `browserExternalPageTools` | [Documented] | string | Unset, so the tools work on external pages | Stop Claude from using its tools on external pages in the desktop Browser pane. The value is `"disabled"`. | Managed settings only |
 | `disableMobileSimulatorTools` | [Documented] | boolean | Unset | Block Claude's tools in the desktop iOS Simulator pane. Only `true` takes effect. | Managed settings only |
-| `disableDesktopLocalSessions` | [Documented] | ❓ | - | Turn off Desktop Code sessions that run on the device. SSH and cloud sessions stay on. | Managed settings only |
+| `disableDesktopLocalSessions` | [Documented] | Unknown | - | Turn off Desktop Code sessions that run on the device. SSH and cloud sessions stay on. Not in the 2.1.304 program (no schema entry or reader). Claude Desktop may read it, if anyone does. | Managed settings only |
 
 ## Global Config Keys
 
@@ -67,7 +67,12 @@ Source: [Settings Reference](https://code.claude.com/docs/en/settings-reference)
 | `leftArrowOpensAgents` | [Documented] | Turn off the `←` shortcut that backgrounds the session and opens agent view. |
 | `prStatusFooterEnabled` | [Documented] | Turn off the prompt footer's PR review status badge and the pull request check behind it. |
 
-> **Not Verified:** The sub-keys under `isolation`, `remoteControl`, and `remoteTools` come from strings in the program. The program gives no description for `isolation.persistHome` and `remoteTools.allowUnattendedServing`.
+> **Sub-Keys:** Source: the program.
+>
+> - `remoteTools.allowUnattendedServing` (default `true`): set `false` in managed or user settings to stop cloud sessions in auto mode from running commands here without approval. Project, local, and `--settings` values are ignored.
+> - `remoteControl.shareHostProfile`: `off`, `basic`, or `full`. It sets what a Remote Control environment reports about this machine. `off` reports nothing. `basic` reports the OS, architecture, and detected developer tools. `full` adds the names of MCP servers set on this machine. Managed, `--settings`, and user settings pick it, and the most restrictive wins. Project and local settings can only lower it.
+> - `isolation.persistHome` and `isolation.required`: the program gives no description. A lower-trust source may set `persistHome` only to `false` and `required` only to `true`.
+>
 
 ## Example
 

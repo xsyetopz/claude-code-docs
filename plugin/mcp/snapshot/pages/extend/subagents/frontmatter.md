@@ -47,12 +47,12 @@ claude --agents '{
 | `background` | [Documented] | Keeps the agent in the background. | `true` or `false`, as a string or boolean. Other values log an error. A teammate may not start such an agent. |
 | `omitClaudeMd` | [Documented] | Starts without user, project, and local `CLAUDE.md`. | `true` only. Managed policy files still load. `Explore`, `Plan`, and the web-reading agent set it. |
 | `effort` | [Documented] | The effort level while the agent runs. | `low`, `medium`, `high`, `xhigh`, `max`. The program text also lists an integer. `CLAUDE_CODE_EFFORT_LEVEL` wins. |
-| `isolation` | [Documented] | Runs the agent in a temporary git worktree. | The docs name `worktree`. The program schema also accepts `remote`. The worktree branches from the default branch. |
+| `isolation` | [Documented] | Runs the agent in a temporary git worktree. | The docs name `worktree`. The program schema also accepts `remote`. The worktree branches from the default branch. In a probe in `-p`, `isolation: remote` in a file ran the agent in a local worktree and started no cloud session. It was not tried with a cloud login. |
 | `color` | [Documented] | The display color. | `red`, `blue`, `green`, `yellow`, `purple`, `orange`, `pink`, `cyan`. |
 | `initialPrompt` | [Documented] | The first user turn when the agent is the main session. | Used with `--agent` or the `agent` setting. Commands and skills are processed. Not read when the agent starts as a subagent. |
-| 🧪 `experimental` | [Documented] | A map of experimental options. | `cacheTtl`: `5m` or `1h` sets the prompt cache TTL when no `subagentPromptCacheTtl` setting or env var is set. `1h` is ignored in subscription overage. Unknown keys are ignored. |
-| `observer` | [Undocumented] [Gated: Probably CLAUDE_CODE_EXPERIMENTAL_OBSERVER_AGENTS. Name only, not verified.] | An agent type that starts as a background observer whenever this agent runs. | A trimmed string. Message kinds `observer` and `observer-activity` exist. |
-| `observerMessage` | [Undocumented] [Gated: Same gate as observer.] | Text added to each activity digest sent to the observer. | A string. It follows the default text. |
+| `experimental` | [Documented] [Experimental] | A map of experimental options. | `cacheTtl`: `5m` or `1h` sets the prompt cache TTL when no `subagentPromptCacheTtl` setting or env var is set. `1h` is ignored in subscription overage. Unknown keys are ignored. |
+| `observer` | [Undocumented] [Gated: CLAUDE_CODE_EXPERIMENTAL_OBSERVER_AGENTS] | An agent type that starts as a background observer whenever this agent runs. | A trimmed string. Needs `CLAUDE_CODE_EXPERIMENTAL_OBSERVER_AGENTS`; without it the field is ignored. With it, the named agent starts in the background, gets an activity digest after each turn of this agent, and has an `ObserverReport` tool. An observer cannot have its own observer. Source: the program and [Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md#subagents-and-hooks). |
+| `observerMessage` | [Undocumented] [Gated: Same gate as observer.] | Text added to each activity digest sent to the observer. | A string. It follows the default digest instruction as the last line (checked by a probe). |
 | `observeSubagents` | [Undocumented] [Gated: Same gate as observer.] | Whether subagents inherit the observer. | A boolean, default true. `false` stops inheritance. |
 
 ## Rules for Files
@@ -62,11 +62,9 @@ claude --agents '{
 - A plugin agent is named `plugin:folder:file`. The file `agents/review/security.md` in `my-plugin` is `my-plugin:review:security`.
 - A plugin agent cannot use `permissionMode`, `hooks`, or `mcpServers`.
 
-> **Not Verified:** The program may normalize the spelling of keys when it reads frontmatter. The exact rule was not checked.
-> A second internal list names `initialPrompt`, `observer`, `observerMessage`, and `observeSubagents`. What it does was not checked.
-> It is also not verified whether `isolation: remote` works in a file. The docs name only `worktree`.
+- Frontmatter keys are case-sensitive and use camelCase. In a probe, `Tools` and `disallowed-tools` were ignored, while `tools` and `disallowedTools` worked. See [Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md#subagents-and-hooks).
 
-## The --agents JSON
+## The `--agents` JSON
 
 `--agents` takes a JSON object. Each key is an agent name. The value uses these fields:
 

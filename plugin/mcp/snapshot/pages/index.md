@@ -14,6 +14,10 @@ Unofficial community docs for version `2.1.304`, built from the official docs an
 - [Undocumented] Only the program shows it. It can change without notice.
 - [Differs] The docs and the program disagree. The row says how.
 - [Gated] It works only behind a flag or a server gate.
+- [Managed Only] It works only in managed (organization policy) settings.
+- [Experimental] The program or the official docs call it experimental or beta.
+- [Deprecated] The program or the official docs call it deprecated.
+- [Caution] It deletes data, skips a safety check, or sends data off your machine.
 
 Claude Code is a coding assistant that runs in your terminal, your editor, and the cloud.
 You tell it a task in plain words. It reads your files, runs commands, and edits code to finish the task.
@@ -68,17 +72,18 @@ When the conversation gets too long, it asks the model for a short summary and g
 
 | Section | What you find there | Start with |
 | --- | --- | --- |
-| Start Here | How to read the badges, a map of what you can change, the files Claude Code keeps, and breaking changes per release. | [How to Read These Docs](https://xsyetopz.github.io/claude-code-docs/start/how-to-read.md) and [What Changed](https://xsyetopz.github.io/claude-code-docs/start/what-changed.md) |
-| How It Works | The harness in depth: architecture, the agent loop, requests and cache, the system prompt, compaction, sessions, models, and permissions. | [Architecture](https://xsyetopz.github.io/claude-code-docs/how-it-works/architecture.md) |
-| Configure | Settings keys, environment variables, command line flags, permissions, memory, output styles, the status line, and models and providers. | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md) |
-| Extend | Hooks, skills and commands, subagents, plugins, MCP servers, the Mod API, and headless mode. | Hooks and Plugins |
-| Reference | Every tool and parameter, API endpoints and betas, the transcript format, probes, and an index of undocumented items. | [Transcript Format](https://xsyetopz.github.io/claude-code-docs/reference/transcript-format.md) and [Undocumented Items](https://xsyetopz.github.io/claude-code-docs/reference/undocumented.md) |
-| System Prompts | The full text of each system prompt variant, captured offline, with sizes and diffs. | [Captured System Prompts](https://xsyetopz.github.io/claude-code-docs/prompts.md) |
+| [Start Here](https://xsyetopz.github.io/claude-code-docs/start) | How to read the badges, a map of what you can change, the files Claude Code keeps, and breaking changes per release. | [How to Read These Docs](https://xsyetopz.github.io/claude-code-docs/start/how-to-read.md) and [What Changed](https://xsyetopz.github.io/claude-code-docs/start/what-changed.md) |
+| [How It Works](https://xsyetopz.github.io/claude-code-docs/how-it-works) | The harness in depth: architecture, the agent loop, requests and cache, the system prompt, compaction, sessions, models, and permissions. | [Architecture](https://xsyetopz.github.io/claude-code-docs/how-it-works/architecture.md) |
+| [Configure](https://xsyetopz.github.io/claude-code-docs/configure) | Settings keys, environment variables, command line flags, permissions, memory, output styles, the status line, and models and providers. | [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md) |
+| [Extend](https://xsyetopz.github.io/claude-code-docs/extend) | Hooks, skills and commands, subagents, plugins, MCP servers, the Mod API, and headless mode. | [Hooks](https://xsyetopz.github.io/claude-code-docs/extend/hooks.md) and [Plugins](https://xsyetopz.github.io/claude-code-docs/extend/plugins.md) |
+| [Reference](https://xsyetopz.github.io/claude-code-docs/reference) | Every tool and parameter, API endpoints and betas, the transcript format, probes, and an index of undocumented items. | [Transcript Format](https://xsyetopz.github.io/claude-code-docs/reference/transcript-format.md) and [Undocumented Items](https://xsyetopz.github.io/claude-code-docs/reference/undocumented.md) |
+| [System Prompts](https://xsyetopz.github.io/claude-code-docs/prompts.md) | The full text of each system prompt variant, captured offline, with sizes and diffs. | [Captured System Prompts](https://xsyetopz.github.io/claude-code-docs/prompts.md) |
 
 ## Where to Go Next
 
 - To change how Claude Code behaves, begin with [Models and Providers](https://xsyetopz.github.io/claude-code-docs/configure/models-and-providers.md) and the Settings pages.
 - To write a hook or a plugin, read [The Agent Loop](https://xsyetopz.github.io/claude-code-docs/how-it-works/agent-loop.md) first. It shows where each hook event fires.
 - To understand cost and speed, read [Request and Cache](https://xsyetopz.github.io/claude-code-docs/how-it-works/request-and-cache.md).
+- To see what an empty session holds and how to shrink it, read [Context Budget](https://xsyetopz.github.io/claude-code-docs/how-it-works/context-budget.md).
 - To see exactly what the model reads, open [Captured System Prompts](https://xsyetopz.github.io/claude-code-docs/prompts.md).
 - To help improve this site, read the [Style Guide](https://xsyetopz.github.io/claude-code-docs/contributing/style-guide.md).

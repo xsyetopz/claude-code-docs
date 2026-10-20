@@ -39,7 +39,12 @@ This hook blocks every `git push` that Claude tries to run.
       {
         "matcher": "Bash",
         "hooks": [
-          { "type": "command", "if": "Bash(git push *)", "command": ".claude/hooks/no-push.sh", "timeout": 10 }
+          {
+            "type": "command",
+            "if": "Bash(git push *)",
+            "command": ".claude/hooks/no-push.sh",
+            "timeout": 10
+          }
         ]
       }
     ]

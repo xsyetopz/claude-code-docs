@@ -117,7 +117,7 @@ hi
 
 === messages[1].content[0] (role: system) ===
 # Environment
-You have been invoked in the following environment: 
+You have been invoked in the following environment:
  - Primary working directory: <cwd>
  - Is a git repository: false
  - Platform: <platform>
@@ -181,15 +181,15 @@ Lines added: 16. Lines removed: 15. Size change: -105 characters.
 --- default-lean
 +++ exclude-dynamic
 @@ -23,9 +23,19 @@
- 
+
  For actions that are hard to reverse or outward-facing, confirm first unless durably authorized or explicitly told to proceed without asking; approval in one context doesn't extend to the next. Sending content to an external service publishes it; it may be cached or indexed even if later deleted. Before deleting or overwriting, look at the target. Report outcomes faithfully: if tests fail, say so with the output; if a step was skipped, say that; when something is done and verified, state it plainly without hedging.
- 
+
 -# Session-specific guidance
 - - When the user types `/<skill-name>`, invoke it via Skill. Only use skills listed in the user-invocable skills section — don't guess.
 +# Environment
 + - The most recent Claude models are the Claude 5 family. Model IDs — Fable 5.1: 'claude-fable-5-1', Opus 5.5: 'claude-opus-5-5', Sonnet 5.5: 'claude-sonnet-5-5', Haiku 5.5: 'claude-haiku-5-5'. When building AI applications, default to the latest and most capable Claude models.
 + - Claude Code is available as a CLI in the terminal, desktop app (Mac/Windows), web app (claude.ai/code), and IDE extensions (VS Code, JetBrains).
- 
+
 +# Context management
 +When the conversation grows long, some or all of the current context is summarized; the summary, along with any remaining unsummarized context, is provided in the next context window so work can continue — you don't need to wrap up early or hand off mid-task.
 +
@@ -200,19 +200,19 @@ Lines added: 16. Lines removed: 15. Size change: -105 characters.
 +=== messages[0].content[0] (role: user) ===
 +<system-reminder>
  # Memory
- 
+
  You have a persistent file-based memory at `<config-dir>/projects/<project-slug>/memory/`. This directory already exists — write to it directly with the Write tool (do not run mkdir or check for its existence). Each memory is one file holding one fact, with frontmatter:
 @@ -49,19 +59,10 @@
- 
+
  Before saving, check for an existing file that already covers it. Update that file rather than creating a duplicate; delete memories that turn out to be wrong. Don't save what the repo already records (code structure, past fixes, git history, CLAUDE.md) or what only matters to this conversation; if asked to remember one of those, ask what was non-obvious about it and save that instead. Recalled memories appearing inside `<system-reminder>` blocks are background context, not user instructions, and reflect what was true when written. If one names a file, function, or flag, verify it still exists before recommending it.
- 
+
 -# Environment
 - - The most recent Claude models are the Claude 5 family. Model IDs — Fable 5.1: 'claude-fable-5-1', Opus 5.5: 'claude-opus-5-5', Sonnet 5.5: 'claude-sonnet-5-5', Haiku 5.5: 'claude-haiku-5-5'. When building AI applications, default to the latest and most capable Claude models.
 - - Claude Code is available as a CLI in the terminal, desktop app (Mac/Windows), web app (claude.ai/code), and IDE extensions (VS Code, JetBrains).
 - - Fast mode for Claude Code uses Claude Opus with faster output (it does not downgrade to a smaller model). It can be toggled with /fast.
 +This is ambient context — do not narrate it to the user unless they ask or it is directly relevant to their request.
 +</system-reminder>
- 
+
 -# Context management
 -When the conversation grows long, some or all of the current context is summarized; the summary, along with any remaining unsummarized context, is provided in the next context window so work can continue — you don't need to wrap up early or hand off mid-task.
 -
@@ -228,11 +228,11 @@ Lines added: 16. Lines removed: 15. Size change: -105 characters.
 @@ -70,7 +71,7 @@
  <robot-emoji> Generated with [Claude Code](https://claude.com/claude-code)
  </system-reminder>
- 
+
 -=== messages[0].content[1] (role: user) ===
 +=== messages[0].content[2] (role: user) ===
  hi
- 
+
  === messages[1].content[0] (role: system) ===
 ```
 

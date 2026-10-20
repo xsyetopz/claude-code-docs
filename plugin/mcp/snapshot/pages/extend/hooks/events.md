@@ -82,7 +82,7 @@ These events fire before a tool runs, and when a permission is asked for or deni
 They are the main place to approve, change, or block a tool call.
 MCP tools are named `mcp__<server>__<tool>`.
 
-### PreToolUse
+### `PreToolUse`
 
 Fires after Claude builds the tool input and before the tool runs.
 It does not fire for `@` file mentions.
@@ -104,27 +104,30 @@ Handlers: all five types.
 
 #### Tool Input Shapes
 
+The tool names link to [Tools](https://xsyetopz.github.io/claude-code-docs/reference/tools.md), which holds the status and the full parameters of each tool.
+
 | Tool | Status | Keys in `tool_input` |
 | --- | --- | --- |
-| `Bash` | [Documented] | `command`, `description`, `timeout` (milliseconds), `run_in_background` |
-| `PowerShell` | [Documented] | The same keys as `Bash`. Match with `Bash\|PowerShell`. |
-| `Write` | [Documented] | `file_path`, `content` |
-| `Edit` | [Documented] | `file_path`, `old_string`, `new_string`, `replace_all` |
-| `Read` | [Documented] | `file_path`, `offset`, `limit` |
-| `Glob` | [Documented] | `pattern`, `path` |
-| `Grep` | [Documented] | `pattern`, `path`, `glob`, `output_mode`, `-i`, `multiline` |
-| `WebFetch` | [Documented] | `url`, `prompt`, `offset` (2.1.290) |
-| `WebSearch` | [Documented] | `query`, `allowed_domains`, `blocked_domains` |
-| `Agent` | [Documented] | `prompt`, `description`, `subagent_type`, `model` |
-| `AskUserQuestion` | [Documented] | `questions`, and `answers` (set only through `updatedInput`) |
-| `ExitPlanMode` | [Documented] | Claude Code adds `plan` and `planFilePath`. The old `allowedPrompts` key is accepted and ignored. |
+| [`Bash`](https://xsyetopz.github.io/claude-code-docs/reference/tools/shell-and-web.md) | [Documented] | `command`, `description`, `timeout` (milliseconds), `run_in_background` |
+| [`PowerShell`](https://xsyetopz.github.io/claude-code-docs/reference/tools/shell-and-web.md) | [Documented] [Gated: CLAUDE_CODE_USE_POWERSHELL_TOOL] | The same keys as `Bash`. Match with `Bash\|PowerShell`. |
+| [`Write`](https://xsyetopz.github.io/claude-code-docs/reference/tools/files.md) | [Documented] | `file_path`, `content` |
+| [`Edit`](https://xsyetopz.github.io/claude-code-docs/reference/tools/files.md) | [Documented] | `file_path`, `old_string`, `new_string`, `replace_all` |
+| [`Read`](https://xsyetopz.github.io/claude-code-docs/reference/tools/files.md) | [Documented] | `file_path`, `offset`, `limit` |
+| [`Glob`](https://xsyetopz.github.io/claude-code-docs/reference/tools/files.md) | [Documented] | `pattern`, `path` |
+| [`Grep`](https://xsyetopz.github.io/claude-code-docs/reference/tools/files.md) | [Documented] | `pattern`, `path`, `glob`, `output_mode`, `-i`, `multiline` |
+| [`WebFetch`](https://xsyetopz.github.io/claude-code-docs/reference/tools/shell-and-web.md) | [Documented] [Gated: CLAUDE_CODE_DISABLE_WEB_FETCH=1 turns it off] | `url`, `prompt`, `offset` (2.1.290) |
+| [`WebSearch`](https://xsyetopz.github.io/claude-code-docs/reference/tools/shell-and-web.md) | [Documented] [Gated: off for the gateway provider; Vertex depends on the model] | `query`, `allowed_domains`, `blocked_domains` |
+| [`Agent`](https://xsyetopz.github.io/claude-code-docs/reference/tools/agents-and-tasks.md) | [Documented] | `prompt`, `description`, `subagent_type`, `model` |
+| [`AskUserQuestion`](https://xsyetopz.github.io/claude-code-docs/reference/tools/agents-and-tasks.md) | [Documented] | `questions`, and `answers` (set only through `updatedInput`) |
+| [`ExitPlanMode`](https://xsyetopz.github.io/claude-code-docs/reference/tools/agents-and-tasks.md) | [Documented] [Gated: internal enable check] | Claude Code adds `plan` and `planFilePath`. The old `allowedPrompts` key is accepted and ignored. |
 
 The docs name `Workflow` as a tool you can match, but give no input shape for it.
 
-### PermissionRequest
+### `PermissionRequest`
 
 Fires when a permission prompt would show, or when a call that cannot prompt would be denied.
 Exit 2 is not honored here. Deny with the `decision` object instead.
+Checked in the interactive screen: the hook fires before the dialog opens; `allow` skips the dialog, `deny` returns `message` to the model, and a top-level `decision: "block"` is ignored. See [Input and Output](https://xsyetopz.github.io/claude-code-docs/extend/hooks/input-and-output.md#what-fires-and-what-is-honored-in-the-interactive-screen).
 There is no event for a sandbox network request.
 Handlers: `command`, `http`, `mcp_tool`, and `prompt`. An `agent` hook is skipped.
 
@@ -149,11 +152,12 @@ These entries are used in `updatedPermissions` and `permission_suggestions`.
 | `addDirectories`, `removeDirectories` | [Documented] | Change working directories. | `directories` |
 | `destination` | [Differs: The docs list four values. The program type also has cliArg.] | Where Claude Code keeps the change. | `session`, `localSettings`, `projectSettings`, `userSettings` |
 
-### PermissionDenied
+### `PermissionDenied`
 
 Fires only when auto mode denies a call, including a denial with no classifier verdict.
 It does not fire for manual denials, `PreToolUse` blocks, or deny rules.
 The exit code and `stderr` are ignored.
+Checked in the interactive screen: an auto mode denial fired it, and a manual "No" did not. `retry: true` had no visible effect there; a denial with a classifier verdict was not tested.
 All five handler types are allowed, but output from `prompt` and `agent` is dropped.
 
 | Field | Status | Direction | What it does |
@@ -167,7 +171,7 @@ All five handler types are allowed, but output from `prompt` and `agent` is drop
 These events fire after a tool runs. `PostToolUse` and `PostToolUseFailure` match on tool name. `PostToolBatch` has no matcher.
 All three accept the five handler types.
 
-### PostToolUse
+### `PostToolUse`
 
 Fires after a tool call succeeds.
 Exit 2 shows `stderr` to Claude but does not undo the tool.
@@ -188,7 +192,7 @@ It does not see writes made by `Bash` or by outside processes. Use `FileChanged`
 | `tool_response` of `ExitPlanMode` | [Documented] | Input | `plan` and `filePath`. |
 | `SubagentHandback` tool | [Documented] | Matcher | The tool that carries a subagent report in auto mode. Match it to read `tool_input.message`. Needs 2.1.271. |
 
-### PostToolUseFailure
+### `PostToolUseFailure`
 
 Fires when a started tool fails, or an MCP tool returns an error.
 It does not fire for unknown tools, schema errors, or permission denials.
@@ -202,7 +206,7 @@ Exit 2 shows `stderr` to Claude.
 | `duration_ms` | [Documented] | Input | Run time in milliseconds. Optional. |
 | `additionalContext` | [Documented] | Output, in `hookSpecificOutput` | Text next to the error. A top-level `decision: "block"` also works. |
 
-### PostToolBatch
+### `PostToolBatch`
 
 Fires once after all tool calls of a batch resolve, before the next model request.
 Exit 2, `decision: "block"`, or `continue: false` stops the loop.
@@ -217,7 +221,7 @@ Exit 2, `decision: "block"`, or `continue: false` stops the loop.
 
 These events fire when a session starts or ends, and when its settings, files, or folders change.
 
-### SessionStart
+### `SessionStart`
 
 Fires when a session starts or resumes.
 Interactive starts run it in the background, but the first reply waits for it.
@@ -237,7 +241,7 @@ Handlers: `command` and `mcp_tool` (skipped at launch).
 | `watchPaths` | [Documented] | Output | Absolute paths for `FileChanged` to watch. |
 | `reloadSkills` | [Documented] | Output | Scans the skill and command folders again. Use it after a hook installs skills. |
 
-### Setup
+### `Setup`
 
 Fires for `--init-only`, or for `--init` or `--maintenance` with `-p`. It does not fire on a normal start.
 `--init-only` also runs `SessionStart` with `startup`.
@@ -247,10 +251,10 @@ Handler: `command` only.
 | --- | --- | --- | --- |
 | `Setup` event | [Gated: Fires only with the --init-only, --init, or --maintenance CLI flags.] | Event | See the flags above. |
 | `trigger` | [Documented] | Input | `init` or `maintenance`. It is also the matcher. |
-| `additionalContext` | [Differs: Docs: all JSON fields of Setup are dropped on every exit code. The program output schema lists additionalContext for Setup.] | Output | Treat it as not delivered. Not verified in `2.1.304`. |
+| `additionalContext` | [Differs: Docs: all JSON fields of Setup are dropped on every exit code. The program output schema lists additionalContext for Setup.] | Output | Treat it as not delivered. A probe with `--init` found it never reached the model request ([Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md#subagents-and-hooks)). |
 | `CLAUDE_ENV_FILE` | [Documented] | Environment | Persists environment variables, as for `SessionStart`. |
 
-### SessionEnd
+### `SessionEnd`
 
 Fires when a session ends.
 The budget is 1.5 seconds for all hooks together. Exit 2 shows `stderr` to you. JSON is dropped.
@@ -260,7 +264,7 @@ Handlers: `command`, `http`, `mcp_tool`.
 | --- | --- | --- | --- |
 | `reason` | [Documented] | Input | Why it ended: `clear`, `resume`, `logout`, `prompt_input_exit`, `other`. This is the matcher. |
 
-### InstructionsLoaded
+### `InstructionsLoaded`
 
 Fires when `CLAUDE.md` or a `.claude/rules/*.md` file loads.
 It runs async and has no decision. It does not fire for an `AGENTS.md` file read directly.
@@ -273,7 +277,7 @@ Handlers: `command`, `http`, `mcp_tool`.
 | `load_reason` | [Documented] | Input | `session_start`, `nested_traversal`, `path_glob_match`, `include`, `compact`. This is the matcher. |
 | `globs`, `trigger_file_path`, `parent_file_path` | [Documented] | Input | Extra data for lazy and `include` loads. `globs` is only for `path_glob_match`. |
 
-### ConfigChange
+### `ConfigChange`
 
 Fires when a settings, managed policy, or skill file changes.
 It does not fire for server-managed or MDM changes.
@@ -286,7 +290,7 @@ Handlers: `command`, `http`, `mcp_tool`.
 | `file_path` | [Documented] | Input | The changed file. Optional. |
 | `decision`, `reason` | [Documented] | Output | `block` keeps the old settings. Nobody sees `reason`. `systemMessage` and `continue` are dropped. |
 
-### CwdChanged
+### `CwdChanged`
 
 Fires when a shell command in the main conversation changes the directory.
 It has no matcher and cannot block.
@@ -298,7 +302,7 @@ Handlers: `command`, `http`, `mcp_tool`.
 | `old_cwd`, `new_cwd` | [Documented] | Input | The two directories. |
 | `watchPaths` | [Documented] | Output, in `hookSpecificOutput` | Replaces the dynamic watch list. An empty array clears it. `systemMessage` shows as a short notice. `continue` is dropped. |
 
-### FileChanged
+### `FileChanged`
 
 Fires when a watched file changes on disk.
 A file watcher drives it, not tool calls.
@@ -312,7 +316,7 @@ Handlers: `command`, `http`, `mcp_tool`.
 | `event` | [Documented] | Input | `change`, `add`, or `unlink`. |
 | `watchPaths` | [Documented] | Output, in `hookSpecificOutput` | Replaces the dynamic watch list. The watcher starts only when something names a file. |
 
-### DirectoryAdded
+### `DirectoryAdded`
 
 Fires after `/add-dir`, or after the SDK `register_repo_root` request.
 It runs in the background with a 600 second timeout.
@@ -328,7 +332,7 @@ Handlers: `command`, `http`, `mcp_tool`.
 
 These events fire around a turn: when you send a prompt, while text shows, when Claude Code sends a notification, and when Claude stops.
 
-### UserPromptSubmit
+### `UserPromptSubmit`
 
 Fires when you submit a prompt, before Claude reads it.
 It has no matcher. It also fires for scheduled tasks, background subagent reports, and messages from other sessions.
@@ -346,7 +350,7 @@ Handlers: all five types.
 | `sessionTitle` | [Documented] | Output | Sets the session title. |
 | `suppressOriginalPrompt` | [Documented] | Output | Leaves the prompt text out of the block message. Otherwise the block message ends with `Original prompt:` and is written to the transcript. |
 
-### UserPromptExpansion
+### `UserPromptExpansion`
 
 Fires when a typed command expands into a prompt.
 The matcher is `command_name`.
@@ -362,7 +366,7 @@ Handlers: all five types.
 | `decision`, `reason` | [Documented] | Output | `block` stops the expansion. |
 | `additionalContext`, `suppressOriginalPrompt` | [Documented] | Output, in `hookSpecificOutput` | As in `UserPromptSubmit`. |
 
-### MessageDisplay
+### `MessageDisplay`
 
 Fires while assistant text streams, once for each batch of finished lines.
 It has no matcher. The timeout is 10 seconds.
@@ -377,7 +381,7 @@ Handlers: `command`, `http`, `mcp_tool`.
 | `delta` | [Documented] | Input | The new lines. Whole lines, except in the final batch. |
 | `displayContent` | [Documented] | Output, in `hookSpecificOutput` | Text shown in place of `delta`. If the hook fails, the original shows. `systemMessage` and `continue` are dropped. |
 
-### Notification
+### `Notification`
 
 Fires when Claude Code sends a notification.
 The matcher is the notification type.
@@ -388,14 +392,14 @@ Handlers: `command`, `http`, `mcp_tool`.
 | Field | Status | Direction | What it does |
 | --- | --- | --- | --- |
 | `message`, `title`, `notification_type` | [Documented] | Input | The text, an optional title, and the type. |
-| `permission_prompt` | [Documented] | Type | A prompt waited about 6 seconds. |
-| `idle_prompt` | [Documented] | Type | The session was idle for about 60 seconds. Both depend on typing and running agents. |
-| `auth_success`, `elicitation_dialog`, `elicitation_url_dialog`, `elicitation_complete`, `elicitation_response` | [Documented] | Type | Auth finished, and the steps of an MCP question. The two dialog types wait 6 seconds. |
-| `agent_needs_input`, `agent_completed` | [Documented] | Type | Background session events in agent view. `agent_needs_input` for a teammate setup question needs 2.1.248. |
-| `quota_auto_resume_fired`, `quota_auto_resume_stale`, `quota_auto_resume_disabled` | [Documented] | Type | Usage limit wait events. Need 2.1.234. |
-| `auth_storage_failure`, `computer_use_enter`, `computer_use_exit`, `plugin_notification`, `push_notification`, `worker_permission_prompt` | [Undocumented] | Type | Other values that the program passes as `notificationType`. `plugin_notification` comes from the mod call `$.ui.notify`. Whether each one reaches a hook is not verified. |
+| `permission_prompt` | [Documented] | Type | A prompt waited about 6 seconds. Seen live in the interactive screen (2.1.304) with the message `Claude needs your permission`. |
+| `idle_prompt` | [Documented] | Type | The session was idle for about 60 seconds. Both depend on typing and running agents. Seen live: the message was `Claude is waiting for your input`, about 60 seconds after the turn ended (the config key `messageIdleNotifThresholdMs` sets the 60 seconds; default 60000). |
+| `auth_success`, `elicitation_dialog`, `elicitation_url_dialog`, `elicitation_complete`, `elicitation_response` | [Documented] | Type | Auth finished, and the steps of an MCP question. The two dialog types wait 6 seconds. Seen live in the interactive screen: all four `elicitation_*` values (messages `Claude Code needs your input` for the two dialogs, `Elicitation response for server "probe": accept`, and `MCP server "probe" confirmed elicitation el-1 complete`). `auth_success` needs a login and was not seen. |
+| `agent_needs_input`, `agent_completed` | [Documented] | Type | Background session events in agent view. `agent_needs_input` for a teammate setup question needs 2.1.248. `agent_needs_input` was seen live for the auto mode classifier billing notice (message `Auto mode has a classifier billing notice to acknowledge`) that shows the first time auto mode runs with a custom base URL. `agent_completed` was not seen (it needs a background session). |
+| `quota_auto_resume_fired`, `quota_auto_resume_stale`, `quota_auto_resume_disabled` | [Documented] | Type | Usage limit wait events. Need 2.1.234. Not seen live: they need a login. |
+| `auth_storage_failure`, `computer_use_enter`, `computer_use_exit`, `plugin_notification`, `push_notification`, `worker_permission_prompt` | [Undocumented] | Type | Other values that the program passes as `notificationType`. `plugin_notification` comes from the mod call `$.ui.notify`. Not seen live: they need a login, a cloud or remote session, computer use, or a mod. Whether each one reaches a hook is not verified. |
 
-### Stop
+### `Stop`
 
 Fires when the main agent finishes. It does not fire on a user interrupt.
 It has no matcher.
@@ -412,7 +416,7 @@ Handlers: all five types.
 | `decision`, `reason` | [Documented] | Output | `block` stops Claude from stopping. `reason` is required. It becomes the next instruction. |
 | `additionalContext` | [Documented] | Output, in `hookSpecificOutput` | Feedback that keeps the turn going. Labeled `Stop hook feedback`, not an error. |
 
-### StopFailure
+### `StopFailure`
 
 Fires instead of `Stop` when the turn ends on an API error.
 The matcher is `error`.
@@ -430,7 +434,7 @@ Handlers: `command`, `http`, `mcp_tool`.
 These events tell your hooks when a subagent, a task, or a teammate starts, stops, or goes idle.
 Teammates belong to agent teams. See [Subagent Runtime](https://xsyetopz.github.io/claude-code-docs/extend/subagents/runtime.md#agent-teams).
 
-### SubagentStart
+### `SubagentStart`
 
 Fires when a subagent starts or resumes, and for each message of an in-process teammate.
 The matcher is the agent type.
@@ -442,7 +446,7 @@ Handlers: `command`, `http`, `mcp_tool`.
 | `agent_id`, `agent_type` | [Documented] | Input | The subagent ID and type. A plugin agent type is `my-plugin:reviewer`. Anchor the matcher with `^` and `$`. |
 | `additionalContext` | [Documented] | Output, in `hookSpecificOutput` | Context for the subagent before its first prompt. On a repeat run it is added only if the earlier copy is gone, to keep the cache. |
 
-### SubagentStop
+### `SubagentStop`
 
 Fires when a subagent finishes.
 The matcher is the agent type.
@@ -456,7 +460,7 @@ Handlers: all five types.
 | `agent_transcript_path` | [Documented] | Input | The subagent transcript, in a nested `subagents/` folder. `transcript_path` is the main one. |
 | `additionalContext` | [Documented] | Output, in `hookSpecificOutput` | Non-error feedback that keeps the subagent running. Same loop guards as `Stop`. |
 
-### TaskCreated
+### `TaskCreated`
 
 Fires when `TaskCreate` makes a task.
 It has no matcher. It does not fire in a session without the Task tools.
@@ -471,7 +475,7 @@ Handlers: all five types.
 | `team_name` | [Documented] | Input | The session team name. Deprecated, to be removed. |
 | `agent_id` | [Documented] | Input | The creating subagent or teammate. Needs 2.1.290. May be absent. |
 
-### TaskCompleted
+### `TaskCompleted`
 
 Fires when a task is marked done, or when a teammate ends its turn with open tasks.
 It has no matcher.
@@ -484,7 +488,7 @@ Handlers: all five types.
 | `task_id`, `task_subject`, `task_description`, `teammate_name` | [Documented] | Input | As in `TaskCreated`. |
 | `team_name`, `agent_id` | [Documented] | Input | The deprecated team name, and the acting agent. `agent_id` needs 2.1.290. |
 
-### TeammateIdle
+### `TeammateIdle`
 
 Fires when an agent team teammate is about to go idle.
 It has no matcher.
@@ -501,11 +505,11 @@ Handlers: all five types.
 These events cover compaction, model switches, MCP questions, and worktrees.
 None of them accepts `prompt` or `agent` handlers.
 
-### PreCompact and PostCompact
+### `PreCompact` and `PostCompact`
 
 `PreCompact` fires before a compaction. `PostCompact` fires after it.
 The matcher is `trigger`.
-For `PreCompact`, exit 2 or `decision: "block"` blocks it.
+For `PreCompact`, exit 2 or `decision: "block"` blocks it (checked in the interactive screen; `continue: false` did not stop the compaction).
 Blocking a proactive auto compaction skips it. Blocking a recovery compaction shows the API error.
 `PostCompact` has no decision. Exit 2 shows `stderr` to you.
 Handlers: `command`, `http`, `mcp_tool`.
@@ -517,7 +521,7 @@ For the compaction process, see [Context and Compaction](https://xsyetopz.github
 | `custom_instructions` | [Documented] | `PreCompact`, input | The text after `/compact`. `null` for `auto` or when empty. |
 | `compact_summary` | [Documented] | `PostCompact`, input | The summary that Claude Code made. |
 
-### PreModelSwitch and PostModelSwitch
+### `PreModelSwitch` and `PostModelSwitch`
 
 Both need 2.1.251.
 The matcher is the canonical name of `to_model`.
@@ -542,7 +546,7 @@ Plain `stdout` is context. Exit 2 shows `stderr` as a notice.
 | `permissionDecision`, `permissionDecisionReason` | [Documented] | Output, `PreModelSwitch` | `allow`, `deny`, `ask`, and the reason. `ask` works only in interactive `/model`, else it is a refusal. No `defer`, `updatedInput`, or `additionalContext`. Strength order: `deny`, `ask`, `allow`. |
 | `additionalContext` | [Documented] | Output, `PostModelSwitch` | Text for the next request. If the hook is late by 5 seconds, it goes to the request after. |
 
-### Elicitation and ElicitationResult
+### `Elicitation` and `ElicitationResult`
 
 An elicitation is a question that an MCP server asks you.
 The matcher for both events is the server name.
@@ -561,7 +565,9 @@ Handlers: `command`, `http`, `mcp_tool`.
 | `action`, `content`, `mode`, `elicitation_id` | [Documented] | `ElicitationResult`, input | Your answer. `action` is `accept`, `decline`, or `cancel`. |
 | `action`, `content` | [Documented] | `ElicitationResult`, output | Change or block the answer. `content` replaces the whole object. An output with no `action` is ignored. `cancel` still sends your values. |
 
-### WorktreeCreate and WorktreeRemove
+Both events fired in an interactive probe for an MCP server that asked for input in form mode and in URL mode. The `Elicitation` input had `mcp_server_name`, `message`, `mode`, and `requested_schema`. The `ElicitationResult` input had `action` and `content`. See [Interactive Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md#interactive-probes).
+
+### `WorktreeCreate` and `WorktreeRemove`
 
 `WorktreeCreate` replaces the default `git worktree` step.
 It fires for `--worktree`, `EnterWorktree`, `isolation: "worktree"`, workflows, background sessions, and remote control.
@@ -581,6 +587,24 @@ Handlers: `command`, `http`, `mcp_tool`.
 | `worktreePath` | [Documented] | `WorktreeCreate`, output | An HTTP hook returns the path here. A command hook cannot return JSON, so it cannot use `terminalSequence`. |
 | `worktree_path` | [Documented] | `WorktreeRemove`, input | The absolute path to remove. |
 
+## `PostToolUse` `tool_response` Shapes
+
+We logged the stdin of a `PostToolUse` command hook in `-p` on `2.1.304`, with one scripted call per tool. This is the `tool_response` you can read, and the shape `updatedToolOutput` replaces.
+
+| Tool | Status | `tool_response` |
+| --- | --- | --- |
+| `Bash` | [Documented] | `stdout`, `stderr`, `interrupted`, `isImage`, and `noOutputExpected`. |
+| `Read` (text) | [Undocumented] | `type` (`text`) and `file` with `filePath`, `content`, `numLines`, `startLine`, and `totalLines`. |
+| `Write` (new file) | [Undocumented] | `type` (`create`), `filePath`, `content`, `structuredPatch` (empty), `originalFile` (`null`), and `userModified`. |
+| `Edit` | [Undocumented] | `filePath`, `oldString`, `newString`, `originalFile`, `structuredPatch` (items with `oldStart`, `oldLines`, `newStart`, `newLines`, `lines`), `userModified`, `replaceAll`, and `contentNotInModelContext`. `tool_input` also has `replace_all`. |
+| `ToolSearch` | [Undocumented] | `matches` (tool names), `query`, and `total_deferred_tools`. `tool_input` also has `max_results`. |
+| `Agent` | [Undocumented] | First an async launch: `isAsync`, `status` (`async_launched`), `agentId`, `description`, `resolvedModel`, `prompt`, `outputFile`, `canReadOutputFile`, and `canContinueAgent`. Then, for a finished subagent: `status` (`completed`), `prompt`, `agentId`, `agentType`, `content` (text blocks), `resolvedModel`, `totalDurationMs`, `totalTokens`, `totalToolUseCount`, and `usage`. |
+| `ListAgents` | [Undocumented] | `listing` (text), `sections`, and `notes`. |
+| `CronCreate` | [Undocumented] | `id`, `humanSchedule`, `recurring`, `durable`, and `nextFireAt`. |
+| `CronList` | [Undocumented] | `jobs`. |
+
+A second probe ran the same hook in the interactive screen (2.1.304, `acceptEdits`, one scripted call per tool). It confirmed the shapes of `Bash`, `Read`, `Write`, and `Edit` above, with one difference: the `Edit` result there had no `contentNotInModelContext` key. It also confirmed that an MCP tool's `tool_response` is the array of content blocks the server returned (`[{"type":"text","text":"echo:hi"}]`), and that the hook input has `mcp_server`. Every `PostToolUse` input had `hook_event_name`, `tool_name`, `tool_input`, `tool_response`, `tool_use_id`, and `duration_ms`. An `Edit` of a file that was never read is a tool error, so it fires `PostToolUseFailure` and not `PostToolUse`. The interactive probe did not run `Glob`, `Grep`, `NotebookEdit`, `WebFetch`, or `WebSearch` (this build's tool list there had no `Glob` or `Grep`), and did not test whether `updatedToolOutput` accepts these shapes. See [Interactive Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md#interactive-probes).
+
 ## Related Pages
 
 - [Hooks](https://xsyetopz.github.io/claude-code-docs/extend/hooks.md): the overview.
@@ -589,4 +613,4 @@ Handlers: `command`, `http`, `mcp_tool`.
 - [Subagent Runtime](https://xsyetopz.github.io/claude-code-docs/extend/subagents/runtime.md): subagents and teams.
 
 Source: [Hooks Reference](https://code.claude.com/docs/en/hooks), the `HookInput` types in the program type file, and the hook output schema in the program.
-Not verified: any input shape for `Workflow`, `Skill`, and MCP tools beyond `tool_input` being unknown; the output schema of each built-in tool for `updatedToolOutput` (the docs give only `Bash`: `stdout`, `stderr`, `interrupted`, `isImage`).
+Probed in `-p`: a `Workflow` call has `tool_input` `{script}`, and its `PostToolUse` `tool_response` has `status` (`async_launched`), `taskId`, `taskType` (`local_workflow`), `workflowName`, `runId`, `summary`, and `transcriptDir`. A `Skill` call has `tool_input` `{skill}` and `tool_response` `{success, commandName}`. An MCP tool's `tool_response` is the list of content blocks that the server returned, for example `[{"type":"text","text":"pong"}]`. Built-in tool outputs differ per tool (see [`PostToolUse` `tool_response` Shapes](#posttooluse-tool_response-shapes)). We did not probe every built-in tool, and `WebFetch`, `ScheduleWakeup`, and `NotebookEdit` calls did not reach `PostToolUse` in our run.

@@ -11,18 +11,7 @@ source: docs/start/use-with-agents.md
 An agent reads plain text better than a web page.
 This site gives agents text files, a small manifest, and a plugin.
 The plugin adds an MCP server (a program that gives an agent tools) and a skill that tells Claude when to use it.
-
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. Fetch the text files, or install the plugin. |
-| Can you change it? | ✅ Yes. The server reads the refresh settings in [Refresh from the Site](#refresh-from-the-site). |
-| Can you turn it on or off? | Install or uninstall the plugin `cc-docs`. Refresh is off until you set `CLAUDE_CODE_DOCS_REFRESH=1`. |
-| Where does it live? | The text files are on this site. The plugin is in the repo folder `plugin/`. |
-| Does it need the network? | ❌ No. The server has a bundled copy of every page and works offline. |
-| Does it send data about you? | ❌ No. The server has no telemetry. |
-
+The server has a bundled copy of every page, so it works offline and needs no network. It has no telemetry and sends no data about you. Refresh is off until you set `CLAUDE_CODE_DOCS_REFRESH=1` (see [Refresh from the Site](#refresh-from-the-site)).
 Source: [llms.txt Proposal](https://llmstxt.org/) and [Model Context Protocol Specification](https://modelcontextprotocol.io/specification).
 
 ## Text Files

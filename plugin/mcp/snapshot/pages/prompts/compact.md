@@ -116,7 +116,7 @@ hi
 
 === messages[1].content[0] (role: system) ===
 # Environment
-You have been invoked in the following environment: 
+You have been invoked in the following environment:
  - Primary working directory: <cwd>
  - Is a git repository: false
  - Platform: <platform>
@@ -246,7 +246,7 @@ Here's an example of how your output should be structured:
 5. Problem Solving:
    [Description of solved problems and ongoing troubleshooting]
 
-6. All user messages: 
+6. All user messages:
     - [Detailed non tool use user message]
     - [...]
 
@@ -264,7 +264,7 @@ Here's an example of how your output should be structured:
 </summary>
 </example>
 
-Please provide your summary based on the conversation so far, following this structure and ensuring precision and thoroughness in your response. 
+Please provide your summary based on the conversation so far, following this structure and ensuring precision and thoroughness in your response.
 
 There may be additional summarization instructions provided in the included context. If so, remember to follow these instructions when creating the above summary. Examples of instructions include:
 <example>
@@ -291,7 +291,7 @@ Lines added: 111. Lines removed: 0. Size change: +6,468 characters.
 +++ compact
 @@ -127,3 +127,114 @@
  <total_tokens>15000000 tokens left</total_tokens>
- 
+
  Today's date is <date>.
 +
 +=== messages[2].content[0] (role: assistant) ===
@@ -371,7 +371,7 @@ Lines added: 111. Lines removed: 0. Size change: +6,468 characters.
 +5. Problem Solving:
 +   [Description of solved problems and ongoing troubleshooting]
 +
-+6. All user messages: 
++6. All user messages:
 +    - [Detailed non tool use user message]
 +    - [...]
 +
@@ -389,7 +389,7 @@ Lines added: 111. Lines removed: 0. Size change: +6,468 characters.
 +</summary>
 +</example>
 +
-+Please provide your summary based on the conversation so far, following this structure and ensuring precision and thoroughness in your response. 
++Please provide your summary based on the conversation so far, following this structure and ensuring precision and thoroughness in your response.
 +
 +There may be additional summarization instructions provided in the included context. If so, remember to follow these instructions when creating the above summary. Examples of instructions include:
 +<example>

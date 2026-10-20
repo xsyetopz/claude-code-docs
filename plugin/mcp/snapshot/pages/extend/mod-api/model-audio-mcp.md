@@ -23,15 +23,15 @@ In a "Where it can be used" cell, "Run time" means in a hook, in a closure that 
 This hook answers `/triage` by asking a small model for a label.
 
 ```javascript
-on('command.run', { command: 'triage' }, async ($, e) => {
+on("command.run", { command: "triage" }, async ($, e) => {
   const r = await $.model.complete({
-    model: 'haiku',
-    system: 'Reply with one word: bug, feature, or question.',
+    model: "haiku",
+    system: "Reply with one word: bug, feature, or question.",
     prompt: e.args,
     maxTokens: 20,
-  })
-  return { text: 'Label: ' + (r.isAnswered ? r.text.trim() : 'unknown') }
-})
+  });
+  return { text: `Label: ${r.isAnswered ? r.text.trim() : "unknown"}` };
+});
 ```
 
 ## Members

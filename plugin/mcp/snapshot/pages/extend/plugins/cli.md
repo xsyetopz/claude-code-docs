@@ -25,7 +25,7 @@ Source: [Plugin Commands Reference](https://code.claude.com/docs/en/plugins/cli-
 | `init <name>` (alias `new`) | [Documented] | Scaffolds `~/.claude/skills/<name>/`. It loads next session as `<name>@skills-dir`. | `--description`, `--author`, `--author-email`, `-f/--force`, `--with` (any of `skills`, `agents`, `hooks`, `mcp`, `lsp`, `output-style`, `channel`) |
 | `install <plugin>` (alias `i`) | [Documented] | Installs a plugin from a marketplace. | `-s/--scope` (default `user`), `--config key=value`, `-y/--yes`, `--accept-command <sha256>`, `--json`, `--marketplace <source>` |
 | `install --registry <url>` | [Documented] | Sets the npm registry for `<package>@npm` installs. | Shown in `--help`, but not in the docs table. |
-| ⚠️ `uninstall <plugin>` (aliases `remove`, `rm`) | [Documented] | Removes the plugin from one scope. | `-s`, `--keep-data`, `--prune`, `-y`, `--json`. On the last scope it deletes options, secrets, and data. |
+| `uninstall <plugin>` (aliases `remove`, `rm`) | [Documented] [Caution: On the last scope it deletes options, secrets, and data] | Removes the plugin from one scope. | `-s`, `--keep-data`, `--prune`, `-y`, `--json`. On the last scope it deletes options, secrets, and data. |
 | `enable <plugin>` | [Documented] | Enables a plugin. | `-s` (auto-detects local, project, then user), `--json` |
 | `disable [plugin]` | [Documented] | Disables a plugin. | `-a/--all`, `-s`, `--json`. Fails if another plugin depends on it. |
 | `update <plugin>` | [Documented] | Updates a plugin. | `-s`, `-y`, `--accept-command`, `--json`. A restart or `/reload-plugins` applies it. |
@@ -81,7 +81,7 @@ claude plugin update deploy-tools@team-tools --yes
 ## How It Works
 
 ```mermaid
-flowchart LR
+flowchart TD
   A["<code>claude plugin install</code>"] --> B[Policy check]
   B --> C[Fetch source to cache]
   C --> D["Write <code>installed_plugins.json</code>"]

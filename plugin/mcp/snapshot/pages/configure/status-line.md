@@ -58,10 +58,10 @@ Official page: [Customize Your Status Line](https://code.claude.com/docs/en/stat
 | `statusLine.hideVimModeIndicator` | [Documented] | Hides the built-in `-- INSERT --` text | Use when the script prints `vim.mode` itself | Same |
 | `subagentStatusLine` | [Documented] | Custom row for each subagent in the agent panel | Fields `type` (`"command"`) and `command`. See the next section | Same |
 | `/statusline` | [Documented] | Writes a script in `~/.claude/` and the setting | Takes natural language. `/statusline delete` removes it | Interactive |
-| `disableAllHooks` | [Documented] | When `true` outside managed settings, only a managed `statusLine` runs | With no managed `statusLine` the status line is off | Settings |
-| `allowManagedHooksOnly` | [Documented] | Only a managed `statusLine` shows | A custom one disappears without a warning | Managed |
 | Workspace trust | [Documented] | The command waits for trust | `--debug` logs `Status line command skipped: workspace trust not accepted` | Project files |
 | `CLAUDE_CODE_SAFE_MODE` | [Documented] | Status line commands do not load | Managed policy still applies | Env |
+
+Two hook settings also act on the status line. `disableAllHooks` set outside managed settings leaves only a managed `statusLine` (with none, the status line is off), and `allowManagedHooksOnly` shows only a managed `statusLine`, so a custom one disappears without a warning. Their rows are on [Hooks, Plugins, and Skills Settings](https://xsyetopz.github.io/claude-code-docs/configure/settings/hooks-and-plugins.md#keys).
 
 ## When the Script Runs
 
@@ -76,10 +76,10 @@ Official page: [Customize Your Status Line](https://code.claude.com/docs/en/stat
 
 - Each printed line is a row. ANSI colors and OSC 8 links work.
 - The output shows only after exit code `0`. A non-zero exit or empty output blanks the line.
-- Claude Code sets `COLUMNS` and `LINES` before it runs the script. `tput cols` does not work.
+- Claude Code sets `COLUMNS` and `LINES` before it runs the `statusLine` script. `tput cols` does not work. The `subagentStatusLine` command does not get them (checked in the interactive screen); it gets `columns` in its JSON.
 - The variables `CLAUDECODE` and `CLAUDE_CODE_CHILD_SESSION` are set in the script process. See [Environment Variables](https://xsyetopz.github.io/claude-code-docs/configure/env-vars.md).
 - `claude --debug` logs `stderr` of each run and the exit code of the first run.
-- The line hides during the help menu and permission prompts. Outside fullscreen, notifications share the row.
+- The line hides during the help menu and permission prompts. The command does not run while a permission or MCP input dialog is open (checked). Outside fullscreen, notifications share the row.
 - On Windows, use forward slashes in `command`. `CLAUDE_CODE_POWERSHELL_RESPECT_EXECUTION_POLICY` changes the PowerShell policy flag.
 
 Source for this list: the official [Customize Your Status Line](https://code.claude.com/docs/en/statusline) and [Environment Variables](https://code.claude.com/docs/en/env-vars) pages.
@@ -87,7 +87,7 @@ Source for this list: the official [Customize Your Status Line](https://code.cla
 ## Subagent Status Line
 
 `subagentStatusLine` customizes each subagent row in the agent panel.
-Its command runs once per refresh tick and gets all visible rows as one JSON object.
+Its command runs once per refresh tick (a fixed 5 seconds, checked in the interactive screen) and gets all visible rows as one JSON object.
 It prints one JSON line for each row it wants to override: `{"id": "<task id>", "content": "<row body>"}`.
 A row without `id` keeps the default. An empty `content` hides the row.
 The same trust, `disableAllHooks`, and `allowManagedHooksOnly` gates apply.
@@ -188,7 +188,7 @@ The `subagentStatusLine` command gets the base hook fields, `columns`, and a `ta
 ## How It Works
 
 ```mermaid
-flowchart LR
+flowchart TD
   Event[Message, compact, mode change, vim toggle, timer] --> Deb[300 ms debounce]
   Deb --> Gate{Trusted and allowed?}
   Gate -->|no| Skip[No status line]
@@ -198,7 +198,17 @@ flowchart LR
   Ok -->|no| Blank[Blank line]
 ```
 
-> **Not Verified:** The exact debounce for `subagentStatusLine`. The source of `transcript_path` and `prompt_id` inside the program (a shared helper adds them).
+> **Interactive Probe Findings:** Checked in the interactive screen (2.1.304, local stub, fake key). See [Interactive Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md#interactive-probes).
+>
+> - `subagentStatusLine` runs on a fixed 5-second tick (4.98 to 5.02 seconds over 11 intervals) while the agent panel has tasks, also for tasks that are `completed`. It is not debounced like `statusLine`, and no setting changes the 5 seconds. The first run came when the agent started.
+> - Its command does not get `COLUMNS` and `LINES`. Use the `columns` field (194 on a 200-column screen). `CLAUDECODE` and `CLAUDE_CODE_CHILD_SESSION` are set.
+> - Its input holds only `session_id`, `transcript_path`, `cwd`, `prompt_id`, `columns`, and `tasks`, not the full `statusLine` object. A row override `{"id": ..., "content": "..."}` was drawn in the agent panel.
+> - For `statusLine`, `transcript_path` is present from the first run, before any message. `prompt_id` is absent until the first prompt, then it is the same UUID as `prompt_id` in hook input. After the first reply the input also gains `prompt_cache`, and `current_usage` is no longer `null`.
+> - `statusLine` runs once at start and once after the first reply (not at prompt submit). Three mode changes 100 ms apart gave one run, which fits the 300 ms debounce. `refreshInterval: 3` ran every 3.0 seconds (2.8 to 3.5).
+> - Runs paused while a permission or MCP input dialog was on screen (gaps of 12.5 and 19.5 seconds).
+> - `padding: 1` gave a one-space indent, and two printed lines showed as two rows under the prompt.
+>
+> Still unknown: how `subagentStatusLine` behaves with no subagents (the command ran only once a task existed), and how long a completed row stays on screen. Reason: not run in the probe.
 
 ## Related Pages
 
