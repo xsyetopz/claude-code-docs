@@ -17,10 +17,10 @@ source: docs/prompts/git-instructions-off.md
 | `system[0]` | 78 |
 | `system[1]` | 62 |
 | `system[2]` | 5,627 |
-| `messages[0].content[0]` | 2 |
+| `messages[0].content[0]` | 16 |
 | `messages[1].content[0]` | 8,849 |
 | System blocks only | 5,767 |
-| Everything shown here | 14,863 |
+| Everything shown here | 14,877 |
 | Tools sent | 12 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -98,7 +98,7 @@ When you have enough information to act, act. Do not re-derive facts already est
 <total_tokens>15000000 tokens left</total_tokens>
 
 === messages[0].content[0] (role: user) ===
-hi
+Reply with 'OK'.
 
 === messages[1].content[0] (role: system) ===
 # Environment
@@ -197,7 +197,7 @@ Lines added: 0. Lines removed: 28. Size change: -1,254 characters.
 -</system-reminder>
 -
 -=== messages[0].content[2] (role: user) ===
- hi
+ Reply with 'OK'.
 
  === messages[1].content[0] (role: system) ===
 ```

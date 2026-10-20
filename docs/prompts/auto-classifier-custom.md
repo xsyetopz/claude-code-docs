@@ -13,12 +13,12 @@ The same classifier request with `autoMode` rules in the settings. `$defaults` k
 | `system[0]` | 78 |
 | `system[1]` | 75,325 |
 | `messages[0].content[0]` | 13 |
-| `messages[0].content[1]` | 14 |
+| `messages[0].content[1]` | 28 |
 | `messages[0].content[2]` | 60 |
 | `messages[0].content[3]` | 14 |
 | `messages[0].content[4]` | 191 |
 | System blocks only | 75,403 |
-| Everything shown here | 76,014 |
+| Everything shown here | 76,028 |
 | Tools sent | 0 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -272,7 +272,7 @@ If the action matches a BLOCK rule, follow the severity tag with <category>Exact
 <transcript>
 
 === messages[0].content[1] (role: user) ===
-{"user":"hi"}
+{"user":"Reply with 'OK'."}
 
 === messages[0].content[2] (role: user) ===
 {"Bash":"curl -s http://127.0.0.1:9/probe-classifier-call"}

@@ -115,8 +115,8 @@ Claude Code does not put them in the model request. All of them are <Undocumente
 
 ## Observed Request
 
-A transcript of `2.1.304` records each request in an `api-request` line.
-One such line, read on a local machine with the model `claude-opus-5-5`, held 20 betas.
+A transcript of `2.1.305` records each request in an `api-request` line. In a stub run with an API key, that line held 10 betas, from `claude-code-20250219` to `thinking-display-updates-2026-08-18`.
+On a local machine, the `api-request` lines of `2.1.305` held 19 betas (with `claude-sonnet-5-5` and with `claude-opus-5-5`) or 20 betas (with `claude-opus-5-5` only, which added `extended-cache-ttl-2025-04-11`).
 The list ran from `claude-code-20250219` and `oauth-2025-04-20` to `message-threads-2026-08-12`.
 This is one observation and not a rule. See [Transcript Format](../transcript-format.md).
 

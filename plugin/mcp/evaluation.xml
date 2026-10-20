@@ -1,6 +1,6 @@
 <evaluation>
   <qa_pair>
-    <question>In Claude Code 2.1.304, a hook handler of type "script" is rejected. What is the exact error text the program prints for it? Give only the text inside the backticks of the docs row, with the type name in double quotes.</question>
+    <question>In Claude Code 2.1.305, a hook handler of type "script" is rejected. What is the exact error text the program prints for it? Give only the text inside the backticks of the docs row, with the type name in double quotes.</question>
     <answer>Unknown hook type "script"</answer>
   </qa_pair>
   <qa_pair>
@@ -37,6 +37,6 @@
   </qa_pair>
   <qa_pair>
     <question>Using the settings.json JSON Schema for this version, how many top-level properties does it define?</question>
-    <answer>169</answer>
+    <answer>170</answer>
   </qa_pair>
 </evaluation>

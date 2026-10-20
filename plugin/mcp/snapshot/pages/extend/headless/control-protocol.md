@@ -132,7 +132,7 @@ The `set_model` request has a `model` field. A success reply has `subtype: "succ
 An error reply has `subtype: "error"`, the `request_id`, an `error` text, and sometimes an `error_code`.
 Source: the program (strings of the request and response builders). The fields of the other subtypes are not listed here.
 
-We ran both examples on `2.1.304` with `claude -p --input-format stream-json --output-format stream-json --verbose` (see [Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md#static-and-print-probes)). The reply matches.
+We ran both examples on `2.1.305` with `claude -p --input-format stream-json --output-format stream-json --verbose` (see [Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md#static-and-print-probes)). The reply matches.
 The `request_id` is any text you pick, and the reply repeats it.
 `set_model` takes an alias such as `sonnet` or a full model ID. It replies `success` even for a name the API does not know, so the error shows up on the next request.
 A reply can come before the first `system` `init` line, because `init` appears only after the first user message.
@@ -142,7 +142,7 @@ A reply can come before the first `system` `init` line, because `init` appears o
 ```
 
 ```json skip-lint title="Reply"
-{"type":"control_response","response":{"subtype":"success","request_id":"req-2","response":{"version":"2.1.304","buildTime":"2026-10-19T18:11:48Z"}}}
+{"type":"control_response","response":{"subtype":"success","request_id":"req-2","response":{"version":"2.1.305","buildTime":"2026-10-20T18:04:27Z"}}}
 ```
 
 ```json skip-lint title="A request that fails"

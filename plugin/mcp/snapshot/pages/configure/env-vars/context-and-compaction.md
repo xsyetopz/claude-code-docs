@@ -70,7 +70,7 @@ The table is sorted by name. See [Environment Variables](https://xsyetopz.github
 | `CLAUDE_COWORK_MEMORY_GUIDELINES` | [Undocumented] | Replaces the auto memory prompt with `# auto memory` plus this text. It also forces file-based memory. | Text. Needs auto memory on | Cowork hosts |
 | `CLAUDE_COWORK_MEMORY_INDEX_CONTENT` | [Undocumented] | Supplies the memory index text and not the file. An empty string turns the injection off. | Text | Cowork hosts |
 | `CLAUDE_COWORK_MEMORY_PATH_OVERRIDE` | [Undocumented] | Sets the auto memory directory. It also keeps auto memory on in remote mode. | Text. Must be a valid absolute path, else it is ignored | Cowork hosts |
-| `CLAUDE_MEMORY_STORES` | [Undocumented] | Mounts extra memory stores from a JSON list. While set, it also turns the org memory feature off. | - | - |
+| `CLAUDE_MEMORY_STORES` | [Undocumented] | Takes a JSON list of `{"name","path"}` objects. The memory section stays, and each store is named as a shared `memory/team/<dir name>` folder with a 4 KB per-file note. A list of strings, `[]`, or non-JSON text changes nothing. | - | - |
 | `CLAUDE_PROJECT_UUID` | [Undocumented] [Gated: Works only behind a feature flag or server gate] | Names a Claude project. Claude Code fetches the project context block and the project memory index for it. | - | - |
 | `DISABLE_AUTO_COMPACT` | [Documented] | Turns off automatic compaction. | On or off | - |
 | `DISABLE_COMPACT` | [Documented] | Turns off all compaction. | On or off | - |

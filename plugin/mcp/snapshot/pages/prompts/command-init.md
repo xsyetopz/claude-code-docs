@@ -194,7 +194,7 @@ Today's date is <date>.
 
 The diff below starts from [Default, Lean Prompt](https://xsyetopz.github.io/claude-code-docs/prompts/default-lean.md). Lines that start with `-` are only in the baseline. Lines that start with `+` are only here.
 
-Lines added: 25. Lines removed: 3. Size change: +1,659 characters.
+Lines added: 25. Lines removed: 3. Size change: +1,645 characters.
 
 ````diff
 --- default-lean
@@ -203,7 +203,7 @@ Lines added: 25. Lines removed: 3. Size change: +1,659 characters.
  </system-reminder>
 
  === messages[0].content[1] (role: user) ===
--hi
+-Reply with 'OK'.
 +<command-message>init</command-message>
 +<command-name>/init</command-name>
 

@@ -34,7 +34,7 @@
   {
     "route": "/start/what-changed",
     "title": "What Changed",
-    "description": "What changed in the Claude Code releases near 2.1.304, newest first, as far as the changelog and a version comparison show.",
+    "description": "What changed in the Claude Code releases near 2.1.305, newest first, as far as the changelog and a version comparison show.",
     "section": "Start Here",
     "md": "https://xsyetopz.github.io/claude-code-docs/start/what-changed.md",
     "url": "https://xsyetopz.github.io/claude-code-docs/start/what-changed"
@@ -954,7 +954,7 @@
   {
     "route": "/reference/probes",
     "title": "Probes",
-    "description": "Facts checked by running Claude Code 2.1.304 against a local stub, and the env vars and settings that changed what the program sent.",
+    "description": "Facts checked by running Claude Code 2.1.305 against a local stub, and the env vars and settings that changed what the program sent.",
     "section": "Reference",
     "md": "https://xsyetopz.github.io/claude-code-docs/reference/probes.md",
     "url": "https://xsyetopz.github.io/claude-code-docs/reference/probes"

@@ -90,7 +90,7 @@ A probe ran a command hook on each event in `-p` mode. "Stops" means the model m
 | `SubagentStart`, `SubagentStop`, `SessionEnd` | The hook ran. No visible effect. | Not shown. |
 | `InstructionsLoaded`, `Setup` | No effect. | Not shown. |
 
-`PermissionRequest`, `PermissionDenied`, `Notification`, and `PreCompact` do not fire in `-p`. They fired in a probe of the interactive screen (2.1.304, local stub, fake key). The rows below are from that run. Source: [Interactive Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md#interactive-probes).
+`PermissionRequest`, `PermissionDenied`, `Notification`, and `PreCompact` do not fire in `-p`. They fired in a probe of the interactive screen (2.1.305, local stub, fake key). The rows below are from that run. Source: [Interactive Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md#interactive-probes).
 
 | Event | `continue: false` | `systemMessage` |
 | --- | --- | --- |

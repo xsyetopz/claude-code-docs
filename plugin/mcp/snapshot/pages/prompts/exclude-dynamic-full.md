@@ -19,10 +19,10 @@ The same flag on the full prompt. Run `claude --exclude-dynamic-system-prompt-se
 | `system[2]` | 26,535 |
 | `messages[0].content[0]` | 233 |
 | `messages[0].content[1]` | 592 |
-| `messages[0].content[2]` | 2 |
+| `messages[0].content[2]` | 16 |
 | `messages[1].content[0]` | 9,057 |
 | System blocks only | 26,675 |
-| Everything shown here | 36,895 |
+| Everything shown here | 36,909 |
 | Tools sent | 12 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -274,7 +274,7 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
 </system-reminder>
 
 === messages[0].content[2] (role: user) ===
-hi
+Reply with 'OK'.
 
 === messages[1].content[0] (role: system) ===
 # Environment
@@ -424,7 +424,7 @@ Lines added: 28. Lines removed: 22. Size change: +10 characters.
 
 -=== messages[0].content[1] (role: user) ===
 +=== messages[0].content[2] (role: user) ===
- hi
+ Reply with 'OK'.
 
  === messages[1].content[0] (role: system) ===
 ```

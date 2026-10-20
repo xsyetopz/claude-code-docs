@@ -39,7 +39,7 @@ x-anthropic-billing-header: cc_version=2.1.305.<build>; cc_entrypoint=sdk-cli;
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
 
 === system[2] (cache marker: {"type":"ephemeral"}) ===
-You are evaluating a PreToolUse hook in Claude Code. Your task is to evaluate the condition described in the user message. The conversation transcript is available at: <config-dir>/projects/<project-slug>/c5f865ec-3616-4463-9f64-be8149a9af48.jsonl
+You are evaluating a PreToolUse hook in Claude Code. Your task is to evaluate the condition described in the user message. The conversation transcript is available at: <config-dir>/projects/<project-slug>/10a9003d-6b6b-48a6-b8f6-cb165f9c4cb7.jsonl
 You can read this file to analyze the conversation history if needed.
 
 Use the available tools to inspect the codebase and verify the condition.
@@ -59,7 +59,7 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
 </system-reminder>
 
 === messages[0].content[1] (role: user) ===
-PROBE-HOOK-AGENT: check this call. {"session_id":"c5f865ec-3616-4463-9f64-be8149a9af48","transcript_path":"<config-dir>/projects/<project-slug>/c5f865ec-3616-4463-9f64-be8149a9af48.jsonl","cwd":"<cwd>","prompt_id":"91bce717-2d80-4f0c-bbbe-254ec97a5354","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"PreToolUse","tool_name":"Bash","tool_input":{"command":"echo probe"},"tool_use_id":"toolu_probe1"}
+PROBE-HOOK-AGENT: check this call. {"session_id":"10a9003d-6b6b-48a6-b8f6-cb165f9c4cb7","transcript_path":"<config-dir>/projects/<project-slug>/10a9003d-6b6b-48a6-b8f6-cb165f9c4cb7.jsonl","cwd":"<cwd>","prompt_id":"2e4828dd-e7cb-4afc-b7ff-c910986af71b","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"PreToolUse","tool_name":"Bash","tool_input":{"command":"echo probe"},"tool_use_id":"toolu_probe1"}
 
 === messages[1].content[0] (role: system) ===
 Today's date is <date>.
@@ -69,7 +69,7 @@ Today's date is <date>.
 
 The diff below starts from [Default, Lean Prompt](./default-lean.md). Lines that start with `-` are only in the baseline. Lines that start with `+` are only here.
 
-Lines added: 7. Lines removed: 103. Size change: -13,027 characters.
+Lines added: 7. Lines removed: 103. Size change: -13,041 characters.
 
 ````diff
 --- default-lean
@@ -78,7 +78,7 @@ Lines added: 7. Lines removed: 103. Size change: -13,027 characters.
  You are a Claude agent, built on Anthropic's Claude Agent SDK.
 
  === system[2] (cache marker: {"type":"ephemeral"}) ===
-+You are evaluating a PreToolUse hook in Claude Code. Your task is to evaluate the condition described in the user message. The conversation transcript is available at: <config-dir>/projects/<project-slug>/c5f865ec-3616-4463-9f64-be8149a9af48.jsonl
++You are evaluating a PreToolUse hook in Claude Code. Your task is to evaluate the condition described in the user message. The conversation transcript is available at: <config-dir>/projects/<project-slug>/10a9003d-6b6b-48a6-b8f6-cb165f9c4cb7.jsonl
 +You can read this file to analyze the conversation history if needed.
 
 -You are an agent working with the user toward their goals, using your own judgment along the way.
@@ -147,8 +147,8 @@ Lines added: 7. Lines removed: 103. Size change: -13,027 characters.
  </system-reminder>
 
  === messages[0].content[1] (role: user) ===
--hi
-+PROBE-HOOK-AGENT: check this call. {"session_id":"c5f865ec-3616-4463-9f64-be8149a9af48","transcript_path":"<config-dir>/projects/<project-slug>/c5f865ec-3616-4463-9f64-be8149a9af48.jsonl","cwd":"<cwd>","prompt_id":"91bce717-2d80-4f0c-bbbe-254ec97a5354","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"PreToolUse","tool_name":"Bash","tool_input":{"command":"echo probe"},"tool_use_id":"toolu_probe1"}
+-Reply with 'OK'.
++PROBE-HOOK-AGENT: check this call. {"session_id":"10a9003d-6b6b-48a6-b8f6-cb165f9c4cb7","transcript_path":"<config-dir>/projects/<project-slug>/10a9003d-6b6b-48a6-b8f6-cb165f9c4cb7.jsonl","cwd":"<cwd>","prompt_id":"2e4828dd-e7cb-4afc-b7ff-c910986af71b","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"PreToolUse","tool_name":"Bash","tool_input":{"command":"echo probe"},"tool_use_id":"toolu_probe1"}
 
  === messages[1].content[0] (role: system) ===
 -# Environment

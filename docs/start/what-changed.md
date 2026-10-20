@@ -1,6 +1,6 @@
 ---
 title: What Changed
-description: What changed in the Claude Code releases near 2.1.304, newest first, as far as the changelog and a version comparison show.
+description: What changed in the Claude Code releases near 2.1.305, newest first, as far as the changelog and a version comparison show.
 sidebar_position: 4
 ---
 
@@ -12,7 +12,7 @@ For every fix and small change, read the official [Changelog](https://code.claud
 
 Run `claude --version`.
 The `/release-notes` command shows a cached copy of the [changelog](https://code.claude.com/docs/en/changelog).
-This site covers `2.1.304`, the version shown in the navbar.
+This site covers `2.1.305`, the version shown in the navbar.
 
 ## Version 2.1.305
 
@@ -128,7 +128,7 @@ The official [Changelog](https://code.claude.com/docs/en/changelog) lists them, 
 
 :::note[What We Checked]
 The rows for `2.1.300` to `2.1.302` match the changelog text that the program itself stores. The `2.1.304` rows come from the [official release notes](https://code.claude.com/docs/en/changelog) and from a comparison of the `2.1.303` and `2.1.304` programs.
-We ran these `2.1.304` rows: the print-mode permission default (`init` shows `default`, and `--permission-mode auto` keeps `auto`), the transcript request lines (`api-request`, `api-request-shape`, and `api-request-blob`), the tool search tool list behind a custom base URL, and the `CLAUDE_CODE_AUTO_COMPACT_WINDOW` warnings.
+We ran these `2.1.304` rows again on `2.1.305`, and they held: the print-mode permission default (`init` shows `default`, and `--permission-mode auto` keeps `auto`), the transcript request lines (`api-request`, `api-request-shape`, and `api-request-blob`), the tool search tool list behind a custom base URL, and the `CLAUDE_CODE_AUTO_COMPACT_WINDOW` warnings.
 We also ran these against a local stub with a fake key:
 
 - `/auto-mode-setup` opens its screen ("Teach auto mode about your environment?") behind a custom base URL.
@@ -137,11 +137,11 @@ We also ran these against a local stub with a fake key:
 - The Mod API items: `tool.check` got `isReadOnly: true` for `Read`. An ask with `decider: "person"` showed a dialog in the default mode, and in `-p` it was refused as `Permission to use Bash denied by plugin <name>: <reason>`, while an ask without it said `Bash needs approval (asked by plugin <name>: <reason>)`. The `settings.read` hook got `layers`, such as `[{"source":"user","settings":{...}}]`.
 - `denyRead` brackets are a Linux fix. On macOS a sandboxed `echo` with `denyRead` globs holding `[user-id]` ran fine, which does not show the Linux fix.
 
-The `/artifacts` delete confirmation was seen live on `2.1.304`. The panel asks `Delete <title>? This cannot be undone.` It offers `No, keep it` and `Yes, delete it`, and the footer shows `y` to delete and `n` to keep. In `2.1.305` `y` and `n` no longer answer it. Choosing yes shows `Artifact deleted`. With an API key and no login, `/artifacts` says `Unknown command`. In print mode with `CLAUDE_CODE_OAUTH_TOKEN` it says `/artifacts isn't available in this environment.` In the interactive screen with that token it opens a panel with the tabs `All`, `Mine`, and `Shared`, and an empty list says `No artifacts yet. Publish one with the Artifact tool.`
+The `/artifacts` delete confirmation was seen live on `2.1.305`, with a throwaway artifact that the run published and deleted. The panel asks `Delete <title>? This cannot be undone.` It offers `1. No, keep it` and `2. Yes, delete it`, with the first one selected, and the footer says `Esc to go back`. Pressing `y` did nothing. Down then Enter chose yes, the list showed `Deleting…`, then `Artifact deleted`, and a refresh showed an empty list. `2.1.304` added the numbered choices and kept `y`, `n`, and Esc; `2.1.305` dropped `y` and `n`. With an API key and no login, `/artifacts` says `Unknown command`. In print mode with `CLAUDE_CODE_OAUTH_TOKEN` it says `/artifacts isn't available in this environment.` In the interactive screen with that token it opens a panel with the tabs `All`, `Mine`, and `Shared`, and an empty list says `No artifacts yet. Publish one with the Artifact tool.`
 
-`/usage` shows only session cost and tokens with an API key or `CLAUDE_CODE_OAUTH_TOKEN`, even after real calls. The rate-limit section needs a claude.ai login with the `user:inference` and `user:profile` scopes (the program). A local stub with fake subscriber credentials showed the `Resets` lines. The `rate limited until <time>` text is new in `2.1.304`. It appears only when the usage endpoint is rate limited (the program). A stub that answered `429` showed it, in four forms. See [Slash Commands](../extend/skills-and-commands/slash-commands.md). With `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` set, `/usage` shows `Failed to load usage data` and sends no request.
+On `2.1.305`, `/usage` with an API key shows only session cost and tokens. With `CLAUDE_CODE_OAUTH_TOKEN` it also shows the rate-limit rows (`Current session`, `Current week (all models)`, their `Resets` lines) and then `What's contributing to your limits usage?` with `Scanning local sessions…`. With the token the program did not call the usage endpoint in a 35 second run. The rows came from the rate-limit headers of a model reply. A fuller panel needs a claude.ai login with the `user:inference` and `user:profile` scopes (the program). A local stub with fake subscriber credentials showed the `Resets` lines too. The `rate limited until <time>` text is new in `2.1.304`. It appears only when the usage endpoint is rate limited (the program). A stub that answered `429` showed it, in four forms. See [Slash Commands](../extend/skills-and-commands/slash-commands.md). With `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` set, `/usage` shows `Failed to load usage data` and sends no request.
 
-For the `/artifacts` and `/usage` rows, <Documented /> means the release notes name them. A local stub saw the rate-limit end-time text. The live runs with a real token did not.
+For the `/artifacts` and `/usage` rows, <Documented /> means the release notes name them. A local stub saw the rate-limit end-time text. The live run with a real token could not reach it, because the usage endpoint was never called.
 :::
 
 ## Example

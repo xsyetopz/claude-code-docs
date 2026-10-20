@@ -28,7 +28,7 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
 </system-reminder>
 
 === messages[0].content[1] (role: user) ===
-hi
+Reply with 'OK'.
 
 === messages[1].content[0] (role: system) ===
 # Environment
@@ -86,11 +86,11 @@ SKIP only when another provider is being worked on (overrides all triggers): Ope
 Today's date is <date>.
 
 === messages[2].content[0] (role: assistant) ===
-stub reply
+OK
 
 === messages[3].content[0] (role: user) ===
 Based on the conversation transcript above, has the following stopping condition been satisfied? Answer based on transcript evidence only.
 
 Condition: PROBE-HOOK-STOP: is the work done?
 
-ARGUMENTS: {"session_id":"6fb7caa5-72ee-41de-a024-d1622be50651","transcript_path":"<config-dir>/projects/<project-slug>/6fb7caa5-72ee-41de-a024-d1622be50651.jsonl","cwd":"<cwd>","prompt_id":"c484840a-e125-4792-b148-6ea159be5edb","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"Stop","stop_hook_active":false,"last_assistant_message":"stub reply","background_tasks":[],"session_crons":[]}
+ARGUMENTS: {"session_id":"b86a028d-60e2-4a7e-9c5b-55f5d0496329","transcript_path":"<config-dir>/projects/<project-slug>/b86a028d-60e2-4a7e-9c5b-55f5d0496329.jsonl","cwd":"<cwd>","prompt_id":"9f949ee3-a7d4-4c26-9373-ad9586ede55c","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"Stop","stop_hook_active":false,"last_assistant_message":"OK","background_tasks":[],"session_crons":[]}

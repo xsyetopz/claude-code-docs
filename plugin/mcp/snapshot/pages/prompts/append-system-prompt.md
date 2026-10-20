@@ -18,10 +18,10 @@ Adds your text to the end of the prompt. Run `claude --append-system-prompt "you
 | `system[1]` | 94 |
 | `system[2]` | 5,652 |
 | `messages[0].content[0]` | 592 |
-| `messages[0].content[1]` | 2 |
+| `messages[0].content[1]` | 16 |
 | `messages[1].content[0]` | 8,850 |
 | System blocks only | 5,824 |
-| Everything shown here | 15,558 |
+| Everything shown here | 15,572 |
 | Tools sent | 12 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -111,7 +111,7 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
 </system-reminder>
 
 === messages[0].content[1] (role: user) ===
-hi
+Reply with 'OK'.
 
 === messages[1].content[0] (role: system) ===
 # Environment

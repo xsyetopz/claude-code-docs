@@ -9,4 +9,4 @@ CWD: <cwd>
 Date: <date>
 
 === messages[0].content[0] (role: user) ===
-hi
+Reply with 'OK'.

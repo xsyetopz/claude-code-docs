@@ -96,7 +96,7 @@ Every prompt on these pages was captured offline, with no model call and no cost
 
 For the subagent pages, the fake server answers the first turn with an `Agent` tool call. The program then starts a real subagent and sends its request to the fake server.
 
-For the compaction page, the script runs twice in the same folders: once with `hi`, then with `--continue` and `/compact`.
+For the compaction page, the script runs twice in the same folders: once with `Reply with 'OK'.`, then with `--continue` and `/compact`.
 
 ## The Three System Blocks
 

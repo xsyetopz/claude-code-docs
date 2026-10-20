@@ -62,7 +62,7 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
 </system-reminder>
 
 === messages[0].content[1] (role: user) ===
-PROBE-SUBAGENT-TASK say hi
+PROBE-SUBAGENT-TASK Reply with 'OK'.
 
 === messages[1].content[0] (role: system) ===
 The following deferred tools are now available via ToolSearch. Their schemas are NOT loaded — calling them directly will fail with InputValidationError. Use ToolSearch with query "select:<name>[,<name>...]" to load tool schemas before calling them:

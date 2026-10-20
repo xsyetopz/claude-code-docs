@@ -16,6 +16,7 @@ import { FAKE_KEY, startStub } from "./stub.ts";
 import { SUB_MARK, VARIANTS, type Variant } from "./variants.ts";
 
 export const ROOT = join(import.meta.dir, "..", "..");
+export const DEFAULT_PROMPT = "Reply with 'OK'.";
 export const CAPTURES = join(ROOT, "captures");
 const requireEnv = (name: string): string => {
   const v = process.env[name];
@@ -70,7 +71,12 @@ const run = async (v: Variant) => {
     }
     writeFileSync(join(proj, "dirty.txt"), "x\n"); // untracked file so the status is not empty
   }
-  const stub = startStub({ log, tool: v.tool?.name, toolInput: v.tool?.input });
+  const stub = startStub({
+    port: Number(process.env["STUB_PORT"] ?? 0),
+    log,
+    tool: v.tool?.name,
+    toolInput: v.tool?.input,
+  });
   const spawnOnce = async (prompt: string, extra: string[]) => {
     const p = Bun.spawn(
       [
@@ -117,7 +123,7 @@ const run = async (v: Variant) => {
     clearTimeout(t);
     return { so, se, code };
   };
-  let { so, se, code } = await spawnOnce(v.prompt ?? "hi", []);
+  let { so, se, code } = await spawnOnce(v.prompt ?? DEFAULT_PROMPT, []);
   if (v.followUp) {
     // second run in the same folders: gives the follow-up command a conversation to work on
     writeFileSync(join(dir, "stdout-first.txt"), so);

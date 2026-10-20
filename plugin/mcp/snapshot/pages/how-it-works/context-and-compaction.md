@@ -23,7 +23,7 @@ Sources: [How Claude Code Works: The Context Window](https://code.claude.com/doc
 | `CLAUDE.md`, rules, and auto memory | [Documented] | The first 200 lines or 25 KB of `MEMORY.md` load. |
 | Skill descriptions | [Documented] | The body of a skill loads only when the skill runs. |
 | Messages, tool results, and file reads | [Documented] | This is the part that grows. |
-| Attachments that Claude Code adds | [Undocumented] | A transcript of 2.1.304 shows types such as `total_tokens_reminder`, `output_style`, `queued_command`, `nested_memory`, `skill_listing`, and `edited_text_file`. |
+| Attachments that Claude Code adds | [Undocumented] | A transcript of 2.1.305 from a stub run shows types such as `total_tokens_reminder`, `output_style`, `nested_memory`, and `skill_listing`. Transcripts of 2.1.305 from a real machine also showed `queued_command`, `edited_text_file`, `deferred_tools_record`, `mcp_instructions_delta`, `credential_org`, and `silent_turn_reminder`. |
 
 The mod event `prompt.attachment` can rewrite or drop one attachment.
 For measured token counts of an empty session and ways to shrink it, see [Context Budget](https://xsyetopz.github.io/claude-code-docs/how-it-works/context-budget.md).

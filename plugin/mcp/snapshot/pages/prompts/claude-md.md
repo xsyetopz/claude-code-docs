@@ -19,10 +19,10 @@ Where project memory files land. Put a `CLAUDE.md` file in the project folder.
 | `system[2]` | 5,627 |
 | `messages[0].content[0]` | 343 |
 | `messages[0].content[1]` | 592 |
-| `messages[0].content[2]` | 2 |
+| `messages[0].content[2]` | 16 |
 | `messages[1].content[0]` | 8,850 |
 | System blocks only | 5,767 |
-| Everything shown here | 15,890 |
+| Everything shown here | 15,904 |
 | Tools sent | 12 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -118,7 +118,7 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
 </system-reminder>
 
 === messages[0].content[2] (role: user) ===
-hi
+Reply with 'OK'.
 
 === messages[1].content[0] (role: system) ===
 # Environment
@@ -207,7 +207,7 @@ Lines added: 10. Lines removed: 1. Size change: +389 characters.
 
 -=== messages[0].content[1] (role: user) ===
 +=== messages[0].content[2] (role: user) ===
- hi
+ Reply with 'OK'.
 
  === messages[1].content[0] (role: system) ===
 ```

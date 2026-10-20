@@ -17,9 +17,9 @@ source: docs/prompts/simple-env.md
 | `system[0]` | 78 |
 | `system[1]` | 62 |
 | `system[2]` | 23 |
-| `messages[0].content[0]` | 2 |
+| `messages[0].content[0]` | 16 |
 | System blocks only | 163 |
-| Everything shown here | 362 |
+| Everything shown here | 376 |
 | Tools sent | 3 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -113,7 +113,7 @@ Lines added: 2. Lines removed: 117. Size change: -15,139 characters.
 -</system-reminder>
 -
 -=== messages[0].content[1] (role: user) ===
- hi
+ Reply with 'OK'.
 -
 -=== messages[1].content[0] (role: system) ===
 -# Environment

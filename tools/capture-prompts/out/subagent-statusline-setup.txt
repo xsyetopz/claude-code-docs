@@ -207,7 +207,7 @@ Notes:
 <total_tokens>15000000 tokens left</total_tokens>
 
 === messages[0].content[0] (role: user) ===
-PROBE-SUBAGENT-TASK say hi
+PROBE-SUBAGENT-TASK Reply with 'OK'.
 
 === messages[1].content[0] (role: system) ===
 # Environment

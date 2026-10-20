@@ -18,10 +18,10 @@ The prompt that a `general-purpose` subagent gets. The main agent calls the `Age
 | `system[1]` | 62 |
 | `system[2]` | 2,720 |
 | `messages[0].content[0]` | 592 |
-| `messages[0].content[1]` | 26 |
+| `messages[0].content[1]` | 36 |
 | `messages[1].content[0]` | 7,130 |
 | System blocks only | 2,881 |
-| Everything shown here | 10,919 |
+| Everything shown here | 10,929 |
 | Tools sent | 8 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -81,7 +81,7 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
 </system-reminder>
 
 === messages[0].content[1] (role: user) ===
-PROBE-SUBAGENT-TASK say hi
+PROBE-SUBAGENT-TASK Reply with 'OK'.
 
 === messages[1].content[0] (role: system) ===
 The following deferred tools are now available via ToolSearch. Their schemas are NOT loaded — calling them directly will fail with InputValidationError. Use ToolSearch with query "select:<name>[,<name>...]" to load tool schemas before calling them:
@@ -129,7 +129,7 @@ Today's date is <date>.
 
 The diff below starts from [Default, Lean Prompt](https://xsyetopz.github.io/claude-code-docs/prompts/default-lean.md). Lines that start with `-` are only in the baseline. Lines that start with `+` are only here.
 
-Lines added: 31. Lines removed: 72. Size change: -4,582 characters.
+Lines added: 31. Lines removed: 72. Size change: -4,586 characters.
 
 ````diff
 --- default-lean
@@ -224,8 +224,8 @@ Lines added: 31. Lines removed: 72. Size change: -4,582 characters.
  </system-reminder>
 
  === messages[0].content[1] (role: user) ===
--hi
-+PROBE-SUBAGENT-TASK say hi
+-Reply with 'OK'.
++PROBE-SUBAGENT-TASK Reply with 'OK'.
 
  === messages[1].content[0] (role: system) ===
 +The following deferred tools are now available via ToolSearch. Their schemas are NOT loaded — calling them directly will fail with InputValidationError. Use ToolSearch with query "select:<name>[,<name>...]" to load tool schemas before calling them:

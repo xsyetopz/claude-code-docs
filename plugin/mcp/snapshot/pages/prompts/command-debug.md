@@ -121,11 +121,11 @@ Help the user debug an issue they're encountering in this current Claude Code se
 
 Debug logging was OFF for this session until now. Nothing prior to this /debug invocation was captured.
 
-Tell the user that debug logging is now active at `<config-dir>/debug/214b1d82-8da3-4585-8378-2651a542d6b7.txt`, ask them to reproduce the issue, then re-read the log. If they can't reproduce, they can also restart with `claude --debug` to capture logs from startup.
+Tell the user that debug logging is now active at `<config-dir>/debug/f4bacf36-3db2-4ecf-ad1c-b9d07f2c6c85.txt`, ask them to reproduce the issue, then re-read the log. If they can't reproduce, they can also restart with `claude --debug` to capture logs from startup.
 
 ## Session Debug Log
 
-The debug log for the current session is at: `<config-dir>/debug/214b1d82-8da3-4585-8378-2651a542d6b7.txt`
+The debug log for the current session is at: `<config-dir>/debug/f4bacf36-3db2-4ecf-ad1c-b9d07f2c6c85.txt`
 
 No log file exists yet.
 
@@ -212,7 +212,7 @@ Today's date is <date>.
 
 The diff below starts from [Default, Lean Prompt](https://xsyetopz.github.io/claude-code-docs/prompts/default-lean.md). Lines that start with `-` are only in the baseline. Lines that start with `+` are only here.
 
-Lines added: 44. Lines removed: 3. Size change: +1,717 characters.
+Lines added: 44. Lines removed: 3. Size change: +1,703 characters.
 
 ```diff
 --- default-lean
@@ -221,7 +221,7 @@ Lines added: 44. Lines removed: 3. Size change: +1,717 characters.
  </system-reminder>
 
  === messages[0].content[1] (role: user) ===
--hi
+-Reply with 'OK'.
 +<command-message>debug</command-message>
 +<command-name>/debug</command-name>
 
@@ -234,11 +234,11 @@ Lines added: 44. Lines removed: 3. Size change: +1,717 characters.
 +
 +Debug logging was OFF for this session until now. Nothing prior to this /debug invocation was captured.
 +
-+Tell the user that debug logging is now active at `<config-dir>/debug/214b1d82-8da3-4585-8378-2651a542d6b7.txt`, ask them to reproduce the issue, then re-read the log. If they can't reproduce, they can also restart with `claude --debug` to capture logs from startup.
++Tell the user that debug logging is now active at `<config-dir>/debug/f4bacf36-3db2-4ecf-ad1c-b9d07f2c6c85.txt`, ask them to reproduce the issue, then re-read the log. If they can't reproduce, they can also restart with `claude --debug` to capture logs from startup.
 +
 +## Session Debug Log
 +
-+The debug log for the current session is at: `<config-dir>/debug/214b1d82-8da3-4585-8378-2651a542d6b7.txt`
++The debug log for the current session is at: `<config-dir>/debug/f4bacf36-3db2-4ecf-ad1c-b9d07f2c6c85.txt`
 +
 +No log file exists yet.
 +

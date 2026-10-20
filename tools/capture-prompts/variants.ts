@@ -11,7 +11,7 @@ export type Variant = {
   cfgFiles?: Record<string, string>; // files written into the config dir
   projFiles?: Record<string, string>; // files written into the project dir
   git?: boolean; // make the project a git repo with one commit
-  prompt?: string; // the user prompt (default "hi")
+  prompt?: string; // the user prompt (default "Reply with 'OK'.")
   followUp?: string; // a second run with --continue, in the same folders
   tool?: { name: string; input: unknown }; // canned tool_use on the first turn
   pick?: "first" | "last" | "subagent" | "marker"; // which recorded request to use
@@ -32,7 +32,7 @@ const subTool = (type: string) => ({
   name: "Agent",
   input: {
     description: "Probe task",
-    prompt: `${SUB_MARK} say hi`,
+    prompt: `${SUB_MARK} Reply with 'OK'.`,
     subagent_type: type,
   },
 });

@@ -173,7 +173,7 @@ Today's date is <date>.
 
 The diff below starts from [Default, Lean Prompt](./default-lean.md). Lines that start with `-` are only in the baseline. Lines that start with `+` are only here.
 
-Lines added: 9. Lines removed: 3. Size change: +539 characters.
+Lines added: 9. Lines removed: 3. Size change: +525 characters.
 
 ```diff
 --- default-lean
@@ -182,7 +182,7 @@ Lines added: 9. Lines removed: 3. Size change: +539 characters.
  </system-reminder>
 
  === messages[0].content[1] (role: user) ===
--hi
+-Reply with 'OK'.
 +<command-message>security-review</command-message>
 +<command-name>/security-review</command-name>
 

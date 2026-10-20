@@ -19,10 +19,10 @@ What changes when the project is a git repository. Start Claude Code in a folder
 | `system[2]` | 5,627 |
 | `messages[0].content[0]` | 571 |
 | `messages[0].content[1]` | 592 |
-| `messages[0].content[2]` | 2 |
+| `messages[0].content[2]` | 16 |
 | `messages[1].content[0]` | 8,849 |
 | System blocks only | 5,767 |
-| Everything shown here | 16,117 |
+| Everything shown here | 16,131 |
 | Tools sent | 12 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -129,7 +129,7 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
 </system-reminder>
 
 === messages[0].content[2] (role: user) ===
-hi
+Reply with 'OK'.
 
 === messages[1].content[0] (role: system) ===
 # Environment
@@ -228,7 +228,7 @@ Lines added: 21. Lines removed: 2. Size change: +616 characters.
 
 -=== messages[0].content[1] (role: user) ===
 +=== messages[0].content[2] (role: user) ===
- hi
+ Reply with 'OK'.
 
  === messages[1].content[0] (role: system) ===
  # Environment

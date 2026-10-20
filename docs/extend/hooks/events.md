@@ -388,7 +388,7 @@ Handlers: `command`, `http`, `mcp_tool`.
 | Field | Status | Direction | What it does |
 | --- | --- | --- | --- |
 | `message`, `title`, `notification_type` | <Documented /> | Input | The text, an optional title, and the type. |
-| `permission_prompt` | <Documented /> | Type | A prompt waited about 6 seconds. Seen live in the interactive screen (2.1.304) with the message `Claude needs your permission`. |
+| `permission_prompt` | <Documented /> | Type | A prompt waited about 6 seconds. Seen live in the interactive screen (2.1.305) with the message `Claude needs your permission`. |
 | `idle_prompt` | <Documented /> | Type | The session was idle for about 60 seconds. Both depend on typing and running agents. Seen live: the message was `Claude is waiting for your input`, about 60 seconds after the turn ended (the config key `messageIdleNotifThresholdMs` sets the 60 seconds; default 60000). |
 | `auth_success`, `elicitation_dialog`, `elicitation_url_dialog`, `elicitation_complete`, `elicitation_response` | <Documented /> | Type | Auth finished, and the steps of an MCP question. The two dialog types wait 6 seconds. Seen live in the interactive screen: all four `elicitation_*` values (messages `Claude Code needs your input` for the two dialogs, `Elicitation response for server "probe": accept`, and `MCP server "probe" confirmed elicitation el-1 complete`). `auth_success` needs a login and was not seen. |
 | `agent_needs_input`, `agent_completed` | <Documented /> | Type | Background session events in agent view. `agent_needs_input` for a teammate setup question needs 2.1.248. `agent_needs_input` was seen live for the auto mode classifier billing notice (message `Auto mode has a classifier billing notice to acknowledge`) that shows the first time auto mode runs with a custom base URL. `agent_completed` was not seen (it needs a background session). |
@@ -600,21 +600,21 @@ Handlers: `command`, `http`, `mcp_tool`.
 
 ## `PostToolUse` `tool_response` Shapes
 
-We logged the stdin of a `PostToolUse` command hook in `-p` on `2.1.304`, with one scripted call per tool. This is the `tool_response` you can read, and the shape `updatedToolOutput` replaces.
+We logged the stdin of a `PostToolUse` command hook in `-p` on `2.1.305`, with one scripted call per tool. This is the `tool_response` you can read, and the shape `updatedToolOutput` replaces.
 
 | Tool | Status | `tool_response` |
 | --- | --- | --- |
 | `Bash` | <Documented /> | `stdout`, `stderr`, `interrupted`, `isImage`, and `noOutputExpected`. |
 | `Read` (text) | <Undocumented /> | `type` (`text`) and `file` with `filePath`, `content`, `numLines`, `startLine`, and `totalLines`. |
 | `Write` (new file) | <Undocumented /> | `type` (`create`), `filePath`, `content`, `structuredPatch` (empty), `originalFile` (`null`), and `userModified`. |
-| `Edit` | <Undocumented /> | `filePath`, `oldString`, `newString`, `originalFile`, `structuredPatch` (items with `oldStart`, `oldLines`, `newStart`, `newLines`, `lines`), `userModified`, `replaceAll`, and `contentNotInModelContext`. `tool_input` also has `replace_all`. |
+| `Edit` | <Undocumented /> | `filePath`, `oldString`, `newString`, `originalFile`, `structuredPatch` (items with `oldStart`, `oldLines`, `newStart`, `newLines`, `lines`), `userModified`, `replaceAll`, and `contentNotInModelContext`. The last key shows only when the file was read in part (a `Read` with `offset` and `limit`), or never read. `tool_input` also has `replace_all`. |
 | `ToolSearch` | <Undocumented /> | `matches` (tool names), `query`, and `total_deferred_tools`. `tool_input` also has `max_results`. |
-| `Agent` | <Undocumented /> | First an async launch: `isAsync`, `status` (`async_launched`), `agentId`, `description`, `resolvedModel`, `prompt`, `outputFile`, `canReadOutputFile`, and `canContinueAgent`. Then, for a finished subagent: `status` (`completed`), `prompt`, `agentId`, `agentType`, `content` (text blocks), `resolvedModel`, `totalDurationMs`, `totalTokens`, `totalToolUseCount`, and `usage`. |
+| `Agent` | <Undocumented /> | First an async launch: `isAsync`, `status` (`async_launched`), `agentId`, `description`, `resolvedModel`, `prompt`, `outputFile`, `canReadOutputFile`, and `canContinueAgent`. Then, for a finished subagent: `status` (`completed`), `prompt`, `agentId`, `agentType`, `content` (text blocks), `resolvedModel`, `totalDurationMs`, `totalTokens`, `totalToolUseCount`, `usage`, `canContinueAgent`, `harnessNoteCount`, `harnessTailCount`, and `harnessSectionHash`. |
 | `ListAgents` | <Undocumented /> | `listing` (text), `sections`, and `notes`. |
 | `CronCreate` | <Undocumented /> | `id`, `humanSchedule`, `recurring`, `durable`, and `nextFireAt`. |
 | `CronList` | <Undocumented /> | `jobs`. |
 
-A second probe ran the same hook in the interactive screen (2.1.304, `acceptEdits`, one scripted call per tool). It confirmed the shapes of `Bash`, `Read`, `Write`, and `Edit` above, with one difference: the `Edit` result there had no `contentNotInModelContext` key. It also confirmed that an MCP tool's `tool_response` is the array of content blocks the server returned (`[{"type":"text","text":"echo:hi"}]`), and that the hook input has `mcp_server`. Every `PostToolUse` input had `hook_event_name`, `tool_name`, `tool_input`, `tool_response`, `tool_use_id`, and `duration_ms`. An `Edit` of a file that was never read is a tool error, so it fires `PostToolUseFailure` and not `PostToolUse`. The interactive probe did not run `Glob`, `Grep`, `NotebookEdit`, `WebFetch`, or `WebSearch` (this build's tool list there had no `Glob` or `Grep`), and did not test whether `updatedToolOutput` accepts these shapes. See [Interactive Probes](../../reference/probes.md#interactive-probes).
+A second probe ran the same hook in the interactive screen (2.1.305, `acceptEdits`, one scripted call per tool). It confirmed the shapes of `Bash`, `Read`, `Write`, and `Edit` above, with one difference: the `Edit` result after a `Read` had no `contentNotInModelContext` key. It also confirmed that an MCP tool's `tool_response` is the array of content blocks the server returned (`[{"type":"text","text":"echo:OK"}]`), and that the hook input has `mcp_server`. Every `PostToolUse` input had `hook_event_name`, `tool_name`, `tool_input`, `tool_response`, `tool_use_id`, and `duration_ms`. On `2.1.305` an `Edit` of a file that was never read was not an error, in `acceptEdits` and in the default mode. The file changed, `PostToolUse` fired, and no `PostToolUseFailure` fired. That `tool_response` had `contentNotInModelContext: true`, which the `Edit` after a `Read` did not have. The interactive probe did not run `Glob`, `Grep`, `NotebookEdit`, `WebFetch`, or `WebSearch` (this build's tool list there had no `Glob` or `Grep`), and did not test whether `updatedToolOutput` accepts these shapes. See [Interactive Probes](../../reference/probes.md#interactive-probes).
 
 ## Related Pages
 

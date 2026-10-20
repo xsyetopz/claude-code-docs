@@ -14,10 +14,10 @@ Starts in `plan` permission mode. Run `claude --permission-mode plan`.
 | `system[1]` | 62 |
 | `system[2]` | 5,627 |
 | `messages[0].content[0]` | 592 |
-| `messages[0].content[1]` | 2 |
+| `messages[0].content[1]` | 16 |
 | `messages[1].content[0]` | 13,729 |
 | System blocks only | 5,767 |
-| Everything shown here | 20,380 |
+| Everything shown here | 20,394 |
 | Tools sent | 12 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -105,7 +105,7 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
 </system-reminder>
 
 === messages[0].content[1] (role: user) ===
-hi
+Reply with 'OK'.
 
 === messages[1].content[0] (role: system) ===
 # Environment

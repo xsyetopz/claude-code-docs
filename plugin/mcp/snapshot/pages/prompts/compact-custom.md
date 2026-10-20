@@ -19,12 +19,12 @@ The compaction request with the three ways to add your own instructions. Add tex
 | `system[2]` | 5,627 |
 | `messages[0].content[0]` | 380 |
 | `messages[0].content[1]` | 592 |
-| `messages[0].content[2]` | 2 |
+| `messages[0].content[2]` | 16 |
 | `messages[1].content[0]` | 8,850 |
-| `messages[2].content[0]` | 10 |
+| `messages[2].content[0]` | 2 |
 | `messages[3].content[0]` | 6,445 |
 | System blocks only | 5,767 |
-| Everything shown here | 22,479 |
+| Everything shown here | 22,485 |
 | Tools sent | 12 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -124,7 +124,7 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
 </system-reminder>
 
 === messages[0].content[2] (role: user) ===
-hi
+Reply with 'OK'.
 
 === messages[1].content[0] (role: system) ===
 # Environment
@@ -182,7 +182,7 @@ SKIP only when another provider is being worked on (overrides all triggers): Ope
 Today's date is <date>.
 
 === messages[2].content[0] (role: assistant) ===
-stub reply
+OK
 
 === messages[3].content[0] (role: user) ===
 CRITICAL: Respond with TEXT ONLY. Do NOT call any tools.
@@ -331,7 +331,7 @@ Lines added: 18. Lines removed: 1. Size change: +510 characters.
 
 -=== messages[0].content[1] (role: user) ===
 +=== messages[0].content[2] (role: user) ===
- hi
+ Reply with 'OK'.
 
  === messages[1].content[0] (role: system) ===
 @@ -237,4 +249,9 @@

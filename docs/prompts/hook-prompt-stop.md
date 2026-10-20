@@ -14,12 +14,12 @@ A prompt hook on the `Stop` event gets a different system text from a tool hook.
 | `system[1]` | 62 |
 | `system[2]` | 1,920 |
 | `messages[0].content[0]` | 592 |
-| `messages[0].content[1]` | 2 |
+| `messages[0].content[1]` | 16 |
 | `messages[1].content[0]` | 8,850 |
-| `messages[2].content[0]` | 10 |
-| `messages[3].content[0]` | 601 |
+| `messages[2].content[0]` | 2 |
+| `messages[3].content[0]` | 593 |
 | System blocks only | 2,060 |
-| Everything shown here | 12,502 |
+| Everything shown here | 12,500 |
 | Tools sent | 0 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -63,7 +63,7 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
 </system-reminder>
 
 === messages[0].content[1] (role: user) ===
-hi
+Reply with 'OK'.
 
 === messages[1].content[0] (role: system) ===
 # Environment
@@ -121,21 +121,21 @@ SKIP only when another provider is being worked on (overrides all triggers): Ope
 Today's date is <date>.
 
 === messages[2].content[0] (role: assistant) ===
-stub reply
+OK
 
 === messages[3].content[0] (role: user) ===
 Based on the conversation transcript above, has the following stopping condition been satisfied? Answer based on transcript evidence only.
 
 Condition: PROBE-HOOK-STOP: is the work done?
 
-ARGUMENTS: {"session_id":"6fb7caa5-72ee-41de-a024-d1622be50651","transcript_path":"<config-dir>/projects/<project-slug>/6fb7caa5-72ee-41de-a024-d1622be50651.jsonl","cwd":"<cwd>","prompt_id":"c484840a-e125-4792-b148-6ea159be5edb","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"Stop","stop_hook_active":false,"last_assistant_message":"stub reply","background_tasks":[],"session_crons":[]}
+ARGUMENTS: {"session_id":"b86a028d-60e2-4a7e-9c5b-55f5d0496329","transcript_path":"<config-dir>/projects/<project-slug>/b86a028d-60e2-4a7e-9c5b-55f5d0496329.jsonl","cwd":"<cwd>","prompt_id":"9f949ee3-a7d4-4c26-9373-ad9586ede55c","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"Stop","stop_hook_active":false,"last_assistant_message":"OK","background_tasks":[],"session_crons":[]}
 ```
 
 ## Compared to the Default
 
 The diff below starts from [Prompt Hook Request](./hook-prompt.md). Lines that start with `-` are only in the baseline. Lines that start with `+` are only here.
 
-Lines added: 82. Lines removed: 5. Size change: +10,940 characters.
+Lines added: 82. Lines removed: 5. Size change: +10,938 characters.
 
 ```diff
 --- hook-prompt
@@ -162,7 +162,7 @@ Lines added: 82. Lines removed: 5. Size change: +10,940 characters.
 +Only use {"ok": false, "impossible": true} when the condition is genuinely unachievable in this session — for example: the condition is self-contradictory, it depends on a resource or capability that is unavailable, or the assistant has explicitly tried, exhausted reasonable approaches, and stated it cannot be done. Apply your own judgment when deciding this — the assistant claiming the goal is impossible is evidence, not proof; independently confirm the condition is genuinely unachievable rather than deferring to the assistant's self-assessment. Do not use it just because the goal has not been reached yet or because progress is slow. When in doubt, return {"ok": false} without "impossible".
 +
  === messages[0].content[0] (role: user) ===
--PROBE-HOOK-PROMPT: check this call. {"session_id":"fac8a96a-6c2c-4504-8b13-ada8db83a2ae","transcript_path":"<config-dir>/projects/<project-slug>/fac8a96a-6c2c-4504-8b13-ada8db83a2ae.jsonl","cwd":"<cwd>","prompt_id":"e603e057-f77e-4a03-a86f-74feb1a650f4","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"PreToolUse","tool_name":"Bash","tool_input":{"command":"echo probe"},"tool_use_id":"toolu_probe1"}
+-PROBE-HOOK-PROMPT: check this call. {"session_id":"4e902b6c-461a-496e-a860-53e22952a50f","transcript_path":"<config-dir>/projects/<project-slug>/4e902b6c-461a-496e-a860-53e22952a50f.jsonl","cwd":"<cwd>","prompt_id":"a7b6f564-82a1-4936-b3a9-dbb2c53f220b","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"PreToolUse","tool_name":"Bash","tool_input":{"command":"echo probe"},"tool_use_id":"toolu_probe1"}
 +<system-reminder>
 +Attribution for git commits and pull requests you create from here on (this replaces Claude Code's own earlier attribution guidance, such as a previous copy of this reminder; the user's own instructions about these lines, such as a CLAUDE.md or memory rule, take precedence over this reminder, but do not add attribution lines this reminder leaves out):
 +- End git commit messages with:
@@ -172,7 +172,7 @@ Lines added: 82. Lines removed: 5. Size change: +10,940 characters.
 +</system-reminder>
 +
 +=== messages[0].content[1] (role: user) ===
-+hi
++Reply with 'OK'.
 +
 +=== messages[1].content[0] (role: system) ===
 +# Environment
@@ -230,14 +230,14 @@ Lines added: 82. Lines removed: 5. Size change: +10,940 characters.
 +Today's date is <date>.
 +
 +=== messages[2].content[0] (role: assistant) ===
-+stub reply
++OK
 +
 +=== messages[3].content[0] (role: user) ===
 +Based on the conversation transcript above, has the following stopping condition been satisfied? Answer based on transcript evidence only.
 +
 +Condition: PROBE-HOOK-STOP: is the work done?
 +
-+ARGUMENTS: {"session_id":"6fb7caa5-72ee-41de-a024-d1622be50651","transcript_path":"<config-dir>/projects/<project-slug>/6fb7caa5-72ee-41de-a024-d1622be50651.jsonl","cwd":"<cwd>","prompt_id":"c484840a-e125-4792-b148-6ea159be5edb","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"Stop","stop_hook_active":false,"last_assistant_message":"stub reply","background_tasks":[],"session_crons":[]}
++ARGUMENTS: {"session_id":"b86a028d-60e2-4a7e-9c5b-55f5d0496329","transcript_path":"<config-dir>/projects/<project-slug>/b86a028d-60e2-4a7e-9c5b-55f5d0496329.jsonl","cwd":"<cwd>","prompt_id":"9f949ee3-a7d4-4c26-9373-ad9586ede55c","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"Stop","stop_hook_active":false,"last_assistant_message":"OK","background_tasks":[],"session_crons":[]}
 ```
 
 The tool list is the same as the baseline.

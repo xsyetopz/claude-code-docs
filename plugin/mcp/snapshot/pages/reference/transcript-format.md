@@ -78,14 +78,14 @@ These keys appear on `user`, `assistant`, `attachment`, and `system` lines.
 ## Line Types
 
 All rows are [Undocumented], because no docs page lists the line types.
-The key lists come from a transcript that 2.1.304 wrote, and the meanings from the program and its type file where they are clear.
+The key lists come from transcripts that 2.1.305 wrote on a real machine and in a stub run, and the meanings from the program and its type file where they are clear.
 
 | `type` | Main keys | Meaning |
 | --- | --- | --- |
 | `user` | `message`, `promptId`, `permissionMode`, `permissionDecision`, `toolUseResult`, `sourceToolAssistantUUID`, `origin`, `promptSource`, `turnOrigin`, `turnPosition` | A user turn or a tool result. |
 | `assistant` | `message`, `requestId`, `requestRef`, `requestedModel`, `effort`, `perTurnEffort`, `advisorModel`, `apiBlockIndex` | A reply of the model. |
 | `system` | `subtype`, `content`, `level`, `durationMs`, `messageCount` | A note that the model never reads. |
-| `attachment` | `attachment`, `rendered`, `renderedRole` | Context that Claude Code adds beside the conversation. |
+| `attachment` | `attachment`, `rendered`, `renderedRole`, `renderedInHumanTurn` | Context that Claude Code adds beside the conversation. |
 | `queue-operation` | `operation`, `content`, `commandUuid`, `deliveryId`, `reason` | A prompt or command that waits in the queue. |
 | `api-request` | `params`, `shapeHash`, `cacheControl`, `requestDigest`, `querySource`, `base`, `keep`, `tail`, `id` | The shape of one request. |
 | `api-request-shape` | `shape`, `shapeHash` | The `system` and `tools` of a request, stored once. |
@@ -204,7 +204,7 @@ Content block types seen: `text`, `thinking`, `tool_use` (in `assistant` lines),
 ## `attachment` Types
 
 An `attachment` line holds an object in `attachment` with a `type` key.
-Types seen in a 2.1.304 transcript:
+Types seen in real 2.1.305 transcripts: `total_tokens_reminder`, `output_style`, `output_style_instructions`, `queued_command`, `edited_text_file`, `skill_listing`, `agent_listing_delta`, `deferred_tools_delta`, `deferred_tools_record`, `mcp_instructions_delta`, `environment`, `date`, `model`, `session_context`, `instructions`, `auto_mode`, `credential_org`, `prompt_snapshot`, `silent_turn_reminder`, `nested_memory`, and `file`. `goal_status` and `remote_session_change` were not seen there. A 2.1.305 stub run showed `total_tokens_reminder`, `output_style`, `output_style_instructions`, `nested_memory`, `skill_listing`, `agent_listing_delta`, `deferred_tools_delta`, `environment`, `date`, `model`, `session_context`, `instructions`, `auto_mode`, `prompt_snapshot`, and `remote_session_change`:
 
 | `attachment.type` | Meaning |
 | --- | --- |
@@ -217,6 +217,7 @@ Types seen in a 2.1.304 transcript:
 | `deferred_tools_record` | A record of deferred tools. |
 | `edited_text_file` | A note that a file changed outside the model. |
 | `environment`, `date`, `model`, `session_context`, `instructions` | Environment and session facts. |
+| `remote_session_change` | The commit and pull request attribution text for git, as a reminder to the model. |
 | `goal_status`, `auto_mode`, `credential_org`, `prompt_snapshot`, `silent_turn_reminder` | State of a goal, auto mode, the account, the prompt snapshot, and a reminder after a silent turn. |
 
 The Mod API type `SessionAppendMessage` lists the `name` of an attachment as `queued_command`, `nested_memory`, and similar, and notice names such as `compact_boundary` and `local_command`.

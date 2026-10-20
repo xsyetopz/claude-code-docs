@@ -1,6 +1,6 @@
 ---
 title: "Probes"
-description: "Facts checked by running Claude Code 2.1.304 against a local stub, and the env vars and settings that changed what the program sent."
+description: "Facts checked by running Claude Code 2.1.305 against a local stub, and the env vars and settings that changed what the program sent."
 url: https://xsyetopz.github.io/claude-code-docs/reference/probes
 source: docs/reference/probes.md
 ---
@@ -8,21 +8,22 @@ source: docs/reference/probes.md
 # Probes
 
 
-A probe is a small test that runs Claude Code `2.1.304` and checks what one setting changes.
+A probe is a small test that runs Claude Code `2.1.305` and checks what one setting changes.
 The probes ran against a local stub of the Messages API, so they cost nothing and sent no data to Anthropic.
 They show which environment variables and settings have an effect that you can see.
 
 ## How We Probed
 
-1. We ran the unmodified `2.1.304` program with `claude -p "hi" --output-format stream-json --verbose`.
+1. We ran the unmodified `2.1.305` program with `claude -p "Reply with 'OK'." --output-format stream-json --verbose`. Every probe used that prompt.
 2. We gave each run a fresh config folder, a fresh home folder, a fake API key, and a base URL that points to the local stub.
 3. We turned off telemetry and other optional traffic. We pointed the proxy settings to a closed port, so a stray request to `api.anthropic.com` fails.
-4. The stub answered `POST /v1/messages` as a stream or as JSON. It sent one scripted tool call and then plain text. It wrote the method, path, headers, and body of each request to a log.
+4. The stub answered `POST /v1/messages` as a stream or as JSON. It sent one scripted tool call and then the plain text `OK`. It wrote the method, path, headers, and body of each request to a log.
 5. We made two baselines. The first was a plain run. The second ran a `Bash` tool call with command hooks on five events and a local plugin with a skill, a hook, and an MCP server. Two repeat runs of each baseline were identical after we removed ids, paths, and times.
-6. We set each of 166 variables to `1` in both baselines, which gave 332 runs. We compared headers, betas, the system prompt, tools, body fields, output events, files in the config folder, the hook log, and the environment names that hooks saw.
+6. We set each of 1,506 variable names to `1` in both baselines, which gave 3,012 runs. The names came from the program itself. We listed every upper-case word in its strings that starts with `ANTHROPIC_`, `API_`, `BASH_`, `CLAUDE_`, `DISABLE_`, `ENABLE_`, `IS_`, `MAX_`, `MCP_`, `NO_`, `OTEL_`, or `USE_` and ends in a letter or digit. That gave 1,499 words, and we added 7 cut-off prefixes that end in `_` (they had no effect). Not every word is an environment variable that the program reads: the list also has shell variables such as `BASH_ARGV`. Names with other prefixes were not swept. Each run got an explicit environment with only the probe setup and the name under test, so no variable of the parent shell reached the program. One name, `ANTHROPIC_API_KEY`, was dropped, because `1` replaced the fake key. We compared headers, betas, the system prompt, tools, body fields, output events, files in the config folder, the hook log, and the environment names that hooks saw.
 7. Some names got extra runs: auto mode with a `Bash` call, `--brief`, `--resume`, and the plugin variables with a plugin.
+   `--brief` changed nothing that we compared, in either baseline. `--resume` with the id of an earlier run loaded that run: the request had both prompts and the first reply, and the session id stayed the same.
 
-Every request carried the fake key, and the only path called was `/v1/messages?beta=true`.
+Every request carried the fake key. The only path called was `/v1/messages?beta=true`, except with `CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY`, which also called `/v1/models?limit=1000`.
 
 ```mermaid
 flowchart TD
@@ -34,10 +35,11 @@ flowchart TD
 
 ## Results
 
-Of the 166 variables, 11 had an effect that we could see. The rest had none.
+Of the 1,506 names, 108 had an effect that we could see: 53 are [Undocumented] in the [Environment Variables](https://xsyetopz.github.io/claude-code-docs/configure/env-vars.md) pages, 2 (`CLAUDE_CODE_HOST_HTTP_PROXY_PORT` and `DISABLE_COLORS`) have no row there, and 53 are documented there. The rest had none.
+We did not count 13 names whose only difference was in the environment names that hooks saw, because the program sets those names itself. The exception is `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB`: its effect is real (hooks lost `ANTHROPIC_API_KEY`, `CLAUDE_CONFIG_DIR`, `GIT_CONFIG_GLOBAL`, and `CLAUDE_CODE_MESSAGING_TOKEN`), and the Static and Print row covers it. We also did not count `ANTHROPIC_BASE_URL`, `NO_PROXY`, and `CLAUDE_CONFIG_DIR`, which the probe setup sets itself.
 No visible effect in print mode does not prove that a variable does nothing.
 Many variables work only in other modes, in remote sessions, or with a login.
-This page lists only the rows with an effect or a difference. The rows with no visible effect are left out.
+This page lists the undocumented names with a clear effect, the two documented plugin variables, and the items that differ from the docs. The other documented names with an effect, and all names with no visible effect, are left out.
 
 ### Effects and Differences
 
@@ -47,40 +49,81 @@ The status of an environment variable is the one on its row in the [Environment 
 | Name | What We Set | Status | What We Saw |
 | --- | --- | --- | --- |
 | `--model X[1m]` | model flag | [Undocumented] | `context-1m-2025-08-07` is added for `sonnet[1m]`, `opus[1m]`, and every `claude-*[1m]` tried, also for models with a native 1M window. Without `[1m]` it is never sent. |
-| hook `type: "script"` | settings | [Differs] | Rejected at load with `Unknown hook type "script"; entry ignored`. No script ran. A `PreToolUse` entry also disables the whole settings file it sits in. |
+| hook `type: "script"` | settings | [Differs] | Rejected at load. Under `PostToolUse` the text is `Unknown hook type "script"; entry ignored`, and the other hooks in the file still ran. Under `PreToolUse` the text is `Unknown hook type "script" — a PreToolUse/PermissionRequest hook that cannot be loaded`. No script ran. A `PreToolUse` entry also disables the whole settings file it sits in (the `SessionStart` and `PostToolUse` command hooks in the same file did not run). |
+| `CLAUDE_AGENT_SDK_VERSION` | `1` | [Undocumented] | Adds `agent-sdk/1` (the value) to the user agent. |
+| `CLAUDE_CODE_ACTION` | `1` | [Undocumented] | Sets the entrypoint to `claude-code-github-action` in the billing header and the user agent, and adds `claude-code-guide` to the agent list. |
+| `CLAUDE_CODE_ADDITIONAL_PROTECTION` | `1` | [Undocumented] | Adds the request header `x-anthropic-additional-protection`. |
 | `CLAUDE_CODE_AMBER_ASTROLABE` | `1` | [Undocumented] | Adds an "operating autonomously" block to the system prompt (do not ask "Shall I...?", finish the work before ending the turn). |
+| `CLAUDE_CODE_ATTACHMENTS_BY_PATH` | `1` | [Undocumented] | Adds the `SendUserFile` tool. |
 | `CLAUDE_CODE_BASALT_COVE` | `1` | [Undocumented] | Adds a "Communicating with the user" section and a code-comment rule to the system prompt. |
+| `CLAUDE_CODE_BISON_CAIRN` | `1` | [Undocumented] | Adds a "Delivering work" section to the system prompt. |
+| `CLAUDE_CODE_BRIDGE_CHILD_AUTO_DEFAULT` | `1` | [Undocumented] | Starts in `auto` permission mode (`permissionMode` in `init`). Adds the betas `dangerous-tool-use-2026-09-03` and `afk-mode-2026-01-31`, a `safeguards` body field, an auto mode reminder in the first message, and a `system/informational` event. |
+| `CLAUDE_CODE_BRIEF` | `1` | [Undocumented] [Gated: Works only behind a feature flag or server gate] | Adds a "Talking to the user" section and the `SendUserMessage` tool. The reply goes through that tool, so the output has an extra tool turn. |
+| `CLAUDE_CODE_CONTAINER_ID` | `1` | [Undocumented] | Adds the request header `x-claude-remote-container-id`. |
+| `CLAUDE_CODE_COORDINATOR_MODE` | `1` | [Undocumented] [Gated: Works only behind a feature flag or server gate] | The tool list shrinks to `Agent`, `ListAgents`, `SendMessage`, `Skill`, `TaskStop`, and `Workflow`. The only agent is `worker`. The beta `advanced-tool-use-2025-11-20` is not sent, and the first message lists the worker tools. |
+| `CLAUDE_CODE_DISABLE_CLAUDE_API_SKILL` | `1` | [Undocumented] | Removes the `claude-api` skill from the skill list and the slash commands. |
+| `CLAUDE_CODE_DISABLE_REFUSAL_RETRY` | `1` | [Undocumented] | Adds the beta `fallback-credit-2026-06-01`. |
+| `CLAUDE_CODE_EMIT_STARTUP_TIMING` | `1` | [Undocumented] | Adds `startup_timing` to the `init` event. |
+| `CLAUDE_CODE_EMIT_TOOL_USE_SUMMARIES` | `1` | [Undocumented] | Adds `tool_use_summary` events after a tool runs. |
+| `CLAUDE_CODE_ENABLE_EXPERIMENTAL_ADVISOR_TOOL` | `1` | [Undocumented] [Gated: A feature flag or server gate decides by default. This variable overrides it] [Experimental] | Adds the beta `advisor-tool-2026-03-01` and an `advisor` slash command. |
+| `CLAUDE_CODE_ENABLE_REFRESH_MCP_TOOLS` | `1` | [Undocumented] | Adds the `RefreshMcpTools` tool (seen with a plugin MCP server configured). |
+| `CLAUDE_CODE_ENABLE_TOKEN_USAGE_ATTACHMENT` | `1` | [Undocumented] | Adds a line `Token usage: 0/980000; 980000 remaining` to the first message. |
+| `CLAUDE_CODE_ENTRYPOINT` | `1` | [Undocumented] | Sets the entrypoint in the billing header and the user agent to the value (`1` here), and adds `claude-code-guide` to the agent list. |
+| `CLAUDE_CODE_FOOTER_INDICATOR` | `1` | [Undocumented] | Adds `footer_indicator` to the `init` event. |
 | `CLAUDE_CODE_HUMBLE_HAMMOCK` | `1` | [Undocumented] [Gated: A feature flag or server gate decides by default. This variable overrides it] | Adds `wire_tool_inputs` (raw `tool_use.input`) to the assistant event when a tool runs. |
+| `CLAUDE_CODE_INCLUDE_PARTIAL_MESSAGES` | `1` | [Undocumented] | Adds `stream_event` events and a `system/status` event to the output. |
 | `CLAUDE_CODE_INLINE_TOOLS` | `1` | [Undocumented] [Gated: Works only behind a feature flag or server gate] | Adds the beta `inline-tools-2026-09-15` to `anthropic-beta`. |
 | `CLAUDE_CODE_LANTERN_PRISM` | `1` | [Undocumented] [Gated: Works only behind a feature flag or server gate] | Adds the `skill-doctor` skill to the `init` event. |
 | `CLAUDE_CODE_LARCH_CISTERN` | `1` | [Undocumented] [Gated: A feature flag or server gate decides by default. This variable overrides it] | Adds a "Corrections" section to the system prompt (avoid excessive self-correction). |
-| `CLAUDE_CODE_PLUGIN_DIRS` | `1` | [Documented] | Loads the plugin dir like `--plugin-dir` (same `plugins` list in `init`). |
+| `CLAUDE_CODE_PEWTER_OWL` | `1` | [Undocumented] [Gated: A feature flag or server gate decides by default. This variable overrides it] | Adds the `SendUserMessage` tool and a "Talking to the user" section. The reply goes through that tool, so the output has an extra tool turn. |
+| `CLAUDE_CODE_PEWTER_OWL_TOOL` | `1` | [Undocumented] [Gated: A feature flag or server gate decides by default. This variable overrides it] | Adds only the `SendUserMessage` tool. |
+| `CLAUDE_CODE_PLUGIN_DIRS` | a plugin folder path | [Documented] | Loads the plugin folder like `--plugin-dir` (the plugin is in the `plugins` list in `init`). The value `1` changed nothing. |
+| `CLAUDE_CODE_PROFILE_STARTUP` | `1` | [Undocumented] | Writes a `.json` and a `.txt` file under `startup-perf/` in the config folder. |
+| `CLAUDE_CODE_REMOTE_MEMORY_DIR` | `1` | [Undocumented] | Changes the memory folder in the system prompt to the value plus `/projects/` and the project folder name (`1/projects/...` here). |
+| `CLAUDE_CODE_SDK_READS_SESSION_STATE` | `1` | [Undocumented] | Adds `system/session_state_changed` events (with `sdk_host_only`). |
+| `CLAUDE_CODE_SDK_READS_STARTUP_MARKS` | `1` | [Undocumented] | Adds `keep_alive` events with a `startup_mark` field. |
 | `CLAUDE_CODE_SIMULATE_PROXY_USAGE` | `1` | [Undocumented] | Removes the whole `anthropic-beta` header and the `thinking.display` field. |
+| `CLAUDE_CODE_SKILL_PROPOSALS` | `1` | [Undocumented] | Adds a "Saving skills" section to the system prompt (skill files are a read-only cache; point the user to claude.ai settings). |
+| `CLAUDE_CODE_SKIP_PLUGIN_LOCAL_MCP_SERVERS` | `1` | [Undocumented] | Plugin MCP servers are not started. `mcp_servers` is empty and the tool list shrinks. |
 | `CLAUDE_CODE_SKIP_PLUGIN_MCP_SERVERS` | `1` | [Undocumented] | Plugin MCP servers are not started. `mcp_servers` is empty and the tool list shrinks. |
 | `CLAUDE_CODE_SYNC_PLUGIN_INSTALL` | `1` | [Documented] | Emits `plugin_install` events (`started`, `completed`) in stream-json. |
+| `CLAUDE_CODE_TETHER_LIVE` | `1` | [Undocumented] [Gated: A feature flag or server gate decides by default. This variable overrides it] | Adds the betas `mid-conversation-system-clear-at-2026-08-21` and `message-threads-2026-08-12` and a `thread` body field. |
+| `CLAUDE_CODE_TOTAL_TOKENS_REMINDER_BUDGET` | `1` | [Undocumented] | Sets the number in the `total_tokens` reminder (`1 tokens left` here). |
+| `CLAUDE_CODE_TURN_UPDATES` | `1` | [Undocumented] | Adds guidance to say what you are about to do and to end with a recap. The line "Write code that reads like the surrounding code..." is gone. |
 | `CLAUDE_CODE_USE_COWORK_PLUGINS` | `1` | [Undocumented] | User settings come from `cowork_settings.json`, so its hooks and `env` apply and those of `settings.json` do not. Plugins and marketplaces use `cowork_plugins`. `claude plugin install` writes there. |
+| `CLAUDE_CODE_WILLOW_TERN` | `1` | [Undocumented] [Gated: A feature flag or server gate decides by default. This variable overrides it] | Adds a "Writing for the user" section to the system prompt. |
+| `CLAUDE_COWORK_MEMORY_EXTRA_GUIDELINES` | `1` | [Undocumented] | Appends the value to the system prompt. |
+| `CLAUDE_COWORK_MEMORY_GUIDELINES` | `1` | [Undocumented] | Replaces the memory section of the system prompt with `# auto memory` and the value. |
+| `CLAUDE_COWORK_MEMORY_INDEX_CONTENT` | `1` | [Undocumented] | Adds a message that shows the value as the content of the `MEMORY.md` auto-memory file. |
+| `CLAUDE_MEMORY_STORES` | `1` | [Undocumented] | Changes the memory section of the system prompt: it adds a 4 KB limit per memory file and drops the `MEMORY.md` pointer rule. |
+| `CLAUDE_PROJECT_UUID` | `1` | [Undocumented] [Gated: Works only behind a feature flag or server gate] | Adds the `Projects` tool. |
+
+Ten undocumented names have no row in this table. Five ended the run with the value `1`, because they need a real value: `CLAUDE_CODE_BLOCKING_LIMIT_OVERRIDE` (result `Prompt is too long`, exit code 1), `CLAUDE_CODE_CLIENT_DATA_URL` (it must be the `https://downloads.claude.ai/` address), `CLAUDE_CODE_CUSTOM_OAUTH_URL` (exit code 1), `CLAUDE_CODE_REMOTE_TOOLS_PIN_STORED_LOGIN` (exit code 78), and `CLAUDE_CODE_USE_ANTHROPIC_GOOGLE_CLOUD` (no workspace ID). `ANTHROPIC_LOG` printed that `1` must be one of `off`, `error`, `warn`, `info`, or `debug`. `CLAUDE_CODE_HOST_HTTP_PROXY_PORT`, `CLAUDE_CODE_SILENT_TURN_REMINDER_TURNS`, and `DISABLE_COLORS` changed one baseline in a way that we could not tie to the name, so we did not describe them. `CLAUDE_CODE_WEB_FETCH_AGENT` is in [Subagents and Hooks](#subagents-and-hooks).
 
 ## Request Details
 
-- `cc_version=2.1.304.914`: the suffix `914` stayed the same in all runs.
-- `/v1/messages/cache_touch`: never called. The program sends it only when the response has `anthropic-cache-keepalive: active` for a request with the `cache-keepalive-2026-09-03` beta.
-  That beta needs a 1-hour cache TTL for a subscriber login, `allow_cache_keepalive`, and a server-side flag.
-  The body is `{"request_id": ...}`. Touches repeat every 30 s by default (10 to 120).
-  The stub with the response header and a flag override did not start it, because the probe had no subscriber login.
+- `cc_version=2.1.305.b57`: the suffix `b57` stayed the same in all runs with the prompt `Reply with 'OK'.`, on both models tried. Auto mode classifier requests carried a different suffix, `034`.
+- `/v1/messages/cache_touch`: never called. On `2.1.305` with a real `CLAUDE_CODE_OAUTH_TOKEN`, `claude -p "Reply with 'OK'."` got no `anthropic-cache-keepalive` header, the request had no `cache-keepalive` beta, and no `cache_touch` call was made (seen through a local proxy that logged only paths, and a debug file). The program sends it only when the response has `anthropic-cache-keepalive: active` for a request with the `cache-keepalive-2026-09-03` beta.
+  That beta needs a 1-hour cache TTL for a subscriber login, `allow_cache_keepalive`, and a server-side flag. It is also off when `ANTHROPIC_UNIX_SOCKET` is set.
+  The body is `{"request_id": ...}`, and the response needs a request id. Touches repeat every 30 s by default (10 to 120).
+  We ran the stub with that response header and a request id, with and without `CLAUDE_INTERNAL_FC_OVERRIDES` setting the flags. The program never sent the beta and never called the path, because the probe had no subscriber login.
+  The path, the header name, the body field, and the 30 s default with its 10 to 120 range are in the program's code.
 - `context-1m-2025-08-07`: added by a `[1m]` suffix, also on models with a native 1M window. Not sent without the suffix.
   The default model in this setup was `claude-opus-5-5` and it did not send the beta.
-- Base betas in the plain run: `claude-code-20250219`, `interleaved-thinking-2025-05-14`, `thinking-token-count-2026-05-13`, `context-management-2025-06-27`, `prompt-caching-scope-2026-01-05`, `per-turn-control-2026-07-01`, `mid-conversation-tool-changes-2026-07-01`, `effort-2025-11-24`, `thinking-display-updates-2026-08-18`.
-  A first-party connection adds `advanced-tool-use-2025-11-20`, `thinking-binding-controls-2026-08-01`, and `cache-diagnosis-2026-04-07`.
+- Base betas in the plain run: `claude-code-20250219`, `interleaved-thinking-2025-05-14`, `thinking-token-count-2026-05-13`, `context-management-2025-06-27`, `prompt-caching-scope-2026-01-05`, `per-turn-control-2026-07-01`, `mid-conversation-tool-changes-2026-07-01`, `advanced-tool-use-2025-11-20`, `effort-2025-11-24`, `thinking-display-updates-2026-08-18`.
+  A first-party connection adds `mid-conversation-system-clear-at-2026-08-21`, `thinking-binding-controls-2026-08-01`, and `cache-diagnosis-2026-04-07`, and a `diagnostics` body field.
+  We tested that with the base URL `http://api.anthropic.com` and `ANTHROPIC_UNIX_SOCKET` pointing to a local socket, so nothing left the machine.
 
 ## Auto Mode
 
 With `--permission-mode auto` and a `Bash` call, the stub got classifier requests with `xml_s1` and `xml_s2` stages.
+There were five requests of each stage, because the stub's `OK` reply makes the program retry.
 The debug log says `server_no_result` and falls back to billed local classifier requests.
-Neither classifier variable changed that.
+`CLAUDE_CODE_TWO_STAGE_CLASSIFIER=1` and `CLAUDE_CODE_AUTO_MODE_SERVER=1` changed nothing. `CLAUDE_CODE_AUTO_MODE_SERVER=0` removed the `server_no_result` line from the debug log, and the stub still got the same ten requests.
 
 ### `autoMode.classifyAllShell`
 
-We ran `claude -p --permission-mode auto` against the stub with the command `curl -s http://127.0.0.1:9/x` and a user allow rule `Bash(curl -s http://127.0.0.1:9/x)`. The count is the stub requests that carried the classifier system prompt. A managed folder needed `sudo`, so the user ran the managed cases.
+We ran `claude -p --permission-mode auto` against the stub with the command `curl -s http://127.0.0.1:9/x` and a user allow rule `Bash(curl -s http://127.0.0.1:9/x)`. The table shows whether the stub got requests that carried the classifier system prompt: `1` means the classifier ran, `0` means it did not. A classifier run sent about 10 requests per `Bash` call, because the stub's canned reply makes the program retry. A managed folder needed `sudo`, so the user ran the managed cases on `2.1.305`: managed `true` and `false` each in all 7 settings combinations.
 
 | Settings | Classifier Requests |
 | --- | --- |
@@ -93,11 +136,11 @@ We ran `claude -p --permission-mode auto` against the stub with the command `cur
 | Managed `false`, with user or `--settings` `false`, or neither | 0 |
 | Managed `true`, with user `false`, `--settings` `false`, or neither | 1 |
 
-Any `true` in user, `--settings`, or managed settings turns the flag on. `false` is the same as unset. The program reads no project or local source. Not seen: the setting in project or local settings (the program ignores them; not run).
+Any `true` in user, `--settings`, or managed settings turns the flag on. `false` is the same as unset. The program reads no project or local source: `true` in project settings or in local settings gave 0 classifier requests.
 
 ## Subagents and Hooks
 
-Follow-up probes used the same stub, a fake key, a temp home folder, and `-p --output-format stream-json --verbose`. The stub scripted `Agent`, `Workflow`, `Bash`, and `Skill` calls, so each subagent request could be logged. No login was used, so cloud paths were not run. The interactive screen has its own section below.
+Follow-up probes ran `2.1.305` against the same stub, with a fake key, a temp home folder, and `-p "Reply with 'OK'." --output-format stream-json --verbose`. The stub scripted `Agent`, `Workflow`, `Bash`, and `Skill` calls, so each subagent request could be logged. No login was used, so cloud paths were not run. The interactive screen has its own section below.
 
 | What We Ran | Status | What We Saw |
 | --- | --- | --- |
@@ -106,7 +149,7 @@ Follow-up probes used the same stub, a fake key, a temp home folder, and `-p --o
 | `Agent` with each built-in type | [Undocumented] | `claude`, `Explore`, `general-purpose`, `Plan`, `statusline-setup`, and `fork` started. `claude-code-guide`, `comment-thread-analyst`, `observer`, and `workflow-subagent` gave `Agent type '...' not found` in `-p`. The interactive screen started `claude-code-guide` (see [Interactive Probes](#interactive-probes)). |
 | `--append-subagent-system-prompt` | [Undocumented] | The text is the last lines of the subagent system prompt. The env var alone changed nothing. |
 | `observer` frontmatter | [Undocumented] | Without `CLAUDE_CODE_EXPERIMENTAL_OBSERVER_AGENTS=1` no observer ran. With it, a fifth request ran as the observer, with an `ObserverReport` tool, and `observerMessage` was the last line of the digest. |
-| Subscription (OAuth) login, main and `Explore` requests | [Undocumented] | Same main prompt, same 12 default tools, and same `Explore` prompt as an API key. The `Explore` request had the same 7 tools: `Bash`, `ListAgents`, `Read`, `ReportFindings`, `Skill`, `DeferredToolPlaceholder`, and `ToolSearch`. See [Override a Prompt](https://xsyetopz.github.io/claude-code-docs/prompts/override.md). |
+| Subscription (OAuth) login, main and `Explore` requests | [Undocumented] | Same main system prompt text (apart from the memory folder path), same 12 default tools, and same `Explore` prompt as an API key. Different: a 1-hour cache `ttl`, `thinking.display` `updates`, the `ScheduleWakeup` description, a `schedule` skill, and `RemoteTrigger` in the deferred list. The `Explore` request had the same 7 tools: `Bash`, `ListAgents`, `Read`, `ReportFindings`, `Skill`, `DeferredToolPlaceholder`, and `ToolSearch`. See [Override a Prompt](https://xsyetopz.github.io/claude-code-docs/prompts/override.md). |
 | Agent frontmatter spelling | [Undocumented] | `Tools` and `disallowed-tools` were ignored. `tools` and `disallowedTools` worked. |
 | `isolation: remote` in a file | [Undocumented] | No error. The agent ran in a local worktree, like `worktree`. |
 | Command hooks with `continue:false` and `systemMessage` | [Documented] | See [Hook Input and Output](https://xsyetopz.github.io/claude-code-docs/extend/hooks/input-and-output.md#what-continue-and-systemmessage-do-per-event). |
@@ -114,26 +157,26 @@ Follow-up probes used the same stub, a fake key, a temp home folder, and `-p --o
 
 ## Configure and Memory
 
-These checks used the same stub, plus static reading of the program. Nothing was run with a login.
+These checks ran `2.1.305` against the same stub, plus static reading of the program. Nothing was run with a login.
 
 | What We Ran | Status | What We Saw |
 | --- | --- | --- |
 | User `outputStyle` plus a plugin style with `force-for-plugin: true` | [Undocumented] | The system prompt used the forced plugin style. The `init` event still named the configured style. |
 | `CLAUDE_CODE_REMOTE=1`, with and without `CLAUDE_CODE_REMOTE_MEMORY_DIR` | [Undocumented] | Without the dir, the auto-memory section is missing. With it, the section returns and names the dir. |
-| `CLAUDE_MEMORY_STORES` set to a JSON list | [Undocumented] | The auto-memory section was gone. No `memory_*` tool was added. |
+| `CLAUDE_MEMORY_STORES` set to a JSON list | [Undocumented] | A list such as `[{"name":"s1","path":"/some/dir"}]` kept the memory section, but it named a `memory/team/<dir name>` folder under the project folder in the config folder, marked "(shared with all users of this project)", and added a 4 KB limit note per memory file. A list of strings, `[]`, and text that was not JSON changed nothing. No `memory_*` tool was added. 2.1.304 gave the same result. |
 | `claude auto-mode config` with `autoMode.allow` in each source | [Documented] | User settings and `--settings` applied. `.claude/settings.json` and `.claude/settings.local.json` were ignored. Managed settings applied too, see [Managed Folder Probe](#managed-folder-probe). |
 
 ## Context Budget
 
-These runs used a live subscription login on `2.1.304`, not the stub, with a fresh config folder and an empty project.
+These runs used a live subscription login on `2.1.305`, not the stub, with a fresh config folder and an empty project.
 
 | What We Ran | Status | What We Saw |
 | --- | --- | --- |
-| `claude -p "/context" --output-format stream-json`, empty and after `claude -p hi` | [Undocumented] | An empty session held 12,114 tokens and 15,768 after "hi". The first request matched `/context` exactly. See [Context Budget](https://xsyetopz.github.io/claude-code-docs/how-it-works/context-budget.md). |
+| `claude -p "/context" --output-format stream-json`, empty and after `claude -p "Reply with 'OK'."` | [Undocumented] | An empty session held 12,524 tokens and 16,277 after `Reply with 'OK'.` (the reply was exactly `OK` in every run). The first request matched `/context` exactly. See [Context Budget](https://xsyetopz.github.io/claude-code-docs/how-it-works/context-budget.md). |
 
 ## Static and Print Probes
 
-These runs used the same stub, a fake key, a temp home folder, and a dead proxy, plus static reading of the program. Nothing was run with a login or with `sudo`. The [Managed Folder Probe](#managed-folder-probe) is the one section that used `sudo`.
+These runs used `2.1.305`, the same stub, a fake key, a temp home folder, and a dead proxy, plus static reading of the program. Nothing was run with a login or with `sudo`. The [Managed Folder Probe](#managed-folder-probe) is the one section that used `sudo`.
 
 | What We Ran | Status | What We Saw |
 | --- | --- | --- |
@@ -141,7 +184,7 @@ These runs used the same stub, a fake key, a temp home folder, and a dead proxy,
 | A user agent with `mcpServers` frontmatter | [Undocumented] | The server started with the agent and stopped when it ended. The same agent in `.claude/agents/` was skipped in an untrusted folder. |
 | `claude plugin validate` with odd `version` values | [Documented] | A string of any text passed. A number failed. An empty string counted as missing. See [Plugin Manifest](https://xsyetopz.github.io/claude-code-docs/extend/plugins/manifest.md). |
 | `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB` with test variables | [Undocumented] | Credential and config names were removed. The four GitHub token variables stayed. The permission mode was forced to `default`. See [Tools and Bash Variables](https://xsyetopz.github.io/claude-code-docs/configure/env-vars/tools-and-bash.md#what-the-scrub-removes). |
-| Default `-p hi` for every model in the catalog | [Undocumented] | Short, extended short, or full prompt by model. See [System Prompt](https://xsyetopz.github.io/claude-code-docs/how-it-works/system-prompt.md#prompt-by-model). |
+| Default `-p "Reply with 'OK'."` for every model in the catalog | [Undocumented] | Short, extended short, or full prompt by model. See [System Prompt](https://xsyetopz.github.io/claude-code-docs/how-it-works/system-prompt.md#prompt-by-model). |
 | `CLAUDE_COWORK_MEMORY_*` and `CLAUDE_CODE_POST_TURN_MEMORY` | [Undocumented] | The four Cowork variables changed the memory section as described in [Memory and Rules](https://xsyetopz.github.io/claude-code-docs/configure/memory-and-rules.md). The post-turn pass did not run locally: the log said the memory server was not mounted. |
 | `PostToolUse` hook logging per tool | [Undocumented] | The `tool_response` shapes in [Hook Events](https://xsyetopz.github.io/claude-code-docs/extend/hooks/events.md#posttooluse-tool_response-shapes). |
 | `claude -p "/context"` | [Undocumented] | 24 `count_tokens` requests and no `/v1/messages` request. |
@@ -151,7 +194,7 @@ These runs used the same stub, a fake key, a temp home folder, and a dead proxy,
 
 ## Managed Folder Probe
 
-These runs used the real `2.1.304` binary on macOS with the stub, a fake key, and a temp home and config folder. The managed folder `/Library/Application Support/ClaudeCode` was made with `sudo` (owner `root:wheel`). It held `CLAUDE.md`, a rule, a skill, an output style, `managed-settings.json`, a `managed-settings.d/` drop-in, and `managed-mcp.json` with one stdio server. Each run also had a user server and a project `.mcp.json` server. A baseline ran without the folder. Runs used `-p --output-format stream-json`, plus `claude mcp list` and `claude mcp get`.
+These runs used the real `2.1.305` binary on macOS with the stub, a fake key, and a temp home and config folder. The managed folder `/Library/Application Support/ClaudeCode` was made with `sudo` (owner `root:wheel`). It held `CLAUDE.md`, a rule, a skill, an output style, `managed-settings.json`, a `managed-settings.d/` drop-in, and `managed-mcp.json` with one stdio server. Each run also had a user server and a project `.mcp.json` server. A baseline ran without the folder. Runs used `-p --output-format stream-json`, plus `claude mcp list` and `claude mcp get`.
 
 | What We Ran | Status | What We Saw |
 | --- | --- | --- |
@@ -161,41 +204,42 @@ These runs used the real `2.1.304` binary on macOS with the stub, a fake key, an
 | Managed `outputStyle` with a style file in the managed `.claude/output-styles/` | [Documented] | The `init` event named the style and its text was in the request. It won over `outputStyle` in user settings, `.claude/settings.json`, `.claude/settings.local.json`, and `--settings`. |
 | A skill in the managed `.claude/skills/`, with and without `CLAUDE_CODE_DISABLE_POLICY_SKILLS=1` | [Documented] | The skill was listed and its description was in the request. The variable removed it. Nothing else changed. |
 | Managed `CLAUDE.md` with user and project `CLAUDE.md` | [Documented] | Order in the request: managed, then `~/.claude/CLAUDE.md`, then project `CLAUDE.md`. |
-| `claudeMdExcludes` of `**/CLAUDE.md`, the managed absolute path, and `<managed>/**`, in user or project settings | [Documented] | User and project `CLAUDE.md` were removed. The managed `CLAUDE.md` still loaded. |
-| Managed `.claude/rules/*.md` | [Undocumented] | It loaded, and `claudeMdExcludes` with `<managed>/**` did not remove it. |
-| A `managed-settings.d/` drop-in that denies `NotebookEdit` | [Documented] | `NotebookEdit` was gone from the tool list (present in the baseline). |
+| `claudeMdExcludes` of `**/CLAUDE.md`, in user or project settings | [Documented] | User and project `CLAUDE.md` were removed. The managed `CLAUDE.md` and the managed rule still loaded. |
+| `claudeMdExcludes` of the managed absolute path, or `<managed>/**`, in user or project settings | [Documented] | Nothing was removed: user and project `CLAUDE.md` stayed, and the managed `CLAUDE.md` and the managed rule loaded. |
+| Managed `.claude/rules/*.md` | [Undocumented] | It loaded, and `claudeMdExcludes` with `**/CLAUDE.md`, the managed absolute path, or `<managed>/**` did not remove it. |
+| A `managed-settings.d/` drop-in that denies `NotebookEdit` | [Documented] | `NotebookEdit` left the `init` event tool list (present there in the baseline). It was not in the request tool list in either run (12 tools). |
 | The prompt note "not verified as your organization's policy" | [Undocumented] | It did not appear with a root-owned folder. The program text says it is added for managed files that the session's own account could write (not run). |
 | User agent with `mcpServers` frontmatter, no `--mcp-config` | [Undocumented] | The agent ran, but its server did not start (without the managed folder it did). A notice said `probe-agent agent MCP server blocked by enterprise MCP config: agent_srv`. |
 | `autoMode` in `managed-settings.json` and a `managed-settings.d/` drop-in, with `claude auto-mode config` | [Documented] | Both files applied. Lists from all sources join, with user or `--settings` rules first and managed rules after. `$defaults` expands where it sits. A list with no `$defaults` in any source has no defaults. See [Auto Mode](https://xsyetopz.github.io/claude-code-docs/configure/permissions/auto-mode.md). |
 
 ## Interactive Probes
 
-These runs used the real `2.1.304` binary in a pseudo-terminal (a Python `pty` driver with `pyte` to render the 200x50 screen, because tmux was not installed). The method is the same as `tmux send-keys` and `capture-pane`. The stub, the fake key, the temp home and config folders, the dead proxy, and `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1` were as in the other probes, with `env -i` so the parent session marker did not leak in. Onboarding and trust were skipped by seeding the config file. The stub answered a `DO:{...}` line in the prompt with one scripted tool call. No login and no real credentials were used.
+These runs used the real `2.1.305` binary in a pseudo-terminal (a Python `pty` driver with `pyte` to render the 200x50 screen, because tmux was not installed). The method is the same as `tmux send-keys` and `capture-pane`. The stub, the fake key, the temp home and config folders, the dead proxy, and `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1` were as in the other probes, with `env -i` so no variable from the parent session leaked in (the child got only the variables the probe set). Plain prompts were `Reply with 'OK'.` and the stub answered `OK`. Onboarding and trust were skipped by seeding the config file. The stub answered a `DO:{...}` line in the prompt with one scripted tool call. No login and no real credentials were used.
 
 | What We Ran | Status | What We Saw |
 | --- | --- | --- |
-| `Agent` with `claude-code-guide` | [Documented] | It started on `claude-haiku-5-5` with the tools `Bash`, `Read`, `WebFetch`, and `WebSearch`. The program leaves it out when `CLAUDE_CODE_ENTRYPOINT` is `sdk-ts`, `sdk-py`, or `sdk-cli`, which includes `-p`. See [Subagent, Claude Code Guide](https://xsyetopz.github.io/claude-code-docs/prompts/subagent-claude-code-guide.md). |
+| `Agent` with `claude-code-guide` | [Documented] | It started on `claude-haiku-5-5` with the tools `Bash`, `Read`, `WebFetch`, and `WebSearch`. The agent call ran in the background. The request text is the same as on 2.1.304. The program leaves it out when `CLAUDE_CODE_ENTRYPOINT` is `sdk-ts`, `sdk-py`, or `sdk-cli`, which includes `-p`. See [Subagent, Claude Code Guide](https://xsyetopz.github.io/claude-code-docs/prompts/subagent-claude-code-guide.md). |
 | `Agent` with other types | [Undocumented] | Unknown types return `Agent type '<x>' not found. Available agents: claude, claude-code-guide, Explore, general-purpose, Plan, statusline-setup`. `comment-thread-analyst`, `workflow-subagent`, and `web-fetch` (default settings) gave that error. `fork` returned `Fork started`. See [Subagent Runtime](https://xsyetopz.github.io/claude-code-docs/extend/subagents/runtime.md). |
 | `PermissionRequest`, `PermissionDenied`, `Notification`, and `PreCompact` hooks | [Undocumented] | All four fired. See [Hook Input and Output](https://xsyetopz.github.io/claude-code-docs/extend/hooks/input-and-output.md#what-fires-and-what-is-honored-in-the-interactive-screen). |
 | `Notification` types | [Documented] | Seven values seen live: `permission_prompt`, `idle_prompt`, `elicitation_dialog`, `elicitation_response`, `elicitation_url_dialog`, `elicitation_complete`, and `agent_needs_input`. See [Hook Events](https://xsyetopz.github.io/claude-code-docs/extend/hooks/events.md#notification). |
 | `Elicitation` and `ElicitationResult` hooks with an MCP server | [Undocumented] | Both fired. Inputs had `mcp_server_name`, `message`, `mode`, and `requested_schema`, and for the result `action` and `content`. |
 | `statusLine` and `subagentStatusLine` commands that log their input | [Undocumented] | `subagentStatusLine` ran on a fixed 5-second tick and got no `COLUMNS` or `LINES`. `statusLine` got `transcript_path` from the first run and `prompt_id` after the first prompt. Runs paused under dialogs. See [Status Line](https://xsyetopz.github.io/claude-code-docs/configure/status-line.md). |
 | Instruction file size warning with 45.6k, 156.0k, and four 34.4k files | [Undocumented] | A banner under the header at start and a line in `/status`. The 40k, 120k total, and 150k (Opus 5.5) limits held. See [Memory and Rules](https://xsyetopz.github.io/claude-code-docs/configure/memory-and-rules.md). |
-| `PostToolUse` hook logging for `Read`, `Write`, `Edit`, `Bash`, and an MCP tool | [Undocumented] | Same shapes as the `-p` probe (no `contentNotInModelContext` on `Edit`). See [Hook Events](https://xsyetopz.github.io/claude-code-docs/extend/hooks/events.md#posttooluse-tool_response-shapes). |
-| `/usage` when the usage endpoint answers `429`, with fake subscriber credentials and a local TLS stub behind a proxy (without `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC`) | [Undocumented] | Six texts, such as `Error: Usage endpoint is rate limited until 10:44am.` and `Showing last-known usage as of 10m ago (rate limited until 10:45am)`. See [Slash Commands](https://xsyetopz.github.io/claude-code-docs/extend/skills-and-commands/slash-commands.md). With `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` set, the panel showed `Failed to load usage data` and sent no request. Not seen: the `(could not refresh)` variants, the form without `as of`, and the `403` path. |
+| `PostToolUse` hook logging for `Read`, `Write`, `Edit`, `Bash`, and an MCP tool | [Undocumented] | Same shapes as the `-p` probe (no `contentNotInModelContext` on an `Edit` after a `Read`). On `2.1.305` an `Edit` of a file that was never read worked, and its `PostToolUse` input had `contentNotInModelContext: true`; no `PostToolUseFailure` fired. See [Hook Events](https://xsyetopz.github.io/claude-code-docs/extend/hooks/events.md#posttooluse-tool_response-shapes). |
+| `/usage` when the usage endpoint answers `429`, with fake subscriber credentials and a local TLS stub behind a proxy (without `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC`) | [Undocumented] | Rerun on `2.1.305` (fake credentials, local stub): a `429` with no `Retry-After` gave `Error: Usage endpoint is rate limited until <time>.` with the time 5 minutes away, and `Retry-After: 1800` gave a time 30 minutes away. A `200` with an `error` envelope gave `Error: Usage endpoint is rate limited. Please try again in a moment.` When rate-limit headers from a model reply had filled the first rows, the panel showed `Per-model breakdown unavailable (rate limited until <time>)` (or `(rate limited — try again in a moment)` for the envelope). After one good fetch and a later `429`, it showed `Showing last-known usage as of 2m ago (rate limited until <time>)`. These texts match the `2.1.304` run. With the real `CLAUDE_CODE_OAUTH_TOKEN` on `2.1.305` (a proxy that answered `429` for the usage endpoint and passed everything else on) the usage endpoint was never called, so the texts could not be checked: the panel showed the `Current session` and `Current week` rows from reply headers, and `Refreshing…` stayed up. A claude.ai login was not tried. See [Slash Commands](https://xsyetopz.github.io/claude-code-docs/extend/skills-and-commands/slash-commands.md). With `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` set, the panel showed `Failed to load usage data` and sent no request. Not seen on `2.1.305`: `Partial usage data`, the `(could not refresh)` variants, the form without `as of`, and the `403` path. |
 | A mod that calls `$.ui.notify` | [Undocumented] | The hook got `message`, `title`, and `notification_type` (type `plugin_notification`), even with no notification channel. See [Hook Events](https://xsyetopz.github.io/claude-code-docs/extend/hooks/events.md#notification). |
 
 ### Notification Types
 
-Follow-up probes ran the interactive screen with a hook that logs each `Notification` input. The same stub and fake key were used, with a temp home and config folder.
+Follow-up probes ran the interactive screen with a hook that logs each `Notification` input. The same stub and fake key were used, with a temp home and config folder. They were rerun on `2.1.305` with `env -i`.
 
 | What We Ran | Status | What We Saw |
 | --- | --- | --- |
-| `PushNotification` tool call `{message, status: "proactive"}` | [Undocumented] [Gated: The tool is behind a server-side flag that is off by default] | The hook got `session_id`, `transcript_path`, `cwd`, `prompt_id`, `hook_event_name`, `message` (`probe push`), and `notification_type` `push_notification`. No `title`. The tool result was `Terminal notification sent.` The flag is `tengu_kairos_push_notifications`. The probe forced it through cached feature flags in the temp config, with `CLAUDE_CODE_GB_DISK_CACHE_WHEN_TELEMETRY_OFF=1`, `ENABLE_TOOL_SEARCH=false` (the tool is deferred), and `CLAUDE_CODE_DISABLE_NOTIFICATION_PRESENCE_CHECK=1`. A run without the presence-check variable was not done. |
-| Agent teams (`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`), one named background teammate, and a hand-written `permission_request` in `<config>/teams/<team>/inboxes/team-lead.json` | [Undocumented] [Gated: Set CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 or use --agent-teams] | The hook got `worker_permission_prompt` with the message `A subagent needs permission for Bash` (the name part was `A subagent`, not the teammate name) and no `title`. A normal `permission_prompt` (`Claude needs your permission`) followed when the dialog showed `Bash command · from a subagent`. The lead's poller starts only when a teammate exists, and it sends the notification only when the lead is idle with no dialog shown. The network form, `<name> needs network access to <host>`, was not run. |
-| Built-in computer-use MCP server, enabled in `/mcp` | [Undocumented] [Gated: Needs a Pro or Max plan, a server flag, and not HIPAA] | It connected with its tools. `list_granted_applications` and `wait` calls did not fire the hook. The program sends `computer_use_enter` when it takes the computer-use lock, so the probe stopped before any action that controls the screen. Not seen. |
-| Search of the program for `model_refusal_fallback` | [Undocumented] | The name is in the `notification_type` list, but no code sends a Notification with it. The only other use is a system message subtype. This is a reading of the program, not a live run. |
-| `auth_storage_failure` | [Undocumented] | Not run. The token URL cannot point at localhost (`CLAUDE_CODE_CUSTOM_OAUTH_URL` allows only three Anthropic hosts), and on macOS the save goes to the real keychain. |
+| `PushNotification` tool call `{message, status: "proactive"}` | [Undocumented] [Gated: The tool is behind a server-side flag that is off by default] | The hook got `session_id`, `transcript_path`, `cwd`, `prompt_id`, `hook_event_name`, `message` (`probe push`), and `notification_type` `push_notification`. No `title`. The tool result was `Terminal notification sent.` The flag is `tengu_kairos_push_notifications`. The probe forced it through cached feature flags in the temp config, with `CLAUDE_CODE_GB_DISK_CACHE_WHEN_TELEMETRY_OFF=1`, `ENABLE_TOOL_SEARCH=false` (the tool is deferred), and `CLAUDE_CODE_DISABLE_NOTIFICATION_PRESENCE_CHECK=1`. A run without the presence-check variable gave the tool result `Not sent because you're active in this terminal.` and no hook call. |
+| Agent teams (`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`), one named background teammate, and a hand-written `permission_request` in `<config>/teams/<team>/inboxes/team-lead.json` | [Undocumented] [Gated: Set CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 or use --agent-teams] | The hook got `worker_permission_prompt` with the message `A subagent needs permission for Bash` (the name part was `A subagent`, not the teammate name) and no `title`. A normal `permission_prompt` (`Claude needs your permission`) followed when the dialog showed `Bash command · from a subagent`. The lead's poller starts only when a teammate exists, and it sends the notification only when the lead is idle with no dialog shown. The network form, `<name> needs network access to <host>`, was not run (it needs a sandbox and a teammate in another process). On `2.1.305` the same hand-written `permission_request` did not work: the lead showed `Message from @mate (unverified)` as a plain message, and no hook ran. The program reads an inbox message as verified only when the same process wrote it (it has a `msg_id` that the process recorded), so a hand-written file is treated as forged or unverifiable (the program). The `worker_permission_prompt` text was not seen again. A real in-process teammate whose scripted `Bash` call needed permission showed the dialog `Bash command · from the mate agent` and fired only `permission_prompt` (`Claude needs your permission`). The lead's inbox path, and so `worker_permission_prompt` and its network form, needs a teammate in another process (a pane backend), which was not available here. |
+| Built-in computer-use MCP server, enabled in `/mcp` | [Undocumented] [Gated: Needs a Pro or Max plan, a server flag, and not HIPAA] | It connected with its tools. `list_granted_applications` and `wait` calls did not fire the hook. The program sends `computer_use_enter` when it takes the computer-use lock, so the probe stopped before any action that controls the screen. Not seen. Not rerun on `2.1.305`. |
+| Search of the program for `model_refusal_fallback` | [Undocumented] | The name is in the `notification_type` list, but no code sends a Notification with it. The only other use is a system message subtype. This is a reading of the `2.1.305` program, not a live run. |
+| `auth_storage_failure` | [Undocumented] | Not run. The token URL cannot point at localhost (`CLAUDE_CODE_CUSTOM_OAUTH_URL` allows only three Anthropic hosts), and on macOS the save goes to the real keychain. The `2.1.305` program still sends it when the login save fails (reading only). |
 
 Not run, because they need a login, a cloud or remote session, or another host:
 
@@ -218,7 +262,7 @@ Repeat the `[1m]` probe by hand against any stub or proxy that logs request head
 ```bash title="Check the 1M beta"
 ANTHROPIC_BASE_URL=http://127.0.0.1:8787 \
 ANTHROPIC_API_KEY=sk-ant-fake-probe \
-claude -p "hi" --model "sonnet[1m]" --output-format stream-json --verbose
+claude -p "Reply with 'OK'." --model "sonnet[1m]" --output-format stream-json --verbose
 ```
 
 Look for `context-1m-2025-08-07` in the `anthropic-beta` header. Run it again without `[1m]` and the value is gone.

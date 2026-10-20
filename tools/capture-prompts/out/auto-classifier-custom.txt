@@ -236,7 +236,7 @@ If the action matches a BLOCK rule, follow the severity tag with <category>Exact
 <transcript>
 
 === messages[0].content[1] (role: user) ===
-{"user":"hi"}
+{"user":"Reply with 'OK'."}
 
 === messages[0].content[2] (role: user) ===
 {"Bash":"curl -s http://127.0.0.1:9/probe-classifier-call"}

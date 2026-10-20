@@ -16,7 +16,13 @@ Some built-in prompt texts can be changed. This page lists each one, says whethe
 - **Indirect** means the text stays the same, but it tells the model to use something you control.
 - **No** means we found no way to change the text.
 
-A subscription (OAuth) login gets the same main prompt, the same 12 default tools, and the same Explore subagent prompt as an API key (live subscription runs on 2.1.304, 2026-10-20). The Explore request had the same 7 tools: Bash, ListAgents, Read, ReportFindings, Skill, DeferredToolPlaceholder, and ToolSearch.
+A subscription (OAuth) login gets the same main system prompt text, the same 12 default tools, and the same Explore subagent prompt as an API key (live subscription runs on 2.1.305 with the prompt `Reply with 'OK'.`, 2026-10-21). The Explore request had the same 7 tools: Bash, ListAgents, Read, ReportFindings, Skill, DeferredToolPlaceholder, and ToolSearch. We compared the main request with an API key request on the same model (Opus 5.5). The system prompt differed only in the memory folder path. Other differences:
+
+- The two cached system blocks and `messages[1]` (role `system`) have a cache `ttl` of `"1h"` with a subscription. The API key request had no `ttl`.
+- `thinking.display` was `updates` with a subscription and `omitted` with an API key.
+- The `ScheduleWakeup` description is different. With a subscription it says requests use a 1-hour prompt-cache TTL. With an API key it says the default 5-minute TTL. Both say the program clamps delays to 60 to 3600 seconds.
+- The first user message listed `RemoteTrigger` as a deferred tool and a `schedule` skill only with a subscription, and the `code-review` skill text was longer there (cloud review and a `--post` option).
+- The request metadata IDs differ, as expected.
 
 ## Agent Merge Rule
 
@@ -47,7 +53,7 @@ Agents are merged by name. The later source wins: built-in, plugin, user (`~/.cl
 | [claude agent](https://xsyetopz.github.io/claude-code-docs/prompts/subagent-claude.md) | Replace | A same-named agent file. | The program |
 | [claude agent](https://xsyetopz.github.io/claude-code-docs/prompts/subagent-claude.md) | Turn Off | `CLAUDE_CODE_DISABLE_AGENT_VIEW=1` or the `disableAgentView` setting. | The program |
 | [web-fetch agent](https://xsyetopz.github.io/claude-code-docs/prompts/subagent-web-fetch.md) | Replace | A same-named agent file. Off by default. `CLAUDE_CODE_WEB_FETCH_AGENT=1` turns it on and `CLAUDE_CODE_DISABLE_WEB_FETCH` turns it off. | The program |
-| [claude-code-guide agent](https://xsyetopz.github.io/claude-code-docs/prompts/subagent-claude-code-guide.md) | Replace | A same-named agent file. This rests on the shared agent merge code and was not tested for this agent. Not offered when the entry point is `sdk-ts`, `sdk-py`, or `sdk-cli`, so it is not available in `-p`. The interactive screen offers it (checked on 2.1.304). | The program |
+| [claude-code-guide agent](https://xsyetopz.github.io/claude-code-docs/prompts/subagent-claude-code-guide.md) | Replace | A same-named agent file. This rests on the shared agent merge code and was not tested for this agent. Not offered when the entry point is `sdk-ts`, `sdk-py`, or `sdk-cli`, so it is not available in `-p`. The interactive screen offers it (checked on 2.1.305). | The program |
 | [Workflow subagent](https://xsyetopz.github.io/claude-code-docs/prompts/subagent-workflow.md) | No | No override found. | The program |
 | [comment-thread-analyst agent](https://xsyetopz.github.io/claude-code-docs/prompts/subagent-comment-thread-analyst.md) | No | No override found. | The program |
 | [Coordinator and worker prompts](https://xsyetopz.github.io/claude-code-docs/prompts/coordinator-mode.md) | No | No text override. Coordinator mode replaces the agent list and the main prompt. `--append-system-prompt` is still added. | The program |

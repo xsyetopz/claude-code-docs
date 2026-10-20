@@ -33,7 +33,7 @@ Project context changes at session start, at `/clear`, and at `/compact`.
 
 ## Body Fields
 
-The field list comes from the official docs and from an `api-request` line that version 2.1.304 wrote to a local transcript.
+The field list comes from the official docs and from `api-request` lines that version 2.1.305 wrote to a local transcript. They and a stub run of 2.1.305 wrote `api-request` lines with the keys `model`, `betas`, `max_tokens`, `thinking`, `context_management`, and `output_config`.
 
 | Field | Status | Content |
 | --- | --- | --- |

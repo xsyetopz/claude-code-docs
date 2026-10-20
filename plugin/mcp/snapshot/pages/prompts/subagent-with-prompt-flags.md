@@ -18,10 +18,10 @@ Shows whether the main-thread prompt flags reach a built-in subagent. Run `claud
 | `system[1]` | 94 |
 | `system[2]` | 3,263 |
 | `messages[0].content[0]` | 592 |
-| `messages[0].content[1]` | 26 |
+| `messages[0].content[1]` | 36 |
 | `messages[1].content[0]` | 7,117 |
 | System blocks only | 3,456 |
-| Everything shown here | 11,481 |
+| Everything shown here | 11,491 |
 | Tools sent | 5 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -97,7 +97,7 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
 </system-reminder>
 
 === messages[0].content[1] (role: user) ===
-PROBE-SUBAGENT-TASK say hi
+PROBE-SUBAGENT-TASK Reply with 'OK'.
 
 === messages[1].content[0] (role: system) ===
 The following deferred tools are now available via ToolSearch. Their schemas are NOT loaded — calling them directly will fail with InputValidationError. Use ToolSearch with query "select:<name>[,<name>...]" to load tool schemas before calling them:

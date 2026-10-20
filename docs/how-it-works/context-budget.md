@@ -10,7 +10,7 @@ This page counts that start, shows what each tool and setting adds, and lists wa
 For compaction and what fills the window later, see [Context and Compaction](context-and-compaction.md).
 
 :::note[Your Numbers May Differ]
-All numbers come from one subscription account on 2026-10-20, with Claude Code `2.1.304` on Opus 5.5 unless a row says otherwise.
+All numbers come from one subscription account on 2026-10-21, with Claude Code `2.1.305` on Opus 5.5 unless a row says otherwise.
 Anthropic turns some tools on or off per account from its servers.
 For example, `ListAgents` and `ScheduleWakeup` are gated, and a server-side list can defer `Workflow` and `ReportFindings` (see [Tools](../reference/tools/index.md)).
 Another account, plan, or date can get a different tool list and different totals.
@@ -19,25 +19,25 @@ Run `/context` to see your own numbers.
 
 ## What an Empty Session Holds
 
-Method: live runs on `2.1.304` with a subscription login, a fresh config folder, and an empty project (a `README.md` only, no git repo).
+Method: live runs on `2.1.305` with a subscription login, a fresh config folder, and an empty project (a `README.md` only, no git repo).
 We ran `claude -p "/context" --output-format stream-json` and read the `context_usage` object.
-For the second column we ran `claude -p hi` and then `claude -p --continue "/context"`.
+For the second column we ran `claude -p "Reply with 'OK'."` (the reply was exactly `OK` in every run) and then `claude -p --continue "/context"`.
 All numbers are tokens on Opus 5.5. See [Probes](../reference/probes.md#context-budget).
 Source: the program (<Undocumented />).
 
-| Category | Empty | After "hi" |
+| Category | Empty | After `Reply with 'OK'.` |
 | --- | --- | --- |
-| System prompt | 2,030 | 2,030 |
-| System tools (loaded) | 7,981 | 8,046 |
-| System tools (deferred, not in the total) | 10,350 | 10,350 |
-| Skills (listing) | 2,093 | 2,093 |
-| Messages | 10 | 3,599 |
-| **Total** | **12,114** | **15,768** |
+| System prompt | 2,407 | 2,407 |
+| System tools (loaded) | 7,897 | 7,962 |
+| System tools (deferred, not in the total) | 13,425 | 13,425 |
+| Skills (listing) | 2,210 | 2,210 |
+| Messages | 10 | 3,698 |
+| **Total** | **12,524** | **16,277** |
 
 The window is 1,000,000 tokens on Opus, Sonnet, and Haiku 5.5.
 The autocompact buffer is 33,000 tokens. See [Context and Compaction](context-and-compaction.md) for the levels.
 
-Messages jump by about 3.6k on the first turn.
+Messages jump by about 3.7k on the first turn.
 The first request carries injected content as messages:
 
 - a system reminder about git attribution
@@ -46,45 +46,48 @@ The first request carries injected content as messages:
 - the "Available agent types" list (`claude`, `Explore`, `general-purpose`, `Plan`, `statusline-setup`)
 - the skills listing
 
-Your own "hi" is about 1 token.
+Your own prompt (`Reply with 'OK'.`) is a few tokens.
 See the captured [first-turn messages](../prompts/index.md).
 
-The real first request matched `/context` exactly: input 2, cache write 5,584, and cache read 10,182 make 15,768.
+The real first request matched `/context` exactly: input 2, cache write 5,441, and cache read 10,834 make 16,277.
+The split between cache write and cache read depends on the cache, not on the request. A subscription login writes with a 1-hour lifetime, so another session on the account with the same tools and system prompt within the last hour lets this one read them. A cold first request wrote almost all of it and read nothing.
 `/context` itself only calls the token counting endpoint, so it does not run a model turn. We checked this: `claude -p "/context"` against the stub sent 24 requests to `/v1/messages/count_tokens` and none to `/v1/messages`.
 
 ## What Each Tool Costs
 
-We removed one tool at a time from the default set with `--disallowedTools <tool>` and read the new total of the empty session (12,114).
+We removed one tool at a time from the default set with `--disallowedTools <tool>` and read the new total of the empty session (12,524).
 Running a tool alone with `--tools` is not used here, because those numbers carry shared overhead and mislead.
 
 | Removed | New total | Change | Notes |
 | --- | --- | --- | --- |
-| `Workflow` | 10,135 | -1,979 | |
-| `ScheduleWakeup` | 10,419 | -1,695 | |
-| `Agent` | 10,786 | -1,328 | |
-| `ReportFindings` | 11,292 | -822 | |
-| `Read` | 11,402 | -712 | |
-| `ListAgents` | 11,757 | -357 | |
-| `Edit` | 11,765 | -349 | |
-| `Write` | 11,879 | -235 | |
-| `Bash` | 12,523 | +409 | The program adds `Glob` and `Grep` in its place, so the loaded tools rise to 8,390. |
-| `Skill` | 17,688 | +5,574 | The skills listing goes, but the `Workflow` tool (description and schema) grows from 5,355 to 22,310 characters: with no `Skill` tool to load the `workflow-authoring` skill, the program puts that guidance in the tool text. |
-| `ToolSearch` | 24,565 | +12,451 | Every deferred tool loads (deferred 0, tools 20,432). |
-| `WebSearch` (deferred) | 12,114 | 0 | Only the deferred pool shrinks, 10,350 to 10,239. |
+| `Workflow` | 10,555 | -1,969 | |
+| `ScheduleWakeup` | 10,849 | -1,675 | |
+| `Agent` | 11,204 | -1,320 | |
+| `ReportFindings` | 11,717 | -807 | |
+| `Read` | 11,818 | -706 | |
+| `ListAgents` | 12,179 | -345 | |
+| `Edit` | 12,184 | -340 | |
+| `Write` | 12,294 | -230 | |
+| `Bash` | 12,908 | +384 | The program adds `Glob` and `Grep` in its place, so the loaded tools rise to 8,273. |
+| `Skill` | 18,123 | +5,599 | The skills listing goes, but the `Workflow` tool (description and schema) grows from 5,313 to 22,089 characters: with no `Skill` tool to load the `workflow-authoring` skill, the program puts that guidance in the tool text. |
+| `ToolSearch` | 28,422 | +15,898 | Every deferred tool loads (deferred 0, tools 23,781). |
+| `WebSearch` (deferred) | 12,394 | -130 | The deferred pool shrinks, 13,425 to 13,190. The system prompt was also 128 tokens smaller in this run. |
+
+The system prompt line moved between 2,277 and 2,427 across these runs, so each Change has some noise (10 to 20 tokens in most rows).
 
 Loaded by default: `Agent`, `Bash`, `Edit`, `ListAgents`, `Read`, `ReportFindings`, `ScheduleWakeup`, `Skill`, `ToolSearch`, `Workflow`, and `Write`.
-Deferred by default: `CronCreate`, `CronDelete`, `CronList`, `DesignSync`, `EnterWorktree`, `ExitWorktree`, `NotebookEdit`, `RemoteTrigger`, `SendMessage`, `TaskStop`, `WebFetch`, and `WebSearch`.
+Deferred by default: `CronCreate`, `CronDelete`, `CronList`, `DesignSync`, `EnterWorktree`, `ExitWorktree`, `Monitor`, `NotebookEdit`, `PushNotification`, `RemoteTrigger`, `SendMessage`, `TaskStop`, `WebFetch`, and `WebSearch`.
 A deferred tool costs nothing, apart from its name, until `ToolSearch` loads it.
-In the default session the deferred tools would add 10,350 tokens.
+In the default session the deferred tools would add 13,425 tokens.
 
-`Skill` brings the skills listing. It is 2,093 tokens for the built-in skills:
+`Skill` brings the skills listing. It is 2,210 tokens for the built-in skills:
 
 | Skill | Tokens |
 | --- | --- |
 | `dataviz` | 482 |
 | `claude-api` | 361 |
 | `update-config` | 236 |
-| `code-review` | 214 |
+| `code-review` | 331 |
 | `schedule` | 127 |
 | `run` | 123 |
 | `loop` | 115 |
@@ -98,46 +101,46 @@ In the default session the deferred tools would add 10,350 tokens.
 
 ## What Else Changes the Budget
 
-Each row is a session after "hi" on Opus 5.5, compared to the default of 15,768.
+Each row is a session after `Reply with 'OK'.` on Opus 5.5, compared to the default of 16,277.
 
 | Variant | Total | Change | Why |
 | --- | --- | --- | --- |
-| Default | 15,768 | 0 | |
-| `--tools "Read,Edit,Bash"` | 5,093 | -10,675 | Tools drop to 2,500 and there is no skills listing. |
-| `--tools ""` | 2,297 | -13,471 | No tools. The system prompt is 1,962. |
-| `ENABLE_TOOL_SEARCH=false` | 27,667 | +11,899 | All tools load, 20,497 in all. Nothing is deferred. |
-| `CLAUDE_CODE_DISABLE_AUTO_MEMORY=1` | 15,001 | -767 | The system prompt drops from 2,030 to 1,255. |
-| `CLAUDE_CODE_DISABLE_EXPLORE_PLAN_AGENTS=1` | 15,433 | -335 | The agent list is shorter. |
-| `includeGitInstructions: false` | 15,411 | -357 | The `Bash` text is shorter, and so are the messages. |
-| Git repo with one commit | 15,945 | +177 | A git status goes into the messages. |
-| `CLAUDE.md` of 60 short lines (about 3.5 KB) | 17,310 | +1,542 | Memory files take 1,387. |
-| `outputStyle` set to `Explanatory` | 16,102 | +334 | The style text is added. |
-| One custom agent file with a one-line description | 15,810 | +42 | Custom agents take 38. |
-| One MCP server (filesystem, 14 tools) | 15,949 | +181 | Its tools are deferred (2,753) until a search loads them. |
-| Sonnet 5.5 | 15,774 | +6 | |
-| Haiku 5.5 | 16,552 | +784 | The system prompt is 2,817. |
+| Default | 16,277 | 0 | |
+| `--tools "Read,Edit,Bash"` | 5,358 | -10,919 | Tools drop to 2,533 and there is no skills listing. |
+| `--tools ""` | 2,532 | -13,745 | No tools. The system prompt is 2,222. |
+| `ENABLE_TOOL_SEARCH=false` | 31,604 | +15,327 | All tools load, 23,846 in all. Nothing is deferred. |
+| `CLAUDE_CODE_DISABLE_AUTO_MEMORY=1` | 15,586 | -691 | The system prompt drops from 2,407 to 1,706. |
+| `CLAUDE_CODE_DISABLE_EXPLORE_PLAN_AGENTS=1` | 15,953 | -324 | The agent list is shorter. |
+| `includeGitInstructions: false` | 15,929 | -348 | The `Bash` text is shorter (loaded tools 7,815), and so are the messages. |
+| Git repo with one commit | 16,454 | +177 | A git status goes into the messages. |
+| `CLAUDE.md` of 60 short lines (about 3.4 KB) | 17,727 | +1,450 | Memory files take 1,327. |
+| `outputStyle` set to `Explanatory` | 16,614 | +337 | The style text is added. |
+| One custom agent file with a one-line description | 16,306 | +29 | Custom agents take 19. |
+| One MCP server (filesystem, 14 tools) | 16,467 | +190 | Its tools are deferred (2,753) until a search loads them. |
+| Sonnet 5.5 | 16,679 | +402 | Loaded tools take 8,355. |
+| Haiku 5.5 | 17,459 | +1,182 | The system prompt is 3,198. |
 
-Messages vary by a few tokens between runs, because the reply to "hi" differs.
-`--disable-slash-commands` makes the request larger, not smaller. In a test with `2.1.304` (`claude -p hi` against a local stub, Opus 5.5, no skills of your own), the request body grew from 43,962 to 52,880 bytes, about 2,200 more tokens at 4 bytes per token (an estimate, not a count). The `Skill` tool (1,803 bytes) and the list of skills in the messages (6,065 bytes) went away. The `Workflow` tool description grew by 16,955 bytes, because it then holds the workflow authoring reference that it otherwise loads through the `workflow-authoring` skill. Your own skills and commands are left out too, so with many of them the net change is smaller.
+Messages still vary by a few tokens between runs, even though every reply was exactly `OK`. Two runs of the default session gave totals of 16,274 and 16,277, but the split differed more (for example deferred tools 15,919 in one and 13,425 in the other, and messages 3,769 and 3,698), so trust the totals more than single categories.
+`--disable-slash-commands` makes the request larger, not smaller. In a test with `2.1.305` (`claude -p "Reply with 'OK'."` against a local stub, Opus 5.5, no skills of your own), the request body grew from 44,332 to 53,389 bytes, about 2,300 more tokens at 4 bytes per token (an estimate, not a count). The `Skill` tool (1,803 bytes) and the list of skills in the messages (the text of that message fell from 8,947 to 2,952 bytes, 5,995 bytes less) went away. The `Workflow` tool description grew by 16,955 bytes, because it then holds the workflow authoring reference that it otherwise loads through the `workflow-authoring` skill. Your own skills and commands are left out too, so with many of them the net change is smaller.
 
 ## Best Practices
 
 ### Keep Tool Search On
 
-Tool search defers rarely used tools. Turning it off added 11,899 tokens.
+Tool search defers rarely used tools. Turning it off added 15,327 tokens.
 Leave `ENABLE_TOOL_SEARCH` unset unless you have a reason.
 
 ### Trim Tools for Narrow Jobs
 
 A headless job or a narrow agent rarely needs every tool.
-`--tools "Read,Edit,Bash"` cut the session from 15,768 to 5,093 tokens, and also removed the skills listing.
+`--tools "Read,Edit,Bash"` cut the session from 16,277 to 5,358 tokens, and also removed the skills listing.
 
 ```bash
 claude -p "Fix the typo in README.md" --tools "Read,Edit"
 ```
 
 To remove single tools, deny them. `permissions.deny` and `--disallowedTools` both take a tool out of the context.
-Denying `Workflow` and `ScheduleWakeup`, which cost the most and are often unused, took the empty session from 12,114 to about 8,440 tokens.
+Denying `Workflow` and `ScheduleWakeup`, which cost the most and are often unused, took the empty session from 12,524 to 8,852 tokens.
 See [Permissions](../configure/permissions/index.md).
 
 ```json title=".claude/settings.json"
@@ -148,18 +151,18 @@ See [Permissions](../configure/permissions/index.md).
 }
 ```
 
-Denying a deferred tool such as `WebSearch` only shrinks the deferred pool (10,350 to 10,239). It does not change the total.
+Denying a deferred tool such as `WebSearch` only shrinks the deferred pool (13,425 to 13,190). It left the total almost unchanged (12,524 to 12,394).
 
 Do not deny tools that are part of the loading machinery:
 
-- Denying `ToolSearch` loads every deferred tool: +12,451.
-- Denying `Skill` raised the total by 5,574. The `workflow-authoring` reference moves into the `Workflow` text. Denying both `Skill` and `Workflow` gives 9,446, which saves 2,668.
-- Denying `Bash` raised the total by 409. The program adds `Glob` and `Grep` in its place.
+- Denying `ToolSearch` loads every deferred tool: +15,898.
+- Denying `Skill` raised the total by 5,599. The `workflow-authoring` reference moves into the `Workflow` text. Denying both `Skill` and `Workflow` gives 9,875, which saves 2,649.
+- Denying `Bash` raised the total by 384. The program adds `Glob` and `Grep` in its place.
 
 ### Keep `CLAUDE.md` Short
 
 Claude Code sends your memory files on every turn.
-A `CLAUDE.md` of 60 short lines cost about 1,400 tokens of memory files (1,387), and 1,542 in total with the extra message text.
+A `CLAUDE.md` of 60 short lines cost about 1,300 tokens of memory files (1,327), and 1,450 in total with the extra message text.
 Keep only rules the model needs in every session.
 
 ### Put Rare Instructions in Skills or Subagents
@@ -169,7 +172,7 @@ Move a long, rarely needed procedure out of `CLAUDE.md` into a skill, or into a 
 
 ### Keep MCP Descriptions Short
 
-MCP tools are deferred, so one server with 14 tools added only 181 tokens at the start.
+MCP tools are deferred, so one server with 14 tools added only 190 tokens at the start.
 The 2,753 tokens of schemas arrive when a search loads them, so keep tool descriptions short.
 
 ### Turn Off Text You Do Not Use
@@ -178,9 +181,9 @@ Each switch below removes a block of the start. Use one only if you do not need 
 
 | Switch | Saves | You lose |
 | --- | --- | --- |
-| `CLAUDE_CODE_DISABLE_AUTO_MEMORY=1` | 767 | Auto memory |
-| `includeGitInstructions: false` | 357 | Commit and PR rules in the `Bash` text |
-| `CLAUDE_CODE_DISABLE_EXPLORE_PLAN_AGENTS=1` | 335 | The `Explore` and `Plan` agents |
+| `CLAUDE_CODE_DISABLE_AUTO_MEMORY=1` | 691 | Auto memory |
+| `includeGitInstructions: false` | 348 | Commit and PR rules in the `Bash` text |
+| `CLAUDE_CODE_DISABLE_EXPLORE_PLAN_AGENTS=1` | 324 | The `Explore` and `Plan` agents |
 
 ```json title="~/.claude/settings.json"
 {
@@ -196,7 +199,7 @@ See [Overriding Prompts](../prompts/override.md) for each switch.
 
 ### Watch Custom Agent Descriptions
 
-One custom agent with a one-line description added 42 tokens.
+One custom agent with a one-line description added 29 tokens (the agent list itself took 19).
 That is cheap, but the descriptions add up.
 Claude Code warns when the descriptions of all non-built-in agents pass 15,000 tokens.
 See [Subagents](../extend/subagents/index.md).
@@ -204,20 +207,21 @@ See [Subagents](../extend/subagents/index.md).
 ### Keep the Start Stable for the Cache
 
 The start of the request (tools and system prompt) is cached.
-In live tests with 2.1.304 (a two-turn session, the second turn resumed with `--continue`):
+In live tests with 2.1.305 (a two-turn session, the second turn resumed with `--continue`):
 
 | Change Before Turn Two | Cache Read | Cache Written |
 | --- | --- | --- |
-| Nothing | 12,601 | 3,382 |
-| `CLAUDE.md` edited | 12,602 | 3,543 |
-| Tools changed (`--disallowedTools Bash`) | 0 | 16,457 |
+| Nothing | 12,980 | 3,474 |
+| `CLAUDE.md` edited | 12,980 | 3,604 |
+| Tools changed (`--disallowedTools ListAgents`) | 0 | 15,925 |
+| Tools changed (`--disallowedTools ReportFindings`) | 10,013 | 5,499 |
 
 Editing `CLAUDE.md` keeps the cache.
-This also holds inside one open session: after the model rewrote `CLAUDE.md` with the Write tool, the next request read 15,996 tokens from the cache and wrote 418.
+This also holds inside one open session: after the model rewrote `CLAUDE.md` with the Write tool, the next request read 16,611 tokens from the cache and wrote 182.
 Memory is sent in the first user message, not the system prompt.
 The old text stays there, and the new text comes in a later message.
-Changing the tools throws the whole cache away, so pick tools before you start.
-A new session with the same tools and system prompt also reads the cache of an earlier one (10,182 tokens read on its first turn).
+Changing the tools breaks the cache. Dropping `ListAgents` threw the whole cached prefix away. Dropping `ReportFindings` kept the first 10,013 tokens. Pick tools before you start. Each tool was one that no earlier request in the past hour had dropped, because an earlier identical request would have left a matching cache to read.
+A new session with the same tools and system prompt also reads the cache of an earlier one within the cache lifetime (1 hour on a subscription). It read 10,834 tokens on its first turn.
 See [Request and Cache](request-and-cache.md).
 
 ## Related Pages

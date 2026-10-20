@@ -17,10 +17,10 @@ The prompt that a `statusline-setup` subagent gets. The main agent calls the `Ag
 | `system[0]` | 99 |
 | `system[1]` | 62 |
 | `system[2]` | 14,276 |
-| `messages[0].content[0]` | 26 |
+| `messages[0].content[0]` | 36 |
 | `messages[1].content[0]` | 833 |
 | System blocks only | 14,437 |
-| Everything shown here | 15,541 |
+| Everything shown here | 15,551 |
 | Tools sent | 2 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -243,7 +243,7 @@ Notes:
 <total_tokens>15000000 tokens left</total_tokens>
 
 === messages[0].content[0] (role: user) ===
-PROBE-SUBAGENT-TASK say hi
+PROBE-SUBAGENT-TASK Reply with 'OK'.
 
 === messages[1].content[0] (role: system) ===
 # Environment
@@ -491,7 +491,7 @@ Lines added: 187. Lines removed: 49. Size change: +4,622 characters.
 -</system-reminder>
 -
 -=== messages[0].content[1] (role: user) ===
- PROBE-SUBAGENT-TASK say hi
+ PROBE-SUBAGENT-TASK Reply with 'OK'.
 
  === messages[1].content[0] (role: system) ===
 -The following deferred tools are now available via ToolSearch. Their schemas are NOT loaded — calling them directly will fail with InputValidationError. Use ToolSearch with query "select:<name>[,<name>...]" to load tool schemas before calling them:

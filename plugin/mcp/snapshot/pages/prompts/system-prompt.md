@@ -18,10 +18,10 @@ Replaces the body of the prompt with your text. Run `claude --system-prompt "you
 | `system[1]` | 62 |
 | `system[2]` | 26 |
 | `messages[0].content[0]` | 592 |
-| `messages[0].content[1]` | 2 |
+| `messages[0].content[1]` | 16 |
 | `messages[1].content[0]` | 8,850 |
 | System blocks only | 166 |
-| Everything shown here | 9,900 |
+| Everything shown here | 9,914 |
 | Tools sent | 12 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -56,7 +56,7 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
 </system-reminder>
 
 === messages[0].content[1] (role: user) ===
-hi
+Reply with 'OK'.
 
 === messages[1].content[0] (role: system) ===
 # Environment

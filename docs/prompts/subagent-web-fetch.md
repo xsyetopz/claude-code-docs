@@ -13,10 +13,10 @@ The prompt that the built-in web-reading subagent gets. Set `CLAUDE_CODE_WEB_FET
 | `system[0]` | 99 |
 | `system[1]` | 62 |
 | `system[2]` | 4,098 |
-| `messages[0].content[0]` | 26 |
+| `messages[0].content[0]` | 36 |
 | `messages[1].content[0]` | 829 |
 | System blocks only | 4,259 |
-| Everything shown here | 5,359 |
+| Everything shown here | 5,369 |
 | Tools sent | 1 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -64,7 +64,7 @@ Notes:
 <total_tokens>15000000 tokens left</total_tokens>
 
 === messages[0].content[0] (role: user) ===
-PROBE-SUBAGENT-TASK say hi
+PROBE-SUBAGENT-TASK Reply with 'OK'.
 
 === messages[1].content[0] (role: system) ===
 # Environment
@@ -136,7 +136,7 @@ Lines added: 11. Lines removed: 49. Size change: -5,560 characters.
 -</system-reminder>
 -
 -=== messages[0].content[1] (role: user) ===
- PROBE-SUBAGENT-TASK say hi
+ PROBE-SUBAGENT-TASK Reply with 'OK'.
 
  === messages[1].content[0] (role: system) ===
 -The following deferred tools are now available via ToolSearch. Their schemas are NOT loaded — calling them directly will fail with InputValidationError. Use ToolSearch with query "select:<name>[,<name>...]" to load tool schemas before calling them:

@@ -48,14 +48,14 @@ Your response must be a JSON object with one of these shapes:
 Always include a "reason" field.
 
 === messages[0].content[0] (role: user) ===
-PROBE-HOOK-PROMPT: check this call. {"session_id":"fac8a96a-6c2c-4504-8b13-ada8db83a2ae","transcript_path":"<config-dir>/projects/<project-slug>/fac8a96a-6c2c-4504-8b13-ada8db83a2ae.jsonl","cwd":"<cwd>","prompt_id":"e603e057-f77e-4a03-a86f-74feb1a650f4","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"PreToolUse","tool_name":"Bash","tool_input":{"command":"echo probe"},"tool_use_id":"toolu_probe1"}
+PROBE-HOOK-PROMPT: check this call. {"session_id":"4e902b6c-461a-496e-a860-53e22952a50f","transcript_path":"<config-dir>/projects/<project-slug>/4e902b6c-461a-496e-a860-53e22952a50f.jsonl","cwd":"<cwd>","prompt_id":"a7b6f564-82a1-4936-b3a9-dbb2c53f220b","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"PreToolUse","tool_name":"Bash","tool_input":{"command":"echo probe"},"tool_use_id":"toolu_probe1"}
 ```
 
 ## Compared to the Default
 
 The diff below starts from [Default, Lean Prompt](./default-lean.md). Lines that start with `-` are only in the baseline. Lines that start with `+` are only here.
 
-Lines added: 7. Lines removed: 115. Size change: -13,939 characters.
+Lines added: 7. Lines removed: 115. Size change: -13,953 characters.
 
 ````diff
 --- default-lean
@@ -136,7 +136,7 @@ Lines added: 7. Lines removed: 115. Size change: -13,939 characters.
 -</system-reminder>
 -
 -=== messages[0].content[1] (role: user) ===
--hi
+-Reply with 'OK'.
 -
 -=== messages[1].content[0] (role: system) ===
 -# Environment
@@ -192,7 +192,7 @@ Lines added: 7. Lines removed: 115. Size change: -13,939 characters.
 -<total_tokens>15000000 tokens left</total_tokens>
 -
 -Today's date is <date>.
-+PROBE-HOOK-PROMPT: check this call. {"session_id":"fac8a96a-6c2c-4504-8b13-ada8db83a2ae","transcript_path":"<config-dir>/projects/<project-slug>/fac8a96a-6c2c-4504-8b13-ada8db83a2ae.jsonl","cwd":"<cwd>","prompt_id":"e603e057-f77e-4a03-a86f-74feb1a650f4","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"PreToolUse","tool_name":"Bash","tool_input":{"command":"echo probe"},"tool_use_id":"toolu_probe1"}
++PROBE-HOOK-PROMPT: check this call. {"session_id":"4e902b6c-461a-496e-a860-53e22952a50f","transcript_path":"<config-dir>/projects/<project-slug>/4e902b6c-461a-496e-a860-53e22952a50f.jsonl","cwd":"<cwd>","prompt_id":"a7b6f564-82a1-4936-b3a9-dbb2c53f220b","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"PreToolUse","tool_name":"Bash","tool_input":{"command":"echo probe"},"tool_use_id":"toolu_probe1"}
 ````
 
 Tool list: removes `Agent`, `Bash`, `Edit`, `ListAgents`, `Read`, `ReportFindings`, `ScheduleWakeup`, `Skill`, `ToolSearch`, `Workflow`, `DeferredToolPlaceholder`, `Write`. See [Tools per Variant](./tools-per-variant.md).

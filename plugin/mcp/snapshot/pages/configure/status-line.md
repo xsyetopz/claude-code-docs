@@ -198,17 +198,17 @@ flowchart TD
   Ok -->|no| Blank[Blank line]
 ```
 
-> **Interactive Probe Findings:** Checked in the interactive screen (2.1.304, local stub, fake key). See [Interactive Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md#interactive-probes).
+> **Interactive Probe Findings:** Checked in the interactive screen (2.1.305, local stub, fake key, clean environment). See [Interactive Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md#interactive-probes).
 >
-> - `subagentStatusLine` runs on a fixed 5-second tick (4.98 to 5.02 seconds over 11 intervals) while the agent panel has tasks, also for tasks that are `completed`. It is not debounced like `statusLine`, and no setting changes the 5 seconds. The first run came when the agent started.
+> - `subagentStatusLine` runs on a fixed 5-second tick (4.99 to 5.02 seconds over 5 intervals, after a first interval of 4.69 seconds) while the agent panel has tasks, also for tasks that are `completed`. It is not debounced like `statusLine`, and no setting changes the 5 seconds. The first run came when the agent started.
 > - Its command does not get `COLUMNS` and `LINES`. Use the `columns` field (194 on a 200-column screen). `CLAUDECODE` and `CLAUDE_CODE_CHILD_SESSION` are set.
 > - Its input holds only `session_id`, `transcript_path`, `cwd`, `prompt_id`, `columns`, and `tasks`, not the full `statusLine` object. A row override `{"id": ..., "content": "..."}` was drawn in the agent panel.
 > - For `statusLine`, `transcript_path` is present from the first run, before any message. `prompt_id` is absent until the first prompt, then it is the same UUID as `prompt_id` in hook input. After the first reply the input also gains `prompt_cache`, and `current_usage` is no longer `null`.
-> - `statusLine` runs once at start and once after the first reply (not at prompt submit). Three mode changes 100 ms apart gave one run, which fits the 300 ms debounce. `refreshInterval: 3` ran every 3.0 seconds (2.8 to 3.5).
-> - Runs paused while a permission or MCP input dialog was on screen (gaps of 12.5 and 19.5 seconds).
+> - `statusLine` runs once at start and once after the first reply (not at prompt submit). Three mode changes gave one run, 0.33 seconds after the last one, both when sent 100 ms apart and when sent in one write. This fits the 300 ms debounce. `refreshInterval: 3` ran every 3.0 seconds (3.0 to 3.1 seconds over 14 intervals in a run with no other trigger).
+> - Runs paused while a permission or MCP input dialog was on screen (a Bash permission dialog was on screen for 17.4 seconds, and the gap between runs was 19.3 seconds).
 > - `padding: 1` gave a one-space indent, and two printed lines showed as two rows under the prompt.
-> - With no subagents, `subagentStatusLine` did not run. In a session left idle for 22 seconds its command had not run once. The first run came when a background agent started.
-> - A test agent finished after 3 seconds. Its row was not drawn again after that, and the command kept its 5-second tick for about 30 seconds after the agent started (7 runs, the first with `status` `running` and the other six with `completed`). In that time the agent panel showed the hint `/tasks to see subagents` for about 30 seconds, then the hint went away. After that the command did not run again.
+> - With no subagents, `subagentStatusLine` did not run. In a session left idle for 29.6 seconds its command had not run once. The first run came when a background agent started.
+> - A test agent finished at once. The command kept its 5-second tick for 29.7 seconds after the agent started (7 runs, all with the tasks `completed`), then did not run again for the next 29 seconds. The input listed three tasks, because the stub answers every request that has no tool result yet with the same `Agent` call.
 >
 
 ## Related Pages

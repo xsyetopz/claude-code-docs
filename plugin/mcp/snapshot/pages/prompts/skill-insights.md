@@ -12,7 +12,7 @@ This is the verbatim text that Claude Code 2.1.305 uses for the built-in `/insig
 
 ## Where It Comes From
 
-Captured from the program on 2.1.304; the prompt text is unchanged in 2.1.305. The file holds several requests, each starting with a `=== request system` line. It includes the system request, the usage data prompt, and the output lines that point to the report.
+Captured from the program on 2.1.305 (`claude -p "/insights PROBE-ARG"` against a local stub, with a fake key and a clean environment). The text matches the 2.1.304 capture. The file holds several requests, each starting with a `=== request system` line. It includes the system request, the usage data prompt, and the output lines that point to the report.
 
 ## How to Override It
 
@@ -23,7 +23,7 @@ Create `.claude/skills/insights/SKILL.md` with the same name. The program then u
 Temp folder paths were replaced with `<temp-dir>` or `<bundled-skill-dir>`, and emoji not on the site's allow-list are shown in brackets. `PROBE-ARG` is the test's argument.
 
 ````text
-=== request system: [{"type": "text", "text": "x-anthropic-billing-header: cc_version=2.1.304.<build>; cc_entrypoint=sdk-cli;"}, {"type": "text", "text": "You are a Claude agent, built
+=== request system: [{"type": "text", "text": "x-anthropic-billing-header: cc_version=2.1.305.<build>; cc_entrypoint=sdk-cli;"}, {"type": "text", "text": "You are a Claude agent, built
 Analyze this Claude Code usage data and identify project areas.
 
 RESPOND WITH ONLY A VALID JSON OBJECT:
@@ -62,7 +62,7 @@ FRICTION DETAILS:
 USER INSTRUCTIONS TO CLAUDE:
 None captured
 
-=== request system: [{"type": "text", "text": "x-anthropic-billing-header: cc_version=2.1.304.<build>; cc_entrypoint=sdk-cli;"}, {"type": "text", "text": "You are a Claude agent, built
+=== request system: [{"type": "text", "text": "x-anthropic-billing-header: cc_version=2.1.305.<build>; cc_entrypoint=sdk-cli;"}, {"type": "text", "text": "You are a Claude agent, built
 Analyze this Claude Code usage data and describe the user's interaction style.
 
 RESPOND WITH ONLY A VALID JSON OBJECT:
@@ -98,7 +98,7 @@ FRICTION DETAILS:
 USER INSTRUCTIONS TO CLAUDE:
 None captured
 
-=== request system: [{"type": "text", "text": "x-anthropic-billing-header: cc_version=2.1.304.<build>; cc_entrypoint=sdk-cli;"}, {"type": "text", "text": "You are a Claude agent, built
+=== request system: [{"type": "text", "text": "x-anthropic-billing-header: cc_version=2.1.305.<build>; cc_entrypoint=sdk-cli;"}, {"type": "text", "text": "You are a Claude agent, built
 Analyze this Claude Code usage data and identify what's working well for this user. Use second person ("you").
 
 RESPOND WITH ONLY A VALID JSON OBJECT:
@@ -138,7 +138,7 @@ FRICTION DETAILS:
 USER INSTRUCTIONS TO CLAUDE:
 None captured
 
-=== request system: [{"type": "text", "text": "x-anthropic-billing-header: cc_version=2.1.304.<build>; cc_entrypoint=sdk-cli;"}, {"type": "text", "text": "You are a Claude agent, built
+=== request system: [{"type": "text", "text": "x-anthropic-billing-header: cc_version=2.1.305.<build>; cc_entrypoint=sdk-cli;"}, {"type": "text", "text": "You are a Claude agent, built
 Analyze this Claude Code usage data and identify friction points for this user. Use second person ("you").
 
 RESPOND WITH ONLY A VALID JSON OBJECT:
@@ -178,7 +178,7 @@ FRICTION DETAILS:
 USER INSTRUCTIONS TO CLAUDE:
 None captured
 
-=== request system: [{"type": "text", "text": "x-anthropic-billing-header: cc_version=2.1.304.<build>; cc_entrypoint=sdk-cli;"}, {"type": "text", "text": "You are a Claude agent, built
+=== request system: [{"type": "text", "text": "x-anthropic-billing-header: cc_version=2.1.305.<build>; cc_entrypoint=sdk-cli;"}, {"type": "text", "text": "You are a Claude agent, built
 Analyze this Claude Code usage data and suggest improvements.
 
 ## CC FEATURES REFERENCE (pick from these for features_to_try):
@@ -246,7 +246,7 @@ FRICTION DETAILS:
 USER INSTRUCTIONS TO CLAUDE:
 None captured
 
-=== request system: [{"type": "text", "text": "x-anthropic-billing-header: cc_version=2.1.304.<build>; cc_entrypoint=sdk-cli;"}, {"type": "text", "text": "You are a Claude agent, built
+=== request system: [{"type": "text", "text": "x-anthropic-billing-header: cc_version=2.1.305.<build>; cc_entrypoint=sdk-cli;"}, {"type": "text", "text": "You are a Claude agent, built
 Analyze this Claude Code usage data and identify future opportunities.
 
 RESPOND WITH ONLY A VALID JSON OBJECT:
@@ -286,7 +286,7 @@ FRICTION DETAILS:
 USER INSTRUCTIONS TO CLAUDE:
 None captured
 
-=== request system: [{"type": "text", "text": "x-anthropic-billing-header: cc_version=2.1.304.<build>; cc_entrypoint=sdk-cli;"}, {"type": "text", "text": "You are a Claude agent, built
+=== request system: [{"type": "text", "text": "x-anthropic-billing-header: cc_version=2.1.305.<build>; cc_entrypoint=sdk-cli;"}, {"type": "text", "text": "You are a Claude agent, built
 Analyze this Claude Code usage data and find a memorable moment.
 
 RESPOND WITH ONLY A VALID JSON OBJECT:
@@ -324,7 +324,7 @@ FRICTION DETAILS:
 USER INSTRUCTIONS TO CLAUDE:
 None captured
 
-=== request system: [{"type": "text", "text": "x-anthropic-billing-header: cc_version=2.1.304.<build>; cc_entrypoint=sdk-cli;"}, {"type": "text", "text": "You are a Claude agent, built
+=== request system: [{"type": "text", "text": "x-anthropic-billing-header: cc_version=2.1.305.<build>; cc_entrypoint=sdk-cli;"}, {"type": "text", "text": "You are a Claude agent, built
 You're writing an "At a Glance" summary for a Claude Code usage insights report for Claude Code users. The goal is to help them understand their usage and improve how they can use Claude better, especially as models improve.
 
 Use this 4-part structure:
@@ -388,7 +388,7 @@ None captured
 
 DATA:
 
-=== request system: [{"type": "text", "text": "x-anthropic-billing-header: cc_version=2.1.304.<build>; cc_entrypoint=sdk-cli;"}, {"type": "text", "text": "You are a Claude agent, built
+=== request system: [{"type": "text", "text": "x-anthropic-billing-header: cc_version=2.1.305.<build>; cc_entrypoint=sdk-cli;"}, {"type": "text", "text": "You are a Claude agent, built
 <system-reminder>
 Attribution for git commits and pull requests you create from here on (this replaces Claude Code's own earlier attribution guidance, such as a previous copy of this reminder; the user's own instructions about these lines, such as a CLAUDE.md or memory rule, take precedence over this reminder, but do not add attribution lines this reminder leaves out):
 - End git commit messages with:
@@ -397,12 +397,12 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
 [robot] Generated with [Claude Code](https://claude.com/claude-code)
 </system-reminder>
 
-=== request system: [{"type": "text", "text": "x-anthropic-billing-header: cc_version=2.1.304.<build>; cc_entrypoint=sdk-cli;"}, {"type": "text", "text": "You are a Claude agent, built
+=== request system: [{"type": "text", "text": "x-anthropic-billing-header: cc_version=2.1.305.<build>; cc_entrypoint=sdk-cli;"}, {"type": "text", "text": "You are a Claude agent, built
 <command-message>insights</command-message>
 <command-name>/insights</command-name>
 <command-args>PROBE-ARG</command-args>
 
-=== request system: [{"type": "text", "text": "x-anthropic-billing-header: cc_version=2.1.304.<build>; cc_entrypoint=sdk-cli;"}, {"type": "text", "text": "You are a Claude agent, built
+=== request system: [{"type": "text", "text": "x-anthropic-billing-header: cc_version=2.1.305.<build>; cc_entrypoint=sdk-cli;"}, {"type": "text", "text": "You are a Claude agent, built
 The user just ran /insights to generate a usage report analyzing their Claude Code sessions.
 
 Here is the full insights data:
@@ -427,7 +427,7 @@ file://<temp-dir>
 
 Want to dig into any section or try one of the suggestions?
 
-=== request system: [{"type": "text", "text": "x-anthropic-billing-header: cc_version=2.1.304.<build>; cc_entrypoint=sdk-cli;"}, {"type": "text", "text": "You are a Claude agent, built
+=== request system: [{"type": "text", "text": "x-anthropic-billing-header: cc_version=2.1.305.<build>; cc_entrypoint=sdk-cli;"}, {"type": "text", "text": "You are a Claude agent, built
 # Environment
 You have been invoked in the following environment: 
  - Primary working directory: <temp-dir>
@@ -478,5 +478,5 @@ SKIP only when another provider is being worked on (overrides all triggers): Ope
 - init: Initialize a new CLAUDE.md file with codebase documentation
 - security-review: Complete a security review of the pending changes on the current branch
 
-Today's date is 2026-10-20.
+Today's date is 2026-10-21.
 ````

@@ -18,19 +18,19 @@ The request that summarizes a conversation. Run `/compact` in a session with som
 | `system[1]` | 62 |
 | `system[2]` | 5,627 |
 | `messages[0].content[0]` | 592 |
-| `messages[0].content[1]` | 2 |
+| `messages[0].content[1]` | 16 |
 | `messages[1].content[0]` | 8,850 |
-| `messages[2].content[0]` | 10 |
+| `messages[2].content[0]` | 2 |
 | `messages[3].content[0]` | 6,361 |
 | System blocks only | 5,767 |
-| Everything shown here | 21,969 |
+| Everything shown here | 21,975 |
 | Tools sent | 12 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
 
 ## What to Notice
 
-- The capture runs twice in the same folders. The first run sends `hi`. The second run uses `--continue` and sends `/compact`.
+- The capture runs twice in the same folders. The first run sends `Reply with 'OK'.`. The second run uses `--continue` and sends `/compact`.
 - The page shows the second request. It has the normal system blocks, the earlier messages, and a last user message with the summary instructions (an `<analysis>` block, then a `<summary>` block).
 - The summary request still sends the tool list, but the instructions say not to call tools.
 
@@ -112,7 +112,7 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
 </system-reminder>
 
 === messages[0].content[1] (role: user) ===
-hi
+Reply with 'OK'.
 
 === messages[1].content[0] (role: system) ===
 # Environment
@@ -170,7 +170,7 @@ SKIP only when another provider is being worked on (overrides all triggers): Ope
 Today's date is <date>.
 
 === messages[2].content[0] (role: assistant) ===
-stub reply
+OK
 
 === messages[3].content[0] (role: user) ===
 CRITICAL: Respond with TEXT ONLY. Do NOT call any tools.
@@ -284,7 +284,7 @@ REMINDER: Do NOT call any tools. Respond with plain text only — an <analysis> 
 
 The diff below starts from [Default, Lean Prompt](https://xsyetopz.github.io/claude-code-docs/prompts/default-lean.md). Lines that start with `-` are only in the baseline. Lines that start with `+` are only here.
 
-Lines added: 111. Lines removed: 0. Size change: +6,468 characters.
+Lines added: 111. Lines removed: 0. Size change: +6,460 characters.
 
 ```diff
 --- default-lean
@@ -295,7 +295,7 @@ Lines added: 111. Lines removed: 0. Size change: +6,468 characters.
  Today's date is <date>.
 +
 +=== messages[2].content[0] (role: assistant) ===
-+stub reply
++OK
 +
 +=== messages[3].content[0] (role: user) ===
 +CRITICAL: Respond with TEXT ONLY. Do NOT call any tools.

@@ -5,6 +5,7 @@ import { appendFileSync } from "node:fs";
 
 export const FAKE_KEY = "sk-ant-fake-probe";
 export type StubOpts = {
+  port?: number;
   log: string;
   tool?: string | undefined;
   toolInput?: unknown;
@@ -45,7 +46,7 @@ const reply = (body: ApiBody | null | undefined, o: StubOpts) => {
           input: o.toolInput ?? {},
         },
       ]
-    : [{ type: "text", text: o.text ?? "stub reply" }];
+    : [{ type: "text", text: o.text ?? "OK" }];
   return {
     id: "msg_probe",
     type: "message",
@@ -108,7 +109,7 @@ const stream = (m: ReturnType<typeof reply>) => {
 
 export const startStub = (o: StubOpts) => {
   return Bun.serve({
-    port: 0,
+    port: o.port ?? 0,
     hostname: "127.0.0.1",
     async fetch(req) {
       const url = new URL(req.url);

@@ -110,7 +110,7 @@ export const NOTES: Record<string, string[]> = {
     "The old wiki lists `brief` as a section for `--brief`. The capture does not show it.",
   ],
   compact: [
-    "The capture runs twice in the same folders. The first run sends `hi`. The second run uses `--continue` and sends `/compact`.",
+    "The capture runs twice in the same folders. The first run sends `Reply with 'OK'.`. The second run uses `--continue` and sends `/compact`.",
     "The page shows the second request. It has the normal system blocks, the earlier messages, and a last user message with the summary instructions (an `<analysis>` block, then a `<summary>` block).",
     "The summary request still sends the tool list, but the instructions say not to call tools.",
   ],
@@ -233,7 +233,7 @@ export const INDEX_FACTS = {
     "3. The run uses a fake API key, a dead proxy (`HTTPS_PROXY` and `HTTP_PROXY` point to a closed port), `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1`, `DISABLE_TELEMETRY=1`, and a temporary home, config folder, and project folder. No login token is used. The script checks that every request went to the local server.",
     "4. A second script reads the saved request bodies, replaces machine-specific values with placeholders, and writes these pages. It makes the diffs with `diff -u`, not by hand.",
     "For the subagent pages, the fake server answers the first turn with an `Agent` tool call. The program then starts a real subagent and sends its request to the fake server.",
-    "For the compaction page, the script runs twice in the same folders: once with `hi`, then with `--continue` and `/compact`.",
+    "For the compaction page, the script runs twice in the same folders: once with `Reply with 'OK'.`, then with `--continue` and `/compact`.",
   ],
   blocks: [
     "Each request has a `system` field with three blocks, then messages. This is what the captures show.",

@@ -93,7 +93,7 @@ Each line is a separate command. The text after the name is the argument.
 | `/import` `[codex\|gemini\|cursor] [--dry-run]` | <Gated note="Server flag tengu_import, off by default. You cannot turn it on" /> | Imports config from another AI coding agent. | Panel and text form. |
 | `/help` | <Documented /> | Shows help and the command list. | Panel. Terminal only. |
 | `/status` | <Documented /> | Shows version, model, account, API connectivity, and tool status. | Panel. Lists skills whose `allowed-tools` were ignored. |
-| `/usage` (aliases `/cost`, `/stats`) | <Documented /> | Shows session cost, plan use, and activity stats. | Panel and text form. Since `2.1.304` it says when a rate limit ends. The limit section needs a claude.ai login. Since `2.1.305` each warning is a one-line fix that names its source, and `f` applies the fixes. The same fixes appear in VS Code and `/doctor` ([v2.1.305 release](https://github.com/anthropics/claude-code/releases/tag/v2.1.305)). See [How `/usage` and `/artifacts` Work](#how-usage-and-artifacts-work). |
+| `/usage` (aliases `/cost`, `/stats`) | <Documented /> | Shows session cost, plan use, and activity stats. | Panel and text form. Since `2.1.304` it says when a rate limit ends. `CLAUDE_CODE_OAUTH_TOKEN` shows the limit rows too. Since `2.1.305` each warning is a one-line fix that names its source, and `f` applies the fixes. The same fixes appear in VS Code and `/doctor` ([v2.1.305 release](https://github.com/anthropics/claude-code/releases/tag/v2.1.305)). See [How `/usage` and `/artifacts` Work](#how-usage-and-artifacts-work). |
 | `/release-notes` | <Documented /> | Shows release notes. | Panel. |
 | `/statusline` | <Documented /> | Sets up the status line. | A prompt command. Not in safe mode. Interactive only. |
 | `/sandbox` `exclude "command pattern"` (Windows also `install`) | <Gated note="Hidden when the platform is not supported or not in the enabled list." /> | Shows sandbox state and opens its settings. | Panel. |
@@ -132,7 +132,7 @@ Each line is a separate command. The text after the name is the argument.
 | `/autofix-pr` | <Gated note="Availability claude-ai and console-profile. Policy allow_remote_sessions." /> | Watches the current pull request and fixes issues. | Panel. |
 | `/daemon` | <Undocumented /> | Manages background services and routines. | Panel. |
 | `/workflows` | <Gated note="Setting disableWorkflows and env var CLAUDE_CODE_DISABLE_WORKFLOWS." /> | Browses running and finished workflows. | Panel. |
-| `/artifacts` | <Gated note="claude.ai login on a Pro, Max, Team, or Enterprise plan (or no plan set), and an org policy." /> | Browses your published and shared artifacts. | Panel. `d` deletes your own artifact after a confirmation. Since `2.1.304` the confirmation is numbered: 1 or Enter keeps, 2 deletes. Since `2.1.305` Esc cancels and `y` and `n` no longer answer. See [How `/usage` and `/artifacts` Work](#how-usage-and-artifacts-work). |
+| `/artifacts` | <Gated note="claude.ai login on a Pro, Max, Team, or Enterprise plan (or no plan set), and an org policy." /> | Browses your published and shared artifacts. | Panel. `d` deletes your own artifact after a confirmation. Since `2.1.304` the confirmation is numbered: 1 or Enter keeps, 2 deletes, and `y`, `n`, and Esc still worked. Since `2.1.305` `y` and `n` no longer answer. See [How `/usage` and `/artifacts` Work](#how-usage-and-artifacts-work). |
 | `/design-consent`, `/design-revoke` | <Gated note="Policy allow_design_sync." /> | Grants or revokes agent access to your Design projects. | Hidden text commands. |
 | `/design-login` | <Gated note="Policy allow_design_sync." /> | Authorizes design-system access for `/design-sync`. | Panel. |
 | `/voice` `[hold\|tap\|off]` | <Gated note="Availability claude-ai." /> | Toggles voice mode. | Text command. |
@@ -177,17 +177,17 @@ Background sessions use `claude respawn <id>` instead.
 ## How `/usage` and `/artifacts` Work
 
 `/artifacts` has four tabs: `All`, `Mine`, `Shared`, and `Pinned`. `Pinned` shows only when you have pins.
-The footer lists the keys. `Enter` opens an artifact, `x` dismisses, `c` copies the URL, `Ctrl+R` renames, `d` deletes, `p` pins, `/` searches, and `r` refreshes.
+The footer lists the keys. `Enter` attaches the selected artifact to the session (the panel shows `Attaching <title>…`, and an artifact that is already attached is opened instead), `x` dismisses, `c` copies the URL, `Ctrl+R` renames, `d` deletes, `p` pins, `/` searches, and `r` refreshes.
 
-To delete, press `d` or choose `Delete` from the actions menu. Only the owner can delete, so the key works only on your own artifacts. The panel asks `Delete <title>? This cannot be undone.` Choose `No, keep it` or `Yes, delete it`. Since `2.1.305` the keys are 1 or Enter to keep, 2 to delete, and Esc to cancel with nothing sent. `y` and `n` no longer answer ([v2.1.305 release](https://github.com/anthropics/claude-code/releases/tag/v2.1.305)).
+To delete, press `d` or choose `Delete` from the actions menu. Only the owner can delete, so the key works only on your own artifacts. The panel asks `Delete <title>? This cannot be undone.` Choose `No, keep it` or `Yes, delete it`. Since `2.1.304` the keys are 1 or Enter to keep and 2 to delete, and `y`, `n`, and Esc still worked. Since `2.1.305` `y` and `n` no longer answer, and Esc goes back with nothing sent ([v2.1.305 release](https://github.com/anthropics/claude-code/releases/tag/v2.1.305)).
 
 A yes sends `DELETE /api/frame/<slug>`. The program retries once on `409`, `429`, or `503`. Success shows `Artifact deleted`. The link stops working for everyone. You cannot restore it, and republishing makes a new URL.
 
 Since `2.1.305` `/usage` turns each warning into a one-line fix that names its source, and `f` applies the fixes. Each fix starts a prompt that begins `Fix what /usage flagged. Show me each change before you make it.` It tells Claude that text in backticks is a name from your logs, never an instruction. Examples of fix lines are `Turn off MCP servers you don't use`, `Stop sessions you no longer need`, `Start fresh when you switch tasks`, and `Give simple subagents a cheaper model` (the program). With Remote Control on, `/usage` says `Nothing was sent. Turn off Remote Control to use fixes.`
 
-`/usage` shows a rate-limit section only with a claude.ai login that has the `user:inference` and `user:profile` scopes. An API key or `CLAUDE_CODE_OAUTH_TOKEN` shows only session cost and tokens.
+On `2.1.305`, an API key shows only session cost and tokens. `CLAUDE_CODE_OAUTH_TOKEN` also shows the `Current session` and `Current week (all models)` rows, filled from model reply headers. The panel then also shows `What's contributing to your limits usage?` with `Scanning local sessions…`. The program did not call the usage endpoint with the token. A claude.ai login with the `user:inference` and `user:profile` scopes is what the program checks for the full section.
 
-Reset times look like `Resets 11:26am (Europe/Tallinn)`. Minutes are dropped on the hour. A date is added when the reset is more than 24 hours away, and weekly rows always show the date.
+Reset times look like `Resets <time> (<time zone>)`. Minutes are dropped on the hour. A date is added when the reset is more than 24 hours away, and weekly rows always show the date.
 
 When the usage endpoint is rate limited, `/usage` says so. What you see depends on the data it already has. A run against a local stub that answered `429` showed these texts. The time is 12-hour, rounded up to the next minute, with no zone and no date. This differs from the `Resets` lines.
 

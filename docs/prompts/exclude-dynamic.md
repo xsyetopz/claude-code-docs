@@ -15,10 +15,10 @@ Moves per-machine text from the system prompt into the first user message. Run `
 | `system[2]` | 3,260 |
 | `messages[0].content[0]` | 2,216 |
 | `messages[0].content[1]` | 592 |
-| `messages[0].content[2]` | 2 |
+| `messages[0].content[2]` | 16 |
 | `messages[1].content[0]` | 8,850 |
 | System blocks only | 3,400 |
-| Everything shown here | 15,396 |
+| Everything shown here | 15,410 |
 | Tools sent | 12 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -109,7 +109,7 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
 </system-reminder>
 
 === messages[0].content[2] (role: user) ===
-hi
+Reply with 'OK'.
 
 === messages[1].content[0] (role: system) ===
 # Environment
@@ -227,7 +227,7 @@ Lines added: 16. Lines removed: 15. Size change: -105 characters.
 
 -=== messages[0].content[1] (role: user) ===
 +=== messages[0].content[2] (role: user) ===
- hi
+ Reply with 'OK'.
 
  === messages[1].content[0] (role: system) ===
 ```

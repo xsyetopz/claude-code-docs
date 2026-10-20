@@ -18,10 +18,10 @@ source: docs/prompts/simple-prompt-haiku.md
 | `system[1]` | 62 |
 | `system[2]` | 8,419 |
 | `messages[0].content[0]` | 593 |
-| `messages[0].content[1]` | 2 |
+| `messages[0].content[1]` | 16 |
 | `messages[1].content[0]` | 8,852 |
 | System blocks only | 8,559 |
-| Everything shown here | 18,296 |
+| Everything shown here | 18,310 |
 | Tools sent | 12 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
