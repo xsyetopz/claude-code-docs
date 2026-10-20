@@ -68,6 +68,7 @@ Turn on the PowerShell tool and turn off web fetching for one project.
 
 ## How It Works
 
+- Since `2.1.305`, when the disk is full, `Bash` does not start the command and says so: `The command was not started: this computer's disk is full (...), so the file that captures command output could not be created. Nothing ran. If this is the user's own computer, tell them before deleting anything to make room.` It no longer shows a raw `ENOSPC` file path ([v2.1.305 release](https://github.com/anthropics/claude-code/releases/tag/v2.1.305); the program).
 - Background subagents keep `Bash`, `PowerShell`, `Monitor`, `TaskStop`, `WebFetch`, and `WebSearch`. See [Create Custom Subagents](https://code.claude.com/docs/en/sub-agents).
 - `CLAUDE_CODE_DISABLE_BACKGROUND_TASKS=1` also disables auto-backgrounding and the `Ctrl+B` key ([Environment Variables](https://code.claude.com/docs/en/env-vars)).
 - A true value for `CLAUDE_AUTO_BACKGROUND_TASKS` gives the `Agent` tool a 120000 ms auto-background time. Source: the program (the env name). It is not in the saved docs, so it is <Undocumented />.

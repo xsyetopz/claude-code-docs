@@ -8,7 +8,7 @@ source: docs/prompts/memory-extraction.md
 # Memory Extraction
 
 
-This is the verbatim text that Claude Code 2.1.304 uses for the memory extraction subagent.
+This is the verbatim text that Claude Code 2.1.305 uses for the memory extraction subagent.
 
 ## Where It Comes From
 

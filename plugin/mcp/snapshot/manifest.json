@@ -338,7 +338,7 @@
   {
     "route": "/configure/cli",
     "title": "CLI Overview",
-    "description": "How to start claude, what print mode does, and a map of the flags and subcommands of Claude Code 2.1.304.",
+    "description": "How to start claude, what print mode does, and a map of the flags and subcommands of Claude Code 2.1.305.",
     "section": "Configure",
     "md": "https://xsyetopz.github.io/claude-code-docs/configure/cli.md",
     "url": "https://xsyetopz.github.io/claude-code-docs/configure/cli/"
@@ -346,7 +346,7 @@
   {
     "route": "/configure/cli/flags",
     "title": "All Flags",
-    "description": "Every claude flag in 2.1.304, with the ones that claude --help hides, grouped by job.",
+    "description": "Every claude flag in 2.1.305, with the ones that claude --help hides, grouped by job.",
     "section": "Configure",
     "md": "https://xsyetopz.github.io/claude-code-docs/configure/cli/flags.md",
     "url": "https://xsyetopz.github.io/claude-code-docs/configure/cli/flags"
@@ -354,7 +354,7 @@
   {
     "route": "/configure/cli/subcommands",
     "title": "Subcommands",
-    "description": "Every claude subcommand in 2.1.304, including background sessions, auth, plugins, and the hidden commands.",
+    "description": "Every claude subcommand in 2.1.305, including background sessions, auth, plugins, and the hidden commands.",
     "section": "Configure",
     "md": "https://xsyetopz.github.io/claude-code-docs/configure/cli/subcommands.md",
     "url": "https://xsyetopz.github.io/claude-code-docs/configure/cli/subcommands"
@@ -514,7 +514,7 @@
   {
     "route": "/extend/skills-and-commands/slash-commands",
     "title": "Slash Commands",
-    "description": "Every built-in slash command in Claude Code 2.1.304, grouped by job, with aliases, arguments, and gates.",
+    "description": "Every built-in slash command in Claude Code 2.1.305, grouped by job, with aliases, arguments, and gates.",
     "section": "Extend",
     "md": "https://xsyetopz.github.io/claude-code-docs/extend/skills-and-commands/slash-commands.md",
     "url": "https://xsyetopz.github.io/claude-code-docs/extend/skills-and-commands/slash-commands"
@@ -946,7 +946,7 @@
   {
     "route": "/reference/api/betas",
     "title": "Betas",
-    "description": "Every anthropic-beta value in Claude Code 2.1.304, when it is sent, and how the list is built and turned off.",
+    "description": "Every anthropic-beta value in Claude Code 2.1.305, when it is sent, and how the list is built and turned off.",
     "section": "Reference",
     "md": "https://xsyetopz.github.io/claude-code-docs/reference/api/betas.md",
     "url": "https://xsyetopz.github.io/claude-code-docs/reference/api/betas"
@@ -962,7 +962,7 @@
   {
     "route": "/reference/transcript-format",
     "title": "Transcript Format",
-    "description": "The session JSONL file, where it lives, and every line type and field that Claude Code 2.1.304 writes.",
+    "description": "The session JSONL file, where it lives, and every line type and field that Claude Code writes.",
     "section": "Reference",
     "md": "https://xsyetopz.github.io/claude-code-docs/reference/transcript-format.md",
     "url": "https://xsyetopz.github.io/claude-code-docs/reference/transcript-format"
@@ -970,7 +970,7 @@
   {
     "route": "/reference/schemas",
     "title": "JSON Schemas",
-    "description": "JSON Schemas for Claude Code 2.1.304 config files, made from the validators inside the program, and how they differ from the SchemaStore copies.",
+    "description": "JSON Schemas for Claude Code 2.1.305 config files, made from the validators inside the program, and how they differ from the SchemaStore copies.",
     "section": "Reference",
     "md": "https://xsyetopz.github.io/claude-code-docs/reference/schemas.md",
     "url": "https://xsyetopz.github.io/claude-code-docs/reference/schemas"
@@ -986,7 +986,7 @@
   {
     "route": "/prompts",
     "title": "Captured System Prompts",
-    "description": "Every system prompt variant you can pick in Claude Code 2.1.304, captured offline and compared.",
+    "description": "Every system prompt variant you can pick in Claude Code 2.1.305, captured offline and compared.",
     "section": "System Prompts",
     "md": "https://xsyetopz.github.io/claude-code-docs/prompts.md",
     "url": "https://xsyetopz.github.io/claude-code-docs/prompts/"
@@ -994,7 +994,7 @@
   {
     "route": "/prompts/override",
     "title": "Override a Prompt",
-    "description": "Which built-in prompt texts in Claude Code 2.1.304 you can replace, append to, or turn off, and how.",
+    "description": "Which built-in prompt texts in Claude Code 2.1.305 you can replace, append to, or turn off, and how.",
     "section": "System Prompts",
     "md": "https://xsyetopz.github.io/claude-code-docs/prompts/override.md",
     "url": "https://xsyetopz.github.io/claude-code-docs/prompts/override"

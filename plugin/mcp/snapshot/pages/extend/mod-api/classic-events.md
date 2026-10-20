@@ -15,7 +15,7 @@ A managed block ends the chain above every module.
 
 Remove the `on` call to turn a hook off. `disableAllHooks` stops installed mods. The same events come from `hooks` in settings.
 
-Official pages: [Hooks Reference](https://code.claude.com/docs/en/hooks), [React to Events](https://code.claude.com/docs/en/plugins/mods/events). Source: the program (the `*HookInput` types of `types-2.1.304.d.ts`). For what each event means, see [Hook Events](https://xsyetopz.github.io/claude-code-docs/extend/hooks/events.md).
+Official pages: [Hooks Reference](https://code.claude.com/docs/en/hooks), [React to Events](https://code.claude.com/docs/en/plugins/mods/events). Source: the Mod API type file (the `*HookInput` types of `types-2.1.303.d.ts`, checked against the 2.1.305 program). For what each event means, see [Hook Events](https://xsyetopz.github.io/claude-code-docs/extend/hooks/events.md).
 
 ## Example
 

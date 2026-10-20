@@ -8,7 +8,7 @@ source: docs/prompts/observer.md
 # Observer Prompt
 
 
-This is the verbatim text that Claude Code 2.1.304 uses for experimental observer agents.
+This is the verbatim text that Claude Code 2.1.305 uses for experimental observer agents.
 
 ## Where It Comes From
 

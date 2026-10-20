@@ -8,7 +8,7 @@ source: docs/prompts/skill-workflow-authoring.md
 # Skill, /workflow-authoring
 
 
-This is the verbatim text that Claude Code 2.1.304 uses for the built-in `/workflow-authoring` skill.
+This is the verbatim text that Claude Code 2.1.305 uses for the built-in `/workflow-authoring` skill.
 
 ## Where It Comes From
 

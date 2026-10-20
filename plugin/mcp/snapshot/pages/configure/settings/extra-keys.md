@@ -12,7 +12,7 @@ Some keys are not in the settings schema, or they live in another file.
 This page covers the auto mode and display keys, the keys that only the desktop app reads, and the global config keys of `~/.claude.json`.
 The global config file is not a settings file. Claude Code writes it, and `/config` changes some of its keys.
 
-All keys here work in `2.1.304`. Edit a settings file for the first two tables. Use `/config` or edit `~/.claude.json` for the global config keys in the last table. Most keys are booleans.
+All keys here work in `2.1.305`. Edit a settings file for the first two tables. Use `/config` or edit `~/.claude.json` for the global config keys in the last table. Most keys are booleans.
 
 ## Auto Mode, Voice, and Display Keys
 
@@ -28,7 +28,7 @@ Source: [Settings Reference](https://code.claude.com/docs/en/settings-reference)
 | `disableDeepLinkRegistration` | [Documented] | enum: `disable` | - | Stop Claude Code from registering the `claude-cli://` link handler with the operating system. | Any settings file |
 | `voiceEnabled` | [Documented] | boolean | - | Turn on voice dictation (hold to talk). See also `voice` in [Interface Settings](https://xsyetopz.github.io/claude-code-docs/configure/settings/ui.md). | Any settings file |
 | `defaultView` | [Undocumented] | enum: `chat`, `transcript` | - | Choose the default transcript view: `chat` shows only `SendUserMessage` checkpoints, and `transcript` shows everything. | Settings files |
-| `axScreenReader` | [Documented] | boolean | - | Render screen-reader friendly output. The `CLAUDE_AX_SCREEN_READER` variable and the `--ax-screen-reader` flag win. | Any settings file |
+| `axScreenReader` | [Documented] | boolean | - | Render screen-reader friendly output. The `CLAUDE_AX_SCREEN_READER` variable and the `--ax-screen-reader` flag win. Since `2.1.305` the program ignores it in project and local settings, and says "Screen reader mode is off: project settings can't turn it on" if only they ask. | Any settings file |
 
 ## Other Keys
 
@@ -46,7 +46,7 @@ The first rows are sub-keys of an object key. The last rows are read only by the
 | `disableBrowserExternalNavigation` | [Documented] | boolean | Unset, so external browsing is on | Turn off external browsing in the desktop Browser pane. Only `true` takes effect. | Managed settings only |
 | `browserExternalPageTools` | [Documented] | string | Unset, so the tools work on external pages | Stop Claude from using its tools on external pages in the desktop Browser pane. The value is `"disabled"`. | Managed settings only |
 | `disableMobileSimulatorTools` | [Documented] | boolean | Unset | Block Claude's tools in the desktop iOS Simulator pane. Only `true` takes effect. | Managed settings only |
-| `disableDesktopLocalSessions` | [Documented] | boolean | - | Turn off Desktop Code sessions that run on the device. SSH and cloud sessions stay on. Not in the 2.1.304 program (no schema entry or reader). The [official docs](https://code.claude.com/docs/en/settings-reference#disabledesktoplocalsessions) say the desktop app reads it (v1.37937.0 or later), and only `true` takes effect. | Managed settings only |
+| `disableDesktopLocalSessions` | [Documented] | boolean | - | Turn off Desktop Code sessions that run on the device. SSH and cloud sessions stay on. Not in the 2.1.305 program (no schema entry or reader). The [official docs](https://code.claude.com/docs/en/settings-reference#disabledesktoplocalsessions) say the desktop app reads it (v1.37937.0 or later), and only `true` takes effect. | Managed settings only |
 
 ## Global Config Keys
 

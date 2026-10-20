@@ -1,6 +1,6 @@
 ---
 title: "Subcommands"
-description: "Every claude subcommand in 2.1.304, including background sessions, auth, plugins, and the hidden commands."
+description: "Every claude subcommand in 2.1.305, including background sessions, auth, plugins, and the hidden commands."
 url: https://xsyetopz.github.io/claude-code-docs/configure/cli/subcommands
 source: docs/configure/cli/subcommands.md
 ---
@@ -25,7 +25,7 @@ claude stop <id>                        # stop it, keep the conversation
 
 ## Commands
 
-Source: the text of `claude <command> --help` in `2.1.304`.
+Source: the text of `claude <command> --help` in `2.1.305`.
 
 | Command | Status | What it does |
 | --- | --- | --- |

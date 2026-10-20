@@ -12,7 +12,7 @@ The prompt that the built-in Claude Code guide subagent gets. The main agent cal
 
 ## Where It Comes From
 
-Captured from a real interactive session of Claude Code 2.1.304 against a local stub server, with a fake key (see [Interactive Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md#interactive-probes)). The stub answered the first turn with an `Agent` call, and this is the request that the subagent sent.
+Captured from a real interactive session of Claude Code 2.1.304 against a local stub server, with a fake key (see [Interactive Probes](https://xsyetopz.github.io/claude-code-docs/reference/probes.md#interactive-probes)). The stub answered the first turn with an `Agent` call, and this is the request that the subagent sent. The prompt text is unchanged in 2.1.305.
 
 - Model: `claude-haiku-5-5`, while the main session ran `claude-opus-5-5`.
 - Tools: `Bash`, `Read`, `WebFetch`, `WebSearch`.

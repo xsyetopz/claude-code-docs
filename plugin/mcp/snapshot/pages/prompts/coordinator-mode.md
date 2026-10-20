@@ -8,7 +8,7 @@ source: docs/prompts/coordinator-mode.md
 # Coordinator Mode
 
 
-This is the verbatim text that Claude Code 2.1.304 uses for coordinator mode.
+This is the verbatim text that Claude Code 2.1.305 uses for coordinator mode.
 
 ## Where It Comes From
 

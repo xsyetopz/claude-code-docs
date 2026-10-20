@@ -8,7 +8,7 @@ source: docs/prompts/session-naming.md
 # Session Naming
 
 
-This is the verbatim text that Claude Code 2.1.304 uses for session naming.
+This is the verbatim text that Claude Code 2.1.305 uses for session naming.
 
 ## Where It Comes From
 

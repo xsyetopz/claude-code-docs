@@ -8,7 +8,7 @@ source: docs/prompts/skill-team-onboarding.md
 # Skill, /team-onboarding
 
 
-This is the verbatim text that Claude Code 2.1.304 uses for the built-in `/team-onboarding` skill.
+This is the verbatim text that Claude Code 2.1.305 uses for the built-in `/team-onboarding` skill.
 
 ## Where It Comes From
 

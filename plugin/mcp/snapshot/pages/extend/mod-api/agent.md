@@ -14,7 +14,7 @@ source: docs/extend/mod-api/agent.md
 
 Return `{ isOffered: false }` or `{ deny }` from a hook to turn something off. Hook `agent.spawn` to pick a model or refuse, and `agent.offer` to hide a type.
 
-Official pages: [Use the Mods API](https://code.claude.com/docs/en/plugins/mods/api), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the program (`types-2.1.304.d.ts`).
+Official pages: [Use the Mods API](https://code.claude.com/docs/en/plugins/mods/api), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the Mod API type file (`types-2.1.303.d.ts`, checked against the 2.1.305 program).
 In a "Where it can be used" cell, "Run time" means in a hook, in a closure that a hook drew, or in a timer callback. It does not mean inside `register`.
 
 ## Example

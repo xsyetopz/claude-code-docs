@@ -1,11 +1,11 @@
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.304.<build>; cc_entrypoint=sdk-cli;
+x-anthropic-billing-header: cc_version=2.1.305.<build>; cc_entrypoint=sdk-cli;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
 
 === system[2] (cache marker: {"type":"ephemeral"}) ===
-You are evaluating a PreToolUse hook in Claude Code. Your task is to evaluate the condition described in the user message. The conversation transcript is available at: <config-dir>/projects/<project-slug>/149c0497-780f-4126-a159-5b7867e53aff.jsonl
+You are evaluating a PreToolUse hook in Claude Code. Your task is to evaluate the condition described in the user message. The conversation transcript is available at: <config-dir>/projects/<project-slug>/c5f865ec-3616-4463-9f64-be8149a9af48.jsonl
 You can read this file to analyze the conversation history if needed.
 
 Use the available tools to inspect the codebase and verify the condition.
@@ -25,7 +25,7 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
 </system-reminder>
 
 === messages[0].content[1] (role: user) ===
-PROBE-HOOK-AGENT: check this call. {"session_id":"149c0497-780f-4126-a159-5b7867e53aff","transcript_path":"<config-dir>/projects/<project-slug>/149c0497-780f-4126-a159-5b7867e53aff.jsonl","cwd":"<cwd>","prompt_id":"1010aa79-27fd-4fe0-a709-793fc5b2641b","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"PreToolUse","tool_name":"Bash","tool_input":{"command":"echo probe"},"tool_use_id":"toolu_probe1"}
+PROBE-HOOK-AGENT: check this call. {"session_id":"c5f865ec-3616-4463-9f64-be8149a9af48","transcript_path":"<config-dir>/projects/<project-slug>/c5f865ec-3616-4463-9f64-be8149a9af48.jsonl","cwd":"<cwd>","prompt_id":"91bce717-2d80-4f0c-bbbe-254ec97a5354","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"PreToolUse","tool_name":"Bash","tool_input":{"command":"echo probe"},"tool_use_id":"toolu_probe1"}
 
 === messages[1].content[0] (role: system) ===
 Today's date is <date>.

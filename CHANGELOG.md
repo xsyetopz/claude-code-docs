@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-The site documents Claude Code `2.1.304`, the only release it tracks. The version of the site itself is set in `package.json`, and the tracked Claude Code version is set in `src/version.ts`.
+The site documents Claude Code `2.1.305`, the only release it tracks. The version of the site itself is set in `package.json`, and the tracked Claude Code version is set in `src/version.ts`.
 
 ## [Unreleased]
 
@@ -16,7 +16,7 @@ The site documents Claude Code `2.1.304`, the only release it tracks. The versio
 - Overview pages for each top-level section, so breadcrumbs link back.
 - Status labels (Managed Only, Experimental, Deprecated, Caution) in place of emoji markers, and screen-reader text for ✅ and ❌.
 - A `check:examples` gate that runs Biome on code examples, and `check-docs` rules for code spans in headings and admonition titles.
-- An unofficial docs site for Claude Code `2.1.304`, with pages for start, configure, extend, prompts, reference, and how it works.
+- An unofficial docs site for Claude Code `2.1.305`, with pages for start, configure, extend, prompts, reference, and how it works.
 - Provenance badges (Documented, Undocumented, Differs, and Gated) that mark each item.
 - A style guide for contributors in `docs/contributing/`.
 - Capture and check tools in `tools/`, and a GitHub Pages deploy workflow.
@@ -26,7 +26,7 @@ The site documents Claude Code `2.1.304`, the only release it tracks. The versio
 - Diagrams render after the fonts load, scroll sideways on small screens instead of shrinking, and keep lines out of labels.
 - Merged duplicated rows into one home per item, with links from other pages.
 - Code examples follow `biome.json`, including arrow functions.
-- Updated to Claude Code `2.1.304`.
+- Updated to Claude Code `2.1.305`.
 - Refreshed the design with IBM Plex Mono for code, a capped prose width, and quieter tables that scroll on mobile.
 - Made the badge shapes read without color, and added brand-style admonitions.
 - Added a hero to the overview page.

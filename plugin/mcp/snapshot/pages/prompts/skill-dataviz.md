@@ -8,7 +8,7 @@ source: docs/prompts/skill-dataviz.md
 # Skill, /dataviz
 
 
-This is the verbatim text that Claude Code 2.1.304 uses for the built-in `/dataviz` skill.
+This is the verbatim text that Claude Code 2.1.305 uses for the built-in `/dataviz` skill.
 
 ## Where It Comes From
 

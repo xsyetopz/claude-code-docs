@@ -8,7 +8,7 @@ source: docs/prompts/skill-run-skill-generator.md
 # Skill, /run-skill-generator
 
 
-This is the verbatim text that Claude Code 2.1.304 uses for the built-in `/run-skill-generator` skill.
+This is the verbatim text that Claude Code 2.1.305 uses for the built-in `/run-skill-generator` skill.
 
 ## Where It Comes From
 

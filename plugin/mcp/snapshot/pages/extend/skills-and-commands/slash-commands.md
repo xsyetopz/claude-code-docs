@@ -1,6 +1,6 @@
 ---
 title: "Slash Commands"
-description: "Every built-in slash command in Claude Code 2.1.304, grouped by job, with aliases, arguments, and gates."
+description: "Every built-in slash command in Claude Code 2.1.305, grouped by job, with aliases, arguments, and gates."
 url: https://xsyetopz.github.io/claude-code-docs/extend/skills-and-commands/slash-commands
 source: docs/extend/skills-and-commands/slash-commands.md
 ---
@@ -97,7 +97,7 @@ Each line is a separate command. The text after the name is the argument.
 | `/import` `[codex\|gemini\|cursor] [--dry-run]` | [Gated: Server flag tengu_import, off by default. You cannot turn it on] | Imports config from another AI coding agent. | Panel and text form. |
 | `/help` | [Documented] | Shows help and the command list. | Panel. Terminal only. |
 | `/status` | [Documented] | Shows version, model, account, API connectivity, and tool status. | Panel. Lists skills whose `allowed-tools` were ignored. |
-| `/usage` (aliases `/cost`, `/stats`) | [Documented] | Shows session cost, plan use, and activity stats. | Panel and text form. Since `2.1.304` it says when a rate limit ends. The limit section needs a claude.ai login. See [How `/usage` and `/artifacts` Work](#how-usage-and-artifacts-work). |
+| `/usage` (aliases `/cost`, `/stats`) | [Documented] | Shows session cost, plan use, and activity stats. | Panel and text form. Since `2.1.304` it says when a rate limit ends. The limit section needs a claude.ai login. Since `2.1.305` each warning is a one-line fix that names its source, and `f` applies the fixes. The same fixes appear in VS Code and `/doctor` ([v2.1.305 release](https://github.com/anthropics/claude-code/releases/tag/v2.1.305)). See [How `/usage` and `/artifacts` Work](#how-usage-and-artifacts-work). |
 | `/release-notes` | [Documented] | Shows release notes. | Panel. |
 | `/statusline` | [Documented] | Sets up the status line. | A prompt command. Not in safe mode. Interactive only. |
 | `/sandbox` `exclude "command pattern"` (Windows also `install`) | [Gated: Hidden when the platform is not supported or not in the enabled list.] | Shows sandbox state and opens its settings. | Panel. |
@@ -130,13 +130,13 @@ Each line is a separate command. The text after the name is the argument.
 | `/session` (alias `/remote`) | [Gated: Needs a remote workspace.] | Shows the cloud session URL and a QR code. | Panel. |
 | `/desktop` (alias `/app`) | [Gated: Availability claude-ai.] | Continues the session in Claude Desktop. | Panel. |
 | `/mobile` (aliases `/ios`, `/android`) | [Documented] | Shows a QR code to download the mobile app. | Panel. |
-| `/remote-control` (alias `/rc`) `[name]` | [Gated: Off when the setting disableRemoteControl is true.] | Controls this session from your phone or claude.ai/code. | Panel. |
+| `/remote-control` (alias `/rc`) `[name]` | [Gated: Off when the setting disableRemoteControl is true.] | Controls this session from your phone or claude.ai/code. | Panel. Since `2.1.305`, pressing `w` in the spawn-mode screen says the new mode is saved for the folder, and a later `claude remote-control` start that uses the saved mode says where it came from ([v2.1.305 release](https://github.com/anthropics/claude-code/releases/tag/v2.1.305)). A `!` command sent over Remote Control is not run: `Not run: '!' commands aren't available in Remote Control sessions. Run the command directly on the computer the session is running on.` (the program). |
 | `/ultraplan` `<prompt>` | [Gated: Availability claude-ai.] | Drafts an editable plan in a cloud session. | Panel. |
 | `/ultrareview` | [Gated: Paid feature.] | Runs a cloud code review. | Panel and text form. |
 | `/autofix-pr` | [Gated: Availability claude-ai and console-profile. Policy allow_remote_sessions.] | Watches the current pull request and fixes issues. | Panel. |
 | `/daemon` | [Undocumented] | Manages background services and routines. | Panel. |
 | `/workflows` | [Gated: Setting disableWorkflows and env var CLAUDE_CODE_DISABLE_WORKFLOWS.] | Browses running and finished workflows. | Panel. |
-| `/artifacts` | [Gated: claude.ai login on a Pro, Max, Team, or Enterprise plan (or no plan set), and an org policy.] | Browses your published and shared artifacts. | Panel. `d` deletes your own artifact after a confirmation. Since `2.1.304` the confirmation is numbered: 1 or Enter keeps, 2 deletes. See [How `/usage` and `/artifacts` Work](#how-usage-and-artifacts-work). |
+| `/artifacts` | [Gated: claude.ai login on a Pro, Max, Team, or Enterprise plan (or no plan set), and an org policy.] | Browses your published and shared artifacts. | Panel. `d` deletes your own artifact after a confirmation. Since `2.1.304` the confirmation is numbered: 1 or Enter keeps, 2 deletes. Since `2.1.305` Esc cancels and `y` and `n` no longer answer. See [How `/usage` and `/artifacts` Work](#how-usage-and-artifacts-work). |
 | `/design-consent`, `/design-revoke` | [Gated: Policy allow_design_sync.] | Grants or revokes agent access to your Design projects. | Hidden text commands. |
 | `/design-login` | [Gated: Policy allow_design_sync.] | Authorizes design-system access for `/design-sync`. | Panel. |
 | `/voice` `[hold\|tap\|off]` | [Gated: Availability claude-ai.] | Toggles voice mode. | Text command. |
@@ -183,9 +183,11 @@ Background sessions use `claude respawn <id>` instead.
 `/artifacts` has four tabs: `All`, `Mine`, `Shared`, and `Pinned`. `Pinned` shows only when you have pins.
 The footer lists the keys. `Enter` opens an artifact, `x` dismisses, `c` copies the URL, `Ctrl+R` renames, `d` deletes, `p` pins, `/` searches, and `r` refreshes.
 
-To delete, press `d` or choose `Delete` from the actions menu. Only the owner can delete, so the key works only on your own artifacts. The panel asks `Delete <title>? This cannot be undone.` Choose `No, keep it` or `Yes, delete it`. Keys `n` and `y` also work, and Esc cancels with nothing sent.
+To delete, press `d` or choose `Delete` from the actions menu. Only the owner can delete, so the key works only on your own artifacts. The panel asks `Delete <title>? This cannot be undone.` Choose `No, keep it` or `Yes, delete it`. Since `2.1.305` the keys are 1 or Enter to keep, 2 to delete, and Esc to cancel with nothing sent. `y` and `n` no longer answer ([v2.1.305 release](https://github.com/anthropics/claude-code/releases/tag/v2.1.305)).
 
 A yes sends `DELETE /api/frame/<slug>`. The program retries once on `409`, `429`, or `503`. Success shows `Artifact deleted`. The link stops working for everyone. You cannot restore it, and republishing makes a new URL.
+
+Since `2.1.305` `/usage` turns each warning into a one-line fix that names its source, and `f` applies the fixes. Each fix starts a prompt that begins `Fix what /usage flagged. Show me each change before you make it.` It tells Claude that text in backticks is a name from your logs, never an instruction. Examples of fix lines are `Turn off MCP servers you don't use`, `Stop sessions you no longer need`, `Start fresh when you switch tasks`, and `Give simple subagents a cheaper model` (the program). With Remote Control on, `/usage` says `Nothing was sent. Turn off Remote Control to use fixes.`
 
 `/usage` shows a rate-limit section only with a claude.ai login that has the `user:inference` and `user:profile` scopes. An API key or `CLAUDE_CODE_OAUTH_TOKEN` shows only session cost and tokens.
 

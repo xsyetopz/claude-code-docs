@@ -8,7 +8,7 @@ source: docs/prompts/skill-claude-api.md
 # Skill, /claude-api
 
 
-This is the verbatim text that Claude Code 2.1.304 uses for the built-in `/claude-api` skill.
+This is the verbatim text that Claude Code 2.1.305 uses for the built-in `/claude-api` skill.
 
 ## Where It Comes From
 

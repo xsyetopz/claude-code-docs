@@ -8,7 +8,7 @@ source: docs/extend/mod-api/types/index.md
 # Mod API Types
 
 
-The Mod API ships a type file, `types-2.1.304.d.ts`, that your editor reads.
+The Mod API ships a type file, `types-2.1.303.d.ts`, that your editor reads. These pages follow that file, checked against the 2.1.305 program.
 These pages list every type in that file that you can use, grouped by topic.
 Each type is a row or a field row, with its use and its shape.
 Import the types with `import type { ... } from 'claude-code'`. The import is empty at run time.
@@ -33,7 +33,7 @@ Import the types with `import type { ... } from 'claude-code'`. The import is em
 - Each page has a table of types without fields, then one section for each type that has fields.
 - The Documented badge means the type is in the published type file, which the docs call the complete reference.
 - The type file is marked early access, so a type may change between releases.
-- Types have no switch and hold no settings. They live in the published type file `types-2.1.304.d.ts` and in `.claude-plugin/types/claude-code/index.d.ts`.
+- Types have no switch and hold no settings. They live in the published type file `types-2.1.303.d.ts` and in `.claude-plugin/types/claude-code/index.d.ts`.
 - Where the type file has a doc comment, the description follows it. Where it has none, the description comes from the name, the shape, and the pages that document the same thing, such as [Input and Output](https://xsyetopz.github.io/claude-code-docs/extend/hooks/input-and-output.md).
 
 ## Related Pages

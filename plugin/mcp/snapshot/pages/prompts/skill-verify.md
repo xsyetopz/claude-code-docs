@@ -8,7 +8,7 @@ source: docs/prompts/skill-verify.md
 # Skill, /verify
 
 
-This is the verbatim text that Claude Code 2.1.304 uses for the built-in `/verify` skill.
+This is the verbatim text that Claude Code 2.1.305 uses for the built-in `/verify` skill.
 
 ## Where It Comes From
 

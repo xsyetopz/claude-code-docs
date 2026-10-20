@@ -8,7 +8,7 @@ source: docs/prompts/skill-update-config.md
 # Skill, /update-config
 
 
-This is the verbatim text that Claude Code 2.1.304 uses for the built-in `/update-config` skill.
+This is the verbatim text that Claude Code 2.1.305 uses for the built-in `/update-config` skill.
 
 ## Where It Comes From
 

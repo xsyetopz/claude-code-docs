@@ -8,7 +8,7 @@ source: docs/prompts/coordinator-worker.md
 # Coordinator Worker
 
 
-This is the verbatim text that Claude Code 2.1.304 uses for a worker agent that the coordinator starts.
+This is the verbatim text that Claude Code 2.1.305 uses for a worker agent that the coordinator starts.
 
 ## Where It Comes From
 

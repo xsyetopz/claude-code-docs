@@ -115,4 +115,4 @@ The Notes column says which when the code shows it.
 - [Subagents](../../extend/subagents/index.md)
 - [Undocumented Items](../../reference/undocumented.md): every item that only the program shows.
 
-Source: the program (variable names found in the `2.1.304` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
+Source: the program (variable names found in the `2.1.305` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.

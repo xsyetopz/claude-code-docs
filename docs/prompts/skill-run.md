@@ -5,7 +5,7 @@ sidebar_position: 76
 generated: false
 ---
 
-This is the verbatim text that Claude Code 2.1.304 uses for the built-in `/run` skill.
+This is the verbatim text that Claude Code 2.1.305 uses for the built-in `/run` skill.
 
 ## Where It Comes From
 

@@ -5,7 +5,7 @@ sidebar_position: 71
 generated: false
 ---
 
-This is the verbatim text that Claude Code 2.1.304 uses for the built-in `/fewer-permission-prompts` skill.
+This is the verbatim text that Claude Code 2.1.305 uses for the built-in `/fewer-permission-prompts` skill.
 
 ## Where It Comes From
 

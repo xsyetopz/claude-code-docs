@@ -38,7 +38,7 @@ The text below is every part of the request that Claude Code builds before your 
 
 ```text
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.304.<build>; cc_entrypoint=sdk-cli;
+x-anthropic-billing-header: cc_version=2.1.305.<build>; cc_entrypoint=sdk-cli;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -132,7 +132,7 @@ Based on the conversation transcript above, has the following stopping condition
 
 Condition: PROBE-HOOK-STOP: is the work done?
 
-ARGUMENTS: {"session_id":"eed15fb4-c6a1-4e0e-9047-cf282977dbc2","transcript_path":"<config-dir>/projects/<project-slug>/eed15fb4-c6a1-4e0e-9047-cf282977dbc2.jsonl","cwd":"<cwd>","prompt_id":"5ea442a0-a19b-4dd7-bd3c-26f45193acc2","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"Stop","stop_hook_active":false,"last_assistant_message":"stub reply","background_tasks":[],"session_crons":[]}
+ARGUMENTS: {"session_id":"6fb7caa5-72ee-41de-a024-d1622be50651","transcript_path":"<config-dir>/projects/<project-slug>/6fb7caa5-72ee-41de-a024-d1622be50651.jsonl","cwd":"<cwd>","prompt_id":"c484840a-e125-4792-b148-6ea159be5edb","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"Stop","stop_hook_active":false,"last_assistant_message":"stub reply","background_tasks":[],"session_crons":[]}
 ```
 
 ## Compared to the Default
@@ -166,7 +166,7 @@ Lines added: 82. Lines removed: 5. Size change: +10,940 characters.
 +Only use {"ok": false, "impossible": true} when the condition is genuinely unachievable in this session — for example: the condition is self-contradictory, it depends on a resource or capability that is unavailable, or the assistant has explicitly tried, exhausted reasonable approaches, and stated it cannot be done. Apply your own judgment when deciding this — the assistant claiming the goal is impossible is evidence, not proof; independently confirm the condition is genuinely unachievable rather than deferring to the assistant's self-assessment. Do not use it just because the goal has not been reached yet or because progress is slow. When in doubt, return {"ok": false} without "impossible".
 +
  === messages[0].content[0] (role: user) ===
--PROBE-HOOK-PROMPT: check this call. {"session_id":"afde7f4e-dfd9-4f93-892c-1cb552c2bfd7","transcript_path":"<config-dir>/projects/<project-slug>/afde7f4e-dfd9-4f93-892c-1cb552c2bfd7.jsonl","cwd":"<cwd>","prompt_id":"797775c4-5d23-485a-a50b-f54d554a8454","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"PreToolUse","tool_name":"Bash","tool_input":{"command":"echo probe"},"tool_use_id":"toolu_probe1"}
+-PROBE-HOOK-PROMPT: check this call. {"session_id":"fac8a96a-6c2c-4504-8b13-ada8db83a2ae","transcript_path":"<config-dir>/projects/<project-slug>/fac8a96a-6c2c-4504-8b13-ada8db83a2ae.jsonl","cwd":"<cwd>","prompt_id":"e603e057-f77e-4a03-a86f-74feb1a650f4","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"PreToolUse","tool_name":"Bash","tool_input":{"command":"echo probe"},"tool_use_id":"toolu_probe1"}
 +<system-reminder>
 +Attribution for git commits and pull requests you create from here on (this replaces Claude Code's own earlier attribution guidance, such as a previous copy of this reminder; the user's own instructions about these lines, such as a CLAUDE.md or memory rule, take precedence over this reminder, but do not add attribution lines this reminder leaves out):
 +- End git commit messages with:
@@ -241,7 +241,7 @@ Lines added: 82. Lines removed: 5. Size change: +10,940 characters.
 +
 +Condition: PROBE-HOOK-STOP: is the work done?
 +
-+ARGUMENTS: {"session_id":"eed15fb4-c6a1-4e0e-9047-cf282977dbc2","transcript_path":"<config-dir>/projects/<project-slug>/eed15fb4-c6a1-4e0e-9047-cf282977dbc2.jsonl","cwd":"<cwd>","prompt_id":"5ea442a0-a19b-4dd7-bd3c-26f45193acc2","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"Stop","stop_hook_active":false,"last_assistant_message":"stub reply","background_tasks":[],"session_crons":[]}
++ARGUMENTS: {"session_id":"6fb7caa5-72ee-41de-a024-d1622be50651","transcript_path":"<config-dir>/projects/<project-slug>/6fb7caa5-72ee-41de-a024-d1622be50651.jsonl","cwd":"<cwd>","prompt_id":"c484840a-e125-4792-b148-6ea159be5edb","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"Stop","stop_hook_active":false,"last_assistant_message":"stub reply","background_tasks":[],"session_crons":[]}
 ```
 
 The tool list is the same as the baseline.

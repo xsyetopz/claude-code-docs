@@ -73,7 +73,7 @@ In Claude Code, you can add it by hand with `claude mcp add claude-code-docs -- 
 
 ## Refresh from the Site
 
-The bundled copy covers Claude Code 2.1.304 and changes only when you update the plugin.
+The bundled copy covers Claude Code 2.1.305 and changes only when you update the plugin.
 You can ask the server to fetch newer pages instead.
 
 | Variable | What it does |

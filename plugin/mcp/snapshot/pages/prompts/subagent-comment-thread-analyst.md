@@ -8,7 +8,7 @@ source: docs/prompts/subagent-comment-thread-analyst.md
 # Subagent, Comment Thread Analyst
 
 
-This is the verbatim text that Claude Code 2.1.304 uses for the built-in comment thread analyst subagent.
+This is the verbatim text that Claude Code 2.1.305 uses for the built-in comment thread analyst subagent.
 
 ## Where It Comes From
 

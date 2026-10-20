@@ -16,7 +16,7 @@ Flags add more lines: `--include-partial-messages`, `--include-hook-events`, `--
 
 ## Message Types
 
-The tables list the message types that the bundled schema of `2.1.304` defines.
+The tables list the message types that the bundled schema of `2.1.305` defines.
 Each row has a short form of the schema description. A row without a description says so.
 A type is marked [Documented] when a docs page other than the [changelog](https://code.claude.com/docs/en/changelog) and the Agent SDK pages names it.
 Source: [Run Claude Code Programmatically](https://code.claude.com/docs/en/headless), [CLI Reference](https://code.claude.com/docs/en/cli-reference), and the program (the message schema).

@@ -50,7 +50,7 @@ Review the changes under $ARGUMENTS and list the bugs you find.
 | `arguments` | <Documented /> | Names for `$name` placeholders. | A space-separated string or a YAML list. Names made only of digits are dropped. |
 | `disable-model-invocation` | <Documented /> | Stops Claude from loading the skill by itself. | Also blocks preload into subagents and use by scheduled tasks. |
 | `user-invocable` | <Documented /> | `false` hides the skill from the `/` menu. | Default `true`. |
-| `allowed-tools` | <Documented /> | Tools allowed without a prompt for the turn. | A space or comma string, or a list. The grant clears at your next message. Ignored under `allowManagedPermissionRulesOnly` (2.1.282). `${CLAUDE_SKILL_DIR}` works in Bash rules. |
+| `allowed-tools` | <Documented /> | Tools allowed without a prompt for the turn. | A space or comma string, or a list. The grant clears at your next message. Ignored under `allowManagedPermissionRulesOnly` (2.1.282). Since 2.1.305, plugins that Claude Desktop mounts by path no longer keep their `allowed-tools` when your organization's managed settings set it ([v2.1.305 release](https://github.com/anthropics/claude-code/releases/tag/v2.1.305)). `${CLAUDE_SKILL_DIR}` works in Bash rules. |
 | `disallowed-tools` | <Documented /> | Removes tools while the skill is active. | The same format. The program also reads `disallowedTools`. |
 | `model` | <Documented /> | The model for the turn. | `inherit` keeps the active model. A model outside `availableModels` is not used. With `context: fork` it sets the subagent model. |
 | `effort` | <Differs note="Docs: low, medium, high, xhigh, max. The program also accepts an integer." /> | The effort level for the turn. | The program warns `Valid options: ... or an integer`. |

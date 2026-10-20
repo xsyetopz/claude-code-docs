@@ -44,7 +44,7 @@ Source: [Model Configuration: Setting Your Model](https://code.claude.com/docs/e
 | `model` | [Documented] | The settings key that stores the default. |
 | `ANTHROPIC_DEFAULT_MODEL` | [Documented] | Sets the default for new sessions. |
 | `availableModels` | [Documented] | An allowlist in managed settings. It limits `/model`, `--model`, the env vars, and alias resolution. Entries can be a family (`sonnet`), a version prefix (`claude-sonnet-4-5`), or a full ID. |
-| `modelOverrides` | [Documented] | Maps an Anthropic model ID to the provider string Claude Code sends, such as a Bedrock inference profile ARN. |
+| `modelOverrides` | [Documented] | Maps an Anthropic model ID to the provider string Claude Code sends, such as a Bedrock inference profile ARN. Since `2.1.305`, `/effort` and `/autocompact` settings apply even when the model name differs from a `modelOverrides` value by letter case or a `[1m]` tag ([v2.1.305 release](https://github.com/anthropics/claude-code/releases/tag/v2.1.305)). |
 | `modelPicker` | [Documented] | Lists your own rows for the `/model` picker, in your order and labels. |
 | `ANTHROPIC_CUSTOM_MODEL_OPTION` | [Documented] | Adds one custom entry to the picker. The ID is not validated. Add `_NAME` and `_DESCRIPTION` for a label. |
 | `CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY` | [Documented] | Fills the picker from the gateway `/v1/models` endpoint. Off by default. |

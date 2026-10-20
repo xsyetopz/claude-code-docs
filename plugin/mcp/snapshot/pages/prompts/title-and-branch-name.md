@@ -8,7 +8,7 @@ source: docs/prompts/title-and-branch-name.md
 # Session Title and Branch Name
 
 
-This is the verbatim text that Claude Code 2.1.304 uses for the session title and branch name.
+This is the verbatim text that Claude Code 2.1.305 uses for the session title and branch name.
 
 ## Where It Comes From
 

@@ -1,6 +1,6 @@
 ---
 title: "Override a Prompt"
-description: "Which built-in prompt texts in Claude Code 2.1.304 you can replace, append to, or turn off, and how."
+description: "Which built-in prompt texts in Claude Code 2.1.305 you can replace, append to, or turn off, and how."
 url: https://xsyetopz.github.io/claude-code-docs/prompts/override
 source: docs/prompts/override.md
 ---
@@ -70,7 +70,7 @@ The flags `--system-prompt` and `--append-system-prompt` do not reach built-in s
 | [/code-review](https://xsyetopz.github.io/claude-code-docs/prompts/skill-code-review.md) and its `/review` alias | Replace | Same rule as `/simplify`. | The program |
 | Other bundled skills: [batch](https://xsyetopz.github.io/claude-code-docs/prompts/skill-batch.md), [claude-api](https://xsyetopz.github.io/claude-code-docs/prompts/skill-claude-api.md), [dataviz](https://xsyetopz.github.io/claude-code-docs/prompts/skill-dataviz.md), [deep-research](https://xsyetopz.github.io/claude-code-docs/prompts/skill-deep-research.md), [doctor](https://xsyetopz.github.io/claude-code-docs/prompts/skill-doctor.md), [fewer-permission-prompts](https://xsyetopz.github.io/claude-code-docs/prompts/skill-fewer-permission-prompts.md), [goal](https://xsyetopz.github.io/claude-code-docs/prompts/skill-goal.md), [insights](https://xsyetopz.github.io/claude-code-docs/prompts/skill-insights.md), [loop](https://xsyetopz.github.io/claude-code-docs/prompts/skill-loop.md), [plugin-authoring](https://xsyetopz.github.io/claude-code-docs/prompts/skill-plugin-authoring.md), [run](https://xsyetopz.github.io/claude-code-docs/prompts/skill-run.md), [run-skill-generator](https://xsyetopz.github.io/claude-code-docs/prompts/skill-run-skill-generator.md), [team-onboarding](https://xsyetopz.github.io/claude-code-docs/prompts/skill-team-onboarding.md), [update-config](https://xsyetopz.github.io/claude-code-docs/prompts/skill-update-config.md), [verify](https://xsyetopz.github.io/claude-code-docs/prompts/skill-verify.md), [workflow-authoring](https://xsyetopz.github.io/claude-code-docs/prompts/skill-workflow-authoring.md) | Replace | A same-named skill file. | The program |
 
-`/recap`, `/auto-mode-setup`, and `/autocompact` sent no model request, so they have no prompt to change. `/pr-comments` does not exist in 2.1.304.
+`/recap`, `/auto-mode-setup`, and `/autocompact` sent no model request, so they have no prompt to change. `/pr-comments` does not exist in 2.1.305.
 
 ## Output Styles
 

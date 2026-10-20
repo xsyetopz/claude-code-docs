@@ -13,7 +13,7 @@ The point can be before a tool runs, when you send a prompt, or when the session
 A hook can block a risky command, add context, or run a check every time.
 A prompt to Claude cannot promise that, but a hook can.
 
-Claude Code `2.1.304` has 33 hook events.
+Claude Code `2.1.305` has 33 hook events.
 The [official docs](https://code.claude.com/docs/en/hooks) and the program list the same 33 names.
 
 ## At a Glance

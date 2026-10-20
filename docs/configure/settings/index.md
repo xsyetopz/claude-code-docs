@@ -18,7 +18,7 @@ This page explains the files, the scopes, and which value wins. The other pages 
 | Where does it live? | `~/.claude/settings.json`, `.claude/settings.json`, `.claude/settings.local.json`, managed files, and `~/.claude.json` |
 | Status | <Documented /> <Undocumented /> <Differs note="appendPlugins and prependPlugins" /> |
 
-The managed schema of `2.1.304` lists 184 keys. The user schema lists 162, and the other 22 are managed-only.
+The managed schema of `2.1.305` lists 186 keys. The user schema lists 163, and the other 23 are managed-only.
 Source: the program (the published settings schemas).
 
 ## Example
@@ -61,7 +61,7 @@ Each key has a row on one of these pages.
 - `Where to Set It` says which files may set the key. `Any settings file` means the user, project, local, and managed files.
   `Settings files` means the settings files without a narrower scope in the source.
 - Many boolean keys are written as the thing to switch off, such as `spinnerTipsEnabled`. Read the row before you pick a value.
-- Items that are removed or do nothing in `2.1.304` are left out. See the end of this page.
+- Items that are removed or do nothing in `2.1.305` are left out. See the end of this page.
 
 ## Where Settings Live
 
@@ -169,7 +169,7 @@ Claude Code then takes the model keys of that app over the managed values.
 
 ## Left Out on Purpose
 
-These keys do nothing in `2.1.304`, so the pages do not list them.
+These keys do nothing in `2.1.305`, so the pages do not list them.
 
 - `taskOutputMaxChars` — The `TaskOutput` tool was removed.
 - `keybindingFlavor` — Word-editing keys always follow Bash (readline) rules now.

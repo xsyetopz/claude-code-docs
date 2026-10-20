@@ -8,7 +8,7 @@ source: docs/prompts/skill-doctor.md
 # Skill, /doctor
 
 
-This is the verbatim text that Claude Code 2.1.304 uses for the built-in `/doctor` skill.
+This is the verbatim text that Claude Code 2.1.305 uses for the built-in `/doctor` skill.
 
 ## Where It Comes From
 

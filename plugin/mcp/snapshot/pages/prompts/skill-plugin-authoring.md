@@ -8,7 +8,7 @@ source: docs/prompts/skill-plugin-authoring.md
 # Skill, /plugin-authoring
 
 
-This is the verbatim text that Claude Code 2.1.304 uses for the built-in `/plugin-authoring` skill.
+This is the verbatim text that Claude Code 2.1.305 uses for the built-in `/plugin-authoring` skill.
 
 ## Where It Comes From
 

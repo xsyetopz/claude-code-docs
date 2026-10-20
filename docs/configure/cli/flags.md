@@ -1,6 +1,6 @@
 ---
 title: All Flags
-description: Every claude flag in 2.1.304, with the ones that claude --help hides, grouped by job.
+description: Every claude flag in 2.1.305, with the ones that claude --help hides, grouped by job.
 sidebar_position: 2
 ---
 

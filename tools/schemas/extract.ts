@@ -1,5 +1,5 @@
 // Reads the module table of a Bun single-file executable (read only) and returns each embedded module.
-// Layout (Bun StandaloneModuleGraph), found by inspecting Claude Code 2.1.304:
+// Layout (Bun StandaloneModuleGraph), found by inspecting Claude Code 2.1.305:
 //   [data ...][module table][...]  [Offsets: 32 bytes]  "\n---- Bun! ----\n"
 //   Offsets = byte_count u64, modules {offset u32, length u32}, entry_point_id u32, argv {offset u32, length u32}, flags u32
 //   Pointers are relative to base = (start of Offsets) - byte_count.

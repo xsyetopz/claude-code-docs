@@ -8,7 +8,7 @@ source: docs/prompts/team-onboarding-guide.md
 # Team Onboarding Guide
 
 
-This is the verbatim text that Claude Code 2.1.304 uses for the team onboarding guide prompt.
+This is the verbatim text that Claude Code 2.1.305 uses for the team onboarding guide prompt.
 
 ## Where It Comes From
 

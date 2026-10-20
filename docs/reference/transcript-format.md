@@ -1,6 +1,6 @@
 ---
 title: Transcript Format
-description: The session JSONL file, where it lives, and every line type and field that Claude Code 2.1.304 writes.
+description: The session JSONL file, where it lives, and every line type and field that Claude Code writes.
 sidebar_position: 5
 ---
 

@@ -1,5 +1,5 @@
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.304.<build>; cc_entrypoint=sdk-cli;
+x-anthropic-billing-header: cc_version=2.1.305.<build>; cc_entrypoint=sdk-cli;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -83,11 +83,11 @@ Help the user debug an issue they're encountering in this current Claude Code se
 
 Debug logging was OFF for this session until now. Nothing prior to this /debug invocation was captured.
 
-Tell the user that debug logging is now active at `<config-dir>/debug/73e50d86-948a-417c-adb4-6641f4b216b1.txt`, ask them to reproduce the issue, then re-read the log. If they can't reproduce, they can also restart with `claude --debug` to capture logs from startup.
+Tell the user that debug logging is now active at `<config-dir>/debug/214b1d82-8da3-4585-8378-2651a542d6b7.txt`, ask them to reproduce the issue, then re-read the log. If they can't reproduce, they can also restart with `claude --debug` to capture logs from startup.
 
 ## Session Debug Log
 
-The debug log for the current session is at: `<config-dir>/debug/73e50d86-948a-417c-adb4-6641f4b216b1.txt`
+The debug log for the current session is at: `<config-dir>/debug/214b1d82-8da3-4585-8378-2651a542d6b7.txt`
 
 No log file exists yet.
 

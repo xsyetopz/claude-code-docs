@@ -87,6 +87,7 @@ Values in `command`, `args`, `env`, `url`, and `headers` can read env vars.
 - Scopes match by name. Plugins and connectors match by endpoint.
 - Two URLs are the same endpoint when they differ only in scheme or host case, a default port, or a trailing slash.
 - The same name with different endpoints in two scopes gives a warning. OAuth sign-ins are stored for each endpoint.
+- Since `2.1.305`, a server passed by a cloud session or by the SDK's `setMcpServers` is no longer replaced later in the session by a same-named server from your own settings ([v2.1.305 release](https://github.com/anthropics/claude-code/releases/tag/v2.1.305)).
 
 ## Example
 

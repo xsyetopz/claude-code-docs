@@ -8,7 +8,7 @@ source: docs/prompts/memory-selection.md
 # Memory Selection
 
 
-This is the verbatim text that Claude Code 2.1.304 uses for memory selection.
+This is the verbatim text that Claude Code 2.1.305 uses for memory selection.
 
 ## Where It Comes From
 

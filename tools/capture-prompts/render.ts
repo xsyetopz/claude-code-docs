@@ -499,7 +499,7 @@ for (const [id, c] of caps) {
   const L: string[] = [
     "---",
     `title: "Captured System Prompts"`,
-    `description: "Every system prompt variant you can pick in Claude Code 2.1.304, captured offline and compared."`,
+    `description: "Every system prompt variant you can pick in Claude Code 2.1.305, captured offline and compared."`,
     `sidebar_position: 1`,
     "---",
     "",

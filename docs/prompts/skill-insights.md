@@ -5,11 +5,11 @@ sidebar_position: 73
 generated: false
 ---
 
-This is the verbatim text that Claude Code 2.1.304 uses for the built-in `/insights` skill.
+This is the verbatim text that Claude Code 2.1.305 uses for the built-in `/insights` skill.
 
 ## Where It Comes From
 
-Captured from the program. The file holds several requests, each starting with a `=== request system` line. It includes the system request, the usage data prompt, and the output lines that point to the report.
+Captured from the program on 2.1.304; the prompt text is unchanged in 2.1.305. The file holds several requests, each starting with a `=== request system` line. It includes the system request, the usage data prompt, and the output lines that point to the report.
 
 ## How to Override It
 

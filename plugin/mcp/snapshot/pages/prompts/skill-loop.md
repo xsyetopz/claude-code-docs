@@ -8,7 +8,7 @@ source: docs/prompts/skill-loop.md
 # Skill, /loop
 
 
-This is the verbatim text that Claude Code 2.1.304 uses for the built-in `/loop` skill.
+This is the verbatim text that Claude Code 2.1.305 uses for the built-in `/loop` skill.
 
 ## Where It Comes From
 

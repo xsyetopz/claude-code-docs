@@ -246,7 +246,7 @@ A `$.ui.blit` argument swapping one of the caller's mounted keyed Images to its 
 
 ### `ImageProps`
 
-The props of `Image`, the terminal surface's picture leaf: pixels over a box of cells where the terminal can (kitty, Ghostty), the `alt` elsewhere. Object with the fields `key?`, `source`, `columns`, `rows`, `alt`. A leaf with no children, `hover`, or `onPress`. A new `source` replaces the picture in place.
+The props of `Image`, the terminal surface's picture leaf: pixels over a box of cells where the terminal can (kitty, Ghostty), the `alt` elsewhere. Since `2.1.305` it also draws in iTerm2 3.5 and later with fullscreen rendering. The program detects it from an XTVERSION reply that names iTerm2 3.5 or later; otherwise it shows the `alt` text. Object with the fields `key?`, `source`, `columns`, `rows`, `alt`. A leaf with no children, `hover`, or `onPress`. A new `source` replaces the picture in place.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
@@ -375,7 +375,7 @@ The argument of `$.ui.open`: which pane, its title, whether it asks the person's
 | `closeOnEscape` | <Documented /> | While the pane holds the keyboard, the key that hands it back (Escape) also closes it as the person's close does: `ui.close`, origin `person`. | Type: `true`. Optional. Escape at an idle, empty prompt closes the pane. A hook may refuse the close. Each open sets it anew. |
 | `holdToasts` | <Documented /> | While the pane is the one shown the surface holds every transient toast: each other plugin's `$.ui.toast` and the engine's own, as this plugin's. | Type: `true`. Optional. Toasts wait while the pane is open. Use it for a dialog the person answers and leaves. Each open sets it anew. |
 | `rows` | <Documented /> | The body rows the pane's content wants while seated inline above the prompt: it opens that tall, up to what the layout spares, not a third. | Type: `number`. Optional. A request, not a grant. A size the person dragged wins. The dock ignores it. A positive whole number. |
-| `columns` | <Documented /> | The body columns the pane's content wants while docked beside a fullscreen transcript: the dock opens that wide, floor to ceiling. | Type: `number`. Optional. A request, not a grant. A width the person dragged wins. The inline block ignores it. A positive whole number. |
+| `columns` | <Documented /> | The body columns the pane's content wants while docked beside a fullscreen transcript: the dock opens that wide, floor to ceiling. | Type: `number`. Optional. A request, not a grant. A width the person dragged wins. Since `2.1.305` the dock stays within 45% of the terminal's width, also for a requested or chosen width and a width kept from a wider terminal, with a floor of 24 columns. The cap is also at most the terminal's width minus 60 columns. The dock is hidden below 110 columns, so the floor and the cap never clash (the program; [v2.1.305 release](https://github.com/anthropics/claude-code/releases/tag/v2.1.305)). The inline block ignores it. A positive whole number. |
 
 ### `PressedLink`
 

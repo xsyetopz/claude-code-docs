@@ -42,7 +42,7 @@ Lists from all scopes merge. Official pages: [Configure Permissions](https://cod
 
 | Item | Status | What it does | How it works | Where to set it |
 | --- | --- | --- | --- | --- |
-| `allowManagedPermissionRulesOnly` | <Documented /> | Only managed settings supply permission rules | Rules from other scopes are ignored with a notice that names this key | Managed settings |
+| `allowManagedPermissionRulesOnly` | <Documented /> | Only managed settings supply permission rules | Rules from other scopes are ignored with a notice that names this key. Since `2.1.305`, plugins that Claude Desktop mounts by path no longer keep their `allowed-tools` ([v2.1.305 release](https://github.com/anthropics/claude-code/releases/tag/v2.1.305)) | Managed settings |
 | `skipDangerousModePermissionPrompt` | <Documented /> | The user accepted the bypass dialog | Boolean | User settings |
 | `skipAutoPermissionPrompt` | <Documented /> | The user accepted the auto mode opt-in dialog | Boolean | Settings |
 | `useAutoModeDuringPlan` | <Documented /> | Plan mode uses auto mode semantics when auto mode is available | Default `true`. A `false` from managed, `--settings`, user, or local settings wins | Settings |
@@ -94,7 +94,7 @@ A `PermissionUpdate` changes rules or the mode. Hooks and SDK hosts send and rec
 | `destination` | `userSettings`, `projectSettings`, `localSettings`, `session`, `cliArg` |
 | rule value | An object with `toolName` and `ruleContent`. |
 
-Source: `PermissionUpdate` in the program types (`types-2.1.304.d.ts`).
+Source: `PermissionUpdate` in the Mod API type file (`types-2.1.303.d.ts`, checked against the 2.1.305 program).
 
 ## How It Works
 

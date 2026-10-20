@@ -11,7 +11,7 @@ A hooks module in a session cannot import this module.
 
 Each test ends after 5 seconds unless it sets `timeoutMs`. Test files live in the plugin folder.
 
-Official page: [Test a Mod](https://code.claude.com/docs/en/plugins/mods/test), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the program (`types-2.1.304.d.ts`).
+Official page: [Test a Mod](https://code.claude.com/docs/en/plugins/mods/test), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the Mod API type file (`types-2.1.303.d.ts`, checked against the 2.1.305 program).
 
 ## Example
 

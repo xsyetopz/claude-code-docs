@@ -4,7 +4,7 @@ description: What changed in the Claude Code releases near 2.1.304, newest first
 sidebar_position: 4
 ---
 
-This page lists changes in the last few releases up to `2.1.304`.
+This page lists changes in the last few releases up to `2.1.305`.
 It is short on purpose. The site only repeats what its sources say, and it does not guess.
 For every fix and small change, read the official [Changelog](https://code.claude.com/docs/en/changelog).
 
@@ -13,6 +13,24 @@ For every fix and small change, read the official [Changelog](https://code.claud
 Run `claude --version`.
 The `/release-notes` command shows a cached copy of the [changelog](https://code.claude.com/docs/en/changelog).
 This site covers `2.1.304`, the version shown in the navbar.
+
+## Version 2.1.305
+
+Released October 20, 2026. Source: [release notes](https://github.com/anthropics/claude-code/releases/tag/v2.1.305).
+Rows marked with the program come from a comparison of the `2.1.304` and `2.1.305` programs.
+
+| Change | Status | What it means for you | Where to read more |
+| --- | --- | --- | --- |
+| `plugin validate --profile` | <Undocumented /> | `--profile directory` also checks a plugin against the plugin directory's submission rules, with checks such as README, `LICENSE`, icon, and `privacyPolicyUrl`. It is not in the release notes (the program). | [Plugin CLI](../extend/plugins/cli.md) |
+| `/usage` fixes | <Documented /> | Each warning is a one-line fix that names its source, and `f` applies the fixes. The same fixes appear in VS Code and `/doctor`. | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
+| `/artifacts` delete | <Documented /> | 1 or Enter keeps, 2 deletes, Esc cancels. `y` and `n` no longer answer. | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
+| Tool search retry | <Documented /> | Claude Code retries without tool search when the endpoint or a gateway rejects it, or when `ToolSearch` is disallowed or left out of `--tools`. This fixes a `2.1.304` regression. | [MCP Runtime](../extend/mcp/runtime.md) |
+| Mod API | <Documented /> | A docked pane stays within 45% of the terminal's width. `Image` draws in iTerm2 3.5 and later with fullscreen rendering. | [Mod API UI Types](../extend/mod-api/types/ui.md) |
+| Bash on a full disk | <Documented /> | The error says the disk is full and that nothing ran. | [Shell and Web Tools](../reference/tools/shell-and-web.md) |
+| Remote Control `!` commands | <Undocumented /> | A `!` command sent over Remote Control is not run, and the message tells you to run it on the computer itself (the program). | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
+
+The release also adds `sandbox.allowNestedUserNamespaces`, `CLAUDE_CODE_RETRY_WATCHDOG_USAGE_LIMIT_RECHECK_MS`, and many fixes.
+Read the [release notes](https://github.com/anthropics/claude-code/releases/tag/v2.1.305) for the full list.
 
 ## Version 2.1.304
 
@@ -119,7 +137,7 @@ We also ran these against a local stub with a fake key:
 - The Mod API items: `tool.check` got `isReadOnly: true` for `Read`. An ask with `decider: "person"` showed a dialog in the default mode, and in `-p` it was refused as `Permission to use Bash denied by plugin <name>: <reason>`, while an ask without it said `Bash needs approval (asked by plugin <name>: <reason>)`. The `settings.read` hook got `layers`, such as `[{"source":"user","settings":{...}}]`.
 - `denyRead` brackets are a Linux fix. On macOS a sandboxed `echo` with `denyRead` globs holding `[user-id]` ran fine, which does not show the Linux fix.
 
-The `/artifacts` delete confirmation was seen live. The panel asks `Delete <title>? This cannot be undone.` It offers `No, keep it` and `Yes, delete it`, and the footer shows `y` to delete and `n` to keep. Choosing yes shows `Artifact deleted`. With an API key and no login, `/artifacts` says `Unknown command`. In print mode with `CLAUDE_CODE_OAUTH_TOKEN` it says `/artifacts isn't available in this environment.` In the interactive screen with that token it opens a panel with the tabs `All`, `Mine`, and `Shared`, and an empty list says `No artifacts yet. Publish one with the Artifact tool.`
+The `/artifacts` delete confirmation was seen live on `2.1.304`. The panel asks `Delete <title>? This cannot be undone.` It offers `No, keep it` and `Yes, delete it`, and the footer shows `y` to delete and `n` to keep. In `2.1.305` `y` and `n` no longer answer it. Choosing yes shows `Artifact deleted`. With an API key and no login, `/artifacts` says `Unknown command`. In print mode with `CLAUDE_CODE_OAUTH_TOKEN` it says `/artifacts isn't available in this environment.` In the interactive screen with that token it opens a panel with the tabs `All`, `Mine`, and `Shared`, and an empty list says `No artifacts yet. Publish one with the Artifact tool.`
 
 `/usage` shows only session cost and tokens with an API key or `CLAUDE_CODE_OAUTH_TOKEN`, even after real calls. The rate-limit section needs a claude.ai login with the `user:inference` and `user:profile` scopes (the program). A local stub with fake subscriber credentials showed the `Resets` lines. The `rate limited until <time>` text is new in `2.1.304`. It appears only when the usage endpoint is rate limited (the program). A stub that answered `429` showed it, in four forms. See [Slash Commands](../extend/skills-and-commands/slash-commands.md). With `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` set, `/usage` shows `Failed to load usage data` and sends no request.
 

@@ -1,6 +1,6 @@
 ---
 title: "Betas"
-description: "Every anthropic-beta value in Claude Code 2.1.304, when it is sent, and how the list is built and turned off."
+description: "Every anthropic-beta value in Claude Code 2.1.305, when it is sent, and how the list is built and turned off."
 url: https://xsyetopz.github.io/claude-code-docs/reference/api/betas
 source: docs/reference/api/betas.md
 ---
