@@ -21593,7 +21593,7 @@ import { homedir } from "os";
 import { dirname, join, resolve, sep } from "path";
 import { fileURLToPath } from "url";
 var SITE = "https://xsyetopz.github.io/claude-code-docs";
-function fetchBase() {
+var fetchBase = () => {
   const raw = process.env["CLAUDE_CODE_DOCS_SITE"];
   if (!raw)
     return SITE;
@@ -21605,7 +21605,7 @@ function fetchBase() {
   } catch {}
   console.error("claude-code-docs: ignoring CLAUDE_CODE_DOCS_SITE (needs https)");
   return SITE;
-}
+};
 var FETCH_TIMEOUT_MS = 5000;
 var CACHE_TTL_MS = 24 * 60 * 60 * 1000;
 var SCHEMA_NAMES = [
@@ -21619,15 +21619,15 @@ var SCHEMA_NAMES = [
 var SNAPSHOT = join(dirname(fileURLToPath(import.meta.url)), "..", "snapshot");
 var refreshEnabled = () => process.env["CLAUDE_CODE_DOCS_REFRESH"] === "1";
 var cacheDir = () => join(process.env["XDG_CACHE_HOME"] || join(homedir(), ".cache"), "claude-code-docs");
-function normalizeRoute(input) {
+var normalizeRoute = (input) => {
   let r = input.trim();
   if (r.startsWith(SITE))
     r = r.slice(SITE.length);
   r = r.replace(/[?#].*$/, "").replace(/\.(md|html)$/, "");
   return r.replace(/^\/+|\/+$/g, "") || "index";
-}
+};
 var ROUTE_RE = /^\/?[a-z0-9][a-z0-9/_-]*$/i;
-function sanitizeManifest(list) {
+var sanitizeManifest = (list) => {
   if (!Array.isArray(list))
     return [];
   const origins = [SITE, fetchBase()];
@@ -21651,21 +21651,21 @@ function sanitizeManifest(list) {
     });
   }
   return out;
-}
-function inside(base, ...parts) {
+};
+var inside = (base, ...parts) => {
   const root = resolve(base);
   const p = resolve(root, ...parts);
   return p.startsWith(root + sep) ? p : undefined;
-}
+};
 var readJson = (file) => JSON.parse(readFileSync(file, "utf8"));
-function freshFile(file) {
+var freshFile = (file) => {
   try {
     return Date.now() - statSync(file).mtimeMs < CACHE_TTL_MS;
   } catch {
     return false;
   }
-}
-async function fetchText(url) {
+};
+var fetchText = async (url) => {
   try {
     const res = await fetch(url, {
       signal: AbortSignal.timeout(FETCH_TIMEOUT_MS)
@@ -21676,8 +21676,8 @@ async function fetchText(url) {
   } catch {
     return;
   }
-}
-function writeCache(rel, text) {
+};
+var writeCache = (rel, text) => {
   try {
     const file = inside(cacheDir(), rel);
     if (!file)
@@ -21685,7 +21685,7 @@ function writeCache(rel, text) {
     mkdirSync(dirname(file), { recursive: true });
     writeFileSync(file, text);
   } catch {}
-}
+};
 
 class Content {
   entries;
@@ -21771,7 +21771,7 @@ var W_DESC = 3;
 var W_HEAD = 3;
 var K1 = 1.4;
 var B = 0.75;
-function tokenize(text) {
+var tokenize = (text) => {
   const out = [];
   for (const m of text.matchAll(/[A-Za-z0-9]+(?:[_.:-][A-Za-z0-9]+)*/g)) {
     const word = m[0];
@@ -21782,9 +21782,9 @@ function tokenize(text) {
         out.push(p.toLowerCase());
   }
   return out;
-}
+};
 var stripFrontMatter = (md) => md.replace(/^---\n[\s\S]*?\n---\n/, "");
-function headingsOf(md) {
+var headingsOf = (md) => {
   const out = [];
   let fence = false;
   for (const line of md.split(`
@@ -21796,7 +21796,7 @@ function headingsOf(md) {
       out.push(m[1].trim());
   }
   return out;
-}
+};
 
 class SearchIndex {
   docs = [];
@@ -21858,11 +21858,11 @@ class SearchIndex {
     return hits.sort((a, b) => b.score - a.score).slice(0, limit);
   }
 }
-function matchesSection(e, section) {
+var matchesSection = (e, section) => {
   const s = section.trim().toLowerCase().replace(/^\/+|\/+$/g, "");
   return e.section.toLowerCase() === s || e.route.toLowerCase().startsWith(`${s}/`) || e.route.toLowerCase().split("/")[0] === s;
-}
-function snippetOf(body, terms) {
+};
+var snippetOf = (body, terms) => {
   let heading = "";
   let best = { score: 0, line: "", heading: "" };
   let fence = false;
@@ -21889,7 +21889,7 @@ function snippetOf(body, terms) {
     return "";
   const line = best.line.length > 240 ? `${best.line.slice(0, 237)}...` : best.line;
   return best.heading ? `[${best.heading}] ${line}` : line;
-}
+};
 
 // plugin/mcp/src/server.ts
 var DEFAULT_PAGE_CHARS = 20000;
@@ -21962,7 +21962,7 @@ Does not modify anything. Not for general web search.`,
 
 ${md}`, { hits });
 });
-function sectionOf(md, heading) {
+var sectionOf = (md, heading) => {
   const want = heading.trim().toLowerCase().replace(/^#+\s*/, "");
   const lines = md.split(`
 `);
@@ -21983,14 +21983,14 @@ function sectionOf(md, heading) {
   const to = h2[k + 1]?.at ?? lines.length;
   return lines.slice(from.at, to).join(`
 `);
-}
-function unknownRoute(route) {
+};
+var unknownRoute = (route) => {
   const near = searchIndex().search(route.replace(/[/_-]+/g, " "), 5).map((h) => `  - ${h.entry.route}`).join(`
 `);
   return fail(`No page with route "${route}". Routes look like "configure/status-line" (see list_pages).${near ? `
 Closest matches:
 ${near}` : ""}`);
-}
+};
 server.registerTool("read_page", {
   title: "Read a Claude Code docs page",
   description: `Read one page of the Claude Code Docs as markdown (Claude Code ${content.claudeCode}). Tables carry a Status column with badges: [Documented] (an official docs page names it), [Undocumented] (only the program shows it; may change without notice), [Differs] (official docs and program disagree), [Gated] (behind a flag or server gate).
@@ -22082,7 +22082,7 @@ Use to discover routes for read_page. Source: ${refreshEnabled() ? "bundled snap
   });
 });
 var isObj = (v) => typeof v === "object" && v !== null && !Array.isArray(v);
-function walk(schema, path) {
+var walk = (schema, path) => {
   let cur = schema;
   for (const key of path.split(".").filter(Boolean)) {
     if (key === "__proto__" || key === "constructor" || key === "prototype")
@@ -22100,7 +22100,7 @@ function walk(schema, path) {
     cur = next;
   }
   return cur;
-}
+};
 server.registerTool("get_schema", {
   title: "Get a Claude Code JSON Schema",
   description: `Get one of the six JSON Schemas generated from Claude Code ${content.claudeCode} itself: ${SCHEMA_NAMES.join(", ")}.

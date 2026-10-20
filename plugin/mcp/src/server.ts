@@ -114,7 +114,7 @@ Does not modify anything. Not for general web search.`,
 );
 
 // ---- read_page ----
-function sectionOf(md: string, heading: string): string | undefined {
+const sectionOf = (md: string, heading: string): string | undefined => {
   const want = heading
     .trim()
     .toLowerCase()
@@ -135,9 +135,9 @@ function sectionOf(md: string, heading: string): string | undefined {
   if (!from) return undefined;
   const to = h2[k + 1]?.at ?? lines.length;
   return lines.slice(from.at, to).join("\n");
-}
+};
 
-function unknownRoute(route: string) {
+const unknownRoute = (route: string) => {
   const near = searchIndex()
     .search(route.replace(/[/_-]+/g, " "), 5)
     .map((h) => `  - ${h.entry.route}`)
@@ -145,7 +145,7 @@ function unknownRoute(route: string) {
   return fail(
     `No page with route "${route}". Routes look like "configure/status-line" (see list_pages).${near ? `\nClosest matches:\n${near}` : ""}`,
   );
-}
+};
 
 server.registerTool(
   "read_page",
@@ -274,7 +274,7 @@ const isObj = (v: unknown): v is Json =>
   typeof v === "object" && v !== null && !Array.isArray(v);
 
 /** Follows a dotted path through properties, then additionalProperties (a map's values), then items ("[]" also works). */
-function walk(schema: Json, path: string): Json | undefined {
+const walk = (schema: Json, path: string): Json | undefined => {
   let cur: Json = schema;
   for (const key of path.split(".").filter(Boolean)) {
     if (key === "__proto__" || key === "constructor" || key === "prototype")
@@ -288,7 +288,7 @@ function walk(schema: Json, path: string): Json | undefined {
     cur = next;
   }
   return cur;
-}
+};
 
 server.registerTool(
   "get_schema",

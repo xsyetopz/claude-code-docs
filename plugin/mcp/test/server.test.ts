@@ -11,7 +11,7 @@ import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js"
 const SERVER = join(import.meta.dir, "..", "dist", "server.js");
 const clients: Client[] = [];
 
-async function connect(env: Record<string, string> = {}) {
+const connect = async (env: Record<string, string> = {}) => {
   const c = new Client({ name: "test", version: "0" });
   const clean = Object.fromEntries(
     Object.entries(process.env).filter(
@@ -32,7 +32,8 @@ async function connect(env: Record<string, string> = {}) {
     return { error: r.isError === true, text: first?.text ?? "" };
   };
   return { call };
-}
+};
+
 afterAll(async () => {
   for (const c of clients) await c.close();
 });

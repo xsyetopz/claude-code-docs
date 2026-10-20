@@ -49,7 +49,7 @@ const isObject = (v: unknown): v is Json =>
   typeof v === "object" && v !== null && !Array.isArray(v);
 
 // Marks (strip=false) or removes (strip=true) managed-only keys. Walks properties and array items.
-export function applyManaged(schema: Json, strip: boolean): Json {
+export const applyManaged = (schema: Json, strip: boolean): Json => {
   const out: Json = {};
   for (const [k, v] of Object.entries(schema)) {
     if (k === "properties" && isObject(v)) {
@@ -80,11 +80,11 @@ export function applyManaged(schema: Json, strip: boolean): Json {
     }
   }
   return out;
-}
+};
 
 // The binary reads marketplace "plugins" as unknown[] and checks every entry with its own schema afterwards,
 // so the plain conversion leaves "items" empty. Put the entry schema there.
-function graftPluginEntries(marketplace: Json, entry: Json): Json {
+const graftPluginEntries = (marketplace: Json, entry: Json): Json => {
   const props = marketplace["properties"];
   if (!isObject(props) || !isObject(props["plugins"]))
     throw new Error("marketplace schema has no plugins property");
@@ -104,10 +104,10 @@ function graftPluginEntries(marketplace: Json, entry: Json): Json {
     ...marketplace,
     properties: { ...props, plugins: { ...props["plugins"], items: item } },
   };
-}
+};
 
 // An undefined arm in a union only means "may be absent", which JSON Schema already says. Drop it.
-function pruneUnrepresentable(node: unknown): unknown {
+const pruneUnrepresentable = (node: unknown): unknown => {
   if (Array.isArray(node)) return node.map(pruneUnrepresentable);
   if (!isObject(node)) return node;
   const out: Json = {};
@@ -125,10 +125,10 @@ function pruneUnrepresentable(node: unknown): unknown {
     delete out["x-cc-unrepresentable"];
   }
   return out;
-}
+};
 
 // The binary adds this key only when the environment variable is set; say so in the key's description.
-function noteGatedKeys(settings: Json): Json {
+const noteGatedKeys = (settings: Json): Json => {
   const props = settings["properties"];
   if (!isObject(props) || !isObject(props["xaaIdp"])) return settings;
   const key = props["xaaIdp"];
@@ -138,13 +138,13 @@ function noteGatedKeys(settings: Json): Json {
     ...settings,
     properties: { ...props, xaaIdp: { ...key, description } },
   };
-}
+};
 
-function withHeader(
+const withHeader = (
   name: keyof typeof FILES,
   body: Json,
   version: string,
-): Json {
+): Json => {
   const { $schema: _drop, ...rest } = body as Json & { $schema?: unknown };
   void _drop;
   return {
@@ -154,12 +154,12 @@ function withHeader(
     $comment: `For ${FILES[name].what}. Generated from Claude Code ${version} by calling the zod v4 toJSONSchema embedded in the binary on its own validator (method A, runtime export). Do not edit by hand: run "bun run schemas".`,
     ...rest,
   };
-}
+};
 
-export function buildFiles(
+export const buildFiles = (
   raw: RawSchemas,
   version: string,
-): Record<keyof typeof FILES, Json> {
+): Record<keyof typeof FILES, Json> => {
   const need = (k: string) => {
     const v = raw[k];
     if (!v) throw new Error(`missing raw schema "${k}"`);
@@ -197,4 +197,4 @@ export function buildFiles(
       version,
     ),
   };
-}
+};

@@ -12,10 +12,12 @@ export type BunModule = { name: string; source: string };
 const TRAILER = "\n---- Bun! ----\n";
 const ENTRY_SIZE = 52;
 
-export function extractModules(binaryPath: string): {
+export const extractModules = (
+  binaryPath: string,
+): {
   modules: BunModule[];
   entry: string;
-} {
+} => {
   const buf = readFileSync(binaryPath);
   const trailerAt = buf.lastIndexOf(TRAILER);
   if (trailerAt < 0)
@@ -44,4 +46,4 @@ export function extractModules(binaryPath: string): {
     });
   }
   return { modules, entry: modules[entryId]?.name ?? "" };
-}
+};

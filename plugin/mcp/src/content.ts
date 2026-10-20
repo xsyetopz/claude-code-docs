@@ -14,7 +14,7 @@ import { fileURLToPath } from "node:url";
 export const SITE = "https://xsyetopz.github.io/claude-code-docs";
 // Override for mirrors and tests: CLAUDE_CODE_DOCS_SITE=https://example.org/docs
 // Only https is accepted; plain http only for localhost and 127.0.0.1 (tests).
-function fetchBase(): string {
+const fetchBase = (): string => {
   const raw = process.env["CLAUDE_CODE_DOCS_SITE"];
   if (!raw) return SITE;
   try {
@@ -29,7 +29,8 @@ function fetchBase(): string {
     "claude-code-docs: ignoring CLAUDE_CODE_DOCS_SITE (needs https)",
   );
   return SITE;
-}
+};
+
 export const FETCH_TIMEOUT_MS = 5000;
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000;
 
@@ -68,17 +69,17 @@ const cacheDir = (): string =>
   );
 
 /** Normalizes "/a/b/", "a/b.md", or a full site URL to "a/b". */
-export function normalizeRoute(input: string): string {
+export const normalizeRoute = (input: string): string => {
   let r = input.trim();
   if (r.startsWith(SITE)) r = r.slice(SITE.length);
   r = r.replace(/[?#].*$/, "").replace(/\.(md|html)$/, "");
   return r.replace(/^\/+|\/+$/g, "") || "index";
-}
+};
 
 const ROUTE_RE = /^\/?[a-z0-9][a-z0-9/_-]*$/i;
 
 /** Keeps only well-formed manifest entries. A hostile or broken manifest cannot add paths or foreign URLs. */
-export function sanitizeManifest(list: unknown): Entry[] {
+export const sanitizeManifest = (list: unknown): Entry[] => {
   if (!Array.isArray(list)) return [];
   const origins = [SITE, fetchBase()];
   const out: Entry[] = [];
@@ -108,27 +109,27 @@ export function sanitizeManifest(list: unknown): Entry[] {
     });
   }
   return out;
-}
+};
 
 /** Joins and checks that the result stays inside base. Returns undefined otherwise. */
-function inside(base: string, ...parts: string[]): string | undefined {
+const inside = (base: string, ...parts: string[]): string | undefined => {
   const root = resolve(base);
   const p = resolve(root, ...parts);
   return p.startsWith(root + sep) ? p : undefined;
-}
+};
 
 const readJson = <T>(file: string): T =>
   JSON.parse(readFileSync(file, "utf8")) as T;
 
-function freshFile(file: string): boolean {
+const freshFile = (file: string): boolean => {
   try {
     return Date.now() - statSync(file).mtimeMs < CACHE_TTL_MS;
   } catch {
     return false;
   }
-}
+};
 
-async function fetchText(url: string): Promise<string | undefined> {
+const fetchText = async (url: string): Promise<string | undefined> => {
   try {
     const res = await fetch(url, {
       signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
@@ -138,9 +139,9 @@ async function fetchText(url: string): Promise<string | undefined> {
   } catch {
     return undefined;
   }
-}
+};
 
-function writeCache(rel: string, text: string): void {
+const writeCache = (rel: string, text: string): void => {
   try {
     const file = inside(cacheDir(), rel);
     if (!file) return;
@@ -149,7 +150,7 @@ function writeCache(rel: string, text: string): void {
   } catch {
     // A read-only cache dir only costs the cache.
   }
-}
+};
 
 export class Content {
   private entries: Entry[];

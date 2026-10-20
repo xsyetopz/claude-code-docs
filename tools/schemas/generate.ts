@@ -97,7 +97,7 @@ const CAPTURES: Capture[] = [
   ),
 ];
 
-function findBinary(): string {
+const findBinary = (): string => {
   const i = process.argv.indexOf("--bin");
   const bin =
     i >= 0
@@ -106,7 +106,7 @@ function findBinary(): string {
   if (!existsSync(bin))
     throw new Error(`Claude Code ${CLAUDE_CODE_VERSION} not found at ${bin}`);
   return bin;
-}
+};
 
 const baseName = (name: string) => name.slice(name.lastIndexOf("/") + 1);
 

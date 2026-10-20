@@ -62,5 +62,18 @@
     "linter": {
       "enabled": true
     }
-  }
+  },
+  "overrides": [
+    {
+      "includes": ["**"],
+      "plugins": ["./tools/lint/arrow-functions.grit"],
+      "linter": {
+        "rules": {
+          "complexity": {
+            "useArrowFunction": "error"
+          }
+        }
+      }
+    }
+  ]
 }

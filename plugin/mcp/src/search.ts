@@ -15,7 +15,7 @@ type Doc = {
 };
 
 /** Lowercased word tokens. A compound like CLAUDE_CODE_USE_BEDROCK or PreToolUse also yields its parts. */
-export function tokenize(text: string): string[] {
+export const tokenize = (text: string): string[] => {
   const out: string[] = [];
   for (const m of text.matchAll(/[A-Za-z0-9]+(?:[_.:-][A-Za-z0-9]+)*/g)) {
     const word = m[0];
@@ -26,12 +26,12 @@ export function tokenize(text: string): string[] {
     if (parts.length > 1) for (const p of parts) out.push(p.toLowerCase());
   }
   return out;
-}
+};
 
 export const stripFrontMatter = (md: string): string =>
   md.replace(/^---\n[\s\S]*?\n---\n/, "");
 
-export function headingsOf(md: string): string[] {
+export const headingsOf = (md: string): string[] => {
   const out: string[] = [];
   let fence = false;
   for (const line of md.split("\n")) {
@@ -40,7 +40,7 @@ export function headingsOf(md: string): string[] {
     if (m?.[1]) out.push(m[1].trim());
   }
   return out;
-}
+};
 
 export type Hit = { entry: Entry; score: number; snippet: string };
 
@@ -100,7 +100,7 @@ export class SearchIndex {
   }
 }
 
-export function matchesSection(e: Entry, section: string): boolean {
+export const matchesSection = (e: Entry, section: string): boolean => {
   const s = section
     .trim()
     .toLowerCase()
@@ -110,10 +110,10 @@ export function matchesSection(e: Entry, section: string): boolean {
     e.route.toLowerCase().startsWith(`${s}/`) ||
     e.route.toLowerCase().split("/")[0] === s
   );
-}
+};
 
 /** The line (with its nearest heading) that matches the most query terms, cut to about 240 chars. */
-function snippetOf(body: string, terms: string[]): string {
+const snippetOf = (body: string, terms: string[]): string => {
   let heading = "";
   let best = { score: 0, line: "", heading: "" };
   let fence = false;
@@ -134,4 +134,4 @@ function snippetOf(body: string, terms: string[]): string {
   const line =
     best.line.length > 240 ? `${best.line.slice(0, 237)}...` : best.line;
   return best.heading ? `[${best.heading}] ${line}` : line;
-}
+};
