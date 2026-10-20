@@ -97,7 +97,7 @@ Each line is a separate command. The text after the name is the argument.
 | `/import` `[codex\|gemini\|cursor] [--dry-run]` | [Gated: Server flag tengu_import, off by default. You cannot turn it on] | Imports config from another AI coding agent. | Panel and text form. |
 | `/help` | [Documented] | Shows help and the command list. | Panel. Terminal only. |
 | `/status` | [Documented] | Shows version, model, account, API connectivity, and tool status. | Panel. Lists skills whose `allowed-tools` were ignored. |
-| `/usage` (aliases `/cost`, `/stats`) | [Documented] | Shows session cost, plan use, and activity stats. | Panel and text form. Since `2.1.304` it says when a rate limit ends. |
+| `/usage` (aliases `/cost`, `/stats`) | [Documented] | Shows session cost, plan use, and activity stats. | Panel and text form. Since `2.1.304` it says when a rate limit ends. The limit section needs a claude.ai login. See [How `/usage` and `/artifacts` Work](#how-usage-and-artifacts-work). |
 | `/release-notes` | [Documented] | Shows release notes. | Panel. |
 | `/statusline` | [Documented] | Sets up the status line. | A prompt command. Not in safe mode. Interactive only. |
 | `/sandbox` `exclude "command pattern"` (Windows also `install`) | [Gated: Hidden when the platform is not supported or not in the enabled list.] | Shows sandbox state and opens its settings. | Panel. |
@@ -136,7 +136,7 @@ Each line is a separate command. The text after the name is the argument.
 | `/autofix-pr` | [Gated: Availability claude-ai and console-profile. Policy allow_remote_sessions.] | Watches the current pull request and fixes issues. | Panel. |
 | `/daemon` | [Undocumented] | Manages background services and routines. | Panel. |
 | `/workflows` | [Gated: Setting disableWorkflows and env var CLAUDE_CODE_DISABLE_WORKFLOWS.] | Browses running and finished workflows. | Panel. |
-| `/artifacts` | [Gated: An artifacts feature check and a flag.] | Browses your published and shared artifacts. | Panel. Since `2.1.304` the delete confirmation is numbered: 1 or Enter keeps, 2 deletes. `y`, `n`, and Esc still work. |
+| `/artifacts` | [Gated: claude.ai login on a Pro, Max, Team, or Enterprise plan (or no plan set), and an org policy.] | Browses your published and shared artifacts. | Panel. `d` deletes your own artifact after a confirmation. Since `2.1.304` the confirmation is numbered: 1 or Enter keeps, 2 deletes. See [How `/usage` and `/artifacts` Work](#how-usage-and-artifacts-work). |
 | `/design-consent`, `/design-revoke` | [Gated: Policy allow_design_sync.] | Grants or revokes agent access to your Design projects. | Hidden text commands. |
 | `/design-login` | [Gated: Policy allow_design_sync.] | Authorizes design-system access for `/design-sync`. | Panel. |
 | `/voice` `[hold\|tap\|off]` | [Gated: Availability claude-ai.] | Toggles voice mode. | Text command. |
@@ -177,6 +177,23 @@ After an auto-update installs a new version, the prompt area shows a green notic
 - The installed version is missing (it suggests `/doctor`), or that version is on hold.
 
 Background sessions use `claude respawn <id>` instead.
+
+## How `/usage` and `/artifacts` Work
+
+`/artifacts` has four tabs: `All`, `Mine`, `Shared`, and `Pinned`. `Pinned` shows only when you have pins.
+The footer lists the keys. `Enter` opens an artifact, `x` dismisses, `c` copies the URL, `Ctrl+R` renames, `d` deletes, `p` pins, `/` searches, and `r` refreshes.
+
+To delete, press `d` or choose `Delete` from the actions menu. Only the owner can delete, so the key works only on your own artifacts. The panel asks `Delete <title>? This cannot be undone.` Choose `No, keep it` or `Yes, delete it`. Keys `n` and `y` also work, and Esc cancels with nothing sent.
+
+A yes sends `DELETE /api/frame/<slug>`. The program retries once on `409`, `429`, or `503`. Success shows `Artifact deleted`. The link stops working for everyone. You cannot restore it, and republishing makes a new URL.
+
+`/usage` shows a rate-limit section only with a claude.ai login that has the `user:inference` and `user:profile` scopes. An API key or `CLAUDE_CODE_OAUTH_TOKEN` shows only session cost and tokens.
+
+Reset times look like `Resets 11:26am (Europe/Tallinn)`. Minutes are dropped on the hour. A date is added when the reset is more than 24 hours away, and weekly rows always show the date.
+
+When the usage endpoint is rate limited, the panel shows `Showing last-known usage (rate limited until <time>)`. The end time comes from `Retry-After`, with a 5-minute default and a 1-hour cap. With no end time, it shows `Usage endpoint is rate limited. Please try again in a moment.`
+
+Source: the program. The delete prompt, the footer keys, and `Artifact deleted` were also seen in a live run. The `Resets` lines were seen against a local stub with fake subscriber credentials.
 
 ## Related Pages
 

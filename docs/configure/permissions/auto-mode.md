@@ -62,7 +62,7 @@ Official pages: [Choose a Permission Mode](https://code.claude.com/docs/en/permi
 The plugin `settings.json` does not accept `autoMode`.
 
 :::note[Which Sources Count]
-A probe ran `claude auto-mode config` with `autoMode.allow` set in each source. Rules from user settings and from a `--settings` file applied. Rules in `.claude/settings.json` and `.claude/settings.local.json` were ignored. The program logs `tengu_settings_auto_mode_untrusted_source_ignored` for them. Its message says only policy, user, and flag settings may set the rules. Managed settings were not run. See [Probes](../../reference/probes.md#configure-and-memory).
+A probe ran `claude auto-mode config` with `autoMode.allow` set in each source. Rules from user settings and from a `--settings` file applied. Rules in `.claude/settings.json` and `.claude/settings.local.json` were ignored. The program logs `tengu_settings_auto_mode_untrusted_source_ignored` for them. Its message says only policy, user, and flag settings may set the rules. Managed settings also applied, from `managed-settings.json` and `managed-settings.d/`. Lists from all sources are joined. User or `--settings` rules come first, and managed rules come after. `$defaults` expands where it sits. A list with no `$defaults` in any source has no built-in rules. `classifyAllShell` is not in the `auto-mode config` output, so this run did not check it. See [Probes](../../reference/probes.md#configure-and-memory).
 The [official docs](https://code.claude.com/docs/en/auto-mode-config) confirm this only for `classifyAllShell` (user and `--settings`).
 :::
 

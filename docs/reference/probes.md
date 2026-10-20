@@ -100,7 +100,7 @@ These checks used the same stub, plus static reading of the program. Nothing was
 | User `outputStyle` plus a plugin style with `force-for-plugin: true` | <Undocumented /> | The system prompt used the forced plugin style. The `init` event still named the configured style. |
 | `CLAUDE_CODE_REMOTE=1`, with and without `CLAUDE_CODE_REMOTE_MEMORY_DIR` | <Undocumented /> | Without the dir, the auto-memory section is missing. With it, the section returns and names the dir. |
 | `CLAUDE_MEMORY_STORES` set to a JSON list | <Undocumented /> | The auto-memory section was gone. No `memory_*` tool was added. |
-| `claude auto-mode config` with `autoMode.allow` in each source | <Documented /> | User settings and `--settings` applied. `.claude/settings.json` and `.claude/settings.local.json` were ignored. |
+| `claude auto-mode config` with `autoMode.allow` in each source | <Documented /> | User settings and `--settings` applied. `.claude/settings.json` and `.claude/settings.local.json` were ignored. Managed settings applied too, see [Managed Folder Probe](#managed-folder-probe). |
 
 ## Context Budget
 
@@ -145,6 +145,7 @@ These runs used the real `2.1.304` binary on macOS with the stub, a fake key, an
 | A `managed-settings.d/` drop-in that denies `NotebookEdit` | <Documented /> | `NotebookEdit` was gone from the tool list (present in the baseline). |
 | The prompt note "not verified as your organization's policy" | <Undocumented /> | It did not appear with a root-owned folder. The program text says it is added for managed files that the session's own account could write (not run). |
 | User agent with `mcpServers` frontmatter, no `--mcp-config` | <Undocumented /> | The agent ran, but its server did not start (without the managed folder it did). A notice said `probe-agent agent MCP server blocked by enterprise MCP config: agent_srv`. |
+| `autoMode` in `managed-settings.json` and a `managed-settings.d/` drop-in, with `claude auto-mode config` | <Documented /> | Both files applied. Lists from all sources join, with user or `--settings` rules first and managed rules after. `$defaults` expands where it sits. A list with no `$defaults` in any source has no defaults. See [Auto Mode](../configure/permissions/auto-mode.md). |
 
 ## Interactive Probes
 
@@ -160,11 +161,12 @@ These runs used the real `2.1.304` binary in a pseudo-terminal (a Python `pty` d
 | `statusLine` and `subagentStatusLine` commands that log their input | <Undocumented /> | `subagentStatusLine` ran on a fixed 5-second tick and got no `COLUMNS` or `LINES`. `statusLine` got `transcript_path` from the first run and `prompt_id` after the first prompt. Runs paused under dialogs. See [Status Line](../configure/status-line.md). |
 | Instruction file size warning with 45.6k, 156.0k, and four 34.4k files | <Undocumented /> | A banner under the header at start and a line in `/status`. The 40k, 120k total, and 150k (Opus 5.5) limits held. See [Memory and Rules](../configure/memory-and-rules.md). |
 | `PostToolUse` hook logging for `Read`, `Write`, `Edit`, `Bash`, and an MCP tool | <Undocumented /> | Same shapes as the `-p` probe (no `contentNotInModelContext` on `Edit`). See [Hook Events](../extend/hooks/events.md#posttooluse-tool_response-shapes). |
+| A mod that calls `$.ui.notify` | <Undocumented /> | The hook got `message`, `title`, and `notification_type` (type `plugin_notification`), even with no notification channel. See [Hook Events](../extend/hooks/events.md#notification). |
 
 Not run, because they need a login, a cloud or remote session, or another host:
 
 - `callback` hook forwarding for cloud sessions.
-- The `Notification` types `auth_success`, `agent_completed`, `quota_auto_resume_fired`, `quota_auto_resume_stale`, `quota_auto_resume_disabled`, `auth_storage_failure`, `computer_use_enter`, `computer_use_exit`, `plugin_notification`, `push_notification`, and `worker_permission_prompt`.
+- The `Notification` types `auth_success`, `agent_completed`, `quota_auto_resume_fired`, `quota_auto_resume_stale`, `quota_auto_resume_disabled`, `auth_storage_failure`, `computer_use_enter`, `computer_use_exit`, `push_notification`, and `worker_permission_prompt`.
 - Cloud and Cowork memory variables.
 - `Glob`, `Grep`, `NotebookEdit`, `WebFetch`, and `WebSearch` in the `PostToolUse` shape probe.
 

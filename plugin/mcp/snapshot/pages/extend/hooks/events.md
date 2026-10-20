@@ -397,7 +397,14 @@ Handlers: `command`, `http`, `mcp_tool`.
 | `auth_success`, `elicitation_dialog`, `elicitation_url_dialog`, `elicitation_complete`, `elicitation_response` | [Documented] | Type | Auth finished, and the steps of an MCP question. The two dialog types wait 6 seconds. Seen live in the interactive screen: all four `elicitation_*` values (messages `Claude Code needs your input` for the two dialogs, `Elicitation response for server "probe": accept`, and `MCP server "probe" confirmed elicitation el-1 complete`). `auth_success` needs a login and was not seen. |
 | `agent_needs_input`, `agent_completed` | [Documented] | Type | Background session events in agent view. `agent_needs_input` for a teammate setup question needs 2.1.248. `agent_needs_input` was seen live for the auto mode classifier billing notice (message `Auto mode has a classifier billing notice to acknowledge`) that shows the first time auto mode runs with a custom base URL. `agent_completed` was not seen (it needs a background session). |
 | `quota_auto_resume_fired`, `quota_auto_resume_stale`, `quota_auto_resume_disabled` | [Documented] | Type | Usage limit wait events. Need 2.1.234. Not seen live: they need a login. |
-| `auth_storage_failure`, `computer_use_enter`, `computer_use_exit`, `plugin_notification`, `push_notification`, `worker_permission_prompt` | [Undocumented] | Type | Other values that the program passes as `notificationType`. `plugin_notification` comes from the mod call `$.ui.notify`. Not seen live: they need a login, a cloud or remote session, computer use, or a mod. Whether each one reaches a hook is not verified. |
+| `plugin_notification` | [Undocumented] | Type | Sent by the mod call `$.ui.notify`. Seen live: the hook got `message`, `title`, and `notification_type`, even with no notification channel. |
+| `auth_storage_failure` | [Undocumented] | Type | Sent after the OAuth token exchange, when storage fails. Message: `Claude Code login needs attention: credentials may not have been saved`, or `Claude Code login needs attention: credentials could not be saved`. |
+| `worker_permission_prompt` | [Undocumented] | Type | Sent by the team lead's inbox poller. Messages: `<worker> needs permission for <tool>`, or `<worker> needs network access to <host>`. |
+| `push_notification` | [Undocumented] | Type | Sent with the message from the `PushNotification` tool. Skipped when the config is off (`config_off`) or the user is present (`user_present`). Setting `CLAUDE_CODE_DISABLE_NOTIFICATION_PRESENCE_CHECK` turns off the presence check. |
+| `computer_use_enter` | [Undocumented] | Type | Message when computer use starts: `Claude is using your computer · press Esc to stop` (or `Ctrl+C`). |
+| `computer_use_exit` | [Undocumented] | Type | Message when computer use ends: `Claude is done using your computer`. |
+
+The five rows after `plugin_notification` come from the program and were not seen live. The program runs Notification hooks for each type in the table above before it chooses a notification channel. The program also lists `model_refusal_fallback` as a type.
 
 ### `Stop`
 

@@ -119,7 +119,11 @@ We also ran these against a local stub with a fake key:
 - The Mod API items: `tool.check` got `isReadOnly: true` for `Read`. An ask with `decider: "person"` showed a dialog in the default mode, and in `-p` it was refused as `Permission to use Bash denied by plugin <name>: <reason>`, while an ask without it said `Bash needs approval (asked by plugin <name>: <reason>)`. The `settings.read` hook got `layers`, such as `[{"source":"user","settings":{...}}]`.
 - `denyRead` brackets are a Linux fix. On macOS a sandboxed `echo` with `denyRead` globs holding `[user-id]` ran fine, which does not show the Linux fix.
 
-Two rows were only partly run. `/artifacts` with an API key and no login says `Unknown command`; in print mode with `CLAUDE_CODE_OAUTH_TOKEN` it says `/artifacts isn't available in this environment.` In the interactive screen with that token it opens a panel with the tabs `All`, `Mine`, and `Shared`, and an empty list says `No artifacts yet. Publish one with the Artifact tool.` The delete confirmation needs a published artifact, so it was not shown. `/usage` with an API key or with `CLAUDE_CODE_OAUTH_TOKEN` shows only the session cost and tokens, with no rate-limit section, so the end time was not shown. For those two rows <Documented /> means the release notes name them.
+The `/artifacts` delete confirmation was seen live. The panel asks `Delete <title>? This cannot be undone.` It offers `No, keep it` and `Yes, delete it`, and the footer shows `y` to delete and `n` to keep. Choosing yes shows `Artifact deleted`. With an API key and no login, `/artifacts` says `Unknown command`. In print mode with `CLAUDE_CODE_OAUTH_TOKEN` it says `/artifacts isn't available in this environment.` In the interactive screen with that token it opens a panel with the tabs `All`, `Mine`, and `Shared`, and an empty list says `No artifacts yet. Publish one with the Artifact tool.`
+
+`/usage` shows only session cost and tokens with an API key or `CLAUDE_CODE_OAUTH_TOKEN`, even after real calls. The rate-limit section needs a claude.ai login with the `user:inference` and `user:profile` scopes (the program). A local stub with fake subscriber credentials showed the `Resets` lines. The `rate limited until <time>` text is new in `2.1.304`. It appears only when the usage endpoint is rate limited (the program).
+
+For the `/artifacts` and `/usage` rows, <Documented /> means the release notes name them. The live runs did not see the rate-limit end-time text.
 :::
 
 ## Example
