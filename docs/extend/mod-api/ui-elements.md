@@ -19,18 +19,23 @@ Official pages: [Draw in the Interface](https://code.claude.com/docs/en/plugins/
 This hook adds a tail to the hint line under the prompt.
 
 ```javascript
-on('ui.render', { component: 'PromptHint' }, async ($, e, next) =>
-  next({ ...e, props: { ...e.props, tail: ' (mod)' } }))
+on("ui.render", { component: "PromptHint" }, async ($, e, next) =>
+  next({ ...e, props: { ...e.props, tail: " (mod)" } }),
+);
 ```
 
 There are no string tags in JSX.
 Every tag is an element from `$.ui.resolve(e)`, and JSX compiles a tag to `h(Box, props, ...children)`.
 
 ```tsx
-on('ui.render', { component: 'Pane' }, async ($, e) => {
-  const { Box, Text } = $.ui.resolve(e)
-  return <Box><Text>Hello</Text></Box>
-})
+on("ui.render", { component: "Pane" }, async ($, e) => {
+  const { Box, Text } = $.ui.resolve(e);
+  return (
+    <Box>
+      <Text>Hello</Text>
+    </Box>
+  );
+});
 ```
 
 ## Surfaces
@@ -47,7 +52,7 @@ on('ui.render', { component: 'Pane' }, async ($, e) => {
 "Read-only" means a rewrite must carry the prop on as received. A change is refused.
 Many sites have `onScreen` (type `OnScreen \| null`, optional, read-only): which of its rows the viewport shows now. It is `null` while drawn outside the viewport, and absent where the surface does not say.
 
-### AskUserQuestion
+### `AskUserQuestion`
 
 The dialog the AskUserQuestion tool opens. A tree for it holds the engine's node once. At most 12 rows on the terminal and 48 on other surfaces. Markdown works on other surfaces only.
 
@@ -57,7 +62,7 @@ The dialog the AskUserQuestion tool opens. A tree for it holds the engine's node
 | `questions` | <Documented /> | The tool's `questions` input, as the dialog draws them. A rewrite must still fit the tool's schema, or the original is drawn. | `unknown[]`. |
 | `metadataSource` | <Documented /> | The call's `metadata.source` (who asked), when the model gave one. Analytics only, never drawn. | `string`, optional. |
 
-### UserMessage
+### `UserMessage`
 
 A user-role transcript row: the person's prompt, a background task notification, or a message from another agent, teammate, or session. A rewrite of `text` changes only what is drawn. The stored message stays as it was.
 
@@ -70,7 +75,7 @@ A user-role transcript row: the person's prompt, a background task notification,
 | `from` | <Documented /> | Who sent the message: another agent of this session, a teammate, another session, or a channel. | `UserMessageFrom`, optional. Read-only. |
 | `onScreen` | <Documented /> | Which rows are in the viewport. | See above. |
 
-### AssistantMessage
+### `AssistantMessage`
 
 One block of an assistant reply: its text, or a summary of the text the model wrote between two tool calls. A rewrite changes the drawing and leaves the stored message alone. It is raised on every attached surface.
 
@@ -81,7 +86,7 @@ One block of an assistant reply: its text, or a summary of the text the model wr
 | `isSummary` | <Documented /> | True on a block that holds a summary of the model's text. | `true`, optional, read-only. A rewrite that changes it is refused. |
 | `onScreen` | <Documented /> | Which rows are in the viewport. | See above. |
 
-### ToolUse
+### `ToolUse`
 
 A tool call's row in the transcript, such as `Bash(ls -la)` and its result. The call was decided by `tool.call`, so a rewrite here changes the row alone. Raised on every attached surface.
 
@@ -96,7 +101,7 @@ A tool call's row in the transcript, such as `Bash(ls -la)` and its result. The 
 | `output` | <Documented /> | The stored result once the call has resolved. Undefined while it runs. | `unknown`, optional. For a failed, refused, or cut call it is the text the model read. |
 | `onScreen` | <Documented /> | Which rows are in the viewport. | See above. |
 
-### ToolResult
+### `ToolResult`
 
 The result block under a standalone tool row, which the tool's own result renderer draws from `output`. A rewrite of `output` is checked against the tool's output schema. One that does not fit draws nothing. The stored result is untouched.
 
@@ -108,7 +113,7 @@ The result block under a standalone tool row, which the tool's own result render
 | `isErrored` | <Documented /> | True when the call ended in an error. The row then draws the error text, not `output`. | `boolean`. Read-only. |
 | `onScreen` | <Documented /> | Which rows are in the viewport. | See above. |
 
-### ToolGroup
+### `ToolGroup`
 
 A run of tool calls that the transcript folds into one count line, such as `Read 3 files, ran 2 shell commands`. A hook that sets `isExpanded` unfolds the group. Each unfolded row is a `ToolUse`. The fullscreen ctrl+o view draws no `ToolGroup`.
 
@@ -119,7 +124,7 @@ A run of tool calls that the transcript folds into one count line, such as `Read
 | `isExpanded` | <Documented /> | Whether each call draws as its own `ToolUse` row, or the group draws one line. | `boolean`. True under `--verbose` and in the non-fullscreen ctrl+o transcript. The one prop a rewrite changes on screen. |
 | `onScreen` | <Documented /> | Which rows are in the viewport. | See above. |
 
-### CommandOutput
+### `CommandOutput`
 
 The output row a slash command printed in the transcript, under its echo. A rewrite of `text` changes only what is drawn. The model still reads the stored row.
 
@@ -131,7 +136,7 @@ The output row a slash command printed in the transcript, under its echo. A rewr
 | `isErrored` | <Documented /> | True when the row is the error line of a command that threw. | `boolean`. Read-only. |
 | `onScreen` | <Documented /> | Which rows are in the viewport. | See above. |
 
-### ToolProgress
+### `ToolProgress`
 
 One row of the live tool-progress region under a running tool call. Today it is the run-in-background pill. A hook matches `{ props: { kind: "background_hint" } }`.
 
@@ -152,7 +157,7 @@ The line that animates while a turn runs, such as `Sauteing... (12s, 300 tokens)
 | `suffix` | <Documented /> | What the engine draws after the word to say the turn is still going: one ellipsis character. | `string`. Not added to a text that already ends in an ellipsis. |
 | `mode` | <Documented /> | What the turn is doing. | `'requesting' \| 'responding' \| 'thinking' \| 'tool-input' \| 'tool-use'`. The desktop never says `tool-input`. |
 
-### TurnDuration
+### `TurnDuration`
 
 The line that closes a turn in the transcript, such as `Baked for 3s`. Only the terminal surface raises it. A remote surface draws its own footer.
 
@@ -162,7 +167,7 @@ The line that closes a turn in the transcript, such as `Baked for 3s`. Only the 
 | `durationMs` | <Documented /> | The duration of the turn in milliseconds. | `number`. |
 | `onScreen` | <Documented /> | Which rows are in the viewport. | See above. |
 
-### InfoNotice
+### `InfoNotice`
 
 One dim status line under the logo (the model source, an experiment enrollment, a settings hint), with a trailing `/command`. Terminal only.
 
@@ -172,7 +177,7 @@ One dim status line under the logo (the model source, an experiment enrollment, 
 | `command` | <Documented /> | The slash command appended after the text. | `string \| null`. |
 | `onScreen` | <Documented /> | Which rows are in the viewport. | See above. |
 
-### SessionMode
+### `SessionMode`
 
 The dim mode labels at the right of the prompt footer (`focus`, `memory paused`), joined by `&`. One instance. Terminal and desktop only. A hook adds a mode by rewriting `modes`, removes one by filtering, or draws its own tree.
 
@@ -180,7 +185,7 @@ The dim mode labels at the right of the prompt footer (`focus`, `memory paused`)
 | --- | --- | --- | --- |
 | `modes` | <Documented /> | The labels the footer shows, in order. Empty when there are none. | `readonly string[]`. |
 
-### PromptHint
+### `PromptHint`
 
 The dim hint line under the prompt (`? for shortcuts`, `esc to interrupt`, and the pills beside them). One instance.
 
@@ -191,7 +196,7 @@ The dim hint line under the prompt (`? for shortcuts`, `esc to interrupt`, and t
 | `hint` | <Documented /> | The text of the line as the engine draws it, one string. A rewrite replaces the line. | `string`. |
 | `tail` | <Documented /> | Text a hook adds after the line. | `string`, optional. The terminal draws it dim. It is left out when fewer than four columns would show. |
 
-### AbovePrompt
+### `AbovePrompt`
 
 The band directly above the prompt input, where surveys draw. The engine draws a `[-]` beside the tree and an `n more` row under it. A hook draws one tree or passes. The person collapses it (ctrl+x ctrl+a) or focuses it (a click, ctrl+x tab).
 

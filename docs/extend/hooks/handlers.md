@@ -45,7 +45,7 @@ Only names in `allowedEnvVars` are filled into headers. Other references become 
 | `http` | <Documented /> | Sends the input as JSON in a POST to a URL. The result is the response body, and needs a 2xx status. | 31 events. Not `SessionStart` and not `Setup`. |
 | `mcp_tool` | <Documented /> | Calls a tool on a configured MCP server. The text result is read like `stdout`. A result with `isError: true` is a non-blocking error. | 33 events, but skipped on `Setup` and on `SessionStart` at launch. |
 | `prompt` | <Documented /> | One model call that returns `ok`. | 12 events, plus `PermissionRequest`. |
-| 🧪 `agent` | <Documented /> | A subagent that checks a condition. Up to 50 turns. Experimental, and the docs say it may change. | 12 events. Not `PermissionRequest`. |
+| `agent` | <Documented /> <Experimental /> | A subagent that checks a condition. Up to 50 turns. Experimental, and the docs say it may change. | 12 events. Not `PermissionRequest`. |
 | `callback` | <Undocumented /> | A function that an SDK host or a mod registers. | Events that run device hooks. It is not a config key. |
 | `script` | <Differs note="Rejected in 2.1.304. Do not use." /> | Some text names this type. | `2.1.304` rejects it with `Unknown hook type "script"`. A `script` entry under `PreToolUse` also disables the whole settings file it sits in. |
 
@@ -120,4 +120,4 @@ On observer events, it does not wait.
 - [Input and Output](input-and-output.md): what each handler can answer.
 
 Source: [Hooks Reference](https://code.claude.com/docs/en/hooks) and the program (handler schemas for `command`, `prompt`, `mcp_tool`, `http`, and `agent`).
-Not verified: the `callback` forwarding rules for cloud sessions.
+Cloud sessions forward only your own hooks of kind `command` and `http` from user settings, `settings.local.json`, or `--settings`. They never forward `prompt`, `agent`, or `mcp_tool` hooks, or plugin or managed hooks. A device client registers up to 128 hooks with a lease of 60 to 3600 seconds (600 by default), and the cloud worker calls back with `hook_callback`. We read these rules in the program and did not run them, because a cloud session needs a login (needs a cloud session, not run).

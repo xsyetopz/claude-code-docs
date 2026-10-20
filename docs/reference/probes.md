@@ -8,16 +8,6 @@ A probe is a small test that runs Claude Code `2.1.304` and checks what one sett
 The probes ran against a local stub of the Messages API, so they cost nothing and sent no data to Anthropic.
 They show which environment variables and settings have an effect that you can see.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. You can repeat any probe with the method below. |
-| Can you change it? | Not applicable. This page records results. |
-| Can you turn it on or off? | Each row names the env var or flag that was set. |
-| Where does it live? | Results only. The tools to repeat them are in the repo. |
-| Status | <Undocumented /> <Differs /> |
-
 ## How We Probed
 
 1. We ran the unmodified `2.1.304` program with `claude -p "hi" --output-format stream-json --verbose`.
@@ -31,7 +21,7 @@ They show which environment variables and settings have an effect that you can s
 Every request carried the fake key, and the only path called was `/v1/messages?beta=true`.
 
 ```mermaid
-flowchart LR
+flowchart TD
   R[claude -p run] -->|fake key, local base URL| S[Local stub]
   S -->|scripted tool call, then text| R
   S --> L[(Request log)]
@@ -48,6 +38,7 @@ This page lists only the rows with an effect or a difference. The rows with no v
 ### Effects and Differences
 
 An item is <Differs /> when the result differs from the docs.
+The status of an environment variable is the one on its row in the [Environment Variables](../configure/env-vars/index.md) pages. This table records only what the probe saw.
 
 | Name | What We Set | Status | What We Saw |
 | --- | --- | --- | --- |
@@ -55,15 +46,15 @@ An item is <Differs /> when the result differs from the docs.
 | hook `type: "script"` | settings | <Differs /> | Rejected at load with `Unknown hook type "script"; entry ignored`. No script ran. A `PreToolUse` entry also disables the whole settings file it sits in. |
 | `CLAUDE_CODE_AMBER_ASTROLABE` | `1` | <Undocumented /> | Adds an "operating autonomously" block to the system prompt (do not ask "Shall I...?", finish the work before ending the turn). |
 | `CLAUDE_CODE_BASALT_COVE` | `1` | <Undocumented /> | Adds a "Communicating with the user" section and a code-comment rule to the system prompt. |
-| `CLAUDE_CODE_HUMBLE_HAMMOCK` | `1` | <Undocumented /> | Adds `wire_tool_inputs` (raw `tool_use.input`) to the assistant event when a tool runs. |
-| `CLAUDE_CODE_INLINE_TOOLS` | `1` | <Undocumented /> | Adds the beta `inline-tools-2026-09-15` to `anthropic-beta`. |
-| `CLAUDE_CODE_LANTERN_PRISM` | `1` | <Undocumented /> | Adds the `skill-doctor` skill to the `init` event. |
-| `CLAUDE_CODE_LARCH_CISTERN` | `1` | <Undocumented /> | Adds a "Corrections" section to the system prompt (avoid excessive self-correction). |
-| `CLAUDE_CODE_PLUGIN_DIRS` | `1` | <Undocumented /> | Loads the plugin dir like `--plugin-dir` (same `plugins` list in `init`). |
+| `CLAUDE_CODE_HUMBLE_HAMMOCK` | `1` | <Undocumented /> <Gated note="A feature flag or server gate decides by default. This variable overrides it" /> | Adds `wire_tool_inputs` (raw `tool_use.input`) to the assistant event when a tool runs. |
+| `CLAUDE_CODE_INLINE_TOOLS` | `1` | <Undocumented /> <Gated note="Works only behind a feature flag or server gate" /> | Adds the beta `inline-tools-2026-09-15` to `anthropic-beta`. |
+| `CLAUDE_CODE_LANTERN_PRISM` | `1` | <Undocumented /> <Gated note="Works only behind a feature flag or server gate" /> | Adds the `skill-doctor` skill to the `init` event. |
+| `CLAUDE_CODE_LARCH_CISTERN` | `1` | <Undocumented /> <Gated note="A feature flag or server gate decides by default. This variable overrides it" /> | Adds a "Corrections" section to the system prompt (avoid excessive self-correction). |
+| `CLAUDE_CODE_PLUGIN_DIRS` | `1` | <Documented /> | Loads the plugin dir like `--plugin-dir` (same `plugins` list in `init`). |
 | `CLAUDE_CODE_SIMULATE_PROXY_USAGE` | `1` | <Undocumented /> | Removes the whole `anthropic-beta` header and the `thinking.display` field. |
 | `CLAUDE_CODE_SKIP_PLUGIN_MCP_SERVERS` | `1` | <Undocumented /> | Plugin MCP servers are not started. `mcp_servers` is empty and the tool list shrinks. |
-| `CLAUDE_CODE_SYNC_PLUGIN_INSTALL` | `1` | <Undocumented /> | Emits `plugin_install` events (`started`, `completed`) in stream-json. |
-| `CLAUDE_CODE_USE_COWORK_PLUGINS` | `1` | <Undocumented /> | User settings come from `cowork_settings.json` and plugins from `cowork_plugins`, so the hooks in `settings.json` did not run. |
+| `CLAUDE_CODE_SYNC_PLUGIN_INSTALL` | `1` | <Documented /> | Emits `plugin_install` events (`started`, `completed`) in stream-json. |
+| `CLAUDE_CODE_USE_COWORK_PLUGINS` | `1` | <Undocumented /> | User settings come from `cowork_settings.json`, so its hooks and `env` apply and those of `settings.json` do not. Plugins and marketplaces use `cowork_plugins`. `claude plugin install` writes there. |
 
 ## Request Details
 
@@ -83,8 +74,87 @@ With `--permission-mode auto` and a `Bash` call, the stub got classifier request
 The debug log says `server_no_result` and falls back to billed local classifier requests.
 Neither classifier variable changed that.
 
+## Subagents and Hooks
+
+Follow-up probes used the same stub, a fake key, a temp home folder, and `-p --output-format stream-json --verbose`. The stub scripted `Agent`, `Workflow`, `Bash`, and `Skill` calls, so each subagent request could be logged. No login was used, so cloud paths were not run. The interactive screen has its own section below.
+
+| What We Ran | Status | What We Saw |
+| --- | --- | --- |
+| `Workflow` script with `agent()`, and the model variables | <Undocumented /> | The subagent model comes from `CLAUDE_CODE_WORKFLOW_SUBAGENT_MODEL` (not `inherit`), then `CLAUDE_CODE_SUBAGENT_MODEL`, then the main model. A `model` option in `agent()` is overridden. With `CLAUDE_CODE_SUBAGENT_MODEL_FORCE`, the workflow variable is dropped. |
+| `CLAUDE_CODE_WEB_FETCH_AGENT=1` | <Undocumented /> | The roster gains `web-fetch`, and `WebFetch` leaves the main session's tools. The agent has only `WebFetch`. |
+| `Agent` with each built-in type | <Undocumented /> | `claude`, `Explore`, `general-purpose`, `Plan`, `statusline-setup`, and `fork` started. `claude-code-guide`, `comment-thread-analyst`, `observer`, and `workflow-subagent` gave `Agent type '...' not found` in `-p`. The interactive screen started `claude-code-guide` (see [Interactive Probes](#interactive-probes)). |
+| `--append-subagent-system-prompt` | <Undocumented /> | The text is the last lines of the subagent system prompt. The env var alone changed nothing. |
+| `observer` frontmatter | <Undocumented /> | Without `CLAUDE_CODE_EXPERIMENTAL_OBSERVER_AGENTS=1` no observer ran. With it, a fifth request ran as the observer, with an `ObserverReport` tool, and `observerMessage` was the last line of the digest. |
+| Subscription (OAuth) login, main and `Explore` requests | <Undocumented /> | Same main prompt, same 12 default tools, and same `Explore` prompt as an API key. The `Explore` request had the same 7 tools: `Bash`, `ListAgents`, `Read`, `ReportFindings`, `Skill`, `DeferredToolPlaceholder`, and `ToolSearch`. See [Override a Prompt](../prompts/override.md). |
+| Agent frontmatter spelling | <Undocumented /> | `Tools` and `disallowed-tools` were ignored. `tools` and `disallowedTools` worked. |
+| `isolation: remote` in a file | <Undocumented /> | No error. The agent ran in a local worktree, like `worktree`. |
+| Command hooks with `continue:false` and `systemMessage` | <Documented /> | See [Hook Input and Output](../extend/hooks/input-and-output.md#what-continue-and-systemmessage-do-per-event). |
+| Setup hook `additionalContext` | <Differs note="Not in the model request." /> | It never reached the model request. |
+
+## Configure and Memory
+
+These checks used the same stub, plus static reading of the program. Nothing was run with a login.
+
+| What We Ran | Status | What We Saw |
+| --- | --- | --- |
+| User `outputStyle` plus a plugin style with `force-for-plugin: true` | <Undocumented /> | The system prompt used the forced plugin style. The `init` event still named the configured style. |
+| `CLAUDE_CODE_REMOTE=1`, with and without `CLAUDE_CODE_REMOTE_MEMORY_DIR` | <Undocumented /> | Without the dir, the auto-memory section is missing. With it, the section returns and names the dir. |
+| `CLAUDE_MEMORY_STORES` set to a JSON list | <Undocumented /> | The auto-memory section was gone. No `memory_*` tool was added. |
+| `claude auto-mode config` with `autoMode.allow` in each source | <Documented /> | User settings and `--settings` applied. `.claude/settings.json` and `.claude/settings.local.json` were ignored. |
+
+## Context Budget
+
+These runs used a live subscription login on `2.1.304`, not the stub, with a fresh config folder and an empty project.
+
+| What We Ran | Status | What We Saw |
+| --- | --- | --- |
+| `claude -p "/context" --output-format stream-json`, empty and after `claude -p hi` | <Undocumented /> | An empty session held 12,114 tokens and 15,768 after "hi". The first request matched `/context` exactly. See [Context Budget](../how-it-works/context-budget.md). |
+
+## Static and Print Probes
+
+These runs used the same stub, a fake key, a temp home folder, and a dead proxy, plus static reading of the program. Nothing was run with a login or with `sudo`.
+
+| What We Ran | Status | What We Saw |
+| --- | --- | --- |
+| Control requests on stdin with `--input-format stream-json` | <Undocumented /> | `set_model`, `get_binary_version`, `set_permission_mode`, `mcp_status`, and `interrupt` got replies that match [Control Protocol](../extend/headless/control-protocol.md). An unknown model ID still got `success`. A bad mode got `error` with `error_code` `invalid_mode`. |
+| A user agent with `mcpServers` frontmatter | <Undocumented /> | The server started with the agent and stopped when it ended. The same agent in `.claude/agents/` was skipped in an untrusted folder. |
+| `claude plugin validate` with odd `version` values | <Documented /> | A string of any text passed. A number failed. An empty string counted as missing. See [Plugin Manifest](../extend/plugins/manifest.md). |
+| `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB` with test variables | <Undocumented /> | Credential and config names were removed. The four GitHub token variables stayed. The permission mode was forced to `default`. See [Tools and Bash Variables](../configure/env-vars/tools-and-bash.md#what-the-scrub-removes). |
+| Default `-p hi` for every model in the catalog | <Undocumented /> | Short, extended short, or full prompt by model. See [System Prompt](../how-it-works/system-prompt.md#prompt-by-model). |
+| `CLAUDE_COWORK_MEMORY_*` and `CLAUDE_CODE_POST_TURN_MEMORY` | <Undocumented /> | The four Cowork variables changed the memory section as described in [Memory and Rules](../configure/memory-and-rules.md). The post-turn pass did not run locally: the log said the memory server was not mounted. |
+| `PostToolUse` hook logging per tool | <Undocumented /> | The `tool_response` shapes in [Hook Events](../extend/hooks/events.md#posttooluse-tool_response-shapes). |
+| `claude -p "/context"` | <Undocumented /> | 24 `count_tokens` requests and no `/v1/messages` request. |
+| Skill variables in the `init` skill list | <Documented /> | `CLAUDE_CODE_DISABLE_CLAUDE_API_SKILL` removed `claude-api`. The other four had no visible effect. |
+| `CLAUDE_CODE_MANAGED_SETTINGS_PATH` | <Undocumented /> | Ignored. The log still read the machine default managed folder. |
+| `/status` size warning with a 45,000-character `CLAUDE.md` in `-p`, `claude doctor`, and `get_status` | <Undocumented /> | No warning in these three. It shows in the interactive screen (see [Interactive Probes](#interactive-probes)). |
+
+## Interactive Probes
+
+These runs used the real `2.1.304` binary in a pseudo-terminal (a Python `pty` driver with `pyte` to render the 200x50 screen, because tmux was not installed). The method is the same as `tmux send-keys` and `capture-pane`. The stub, the fake key, the temp home and config folders, the dead proxy, and `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1` were as in the other probes, with `env -i` so the parent session marker did not leak in. Onboarding and trust were skipped by seeding the config file. The stub answered a `DO:{...}` line in the prompt with one scripted tool call. No login and no real credentials were used.
+
+| What We Ran | Status | What We Saw |
+| --- | --- | --- |
+| `Agent` with `claude-code-guide` | <Documented /> | It started on `claude-haiku-5-5` with the tools `Bash`, `Read`, `WebFetch`, and `WebSearch`. The program leaves it out when `CLAUDE_CODE_ENTRYPOINT` is `sdk-ts`, `sdk-py`, or `sdk-cli`, which includes `-p`. See [Subagent, Claude Code Guide](../prompts/subagent-claude-code-guide.md). |
+| `Agent` with other types | <Undocumented /> | Unknown types return `Agent type '<x>' not found. Available agents: claude, claude-code-guide, Explore, general-purpose, Plan, statusline-setup`. `comment-thread-analyst`, `workflow-subagent`, and `web-fetch` (default settings) gave that error. `fork` returned `Fork started`. See [Subagent Runtime](../extend/subagents/runtime.md). |
+| `PermissionRequest`, `PermissionDenied`, `Notification`, and `PreCompact` hooks | <Undocumented /> | All four fired. See [Hook Input and Output](../extend/hooks/input-and-output.md#what-fires-and-what-is-honored-in-the-interactive-screen). |
+| `Notification` types | <Documented /> | Seven values seen live: `permission_prompt`, `idle_prompt`, `elicitation_dialog`, `elicitation_response`, `elicitation_url_dialog`, `elicitation_complete`, and `agent_needs_input`. See [Hook Events](../extend/hooks/events.md#notification). |
+| `Elicitation` and `ElicitationResult` hooks with an MCP server | <Undocumented /> | Both fired. Inputs had `mcp_server_name`, `message`, `mode`, and `requested_schema`, and for the result `action` and `content`. |
+| `statusLine` and `subagentStatusLine` commands that log their input | <Undocumented /> | `subagentStatusLine` ran on a fixed 5-second tick and got no `COLUMNS` or `LINES`. `statusLine` got `transcript_path` from the first run and `prompt_id` after the first prompt. Runs paused under dialogs. See [Status Line](../configure/status-line.md). |
+| Instruction file size warning with 45.6k, 156.0k, and four 34.4k files | <Undocumented /> | A banner under the header at start and a line in `/status`. The 40k, 120k total, and 150k (Opus 5.5) limits held. See [Memory and Rules](../configure/memory-and-rules.md). |
+| `PostToolUse` hook logging for `Read`, `Write`, `Edit`, `Bash`, and an MCP tool | <Undocumented /> | Same shapes as the `-p` probe (no `contentNotInModelContext` on `Edit`). See [Hook Events](../extend/hooks/events.md#posttooluse-tool_response-shapes). |
+
+Not run, because they need a login, a cloud or remote session, or another host:
+
+- `callback` hook forwarding for cloud sessions.
+- The `Notification` types `auth_success`, `agent_completed`, `quota_auto_resume_fired`, `quota_auto_resume_stale`, `quota_auto_resume_disabled`, `auth_storage_failure`, `computer_use_enter`, `computer_use_exit`, `plugin_notification`, `push_notification`, and `worker_permission_prompt`.
+- Cloud and Cowork memory variables.
+- `PermissionDenied` with `retry: true` and a real classifier verdict. The stub cannot return a verdict.
+- `Glob`, `Grep`, `NotebookEdit`, `WebFetch`, and `WebSearch` in the `PostToolUse` shape probe.
+
 ## What We Did Not Probe
 
+- The managed folder (`managed-mcp.json`, managed `outputStyle`, policy skills) needs `sudo`.
+- Cloud hook forwarding (`callback`) and the post-turn memory pass need a cloud session.
 - Chrome variables need the extension.
 - Remote, CCR, and cloud variables need a remote session.
 - Subscriber-only paths such as `cache_touch` need a login.

@@ -17,11 +17,11 @@ In a "Where it can be used" cell, "Run time" means in a hook, in a closure that 
 ## Example
 
 ```javascript
-on('turn.complete', async ($, e, next) => {
-  const count = Number((await $.store.get('count')) ?? 0) + 1
-  await $.store.set('count', count)
-  return next(e)
-})
+on("turn.complete", async ($, e, next) => {
+  const count = Number((await $.store.get("count")) ?? 0) + 1;
+  await $.store.set("count", count);
+  return next(e);
+});
 ```
 
 ## Members

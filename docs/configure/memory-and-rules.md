@@ -86,7 +86,7 @@ Auto memory is a folder of notes that Claude writes for itself. `MEMORY.md` is t
 | `/memory` | <Documented /> | Lists memory files, toggles auto memory, opens the folder | Editor opens a file | Interactive |
 | `autoDreamEnabled` | <Undocumented /> | Background memory consolidation (auto-dream) | Overrides the server default | Settings |
 | `/pause-memory` | <Undocumented /> | Pauses memory for the session | Only the user can turn it back on. Text `memory access blocked by /pause-memory` | Interactive |
-| `CLAUDE_CODE_REMOTE_MEMORY_DIR`, `CLAUDE_CODE_POST_TURN_MEMORY`, `CLAUDE_COWORK_MEMORY_*`, `CLAUDE_MEMORY_STORES` | <Undocumented /> | Cloud, Cowork, and post-turn memory | Use not verified | Env |
+| `CLAUDE_CODE_REMOTE_MEMORY_DIR`, `CLAUDE_CODE_POST_TURN_MEMORY`, `CLAUDE_COWORK_MEMORY_*`, `CLAUDE_MEMORY_STORES` | <Undocumented /> | Cloud, Cowork, and post-turn memory | `CLAUDE_CODE_REMOTE_MEMORY_DIR`: in a remote session (`CLAUDE_CODE_REMOTE=1`) auto memory is off unless this is set. It sets the memory folder (full path, outside Claude temp folders). `CLAUDE_MEMORY_STORES`: a JSON list of memory stores (`path`, `mode` `rw` or `ro`). While set, the built-in auto-memory text is not added and org memory sync is off. The `memory_*` tools did not appear without a server flag. `CLAUDE_CODE_POST_TURN_MEMORY` needs `CLAUDE_CODE_POST_TURN_MEMORY_CONFIG` (JSON with a required `instruction`); without a valid config the pass is off. The pass also needs a cloud memory server: in a local run the debug log says `skipping (mcp) - CCR memory server not mounted`, so its live effect is not verified. The `CLAUDE_COWORK_MEMORY_*` variables take text: `_PATH_OVERRIDE` names the memory folder (an absolute path, and it lets auto memory stay on in a remote session), `_GUIDELINES` replaces the built-in memory instructions, `_EXTRA_GUIDELINES` adds to them, and `_INDEX_CONTENT` replaces the `MEMORY.md` text (an empty string turns the index read off). We ran the four `CLAUDE_COWORK_MEMORY_*` variables in `-p` | Env |
 | Subagent `memory` field | <Documented /> | A separate memory directory for a subagent | See [Subagents](../extend/subagents/frontmatter.md) | Agent frontmatter |
 
 ## Limits
@@ -131,9 +131,20 @@ flowchart TD
   Nest --> Msg
 ```
 
-:::note[Not Verified]
-The size at which the combined-size warning for instruction files appears.
-The use of the cloud, Cowork, and post-turn memory variables (`CLAUDE_CODE_REMOTE_MEMORY_DIR`, `CLAUDE_CODE_POST_TURN_MEMORY`).
+:::note[Instruction File Size Warning]
+Source: the program (read), and a probe of the interactive screen (2.1.304, local stub, fake key). See [Interactive Probes](../reference/probes.md#interactive-probes). The warning shows in two places: a banner line under the header at start, and the Status screen (`/status`). It does not show in `-p`, in `claude doctor`, or in the `get_status` control reply (checked with a 45,000-character `CLAUDE.md`).
+
+- Seen live at start: `CLAUDE.md is over the 40.0k-char limit (45.6k chars) · /memory to free up context`. In `/status`: `Large CLAUDE.md will impact performance (45.6k chars > 40.0k)`.
+- Seen live for the total: four files of 34.4k characters each (all under 40k) gave a banner `4 instruction files add up to 137.6k chars, over the 120.0k-char total limit`, with the largest files named. `/status` said `Instruction files will impact performance: 4 files, 137.6k chars in total > 120.0k`.
+- Seen live on Opus 5.5 (1M window): a 156.0k-character file gave `CLAUDE.md is over the 150.0k-char limit (156.0k chars)`, and a 116k file gave no warning. That confirms 3 characters per token for that model.
+
+- The one-file limit is the larger of 40,000 characters and 5% of the context window, turned into characters. Claude Code uses 4 characters per token for Claude 3 models, Opus 4.0 to 4.6, Sonnet 4.0 to 4.6, and Haiku 4.5, and 3 per token for every other model (Opus 4.7 and later, Sonnet 5 and later, Haiku 5.5, Fable, Mythos, and unknown names).
+- A 200k window: 200,000 x 0.05 x 4 = 40,000, and 200,000 x 0.05 x 3 = 30,000, so the 40,000 floor applies to both.
+- A 1M window: 1,000,000 x 0.05 x 4 = 200,000 for the 4-per-token models, and 1,000,000 x 0.05 x 3 = 150,000 for the rest.
+- The total limit is the larger of 120,000 characters and the one-file limit. Only files under the one-file limit add to the total.
+- `User`, `Project`, `Local`, and `Managed` instruction files count, including the files they import. `MEMORY.md` does not count.
+- The messages are `Large <file> will impact performance (<n> chars > <limit>)` for one file, and `Instruction files will impact performance: <n> files, <total> chars in total > <limit>` for the total.
+
 :::
 
 ## Related Pages

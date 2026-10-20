@@ -27,28 +27,13 @@ Use it only in folders you trust.
 ## Print Mode Flags
 
 Source: [Run Claude Code Programmatically](https://code.claude.com/docs/en/headless), [CLI Reference](https://code.claude.com/docs/en/cli-reference), and `claude --help`.
-The full flag list is on [CLI Flags](../../configure/cli/flags.md).
+These flags have their rows, with status and details, on [CLI Flags](../../configure/cli/flags.md).
 
-| Flag | Status | What It Does | Notes |
-| --- | --- | --- | --- |
-| `-p, --print` | <Documented /> | Prints the answer and exits. | Skips the trust dialog. |
-| `--output-format <format>` | <Documented /> | Sets the output. | `text` (default), `json` (one result object), or `stream-json` (one JSON object per line, live). |
-| `--input-format <format>` | <Documented /> | Sets the input. | `text` (default) or `stream-json` (live input, and control requests). |
-| `--include-partial-messages` | <Documented /> | Adds partial message chunks as the answer grows. | Needs `--output-format=stream-json`. Adds `stream_event` lines. |
-| `--include-hook-events` | <Documented /> | Adds hook lifecycle events to the stream. | Needs `--output-format=stream-json`. |
-| `--forward-subagent-text` | <Documented /> | Adds subagent text and thinking to the stream. | Messages carry `parent_tool_use_id`. Needs `stream-json` output. |
-| `--replay-user-messages` | <Documented /> | Sends user messages from stdin back on stdout as an acknowledgment. | Needs both `stream-json` formats. |
-| `--json-schema <schema>` | <Documented /> | Checks the final answer against a JSON Schema. | Pass the schema as a JSON string. |
-| `--max-budget-usd <amount>` | <Documented /> | Stops at a spend limit in dollars. | Print mode only. |
-| `--prompt-suggestions [value]` | <Documented /> | Turns on prompt suggestions. | Print mode sends a `prompt_suggestion` message after each turn. |
-| `--permission-prompts <target>` | <Documented /> | Says who answers permission prompts. | `host` (the SDK host or `--permission-prompt-tool`) or `none` (anything that would prompt is denied; the permission mode decides the rest). |
-| `--no-session-persistence` | <Documented /> | Saves nothing to disk. | The session cannot be resumed. Print mode only. |
-| `--bare` | <Documented /> | Starts with a minimal setup. | Skips hooks, LSP, plugin sync, attribution, auto memory, background prefetches, keychain reads, and `CLAUDE.md` discovery. |
-| `--restricted` | <Documented /> | Removes the tools that run code and `WebFetch`, and ignores user, project, and local settings. | Good for untrusted input. |
-| `--allowedTools`, `--disallowedTools`, `--tools` | <Documented /> | Choose which tools run without a prompt, which are blocked, and which exist. | See [CLI Flags](../../configure/cli/flags.md). |
-| `--fallback-model <model>` | <Documented /> | Names models to try when the main model is overloaded or not available. | See [Models](../../how-it-works/models.md). |
-| `--resume`, `--continue`, `--fork-session`, `--session-id` | <Documented /> | Pick, branch, or name the session. | See [Sessions and Storage](../../how-it-works/sessions-and-storage.md). |
-| `--mcp-config`, `--strict-mcp-config` | <Documented /> | Load MCP servers for this run. | See [MCP Settings and Policy](../mcp/settings.md#files-and-flags). |
+- Output and input: `-p, --print`, `--output-format`, `--input-format`, `--include-partial-messages`, `--include-hook-events`, `--forward-subagent-text`, and `--replay-user-messages`.
+- Checks and limits: `--json-schema` and `--max-budget-usd`.
+- Prompts and permissions: `--prompt-suggestions` and `--permission-prompts`.
+- Lean runs: `--no-session-persistence`, `--bare`, and `--restricted`.
+- Tools, models, sessions, and MCP: `--allowedTools`, `--disallowedTools`, `--tools` (see [CLI Flags](../../configure/cli/flags.md)), `--fallback-model` (see [Models](../../how-it-works/models.md)), `--resume`, `--continue`, `--fork-session`, `--session-id` (see [Sessions and Storage](../../how-it-works/sessions-and-storage.md)), and `--mcp-config` with `--strict-mcp-config` (see [MCP Settings and Policy](../mcp/settings.md#files-and-flags)).
 
 ## Example
 
@@ -69,7 +54,7 @@ The second command prints a `system` line for `init`, then `stream_event` lines,
 ## How It Works
 
 ```mermaid
-flowchart LR
+flowchart TD
   A["<code>claude -p prompt</code>"] --> B[Skip trust dialog]
   B --> C[Run the agent loop]
   C --> D{"<code>--output-format</code>"}

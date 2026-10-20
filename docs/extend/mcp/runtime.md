@@ -25,7 +25,7 @@ Source: [Connect Claude Code to Tools via MCP](https://code.claude.com/docs/en/m
 | `mcp_tool` hook type | <Documented /> | Calls an MCP tool as a hook. | The output counts as command stdout. Skipped on `Setup`, and at `SessionStart` before servers connect. |
 | `updatedMCPToolOutput` | <Documented /> | Replaces an MCP tool result. | Output of a `PostToolUse` hook. MCP tools only. |
 | `ToolSearch` | <Documented /> | Finds deferred MCP tools. | On by default. `permissions.deny: ["ToolSearch"]` turns the tool off. |
-| `WaitForMcpServers` | <Documented /> | Waits for a connecting server. | Used when tool search is off. With tool search the wait happens inside `ToolSearch`. Works in the main session and subagents. |
+| [`WaitForMcpServers`](../../reference/tools/gated-and-other.md) | <Documented /> <Gated note="used when tool search is off" /> | Waits for a connecting server. | Used when tool search is off. With tool search the wait happens inside `ToolSearch`. Works in the main session and subagents. |
 | `SearchMcpRegistry`, `SuggestConnectors`, `ListConnectors` | <Undocumented /> | Find and list MCP connectors. | `SearchMcpRegistry` searches the connector registry by keyword. `ListConnectors` lists the connectors of the claude.ai organization. |
 
 ## Resources and Prompts
@@ -100,7 +100,10 @@ Source: [Channels Reference](https://code.claude.com/docs/en/channels-reference)
 {
   "hooks": {
     "PreToolUse": [
-      { "matcher": "mcp__memory__.*", "hooks": [{ "type": "command", "command": "./audit.sh" }] }
+      {
+        "matcher": "mcp__memory__.*",
+        "hooks": [{ "type": "command", "command": "./audit.sh" }]
+      }
     ]
   }
 }

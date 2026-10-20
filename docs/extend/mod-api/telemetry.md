@@ -16,7 +16,7 @@ Official page: [Mods Reference](https://code.claude.com/docs/en/plugins/mods/ref
 ## Example
 
 ```javascript
-on('telemetry.log', { to: 'collector' }, ($, e, next) => next(e))
+on("telemetry.log", { to: "collector" }, ($, e, next) => next(e));
 ```
 
 ## Members

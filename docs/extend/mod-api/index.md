@@ -26,12 +26,12 @@ These pages cover `2.1.304`. Official pages: [Mods Overview](https://code.claude
 This mod writes each Bash command that Claude runs to the transcript.
 
 ```javascript title="hooks/register.js"
-export function register(on) {
-  on('tool.call', { tool: 'Bash' }, async ($, e, next) => {
-    $.ui.log('Claude runs: ' + e.command)
-    return next(e)
-  })
-}
+export const register = (on) => {
+  on("tool.call", { tool: "Bash" }, async ($, e, next) => {
+    $.ui.log(`Claude runs: ${e.command}`);
+    return next(e);
+  });
+};
 ```
 
 ## A First Mod
@@ -132,7 +132,7 @@ The [type pages](types/index.md) hold the detailed shapes of inputs and results:
 
 ## Known Gaps
 
-- The 50 millisecond limit of a `prompt.edit` hook is in the docs and not in the type file.
+- The 50 millisecond limit of a `prompt.edit` hook is set on the event in the program, not in the type file.
 - The name of the rollout flag for installed mods is not in the program strings.
 - The value `re-entry` of `next.error.kind` is in the docs and in a program debug string, and not in the type file.
 - Many doc comments in the type file name code items without backticks. The tables keep the wording of the type file where it matters.

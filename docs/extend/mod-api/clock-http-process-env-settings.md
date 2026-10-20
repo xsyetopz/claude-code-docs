@@ -16,12 +16,16 @@ In a "Where it can be used" cell, "Run time" means in a hook, in a closure that 
 ## Example
 
 ```javascript
-on('session.start', async ($, e, next) => {
-  const { exitCode, stdout } = await $.process.run(['git', 'status', '--short'])
-  if (exitCode === 0) $.ui.log(stdout)
-  $.clock.every(1000, () => $.ui.status('polling'))
-  return next(e)
-})
+on("session.start", async ($, e, next) => {
+  const { exitCode, stdout } = await $.process.run([
+    "git",
+    "status",
+    "--short",
+  ]);
+  if (exitCode === 0) $.ui.log(stdout);
+  $.clock.every(1000, () => $.ui.status("polling"));
+  return next(e);
+});
 ```
 
 ## Members

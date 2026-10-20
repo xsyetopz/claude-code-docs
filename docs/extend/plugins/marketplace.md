@@ -38,7 +38,7 @@ An entry also accepts every [`plugin.json` key](manifest.md#top-level-keys) exce
 | `headers`, `headersHelper` | <Documented /> | Add headers to an archive download. | Needs `2.1.238` or later. `headersHelper` needs `strict: false`. Only for `archive` sources. |
 | `defaultEnabled`, `displayName`, `dependencies`, `metadata` | <Documented /> | Work as in the manifest. | Entry values override the manifest for display and `defaultEnabled`. |
 | `relevance` | <Documented /> | Says when to suggest the plugin. | `topic` (64 characters) and `signals`: `cli`, `hosts`, `filesRead`, `manifestDeps` (`file` and `pattern`), `cwd`. Each list has a limit of 10 or 20 items. Needs the setting `pluginSuggestionMarketplaces`. |
-| 🧪 `experimental` | <Documented /> | Holds component declarations. | `validate` warns when it is not an object. |
+| `experimental` | <Documented /> <Experimental /> | Holds component declarations. | `validate` warns when it is not an object. |
 
 ## Plugin Sources
 
@@ -72,17 +72,13 @@ These sources go in `extraKnownMarketplaces`, `strictKnownMarketplaces`, and `bl
 ## Settings Keys
 
 Source: [Manage Claude Code Plugins for Your Organization](https://code.claude.com/docs/en/plugins/org) and [Settings Reference](https://code.claude.com/docs/en/settings-reference).
-The full key list is on [Hooks, Plugins, and Skills Settings](../../configure/settings/hooks-and-plugins.md).
 
-| Key | Status | What It Does | How It Works |
-| --- | --- | --- | --- |
-| `extraKnownMarketplaces` | <Documented /> | Declares marketplaces. | A map of name to `{ "source": ... }`. Project values apply after you trust the folder. |
-| `additionalMarketplaces` | <Documented /> | Alias of `extraKnownMarketplaces`. | If both are set, Claude Code ignores the alias and warns. |
-| `strictKnownMarketplaces` | <Documented /> | Allowlist of marketplace sources. | Checked before download. It does not register anything. Managed settings. |
-| `allowedMarketplaces` | <Documented /> | Alias of `strictKnownMarketplaces`. | Managed only. |
-| `blockedMarketplaces` | <Documented /> | Blocklist of marketplace sources. | Checked before download. Managed settings. |
-| `pluginSuggestionMarketplaces` | <Documented /> | Lists marketplaces that may suggest plugins. | Without it, no marketplace suggestion shows. |
-| `disableCommandPluginSources` | <Documented /> | Turns off `command` plugin sources. | Managed settings. |
+The rows for these keys, with types, scopes, and details, are on [Hooks, Plugins, and Skills Settings](../../configure/settings/hooks-and-plugins.md#keys).
+
+- Declare marketplaces: [`extraKnownMarketplaces`](../../configure/settings/hooks-and-plugins.md#keys) and its alias [`additionalMarketplaces`](../../configure/settings/hooks-and-plugins.md#keys).
+- Allow or block sources (managed): [`strictKnownMarketplaces`](../../configure/settings/hooks-and-plugins.md#keys) and its alias [`allowedMarketplaces`](../../configure/settings/hooks-and-plugins.md#keys), and [`blockedMarketplaces`](../../configure/settings/hooks-and-plugins.md#keys).
+- Suggest plugins: [`pluginSuggestionMarketplaces`](../../configure/settings/hooks-and-plugins.md#keys).
+- Turn off `command` plugin sources (managed): [`disableCommandPluginSources`](../../configure/settings/hooks-and-plugins.md#keys).
 
 ## Example
 
@@ -95,7 +91,11 @@ The full key list is on [Hooks, Plugins, and Skills Settings](../../configure/se
     { "name": "lint-helper", "source": "lint-helper" },
     {
       "name": "deploy-tools",
-      "source": { "source": "github", "repo": "example/deploy-tools", "ref": "v1.2.0" },
+      "source": {
+        "source": "github",
+        "repo": "example/deploy-tools",
+        "ref": "v1.2.0"
+      },
       "category": "ops"
     }
   ]
@@ -105,7 +105,9 @@ The full key list is on [Hooks, Plugins, and Skills Settings](../../configure/se
 ```json title="Settings: let a project suggest this marketplace"
 {
   "extraKnownMarketplaces": {
-    "team-tools": { "source": { "source": "github", "repo": "example/team-tools" } }
+    "team-tools": {
+      "source": { "source": "github", "repo": "example/team-tools" }
+    }
   }
 }
 ```
@@ -122,7 +124,7 @@ sequenceDiagram
   C->>P: Check strict and blocked lists
   P-->>C: Allowed
   C->>S: Clone or fetch marketplace.json
-  C->>C: Save to known_marketplaces.json
+  Note over C: Save to known_marketplaces.json
   U->>C: plugin install name@marketplace
   C->>S: Fetch the entry source
 ```

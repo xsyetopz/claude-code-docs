@@ -66,7 +66,7 @@ Review the changes under $ARGUMENTS and list the bugs you find.
 | `version` | <Documented /> | Skill version text. | Read as a string. Not in the docs key table. For skills and plugin commands. |
 | `fallback` | <Documented /> | A boolean that the loader reads. | Parsed with the boolean rule above. |
 | `created_by`, `improved_by` | <Undocumented /> | Mark a skill as made by the `dream-proposal` flow. | Only the value `dream-proposal` counts. The env var `CLAUDE_CODE_SKILL_PROPOSALS` exists. |
-| 🧪 `experimental` | <Documented /> | A map whose key names are recorded. | Only the key names go into `declaredFields`. |
+| `experimental` | <Documented /> <Experimental /> | A map whose key names are recorded. | Only the key names go into `declaredFields`. |
 
 ## Outside Claude Code
 

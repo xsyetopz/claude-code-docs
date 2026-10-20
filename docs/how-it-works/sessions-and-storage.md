@@ -9,16 +9,6 @@ Claude Code writes it to a file on your disk as you work.
 You can leave and come back to continue, or branch the conversation to try another path.
 This page covers the flags, the files, and the cleanup rules. The line format is on the [Transcript Format](../reference/transcript-format.md) page.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. Every session is saved unless you turn it off. |
-| Can you change it? | ✅ Yes. Move the folder, change the retention, or skip saving. |
-| Can you turn it on or off? | `--no-session-persistence` (print mode) or `CLAUDE_CODE_SKIP_PROMPT_HISTORY` (any mode). |
-| Where does it live? | `~/.claude/projects/<project>/<session>.jsonl` |
-| Status | <Documented /> <Undocumented /> |
-
 ## The Life of a Session
 
 ```mermaid
@@ -126,7 +116,11 @@ The last column shows whether Claude Code deletes the item after `cleanupPeriodD
 | `stats-cache.json`, `remote-settings.json`, `policy-limits.json`, `cache/changelog.md` | <Documented /> | Usage totals, cached organization settings, organization limits, and the [changelog](https://code.claude.com/docs/en/changelog). | ❌ |
 | `.credentials.json`, `agent-memory/`, `jobs/`, `daemon/` | <Documented /> | Files that you should keep. | ❌ |
 | `settings.json`, `plugins/`, `skills/`, `agents/`, `CLAUDE.md` | <Documented /> | Your configuration. | ❌ |
-| `state/`, `mods/`, `bridge-spawn/`, `seed-admin/`, `downloads/`, `cache/model-catalog/` | <Undocumented /> | Seen on a 2.1.304 machine or named in the program. No docs page describes them. | ❓ |
+| `state/` | <Undocumented /> | Seen in the program: holds `settings-review.json`. A write there is denied with the text "Staged Claude Code settings changes". | Unknown |
+| `seed-admin/` | <Undocumented /> | Seen in the program: the root for temp folders `claude-seed-admin-<pid>-...`, created with mode 0700. It is refused inside a git work tree. | Unknown |
+| `bridge-spawn/` | <Undocumented /> | Seen in the program: the root folder for sessions started over the bridge. The sandbox rules allow it. | Unknown |
+| `cache/model-catalog/` | <Undocumented /> | Seen in the program: `masked-ids.json` and `masked-ids.unparseable.json`, for the served model catalog. | Unknown |
+| `mods/`, `downloads/` | <Undocumented /> | Seen on a 2.1.304 machine or named in the program. The program has no `mods/` path (it uses `dev-mods/`, listed above). `downloads/` is only in the program's list of known folders. Their purpose is not found. | Unknown |
 
 `~/.claude.json`, next to the folder, holds app state, the sign-in, and personal MCP servers.
 The default retention is 30 days, and the minimum is 1.

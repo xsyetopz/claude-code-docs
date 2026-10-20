@@ -81,12 +81,12 @@ The calling hook alone is skipped, so a plugin does not trap itself.
 
 | Item | Status | What it does | How it works | Where it can be used |
 | --- | --- | --- | --- | --- |
-| `disableAllHooks` | <Documented /> | No mod or hook of an installed plugin runs. | In managed settings it also stops organization mods. In user settings, what the organization manages keeps running. Built-in mods load. | Settings files. |
-| `allowManagedHooksOnly` | <Documented /> | Blocks hooks and mods that are not the organization's. | The program says: hooks modules are turned off here (`disableAllHooks`, `allowManagedHooksOnly` or a policy). | Managed settings. |
+| `disableAllHooks` | <Differs note="The schema also says it stops the statusLine command. The Hooks Reference names only hooks." /> | No mod or hook of an installed plugin runs. Built-in mods load. | Row: [Hooks, Plugins, and Skills Settings](../../configure/settings/hooks-and-plugins.md#keys). | Settings files. |
+| `allowManagedHooksOnly` | <Documented /> <ManagedOnly /> | Blocks hooks and mods that are not the organization's. | The program says: hooks modules are turned off here (`disableAllHooks`, `allowManagedHooksOnly` or a policy). Row: [Hooks, Plugins, and Skills Settings](../../configure/settings/hooks-and-plugins.md#keys). | Managed settings. |
 | `allowManagedModsOnly` | <Documented /> | Only organization mods and built-in mods run their hooks. | An option of the built-in guard `sec-default`. | Managed settings. |
 | `allowModsToOverrideDenyRules` | <Documented /> | Lets an installed mod approve a call that a `deny` rule refuses. | An option of the built-in guard. | Managed settings. |
-| `prependPlugins`, `appendPlugins` | <Documented /> | Plugin ids that run before or after user mods. | Only these can call `next.to`. | Managed settings. |
-| `disableSideloadFlags` | <Documented /> | Rejects `--plugin-dir` and `--plugin-url`. | None. | Managed settings. |
+| `prependPlugins`, `appendPlugins` | <Differs note="Docs say user or managed scope. The schema says managed only." /> <ManagedOnly /> | Plugin ids that run before or after user mods. | Only these can call `next.to`. Rows: [Hooks, Plugins, and Skills Settings](../../configure/settings/hooks-and-plugins.md#keys). | Managed settings. |
+| `disableSideloadFlags` | <Documented /> <ManagedOnly /> | Rejects `--plugin-dir` and `--plugin-url`. | Row: [Hooks, Plugins, and Skills Settings](../../configure/settings/hooks-and-plugins.md#keys). | Managed settings. |
 | `--safe-mode`, `--bare` | <Documented /> | No installed hooks module loads. | The program says: installed plugins are disabled, none of their hooks or hooks modules load, built-in plugins load regardless. | CLI flags. |
 | Rollout switch | <Gated note="Remote flag, name not shown in the program strings" /> | Installed hooks modules wait for a rollout flag. A message says installed mods are turned off remotely. | Built-in plugins and organization plugins load regardless. | Installed plugins. |
 | `CLAUDE_CODE_PLUGIN_DIRS`, `CLAUDE_CODE_PLUGIN_DIR_WATCH` | <Documented /> | Load plugin dirs as `--plugin-dir` does, and reload on save in a non-interactive session. | None. | Environment. |
@@ -98,7 +98,7 @@ Claude Code skips a hook that is too slow.
 
 | Limit | Value |
 | --- | --- |
-| Own time of one hook for one event | 10 seconds, or 50 milliseconds for a `prompt.edit` hook (from the docs; not checked in the program) |
+| Own time of one hook for one event | 10 seconds, or 50 milliseconds for a `prompt.edit` hook (set on the event in the program) |
 | A `.catch` handler | 1 second |
 | All `session.end` hooks together | 1.5 seconds unless you change the `SessionEnd` hook budget |
 | `$.process.run` | 30 seconds by default, 10 minutes at most |

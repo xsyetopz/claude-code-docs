@@ -41,6 +41,7 @@ Use Chicago-style Title Case for every heading, page title, and sidebar label.
 - Capitalize nouns, verbs, adjectives, adverbs, and pronouns.
 - Keep articles, short conjunctions, and prepositions lowercase: `a`, `an`, `the`, `and`, `but`, `or`, `for`, `in`, `of`, `on`, `to`, `with`, `from`, `at`, `by`.
 - Words in inline code keep their exact spelling.
+- Put code identifiers in headings in backticks (flags, env vars, keys, tool, event, and type names, file names). Page titles and sidebar labels stay plain text.
 
 | Wrong | Right |
 | --- | --- |
@@ -189,29 +190,28 @@ Use these marks in a table cell that is a yes, no, or unknown answer, such as an
 | --- | --- | --- |
 | ✅ | Yes | `✅`, or `✅ Yes. <detail>` when text follows |
 | ❌ | No | `❌`, or `❌ No. <detail>` when text follows |
-| ❓ | Unknown or not stated | `❓` |
+| Unknown | Unknown or not stated | the word `Unknown` |
 
 - Do not use a mark where Yes or No is part of a value, such as a default that is literally "no".
 - Never put a mark in a heading, a sidebar label, or link text.
 - For a short clarification, put `\*` after the mark (`✅\*`) and write `\* The note.` right after the table. Use `\*\*` for a second note.
 - `bun run check:docs` rejects every emoji that is not on the allow-list in `tools/check-docs.ts`.
 
-### Name Markers
+### Status Labels
 
-Put one of these before the item name in a table cell, or at the start of a note, followed by a space.
+Put one of these components in the `Status` column, after the provenance badges. The name cell holds only the identifier.
 Each has one meaning, and a provenance badge stays the primary status.
 
-| Mark | Meaning | Use it when |
+| Component | Meaning | Use it when |
 | --- | --- | --- |
-| 🔒 | Managed only | The schema has `x-managed-only: true` for the key |
-| 🧪 | Experimental | The key name has `EXPERIMENTAL` or `experimental`, or the program or the vendor pages call it experimental or beta |
-| ⛔ | Deprecated | The program or the vendor pages call it deprecated, and the row names the replacement |
-| ⚠️ | Caution | It deletes data, skips a safety check or permission, or sends data off the machine. Use it sparingly. Long warnings stay admonitions |
+| `<ManagedOnly />` | Managed only | The schema has `x-managed-only: true` for the key |
+| `<Experimental />` | Experimental | The key name has `EXPERIMENTAL` or `experimental`, or the program or the vendor pages call it experimental or beta |
+| `<Deprecated note="..." />` | Deprecated | The program or the vendor pages call it deprecated. Put the replacement in `note` when the row names one |
+| `<Caution note="..." />` | Caution | It deletes data, skips a safety check or permission, or sends data off the machine. Use it sparingly. Long warnings stay admonitions |
 
-- Never put a name marker in a heading, a sidebar label, link text, or code.
-- Never invent a status. Cite the source in the row or the page.
-- `🧪` does not replace `<Gated />`. Use it only where "experimental" is the stated status.
-- Screen readers say "locked", "test tube", "no entry", and "warning". The row text must say the meaning in words too.
+- Never invent a status or a `note`. Cite the source in the row or the page.
+- `<Experimental />` does not replace `<Gated />`. Use it only where "experimental" is the stated status.
+- Do not use an emoji for these. `bun run check:docs` rejects them.
 
 ### Admonitions
 
@@ -236,6 +236,8 @@ Give a code block a language and, when useful, a title.
 ````
 
 Every surface page has at least one worked example.
+
+Examples in `ts`, `tsx`, `js`, `jsx`, `json`, and `jsonc` blocks follow `biome.json`: formatting, lint rules, and typed const arrows instead of `function` declarations. Run `bun run check:examples` (add `--fix` for safe fixes). To skip a block that must stay verbatim, such as program output or a wire format, add `skip-lint` to its fence: ` ```json skip-lint title="..." `. Blocks in `docs/prompts/` are skipped.
 
 ## MDX Gotchas
 

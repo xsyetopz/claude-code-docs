@@ -40,7 +40,7 @@ Source: [Tools Reference](https://code.claude.com/docs/en/tools-reference), [Con
 | `ProposeGoal` | <Undocumented /> <Gated note="hidden server-side flag" /> | Proposes a goal condition for user approval. | `condition` (string, required), `ask_user` (boolean, default true). | Main session. | ✅ | ❌ | ✅ |
 | `ReportFindings` | <Documented /> | Reports code-review findings as a list. | `level` (`low`, `medium`, `high`, `xhigh`, `max`, optional), `findings` (array of at most 32, required). Used only when review instructions ask for it. | Main session. | ✅ | ✅ | ❌ |
 
-## Agent Parameters
+## `Agent` Parameters
 
 Source: the program (the `Agent` input schema).
 

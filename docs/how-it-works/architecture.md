@@ -9,20 +9,10 @@ You give it a task, it asks a model what to do, it runs tools, and it repeats un
 Settings, hooks, plugins, skills, MCP servers, and subagents are layers around this loop, and you can change each of them.
 This page shows the pieces, the processes, and the order of the startup.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. Run `claude` in a folder. |
-| Can you change it? | Partly. You change the layers (settings, hooks, plugins), not the loop itself. |
-| Can you turn it on or off? | Each layer has its own switch. See the pages in Configure and Extend. |
-| Where does it live? | A program file in `~/.local/share/claude/versions/`, a launcher at `~/.local/bin/claude`, and data in `~/.claude/`. |
-| Status | <Documented /> <Undocumented /> |
-
 ## The Big Picture
 
 ```mermaid
-flowchart LR
+flowchart TD
   You[You or a script] --> CLI[Command parser]
   CLI --> App[App state and settings]
   App --> Loop[Model loop]
@@ -104,7 +94,7 @@ sequenceDiagram
   participant S as Settings and storage
   participant X as Plugins and MCP
   participant U as Screen or output
-  P->>P: Set entry point, build command tree
+  Note over P: Set entry point, build command tree
   P->>S: Read device settings and keychain
   P->>S: Init: config, storage, flag fetch
   P->>S: Managed settings and policy checks

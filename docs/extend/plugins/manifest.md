@@ -29,7 +29,7 @@ The last column says where the key may appear: the manifest, a marketplace entry
 | `$schema` | <Documented /> | Gives an editor schema URL. | Ignored when the plugin loads. | Manifest |
 | `name` | <Documented /> | Sets the plugin id and namespace. | Not empty, no spaces, no control or bidirectional characters. Reserved: names that start with `claude-`, `anthropic-`, `anthropics-`, or `cc-plugin-`, and the names `claude`, `anthropic`, `claude-code`, `claude-mods`. | Both |
 | `displayName` | <Documented /> | Sets the name shown in the UI. | The entry value wins. | Both |
-| `version` | <Documented /> | Sets the version text. | Not checked as semver. Users stay on this version until you change it. The manifest value wins over the entry. | Both |
+| `version` | <Documented /> | Sets the version text. | Must be a string (a number is an error). Any text works, because it is not checked as semver. The validator only warns when it is missing or empty. Users stay on this version until you change it. The manifest value wins over the entry, and `claude plugin validate` warns when they differ. | Both |
 | `description`, `homepage`, `repository`, `license`, `keywords` | <Documented /> | Listing data. | `homepage` must be a URL. | Both |
 | `author` | <Documented /> | Names the maker. | An object: `name` (required), `email`, `url`. | Both |
 | `metadata` | <Documented /> | A free map for your own data. | A value that is not an object is dropped. | Both |
@@ -48,10 +48,10 @@ The last column says where the key may appear: the manifest, a marketplace entry
 | `lspServers` | <Documented /> | Gives language server config. | Fields: `command`, `extensionToLanguage`, `args`, `transport`, `env`, `initializationOptions`, `settings`, `workspaceFolder`, `startupTimeout`, `shutdownTimeout`, `requestTimeout`, `restartOnCrash`, `maxRestarts`, `diagnostics`. | Manifest |
 | `outputStyles` | <Documented /> | Lists style files or folders. | Replaces `output-styles/`. | Manifest |
 | `workflows` | <Documented /> | Lists workflow `.js` files or folders. | Replaces `workflows/`. | Manifest |
-| 🧪 `experimental.themes` | <Documented /> | Lists theme files or folders. | Replaces `themes/`. A top-level `themes` key still loads and gives a warning. | Manifest |
-| 🧪 `experimental.monitors` | <Documented /> | Declares background watchers. | Items: `name`, `command`, `description`, `when` (`always` or `on-skill-invoke:<skill>`). Interactive sessions only. | Manifest |
-| 🧪 `experimental.evals` | <Documented /> | Names the eval folder. | Default `evals/`. Used by `claude plugin eval`. | Manifest |
-| 🧪 `experimental.syntaxHighlighting.hljsLanguages` | <Undocumented /> | Adds highlight.js languages. | Up to 16 items. `id` matches `^[a-z][a-z0-9_-]*$` (64 characters at most). `remote` is `npm:<pkg>[@ver]` or `github:<owner>/<repo>@<ref>#<path>.js`. `integrity` is an SRI hash with `sha256-`, `sha384-`, or `sha512-`. Strict. | Manifest |
+| `experimental.themes` | <Documented /> <Experimental /> | Lists theme files or folders. | Replaces `themes/`. A top-level `themes` key still loads and gives a warning. | Manifest |
+| `experimental.monitors` | <Documented /> <Experimental /> | Declares background watchers. | Items: `name`, `command`, `description`, `when` (`always` or `on-skill-invoke:<skill>`). Interactive sessions only. | Manifest |
+| `experimental.evals` | <Documented /> <Experimental /> | Names the eval folder. | Default `evals/`. Used by `claude plugin eval`. | Manifest |
+| `experimental.syntaxHighlighting.hljsLanguages` | <Undocumented /> <Experimental /> | Adds highlight.js languages. | Up to 16 items. `id` matches `^[a-z][a-z0-9_-]*$` (64 characters at most). `remote` is `npm:<pkg>[@ver]` or `github:<owner>/<repo>@<ref>#<path>.js`. `integrity` is an SRI hash with `sha256-`, `sha384-`, or `sha512-`. Strict. | Manifest |
 | `binaries` | <Undocumented /> | Lists files fetched into `bin/` at install. | A map of base name to `{ "sha256": <64 hex> }`. At most 64 entries. Names match `^[a-z0-9](?:[a-z0-9._-]*[a-z0-9_-])?$`. The env var `CLAUDE_CODE_PLUGIN_BINARY_ASSETS` also exists. | Manifest |
 
 ## `userConfig` Option Keys

@@ -19,22 +19,22 @@ Items that the docs name but describe wrongly are in [Behaves Differently From t
 | --- | --- |
 | [Settings Keys](#settings-keys) | 25 |
 | [Environment Variables](#environment-variables) | 868 |
-| [CLI Flags and Subcommands](#cli-flags-and-subcommands) | 53 |
+| [CLI Flags and Subcommands](#cli-flags-and-subcommands) | 52 |
 | [Permissions](#permissions) | 121 |
-| [Hooks](#hooks) | 14 |
+| [Hooks](#hooks) | 13 |
 | [Commands](#commands) | 2 |
 | [Skills](#skills) | 7 |
 | [Subagents](#subagents) | 7 |
-| [Plugins](#plugins) | 10 |
-| [MCP](#mcp) | 37 |
+| [Plugins](#plugins) | 9 |
+| [MCP](#mcp) | 32 |
 | [Tools](#tools) | 29 |
 | [API Endpoints and Betas](#api-endpoints-and-betas) | 54 |
 | [System Prompt](#system-prompt) | 34 |
-| [Transcript and Sessions](#transcript-and-sessions) | 16 |
+| [Transcript and Sessions](#transcript-and-sessions) | 13 |
 | [Headless Protocol](#headless-protocol) | 155 |
 | [Mod API](#mod-api) | 0 |
-| [Other](#other) | 110 |
-| Total | 1542 |
+| [Other](#other) | 97 |
+| Total | 1518 |
 
 ## Settings Keys
 
@@ -51,8 +51,8 @@ Count: 25.
 | `remoteControl` | [Agents and Remote Settings](../configure/settings/agents-and-remote.md#keys) (Keys) |
 | `remoteTools` | [Agents and Remote Settings](../configure/settings/agents-and-remote.md#keys) (Keys) |
 | `skipWorkflowUsageWarning` | [Agents and Remote Settings](../configure/settings/agents-and-remote.md#keys) (Keys) |
-| `xaaIdp` | [Auth Settings](../configure/settings/auth.md#keys) (Keys) |
-| `autoDreamEnabled` | [Core Settings](../configure/settings/core.md#keys) (Keys) |
+| `xaaIdp` | [Auth Settings](../configure/settings/auth.md#keys) (Keys); [MCP Settings and Policy](../extend/mcp/settings.md#settings-keys) (Settings Keys) |
+| `autoDreamEnabled` | [Core Settings](../configure/settings/core.md#keys) (Keys); [Memory and Rules](../configure/memory-and-rules.md#auto-memory) (Auto Memory) |
 | `precomputeCompactionEnabled` | [Core Settings](../configure/settings/core.md#keys) (Keys) |
 | `todoFeatureEnabled` | [Core Settings](../configure/settings/core.md#keys) (Keys) |
 | `policyHelpers` | [Enterprise Settings](../configure/settings/enterprise.md#keys) (Keys) |
@@ -103,7 +103,7 @@ Count: 53.
 
 | Item | Where |
 | --- | --- |
-| `--plugin-dir-no-mcp <path>` | [Plugin Commands](../extend/plugins/cli.md#session-flags) (Session Flags) |
+| `--plugin-dir-no-mcp <path>` | [Plugin Commands](../extend/plugins/cli.md#session-flags) (Session Flags); [All Flags](../configure/cli/flags.md#agents-plugins-mcp-and-context) (Agents, Plugins, MCP, and Context); [MCP Settings and Policy](../extend/mcp/settings.md#files-and-flags) (Files and Flags) |
 | `--session-mirror` | [All Flags](../configure/cli/flags.md#start-and-print-mode) (Start and Print Mode) |
 | `--await-claim` | [All Flags](../configure/cli/flags.md#start-and-print-mode) (Start and Print Mode) |
 | `--await-initialize` | [All Flags](../configure/cli/flags.md#start-and-print-mode) (Start and Print Mode) |
@@ -123,12 +123,11 @@ Count: 53.
 | `--max-thinking-tokens <tokens>` | [All Flags](../configure/cli/flags.md#model-and-thinking) (Model and Thinking) |
 | `--task-budget <tokens>` | [All Flags](../configure/cli/flags.md#model-and-thinking) (Model and Thinking) |
 | `--fast-mode <on\|off>` | [All Flags](../configure/cli/flags.md#model-and-thinking) (Model and Thinking) |
-| `--include-unsupported-models` | [All Flags](../configure/cli/flags.md#model-and-thinking) (Model and Thinking) |
-| `--resume-session-at <message id>` | [All Flags](../configure/cli/flags.md#sessions-and-worktrees) (Sessions and Worktrees) |
+| `--include-unsupported-models` | [All Flags](../configure/cli/flags.md#model-and-thinking) (Model and Thinking); [Models and Providers](../configure/models-and-providers.md#choose-a-model) (Choose a Model) |
+| `--resume-session-at <message id>` | [All Flags](../configure/cli/flags.md#sessions-and-worktrees) (Sessions and Worktrees); [Sessions and Storage](../how-it-works/sessions-and-storage.md#resume-and-branch) (Resume and Branch) |
 | `--resume-drops-turn <message id>` | [All Flags](../configure/cli/flags.md#sessions-and-worktrees) (Sessions and Worktrees) |
-| `--reply-on-resume` | [All Flags](../configure/cli/flags.md#sessions-and-worktrees) (Sessions and Worktrees) |
-| `--rewind-files <user-message-id>` | [All Flags](../configure/cli/flags.md#sessions-and-worktrees) (Sessions and Worktrees) |
-| `--plugin-dir-no-mcp <path>` | [All Flags](../configure/cli/flags.md#agents-plugins-mcp-and-context) (Agents, Plugins, MCP, and Context) |
+| `--reply-on-resume` | [All Flags](../configure/cli/flags.md#sessions-and-worktrees) (Sessions and Worktrees); [Sessions and Storage](../how-it-works/sessions-and-storage.md#resume-and-branch) (Resume and Branch) |
+| `--rewind-files <user-message-id>` | [All Flags](../configure/cli/flags.md#sessions-and-worktrees) (Sessions and Worktrees); [Sessions and Storage](../how-it-works/sessions-and-storage.md#resume-and-branch) (Resume and Branch) |
 | `--brief` | [All Flags](../configure/cli/flags.md#agents-plugins-mcp-and-context) (Agents, Plugins, MCP, and Context) |
 | `--file <specs...>` | [All Flags](../configure/cli/flags.md#agents-plugins-mcp-and-context) (Agents, Plugins, MCP, and Context) |
 | `--watch-artifact <artifact>` | [All Flags](../configure/cli/flags.md#agents-plugins-mcp-and-context) (Agents, Plugins, MCP, and Context) |
@@ -176,7 +175,7 @@ The 85 default auto mode rules are all listed on [Auto Mode Default Rules](../co
 | `CLAUDE_CHROME_CLASSIFIER_FLOOR`, `CLAUDE_CHROME_PERMISSION_MODE` | [Auto Mode](../configure/permissions/auto-mode.md#environment-variables) (Environment Variables) |
 | `CLAUDE_BG_SESSION_PERMISSION_RULES` | [Auto Mode](../configure/permissions/auto-mode.md#environment-variables) (Environment Variables) |
 | `CLAUDE_CODE_PARKED_PERMISSION_WAIT_MS` | [Auto Mode](../configure/permissions/auto-mode.md#environment-variables) (Environment Variables) |
-| `CLAUDE_CODE_RESTRICT_PERSONAL_CONFIG` | [Auto Mode](../configure/permissions/auto-mode.md#environment-variables) (Environment Variables) |
+| `CLAUDE_CODE_RESTRICT_PERSONAL_CONFIG` | [Auto Mode](../configure/permissions/auto-mode.md#environment-variables) (Environment Variables); [Hook Configuration](../extend/hooks/configuration.md#failure-handling) (Failure Handling) |
 | `rule` | [Permission Modes](../configure/permissions/modes.md#decision-reasons) (Decision Reasons) |
 | `mode` | [Permission Modes](../configure/permissions/modes.md#decision-reasons) (Decision Reasons) |
 | `subcommandResults` | [Permission Modes](../configure/permissions/modes.md#decision-reasons) (Decision Reasons) |
@@ -214,7 +213,6 @@ Count: 16.
 | --- | --- |
 | `asyncTimeout` | [Hook Configuration](../extend/hooks/configuration.md#timeouts) (Timeouts) |
 | `onFailure` has no effect | [Hook Configuration](../extend/hooks/configuration.md#failure-handling) (Failure Handling) |
-| `CLAUDE_CODE_RESTRICT_PERSONAL_CONFIG` | [Hook Configuration](../extend/hooks/configuration.md#failure-handling) (Failure Handling) |
 | `CLAUDE_CODE_HOOKS_SAME_THREAD` | [Hook Configuration](../extend/hooks/configuration.md#environment-variables-for-hooks) (Environment Variables for Hooks) |
 | `CLAUDE_CODE_DISABLE_HOOK_FORWARDING` | [Hook Configuration](../extend/hooks/configuration.md#environment-variables-for-hooks) (Environment Variables for Hooks) |
 | `CLAUDE_CODE_RESUME_SESSIONSTART_HOOKS_WAIT_MS` | [Hook Configuration](../extend/hooks/configuration.md#environment-variables-for-hooks) (Environment Variables for Hooks) |
@@ -280,7 +278,6 @@ Count: 10.
 
 | Item | Where |
 | --- | --- |
-| `--plugin-dir-no-mcp <path>` | [Plugin Commands](../extend/plugins/cli.md#session-flags) (Session Flags) |
 | `plugins/cache/<marketplace>/<plugin>/<version>/` | [Plugin Loading](../extend/plugins/loading.md#paths) (Paths) |
 | `plugins/installed_plugins.json` | [Plugin Loading](../extend/plugins/loading.md#paths) (Paths) |
 | `plugins/known_marketplaces.json` | [Plugin Loading](../extend/plugins/loading.md#paths) (Paths) |
@@ -299,7 +296,7 @@ Count: 37.
 
 | Item | Where |
 | --- | --- |
-| `MCP_OAUTH_CLIENT_METADATA_URL` | [MCP Authentication](../extend/mcp/auth.md#oauth-options) (OAuth Options) |
+| `MCP_OAUTH_CLIENT_METADATA_URL` | [MCP Authentication](../extend/mcp/auth.md#oauth-options) (OAuth Options); [MCP Env Vars](../extend/mcp/env.md#undocumented-variables) (Undocumented Variables) |
 | `bareElicitationCapability` | [Server Configuration](../extend/mcp/config.md#server-options) (Server Options) |
 | `discoveryCache` | [Server Configuration](../extend/mcp/config.md#server-options) (Server Options) |
 | `request_timeout_ms` | [Server Configuration](../extend/mcp/config.md#server-options) (Server Options) |
@@ -308,15 +305,14 @@ Count: 37.
 | `ideName`, `ideRunningInWindows`, `authToken` | [Server Configuration](../extend/mcp/config.md#server-options) (Server Options) |
 | `cachedInitResponse`, `cachedDiscoverResponse`, `discoverSupport`, and 2 more | [Server Configuration](../extend/mcp/config.md#server-options) (Server Options) |
 | Blocked names | [Server Configuration](../extend/mcp/config.md#names) (Names) |
-| `ENABLE_MCP_LARGE_OUTPUT_FILES` | [MCP Env Vars](../extend/mcp/env.md#undocumented-variables) (Undocumented Variables) |
-| `CLAUDE_CODE_MCP_APPS_HOST` | [MCP Env Vars](../extend/mcp/env.md#undocumented-variables) (Undocumented Variables) |
-| `CLAUDE_CODE_SKIP_PLUGIN_MCP_SERVERS` | [MCP Env Vars](../extend/mcp/env.md#undocumented-variables) (Undocumented Variables) |
+| `ENABLE_MCP_LARGE_OUTPUT_FILES` | [MCP Env Vars](../extend/mcp/env.md#undocumented-variables) (Undocumented Variables); [MCP Runtime](../extend/mcp/runtime.md#limits) (Limits) |
+| `CLAUDE_CODE_MCP_APPS_HOST` | [MCP Env Vars](../extend/mcp/env.md#undocumented-variables) (Undocumented Variables); [MCP Runtime](../extend/mcp/runtime.md#resources-and-prompts) (Resources and Prompts) |
+| `CLAUDE_CODE_SKIP_PLUGIN_MCP_SERVERS` | [MCP Env Vars](../extend/mcp/env.md#undocumented-variables) (Undocumented Variables); [Probes](probes.md#effects-and-differences) (Effects and Differences) |
 | `CLAUDE_CODE_SKIP_PLUGIN_MCP_SERVERS_EXCEPT` | [MCP Env Vars](../extend/mcp/env.md#undocumented-variables) (Undocumented Variables) |
 | `CLAUDE_CODE_SKIP_PLUGIN_LOCAL_MCP_SERVERS` | [MCP Env Vars](../extend/mcp/env.md#undocumented-variables) (Undocumented Variables) |
 | `CLAUDE_CODE_SKIP_PLUGIN_MCP_BUNDLES` | [MCP Env Vars](../extend/mcp/env.md#undocumented-variables) (Undocumented Variables) |
 | `CLAUDE_CODE_ENABLE_REFRESH_MCP_TOOLS` | [MCP Env Vars](../extend/mcp/env.md#undocumented-variables) (Undocumented Variables) |
 | `MCP_TRUNCATION_PROMPT_OVERRIDE` | [MCP Env Vars](../extend/mcp/env.md#undocumented-variables) (Undocumented Variables) |
-| `MCP_OAUTH_CLIENT_METADATA_URL` | [MCP Env Vars](../extend/mcp/env.md#undocumented-variables) (Undocumented Variables) |
 | `CLAUDE_CODE_SYNC_PLUGINS_MCP_TIMEOUT_MS` | [MCP Env Vars](../extend/mcp/env.md#undocumented-variables) (Undocumented Variables) |
 | `CLAUDE_CODE_MCP_CONNECTOR_PREWAIT_MS` | [MCP Env Vars](../extend/mcp/env.md#undocumented-variables) (Undocumented Variables) |
 | `CLAUDE_CODE_MCP_PREWAIT_SERVERS`, `CLAUDE_CODE_MCP_PREWAIT_SERVERS_MS` | [MCP Env Vars](../extend/mcp/env.md#undocumented-variables) (Undocumented Variables) |
@@ -332,10 +328,6 @@ Count: 37.
 | `SearchMcpRegistry`, `SuggestConnectors`, `ListConnectors` | [MCP Runtime](../extend/mcp/runtime.md#tools-and-names) (Tools and Names) |
 | `ReadMcpResourceDirTool` | [MCP Runtime](../extend/mcp/runtime.md#resources-and-prompts) (Resources and Prompts) |
 | Old tool names | [MCP Runtime](../extend/mcp/runtime.md#resources-and-prompts) (Resources and Prompts) |
-| `CLAUDE_CODE_MCP_APPS_HOST` | [MCP Runtime](../extend/mcp/runtime.md#resources-and-prompts) (Resources and Prompts) |
-| `ENABLE_MCP_LARGE_OUTPUT_FILES` | [MCP Runtime](../extend/mcp/runtime.md#limits) (Limits) |
-| `xaaIdp` | [MCP Settings and Policy](../extend/mcp/settings.md#settings-keys) (Settings Keys) |
-| `--plugin-dir-no-mcp <path>` | [MCP Settings and Policy](../extend/mcp/settings.md#files-and-flags) (Files and Flags) |
 
 ## Tools
 
@@ -407,7 +399,7 @@ Count: 54.
 | `mcp-servers-2025-12-04` | [Betas](api/betas.md#registry) (Registry) |
 | `files-api-2025-04-14` | [Betas](api/betas.md#registry) (Registry) |
 | `environments-2025-11-01` | [Betas](api/betas.md#registry) (Registry) |
-| `per-turn-control-2026-07-01` | [Betas](api/betas.md#registry) (Registry) |
+| `per-turn-control-2026-07-01` | [Betas](api/betas.md#registry) (Registry); [Models and Providers](../configure/models-and-providers.md#effort) (Effort) |
 | `timing-2026-09-09` | [Betas](api/betas.md#registry) (Registry) |
 | `mid-conversation-tool-changes-2026-07-01` | [Betas](api/betas.md#registry) (Registry) |
 | `inline-tools-2026-09-15` | [Betas](api/betas.md#registry) (Registry) |
@@ -469,7 +461,7 @@ Count: 34.
 | `memory` | [The System Prompt](../how-it-works/system-prompt.md#session-sections) (Session Sections) |
 | `env_info_simple` | [The System Prompt](../how-it-works/system-prompt.md#session-sections) (Session Sections) |
 | `env_info_static` | [The System Prompt](../how-it-works/system-prompt.md#session-sections) (Session Sections) |
-| `context_management` | [The System Prompt](../how-it-works/system-prompt.md#session-sections) (Session Sections) |
+| `context_management` | [The System Prompt](../how-it-works/system-prompt.md#session-sections) (Session Sections); [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
 | `brief` | [The System Prompt](../how-it-works/system-prompt.md#session-sections) (Session Sections) |
 | `focus_mode` | [The System Prompt](../how-it-works/system-prompt.md#session-sections) (Session Sections) |
 | Default, Lean Prompt | [Captured System Prompts](../prompts/index.md#all-variants) (All Variants) |
@@ -489,9 +481,6 @@ Count: 16.
 
 | Item | Where |
 | --- | --- |
-| `--resume-session-at <message id>` | [Sessions and Storage](../how-it-works/sessions-and-storage.md#resume-and-branch) (Resume and Branch) |
-| `--reply-on-resume` | [Sessions and Storage](../how-it-works/sessions-and-storage.md#resume-and-branch) (Resume and Branch) |
-| `--rewind-files <user-message-id>` | [Sessions and Storage](../how-it-works/sessions-and-storage.md#resume-and-branch) (Resume and Branch) |
 | `state/`, `mods/`, `bridge-spawn/`, and 3 more | [Sessions and Storage](../how-it-works/sessions-and-storage.md#where-files-live) (Where Files Live) |
 | `type` | [Transcript Format](transcript-format.md#common-fields) (Common Fields) |
 | `uuid` | [Transcript Format](transcript-format.md#common-fields) (Common Fields) |
@@ -531,17 +520,15 @@ Count: 110.
 
 | Item | Where |
 | --- | --- |
-| `autoDreamEnabled` | [Memory and Rules](../configure/memory-and-rules.md#auto-memory) (Auto Memory) |
 | `/pause-memory` | [Memory and Rules](../configure/memory-and-rules.md#auto-memory) (Auto Memory) |
 | `CLAUDE_CODE_REMOTE_MEMORY_DIR`, `CLAUDE_CODE_POST_TURN_MEMORY`, `CLAUDE_COWORK_MEMORY_*`, `CLAUDE_MEMORY_STORES` | [Memory and Rules](../configure/memory-and-rules.md#auto-memory) (Auto Memory) |
 | `InstructionFileKind` | [Memory and Rules](../configure/memory-and-rules.md#the-instructionsloaded-hook) (The InstructionsLoaded Hook) |
-| `--include-unsupported-models` | [Models and Providers](../configure/models-and-providers.md#choose-a-model) (Choose a Model) |
-| `claude-3-5-haiku` | [Models and Providers](../configure/models-and-providers.md#catalog) (Catalog) |
-| `claude-3-5-sonnet` | [Models and Providers](../configure/models-and-providers.md#catalog) (Catalog) |
-| `claude-3-7-sonnet` | [Models and Providers](../configure/models-and-providers.md#catalog) (Catalog) |
-| `claude-sonnet-4-0` | [Models and Providers](../configure/models-and-providers.md#catalog) (Catalog) |
-| `claude-opus-4-0` | [Models and Providers](../configure/models-and-providers.md#catalog) (Catalog) |
-| `claude-mythos-5-1` | [Models and Providers](../configure/models-and-providers.md#catalog) (Catalog) |
+| `claude-3-5-haiku` | [Models and Providers](../configure/models-and-providers.md#catalog) (Catalog); [Models and Providers](../configure/models-and-providers.md#provider-names) (Provider Names) |
+| `claude-3-5-sonnet` | [Models and Providers](../configure/models-and-providers.md#catalog) (Catalog); [Models and Providers](../configure/models-and-providers.md#provider-names) (Provider Names) |
+| `claude-3-7-sonnet` | [Models and Providers](../configure/models-and-providers.md#catalog) (Catalog); [Models and Providers](../configure/models-and-providers.md#provider-names) (Provider Names) |
+| `claude-sonnet-4-0` | [Models and Providers](../configure/models-and-providers.md#catalog) (Catalog); [Models and Providers](../configure/models-and-providers.md#provider-names) (Provider Names) |
+| `claude-opus-4-0` | [Models and Providers](../configure/models-and-providers.md#catalog) (Catalog); [Models and Providers](../configure/models-and-providers.md#provider-names) (Provider Names) |
+| `claude-mythos-5-1` | [Models and Providers](../configure/models-and-providers.md#catalog) (Catalog); [Models and Providers](../configure/models-and-providers.md#provider-names) (Provider Names) |
 | `--thinking <enabled\|adaptive\|disabled>` | [Models and Providers](../configure/models-and-providers.md#thinking) (Thinking) |
 | `--thinking-display <summarized\|omitted\|highlights>` | [Models and Providers](../configure/models-and-providers.md#thinking) (Thinking) |
 | `--max-thinking-tokens` | [Models and Providers](../configure/models-and-providers.md#thinking) (Thinking) |
@@ -550,12 +537,6 @@ Count: 110.
 | `CLAUDE_CODE_USE_GATEWAY` | [Models and Providers](../configure/models-and-providers.md#providers) (Providers) |
 | `ANTHROPIC_GOOGLE_CLOUD_BASE_URL`, `_LOCATION`, `_PROJECT`, `_WORKSPACE_ID` | [Models and Providers](../configure/models-and-providers.md#endpoint-and-region-variables) (Endpoint and Region Variables) |
 | `CLAUDE_CODE_SKIP_ANTHROPIC_GOOGLE_CLOUD_AUTH` | [Models and Providers](../configure/models-and-providers.md#endpoint-and-region-variables) (Endpoint and Region Variables) |
-| `claude-3-5-haiku` | [Models and Providers](../configure/models-and-providers.md#provider-names) (Provider Names) |
-| `claude-3-5-sonnet` | [Models and Providers](../configure/models-and-providers.md#provider-names) (Provider Names) |
-| `claude-3-7-sonnet` | [Models and Providers](../configure/models-and-providers.md#provider-names) (Provider Names) |
-| `claude-sonnet-4-0` | [Models and Providers](../configure/models-and-providers.md#provider-names) (Provider Names) |
-| `claude-opus-4-0` | [Models and Providers](../configure/models-and-providers.md#provider-names) (Provider Names) |
-| `claude-mythos-5-1` | [Models and Providers](../configure/models-and-providers.md#provider-names) (Provider Names) |
 | Custom style over Remote Control | [Output Styles](../configure/output-styles.md#the-outputstyle-setting-and-switching) (The outputStyle Setting and Switching) |
 | `outputStylesPath`, `outputStylesPaths` | [Output Styles](../configure/output-styles.md#locations-and-precedence) (Locations and Precedence) |
 | Merge order | [Output Styles](../configure/output-styles.md#locations-and-precedence) (Locations and Precedence) |
@@ -597,31 +578,27 @@ Count: 110.
 | Precomputed | [Context and Compaction](../how-it-works/context-and-compaction.md#kinds-of-compaction) (Kinds of Compaction) |
 | Larger-model retry | [Context and Compaction](../how-it-works/context-and-compaction.md#kinds-of-compaction) (Kinds of Compaction) |
 | Server side | [Context and Compaction](../how-it-works/context-and-compaction.md#kinds-of-compaction) (Kinds of Compaction) |
-| `--include-unsupported-models` | [Models](../how-it-works/models.md#choosing-the-model) (Choosing the Model) |
-| `per-turn-control-2026-07-01` | [Models](../how-it-works/models.md#effort) (Effort) |
-| `--thinking <enabled\|adaptive\|disabled>` | [Models](../how-it-works/models.md#thinking) (Thinking) |
-| `--thinking-display <summarized\|omitted\|highlights>` | [Models](../how-it-works/models.md#thinking) (Thinking) |
-| `--max-thinking-tokens` | [Models](../how-it-works/models.md#thinking) (Thinking) |
-| `context_management` | [Models](../how-it-works/models.md#capabilities) (Capabilities) |
-| `effort` | [Models](../how-it-works/models.md#capabilities) (Capabilities) |
-| `max_effort` | [Models](../how-it-works/models.md#capabilities) (Capabilities) |
-| `xhigh_effort` | [Models](../how-it-works/models.md#capabilities) (Capabilities) |
-| `adaptive_thinking` | [Models](../how-it-works/models.md#capabilities) (Capabilities) |
-| `mid_conv_tool_change` | [Models](../how-it-works/models.md#capabilities) (Capabilities) |
-| `rejects_disabled_thinking` | [Models](../how-it-works/models.md#capabilities) (Capabilities) |
-| `per_turn_effort` | [Models](../how-it-works/models.md#capabilities) (Capabilities) |
-| `per_turn_timing` | [Models](../how-it-works/models.md#capabilities) (Capabilities) |
-| `lean_prompt` | [Models](../how-it-works/models.md#capabilities) (Capabilities) |
-| `org_locked_thinking` | [Models](../how-it-works/models.md#capabilities) (Capabilities) |
-| `haiku_5_5_early_stopping_guidance` | [Models](../how-it-works/models.md#capabilities) (Capabilities) |
-| `refusal_fallback` | [Models](../how-it-works/models.md#capabilities) (Capabilities) |
-| `silent_turn_reminder` | [Models](../how-it-works/models.md#capabilities) (Capabilities) |
-| `fast_mode` | [Models](../how-it-works/models.md#capabilities) (Capabilities) |
-| `thinking_disabled_effort_cap` | [Models](../how-it-works/models.md#capabilities) (Capabilities) |
-| `opus_5_prompt_bundle` | [Models](../how-it-works/models.md#capabilities) (Capabilities) |
-| `opus_5_5_prompt_bundle` | [Models](../how-it-works/models.md#capabilities) (Capabilities) |
-| `fable_5_mitigations` | [Models](../how-it-works/models.md#capabilities) (Capabilities) |
-| `fable_5_1_prompt_bundle` | [Models](../how-it-works/models.md#capabilities) (Capabilities) |
+| `--thinking <enabled\|adaptive\|disabled>` | [Models and Providers](../configure/models-and-providers.md#thinking) (Thinking) |
+| `--thinking-display <summarized\|omitted\|highlights>` | [Models and Providers](../configure/models-and-providers.md#thinking) (Thinking) |
+| `effort` | [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
+| `max_effort` | [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
+| `xhigh_effort` | [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
+| `adaptive_thinking` | [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
+| `mid_conv_tool_change` | [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
+| `rejects_disabled_thinking` | [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
+| `per_turn_effort` | [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
+| `per_turn_timing` | [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
+| `lean_prompt` | [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
+| `org_locked_thinking` | [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
+| `haiku_5_5_early_stopping_guidance` | [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
+| `refusal_fallback` | [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
+| `silent_turn_reminder` | [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
+| `fast_mode` | [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
+| `thinking_disabled_effort_cap` | [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
+| `opus_5_prompt_bundle` | [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
+| `opus_5_5_prompt_bundle` | [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
+| `fable_5_mitigations` | [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
+| `fable_5_1_prompt_bundle` | [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
 | `safeguards` | [Request and Cache](../how-it-works/request-and-cache.md#body-fields) (Body Fields) |
 | `system[0]` (attribution line) | [Request and Cache](../how-it-works/request-and-cache.md#system-blocks-and-cache-markers) (System Blocks and Cache Markers) |
 | `system[1]` (identity line) | [Request and Cache](../how-it-works/request-and-cache.md#system-blocks-and-cache-markers) (System Blocks and Cache Markers) |
@@ -638,7 +615,6 @@ Count: 110.
 | `CLAUDE_CODE_LARCH_CISTERN` | [Probes](probes.md#effects-and-differences) (Effects and Differences) |
 | `CLAUDE_CODE_PLUGIN_DIRS` | [Probes](probes.md#effects-and-differences) (Effects and Differences) |
 | `CLAUDE_CODE_SIMULATE_PROXY_USAGE` | [Probes](probes.md#effects-and-differences) (Effects and Differences) |
-| `CLAUDE_CODE_SKIP_PLUGIN_MCP_SERVERS` | [Probes](probes.md#effects-and-differences) (Effects and Differences) |
 | `CLAUDE_CODE_SYNC_PLUGIN_INSTALL` | [Probes](probes.md#effects-and-differences) (Effects and Differences) |
 | `CLAUDE_CODE_USE_COWORK_PLUGINS` | [Probes](probes.md#effects-and-differences) (Effects and Differences) |
 

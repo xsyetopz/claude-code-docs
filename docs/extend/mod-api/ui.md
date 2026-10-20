@@ -15,11 +15,11 @@ In a "Where it can be used" cell, "Run time" means in a hook, in a closure that 
 ## Example
 
 ```javascript
-on('session.start', async ($, e, next) => {
-  $.ui.status('Mod ready')
-  $.ui.toast('Hello from a mod', { timeoutMs: 2000 })
-  return next(e)
-})
+on("session.start", async ($, e, next) => {
+  $.ui.status("Mod ready");
+  $.ui.toast("Hello from a mod", { timeoutMs: 2000 });
+  return next(e);
+});
 ```
 
 ## Members

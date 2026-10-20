@@ -14,7 +14,7 @@ Use them when you write a mod hook for an event such as `classic.Stop`.
 This hook on `classic.Stop` passes the event on without a change. Its `e` is the same data a `Stop` settings hook reads on `stdin`.
 
 ```ts
-on("classic.Stop", ($, e, next) => next(e))
+on("classic.Stop", ($, e, next) => next(e));
 ```
 
 ## How It Works

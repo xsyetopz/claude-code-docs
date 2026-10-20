@@ -17,18 +17,18 @@ Where to Set It tells you which files may set the key. See [Settings Files and S
 
 | Key | Status | Type | Default | What It Does | Where to Set It |
 | --- | --- | --- | --- | --- | --- |
-| 🔒 `allowAllClaudeAiMcps` | <Documented /> | boolean | - | Load the claude.ai connectors Claude Code fetches itself alongside a deployed `managed-mcp.json`. | Managed settings only |
-| 🔒 `allowClaudeInChromeWithManagedMcp` | <Documented /> | boolean | - | Let the built-in Claude in Chrome server run alongside a deployed `managed-mcp.json`. | Managed settings only |
-| `allowedChannelPlugins` | <Documented /> | array | - | Replace the default allowlist of channel plugins that can push messages. | Managed settings only |
-| `allowedMcpServers` | <Documented /> | array | - | Allowlist which MCP servers users can add. | Any settings file |
-| 🔒 `allowManagedMcpServersOnly` | <Documented /> | boolean | - | Make the managed MCP allowlist the only one that applies. | Managed settings only |
-| `channelsEnabled` | <Documented /> | boolean | - | Allow channels for your organization. | Managed settings only |
-| `deniedMcpServers` | <Documented /> | array | - | Block specific MCP servers by URL, command, or name. | Any settings file |
-| `disableClaudeAiConnectors` | <Documented /> | boolean | - | Turn off claude.ai connectors so Claude Code doesn't fetch them. | Any settings file |
-| `disabledMcpjsonServers` | <Documented /> | array of string | - | Reject specific servers from a project's `.mcp.json`. | Any settings file |
-| `enableAllProjectMcpServers` | <Documented /> | boolean | - | Approve every server in project `.mcp.json` files without a prompt. | Any settings file |
-| `enabledMcpjsonServers` | <Documented /> | array of string | - | Approve specific servers from a project's `.mcp.json`. | Any settings file |
-| `managedMcpServers` | <Documented /> | object | - | Provide remote MCP servers to every user alongside the ones they add. | Managed settings only |
+| `allowAllClaudeAiMcps` | <Documented /> <ManagedOnly /> | boolean | - | Load the claude.ai connectors Claude Code fetches itself alongside a deployed `managed-mcp.json`. Off by default, which keeps the lockdown. | Managed settings only |
+| `allowClaudeInChromeWithManagedMcp` | <Documented /> <ManagedOnly /> | boolean | - | Let the built-in Claude in Chrome server run alongside a deployed `managed-mcp.json`. Device managed settings only. `deniedMcpServers` and the organization Chrome setting still block it. | Managed settings only |
+| `allowedChannelPlugins` | <Documented /> | array | - | Replace the default allowlist of channel plugins that can push messages. Needs `channelsEnabled: true`. | Managed settings only |
+| `allowedMcpServers` | <Documented /> | array | - | Allowlist which MCP servers users can add. Each entry has exactly one of `serverName`, `serverCommand` (an exact array), or `serverUrl` (a wildcard pattern such as `https://*.example.com/*`). Not set means allow all. | Any settings file |
+| `allowManagedMcpServersOnly` | <Documented /> <ManagedOnly /> | boolean | - | Make the managed MCP allowlist the only one that applies. `deniedMcpServers` still merges from all sources. Users can still add servers, but only the admin allowlist applies. | Managed settings only |
+| `channelsEnabled` | <Documented /> | boolean | - | Allow channels for your organization. On Teams and Enterprise it is off by default. On Console it is on by default unless managed settings exist. | Managed settings only |
+| `deniedMcpServers` | <Documented /> | array | - | Block specific MCP servers by URL, command, or name. Entries have the same shapes. It applies in all scopes, also for the organization. | Any settings file |
+| `disableClaudeAiConnectors` | <Documented /> | boolean | - | Turn off claude.ai connectors so Claude Code doesn't fetch them. `true` in any source wins. It also stops a `claudeai-proxy` server from `--mcp-config`. | Any settings file |
+| `disabledMcpjsonServers` | <Documented /> | array of string | - | Reject specific servers from a project's `.mcp.json`. It blocks in every permission mode and every folder. | Any settings file |
+| `enableAllProjectMcpServers` | <Documented /> | boolean | - | Approve every server in project `.mcp.json` files without a prompt. Ignored in an untrusted folder when it comes from the checked-in `.claude/settings.json`. | Any settings file |
+| `enabledMcpjsonServers` | <Documented /> | array of string | - | Approve specific servers from a project's `.mcp.json`. The same trust rule applies. | Any settings file |
+| `managedMcpServers` | <Documented /> | object | - | Provide remote MCP servers to every user alongside the ones they add. Only `http` and `sse` servers, keyed by name. No `command`, `args`, `env`, or `headersHelper`, no `${VAR}`, and the URL must start with `https://`. Users cannot remove them. `deniedMcpServers` still applies. | Managed settings only |
 
 ## Example
 

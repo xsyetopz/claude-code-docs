@@ -9,16 +9,6 @@ The request holds the tool list, the system prompt, and the whole conversation s
 The API can reuse the start of a request it has seen before. That reuse is the prompt cache.
 What you change in the request decides what the cache can reuse, so it decides speed and cost.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. Every model call uses it. |
-| Can you change it? | ✅ Yes. Change the cache lifetime, add body fields, or turn caching off. |
-| Can you turn it on or off? | `DISABLE_PROMPT_CACHING`, and the per-family variants. |
-| Where does it live? | Built in memory for each call. A record is saved in the transcript as `api-request` lines. |
-| Status | <Documented /> <Undocumented /> |
-
 ## Parts of a Request
 
 The API reads the parts in this order: tools, then system, then messages.

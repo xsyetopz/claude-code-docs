@@ -13,23 +13,16 @@ Most keys also work in your own settings. They live in settings files, `~/.claud
 ## Settings Keys
 
 Source: [Connect Claude Code to Tools via MCP](https://code.claude.com/docs/en/mcp), [Control MCP Server Access for Your Organization](https://code.claude.com/docs/en/managed-mcp), [Settings Reference](https://code.claude.com/docs/en/settings-reference), and [Channels Reference](https://code.claude.com/docs/en/channels-reference).
-The keys with their types are also on [MCP and Channels Settings](../../configure/settings/mcp-and-channels.md).
 
-| Key | Status | What It Does | How It Works | Where |
-| --- | --- | --- | --- | --- |
-| `enableAllProjectMcpServers` | <Documented /> | Approves all `.mcp.json` servers. | Boolean. Ignored in an untrusted folder when it comes from the checked-in `.claude/settings.json`. | Settings files |
-| `enabledMcpjsonServers` | <Documented /> | Lists approved `.mcp.json` servers. | Array of names. Same trust rule. | Settings files |
-| `disabledMcpjsonServers` | <Documented /> | Lists rejected `.mcp.json` servers. | Array of names. It blocks in every permission mode and every folder. | Settings files |
-| `managedMcpServers` | <Documented /> | Gives servers to every user. | Object keyed by name. Only `http` and `sse`. No `command`, `args`, `env`, or `headersHelper`, no `${VAR}`, and the URL must start with `https://`. Users cannot remove them. `deniedMcpServers` still applies. | Managed only |
-| `allowedMcpServers` | <Documented /> | Allowlist of servers users may use. | Array of entries. Each entry has exactly one of `serverName`, `serverCommand` (an exact array), or `serverUrl` (a wildcard pattern such as `https://*.example.com/*`). Not set means allow all. | Settings, mainly managed |
-| `deniedMcpServers` | <Documented /> | Denylist of servers. | Same entry shapes. It applies in all scopes, also for the organization. | Settings, mainly managed |
-| `allowManagedMcpServersOnly` | <Documented /> | Reads the allowlist from managed settings only. | `deniedMcpServers` still merges from all sources. Users can still add servers, but only the admin allowlist applies. | Managed only |
-| `allowAllClaudeAiMcps` | <Documented /> | Lets connectors load beside `managed-mcp.json`. | Off by default, which keeps the lockdown. | Managed only |
-| `allowClaudeInChromeWithManagedMcp` | <Documented /> | Lets Claude in Chrome run beside `managed-mcp.json`. | Device managed settings only. `deniedMcpServers` and the organization Chrome setting still block it. | Device managed |
-| `disableClaudeAiConnectors` | <Documented /> | Turns off the connectors Claude Code fetches. | `true` in any source wins. It also stops a `claudeai-proxy` server from `--mcp-config`. | Any scope |
-| `channelsEnabled` | <Documented /> | Organization opt-in for channel notifications. | Teams and Enterprise: off by default. Console: on by default unless managed settings exist. | Managed |
-| `allowedChannelPlugins` | <Documented /> | Organization allowlist of channel plugins. | Replaces the default allowlist. Needs `channelsEnabled: true`. | Managed |
-| `xaaIdp` | <Undocumented /> | Stores the IdP connection for XAA. | Object `{ issuer, clientId, callbackPort? }`. Written by `claude mcp xaa setup`. See [MCP Authentication](auth.md#xaa). | User settings |
+These keys sit in the settings files. Each key has one row, with its type, what it does, and where to set it, on [MCP and Channels Settings](../../configure/settings/mcp-and-channels.md#keys).
+
+- Approve or reject servers from a project `.mcp.json`: [`enableAllProjectMcpServers`](../../configure/settings/mcp-and-channels.md#keys), [`enabledMcpjsonServers`](../../configure/settings/mcp-and-channels.md#keys), and [`disabledMcpjsonServers`](../../configure/settings/mcp-and-channels.md#keys).
+- Allow or block servers for users: [`allowedMcpServers`](../../configure/settings/mcp-and-channels.md#keys), [`deniedMcpServers`](../../configure/settings/mcp-and-channels.md#keys), and [`allowManagedMcpServersOnly`](../../configure/settings/mcp-and-channels.md#keys).
+- Give servers to every user: [`managedMcpServers`](../../configure/settings/mcp-and-channels.md#keys).
+- Let connectors and Claude in Chrome run beside `managed-mcp.json`: [`allowAllClaudeAiMcps`](../../configure/settings/mcp-and-channels.md#keys) and [`allowClaudeInChromeWithManagedMcp`](../../configure/settings/mcp-and-channels.md#keys).
+- Turn off the connectors Claude Code fetches: [`disableClaudeAiConnectors`](../../configure/settings/mcp-and-channels.md#keys).
+- Allow channels: [`channelsEnabled`](../../configure/settings/mcp-and-channels.md#keys) and [`allowedChannelPlugins`](../../configure/settings/mcp-and-channels.md#keys).
+- Store the IdP connection for XAA: [`xaaIdp`](../../configure/settings/auth.md#keys) <Undocumented />. `claude mcp xaa setup` writes it. See [MCP Authentication](auth.md#xaa).
 
 ## State Keys in `~/.claude.json`
 
@@ -52,7 +45,7 @@ These keys sit under `projects["<path>"]`.
 | `--strict-mcp-config` | <Documented /> | Uses only the `--mcp-config` servers. | Skips the approval prompt for project servers it does not load (`2.1.246` and later). |
 | `--plugin-dir-no-mcp <path>` | <Undocumented /> | Loads an inline plugin without its MCP servers. | Hidden flag. The SDK form is `skipMcpDiscovery`. |
 | `--channels <servers...>` | <Documented /> | Registers channel notifications of the listed servers. | Hidden flag. Space-separated names. See [MCP Runtime](runtime.md#elicitation-and-channels). |
-| ⚠️ `--dangerously-load-development-channels <servers...>` | <Documented /> | Loads channel servers that are not on the allowlist. | Hidden flag for local channel development. Shows a confirmation dialog. |
+| `--dangerously-load-development-channels <servers...>` | <Documented /> <Caution /> | Loads channel servers that are not on the allowlist. | Hidden flag for local channel development. Shows a confirmation dialog. |
 | `--setting-sources` | <Documented /> | Excludes project settings. | Keeps a project `.mcp.json` out. |
 
 ## Approval Rules
@@ -71,9 +64,7 @@ These keys sit under `projects["<path>"]`.
     { "serverName": "github" },
     { "serverUrl": "https://*.example.com/*" }
   ],
-  "deniedMcpServers": [
-    { "serverCommand": ["bunx", "untrusted-server"] }
-  ],
+  "deniedMcpServers": [{ "serverCommand": ["bunx", "untrusted-server"] }],
   "disableClaudeAiConnectors": true
 }
 ```

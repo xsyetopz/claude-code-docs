@@ -33,33 +33,34 @@ Treat <Undocumented /> items with care.
 They work today, but nobody promises they will work in the next release.
 :::
 
+## Status Labels
+
+Four more labels can follow the badges in the `Status` column.
+Each has one meaning. A label adds a fact that the provenance badges above do not carry. It never replaces a badge.
+
+| Label | What it means |
+| --- | --- |
+| <ManagedOnly /> | The setting works only in managed (organization policy) settings. The source is the `x-managed-only` flag in the managed settings schema. |
+| <Experimental /> | The program or the official docs call it experimental or beta. |
+| <Deprecated note="Example: use the new name" /> | It is deprecated. Hover over the label to see what replaces it, when the row names one. |
+| <Caution note="Example: deletes data" /> | It has a side effect to notice: it deletes data, skips a safety check or permission, or sends data off your machine. |
+
+The name cell holds only the item name. The label is plain text, so a screen reader reads it with the other badges.
+
 ## Marks in Tables
 
-A table cell that answers a question uses one of three marks.
+A table cell that answers a question uses a mark or a word.
 
 | Mark | What it means |
 | --- | --- |
 | ✅ | Yes. |
 | ❌ | No. |
-| ❓ | Unknown. Neither the official docs nor the program say. |
+| Unknown | Neither the official docs nor the program say. |
 
 Text can follow a mark, such as "✅ Yes. Type `/` to see the list."
 A star after a mark, such as ✅\*, points to a note under the table that starts with the same star.
+In a table cell, a screen reader says "Yes" or "No" for a mark that stands alone.
 The marks never replace the words in a heading or a link.
-
-## Markers Before a Name
-
-Four more marks can stand before an item name in a table cell, or at the start of a note.
-Each has one meaning. A mark adds a fact that the badges above do not carry. It never replaces a badge.
-
-| Mark | What it means |
-| --- | --- |
-| 🔒 | Managed only. The setting works only in managed (organization policy) settings. The source is the `x-managed-only` flag in the managed settings schema. |
-| 🧪 | Experimental. The program or the official docs call it experimental or beta. |
-| ⛔ | Deprecated. The row names what replaces it. |
-| ⚠️ | Caution. It has a side effect to notice: it deletes data, skips a safety check or permission, or sends data off your machine. |
-
-A screen reader reads the picture name, such as "locked" or "warning". The row text always says the same thing in words, so nothing depends on the picture.
 
 ## At a Glance
 

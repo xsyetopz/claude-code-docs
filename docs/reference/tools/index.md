@@ -53,7 +53,7 @@ Source: the program (the tool definitions).
 | `strict` | true for `Write`, `Edit`, `Read`, `Grep`, `Bash`, `PowerShell`, `TodoWrite`, `ReportFindings` | The tool schema is strict. |
 | MCP tool name | `mcp__<server>__<tool>` | How a tool from an MCP server is named. See [MCP](../../extend/mcp/index.md). |
 
-## ToolSearch
+## `ToolSearch`
 
 `ToolSearch` loads the full schema of a deferred tool, so that Claude can call it.
 For example, the query `select:Read,Edit,Grep` fetches those three tools by name.

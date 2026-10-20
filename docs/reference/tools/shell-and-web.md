@@ -23,9 +23,9 @@ Source: [Tools Reference](https://code.claude.com/docs/en/tools-reference), [Con
 | `WebFetch` | <Documented /> <Gated note="CLAUDE_CODE_DISABLE_WEB_FETCH=1 turns it off" /> | Fetches a URL and applies a prompt to the page text. | `url` (URL string, required), `prompt` (string, required), `offset` (int, 0 or more, optional, character offset for a long page). The off switch needs `2.1.285` or later. | Main session and subagents. Kept in background subagents. | ✅ | ✅ | ✅ |
 | `WebSearch` | <Documented /> <Gated note="off for the gateway provider; Vertex depends on the model" /> | Searches the web. | `query` (string, at least 2 characters, required), `allowed_domains` (string array, optional), `blocked_domains` (string array, optional). | Main session and subagents. Kept in background subagents. | ✅ | ✅ | ✅ |
 | `TaskStop` | <Documented /> | Stops a running background task. | `task_id` (string, optional; also takes a teammate or named background agent by ID or name), `shell_id` (string, optional, deprecated). | Main session and subagents. Kept in background subagents. | ❌ | ✅ | ✅ |
-| `GetTask` | <Undocumented /> <Gated note="hidden server-side flag" /> | Checks a background shell command by task ID. | `taskId` (string, required). | ❓ | ✅ | ✅ | ❌ |
+| `GetTask` | <Undocumented /> <Gated note="hidden server-side flag" /> | Checks a background shell command by task ID. | `taskId` (string, required). | Unknown | ✅ | ✅ | ❌ |
 
-## Bash Parameters
+## `Bash` Parameters
 
 | Parameter | What It Does | Required |
 | --- | --- | --- |
@@ -40,7 +40,7 @@ Source: [Tools Reference](https://code.claude.com/docs/en/tools-reference), [Con
 `PowerShell` takes the same parameters, except that it has no `allowed_domains` unless the network lists are on.
 Source: the program (the `Bash` input schema).
 
-## Monitor Parameters
+## `Monitor` Parameters
 
 | Parameter | What It Does | Required |
 | --- | --- | --- |

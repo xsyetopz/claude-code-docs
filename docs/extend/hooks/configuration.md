@@ -138,13 +138,13 @@ A failure means the hook could not start, timed out, exited with a code other th
 | Item | Status | What it does | Notes |
 | --- | --- | --- | --- |
 | `hooks` | <Documented /> | The event map. | Merges across levels. |
-| `disableAllHooks` | <Differs note="The schema also says it stops the statusLine command. The Hooks Reference names only hooks." /> | Turns hooks off. | Managed hooks stay unless you set it in managed settings. Also works with `--settings`. |
-| `allowManagedHooksOnly` | <Documented /> | Only managed hooks and hooks of managed-enabled plugins run. | Also narrows `statusLine`, `fileSuggestion`, and `subagentStatusLine`. Managed settings only. |
 | `allowedHttpHookUrls` | <Documented /> | A URL allowlist for `http` hooks. | `*` is a wildcard. An empty array blocks all. Arrays merge across levels. |
 | `httpHookAllowedEnvVars` | <Documented /> | A name allowlist for header values. | Intersected with each hook's `allowedEnvVars`. Arrays merge. |
 | Workspace trust | <Documented /> | Settings hooks wait for the trust dialog. | `-p` and SDK sessions treat the folder as trusted. Hooks of project subagents need the dialog. |
 | `/hooks` menu | <Documented /> | A read-only browser of your hooks. | Shows where each one comes from. |
 | Debug output | <Documented /> | `claude --debug-file <path>` writes hook activity. | `CLAUDE_CODE_DEBUG_LOG_LEVEL=verbose` adds matcher lines. |
+
+The keys `disableAllHooks` and `allowManagedHooksOnly` turn hooks off or limit them to managed ones. Their rows are on [Hooks, Plugins, and Skills Settings](../../configure/settings/hooks-and-plugins.md#keys).
 
 ## Related Pages
 

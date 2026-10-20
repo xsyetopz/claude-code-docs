@@ -43,7 +43,7 @@ Source: the text of `claude <command> --help` in `2.1.304`.
 | `claude mcp ...` | <Documented /> | Manages MCP servers (see [MCP](../../extend/mcp/cli.md)). |
 | `claude plugin ...` (alias `plugins`) | <Documented /> | Manages plugins (see [Plugins](../../extend/plugins/cli.md)). |
 | `claude plugin test [dir]` | <Documented /> | Runs the tests of a mod. |
-| ⚠️ `claude purge [path]` | <Documented /> | Deletes the state of a project, with `--all`, `--dry-run`, `-i`, and `-y`. |
+| `claude purge [path]` | <Documented /> <Caution note="Deletes the state of a project" /> | Deletes the state of a project, with `--all`, `--dry-run`, `-i`, and `-y`. |
 | `claude remote-control` (alias `rc`) | <Documented /> | Lets you control local sessions from `claude.ai` or the mobile app. |
 | `claude ultrareview [target]` | <Documented /> | Starts a cloud review with many agents, with `--json`, `--post`, and `--timeout`. |
 | `claude self-hosted-runner` | <Documented /> | Runs cloud sessions on your machine, and the root help does not list it. |

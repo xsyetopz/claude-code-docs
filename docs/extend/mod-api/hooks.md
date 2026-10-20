@@ -18,9 +18,11 @@ Official pages: [React to Events](https://code.claude.com/docs/en/plugins/mods/e
 This mod refuses every Bash command that contains `rm -rf`.
 
 ```javascript title="hooks/register.js"
-export function register(on) {
-  on('tool.call', { tool: 'Bash', command: /rm -rf/ }, async () => ({ deny: 'No rm -rf here.' }))
-}
+export const register = (on) => {
+  on("tool.call", { tool: "Bash", command: /rm -rf/ }, async () => ({
+    deny: "No rm -rf here.",
+  }));
+};
 ```
 
 ## Entry Point and Registration
@@ -88,14 +90,10 @@ The type file gives this advice at each event where an answer can refuse.
 | Item | Status | What it does | How it works | Where it can be used |
 | --- | --- | --- | --- | --- |
 | Hook time per event | <Documented /> | 10 seconds of the hook's own code. | The clock stops during `next` and `$` calls, but a `$.clock.sleep` counts. `HookBudget.ms` is 10000. A streaming hook counts its own code only, never a `yield` or a read beneath. | Every hook. |
-| `prompt.edit` hook time | <Documented /> | The docs say 50 milliseconds. | `HookBudget` has one `ms` value. We could not find the 50 millisecond value in the type file. | `prompt.edit` hooks. |
+| `prompt.edit` hook time | <Documented /> | 50 milliseconds. | `HookBudget` has one `ms` value. The 50 millisecond value is set on the event in the program (`budgetMs`) and replaces the 10 second default. If a hook fails, the editor's own edit stands. | `prompt.edit` hooks. |
 | `.catch` grace | <Documented /> | 1 second. | `HookBudget.catchMs` is 1000. The handler gets a fresh budget. | `.catch` handlers. |
 | Linger after abort | <Documented /> | 5 seconds. | `HookBudget.lingerMs` is 5000. Past it the hook is reported as lingering. The dispatch had gone on without it. | Every hook. |
 | `session.end` hooks together | <Documented /> | The `SessionEnd` hook budget, 1.5 seconds by default. | The whole chain shares one short wall-clock bound that `next.budget` reads. | `session.end` hooks. |
-
-:::note[Not Verified]
-The docs set the `prompt.edit` limit of 50 milliseconds. We did not check it in the program.
-:::
 
 ## Related Pages
 

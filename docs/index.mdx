@@ -63,17 +63,18 @@ When the conversation gets too long, it asks the model for a short summary and g
 
 | Section | What you find there | Start with |
 | --- | --- | --- |
-| Start Here | How to read the badges, a map of what you can change, the files Claude Code keeps, and breaking changes per release. | [How to Read These Docs](start/how-to-read.md) and [What Changed](start/what-changed.md) |
-| How It Works | The harness in depth: architecture, the agent loop, requests and cache, the system prompt, compaction, sessions, models, and permissions. | [Architecture](how-it-works/architecture.md) |
-| Configure | Settings keys, environment variables, command line flags, permissions, memory, output styles, the status line, and models and providers. | [Models and Providers](configure/models-and-providers.md) |
-| Extend | Hooks, skills and commands, subagents, plugins, MCP servers, the Mod API, and headless mode. | Hooks and Plugins |
-| Reference | Every tool and parameter, API endpoints and betas, the transcript format, probes, and an index of undocumented items. | [Transcript Format](reference/transcript-format.md) and [Undocumented Items](reference/undocumented.md) |
-| System Prompts | The full text of each system prompt variant, captured offline, with sizes and diffs. | [Captured System Prompts](prompts/index.md) |
+| [Start Here](/start) | How to read the badges, a map of what you can change, the files Claude Code keeps, and breaking changes per release. | [How to Read These Docs](start/how-to-read.md) and [What Changed](start/what-changed.md) |
+| [How It Works](/how-it-works) | The harness in depth: architecture, the agent loop, requests and cache, the system prompt, compaction, sessions, models, and permissions. | [Architecture](how-it-works/architecture.md) |
+| [Configure](/configure) | Settings keys, environment variables, command line flags, permissions, memory, output styles, the status line, and models and providers. | [Models and Providers](configure/models-and-providers.md) |
+| [Extend](/extend) | Hooks, skills and commands, subagents, plugins, MCP servers, the Mod API, and headless mode. | [Hooks](extend/hooks/index.md) and [Plugins](extend/plugins/index.md) |
+| [Reference](/reference) | Every tool and parameter, API endpoints and betas, the transcript format, probes, and an index of undocumented items. | [Transcript Format](reference/transcript-format.md) and [Undocumented Items](reference/undocumented.md) |
+| [System Prompts](prompts/index.md) | The full text of each system prompt variant, captured offline, with sizes and diffs. | [Captured System Prompts](prompts/index.md) |
 
 ## Where to Go Next
 
 - To change how Claude Code behaves, begin with [Models and Providers](configure/models-and-providers.md) and the Settings pages.
 - To write a hook or a plugin, read [The Agent Loop](how-it-works/agent-loop.md) first. It shows where each hook event fires.
 - To understand cost and speed, read [Request and Cache](how-it-works/request-and-cache.md).
+- To see what an empty session holds and how to shrink it, read [Context Budget](how-it-works/context-budget.md).
 - To see exactly what the model reads, open [Captured System Prompts](prompts/index.md).
 - To help improve this site, read the [Style Guide](contributing/style-guide.md).

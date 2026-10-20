@@ -24,11 +24,11 @@ Source: [Tools Reference](https://code.claude.com/docs/en/tools-reference), [Con
 | `Glob` | <Documented /> | Finds files by glob pattern. | `pattern` (string, required), `path` (string, optional, directory), `machine` (optional). | Main session and subagents. The docs say a subagent can get `Glob` and `Grep` when the main session lacks them (macOS, Linux, WSL). | ✅ | ✅ | ❌ |
 | `Grep` | <Documented /> | Searches file contents with ripgrep. | See [Grep Parameters](#grep-parameters). | Same as `Glob`. | ✅ | ✅ | ❌ |
 | `LSP` | <Documented /> | Code intelligence: definitions, references, symbols, hover, call hierarchy. | `operation`, `filePath` (required), `line` (int, 1 or more, required), `character` (int, 1 or more, required), `query` (optional, `workspaceSymbol` only). | Main session and subagents. Background subagents keep it since `2.1.280`. | ✅ | ✅ | ✅ |
-| `memory_read` | <Undocumented /> <Gated note="hidden server-side flag" /> | Reads a document from a memory store. | `store` (string, required), `path` (string, required). | ❓ | ✅ | ✅ | ❌ |
-| `memory_write` | <Undocumented /> <Gated note="hidden server-side flag" /> | Saves a document to a memory store. | `store`, `path`, `content` (all strings, required; `content` replaces the whole document), `if_version` (string, max 64, version token for compare-and-set). | ❓ | ❌ | ❌ | ❌ |
-| `memory_list` | <Undocumented /> <Gated note="hidden server-side flag" /> | Lists memory stores and their documents. | `store` (optional), `path_prefix` (optional, directory-aligned), `cursor` (optional). | ❓ | ✅ | ✅ | ❌ |
+| `memory_read` | <Undocumented /> <Gated note="hidden server-side flag" /> | Reads a document from a memory store. | `store` (string, required), `path` (string, required). | Unknown | ✅ | ✅ | ❌ |
+| `memory_write` | <Undocumented /> <Gated note="hidden server-side flag" /> | Saves a document to a memory store. | `store`, `path`, `content` (all strings, required; `content` replaces the whole document), `if_version` (string, max 64, version token for compare-and-set). | Unknown | ❌ | ❌ | ❌ |
+| `memory_list` | <Undocumented /> <Gated note="hidden server-side flag" /> | Lists memory stores and their documents. | `store` (optional), `path_prefix` (optional, directory-aligned), `cursor` (optional). | Unknown | ✅ | ✅ | ❌ |
 
-## Read Parameters
+## `Read` Parameters
 
 | Parameter | What It Does | Required |
 | --- | --- | --- |
@@ -39,7 +39,7 @@ Source: [Tools Reference](https://code.claude.com/docs/en/tools-reference), [Con
 | `allow_large` | Reads a file or range over the usual size limits, as far as the context allows. | ❌ |
 | `machine` | Name of an attached machine. Offered only when machines are attached. | ❌ |
 
-## NotebookEdit Parameters
+## `NotebookEdit` Parameters
 
 | Parameter | What It Does | Required |
 | --- | --- | --- |
@@ -49,7 +49,7 @@ Source: [Tools Reference](https://code.claude.com/docs/en/tools-reference), [Con
 | `cell_type` | `code` or `markdown`. Required for `insert`. | ❌ |
 | `edit_mode` | `replace` (default), `insert`, or `delete`. | ❌ |
 
-## Grep Parameters
+## `Grep` Parameters
 
 | Parameter | What It Does | Required |
 | --- | --- | --- |

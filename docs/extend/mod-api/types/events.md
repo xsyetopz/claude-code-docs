@@ -17,18 +17,18 @@ Source: the program (`types-2.1.304.d.ts`). Official page: [Mods Reference](http
 These aliases give the input and the result of one event by its name.
 
 ```ts
-import type { EventName, EventOf, EventResult } from 'claude-code'
+import type { EventName, EventOf, EventResult } from "claude-code";
 
-type ReadInput = EventOf['fs.read']
-type ReadResult = EventResult<'fs.read'>
+type ReadInput = EventOf["fs.read"];
+type ReadResult = EventResult<"fs.read">;
 ```
 
 To add your own noun, merge into `EngineInterface`:
 
 ```ts title="types.d.ts"
-declare module 'claude-code' {
+declare module "claude-code" {
   interface EngineInterface {
-    voice: { say(text: string): Promise<void> }
+    voice: { say(text: string): Promise<void> };
   }
 }
 ```

@@ -9,16 +9,6 @@ It tells the model how to behave and what the session looks like.
 You can add to it, replace it, or switch to a shorter version.
 This page explains how the prompt is built. The exact captured texts are on the [Captured System Prompts](../prompts/index.md) page.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. It is sent on every request. |
-| Can you change it? | ✅ Yes. Add text, replace it, pick the short or full version, or rewrite sections with a mod. |
-| Can you turn it on or off? | You can replace it (`--system-prompt`), shrink it (`--bare`), or choose the version (`CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT`). |
-| Where does it live? | Built in memory for each session. Output styles and flags change it. |
-| Status | <Documented /> <Undocumented /> |
-
 ## Ways to Change It
 
 Sources: [CLI Reference](https://code.claude.com/docs/en/cli-reference), [Output Styles](https://code.claude.com/docs/en/output-styles), and [Environment Variables](https://code.claude.com/docs/en/env-vars).
@@ -93,8 +83,28 @@ flowchart TD
 | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=0` | The full prompt. This is the only way to get it on these models. | <Documented /> |
 | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1` | The short prompt. On the three 5.5 models it changes nothing, because they already get it. | <Documented /> |
 
-The program also has name rules (a name that ends in `-eap`, or `claude-mythos-5`, gets the short prompt) and server-set client data for a model.
-Those rules were not tested with every model. The catalog flag `lean_prompt` is the model-side input. See [Models](models.md#capabilities).
+## Prompt by Model
+
+We ran the default prompt for every model in the program's catalog, plus names that end in `-eap` and an unknown name (see [Probes](../reference/probes.md#static-and-print-probes)). The stub accepted every name. The real API may refuse retired models.
+
+The models with the catalog flag `lean_prompt` get the short prompt: Haiku 5.5, Sonnet 5.5, Opus 4.8, Opus 5, Opus 5.5, Fable 5, Fable 5.1, and Mythos 5.1. `claude-mythos-5` has no such flag, but a name rule gives it the short prompt, as it does for a name that ends in `-eap` and for an unknown name. Older models, and `claude-sonnet-5`, get the full prompt. Some models add sections to the short prompt, which follow the flags `opus_5_prompt_bundle`, `opus_5_5_prompt_bundle`, `fable_5_mitigations`, and `fable_5_1_prompt_bundle`.
+
+| Model | Prompt | System Characters |
+| --- | --- | --- |
+| `claude-opus-5-5`, `claude-sonnet-5-5`, and their `-eap` names | Short | 5,699 |
+| `claude-haiku-5-5` | Short plus 5 paragraphs on effort and turns | 8,491 |
+| `claude-opus-4-8` | Short, with one different bullet in a system reminder | 5,641 |
+| `claude-opus-5` | Short plus "Delivering work" and "Corrections" sections and a line to not use agents or workflows unless asked | 9,079 |
+| `claude-fable-5` | Short plus "Communicating with the user", a comment rule, an identity paragraph, and an autonomy block | 9,992 |
+| `claude-fable-5-1` | Short plus "Delivering work", "Writing for the user", an identity paragraph, and an autonomy block | 11,771 |
+| `claude-mythos-5` | Short plus "Communicating with the user" and an autonomy block | 9,414 |
+| `claude-mythos-5-1` | Like Fable 5.1 | 11,084 |
+| Unknown name | Short, without the `total_tokens` line | 5,648 |
+| `claude-sonnet-5` | Full, with one different `TaskCreate` bullet | 26,944 |
+| `claude-haiku-4-5`, `claude-3-5-haiku`, `claude-3-5-sonnet`, `claude-3-7-sonnet`, `claude-sonnet-4-0`, `claude-sonnet-4-5`, `claude-sonnet-4-6`, `claude-opus-4-5`, `claude-opus-4-6`, `claude-opus-4-7` | Full | 27,046 |
+| `claude-opus-4-0`, `claude-opus-4-1` | Claude Code silently changes the request model to `claude-opus-5-5`, so they get the short prompt | 5,699 |
+
+The 3.5 and 3.7 Haiku and Sonnet models also get 24 tools and not 12, because they have no tool search. The captures cover only Opus 5.5, Sonnet 5.5, Haiku 5.5, and the full prompt. The other models have no capture page.
 
 The [official docs](https://code.claude.com/docs/en/env-vars) say that Haiku 4.5, Sonnet 5, Opus 4.7, and earlier models get the full prompt, and newer models get the short one.
 The captures match this for Sonnet 5.5, Opus 5.5, and Haiku 5.5. The old wiki said Sonnet gets the full prompt, and that is wrong.

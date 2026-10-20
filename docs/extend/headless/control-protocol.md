@@ -116,11 +116,11 @@ The host must answer them or the turn waits.
 
 ## Example
 
-```json title="Change the model, then read the reply"
+```json skip-lint title="Change the model, then read the reply"
 {"type":"control_request","request_id":"req-1","request":{"subtype":"set_model","model":"sonnet"}}
 ```
 
-```json title="Reply from Claude Code"
+```json skip-lint title="Reply from Claude Code"
 {"type":"control_response","response":{"subtype":"success","request_id":"req-1"}}
 ```
 
@@ -128,9 +128,28 @@ The `set_model` request has a `model` field. A success reply has `subtype: "succ
 An error reply has `subtype: "error"`, the `request_id`, an `error` text, and sometimes an `error_code`.
 Source: the program (strings of the request and response builders). The fields of the other subtypes are not listed here.
 
-:::note[Not Verified]
-The examples were not run against the program. The `request_id` and `model` values are made up.
-:::
+We ran both examples on `2.1.304` with `claude -p --input-format stream-json --output-format stream-json --verbose` (see [Probes](../../reference/probes.md#static-and-print-probes)). The reply matches.
+The `request_id` is any text you pick, and the reply repeats it.
+`set_model` takes an alias such as `sonnet` or a full model ID. It replies `success` even for a name the API does not know, so the error shows up on the next request.
+A reply can come before the first `system` `init` line, because `init` appears only after the first user message.
+
+```json skip-lint title="Ask for the version"
+{"type":"control_request","request_id":"req-2","request":{"subtype":"get_binary_version"}}
+```
+
+```json skip-lint title="Reply"
+{"type":"control_response","response":{"subtype":"success","request_id":"req-2","response":{"version":"2.1.304","buildTime":"2026-10-19T18:11:48Z"}}}
+```
+
+```json skip-lint title="A request that fails"
+{"type":"control_request","request_id":"req-3","request":{"subtype":"set_permission_mode","mode":"nonsense"}}
+```
+
+```json skip-lint title="Error reply"
+{"type":"control_response","response":{"subtype":"error","request_id":"req-3","error":"Cannot set permission mode: must be one of acceptEdits, auto, bypassPermissions, default, dontAsk, plan","error_code":"invalid_mode"}}
+```
+
+An unknown subtype gives `"error":"Unsupported control request subtype: <name>"` with no `error_code`.
 
 ## How It Works
 

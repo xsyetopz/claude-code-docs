@@ -57,7 +57,7 @@ Each key has a row on one of these pages.
 ## How to Read the Key Tables
 
 - The `Status` column uses the badges from [How to Read These Docs](../../start/how-to-read.md).
-- `Type` shows ❓ when neither the official docs nor the schema give a type. `Default` shows `-` when no default is known.
+- `Type` shows Unknown when neither the official docs nor the schema give a type. `Default` shows `-` when no default is known.
 - `Where to Set It` says which files may set the key. `Any settings file` means the user, project, local, and managed files.
   `Settings files` means the settings files without a narrower scope in the source.
 - Many boolean keys are written as the thing to switch off, such as `spinnerTipsEnabled`. Read the row before you pick a value.

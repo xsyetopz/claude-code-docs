@@ -32,10 +32,10 @@ flowchart TD
   Project[Project settings env] --> Merge
   Local[Local settings env] --> Merge
   Managed[Managed settings env] --> Merge
-  Merge -->|replaces shell value in most sessions| Proc
+  Merge -->|"replaces shell value<br/>in most sessions"| Proc
   Proc --> Read[Feature reads the variable]
-  Flag[CLI flag or slash command] -->|wins for some pairs| Read
-  Key[Dedicated settings key] -->|variable or key first, per pair| Read
+  Flag[CLI flag or slash command] -->|"wins for<br/>some pairs"| Read
+  Key[Dedicated settings key] -->|"variable or key first,<br/>per pair"| Read
   Read --> Effect[Behavior changes]
 ```
 
@@ -113,7 +113,7 @@ Numeric variables, such as timeouts and token budgets, accept forms like `2e3` (
 | [UI and Terminal](ui-and-terminal.md) | Environment variables for the terminal screen, colors, voice, keys, and notifications | 88 |
 | [Sessions and Storage](sessions-and-storage.md) | Environment variables for config folders, session files, resume, install, and updates | 78 |
 | [Telemetry and Debug](telemetry-and-debug.md) | Environment variables for usage data, OpenTelemetry, debug logs, and error reports | 139 |
-| [Plugins and MCP](plugins-and-mcp.md) | Environment variables for plugins, MCP servers, skills, hooks, and marketplaces | 92 |
+| [Plugins and MCP](plugins-and-mcp.md) | Environment variables for plugins, MCP servers, skills, hooks, and marketplaces | 93 |
 | [Agents and Teams](agents-and-teams.md) | Environment variables for subagents, agent teams, background tasks, and workers | 77 |
 | [Features and Toggles](features-and-toggles.md) | Environment variables that turn single features on or off, including server-gated features | 66 |
 | [Remote and Cloud Sessions](remote-and-cloud-sessions.md) | Environment variables for cloud sessions, the bridge, the desktop app, Chrome, Cowork, and Slack | 139 |

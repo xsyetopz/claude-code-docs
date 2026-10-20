@@ -38,13 +38,13 @@ Flags that choose how a run starts and how print mode reads input and writes out
 | Flag | Status | In `--help` | What it does |
 | --- | --- | --- | --- |
 | `-p, --print` | <Documented /> | ✅ | Prints the answer and exits, which suits pipes, and the trust dialog is skipped in this mode. |
-| `--output-format <format>` | <Documented /> | ✅ | Sets the output of print mode to `text`, `json`, or `stream-json`. |
-| `--input-format <format>` | <Documented /> | ✅ | Sets the input of print mode to `text` or `stream-json`. |
-| `--json-schema <schema>` | <Documented /> | ✅ | Checks the final answer against a JSON Schema. It works only with `--print`. |
+| `--output-format <format>` | <Documented /> | ✅ | Sets the output of print mode to `text`, `json`, or `stream-json`. `text` is the default, `json` gives one result object, and `stream-json` gives one JSON object per line, live. |
+| `--input-format <format>` | <Documented /> | ✅ | Sets the input of print mode to `text` or `stream-json`. `text` is the default. `stream-json` gives live input and control requests. |
+| `--json-schema <schema>` | <Documented /> | ✅ | Checks the final answer against a JSON Schema. It works only with `--print`. Pass the schema as a JSON string. |
 | `--include-hook-events` | <Documented /> | ✅ | Adds the hook events to the stream, with `--output-format=stream-json`. |
-| `--include-partial-messages` | <Documented /> | ✅ | Adds partial message chunks to the stream, with `--print` and `stream-json`. |
-| `--forward-subagent-text` | <Documented /> | ✅ | Adds the text of subagents to the stream as `assistant` and `user` messages, with `--print` and `stream-json`. |
-| `--replay-user-messages` | <Documented /> | ✅ | Sends the user messages from stdin back on stdout as an acknowledgment. |
+| `--include-partial-messages` | <Documented /> | ✅ | Adds partial message chunks to the stream, with `--print` and `stream-json`. Adds `stream_event` lines. |
+| `--forward-subagent-text` | <Documented /> | ✅ | Adds the text of subagents to the stream as `assistant` and `user` messages, with `--print` and `stream-json`. Messages carry `parent_tool_use_id`. |
+| `--replay-user-messages` | <Documented /> | ✅ | Sends the user messages from stdin back on stdout as an acknowledgment. Needs both `stream-json` formats. |
 | `--max-budget-usd <amount>` | <Documented /> | ✅ | Stops at a spend limit in dollars, with `--print` only. |
 | `--max-turns <turns>` | <Documented /> | ❌ | Stops after a number of agent turns, with `--print` only. |
 | `--no-session-persistence` | <Documented /> | ✅ | Saves nothing to disk, so the session cannot be resumed, with `--print` only. |
@@ -75,9 +75,9 @@ Flags that strip your setup down, load extra settings, or turn on logs.
 | `-d2e, --debug-to-stderr` | <Undocumented /> | ❌ | Turns on debug mode and writes to stderr, and the flag is deprecated. |
 | `--debug-file <path>` | <Documented /> | ✅ | Writes the debug logs to a file and turns on debug mode. |
 | `--verbose` | <Documented /> | ✅ | Overrides the verbose setting of your config. |
-| `--bare` | <Documented /> | ✅ | Starts with a minimal setup: no hooks, no plugin sync, no auto memory, and no background work. |
+| `--bare` | <Documented /> | ✅ | Starts with a minimal setup: no hooks, no plugin sync, no auto memory, and no background work. It skips hooks, LSP, plugin sync, attribution, auto memory, background prefetches, keychain reads, and `CLAUDE.md` discovery. |
 | `--safe-mode` | <Documented /> | ✅ | Starts with all customizations off, such as `CLAUDE.md`, skills, plugins, hooks, and MCP servers. |
-| `--restricted` | <Documented /> | ✅ | Removes the tools that run code and `WebFetch`, and ignores user, project, and local settings. |
+| `--restricted` | <Documented /> | ✅ | Removes the tools that run code and `WebFetch`, and ignores user, project, and local settings. Good for untrusted input. |
 | `--ax-screen-reader` | <Documented /> | ✅ | Draws flat text with no borders or animations, for screen readers. |
 | `--settings <file-or-json>` | <Documented /> | ✅ | Loads more settings from a JSON file or a JSON string. |
 | `--setting-sources <sources>` | <Documented /> | ✅ | Chooses which setting sources load: `user`, `project`, and `local`. |
@@ -91,12 +91,12 @@ Flags that set the permission mode and the tools the model may use. See [Permiss
 | --- | --- | --- | --- |
 | `--permission-mode <mode>` | <Documented /> | ✅ | Sets the permission mode of the session. |
 | `--inherit-permission-mode <mode>` | <Undocumented /> | ❌ | Sets a permission mode from a parent session, used only when nothing else sets one. |
-| ⚠️ `--dangerously-skip-permissions` | <Documented /> | ✅ | Skips all permission checks, and you should use it only in a sandbox with no internet access. |
+| `--dangerously-skip-permissions` | <Documented /> <Caution note="Skips all permission checks" /> | ✅ | Skips all permission checks, and you should use it only in a sandbox with no internet access. |
 | `--allow-dangerously-skip-permissions` | <Documented /> | ✅ | Makes skipping all permission checks a choice, without turning it on. |
 | `--allowedTools, --allowed-tools <tools...>` | <Documented /> | ✅ | Lists the tools that run without a permission prompt. |
 | `--disallowedTools, --disallowed-tools <tools...>` | <Documented /> | ✅ | Lists the tools that the model cannot use. |
 | `--tools <tools...>` | <Documented /> | ✅ | Lists the built-in tools that the model can use. `"default"` uses the default set. |
-| `--permission-prompts <target>` | <Documented /> | ✅ | Sets who answers permission prompts: `host` or `none`. |
+| `--permission-prompts <target>` | <Documented /> | ✅ | Sets who answers permission prompts: `host` or `none`. `host` means the SDK host or `--permission-prompt-tool`. `none` denies anything that would prompt, and the permission mode decides the rest. |
 | `--permission-prompt-tool <tool>` | <Documented /> | ❌ | Names an MCP tool that answers permission prompts, with `--print` only. |
 | `--plan-mode-instructions <instructions>` | <Undocumented /> | ❌ | Replaces the default steps of plan mode with your own text. |
 
@@ -113,7 +113,7 @@ Flags that pick the model and set how hard it thinks.
 | `--advisor <model>` | <Documented /> | ❌ | Turns on the server-side advisor tool with the model that you name. |
 | `--thinking <mode>` | <Undocumented /> | ❌ | Sets the thinking mode: `enabled` (the same as `adaptive`) or `disabled`. |
 | `--thinking-display <display>` | <Undocumented /> | ❌ | Sets how the thinking text appears in the response. |
-| ⛔ `--max-thinking-tokens <tokens>` | <Undocumented /> | ❌ | Sets a thinking token limit, and the flag is deprecated in favor of `--thinking`. |
+| `--max-thinking-tokens <tokens>` | <Undocumented /> <Deprecated note="Use --thinking" /> | ❌ | Sets a thinking token limit, and the flag is deprecated in favor of `--thinking`. |
 | `--task-budget <tokens>` | <Undocumented /> | ❌ | Sets a task budget in tokens on the API side (`output_config.task_budget`). |
 | `--fast-mode <on\|off>` | <Undocumented /> | ❌ | Turns fast mode on or off. |
 | `--include-unsupported-models` | <Undocumented /> | ❌ | Offers models that your account can use and this version does not know. |
@@ -172,7 +172,7 @@ Flags that add agents, plugins, MCP servers, folders, and files.
 | `--brief` | <Undocumented /> | ✅ | Turns on the `SendUserMessage` tool so the agent can message the user. |
 | `--file <specs...>` | <Undocumented /> | ✅ | Downloads file resources at startup, in the form `file_id:relative_path`. |
 | `--channels <servers...>` | <Documented /> | ❌ | Lists the MCP servers whose channel notifications may register this session. |
-| ⚠️ `--dangerously-load-development-channels <servers...>` | <Documented /> | ❌ | Loads channel servers that are not on the allowlist, for local development only. |
+| `--dangerously-load-development-channels <servers...>` | <Documented /> <Caution /> | ❌ | Loads channel servers that are not on the allowlist, for local development only. |
 | `--watch-artifact <artifact>` | <Undocumented /> | ❌ | Watches a Claude artifact for new versions and comments. |
 | `--watch-artifact-no-autoreact <artifact>` | <Undocumented /> | ❌ | Watches an artifact and does not react to it by itself. |
 | `--messaging-socket-path <path>` | <Undocumented /> | ❌ | Sets the socket or pipe path of the cross-session messaging server. |
@@ -222,8 +222,8 @@ Flags for cloud sessions and Remote Control.
 | `--remote-control [name]` | <Documented /> | ✅ | Starts an interactive session with Remote Control turned on. |
 | `--rc [name]` | <Documented /> | ❌ | Is an alias for `--remote-control`. |
 | `--remote-control-session-name-prefix <prefix>` | <Documented /> | ✅ | Sets the prefix of the names that Remote Control makes, and the default is the host name. |
-| ⛔ `--remote [description\|session_id\|url]` | <Documented /> | ❌ | Is a deprecated alias for `--cloud`. |
-| ⛔ `--pool <pool_id>` | <Undocumented /> | ❌ | Is a deprecated alias for `--environment`. |
+| `--remote [description\|session_id\|url]` | <Documented /> <Deprecated note="Use --cloud" /> | ❌ | Is a deprecated alias for `--cloud`. |
+| `--pool <pool_id>` | <Undocumented /> <Deprecated note="Use --environment" /> | ❌ | Is a deprecated alias for `--environment`. |
 | `--correlation-id <id>` | <Undocumented /> | ❌ | Sets an ID that goes back to the environment orchestrator, and it needs `--environment`. |
 | `--ref <ref>` | <Documented /> | ❌ | Sets the branch, tag, or SHA to check out in the remote session, and it needs `--cloud` or `--environment`. |
 | `--on-branch <branch>` | <Undocumented /> | ❌ | Works directly on a branch in the remote session, with checkout and push. |

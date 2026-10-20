@@ -62,14 +62,11 @@ Source: [Environment Variables](https://code.claude.com/docs/en/env-vars) and th
 
 ## Settings Keys
 
-| Key | Status | What It Does | How It Works |
-| --- | --- | --- | --- |
-| `enabledPlugins` | <Documented /> | Turns plugins on or off. | `"name@marketplace": true\|false`. Order of layers: user, project, local, flag, policy. To turn off a project plugin for yourself, set `false` in `.claude/settings.local.json`. It also holds extended version-constraint forms. |
-| `pluginConfigs` | <Documented /> | Stores saved options by plugin id. | Holds `options` and `mcpServers`. |
-| `strictPluginOnlyCustomization` | <Documented /> | Limits customization to plugins. | Managed. An array of surfaces such as `skills` or `hooks`, or `true`. |
-| `disableSideloadFlags` | <Documented /> | Rejects the sideload flags. | Managed. Covers `--plugin-dir`, `--plugin-url`, `--agents`, `--mcp-config`. |
-| `prependPlugins`, `appendPlugins` | <Differs note="Docs say user or managed scope. The schema says managed only." /> | Set the hook order of managed plugins. | Managed only, per the schema. Listed ids run outermost or innermost. See [Hooks and Plugins Settings](../../configure/settings/hooks-and-plugins.md). |
-| `allowedChannelPlugins`, `pluginTrustMessage` | <Documented /> | Allow channel plugins, and add trust text. | Managed. |
+The rows for these keys, with types, scopes, and details, are on [Hooks, Plugins, and Skills Settings](../../configure/settings/hooks-and-plugins.md#keys).
+
+- Turn plugins on or off and store their saved options: [`enabledPlugins`](../../configure/settings/hooks-and-plugins.md#keys) and [`pluginConfigs`](../../configure/settings/hooks-and-plugins.md#keys).
+- Lock down customization (managed): [`strictPluginOnlyCustomization`](../../configure/settings/hooks-and-plugins.md#keys), [`disableSideloadFlags`](../../configure/settings/hooks-and-plugins.md#keys), and [`prependPlugins`](../../configure/settings/hooks-and-plugins.md#keys) with [`appendPlugins`](../../configure/settings/hooks-and-plugins.md#keys).
+- Channel plugins and trust text (managed): [`allowedChannelPlugins`](../../configure/settings/mcp-and-channels.md#keys) and [`pluginTrustMessage`](../../configure/settings/hooks-and-plugins.md#keys).
 
 Marketplace keys are on the [Marketplaces](marketplace.md#settings-keys) page.
 

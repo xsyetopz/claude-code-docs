@@ -14,8 +14,8 @@ Import from `claude-code/testing` inside your own mod tests.
 The first line checks that a mounted drawing holds two buttons. The second line declares a test with options.
 
 ```ts
-expect(await ui.findAll({ type: 'Button' })).toHaveLength(2)
-test('greets', { options: { greeting: 'yo' } }, body)
+expect(await ui.findAll({ type: "Button" })).toHaveLength(2);
+test("greets", { options: { greeting: "yo" } }, body);
 ```
 
 ## Types without Fields

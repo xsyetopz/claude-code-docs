@@ -12,8 +12,8 @@ They describe a tool call, a permission check, a command run, and a row of the `
 The first call asks the permission system about a tool call. The second line reads the messages of a subagent that made a tool use.
 
 ```ts
-const { decision } = await $.tool.check({ tool: "Read", input })
-if (use.agentId) child = await $.session.messages({ agentId: use.agentId })
+const { decision } = await $.tool.check({ tool: "Read", input });
+if (use.agentId) child = await $.session.messages({ agentId: use.agentId });
 ```
 
 ## Types without Fields

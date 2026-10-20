@@ -30,19 +30,21 @@ A secret that a tool prints goes into the transcript, and every prompt you type 
 ```mermaid
 flowchart TB
   subgraph Project["Your project"]
-    PS["<code>.claude/settings.json</code> and <code>settings.local.json</code>"]
-    PM["<code>CLAUDE.md</code>, <code>CLAUDE.local.md</code>, <code>.claude/rules/</code>"]
-    PX["<code>.claude/skills</code>, commands, agents, output-styles"]
+    PS["<code>.claude/settings.json</code>,<br/><code>settings.local.json</code>"]
+    PM["<code>CLAUDE.md</code>, <code>CLAUDE.local.md</code>,<br/><code>.claude/rules/</code>"]
+    PX["<code>.claude/skills</code>, commands,<br/>agents, output-styles"]
     PJ["<code>.mcp.json</code>"]
   end
   subgraph Home["Your home folder"]
     UJ["<code>~/.claude.json</code>"]
-    UC["<code>~/.claude/</code> settings, memory, skills, agents, plugins"]
-    UD["<code>~/.claude/</code> transcripts, history, caches"]
+    UC["<code>~/.claude/</code><br/>settings, memory, skills,<br/>agents, plugins"]
+    UD["<code>~/.claude/</code><br/>transcripts, history, caches"]
   end
   subgraph Machine["The machine"]
-    MS["Managed settings, <code>CLAUDE.md</code>, and <code>managed-mcp.json</code>"]
+    MS["Managed settings, <code>CLAUDE.md</code>,<br/>and <code>managed-mcp.json</code>"]
   end
+  PS ~~~ PM ~~~ PX ~~~ PJ
+  UJ ~~~ UC ~~~ UD
   Project --> CC[Claude Code]
   Home --> CC
   Machine --> CC
@@ -146,7 +148,7 @@ The line format of a transcript is on [Transcript Format](../reference/transcrip
 | `~/.claude/policy-limits.json` | <Documented /> | Cached organization limits. Some account types only. | [Enterprise Settings](../configure/settings/enterprise.md) |
 | `~/.claude/cache/changelog.md` | <Documented /> | A cached copy of the [changelog](https://code.claude.com/docs/en/changelog) for `/release-notes`. | [What Changed](what-changed.md) |
 | `~/.claude/daemon/roster.json`, `~/.claude/jobs/<id>/state.json`, `~/.claude/jobs/<id>/tmp/` | <Documented /> | The list of running background sessions, the state of each session, and its scratch folder. Keep them. The official "Agent View" page describes them. | [Sessions and Storage](../how-it-works/sessions-and-storage.md) |
-| `state/`, `mods/`, `bridge-spawn/`, `seed-admin/`, `downloads/`, `cache/model-catalog/` | <Undocumented /> | Seen on a `2.1.304` machine or named in the program. No docs page describes them. | [Sessions and Storage](../how-it-works/sessions-and-storage.md) |
+| `state/`, `mods/`, `bridge-spawn/`, `seed-admin/`, `downloads/`, `cache/model-catalog/` | <Undocumented /> | Seen on a `2.1.304` machine or named in the program. No docs page describes them. The program describes `state/`, `seed-admin/`, `bridge-spawn/`, and `cache/model-catalog/`; see the link. | [Sessions and Storage](../how-it-works/sessions-and-storage.md) |
 
 ## Managed Files
 

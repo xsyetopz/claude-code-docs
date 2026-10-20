@@ -12,8 +12,8 @@ They describe the data a mod reads about a session, such as its messages, its co
 The first call reads usage data. The second call sends text to another session and tells you if it arrived.
 
 ```ts
-const { startedAt, context, rateLimits, cost } = await $.session.usage()
-const { isDelivered, reason } = await $.session.send({ to, text })
+const { startedAt, context, rateLimits, cost } = await $.session.usage();
+const { isDelivered, reason } = await $.session.send({ to, text });
 ```
 
 ## Types without Fields

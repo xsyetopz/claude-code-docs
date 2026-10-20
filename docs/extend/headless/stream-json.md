@@ -108,7 +108,7 @@ Only the program shows these. They can change without notice.
 
 ## Example
 
-```json title="Lines from a short run (shortened)"
+```json skip-lint title="Lines from a short run (shortened)"
 {"type":"system","subtype":"init","session_id":"...","model":"...","tools":["Read","Bash"]}
 {"type":"stream_event","event":{"type":"content_block_delta"}}
 {"type":"result","subtype":"success","is_error":false,"result":"..."}

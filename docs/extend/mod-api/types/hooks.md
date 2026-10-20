@@ -14,8 +14,8 @@ The editor types `e` and `next` here from the machinery types below. This sketch
 
 ```ts
 on("tool.call", { tool: "Bash" }, async ($, e, next) => {
-  return next(e)
-})
+  return next(e);
+});
 ```
 
 ## Types without Fields

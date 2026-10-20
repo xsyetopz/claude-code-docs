@@ -18,15 +18,17 @@ Official page: [Test a Mod](https://code.claude.com/docs/en/plugins/mods/test), 
 This test fires two tool calls and checks that `/tally` counts both.
 
 ```typescript title="tally.test.ts"
-import { expect, test } from 'claude-code/testing'
+import { expect, test } from "claude-code/testing";
 
-test('/tally reports the tool calls the mod has seen', async ($, on) => {
-  on('tool.call', () => ({ result: 'ok' }))
-  await $.tool.call({ tool: 'Bash', command: 'ls' })
-  await $.tool.call({ tool: 'Read', file_path: 'README.md' })
-  const answer = await $.command.run({ command: 'tally', args: '' })
-  expect(answer.text).toBe('Claude has made 2 tool calls since this mod loaded')
-})
+test("/tally reports the tool calls the mod has seen", async ($, on) => {
+  on("tool.call", () => ({ result: "ok" }));
+  await $.tool.call({ tool: "Bash", command: "ls" });
+  await $.tool.call({ tool: "Read", file_path: "README.md" });
+  const answer = await $.command.run({ command: "tally", args: "" });
+  expect(answer.text).toBe(
+    "Claude has made 2 tool calls since this mod loaded",
+  );
+});
 ```
 
 ## Exports

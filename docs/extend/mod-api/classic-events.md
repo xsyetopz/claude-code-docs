@@ -16,10 +16,12 @@ Official pages: [Hooks Reference](https://code.claude.com/docs/en/hooks), [React
 ## Example
 
 ```javascript
-export function register(on) {
-  on('classic.PreToolUse', { tool_name: 'Bash' }, async ($, e, next) => next(e))
-  on('classic.Stop', async ($, e, next) => next(e))
-}
+export const register = (on) => {
+  on("classic.PreToolUse", { tool_name: "Bash" }, async ($, e, next) =>
+    next(e),
+  );
+  on("classic.Stop", async ($, e, next) => next(e));
+};
 ```
 
 ## Events

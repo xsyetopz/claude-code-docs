@@ -21,7 +21,7 @@ Source: [Connect Claude Code to Tools via MCP](https://code.claude.com/docs/en/m
 | `claude mcp add-from-claude-desktop [options]` | <Documented /> | Imports servers from Claude Desktop. | macOS and WSL only. You pick interactively. A name with other characters is rejected. A duplicate gets a suffix such as `server_1`. |
 | `claude mcp get <name>` | <Documented /> | Shows one server. | Health-checks approved servers and shows `Issue:` on a failure. An unapproved `.mcp.json` server shows `Pending approval`. A plugin stdio server shows `Command: stdio` and `NAME=[REDACTED]`. |
 | `claude mcp list` | <Documented /> | Lists servers. | Shows `Connected`, `Needs authentication`, `Failed to connect`, `Pending approval`, or `Disabled for this project`. Warnings show here. |
-| ⚠️ `claude mcp remove [options] <name>` | <Documented /> | Removes a server. | Without `--scope` it removes from the scope where the server exists. It deletes stored OAuth tokens and the client registration of a remote server. |
+| `claude mcp remove [options] <name>` | <Documented /> <Caution note="Deletes stored OAuth tokens and the client registration of a remote server" /> | Removes a server. | Without `--scope` it removes from the scope where the server exists. It deletes stored OAuth tokens and the client registration of a remote server. |
 | `claude mcp login [options] <name>` | <Documented /> | Runs OAuth for a server. | Works for `http`, `sse`, and claude.ai connectors. Without a local browser it prints the URL and asks for the redirect URL. |
 | `claude mcp logout <name>` | <Documented /> | Clears stored OAuth credentials. | Does not remove the server. |
 | `claude mcp reset-project-choices` | <Documented /> | Resets approvals. | Clears every approved and rejected `.mcp.json` server for this project. |
@@ -66,7 +66,7 @@ claude mcp remove weather --scope user
 ## How It Works
 
 ```mermaid
-flowchart LR
+flowchart TD
   A["<code>claude mcp add</code>"] --> B{"<code>--scope</code>"}
   B -->|"<code>local</code>"| C["<code>~/.claude.json</code> projects path"]
   B -->|"<code>user</code>"| D["<code>~/.claude.json</code> <code>mcpServers</code>"]

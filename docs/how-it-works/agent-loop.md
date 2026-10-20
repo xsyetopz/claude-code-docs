@@ -9,16 +9,6 @@ Inside a turn, the model asks for tools, Claude Code runs them, and the model re
 This repeats until the model answers without a tool call.
 This page walks through each stage and shows where you can step in.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. Every prompt starts a turn. |
-| Can you change it? | ✅ Yes, at fixed points. Use hooks, mod events, permission rules, and a few env vars. |
-| Can you turn it on or off? | Each hook and rule has its own switch. The loop itself always runs. |
-| Where does it live? | Inside the program. Hook settings are in `settings.json` files. |
-| Status | <Documented /> <Undocumented /> |
-
 ## The Turn at a Glance
 
 ```mermaid
@@ -28,16 +18,16 @@ sequenceDiagram
   participant Model
   participant Tool
   You->>CC: Prompt
-  CC->>CC: UserPromptSubmit hooks
+  Note over CC: UserPromptSubmit hooks
   CC->>Model: Request (system, tools, messages)
   Model-->>CC: Streamed reply with a tool_use block
-  CC->>CC: Permission check and PreToolUse hooks
+  Note over CC: Permission check and PreToolUse hooks
   CC->>Tool: Run the tool
   Tool-->>CC: Result
-  CC->>CC: PostToolUse hooks
+  Note over CC: PostToolUse hooks
   CC->>Model: Request with the tool result
   Model-->>CC: Final text, no tool call
-  CC->>CC: Stop hooks
+  Note over CC: Stop hooks
   CC-->>You: Answer
 ```
 
@@ -188,7 +178,9 @@ If the script exits with code 2, the call is blocked and the reason goes back to
     "PreToolUse": [
       {
         "matcher": "Bash",
-        "hooks": [{ "type": "command", "command": ".claude/hooks/check-bash.sh" }]
+        "hooks": [
+          { "type": "command", "command": ".claude/hooks/check-bash.sh" }
+        ]
       }
     ]
   }
