@@ -113,8 +113,16 @@ This site does not cover versions before `2.1.300` in detail.
 The official [Changelog](https://code.claude.com/docs/en/changelog) lists them, and the weekly [What's New](https://code.claude.com/docs/en/whats-new) digest covers the larger features.
 
 > **What We Checked:** The rows for `2.1.300` to `2.1.302` match the changelog text that the program itself stores. The `2.1.304` rows come from the [official release notes](https://code.claude.com/docs/en/changelog) and from a comparison of the `2.1.303` and `2.1.304` programs.
-> We ran four rows on `2.1.304`: the print-mode permission default (`init` shows `default`, and `--permission-mode auto` keeps `auto`), the transcript request lines (`api-request`, `api-request-shape`, and `api-request-blob`), the tool search tool list behind a custom base URL, and the `CLAUDE_CODE_AUTO_COMPACT_WINDOW` warnings.
-> We did not run the other `2.1.304` rows, which come only from the release notes: the `/artifacts` delete prompt, `denyRead` brackets on Linux, `/auto-mode-setup` on third-party providers, the `/usage` and `/effort status` fixes, the self-paced `/loop` fix, and the Mod API items. Their names exist in the program, but we did not run their behavior. For those rows [Documented] means the release notes name them.
+> We ran these `2.1.304` rows: the print-mode permission default (`init` shows `default`, and `--permission-mode auto` keeps `auto`), the transcript request lines (`api-request`, `api-request-shape`, and `api-request-blob`), the tool search tool list behind a custom base URL, and the `CLAUDE_CODE_AUTO_COMPACT_WINDOW` warnings.
+> We also ran these against a local stub with a fake key:
+>
+> - `/auto-mode-setup` opens its screen ("Teach auto mode about your environment?") behind a custom base URL.
+> - `/effort status` prints `Effort level: auto (currently medium)` for `auto`, and `/effort unset` sets `auto`. For a set level it prints `Current effort level: high (...)`.
+> - `/loop` with a `ScheduleWakeup` of 7200 seconds was clamped: the tool result said `clamped to 3600s from your requested value`. The cache fix itself cannot be seen with a stub.
+> - The Mod API items: `tool.check` got `isReadOnly: true` for `Read`. An ask with `decider: "person"` showed a dialog in the default mode, and in `-p` it was refused as `Permission to use Bash denied by plugin <name>: <reason>`, while an ask without it said `Bash needs approval (asked by plugin <name>: <reason>)`. The `settings.read` hook got `layers`, such as `[{"source":"user","settings":{...}}]`.
+> - `denyRead` brackets are a Linux fix. On macOS a sandboxed `echo` with `denyRead` globs holding `[user-id]` ran fine, which does not show the Linux fix.
+>
+> Two rows were only partly run. `/artifacts` with an API key and no login says `Unknown command`; in print mode with `CLAUDE_CODE_OAUTH_TOKEN` it says `/artifacts isn't available in this environment.` In the interactive screen with that token it opens a panel with the tabs `All`, `Mine`, and `Shared`, and an empty list says `No artifacts yet. Publish one with the Artifact tool.` The delete confirmation needs a published artifact, so it was not shown. `/usage` with an API key or with `CLAUDE_CODE_OAUTH_TOKEN` shows only the session cost and tokens, with no rate-limit section, so the end time was not shown. For those two rows [Documented] means the release notes name them.
 
 ## Example
 

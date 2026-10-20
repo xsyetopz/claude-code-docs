@@ -130,7 +130,7 @@ The captures show this split.
 
 The identity line is `You are a Claude agent, built on Anthropic's Claude Agent SDK.` in print mode.
 With `--append-system-prompt`, print mode sends `You are Claude Code, Anthropic's official CLI for Claude, running within the Claude Agent SDK.`
-The interactive line (`You are Claude Code, Anthropic's official CLI for Claude.`) could not be captured offline.
+The interactive line is `You are Claude Code, Anthropic's official CLI for Claude.` The program picks it when the session is interactive, and it also picks it for Google Cloud Agent Platform (Vertex) sessions.
 
 ## What Each Flag Does in the Captures
 

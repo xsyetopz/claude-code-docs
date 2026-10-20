@@ -64,7 +64,7 @@ What an `attribution.text` hook returns: the text the model reads in that place.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `text` | <Documented /> | Not described in the type file. | Type: `string`. |
+| `text` | <Documented /> | The text the model reads in that place. | Type: `string`. |
 
 ### `DeclaredAttachmentInput`
 
@@ -121,7 +121,7 @@ The input of `prompt.attachment`: one message the engine injects into the conver
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `[K in keyof PromptAttachmentDetailOf]` | <Documented /> | Not described in the type file. | Type: `DeclaredAttachmentInput<K>`. |
+| `[K in keyof PromptAttachmentDetailOf]` | <Documented /> | One input variant per attachment type that `PromptAttachmentDetailOf` declares. | Type: `DeclaredAttachmentInput<K>`. |
 
 ### `PromptAttachmentOrigin`
 
@@ -141,7 +141,7 @@ What a `prompt.attachment` hook returns: the text the model reads for that attac
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `text` | <Documented /> | Not described in the type file. | Type: `string \| null`. |
+| `text` | <Documented /> | The text the model reads for the attachment, or `null` to leave it out. | Type: `string \| null`. |
 
 ### `PromptAutocompleteInput`
 
@@ -211,7 +211,7 @@ What a `prompt.change` hook returns and what `next(e)` resolves to: `{ text }`, 
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `text` | <Documented /> | Not described in the type file. | Type: `string`. |
+| `text` | <Documented /> | The prompt text, echoed by core. | Type: `string`. |
 
 ### `PromptComposeInput`
 
@@ -224,7 +224,7 @@ The input of `prompt.compose`: the facts a system prompt is composed from, each 
 | `surfaces` | <Documented /> | Where the session draws at this render, as `$.session.surfaces()` answers: `terminal` first under the REPL, empty where nothing draws. | Type: `readonly RenderSurface[]`. |
 | `tools` | <Documented /> | The names of the tools the request offers the model, the engine's own composition reads them against the session's, an unknown name ignored. | Type: `readonly string[]`. |
 | `outputStyle` | <Documented /> | What the person chose in place of the default way of answering, and whether it keeps the coding instructions, null for the default style. | Type: `object`. |
-| `traits` | <Documented /> | Not described in the type file. | Type: `readonly PromptComposeTrait[]`. |
+| `traits` | <Documented /> | The traits the system prompt is composed from. | Type: `readonly PromptComposeTrait[]`. |
 
 ### `PromptComposeResult`
 
@@ -232,7 +232,7 @@ What a `prompt.compose` hook returns: the sections of the system prompt, in orde
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `sections` | <Documented /> | Not described in the type file. | Type: `readonly PromptComposeSection[]`. |
+| `sections` | <Documented /> | The sections of the system prompt, in order: every `shared` one ahead of every `session` one. | Type: `readonly PromptComposeSection[]`. |
 
 ### `PromptComposeSection`
 
@@ -480,7 +480,7 @@ What a `prompt.section` hook returns: the text the prompt carries for that secti
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `text` | <Documented /> | Not described in the type file. | Type: `string \| null`. |
+| `text` | <Documented /> | The text the prompt carries for that section, or `null` to leave it out. | Type: `string \| null`. |
 
 ### `PromptSubmitArgs`
 
@@ -573,7 +573,7 @@ What a skill's file declares above its text, parsed and JSON-safe: each key as Y
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `[key: string]` | <Documented /> | Not described in the type file. | Type: `SkillFrontmatterValue`. |
+| `[key: string]` | <Documented /> | Each key the skill file declares, with its value as YAML reads it. | Type: `SkillFrontmatterValue`. |
 
 ### `SkillPromptInput`
 
@@ -595,7 +595,7 @@ What a `skill.prompt` hook returns: the text the model reads for that skill. Use
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `text` | <Documented /> | Not described in the type file. | Type: `string`. |
+| `text` | <Documented /> | The text the model reads for the skill. | Type: `string`. |
 
 ### `TurnCompleteFields`
 
@@ -616,8 +616,8 @@ The end of a turn the model refused with no fallback model to retry on: what the
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `reason` | <Documented /> | Not described in the type file. | Type: `'refusal'`. |
-| `refusal` | <Documented /> | Not described in the type file. | Type: `TurnRefusal`. |
+| `reason` | <Documented /> | Why the turn ended: `refusal`. | Type: `'refusal'`. |
+| `refusal` | <Documented /> | What the API said about the refusal. | Type: `TurnRefusal`. |
 
 ### `TurnCompleteResult`
 
@@ -625,8 +625,8 @@ What a `turn.complete` hook returns and what `next(e)` resolves to: `{ text }`, 
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `text` | <Documented /> | Not described in the type file. | Type: `string`. |
-| `usage` | <Documented /> | Not described in the type file. | Type: `TurnUsage`. Optional. |
+| `text` | <Documented /> | The text of the turn's answer. | Type: `string`. |
+| `usage` | <Documented /> | What the turn cost. Core fills it from `e.usage` when the turn had one. | Type: `TurnUsage`. Optional. |
 
 ### `TurnCompleteUnrefused`
 
@@ -634,7 +634,7 @@ The end of a turn that was not a refusal: answered, interrupted, or dead on an A
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `reason` | <Documented /> | Not described in the type file. | Type: `Exclude<TurnCompleteReason, 'refusal'>`. |
+| `reason` | <Documented /> | Why the turn ended, any reason but `refusal`. | Type: `Exclude<TurnCompleteReason, 'refusal'>`. |
 
 ### `TurnRefusal`
 
@@ -642,8 +642,8 @@ What the API said about a refusal that ended a turn: the classifier's category a
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `category` | <Documented /> | Not described in the type file. | Type: `string \| null`. |
-| `explanation` | <Documented /> | Not described in the type file. | Type: `string \| null`. |
+| `category` | <Documented /> | The classifier's category, or `null` when the API sent none. | Type: `string \| null`. |
+| `explanation` | <Documented /> | The classifier's explanation, or `null` when the API sent none. | Type: `string \| null`. |
 
 ### `TurnStartInput`
 
@@ -661,7 +661,7 @@ What a `turn.start` hook returns and what `next(e)` resolves to: `{ turnId }`, e
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `turnId` | <Documented /> | Not described in the type file. | Type: `string`. |
+| `turnId` | <Documented /> | The ID of the turn, echoed by core. | Type: `string`. |
 
 ### `TurnStepEngineChunk`
 
@@ -669,7 +669,7 @@ An item of the engine's stream the other chunk kinds do not model (the envelope,
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `kind` | <Documented /> | Not described in the type file. | Type: `'engine'`. |
+| `kind` | <Documented /> | Marks an engine chunk: `engine`. | Type: `'engine'`. |
 | `ref` | <Documented /> | The engine's handle on the item, opaque, this step's only. | Type: `number`. |
 
 ### `TurnStepInput`
@@ -691,8 +691,8 @@ A piece of a tool call's arguments as they arrive: JSON text, partial, for the `
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `kind` | <Documented /> | Not described in the type file. | Type: `'input'`. |
-| `index` | <Documented /> | Not described in the type file. | Type: `number`. |
+| `kind` | <Documented /> | Marks a tool argument chunk: `input`. | Type: `'input'`. |
+| `index` | <Documented /> | The block the piece belongs to. It matches the `tool` chunk of the same index. | Type: `number`. |
 | `json` | <Documented /> | The next piece of the arguments' JSON text. | Type: `string`. |
 
 ### `TurnStepResult`
@@ -727,9 +727,9 @@ The response is whole: why the model stopped and what the request cost, as the s
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `kind` | <Documented /> | Not described in the type file. | Type: `'stop'`. |
-| `stopReason` | <Documented /> | Not described in the type file. | Type: `TurnStopReason`. |
-| `usage` | <Documented /> | Not described in the type file. | Type: `TurnUsage \| null`. |
+| `kind` | <Documented /> | Marks the final chunk: `stop`. | Type: `'stop'`. |
+| `stopReason` | <Documented /> | Why the model stopped. | Type: `TurnStopReason`. |
+| `usage` | <Documented /> | What the request cost, or `null`. | Type: `TurnUsage \| null`. |
 
 ### `TurnStepTextChunk`
 
@@ -737,9 +737,9 @@ A piece of the response's visible text as it arrives, in block `index`. The text
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `kind` | <Documented /> | Not described in the type file. | Type: `'text'`. |
+| `kind` | <Documented /> | Marks a text chunk: `text`. | Type: `'text'`. |
 | `index` | <Documented /> | The content block the piece belongs to, from 0 within one response. | Type: `number`. |
-| `text` | <Documented /> | Not described in the type file. | Type: `string`. |
+| `text` | <Documented /> | The next piece of the response text. | Type: `string`. |
 
 ### `TurnStepThinkingChunk`
 
@@ -747,9 +747,9 @@ A piece of the model's thinking as it arrives, in block `index`: what the person
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `kind` | <Documented /> | Not described in the type file. | Type: `'thinking'`. |
-| `index` | <Documented /> | Not described in the type file. | Type: `number`. |
-| `text` | <Documented /> | Not described in the type file. | Type: `string`. |
+| `kind` | <Documented /> | Marks a thinking chunk: `thinking`. | Type: `'thinking'`. |
+| `index` | <Documented /> | The block the piece belongs to. | Type: `number`. |
+| `text` | <Documented /> | The next piece of the model's thinking. | Type: `string`. |
 
 ### `TurnStepToolChunk`
 
@@ -757,8 +757,8 @@ The model begins a tool call in block `index`: the tool's name and the call's id
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `kind` | <Documented /> | Not described in the type file. | Type: `'tool'`. |
-| `index` | <Documented /> | Not described in the type file. | Type: `number`. |
+| `kind` | <Documented /> | Marks the start of a tool call: `tool`. | Type: `'tool'`. |
+| `index` | <Documented /> | The block the tool call is in. | Type: `number`. |
 | `id` | <Documented /> | The call's `tool_use_id`. | Type: `string`. |
 | `name` | <Documented /> | The tool's name (`Read`, `Bash`, `mcp__server__tool`). | Type: `string`. |
 

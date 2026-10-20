@@ -200,7 +200,7 @@ What a `session.attach` hook returns and what `next(e)` resolves to: `{ clientId
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `clientId` | <Documented /> | Not described in the type file. | Type: `string`. |
+| `clientId` | <Documented /> | The ID of the client that attached. | Type: `string`. |
 
 ### `SessionAuthorization`
 
@@ -208,8 +208,8 @@ What `$.session.authorize()` answers: an opaque handle for the session's Anthrop
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `handle` | <Documented /> | Not described in the type file. | Type: `string`. Looks like `auth_` and 32 hex digits. |
-| `kind` | <Documented /> | Not described in the type file. | Type: `'bearer' \| 'api-key'`. |
+| `handle` | <Documented /> | An opaque handle for the session's Anthropic credential. Pass it as `auth` to `$.http.fetch`. | Type: `string`. Looks like `auth_` and 32 hex digits. |
+| `kind` | <Documented /> | Whether the credential is a `bearer` token or an `api-key`. | Type: `'bearer' \| 'api-key'`. |
 
 ### `SessionCompactArgs`
 
@@ -297,7 +297,7 @@ What the session has cost, as `/cost` and the status line total it.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `id` | <Documented /> | Not described in the type file. | Type: `string`. |
+| `id` | <Documented /> | The ID of the scheduled task. | Type: `string`. |
 | `schedule` | <Documented /> | Cron expression, e.g. "0 9 \* * 1-5". | Type: `string`. |
 | `recurring` | <Documented /> | False for one-shot wakeups whose cron field encodes a single fire time, true for tasks that re-fire on every match. | Type: `boolean`. |
 | `prompt` | <Documented /> | Prompt text submitted when the cron fires. Capped at 1000 chars, clipped values append an in-string "... [+N chars]" marker. | Type: `string`. |
@@ -318,7 +318,7 @@ What a `session.detach` hook returns and what `next(e)` resolves to: `{ clientId
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `clientId` | <Documented /> | Not described in the type file. | Type: `string`. |
+| `clientId` | <Documented /> | The ID of the client that detached. | Type: `string`. |
 
 ### `SessionEndInput`
 
@@ -336,7 +336,7 @@ What a `session.end` hook returns and what `next(e)` resolves to: `{ sessionId }
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `sessionId` | <Documented /> | Not described in the type file. | Type: `string`. |
+| `sessionId` | <Documented /> | The ID of the session that ended. | Type: `string`. |
 
 ### `SessionIdentity`
 
@@ -374,7 +374,7 @@ What a `session.measure` hook returns and what `next(e)` resolves to: `{ changed
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `changed` | <Documented /> | Not described in the type file. | Type: `UsageUnit[]`. |
+| `changed` | <Documented /> | The usage units that changed. | Type: `UsageUnit[]`. |
 
 ### `SessionMessage`
 
@@ -575,7 +575,7 @@ What a `session.start` hook returns and what `next(e)` resolves to: `{ cwd }`, e
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `cwd` | <Documented /> | Not described in the type file. | Type: `string`. |
+| `cwd` | <Documented /> | The working directory of the session. | Type: `string`. |
 
 ### `SessionUsage`
 

@@ -58,7 +58,7 @@ A value that matches by a rule inside `toEqual` and its kin (`expect.any`, `expe
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `text` | [Documented] | Not described in the type file. | Type: `string`. Read-only. |
+| `text` | [Documented] | The text that names the matcher in a failure message. | Type: `string`. Read-only. |
 
 ### `AsyncMatchers`
 
@@ -66,7 +66,7 @@ The same checks on what a promise received settles with, each resolving once the
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `[K in keyof Matchers]` | [Documented] | Not described in the type file. | Type: `(...args: Parameters<Matchers[K]>) => Promise<void>`. |
+| `[K in keyof Matchers]` | [Documented] | For each matcher, the same check, as a call that returns a promise. | Type: `(...args: Parameters<Matchers[K]>) => Promise<void>`. |
 
 ### `ClientScope`
 
@@ -74,7 +74,7 @@ Which `Client` of a mounted drawing an act or a read means, by the `key` its ele
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `in` | [Documented] | Not described in the type file. | Type: `string`. Optional. |
+| `in` | [Documented] | The `key` of the `Client` element. Optional while the drawing holds exactly one. | Type: `string`. Optional. |
 
 ### `ElementOfAct`
 
@@ -82,13 +82,13 @@ The element each surface-dependent act of a mounted drawing reaches: a handle ca
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `input` | [Documented] | Not described in the type file. | Type: `'Input'`. |
-| `select` | [Documented] | Not described in the type file. | Type: `'Select'`. |
-| `key` | [Documented] | Not described in the type file. | Type: `'Client'`. |
-| `pointer` | [Documented] | Not described in the type file. | Type: `'Client'`. |
-| `post` | [Documented] | Not described in the type file. | Type: `'Client'`. |
-| `advance` | [Documented] | Not described in the type file. | Type: `'Client'`. |
-| `resize` | [Documented] | Not described in the type file. | Type: `'Client'`. |
+| `input` | [Documented] | The element the `input` act reaches. | Type: `'Input'`. |
+| `select` | [Documented] | The element the `select` act reaches. | Type: `'Select'`. |
+| `key` | [Documented] | The element the `key` act reaches. | Type: `'Client'`. |
+| `pointer` | [Documented] | The element the `pointer` act reaches. | Type: `'Client'`. |
+| `post` | [Documented] | The element the `post` act reaches. | Type: `'Client'`. |
+| `advance` | [Documented] | The element the `advance` act reaches. | Type: `'Client'`. |
+| `resize` | [Documented] | The element the `resize` act reaches. | Type: `'Client'`. |
 
 ### `ElementQuery`
 
@@ -96,9 +96,9 @@ What a mounted drawing's `find` and `findAll` match an element on, every field g
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `type` | [Documented] | Not described in the type file. | Type: `string`. Optional. |
-| `key` | [Documented] | Not described in the type file. | Type: `string`. Optional. |
-| `text` | [Documented] | Not described in the type file. | Type: `string \| RegExp`. Optional. |
+| `type` | [Documented] | The tag of the element to match. | Type: `string`. Optional. |
+| `key` | [Documented] | The `key` of the element to match. | Type: `string`. Optional. |
+| `text` | [Documented] | The text the element shows. A string matches by inclusion, a RegExp by test. | Type: `string \| RegExp`. Optional. |
 | `in` | [Documented] | Searches what this `Client`'s surface module drew (by the `Client`'s key) instead of the plugin's own tree. | Type: `string`. Optional. |
 
 ### `Engine`
@@ -108,7 +108,7 @@ What a test holds as `$`, the engine's own: every call on it is made as the REPL
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
 | `[N in keyof EventCalls]` | [Documented] | One entry for each noun in `EventCalls`. | Type: `N extends 'ui' ? EngineNoun<N> & EnginePress & EngineInput & EngineSelect & EngineMount : EngineNoun<N>`. |
-| `classic` | [Documented] | Not described in the type file. | Type: `EngineClassic`. |
+| `classic` | [Documented] | The classic events, raised as the engine raises them. | Type: `EngineClassic`. |
 
 ### `EngineClassic`
 
@@ -116,7 +116,7 @@ The classic (settings) hook events as the engine raises them: each a call runnin
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `[E in ClassicEvent]` | [Documented] | Not described in the type file. | Type: `` (e: ClassicFields<E>) => Promise<ClassicResultOf[`classic.${E}`]> ``. |
+| `[E in ClassicEvent]` | [Documented] | For each classic event, a call that runs the `classic.*` chain and resolves to its result. | Type: `` (e: ClassicFields<E>) => Promise<ClassicResultOf[`classic.${E}`]> ``. |
 
 ### `EngineInput`
 
@@ -185,8 +185,8 @@ What `$.ui.input` takes: the plugin whose hook drew the Input, its `key`, the fi
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `plugin` | [Documented] | Not described in the type file. | Type: `string`. |
-| `key` | [Documented] | Not described in the type file. | Type: `string`. |
+| `plugin` | [Documented] | The plugin whose hook drew the Input. | Type: `string`. |
+| `key` | [Documented] | The `key` of the Input. | Type: `string`. |
 | `text` | [Documented] | The field's whole text at that moment: `e.value` for the chain. | Type: `string`. |
 | `kind` | [Documented] | `submit` (the default) is Enter with that text and reaches `onSubmit`, `change` is one edit left in the field and reaches `onInput`. | Type: `UiInputArgument['kind']`. Optional. A person typing is a run of `change`s, then a `submit`. |
 | `requestId` | [Documented] | Which instance holds it, when the plugin drew the key in several. | Type: `string`. Optional. |
@@ -264,7 +264,7 @@ Where a mocked clock starts: `now`, in milliseconds (0 when not given). Object w
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `now` | [Documented] | Not described in the type file. | Type: `number`. Optional. |
+| `now` | [Documented] | Where the mocked clock starts, in milliseconds. 0 when not given. | Type: `number`. Optional. |
 
 ### `MockSession`
 
@@ -301,10 +301,10 @@ What a mounted drawing's `input` takes: the Input's key, the text, which of the 
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `key` | [Documented] | Not described in the type file. | Type: `string`. |
-| `text` | [Documented] | Not described in the type file. | Type: `string`. |
-| `kind` | [Documented] | Not described in the type file. | Type: `UiInputArgument['kind']`. Optional. |
-| `plugin` | [Documented] | Not described in the type file. | Type: `string`. Optional. |
+| `key` | [Documented] | The `key` of the Input. | Type: `string`. |
+| `text` | [Documented] | The text to put in the field. | Type: `string`. |
+| `kind` | [Documented] | Which of the two inputs it is. `submit` when not given. | Type: `UiInputArgument['kind']`. Optional. |
+| `plugin` | [Documented] | The name of another plugin, when the Input is not the mounted plugin's. | Type: `string`. Optional. |
 
 ### `MountPressTarget`
 
@@ -312,8 +312,8 @@ What a mounted drawing's `press` takes: the Button's key, another plugin's name 
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `key` | [Documented] | Not described in the type file. | Type: `string`. |
-| `plugin` | [Documented] | Not described in the type file. | Type: `string`. Optional. |
+| `key` | [Documented] | The `key` of the Button. | Type: `string`. |
+| `plugin` | [Documented] | The name of another plugin, when the Button is not the mounted plugin's. | Type: `string`. Optional. |
 | `link` | [Documented] | Presses this link of the Markdown keyed `key` instead of a Button. | Type: `PressedLink`. Optional. |
 
 ### `MountResizeTarget`
@@ -322,9 +322,9 @@ What a mounted drawing's `resize` takes: a `Client` region's size in cells, as t
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `columns` | [Documented] | Not described in the type file. | Type: `number`. |
-| `rows` | [Documented] | Not described in the type file. | Type: `number`. |
-| `in` | [Documented] | Not described in the type file. | Type: `string`. Optional. |
+| `columns` | [Documented] | The width of the region, in cells. | Type: `number`. |
+| `rows` | [Documented] | The height of the region, in cells. | Type: `number`. |
+| `in` | [Documented] | The `key` of the `Client` to resize. | Type: `string`. Optional. |
 
 ### `MountSelectTarget`
 
@@ -332,9 +332,9 @@ What a mounted drawing's `select` takes: the Select's key, the picked option's v
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `key` | [Documented] | Not described in the type file. | Type: `string`. |
-| `value` | [Documented] | Not described in the type file. | Type: `string`. |
-| `plugin` | [Documented] | Not described in the type file. | Type: `string`. Optional. |
+| `key` | [Documented] | The `key` of the Select. | Type: `string`. |
+| `value` | [Documented] | The value of the option to pick. | Type: `string`. |
+| `plugin` | [Documented] | The name of another plugin, when the Select is not the mounted plugin's. | Type: `string`. Optional. |
 
 ### `MountTarget`
 
@@ -363,9 +363,9 @@ Written inline in a test and loaded as a plugin folder is: its name, the tier it
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `name` | [Documented] | Not described in the type file. | Type: `string`. |
-| `tier` | [Documented] | Not described in the type file. | Type: `PluginTier`. Optional. |
-| `register` | [Documented] | Not described in the type file. | Type: `Register`. |
+| `name` | [Documented] | The name of the inline plugin. | Type: `string`. |
+| `tier` | [Documented] | The tier the plugin loads in. `user` when not given. | Type: `PluginTier`. Optional. |
+| `register` | [Documented] | The `register` function of its hooks module. It is self-contained and closes over nothing of the test file. | Type: `Register`. |
 
 ### `PressTarget`
 
@@ -373,8 +373,8 @@ What `$.ui.press` takes: the plugin whose `ui.render` hook drew the element, the
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `plugin` | [Documented] | Not described in the type file. | Type: `string`. |
-| `key` | [Documented] | Not described in the type file. | Type: `string`. |
+| `plugin` | [Documented] | The plugin whose `ui.render` hook drew the element. | Type: `string`. |
+| `key` | [Documented] | The `key` the plugin gave the element. | Type: `string`. |
 | `requestId` | [Documented] | Which instance holds it, when the plugin drew the key in several. | Type: `string`. Optional. |
 | `surface` | [Documented] | Which surface's drawing, when the key is drawn on more than one, the press carries the surface of the drawing it lands in either way. | Type: `RenderSurface`. Optional. |
 | `link` | [Documented] | For a Markdown answering its links: which of them the press lands on. | Type: `PressedLink`. Optional. |
@@ -385,8 +385,8 @@ What `$.ui.select` takes: the plugin whose hook drew the Select, its `key`, the 
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `plugin` | [Documented] | Not described in the type file. | Type: `string`. |
-| `key` | [Documented] | Not described in the type file. | Type: `string`. |
+| `plugin` | [Documented] | The plugin whose hook drew the Select. | Type: `string`. |
+| `key` | [Documented] | The `key` of the Select. | Type: `string`. |
 | `value` | [Documented] | Which option is picked, by the `value` the Select listed it under. | Type: `string`. |
 | `requestId` | [Documented] | Which instance holds it, when the plugin drew the key in several. | Type: `string`. Optional. |
 | `surface` | [Documented] | Which surface's drawing, when the key is drawn on more than one, the pick carries the surface of the drawing it lands in either way. | Type: `RenderSurface`. Optional. |
@@ -397,8 +397,8 @@ What `test` takes beside its name: the inline plugins it loads beside the one un
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `plugins` | [Documented] | Not described in the type file. | Type: `readonly Plugin[]`. Optional. |
-| `timeoutMs` | [Documented] | Not described in the type file. | Type: `number`. Optional. |
+| `plugins` | [Documented] | The inline plugins to load beside the one under test. | Type: `readonly Plugin[]`. Optional. |
+| `timeoutMs` | [Documented] | How long the test may run, in milliseconds. 5000 when not given. | Type: `number`. Optional. |
 | `options` | [Documented] | The plugin under test's `userConfig` values, standing as the ones stored in settings. | Type: `PluginOptions`. Optional. `register(on, options)` receives them as in a real load, with defaults filled in. Left out, the manifest's defaults apply. |
 
 ### `WithMessage`
@@ -407,7 +407,7 @@ An error-like value `toThrow` compares by its whole message. Object with fields 
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `message` | [Documented] | Not described in the type file. | Type: `string`. |
+| `message` | [Documented] | The whole message `toThrow` compares. | Type: `string`. |
 
 ## Related Pages
 

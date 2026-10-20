@@ -153,7 +153,7 @@ These entries are used in `updatedPermissions` and `permission_suggestions`.
 Fires only when auto mode denies a call, including a denial with no classifier verdict.
 It does not fire for manual denials, `PreToolUse` blocks, or deny rules.
 The exit code and `stderr` are ignored.
-Checked in the interactive screen: an auto mode denial fired it, and a manual "No" did not. `retry: true` had no visible effect there; a denial with a classifier verdict was not tested.
+Checked in the interactive screen: an auto mode denial fired it, and a manual "No" did not. With no classifier verdict (the classifier failed), `retry: true` changed nothing in the model's input. With a verdict (a stub answered the classifier with a block and the reason `[Data Exfiltration]`), the denial stood and the tool did not run, and the model's next request got the extra text `The PermissionDenied hook indicated you may retry this tool call.` after the denied tool result. Without `retry` that text was absent. `systemMessage` was not shown.
 All five handler types are allowed, but output from `prompt` and `agent` is dropped.
 
 | Field | Status | Direction | What it does |

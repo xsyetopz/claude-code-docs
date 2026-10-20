@@ -76,7 +76,7 @@ We compared the files with the copies on [SchemaStore](https://json.schemastore.
 | Plugin hooks | none | 5 | SchemaStore has no schema for this file. |
 
 SchemaStore has 25 settings keys that this site's settings schema does not. 12 of them are managed-only keys, such as `policyHelper` and `allowManagedHooksOnly`, which this site's managed schema has.
-The other 13 are not in the `2.1.304` validator at all, for example `autoConnectIde`, `diffTool`, `skippedPlugins`, and `sshHostAllowlist`. They may be older or newer than this release.
+The other 13 are not in the `2.1.304` validator at all, for example `autoConnectIde`, `diffTool`, `skippedPlugins`, and `sshHostAllowlist`. Four are keys of the global config file `~/.claude.json`: `autoConnectIde`, `autoInstallIdeExtension`, `diffTool`, and `externalEditorContext`. Five are desktop-app fields that the program carries: `browserExternalPageTools`, `disableBrowserExternalNavigation`, `disableMobileSimulatorTools`, `requireCoworkFullVmSandbox`, and `sshHostAllowlist`. Four have no string in the 2.1.304 program: `permissionExplainerEnabled`, `skippedMarketplaces`, `skippedPlugins`, and `teammateDefaultModel`.
 
 SchemaStore also has [`claude-code-launch.json`](https://json.schemastore.org/claude-code-launch.json), the Launch Preview file for preview servers in Claude Code Desktop.
 This site has no copy of it. We found no validator for that file in the `claude` program, and it belongs to the Desktop app, so there is nothing to export from the binary.

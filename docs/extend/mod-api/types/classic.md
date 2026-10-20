@@ -39,13 +39,13 @@ These types are aliases, unions, or plain shapes. Each row gives its use and its
 | `ClassicEventName` | <Documented /> | The name of a classic hook event as a function-hooks event: the settings hook's own name under `classic` (`classic.Stop`, `classic.PreToolUse`). | Alias of `` `classic.${ClassicHookEvent}` ``. Each fires wherever the engine runs the classic hook, even with no settings hook configured. |
 | `ClassicHookEvent` | <Documented /> | The name of a classic hook event: `PreToolUse`, `Stop`, and the rest. | Alias of `HookInput['hook_event_name']`. |
 | `ClassicHookInputs` | <Documented /> | What a classic hook receives on stdin for each event, by event name: the Agent SDK's `<Event>HookInput`. | Alias of `{ [I in HookInput as I['hook_event_name']]: I, }`. |
-| `ExitReason` | <Documented /> | Not described in the type file. | Alias of `'clear' \| 'resume' \| 'logout' \| 'prompt_input_exit' \| 'other'`. |
-| `HookInput` | <Documented /> | Not described in the type file. | Alias of the union of every hook input type, such as `PreToolUseHookInput`, `PostToolUseHookInput`, `SessionStartHookInput`, and `StopHookInput`. |
-| `PermissionBehavior` | <Documented /> | Not described in the type file. | Alias of `'allow' \| 'deny' \| 'ask'`. |
+| `ExitReason` | <Documented /> | Why a session ended, as `SessionEndHookInput.reason` reports it. | Alias of `'clear' \| 'resume' \| 'logout' \| 'prompt_input_exit' \| 'other'`. |
+| `HookInput` | <Documented /> | Any classic hook input, for code that handles the input of several events. | Alias of the union of every hook input type, such as `PreToolUseHookInput`, `PostToolUseHookInput`, `SessionStartHookInput`, and `StopHookInput`. |
+| `PermissionBehavior` | <Documented /> | What a permission rule does: allow, deny, or ask. | Alias of `'allow' \| 'deny' \| 'ask'`. |
 | `PermissionMode` | <Documented /> | How tool runs are handled: `default`, `acceptEdits`, `bypassPermissions`, `plan`, `dontAsk`, or `auto`. `bypassPermissions` needs `allowDangerouslySkipPermissions`. | Alias of `'default' \| 'acceptEdits' \| 'bypassPermissions' \| 'plan' \| 'dontAsk' \| 'auto'`. |
-| `PermissionUpdateDestination` | <Documented /> | Not described in the type file. | Alias of `'userSettings' \| 'projectSettings' \| 'localSettings' \| 'session' \| 'cliArg'`. |
+| `PermissionUpdateDestination` | <Documented /> | Where a permission update is saved: user, project, or local settings, the session only, or the CLI argument. | Alias of `'userSettings' \| 'projectSettings' \| 'localSettings' \| 'session' \| 'cliArg'`. |
 | `PermissionUpdates` | <Documented /> | The permission rules a PermissionRequest allow may add: the shape of the request's own `permission_suggestions` (the SDK's PermissionUpdate list). | Alias of `NonNullable<ClassicHookInputs['PermissionRequest']['permission_suggestions']>`. |
-| `SDKAssistantMessageError` | <Documented /> | Not described in the type file. | Alias of 13 error names, from `authentication_failed` and `billing_error` to `rate_limit`, `overloaded`, `model_not_found`, `server_error`, `max_output_tokens`, and `unknown`. |
+| `SDKAssistantMessageError` | <Documented /> | The error a failed assistant turn can carry, as `StopFailureHookInput.error` reports it. | Alias of 13 error names, from `authentication_failed` and `billing_error` to `rate_limit`, `overloaded`, `model_not_found`, `server_error`, `max_output_tokens`, and `unknown`. |
 
 ## Types with Fields
 
@@ -55,9 +55,9 @@ Each type below has its own table of fields.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `id` | <Documented /> | Not described in the type file. | Type: `string`. |
+| `id` | <Documented /> | The ID of the background task. | Type: `string`. |
 | `type` | <Documented /> | Friendly task-type label (e.g. 'shell', 'subagent', 'monitor', 'workflow'). Falls back to the raw discriminant for unknown types. | Type: `string`. |
-| `status` | <Documented /> | Not described in the type file. | Type: `string`. |
+| `status` | <Documented /> | The status of the background task. | Type: `string`. |
 | `description` | <Documented /> | Free-text description. Capped at 1000 chars, clipped values append an in-string "... [+N chars]" marker. | Type: `string`. |
 | `command` | <Documented /> | Shell command line. Only present for 'shell' tasks. Capped at 1000 chars with the same "... [+N chars]" marker. | Type: `string`. Optional. |
 | `agent_type` | <Documented /> | Subagent type name. Only present for 'subagent' tasks. | Type: `string`. Optional. |
@@ -69,11 +69,11 @@ Each type below has its own table of fields.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `session_id` | <Documented /> | Not described in the type file. | Type: `string`. |
-| `transcript_path` | <Documented /> | Not described in the type file. | Type: `string`. |
-| `cwd` | <Documented /> | Not described in the type file. | Type: `string`. |
+| `session_id` | <Documented /> | The ID of the current session. | Type: `string`. |
+| `transcript_path` | <Documented /> | Path to the conversation JSONL file. See [Transcript Format](../../../reference/transcript-format.md). | Type: `string`. |
+| `cwd` | <Documented /> | The working directory when the hook fires. | Type: `string`. |
 | `prompt_id` | <Documented /> | A UUID that ties a user prompt to all later events until the next prompt. It is also the `prompt.id` attribute on OpenTelemetry events. Absent until the first user input. | Type: `string`. Optional. |
-| `permission_mode` | <Documented /> | Not described in the type file. | Type: `string`. Optional. |
+| `permission_mode` | <Documented /> | The permission mode in force, such as `default`, `plan`, or `acceptEdits`. See [Input and Output](../../hooks/input-and-output.md). | Type: `string`. Optional. |
 | `agent_id` | <Documented /> | Subagent identifier. Present only when the hook fires inside a subagent. Absent on the main thread. Use it, not `agent_type`, to tell subagent calls apart. | Type: `string`. Optional. |
 | `agent_type` | <Documented /> | Agent type name, such as `general-purpose`. Present inside a subagent, or on the main thread of a session started with `--agent`. | Type: `string`. Optional. |
 | `effort` | <Documented /> | Reasoning effort of the current turn. Present for hooks in a tool-use context on a model that supports effort. Absent for session-lifecycle hooks. | Type: `object`. Optional. |
@@ -84,7 +84,7 @@ The classic (settings) hook events, one per classic event name: `e` is the hook'
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `` [E in ClassicHookEvent as `classic.${E}`] `` | <Documented /> | Not described in the type file. | Type: `E extends 'PreToolUse' ? ToolCallEnvelope : ClassicHookInputs[E]`. |
+| `` [E in ClassicHookEvent as `classic.${E}`] `` | <Documented /> | The input of each `classic.*` event: the tool-call envelope for `classic.PreToolUse`, the hook input for the rest. | Type: `E extends 'PreToolUse' ? ToolCallEnvelope : ClassicHookInputs[E]`. |
 
 ### `ClassicResult`
 
@@ -116,22 +116,22 @@ The event-specific fields of ClassicResult each classic event reads (its `hookSp
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `UserPromptSubmit` | <Documented /> | Not described in the type file. | Type: `'additionalContext' \| 'sessionTitle' \| 'suppressOriginalPrompt'`. |
-| `UserPromptExpansion` | <Documented /> | Not described in the type file. | Type: `'additionalContext' \| 'suppressOriginalPrompt'`. |
-| `SessionStart` | <Documented /> | Not described in the type file. | Type: `'additionalContext' \| 'initialUserMessage' \| 'sessionTitle' \| 'watchPaths' \| 'reloadSkills'`. |
-| `Setup` | <Documented /> | Not described in the type file. | Type: `'additionalContext'`. |
-| `PreModelSwitch` | <Documented /> | Not described in the type file. | Type: `'permissionDecision' \| 'permissionDecisionReason'`. |
-| `PostModelSwitch` | <Documented /> | Not described in the type file. | Type: `'additionalContext'`. |
-| `SubagentStart` | <Documented /> | Not described in the type file. | Type: `'additionalContext'`. |
-| `PostToolUse` | <Documented /> | Not described in the type file. | Type: `'additionalContext' \| 'updatedToolOutput' \| 'updatedMCPToolOutput'`. |
-| `PostToolUseFailure` | <Documented /> | Not described in the type file. | Type: `'additionalContext'`. |
-| `PostToolBatch` | <Documented /> | Not described in the type file. | Type: `'additionalContext'`. |
-| `Stop` | <Documented /> | Not described in the type file. | Type: `'additionalContext'`. |
-| `SubagentStop` | <Documented /> | Not described in the type file. | Type: `'additionalContext'`. |
-| `PermissionDenied` | <Documented /> | Not described in the type file. | Type: `'retry'`. |
-| `PermissionRequest` | <Documented /> | Not described in the type file. | Type: `'decision'`. |
-| `MessageDisplay` | <Documented /> | Not described in the type file. | Type: `'displayContent'`. |
-| `WorktreeCreate` | <Documented /> | Not described in the type file. | Type: `'worktreePath'`. |
+| `UserPromptSubmit` | <Documented /> | The result fields of `classic.UserPromptSubmit`, besides the `block`, `preventContinuation`, and `stopReason` every event has. | Type: `'additionalContext' \| 'sessionTitle' \| 'suppressOriginalPrompt'`. |
+| `UserPromptExpansion` | <Documented /> | The result fields of `classic.UserPromptExpansion`, besides the `block`, `preventContinuation`, and `stopReason` every event has. | Type: `'additionalContext' \| 'suppressOriginalPrompt'`. |
+| `SessionStart` | <Documented /> | The result fields of `classic.SessionStart`, besides the `block`, `preventContinuation`, and `stopReason` every event has. | Type: `'additionalContext' \| 'initialUserMessage' \| 'sessionTitle' \| 'watchPaths' \| 'reloadSkills'`. |
+| `Setup` | <Documented /> | The result fields of `classic.Setup`, besides the `block`, `preventContinuation`, and `stopReason` every event has. | Type: `'additionalContext'`. |
+| `PreModelSwitch` | <Documented /> | The result fields of `classic.PreModelSwitch`, besides the `block`, `preventContinuation`, and `stopReason` every event has. | Type: `'permissionDecision' \| 'permissionDecisionReason'`. |
+| `PostModelSwitch` | <Documented /> | The result fields of `classic.PostModelSwitch`, besides the `block`, `preventContinuation`, and `stopReason` every event has. | Type: `'additionalContext'`. |
+| `SubagentStart` | <Documented /> | The result fields of `classic.SubagentStart`, besides the `block`, `preventContinuation`, and `stopReason` every event has. | Type: `'additionalContext'`. |
+| `PostToolUse` | <Documented /> | The result fields of `classic.PostToolUse`, besides the `block`, `preventContinuation`, and `stopReason` every event has. | Type: `'additionalContext' \| 'updatedToolOutput' \| 'updatedMCPToolOutput'`. |
+| `PostToolUseFailure` | <Documented /> | The result fields of `classic.PostToolUseFailure`, besides the `block`, `preventContinuation`, and `stopReason` every event has. | Type: `'additionalContext'`. |
+| `PostToolBatch` | <Documented /> | The result fields of `classic.PostToolBatch`, besides the `block`, `preventContinuation`, and `stopReason` every event has. | Type: `'additionalContext'`. |
+| `Stop` | <Documented /> | The result fields of `classic.Stop`, besides the `block`, `preventContinuation`, and `stopReason` every event has. | Type: `'additionalContext'`. |
+| `SubagentStop` | <Documented /> | The result fields of `classic.SubagentStop`, besides the `block`, `preventContinuation`, and `stopReason` every event has. | Type: `'additionalContext'`. |
+| `PermissionDenied` | <Documented /> | The result fields of `classic.PermissionDenied`, besides the `block`, `preventContinuation`, and `stopReason` every event has. | Type: `'retry'`. |
+| `PermissionRequest` | <Documented /> | The result fields of `classic.PermissionRequest`, besides the `block`, `preventContinuation`, and `stopReason` every event has. | Type: `'decision'`. |
+| `MessageDisplay` | <Documented /> | The result fields of `classic.MessageDisplay`, besides the `block`, `preventContinuation`, and `stopReason` every event has. | Type: `'displayContent'`. |
+| `WorktreeCreate` | <Documented /> | The result fields of `classic.WorktreeCreate`, besides the `block`, `preventContinuation`, and `stopReason` every event has. | Type: `'worktreePath'`. |
 
 ### `ClassicResultOf`
 
@@ -139,7 +139,7 @@ What each classic hook event's hook returns and its `next(e)` resolves to: the e
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `` [E in ClassicHookEvent as `classic.${E}`] `` | <Documented /> | Not described in the type file. | Type: `E extends 'PreToolUse' ? PreToolUseResult : Pick<ClassicResult, 'block' \| 'preventContinuation' \| 'stopReason' \| (E extends keyof ClassicResultFields ? ClassicResultFields[E] : never)>`. |
+| `` [E in ClassicHookEvent as `classic.${E}`] `` | <Documented /> | The result of each `classic.*` event: `PreToolUseResult` for `classic.PreToolUse`, a pick of `ClassicResult` fields for the rest. | Type: `E extends 'PreToolUse' ? PreToolUseResult : Pick<ClassicResult, 'block' \| 'preventContinuation' \| 'stopReason' \| (E extends keyof ClassicResultFields ? ClassicResultFields[E] : never)>`. |
 
 ### `ConfigChangeHookInput`
 
@@ -147,9 +147,9 @@ Combines `ConfigChangeHookInput`, `BaseHookInput`.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `hook_event_name` | <Documented /> | Not described in the type file. | Type: `'ConfigChange'`. |
-| `source` | <Documented /> | Not described in the type file. | Type: `'user_settings' \| 'project_settings' \| 'local_settings' \| 'policy_settings' \| 'skills'`. |
-| `file_path` | <Documented /> | Not described in the type file. | Type: `string`. Optional. |
+| `hook_event_name` | <Documented /> | The event name: always `ConfigChange`. | Type: `'ConfigChange'`. |
+| `source` | <Documented /> | Which settings source changed. | Type: `'user_settings' \| 'project_settings' \| 'local_settings' \| 'policy_settings' \| 'skills'`. |
+| `file_path` | <Documented /> | The settings file that changed. | Type: `string`. Optional. |
 
 ### `CwdChangedHookInput`
 
@@ -157,9 +157,9 @@ Combines `CwdChangedHookInput`, `BaseHookInput`.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `hook_event_name` | <Documented /> | Not described in the type file. | Type: `'CwdChanged'`. |
-| `old_cwd` | <Documented /> | Not described in the type file. | Type: `string`. |
-| `new_cwd` | <Documented /> | Not described in the type file. | Type: `string`. |
+| `hook_event_name` | <Documented /> | The event name: always `CwdChanged`. | Type: `'CwdChanged'`. |
+| `old_cwd` | <Documented /> | The working directory before the change. | Type: `string`. |
+| `new_cwd` | <Documented /> | The working directory after the change. | Type: `string`. |
 
 ### `DirectoryAddedHookInput`
 
@@ -167,7 +167,7 @@ Combines `DirectoryAddedHookInput`, `BaseHookInput`.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `hook_event_name` | <Documented /> | Not described in the type file. | Type: `'DirectoryAdded'`. |
+| `hook_event_name` | <Documented /> | The event name: always `DirectoryAdded`. | Type: `'DirectoryAdded'`. |
 | `directory` | <Documented /> | Absolute path of the directory that was added. | Type: `string`. |
 | `source` | <Documented /> | How the directory was added: "slash_command" for /add-dir, "register_repo_root" for the SDK control_request. | Type: `'slash_command' \| 'register_repo_root'`. |
 
@@ -177,13 +177,13 @@ Hook input for the Elicitation event. Fired when an MCP server requests user inp
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `hook_event_name` | <Documented /> | Not described in the type file. | Type: `'Elicitation'`. |
-| `mcp_server_name` | <Documented /> | Not described in the type file. | Type: `string`. |
-| `message` | <Documented /> | Not described in the type file. | Type: `string`. |
-| `mode` | <Documented /> | Not described in the type file. | Type: `'form' \| 'url'`. Optional. |
-| `url` | <Documented /> | Not described in the type file. | Type: `string`. Optional. |
-| `elicitation_id` | <Documented /> | Not described in the type file. | Type: `string`. Optional. |
-| `requested_schema` | <Documented /> | Not described in the type file. | Type: `Record<string, unknown>`. Optional. |
+| `hook_event_name` | <Documented /> | The event name: always `Elicitation`. | Type: `'Elicitation'`. |
+| `mcp_server_name` | <Documented /> | The name of the MCP server that asks for input. | Type: `string`. |
+| `message` | <Documented /> | The text the MCP server shows to ask for input. | Type: `string`. |
+| `mode` | <Documented /> | Whether the MCP server asks with a `form` or with a `url`. | Type: `'form' \| 'url'`. Optional. |
+| `url` | <Documented /> | The URL to open, in `url` mode. | Type: `string`. Optional. |
+| `elicitation_id` | <Documented /> | The ID of the request. | Type: `string`. Optional. |
+| `requested_schema` | <Documented /> | The schema of the form the server asks for, in `form` mode. | Type: `Record<string, unknown>`. Optional. |
 
 ### `ElicitationResultHookInput`
 
@@ -191,12 +191,12 @@ Hook input for the ElicitationResult event. Fired after the user responds to an 
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `hook_event_name` | <Documented /> | Not described in the type file. | Type: `'ElicitationResult'`. |
-| `mcp_server_name` | <Documented /> | Not described in the type file. | Type: `string`. |
-| `elicitation_id` | <Documented /> | Not described in the type file. | Type: `string`. Optional. |
-| `mode` | <Documented /> | Not described in the type file. | Type: `'form' \| 'url'`. Optional. |
-| `action` | <Documented /> | Not described in the type file. | Type: `'accept' \| 'decline' \| 'cancel'`. |
-| `content` | <Documented /> | Not described in the type file. | Type: `Record<string, unknown>`. Optional. |
+| `hook_event_name` | <Documented /> | The event name: always `ElicitationResult`. | Type: `'ElicitationResult'`. |
+| `mcp_server_name` | <Documented /> | The name of the MCP server that asked. | Type: `string`. |
+| `elicitation_id` | <Documented /> | The ID of the request. | Type: `string`. Optional. |
+| `mode` | <Documented /> | Whether the server asked with a `form` or with a `url`. | Type: `'form' \| 'url'`. Optional. |
+| `action` | <Documented /> | The answer: `accept`, `decline`, or `cancel`. | Type: `'accept' \| 'decline' \| 'cancel'`. |
+| `content` | <Documented /> | The values submitted with the answer. | Type: `Record<string, unknown>`. Optional. |
 
 ### `FileChangedHookInput`
 
@@ -204,9 +204,9 @@ Combines `FileChangedHookInput`, `BaseHookInput`.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `hook_event_name` | <Documented /> | Not described in the type file. | Type: `'FileChanged'`. |
-| `file_path` | <Documented /> | Not described in the type file. | Type: `string`. |
-| `event` | <Documented /> | Not described in the type file. | Type: `'change' \| 'add' \| 'unlink'`. |
+| `hook_event_name` | <Documented /> | The event name: always `FileChanged`. | Type: `'FileChanged'`. |
+| `file_path` | <Documented /> | The path of the file that changed. | Type: `string`. |
+| `event` | <Documented /> | What happened to the file: `change`, `add`, or `unlink`. | Type: `'change' \| 'add' \| 'unlink'`. |
 
 ### `InstructionsLoadedHookInput`
 
@@ -214,13 +214,13 @@ Combines `InstructionsLoadedHookInput`, `BaseHookInput`.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `hook_event_name` | <Documented /> | Not described in the type file. | Type: `'InstructionsLoaded'`. |
-| `file_path` | <Documented /> | Not described in the type file. | Type: `string`. |
-| `memory_type` | <Documented /> | Not described in the type file. | Type: `'User' \| 'Project' \| 'Local' \| 'Managed'`. |
-| `load_reason` | <Documented /> | Not described in the type file. | Type: `'session_start' \| 'nested_traversal' \| 'path_glob_match' \| 'include' \| 'compact'`. |
-| `globs` | <Documented /> | Not described in the type file. | Type: `string[]`. Optional. |
-| `trigger_file_path` | <Documented /> | Not described in the type file. | Type: `string`. Optional. |
-| `parent_file_path` | <Documented /> | Not described in the type file. | Type: `string`. Optional. |
+| `hook_event_name` | <Documented /> | The event name: always `InstructionsLoaded`. | Type: `'InstructionsLoaded'`. |
+| `file_path` | <Documented /> | The path of the instructions file that was loaded. | Type: `string`. |
+| `memory_type` | <Documented /> | The kind of memory file: `User`, `Project`, `Local`, or `Managed`. | Type: `'User' \| 'Project' \| 'Local' \| 'Managed'`. |
+| `load_reason` | <Documented /> | Why the file was loaded. This is the matcher. | Type: `'session_start' \| 'nested_traversal' \| 'path_glob_match' \| 'include' \| 'compact'`. |
+| `globs` | <Documented /> | The path globs from the file's `paths:` frontmatter. | Type: `string[]`. Optional. Present only when `load_reason` is `path_glob_match` ([InstructionsLoaded input](https://code.claude.com/docs/en/hooks#instructionsloaded-input)). |
+| `trigger_file_path` | <Documented /> | The file whose access caused the load. | Type: `string`. Optional. |
+| `parent_file_path` | <Documented /> | The file that includes this one. | Type: `string`. Optional. |
 
 ### `MessageDisplayHookInput`
 
@@ -228,7 +228,7 @@ Hook input for the MessageDisplay event. Fired with each batch of newly complete
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `hook_event_name` | <Documented /> | Not described in the type file. | Type: `'MessageDisplay'`. |
+| `hook_event_name` | <Documented /> | The event name: always `MessageDisplay`. | Type: `'MessageDisplay'`. |
 | `turn_id` | <Documented /> | UUID of the current turn. | Type: `string`. |
 | `message_id` | <Documented /> | UUID of the assistant message being displayed. Stable across every flush of the same message. Not the API msg_... id. | Type: `string`. |
 | `index` | <Documented /> | Zero-based index of this delta within the message. Increments by one per flush. | Type: `number`. |
@@ -241,10 +241,10 @@ Combines `NotificationHookInput`, `BaseHookInput`.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `hook_event_name` | <Documented /> | Not described in the type file. | Type: `'Notification'`. |
-| `message` | <Documented /> | Not described in the type file. | Type: `string`. |
-| `title` | <Documented /> | Not described in the type file. | Type: `string`. Optional. |
-| `notification_type` | <Documented /> | Not described in the type file. | Type: `string`. |
+| `hook_event_name` | <Documented /> | The event name: always `Notification`. | Type: `'Notification'`. |
+| `message` | <Documented /> | The notification text. | Type: `string`. |
+| `title` | <Documented /> | The notification title. | Type: `string`. Optional. |
+| `notification_type` | <Documented /> | The kind of notification, such as `idle_prompt`. | Type: `string`. |
 
 ### `PermissionDeniedHookInput`
 
@@ -252,12 +252,12 @@ Combines `PermissionDeniedHookInput`, `BaseHookInput`.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `hook_event_name` | <Documented /> | Not described in the type file. | Type: `'PermissionDenied'`. |
-| `tool_name` | <Documented /> | Not described in the type file. | Type: `string`. |
-| `tool_input` | <Documented /> | Not described in the type file. | Type: `unknown`. |
-| `tool_use_id` | <Documented /> | Not described in the type file. | Type: `string`. |
-| `reason` | <Documented /> | Not described in the type file. | Type: `string`. |
-| `mcp_server` | <Documented /> | Not described in the type file. | Type: `McpServerProvenance`. Optional. |
+| `hook_event_name` | <Documented /> | The event name: always `PermissionDenied`. | Type: `'PermissionDenied'`. |
+| `tool_name` | <Documented /> | The name of the tool. | Type: `string`. |
+| `tool_input` | <Documented /> | The arguments the tool was called with. | Type: `unknown`. |
+| `tool_use_id` | <Documented /> | The ID of the tool call. | Type: `string`. |
+| `reason` | <Documented /> | Why the call was denied. | Type: `string`. |
+| `mcp_server` | <Documented /> | The MCP server the tool comes from, for an `mcp__*` tool. | Type: `McpServerProvenance`. Optional. |
 
 ### `PermissionRequestDecision`
 
@@ -265,12 +265,12 @@ A `classic.PermissionRequest` answer's `decision`, as the classic hook's `hookSp
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `behavior` | <Documented /> | Not described in the type file. | Type: `'allow'`. |
-| `updatedInput` | <Documented /> | Not described in the type file. | Type: `Record<string, unknown>`. Optional. |
-| `updatedPermissions` | <Documented /> | Not described in the type file. | Type: `PermissionUpdates`. Optional. |
-| `behavior` | <Documented /> | Not described in the type file. | Type: `'deny'`. |
-| `message` | <Documented /> | Not described in the type file. | Type: `string`. Optional. |
-| `interrupt` | <Documented /> | Not described in the type file. | Type: `true`. Optional. |
+| `behavior` | <Documented /> | Allows the request: `allow`. | Type: `'allow'`. |
+| `updatedInput` | <Documented /> | Replaces the tool input before the tool runs. | Type: `Record<string, unknown>`. Optional. |
+| `updatedPermissions` | <Documented /> | Permission updates to apply with the decision. | Type: `PermissionUpdates`. Optional. |
+| `behavior` | <Documented /> | Denies the request: `deny`. | Type: `'deny'`. |
+| `message` | <Documented /> | Tells Claude why the request was denied. | Type: `string`. Optional. |
+| `interrupt` | <Documented /> | `true` stops Claude after the denial. | Type: `true`. Optional. |
 
 ### `PermissionRequestHookInput`
 
@@ -278,44 +278,44 @@ Combines `PermissionRequestHookInput`, `BaseHookInput`.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `hook_event_name` | <Documented /> | Not described in the type file. | Type: `'PermissionRequest'`. |
-| `tool_name` | <Documented /> | Not described in the type file. | Type: `string`. |
-| `tool_input` | <Documented /> | Not described in the type file. | Type: `unknown`. |
-| `permission_suggestions` | <Documented /> | Not described in the type file. | Type: `PermissionUpdate[]`. Optional. |
-| `mcp_server` | <Documented /> | Not described in the type file. | Type: `McpServerProvenance`. Optional. |
+| `hook_event_name` | <Documented /> | The event name: always `PermissionRequest`. | Type: `'PermissionRequest'`. |
+| `tool_name` | <Documented /> | The name of the tool. | Type: `string`. |
+| `tool_input` | <Documented /> | The arguments the tool was called with. | Type: `unknown`. |
+| `permission_suggestions` | <Documented /> | The permission updates Claude Code suggests for this request, such as adding an allow rule or changing the permission mode. | Type: `PermissionUpdate[]`. Optional. Not an exact list of the dialog choices ([PermissionRequest input](https://code.claude.com/docs/en/hooks#permissionrequest-input)). |
+| `mcp_server` | <Documented /> | The MCP server the tool comes from, for an `mcp__*` tool. | Type: `McpServerProvenance`. Optional. |
 
 ### `PermissionRuleValue`
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `toolName` | <Documented /> | Not described in the type file. | Type: `string`. |
-| `ruleContent` | <Documented /> | Not described in the type file. | Type: `string`. Optional. |
+| `toolName` | <Documented /> | The tool the rule is for. | Type: `string`. |
+| `ruleContent` | <Documented /> | The part of the rule inside the parentheses. Absent, the rule covers the whole tool. | Type: `string`. Optional. |
 
 ### `PermissionUpdate`
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `type` | <Documented /> | Not described in the type file. | Type: `'addRules'`. |
-| `rules` | <Documented /> | Not described in the type file. | Type: `PermissionRuleValue[]`. |
-| `behavior` | <Documented /> | Not described in the type file. | Type: `PermissionBehavior`. |
-| `destination` | <Documented /> | Not described in the type file. | Type: `PermissionUpdateDestination`. |
-| `type` | <Documented /> | Not described in the type file. | Type: `'replaceRules'`. |
-| `rules` | <Documented /> | Not described in the type file. | Type: `PermissionRuleValue[]`. |
-| `behavior` | <Documented /> | Not described in the type file. | Type: `PermissionBehavior`. |
-| `destination` | <Documented /> | Not described in the type file. | Type: `PermissionUpdateDestination`. |
-| `type` | <Documented /> | Not described in the type file. | Type: `'removeRules'`. |
-| `rules` | <Documented /> | Not described in the type file. | Type: `PermissionRuleValue[]`. |
-| `behavior` | <Documented /> | Not described in the type file. | Type: `PermissionBehavior`. |
-| `destination` | <Documented /> | Not described in the type file. | Type: `PermissionUpdateDestination`. |
-| `type` | <Documented /> | Not described in the type file. | Type: `'setMode'`. |
-| `mode` | <Documented /> | Not described in the type file. | Type: `PermissionMode`. |
-| `destination` | <Documented /> | Not described in the type file. | Type: `PermissionUpdateDestination`. |
-| `type` | <Documented /> | Not described in the type file. | Type: `'addDirectories'`. |
-| `directories` | <Documented /> | Not described in the type file. | Type: `string[]`. |
-| `destination` | <Documented /> | Not described in the type file. | Type: `PermissionUpdateDestination`. |
-| `type` | <Documented /> | Not described in the type file. | Type: `'removeDirectories'`. |
-| `directories` | <Documented /> | Not described in the type file. | Type: `string[]`. |
-| `destination` | <Documented /> | Not described in the type file. | Type: `PermissionUpdateDestination`. |
+| `type` | <Documented /> | The kind of update: `addRules`. | Type: `'addRules'`. |
+| `rules` | <Documented /> | The rules to add. | Type: `PermissionRuleValue[]`. |
+| `behavior` | <Documented /> | What the rules do: allow, deny, or ask. | Type: `PermissionBehavior`. |
+| `destination` | <Documented /> | Where the update is saved. | Type: `PermissionUpdateDestination`. |
+| `type` | <Documented /> | The kind of update: `replaceRules`. | Type: `'replaceRules'`. |
+| `rules` | <Documented /> | The rules that replace the existing ones. | Type: `PermissionRuleValue[]`. |
+| `behavior` | <Documented /> | What the rules do: allow, deny, or ask. | Type: `PermissionBehavior`. |
+| `destination` | <Documented /> | Where the update is saved. | Type: `PermissionUpdateDestination`. |
+| `type` | <Documented /> | The kind of update: `removeRules`. | Type: `'removeRules'`. |
+| `rules` | <Documented /> | The rules to remove. | Type: `PermissionRuleValue[]`. |
+| `behavior` | <Documented /> | What the rules do: allow, deny, or ask. | Type: `PermissionBehavior`. |
+| `destination` | <Documented /> | Where the update is saved. | Type: `PermissionUpdateDestination`. |
+| `type` | <Documented /> | The kind of update: `setMode`. | Type: `'setMode'`. |
+| `mode` | <Documented /> | The permission mode to set. | Type: `PermissionMode`. |
+| `destination` | <Documented /> | Where the update is saved. | Type: `PermissionUpdateDestination`. |
+| `type` | <Documented /> | The kind of update: `addDirectories`. | Type: `'addDirectories'`. |
+| `directories` | <Documented /> | The directories to add. | Type: `string[]`. |
+| `destination` | <Documented /> | Where the update is saved. | Type: `PermissionUpdateDestination`. |
+| `type` | <Documented /> | The kind of update: `removeDirectories`. | Type: `'removeDirectories'`. |
+| `directories` | <Documented /> | The directories to remove. | Type: `string[]`. |
+| `destination` | <Documented /> | Where the update is saved. | Type: `PermissionUpdateDestination`. |
 
 ### `PostCompactHookInput`
 
@@ -323,8 +323,8 @@ Combines `PostCompactHookInput`, `BaseHookInput`.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `hook_event_name` | <Documented /> | Not described in the type file. | Type: `'PostCompact'`. |
-| `trigger` | <Documented /> | Not described in the type file. | Type: `'manual' \| 'auto'`. |
+| `hook_event_name` | <Documented /> | The event name: always `PostCompact`. | Type: `'PostCompact'`. |
+| `trigger` | <Documented /> | What started the compaction: `manual` or `auto`. | Type: `'manual' \| 'auto'`. |
 | `compact_summary` | <Documented /> | The conversation summary produced by compaction | Type: `string`. |
 
 ### `PostModelSwitchHookInput`
@@ -333,14 +333,14 @@ Combines `PostModelSwitchHookInput`, `BaseHookInput`.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `hook_event_name` | <Documented /> | Not described in the type file. | Type: `'PostModelSwitch'`. |
+| `hook_event_name` | <Documented /> | The event name: always `PostModelSwitch`. | Type: `'PostModelSwitch'`. |
 | `from_model` | <Documented /> | Resolved model id the session was running before the switch | Type: `string`. |
 | `to_model` | <Documented /> | Resolved model id the session runs after the switch | Type: `string`. |
 | `requested_model` | <Documented /> | What was asked for (alias such as "opus", a full id, or null for "default") | Type: `string \| null`. |
 | `source` | <Documented /> | Why the model changed: `command` (/model or the /config Model row), `picker`, `sdk` (headless `set_model`), `auto` (fallback or other change), or `resume`. | Type: `'command' \| 'picker' \| 'sdk' \| 'auto' \| 'resume'`. |
 | `context_tokens` | <Documented /> | Prompt tokens that the next request re-sends: the last main-thread response's input, cache read, cache creation, and output tokens. 0 before the first response. | Type: `number`. |
 | `prompt_cache_warm` | <Documented /> | Whether the current model's prompt cache is likely still warm (a switch then forfeits it) | Type: `boolean`. |
-| `cache_ttl` | <Documented /> | Not described in the type file. | Type: `'5m' \| '1h'`. |
+| `cache_ttl` | <Documented /> | How long the prompt cache lasts: `5m` or `1h`. | Type: `'5m' \| '1h'`. |
 | `estimated_cache_write_usd` | <Documented /> | Estimated cost of re-caching context_tokens on to_model at its cache-write rate - the managed modelPricing when set, otherwise list price, excludes the response | Type: `number`. |
 | `pricing` | <Documented /> | configured: priced at the managed modelPricing setting, catalog: list price, default: to_model unknown, the default tier was assumed | Type: `'configured' \| 'catalog' \| 'default'`. |
 
@@ -350,17 +350,17 @@ Hook input for `PostToolBatch`. Fires once after every tool call in a batch reso
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `hook_event_name` | <Documented /> | Not described in the type file. | Type: `'PostToolBatch'`. |
-| `tool_calls` | <Documented /> | Not described in the type file. | Type: `PostToolBatchToolCall[]`. |
+| `hook_event_name` | <Documented /> | The event name: always `PostToolBatch`. | Type: `'PostToolBatch'`. |
+| `tool_calls` | <Documented /> | The tool calls of the batch. | Type: `PostToolBatchToolCall[]`. |
 
 ### `PostToolBatchToolCall`
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `tool_name` | <Documented /> | Not described in the type file. | Type: `string`. |
-| `tool_input` | <Documented /> | Not described in the type file. | Type: `unknown`. |
-| `tool_use_id` | <Documented /> | Not described in the type file. | Type: `string`. |
-| `tool_response` | <Documented /> | Not described in the type file. | Type: `unknown`. Optional. |
+| `tool_name` | <Documented /> | The name of the tool. | Type: `string`. |
+| `tool_input` | <Documented /> | The arguments the tool was called with. | Type: `unknown`. |
+| `tool_use_id` | <Documented /> | The ID of the tool call. | Type: `string`. |
+| `tool_response` | <Documented /> | What the tool returned. | Type: `unknown`. Optional. |
 
 ### `PostToolUseFailureHookInput`
 
@@ -368,14 +368,14 @@ Combines `PostToolUseFailureHookInput`, `BaseHookInput`.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `hook_event_name` | <Documented /> | Not described in the type file. | Type: `'PostToolUseFailure'`. |
-| `tool_name` | <Documented /> | Not described in the type file. | Type: `string`. |
-| `tool_input` | <Documented /> | Not described in the type file. | Type: `unknown`. |
-| `tool_use_id` | <Documented /> | Not described in the type file. | Type: `string`. |
-| `error` | <Documented /> | Not described in the type file. | Type: `string`. |
-| `is_interrupt` | <Documented /> | Not described in the type file. | Type: `boolean`. Optional. |
+| `hook_event_name` | <Documented /> | The event name: always `PostToolUseFailure`. | Type: `'PostToolUseFailure'`. |
+| `tool_name` | <Documented /> | The name of the tool. | Type: `string`. |
+| `tool_input` | <Documented /> | The arguments the tool was called with. | Type: `unknown`. |
+| `tool_use_id` | <Documented /> | The ID of the tool call. | Type: `string`. |
+| `error` | <Documented /> | The error text of the failed call. | Type: `string`. |
+| `is_interrupt` | <Documented /> | `true` when the failure was an abort, not an error the tool reported. | Type: `boolean`. Optional. |
 | `duration_ms` | <Documented /> | Tool execution time in milliseconds. Excludes permission-prompt and hook time. | Type: `number`. Optional. |
-| `mcp_server` | <Documented /> | Not described in the type file. | Type: `McpServerProvenance`. Optional. |
+| `mcp_server` | <Documented /> | The MCP server the tool comes from, for an `mcp__*` tool. | Type: `McpServerProvenance`. Optional. |
 
 ### `PostToolUseHookInput`
 
@@ -383,13 +383,13 @@ Combines `PostToolUseHookInput`, `BaseHookInput`.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `hook_event_name` | <Documented /> | Not described in the type file. | Type: `'PostToolUse'`. |
-| `tool_name` | <Documented /> | Not described in the type file. | Type: `string`. |
-| `tool_input` | <Documented /> | Not described in the type file. | Type: `unknown`. |
-| `tool_response` | <Documented /> | Not described in the type file. | Type: `unknown`. |
-| `tool_use_id` | <Documented /> | Not described in the type file. | Type: `string`. |
+| `hook_event_name` | <Documented /> | The event name: always `PostToolUse`. | Type: `'PostToolUse'`. |
+| `tool_name` | <Documented /> | The name of the tool. | Type: `string`. |
+| `tool_input` | <Documented /> | The arguments the tool was called with. | Type: `unknown`. |
+| `tool_response` | <Documented /> | What the tool returned. | Type: `unknown`. |
+| `tool_use_id` | <Documented /> | The ID of the tool call. | Type: `string`. |
 | `duration_ms` | <Documented /> | Tool execution time in milliseconds. Excludes permission-prompt and hook time. | Type: `number`. Optional. |
-| `mcp_server` | <Documented /> | Not described in the type file. | Type: `McpServerProvenance`. Optional. |
+| `mcp_server` | <Documented /> | The MCP server the tool comes from, for an `mcp__*` tool. | Type: `McpServerProvenance`. Optional. |
 
 ### `PreCompactHookInput`
 
@@ -397,9 +397,9 @@ Combines `PreCompactHookInput`, `BaseHookInput`.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `hook_event_name` | <Documented /> | Not described in the type file. | Type: `'PreCompact'`. |
-| `trigger` | <Documented /> | Not described in the type file. | Type: `'manual' \| 'auto'`. |
-| `custom_instructions` | <Documented /> | Not described in the type file. | Type: `string \| null`. |
+| `hook_event_name` | <Documented /> | The event name: always `PreCompact`. | Type: `'PreCompact'`. |
+| `trigger` | <Documented /> | What started the compaction: `manual` or `auto`. | Type: `'manual' \| 'auto'`. |
+| `custom_instructions` | <Documented /> | The instructions given to `/compact`, or `null` when there are none. | Type: `string \| null`. |
 
 ### `PreModelSwitchHookInput`
 
@@ -407,14 +407,14 @@ Combines `PreModelSwitchHookInput`, `BaseHookInput`.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `hook_event_name` | <Documented /> | Not described in the type file. | Type: `'PreModelSwitch'`. |
+| `hook_event_name` | <Documented /> | The event name: always `PreModelSwitch`. | Type: `'PreModelSwitch'`. |
 | `from_model` | <Documented /> | Resolved model id the session was running before the switch | Type: `string`. |
 | `to_model` | <Documented /> | Resolved model id the session runs after the switch | Type: `string`. |
 | `requested_model` | <Documented /> | What was asked for (alias such as "opus", a full id, or null for "default") | Type: `string \| null`. |
 | `source` | <Documented /> | command: /model &lt;name>, the /config Model row, or enabling fast mode when that promotes the model, picker: an interactive model picker, sdk: headless set_model (SDK, Remote Control, IDE) | Type: `'command' \| 'picker' \| 'sdk'`. |
 | `context_tokens` | <Documented /> | Prompt tokens that the next request re-sends: the last main-thread response's input, cache read, cache creation, and output tokens. 0 before the first response. | Type: `number`. |
 | `prompt_cache_warm` | <Documented /> | Whether the current model's prompt cache is likely still warm (a switch then forfeits it) | Type: `boolean`. |
-| `cache_ttl` | <Documented /> | Not described in the type file. | Type: `'5m' \| '1h'`. |
+| `cache_ttl` | <Documented /> | How long the prompt cache lasts: `5m` or `1h`. | Type: `'5m' \| '1h'`. |
 | `estimated_cache_write_usd` | <Documented /> | Estimated cost of re-caching context_tokens on to_model at its cache-write rate - the managed modelPricing when set, otherwise list price, excludes the response | Type: `number`. |
 | `pricing` | <Documented /> | configured: priced at the managed modelPricing setting, catalog: list price, default: to_model unknown, the default tier was assumed | Type: `'configured' \| 'catalog' \| 'default'`. |
 
@@ -443,11 +443,11 @@ Combines `PreToolUseHookInput`, `BaseHookInput`.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `hook_event_name` | <Documented /> | Not described in the type file. | Type: `'PreToolUse'`. |
-| `tool_name` | <Documented /> | Not described in the type file. | Type: `string`. |
-| `tool_input` | <Documented /> | Not described in the type file. | Type: `unknown`. |
-| `tool_use_id` | <Documented /> | Not described in the type file. | Type: `string`. |
-| `mcp_server` | <Documented /> | Not described in the type file. | Type: `McpServerProvenance`. Optional. |
+| `hook_event_name` | <Documented /> | The event name: always `PreToolUse`. | Type: `'PreToolUse'`. |
+| `tool_name` | <Documented /> | The name of the tool. | Type: `string`. |
+| `tool_input` | <Documented /> | The arguments the tool was called with. | Type: `unknown`. |
+| `tool_use_id` | <Documented /> | The ID of the tool call. | Type: `string`. |
+| `mcp_server` | <Documented /> | The MCP server the tool comes from, for an `mcp__*` tool. | Type: `McpServerProvenance`. Optional. |
 
 ### `PreToolUseResult`
 
@@ -464,8 +464,8 @@ Combines `SessionEndHookInput`, `BaseHookInput`.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `hook_event_name` | <Documented /> | Not described in the type file. | Type: `'SessionEnd'`. |
-| `reason` | <Documented /> | Not described in the type file. | Type: `ExitReason`. |
+| `hook_event_name` | <Documented /> | The event name: always `SessionEnd`. | Type: `'SessionEnd'`. |
+| `reason` | <Documented /> | Why the session ended. | Type: `ExitReason`. |
 
 ### `SessionStartHookInput`
 
@@ -473,11 +473,11 @@ Combines `SessionStartHookInput`, `BaseHookInput`.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `hook_event_name` | <Documented /> | Not described in the type file. | Type: `'SessionStart'`. |
-| `source` | <Documented /> | Not described in the type file. | Type: `'startup' \| 'resume' \| 'clear' \| 'compact' \| 'fork'`. |
-| `agent_type` | <Documented /> | Not described in the type file. | Type: `string`. Optional. |
-| `model` | <Documented /> | Not described in the type file. | Type: `string`. Optional. |
-| `session_title` | <Documented /> | Not described in the type file. | Type: `string`. Optional. |
+| `hook_event_name` | <Documented /> | The event name: always `SessionStart`. | Type: `'SessionStart'`. |
+| `source` | <Documented /> | How the session started: `startup`, `resume`, `clear`, `compact`, or `fork`. | Type: `'startup' \| 'resume' \| 'clear' \| 'compact' \| 'fork'`. |
+| `agent_type` | <Documented /> | The agent type name, when the session started with `--agent`. | Type: `string`. Optional. |
+| `model` | <Documented /> | The model in use at the start. | Type: `string`. Optional. |
+| `session_title` | <Documented /> | The title of the session. | Type: `string`. Optional. |
 | `seconds_since_last_response` | <Documented /> | resume/fork: seconds since the resumed transcript's last assistant response | Type: `number`. Optional. |
 | `context_tokens` | <Documented /> | resume/fork: the resumed transcript's last response input + cache_read + cache_creation + output tokens (for a server-side tool loop, its last iteration's window, not the summed totals) | Type: `number`. Optional. |
 | `prompt_cache_likely_expired` | <Documented /> | resume/fork: seconds_since_last_response exceeds the prompt-cache TTL, so the first request re-caches context_tokens | Type: `boolean`. Optional. |
@@ -489,8 +489,8 @@ Combines `SetupHookInput`, `BaseHookInput`.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `hook_event_name` | <Documented /> | Not described in the type file. | Type: `'Setup'`. |
-| `trigger` | <Documented /> | Not described in the type file. | Type: `'init' \| 'maintenance'`. |
+| `hook_event_name` | <Documented /> | The event name: always `Setup`. | Type: `'Setup'`. |
+| `trigger` | <Documented /> | What ran setup: `init` or `maintenance`. | Type: `'init' \| 'maintenance'`. |
 
 ### `StopFailureHookInput`
 
@@ -498,10 +498,10 @@ Combines `StopFailureHookInput`, `BaseHookInput`.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `hook_event_name` | <Documented /> | Not described in the type file. | Type: `'StopFailure'`. |
-| `error` | <Documented /> | Not described in the type file. | Type: `SDKAssistantMessageError`. |
-| `error_details` | <Documented /> | Not described in the type file. | Type: `string`. Optional. |
-| `last_assistant_message` | <Documented /> | Not described in the type file. | Type: `string`. Optional. |
+| `hook_event_name` | <Documented /> | The event name: always `StopFailure`. | Type: `'StopFailure'`. |
+| `error` | <Documented /> | The error that ended the turn. | Type: `SDKAssistantMessageError`. |
+| `error_details` | <Documented /> | More detail about the error. | Type: `string`. Optional. |
+| `last_assistant_message` | <Documented /> | The rendered API error text shown in the conversation, such as `API Error: Rate limit reached`. It is not Claude's own words. | Type: `string`. Optional. See [StopFailure input](https://code.claude.com/docs/en/hooks#stopfailure-input). |
 
 ### `StopHookInput`
 
@@ -509,8 +509,8 @@ Combines `StopHookInput`, `BaseHookInput`.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `hook_event_name` | <Documented /> | Not described in the type file. | Type: `'Stop'`. |
-| `stop_hook_active` | <Documented /> | Not described in the type file. | Type: `boolean`. |
+| `hook_event_name` | <Documented /> | The event name: always `Stop`. | Type: `'Stop'`. |
+| `stop_hook_active` | <Documented /> | `true` when a stop hook already continued the turn. Check it to avoid loops. | Type: `boolean`. |
 | `last_assistant_message` | <Documented /> | Text content of the last assistant message before stopping. Avoids the need to read and parse the transcript file. | Type: `string`. Optional. |
 | `background_tasks` | <Documented /> | In-flight background work in this session. Lets a hook tell "session is done" from "session is paused for background work". Empty when nothing is in flight. | Type: `BackgroundTaskSummary[]`. Optional. |
 | `session_crons` | <Documented /> | Session-scoped cron tasks (CronCreate, ScheduleWakeup, /loop) that will wake this session later. Empty array when none are scheduled. | Type: `SessionCronSummary[]`. Optional. |
@@ -521,9 +521,9 @@ Combines `SubagentStartHookInput`, `BaseHookInput`.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `hook_event_name` | <Documented /> | Not described in the type file. | Type: `'SubagentStart'`. |
-| `agent_id` | <Documented /> | Not described in the type file. | Type: `string`. |
-| `agent_type` | <Documented /> | Not described in the type file. | Type: `string`. |
+| `hook_event_name` | <Documented /> | The event name: always `SubagentStart`. | Type: `'SubagentStart'`. |
+| `agent_id` | <Documented /> | The ID of the subagent. | Type: `string`. |
+| `agent_type` | <Documented /> | The agent type name of the subagent. | Type: `string`. |
 
 ### `SubagentStopHookInput`
 
@@ -531,11 +531,11 @@ Combines `SubagentStopHookInput`, `BaseHookInput`.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `hook_event_name` | <Documented /> | Not described in the type file. | Type: `'SubagentStop'`. |
-| `stop_hook_active` | <Documented /> | Not described in the type file. | Type: `boolean`. |
-| `agent_id` | <Documented /> | Not described in the type file. | Type: `string`. |
-| `agent_transcript_path` | <Documented /> | Not described in the type file. | Type: `string`. |
-| `agent_type` | <Documented /> | Not described in the type file. | Type: `string`. |
+| `hook_event_name` | <Documented /> | The event name: always `SubagentStop`. | Type: `'SubagentStop'`. |
+| `stop_hook_active` | <Documented /> | `true` when a stop hook already continued the turn. Check it to avoid loops. | Type: `boolean`. |
+| `agent_id` | <Documented /> | The ID of the subagent. | Type: `string`. |
+| `agent_transcript_path` | <Documented /> | Path to the subagent transcript. `transcript_path` is the main one. | Type: `string`. |
+| `agent_type` | <Documented /> | The agent type name, such as `general-purpose`. | Type: `string`. |
 | `last_assistant_message` | <Documented /> | Text content of the last assistant message before stopping. Avoids the need to read and parse the transcript file. | Type: `string`. Optional. |
 | `background_tasks` | <Documented /> | In-flight background work in this session. Lets a hook tell "session is done" from "session is paused for background work". Empty when nothing is in flight. | Type: `BackgroundTaskSummary[]`. Optional. |
 | `session_crons` | <Documented /> | Session-scoped cron tasks (CronCreate, ScheduleWakeup, /loop) that will wake this session later. Empty array when none are scheduled. | Type: `SessionCronSummary[]`. Optional. |
@@ -546,12 +546,12 @@ Combines `TaskCompletedHookInput`, `BaseHookInput`.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `hook_event_name` | <Documented /> | Not described in the type file. | Type: `'TaskCompleted'`. |
-| `task_id` | <Documented /> | Not described in the type file. | Type: `string`. |
-| `task_subject` | <Documented /> | Not described in the type file. | Type: `string`. |
-| `task_description` | <Documented /> | Not described in the type file. | Type: `string`. Optional. |
-| `teammate_name` | <Documented /> | Not described in the type file. | Type: `string`. Optional. |
-| `team_name` | <Documented /> | Not described in the type file. | Type: `string`. Optional. Deprecated: Sessions have a single implicit team, this carries the session-derived team name and will be removed in a future release. |
+| `hook_event_name` | <Documented /> | The event name: always `TaskCompleted`. | Type: `'TaskCompleted'`. |
+| `task_id` | <Documented /> | The ID of the task. | Type: `string`. |
+| `task_subject` | <Documented /> | The title of the task. | Type: `string`. |
+| `task_description` | <Documented /> | The longer text of the task. | Type: `string`. Optional. |
+| `teammate_name` | <Documented /> | The name of the teammate. | Type: `string`. Optional. |
+| `team_name` | <Documented /> | The name of the team. | Type: `string`. Optional. Deprecated: Sessions have a single implicit team, this carries the session-derived team name and will be removed in a future release. |
 
 ### `TaskCreatedHookInput`
 
@@ -559,12 +559,12 @@ Combines `TaskCreatedHookInput`, `BaseHookInput`.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `hook_event_name` | <Documented /> | Not described in the type file. | Type: `'TaskCreated'`. |
-| `task_id` | <Documented /> | Not described in the type file. | Type: `string`. |
-| `task_subject` | <Documented /> | Not described in the type file. | Type: `string`. |
-| `task_description` | <Documented /> | Not described in the type file. | Type: `string`. Optional. |
-| `teammate_name` | <Documented /> | Not described in the type file. | Type: `string`. Optional. |
-| `team_name` | <Documented /> | Not described in the type file. | Type: `string`. Optional. Deprecated: Sessions have a single implicit team, this carries the session-derived team name and will be removed in a future release. |
+| `hook_event_name` | <Documented /> | The event name: always `TaskCreated`. | Type: `'TaskCreated'`. |
+| `task_id` | <Documented /> | The ID of the task. | Type: `string`. |
+| `task_subject` | <Documented /> | The title of the task. | Type: `string`. |
+| `task_description` | <Documented /> | The longer text of the task. | Type: `string`. Optional. |
+| `teammate_name` | <Documented /> | The name of the teammate. | Type: `string`. Optional. |
+| `team_name` | <Documented /> | The name of the team. | Type: `string`. Optional. Deprecated: Sessions have a single implicit team, this carries the session-derived team name and will be removed in a future release. |
 
 ### `TeammateIdleHookInput`
 
@@ -572,9 +572,9 @@ Combines `TeammateIdleHookInput`, `BaseHookInput`.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `hook_event_name` | <Documented /> | Not described in the type file. | Type: `'TeammateIdle'`. |
-| `teammate_name` | <Documented /> | Not described in the type file. | Type: `string`. |
-| `team_name` | <Documented /> | Not described in the type file. | Type: `string`. Deprecated: Sessions have a single implicit team, this carries the session-derived team name and will be removed in a future release. |
+| `hook_event_name` | <Documented /> | The event name: always `TeammateIdle`. | Type: `'TeammateIdle'`. |
+| `teammate_name` | <Documented /> | The name of the idle teammate. | Type: `string`. |
+| `team_name` | <Documented /> | The name of the team. | Type: `string`. Deprecated: Sessions have a single implicit team, this carries the session-derived team name and will be removed in a future release. |
 
 ### `UserPromptExpansionHookInput`
 
@@ -582,12 +582,12 @@ Combines `UserPromptExpansionHookInput`, `BaseHookInput`.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `hook_event_name` | <Documented /> | Not described in the type file. | Type: `'UserPromptExpansion'`. |
-| `expansion_type` | <Documented /> | Not described in the type file. | Type: `'slash_command' \| 'mcp_prompt'`. |
-| `command_name` | <Documented /> | Not described in the type file. | Type: `string`. |
-| `command_args` | <Documented /> | Not described in the type file. | Type: `string`. |
-| `command_source` | <Documented /> | Not described in the type file. | Type: `string`. Optional. |
-| `prompt` | <Documented /> | Not described in the type file. | Type: `string`. |
+| `hook_event_name` | <Documented /> | The event name: always `UserPromptExpansion`. | Type: `'UserPromptExpansion'`. |
+| `expansion_type` | <Documented /> | What expanded: `slash_command` or `mcp_prompt`. | Type: `'slash_command' \| 'mcp_prompt'`. |
+| `command_name` | <Documented /> | The name of the command. | Type: `string`. |
+| `command_args` | <Documented /> | The arguments given to the command. | Type: `string`. |
+| `command_source` | <Documented /> | Where the command came from, such as `plugin`. | Type: `string`. Optional. |
+| `prompt` | <Documented /> | The prompt text. | Type: `string`. |
 
 ### `UserPromptSubmitHookInput`
 
@@ -595,10 +595,10 @@ Combines `UserPromptSubmitHookInput`, `BaseHookInput`.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `hook_event_name` | <Documented /> | Not described in the type file. | Type: `'UserPromptSubmit'`. |
-| `prompt` | <Documented /> | Not described in the type file. | Type: `string`. |
+| `hook_event_name` | <Documented /> | The event name: always `UserPromptSubmit`. | Type: `'UserPromptSubmit'`. |
+| `prompt` | <Documented /> | The text the person submitted. | Type: `string`. |
 | `source` | <Documented /> | Who wrote the prompt: `user` (interactive), `sdk` (`-p` or Agent SDK), `loop_wakeup`, `schedule_wakeup`, `system` (machine-injected), or `poll_event`. Payloads may omit it. | Type: `'user' \| 'sdk' \| 'system' \| 'loop_wakeup' \| 'schedule_wakeup' \| 'poll_event'`. Optional. |
-| `session_title` | <Documented /> | Not described in the type file. | Type: `string`. Optional. |
+| `session_title` | <Documented /> | The title of the session. | Type: `string`. Optional. |
 
 ### `WorktreeCreateHookInput`
 
@@ -606,8 +606,8 @@ Combines `WorktreeCreateHookInput`, `BaseHookInput`.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `hook_event_name` | <Documented /> | Not described in the type file. | Type: `'WorktreeCreate'`. |
-| `name` | <Documented /> | Not described in the type file. | Type: `string`. |
+| `hook_event_name` | <Documented /> | The event name: always `WorktreeCreate`. | Type: `'WorktreeCreate'`. |
+| `name` | <Documented /> | The name of the worktree to create. | Type: `string`. |
 
 ### `WorktreeRemoveHookInput`
 
@@ -615,8 +615,8 @@ Combines `WorktreeRemoveHookInput`, `BaseHookInput`.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `hook_event_name` | <Documented /> | Not described in the type file. | Type: `'WorktreeRemove'`. |
-| `worktree_path` | <Documented /> | Not described in the type file. | Type: `string`. |
+| `hook_event_name` | <Documented /> | The event name: always `WorktreeRemove`. | Type: `'WorktreeRemove'`. |
+| `worktree_path` | <Documented /> | The path of the worktree to remove. | Type: `string`. |
 
 ## Related Pages
 

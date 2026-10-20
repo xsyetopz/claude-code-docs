@@ -120,7 +120,7 @@ Each row is a session after "hi" on Opus 5.5, compared to the default of 15,768.
 | Haiku 5.5 | 16,552 | +784 | The system prompt is 2,817. |
 
 Messages vary by a few tokens between runs, because the reply to "hi" differs.
-We could not measure `--disable-slash-commands`, because it also turns off `/context`.
+`--disable-slash-commands` makes the request larger, not smaller. In a test with `2.1.304` (`claude -p hi` against a local stub, Opus 5.5, no skills of your own), the request body grew from 43,962 to 52,880 bytes, about 2,200 more tokens at 4 bytes per token (an estimate, not a count). The `Skill` tool (1,803 bytes) and the list of skills in the messages (6,065 bytes) went away. The `Workflow` tool description grew by 16,955 bytes, because it then holds the workflow authoring reference that it otherwise loads through the `workflow-authoring` skill. Your own skills and commands are left out too, so with many of them the net change is smaller.
 
 ## Best Practices
 
@@ -205,9 +205,21 @@ See [Subagents](https://xsyetopz.github.io/claude-code-docs/extend/subagents.md)
 
 ### Keep the Start Stable for the Cache
 
-The start of the request (tools, system prompt, memory) is cached.
-This follows from the prefix model on the request page. We did not measure it.
-Changing it, for example by switching tools or editing `CLAUDE.md` mid-session, makes the API read it again.
+The start of the request (tools and system prompt) is cached.
+In live tests with 2.1.304 (a two-turn session, the second turn resumed with `--continue`):
+
+| Change Before Turn Two | Cache Read | Cache Written |
+| --- | --- | --- |
+| Nothing | 12,601 | 3,382 |
+| `CLAUDE.md` edited | 12,602 | 3,543 |
+| Tools changed (`--disallowedTools Bash`) | 0 | 16,457 |
+
+Editing `CLAUDE.md` keeps the cache.
+This also holds inside one open session: after the model rewrote `CLAUDE.md` with the Write tool, the next request read 15,996 tokens from the cache and wrote 418.
+Memory is sent in the first user message, not the system prompt.
+The old text stays there, and the new text comes in a later message.
+Changing the tools throws the whole cache away, so pick tools before you start.
+A new session with the same tools and system prompt also reads the cache of an earlier one (10,182 tokens read on its first turn).
 See [Request and Cache](https://xsyetopz.github.io/claude-code-docs/how-it-works/request-and-cache.md).
 
 ## Related Pages

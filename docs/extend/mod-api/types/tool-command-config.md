@@ -51,7 +51,7 @@ One variant per built-in tool, with none in the table (a plugin author's project
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `[N in BuiltinToolName]` | <Documented /> | Not described in the type file. | Type: `ToolInputOf<N, BuiltinToolInputs[N]>`. |
+| `[N in BuiltinToolName]` | <Documented /> | One variant per built-in tool: the tool's input. | Type: `ToolInputOf<N, BuiltinToolInputs[N]>`. |
 
 ### `BuiltinToolCallInputFallback`
 
@@ -61,7 +61,7 @@ The built-in branch's answer when no built-in tool is declared: every name, its 
 | --- | --- | --- | --- |
 | `tool` | <Documented /> | The name of the tool being called (`Bash`), comparing it narrows `e` once the table has entries. Reserved: a rewrite of it is ignored by core. | Type: `string`. |
 | `tool_use_id` | <Documented /> | The tool_use block's id: the same at every event of the call and in `$.ui.notice`. Reserved: a rewrite of it is ignored by core. | Type: `string`. |
-| `[argument: string]` | <Documented /> | Not described in the type file. | Type: `unknown`. |
+| `[argument: string]` | <Documented /> | Any argument of the tool, with no type. | Type: `unknown`. |
 
 ### `CommandDescribeInput`
 
@@ -193,9 +193,9 @@ What a `config.set` hook returns and what `next(e)` resolves to: `{ value }` onc
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `value` | <Documented /> | Not described in the type file. | Type: `ConfigValue`. |
+| `value` | <Documented /> | The value now written to the row. | Type: `ConfigValue`. |
 | `deny` | <Documented /> | Never set in this form. | Type: `undefined`. Optional. |
-| `deny` | <Documented /> | Not described in the type file. | Type: `string`. |
+| `deny` | <Documented /> | The reason the write was refused. The row stays as it was. | Type: `string`. |
 | `value` | <Documented /> | Never set in this form. | Type: `undefined`. Optional. |
 
 ### `RegisteredToolSpec`
@@ -204,10 +204,10 @@ A ToolSpec as `$.tool.register` hands it on: the input schema filled in, `isDefe
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `name` | <Documented /> | Not described in the type file. | Type: `string`. |
-| `description` | <Documented /> | Not described in the type file. | Type: `string`. |
-| `inputSchema` | <Documented /> | Not described in the type file. | Type: `Record<string, unknown>`. |
-| `isDeferred` | <Documented /> | Not described in the type file. | Type: `ToolDeferral`. Optional. |
+| `name` | <Documented /> | The name of the tool. | Type: `string`. |
+| `description` | <Documented /> | The description the model sees for the tool. | Type: `string`. |
+| `inputSchema` | <Documented /> | The JSON schema of the tool input. | Type: `Record<string, unknown>`. |
+| `isDeferred` | <Documented /> | Where the tool waits, as the plugin gave it. | Type: `ToolDeferral`. Optional. |
 
 ### `ToolCallReserved`
 
@@ -215,9 +215,9 @@ The keys `tool.call`'s input carries beside the tool's own arguments, none of wh
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `tool` | <Documented /> | Not described in the type file. | Type: `T`. |
-| `tool_use_id` | <Documented /> | Not described in the type file. | Type: `string`. Optional. |
-| `consent` | <Documented /> | Not described in the type file. | Type: `string`. Optional. |
+| `tool` | <Documented /> | The name of the tool. | Type: `T`. |
+| `tool_use_id` | <Documented /> | The ID of the tool call. | Type: `string`. Optional. |
+| `consent` | <Documented /> | The person's own words for the press that raised the call. The tool never sees it. | Type: `string`. Optional. |
 
 ### `ToolCallResult`
 
@@ -291,8 +291,8 @@ What a `tool.describe` hook returns: the description the model sees for that too
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `description` | <Documented /> | Not described in the type file. | Type: `string`. |
-| `isDeferred` | <Documented /> | Not described in the type file. | Type: `ToolDeferral`. Optional. |
+| `description` | <Documented /> | The description the model sees for the tool. | Type: `string`. |
+| `isDeferred` | <Documented /> | Where the tool waits. `true` puts it behind ToolSearch. | Type: `ToolDeferral`. Optional. |
 
 ### `ToolEnvelope`
 
@@ -319,7 +319,7 @@ One tool as `$.tool.list()` returns it. Used by `$.tool.list`, `tool.list`.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `[K in keyof ToolEnvelope<Name, Arguments>]` | <Documented /> | Not described in the type file. | Type: `ToolEnvelope<Name, Arguments>[K]`. |
+| `[K in keyof ToolEnvelope<Name, Arguments>]` | <Documented /> | Each key of the tool envelope, with its type unchanged. | Type: `ToolEnvelope<Name, Arguments>[K]`. |
 
 ### `ToolNamed`
 

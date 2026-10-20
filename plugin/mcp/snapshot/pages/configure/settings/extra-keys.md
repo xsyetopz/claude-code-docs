@@ -46,7 +46,7 @@ The first rows are sub-keys of an object key. The last rows are read only by the
 | `disableBrowserExternalNavigation` | [Documented] | boolean | Unset, so external browsing is on | Turn off external browsing in the desktop Browser pane. Only `true` takes effect. | Managed settings only |
 | `browserExternalPageTools` | [Documented] | string | Unset, so the tools work on external pages | Stop Claude from using its tools on external pages in the desktop Browser pane. The value is `"disabled"`. | Managed settings only |
 | `disableMobileSimulatorTools` | [Documented] | boolean | Unset | Block Claude's tools in the desktop iOS Simulator pane. Only `true` takes effect. | Managed settings only |
-| `disableDesktopLocalSessions` | [Documented] | Unknown | - | Turn off Desktop Code sessions that run on the device. SSH and cloud sessions stay on. Not in the 2.1.304 program (no schema entry or reader). Claude Desktop may read it, if anyone does. | Managed settings only |
+| `disableDesktopLocalSessions` | [Documented] | boolean | - | Turn off Desktop Code sessions that run on the device. SSH and cloud sessions stay on. Not in the 2.1.304 program (no schema entry or reader). The [official docs](https://code.claude.com/docs/en/settings-reference#disabledesktoplocalsessions) say the desktop app reads it (v1.37937.0 or later), and only `true` takes effect. | Managed settings only |
 
 ## Global Config Keys
 

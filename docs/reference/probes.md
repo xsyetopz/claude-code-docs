@@ -148,7 +148,6 @@ Not run, because they need a login, a cloud or remote session, or another host:
 - `callback` hook forwarding for cloud sessions.
 - The `Notification` types `auth_success`, `agent_completed`, `quota_auto_resume_fired`, `quota_auto_resume_stale`, `quota_auto_resume_disabled`, `auth_storage_failure`, `computer_use_enter`, `computer_use_exit`, `plugin_notification`, `push_notification`, and `worker_permission_prompt`.
 - Cloud and Cowork memory variables.
-- `PermissionDenied` with `retry: true` and a real classifier verdict. The stub cannot return a verdict.
 - `Glob`, `Grep`, `NotebookEdit`, `WebFetch`, and `WebSearch` in the `PostToolUse` shape probe.
 
 ## What We Did Not Probe

@@ -56,8 +56,8 @@ A named value with its initial, as `atom(ref, initial)` makes it: read, it is ne
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `ref` | [Documented] | Not described in the type file. | Type: `StateAddress`. Read-only. |
-| `initial` | [Documented] | Not described in the type file. | Type: `T`. Read-only. |
+| `ref` | [Documented] | The address of the named value. | Type: `StateAddress`. Read-only. |
+| `initial` | [Documented] | The value it reads as while nothing is written. | Type: `T`. Read-only. |
 | `shape` | [Documented] | The tag the value is kept under, when the atom was given one: a stored value under another tag reads as absent (Shaped). | Type: `string`. Optional. Read-only. |
 
 ### `AtomOptions`
@@ -66,7 +66,7 @@ The options of `atom`: `shape`, a tag the value is kept under, so a reload of th
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `shape` | [Documented] | Not described in the type file. | Type: `string`. |
+| `shape` | [Documented] | A tag the value is kept under. A reload of the plugin that names another tag finds the value absent. | Type: `string`. |
 
 ### `ClockWait`
 
@@ -208,7 +208,7 @@ Plain data: what JSON holds, and what crosses between a plugin's hooks module an
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `[key: string]` | [Documented] | Not described in the type file. | Type: `JsonValue`. |
+| `[key: string]` | [Documented] | Any property of a plain object, whose value is again plain data. | Type: `JsonValue`. |
 
 ### `ProcessRunInit`
 
@@ -284,9 +284,9 @@ Which named value a `$.state` call is about, as it crosses to the host: the owni
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `plugin` | [Documented] | Not described in the type file. | Type: `string`. |
-| `key` | [Documented] | Not described in the type file. | Type: `string`. |
-| `id` | [Documented] | Not described in the type file. | Type: `string`. Optional. |
+| `plugin` | [Documented] | The plugin that owns the value. | Type: `string`. |
+| `key` | [Documented] | The key of the value in that plugin. | Type: `string`. |
+| `id` | [Documented] | The member of a family, when the key is a `StateFamily`. | Type: `string`. Optional. |
 
 ### `StateFamily`
 
@@ -294,7 +294,7 @@ A key of PluginState that holds one value of type `T` per `id` (one per drawn ro
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `byId` | [Documented] | Not described in the type file. | Type: `T`. Read-only. |
+| `byId` | [Documented] | The type of the value held for each `id`. A marker only: no value has this shape. | Type: `T`. Read-only. |
 
 ### `StateName`
 
@@ -302,8 +302,8 @@ Which named value: the plugin that owns it and its key there, both literals wher
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `plugin` | [Documented] | Not described in the type file. | Type: `P`. Read-only. |
-| `key` | [Documented] | Not described in the type file. | Type: `K`. Read-only. |
+| `plugin` | [Documented] | The plugin that owns the value. | Type: `P`. Read-only. |
+| `key` | [Documented] | The key of the value in that plugin. | Type: `K`. Read-only. |
 
 ### `StateRead`
 
@@ -311,8 +311,8 @@ What `$.state.get` answers: the value and the version it stands at, a value neve
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `value` | [Documented] | Not described in the type file. | Type: `T \| undefined`. |
-| `version` | [Documented] | Not described in the type file. | Type: `number`. |
+| `value` | [Documented] | The value, or `undefined` if it was never written. | Type: `T \| undefined`. |
+| `version` | [Documented] | The version the value stands at. 0 for a value never written. | Type: `number`. |
 
 ### `StateSetOptions`
 
@@ -320,7 +320,7 @@ The options of `$.state.set`: `ifVersion` makes the write conditional on the val
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `ifVersion` | [Documented] | Not described in the type file. | Type: `number`. Optional. |
+| `ifVersion` | [Documented] | Write only if the value still stands at this version. | Type: `number`. Optional. |
 
 ### `StateSetResult`
 
@@ -328,10 +328,10 @@ What `$.state.set` answers: whether the write landed, and the version the value 
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `isSet` | [Documented] | Not described in the type file. | Type: `true`. |
-| `version` | [Documented] | Not described in the type file. | Type: `number`. |
-| `isSet` | [Documented] | Not described in the type file. | Type: `false`. |
-| `version` | [Documented] | Not described in the type file. | Type: `number`. |
+| `isSet` | [Documented] | `true`: the write landed. | Type: `true`. |
+| `version` | [Documented] | The version the value stands at now. | Type: `number`. |
+| `isSet` | [Documented] | `false`: another write beat it and nothing changed. | Type: `false`. |
+| `version` | [Documented] | The version the value stands at now. | Type: `number`. |
 
 ### `StateWrite`
 
@@ -339,9 +339,9 @@ A `$.state.set` as it crosses to the host and as its hooks see it when no contra
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `value` | [Documented] | Not described in the type file. | Type: `unknown`. |
-| `previous` | [Documented] | Not described in the type file. | Type: `unknown`. Optional. |
-| `ifVersion` | [Documented] | Not described in the type file. | Type: `number`. Optional. |
+| `value` | [Documented] | The value to write. | Type: `unknown`. |
+| `previous` | [Documented] | What stood there when the write was raised. The host sets it. | Type: `unknown`. Optional. |
+| `ifVersion` | [Documented] | Write only if the value still stands at this version. | Type: `number`. Optional. |
 
 ### `Timer`
 

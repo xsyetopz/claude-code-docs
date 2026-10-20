@@ -88,9 +88,10 @@ The `config` output tags custom rules as `(custom rules added alongside the defa
 | `CLAUDE_CODE_BG_CLASSIFIER_MODEL` | <Undocumented /> | Classifier model for background sessions | Listed with the model env vars | Env |
 | `CLAUDE_CODE_AUTO_MODE_TIER` | <Undocumented /> | Any value sets the tier to `strict` | Source `env` | Env |
 | `CLAUDE_CODE_CLASSIFIER_SUMMARY` | <Undocumented /> | Chooses `llm` or `heuristic` summaries | Boolean parse, a hidden server-side flag picks the default | Env |
-| `CLAUDE_CODE_TWO_STAGE_CLASSIFIER` | <Undocumented /> | Two-stage classifier | Use unknown | Env |
-| `CLAUDE_CODE_AUTO_MODE_EXTERNAL_PERMISSIONS` | <Undocumented /> | Unknown | Use unknown | Env |
-| `CLAUDE_CHROME_CLASSIFIER_FLOOR`, `CLAUDE_CHROME_PERMISSION_MODE` | <Undocumented /> | Chrome extension permission input | Use unknown | Env |
+| `CLAUDE_CODE_TWO_STAGE_CLASSIFIER` | <Undocumented /> | No effect. The program lists it in its environment table as a boolean and no code reads it. The two-stage mode (`fast`, `thinking`, or `both`) comes from server config, and `both` is the default | The program ignores the value | Env |
+| `CLAUDE_CODE_AUTO_MODE_EXTERNAL_PERMISSIONS` | <Undocumented /> | No effect. The program lists the name in its environment table and no code reads it | The program ignores the value | Env |
+| `CLAUDE_CHROME_CLASSIFIER_FLOOR` | <Undocumented /> | Turns the Chrome classifier floor on or off for auto mode | Used when set. When unset, the hidden server-side flag `tengu_cowork_chrome_automode_default` decides (default off). Project `env` can set it only to a true value | Env |
+| `CLAUDE_CHROME_PERMISSION_MODE` | <Undocumented /> | Permission mode that the Claude in Chrome bridge uses | `ask`, `skip_all_permission_checks`, or `follow_a_plan`. Another value logs a warning. Claude Code sets `skip_all_permission_checks` for the Chrome native host when it skips permission checks. Project `env` can set it only to `ask` | Env |
 | `CLAUDE_BG_SESSION_PERMISSION_RULES` | <Undocumented /> | JSON with `allow`, `deny`, `addDirs` for a background session | Read when `CLAUDE_CODE_SESSION_KIND` is `bg`. Removed from child env | Env |
 | `CLAUDE_CODE_PARKED_PERMISSION_WAIT_MS` | <Undocumented /> | Wait for a parked permission | Default `2000` | Env |
 | `CLAUDE_CODE_RESTRICT_PERSONAL_CONFIG` | <Undocumented /> | Own skills and commands cannot pre-approve tools | Personal hooks need existing rules | Env |

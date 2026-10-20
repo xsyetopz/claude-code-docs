@@ -23,7 +23,7 @@ Source: [Tools Reference](https://code.claude.com/docs/en/tools-reference), [Con
 | `WebFetch` | <Documented /> <Gated note="CLAUDE_CODE_DISABLE_WEB_FETCH=1 turns it off" /> | Fetches a URL and applies a prompt to the page text. | `url` (URL string, required), `prompt` (string, required), `offset` (int, 0 or more, optional, character offset for a long page). The off switch needs `2.1.285` or later. | Main session and subagents. Kept in background subagents. | ✅ | ✅ | ✅ |
 | `WebSearch` | <Documented /> <Gated note="off for the gateway provider; Vertex depends on the model" /> | Searches the web. | `query` (string, at least 2 characters, required), `allowed_domains` (string array, optional), `blocked_domains` (string array, optional). | Main session and subagents. Kept in background subagents. | ✅ | ✅ | ✅ |
 | `TaskStop` | <Documented /> | Stops a running background task. | `task_id` (string, optional; also takes a teammate or named background agent by ID or name), `shell_id` (string, optional, deprecated). | Main session and subagents. Kept in background subagents. | ❌ | ✅ | ✅ |
-| `GetTask` | <Undocumented /> <Gated note="hidden server-side flag" /> | Checks a background shell command by task ID. | `taskId` (string, required). | Unknown | ✅ | ✅ | ❌ |
+| `GetTask` | <Undocumented /> <Gated note="hidden server-side flag" /> | Checks a background shell command by task ID. | `taskId` (string, required). | Only when the server flag `tengu_violin_rosin` is on (default off). Nothing local turns it on. `CLAUDE_CODE_DISABLE_BACKGROUND_TASKS`, the setting that turns off background tasks, and `--bare` turn it off. | ✅ | ✅ | ❌ |
 
 ## `Bash` Parameters
 

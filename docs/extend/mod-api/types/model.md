@@ -38,7 +38,7 @@ One content block of an ApiMessage: `type` names its kind (`text`, `tool_use`, `
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
 | `type` | <Documented /> | The block's kind, the rest of the block is that kind's fields. | Type: `string`. |
-| `[field: string]` | <Documented /> | Not described in the type file. | Type: `unknown`. |
+| `[field: string]` | <Documented /> | Any other field of the block. Its kind (`type`) decides which fields it has, as the Messages API defines them. | Type: `unknown`. |
 
 ### `ApiMessage`
 
@@ -98,7 +98,7 @@ One block of an MCP result: `type` and the fields that kind of block carries.
 | `text` | <Documented /> | Set on a `text` block. | Type: `string`. Optional. |
 | `uri` | <Documented /> | Set on a `resource_link` (or embedded `resource`) block. | Type: `string`. Optional. |
 | `mimeType` | <Documented /> | Declared by an image, audio or resource block. | Type: `string`. Optional. |
-| `[field: string]` | <Documented /> | Not described in the type file. | Type: `unknown`. |
+| `[field: string]` | <Documented /> | Any other field of the block. Its `type` decides which fields it has. | Type: `unknown`. |
 
 ### `McpServerProvenance`
 
@@ -106,7 +106,7 @@ The MCP server that serves this tool. `name` is the server's config key and `sou
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `name` | <Documented /> | Not described in the type file. | Type: `string`. |
+| `name` | <Documented /> | The config key of the MCP server. | Type: `string`. |
 | `source` | <Documented /> | sdk \| plugin \| user \| project \| local \| dynamic \| managed \| enterprise \| claudeai \| agent - an open set, treat unknown values as an unrecognized configured source, never as sdk. | Type: `string`. |
 
 ### `McpToolCallInput`
@@ -115,7 +115,7 @@ The MCP branch of a `tool.call` hook's `e` (and of `$.tool.call`'s input): one v
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `[N in keyof McpToolInputs & string]` | <Documented /> | Not described in the type file. | Type: `ToolInputOf<N, McpToolInputs[N] & Record<string, unknown>>`. |
+| `[N in keyof McpToolInputs & string]` | <Documented /> | One variant per declared MCP tool: the tool's input. | Type: `ToolInputOf<N, McpToolInputs[N] & Record<string, unknown>>`. |
 
 ### `McpToolCallInputFallback`
 
@@ -125,7 +125,7 @@ The `e` a `tool.call` (or `classic.PreToolUse`) hook receives for an MCP tool wh
 | --- | --- | --- | --- |
 | `tool` | <Documented /> | The name of the tool being called (`mcp__<server>__<tool>`), comparing it narrows `e`. Reserved: a rewrite of it is ignored by core. | Type: `McpToolName`. |
 | `tool_use_id` | <Documented /> | The tool_use block's id: the same at every event of the call and in `$.ui.notice`. Reserved: a rewrite of it is ignored by core. | Type: `string`. |
-| `[argument: string]` | <Documented /> | Not described in the type file. | Type: `unknown`. |
+| `[argument: string]` | <Documented /> | Any argument of the MCP tool, with no type. | Type: `unknown`. |
 
 ### `McpToolResult`
 
@@ -182,15 +182,15 @@ What one model call resolves to: the reply when the model answered (`isAnswered`
 | `isAnswered` | <Documented /> | True: the model answered, `text` and `usage` are its reply. | Type: `true`. Example: `if (r.isAnswered) spent += r.usage.output_tokens`. |
 | `text` | <Documented /> | The reply's text: a completion's text blocks joined, on a fork, the non-error replies' text joined by newlines. | Type: `string`. |
 | `usage` | <Documented /> | What the call cost (ModelUsage), on a fork its completions summed. | Type: `ModelUsage`. On a fork, `cache_read_input_tokens` near zero means the fork paid for the whole prefix. |
-| `isAnswered` | <Documented /> | Not described in the type file. | Type: `false`. |
+| `isAnswered` | <Documented /> | `false`: the model gave no text. | Type: `false`. |
 | `reason` | <Documented /> | The API answered with an error and no reply carried text. | Type: `'api-error'`. Example: `if (!r.isAnswered && r.reason === "api-error") retry(r.status)`. |
 | `status` | <Documented /> | The error reply's HTTP status (429, 500, 529, ...), null when no response arrived at all (a dropped connection, a provider timeout). | Type: `number \| null`. |
 | `error` | <Documented /> | Which kind of failure, as Claude Code classifies API errors, never the error's text or body. | Type: `ModelApiError`. `rate_limit`, `overloaded`, `invalid_request`, `authentication_failed`, `server_error`, ..., `unknown` when it fits none of the named kinds. |
 | `usage` | <Documented /> | What the call cost before it failed: all zeros for a completion (its one request was the one refused), on a fork, the turns before it. | Type: `ModelUsage`. |
-| `isAnswered` | <Documented /> | Not described in the type file. | Type: `false`. |
+| `isAnswered` | <Documented /> | `false`: the model gave no text. | Type: `false`. |
 | `reason` | <Documented /> | The model replied and its reply carried no text. | Type: `'empty-reply'`. The reply held no text block, or a fork answered only with a denied tool attempt. |
 | `usage` | <Documented /> | What the call cost. | Type: `ModelUsage`. |
-| `isAnswered` | <Documented /> | Not described in the type file. | Type: `false`. |
+| `isAnswered` | <Documented /> | `false`: the model gave no text. | Type: `false`. |
 | `reason` | <Documented /> | The call was cut before a reply came, whatever had come back is discarded. | Type: `'aborted'`. The dispatch was aborted, the plugin unloaded, `options.signal` fired, or `timeoutMs` ran out. |
 | `usage` | <Documented /> | What the call cost before it was cut: all zeros for a completion (no response arrived), on a fork, what came back before the abort. | Type: `ModelUsage`. |
 
@@ -208,7 +208,7 @@ What `$.model.fork` resolves to: a completion's result (ModelCompleteResult) or 
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `isAnswered` | <Documented /> | Not described in the type file. | Type: `false`. |
+| `isAnswered` | <Documented /> | `false`: the fork gave no text. | Type: `false`. |
 | `reason` | <Documented /> | Nothing to fork, so no request was made: the session holds no snapshot of this conversation's main thread that a fork may share. | Type: `'nothing-to-fork'`. No turn has run yet, or the conversation started afresh after `/clear` or a resume. |
 
 ### `ModelTextBlock`

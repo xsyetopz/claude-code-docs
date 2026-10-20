@@ -207,8 +207,9 @@ flowchart TD
 > - `statusLine` runs once at start and once after the first reply (not at prompt submit). Three mode changes 100 ms apart gave one run, which fits the 300 ms debounce. `refreshInterval: 3` ran every 3.0 seconds (2.8 to 3.5).
 > - Runs paused while a permission or MCP input dialog was on screen (gaps of 12.5 and 19.5 seconds).
 > - `padding: 1` gave a one-space indent, and two printed lines showed as two rows under the prompt.
+> - With no subagents, `subagentStatusLine` did not run. In a session left idle for 22 seconds its command had not run once. The first run came when a background agent started.
+> - A test agent finished after 3 seconds. Its row was not drawn again after that, and the command kept its 5-second tick for about 30 seconds after the agent started (7 runs, the first with `status` `running` and the other six with `completed`). In that time the agent panel showed the hint `/tasks to see subagents` for about 30 seconds, then the hint went away. After that the command did not run again.
 >
-> Still unknown: how `subagentStatusLine` behaves with no subagents (the command ran only once a task existed), and how long a completed row stays on screen. Reason: not run in the probe.
 
 ## Related Pages
 

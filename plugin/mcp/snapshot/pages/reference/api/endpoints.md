@@ -31,21 +31,21 @@ Source: [Gateway Compatibility Guide](https://code.claude.com/docs/en/llm-gatewa
 ## Account and Service Endpoints
 
 These paths are strings in the program. The docs do not describe them, except the OpenTelemetry row.
-The use of a path is a guess from its name.
+The Use column comes from the code that calls each path.
 
-| Path | Status | Likely Use |
+| Path | Status | Use |
 | --- | --- | --- |
-| `/v1/oauth/token`, `/api/oauth/profile`, `/api/oauth/usage`, `/api/oauth/account/settings` | [Undocumented] | Sign-in tokens, the profile, plan usage, and account settings. |
+| `/v1/oauth/token`, `/api/oauth/profile`, `/api/oauth/usage`, `/api/oauth/account/settings` | [Undocumented] | `/v1/oauth/token` is the OAuth token URL. `/api/oauth/profile` returns the sign-in profile and organization. `/api/oauth/usage` returns plan usage (the `/usage` data). `/api/oauth/account/settings` is read and patched for the `grove_enabled` choice and for artifact pins. |
 | `/api/claude_code/policy_limits` | [Undocumented] | The limits of your organization, cached in `policy-limits.json`. |
-| `/api/claude_code/organizations/metrics_enabled`, `/api/claude_code/notification/preferences`, `/api/claude_code/skills` | [Undocumented] | The metrics switch of the organization, notification settings, and synced skills. |
+| `/api/claude_code/organizations/metrics_enabled`, `/api/claude_code/notification/preferences`, `/api/claude_code/skills` | [Undocumented] | The metrics opt-out check (`metrics_logging_enabled`), the notification preferences, and the skill health data, which is fetched only when the server flag `tengu_skills_dashboard_enabled` is on. |
 | `/api/event_logging/v2/batch` | [Undocumented] | Event logging by Anthropic. |
 | `/v1/metrics`, `/v1/logs`, `/v1/traces` | [Documented] | OpenTelemetry export. See [Monitoring](https://code.claude.com/docs/en/monitoring-usage). |
 | `/api/claude_cli_feedback`, `/api/claude_code_shared_session_transcripts` | [Undocumented] | Feedback and shared transcripts. |
-| `/v1/code/sessions`, `/v1/code/triggers`, `/v1/code/github/*`, `/v1/code/agent-proxy` | [Undocumented] | Cloud sessions, routines, and GitHub helpers. |
-| `/v1/ultrareview/quota`, `/v1/ultrareview/preflight` | [Undocumented] | The command `claude ultrareview`. |
-| `/api/model_selector/{id}`, `/api/organization/claude_code_first_token_date` | [Undocumented] | Data for the model picker and the date of first use. |
+| `/v1/code/sessions`, `/v1/code/triggers`, `/v1/code/github/*`, `/v1/code/agent-proxy` | [Undocumented] | Cloud sessions, routines (`/v1/code/triggers`), GitHub pull request and review comment helpers, and the relay that the agent proxy uses. |
+| `/v1/ultrareview/quota`, `/v1/ultrareview/preflight` | [Undocumented] | The quota check and the preflight check for an ultrareview cloud run. |
+| `/api/model_selector/{id}`, `/api/organization/claude_code_first_token_date` | [Undocumented] | Model picker data, and a one-time fetch of the date of first use that is kept as `claudeCodeFirstTokenDate`. |
 | `/api/ws/speech_to_text/voice_stream` | [Undocumented] | Voice dictation. |
-| `/api/frame/*`, `/v1/design/*` | [Undocumented] | Artifacts and Claude Design. |
+| `/api/frame/*`, `/v1/design/*` | [Undocumented] | Artifact frames (`/api/frame/*`, through the agent proxy) and Claude Design MCP servers (`/v1/design/*`). |
 
 The program also holds an Anthropic SDK client with paths such as `/v1/agents`, `/v1/skills`, `/v1/vaults`, and `/v1/organizations/*`.
 They belong to the SDK code, and the Claude Code loop does not call them.

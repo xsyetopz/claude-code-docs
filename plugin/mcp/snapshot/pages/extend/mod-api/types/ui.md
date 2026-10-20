@@ -77,14 +77,14 @@ The `Box` props a `hover` may override, none of which moves the Box's siblings, 
 | --- | --- | --- | --- |
 | `scope` | [Documented] | Names a hover group of this plugin's: every element it draws with the same `scope`, in any site, lights while any is hovered, reveals included. | Type: `string`. Optional. A `Pane` row and a transcript mark can share one scope. A scope is 1 to 64 characters with no control characters. |
 | `borderStyle` | [Documented] | Restyles a border the Box has, it adds none. | Type: `string`. Optional. |
-| `borderColor` | [Documented] | Not described in the type file. | Type: `Color`. Optional. |
-| `borderDimColor` | [Documented] | Not described in the type file. | Type: `boolean`. Optional. |
-| `backgroundColor` | [Documented] | Not described in the type file. | Type: `Color`. Optional. |
+| `borderColor` | [Documented] | The border color. | Type: `Color`. Optional. |
+| `borderDimColor` | [Documented] | `true` dims the border color. | Type: `boolean`. Optional. |
+| `backgroundColor` | [Documented] | The background color. | Type: `Color`. Optional. |
 | `display` | [Documented] | `"flex"` alone, on a Box drawn `display: "none"`: with a `scope`, every member of the lit group is revealed, in whichever site it sits. | Type: `'flex'`. Optional. So a pointer on a glyph in the transcript can swap an entry into a fixed row of the band, or reveal an absolutely positioned card. |
 | `top` | [Documented] | Moves a Box drawn `position: "absolute"`, as `left`, `right` and `bottom` do, none of the four moves a Box in the flow. | Type: `number`. Optional. |
-| `left` | [Documented] | Not described in the type file. | Type: `number`. Optional. |
-| `right` | [Documented] | Not described in the type file. | Type: `number`. Optional. |
-| `bottom` | [Documented] | Not described in the type file. | Type: `number`. Optional. |
+| `left` | [Documented] | The distance from the left edge. | Type: `number`. Optional. |
+| `right` | [Documented] | The distance from the right edge. | Type: `number`. Optional. |
+| `bottom` | [Documented] | The distance from the bottom edge. | Type: `number`. Optional. |
 
 ### `BoxProps`
 
@@ -99,40 +99,40 @@ The props of `Box`: the layout, position, margin, padding and border props of In
 | `left` | [Documented] | Columns from the parent's left edge, in character cells: an integer, negative left of the edge. | Type: `number`. Optional. With `right` and no `width` the Box spans the two. |
 | `right` | [Documented] | Columns from the parent's right edge, in character cells: an integer, negative right of the edge. | Type: `number`. Optional. |
 | `bottom` | [Documented] | Rows from the parent's bottom edge, in character cells: an integer, negative below the edge. | Type: `number`. Optional. |
-| `flexDirection` | [Documented] | Not described in the type file. | Type: `'row' \| 'column' \| 'row-reverse' \| 'column-reverse'`. Optional. |
-| `flexGrow` | [Documented] | Not described in the type file. | Type: `number`. Optional. |
-| `flexShrink` | [Documented] | Not described in the type file. | Type: `number`. Optional. |
-| `flexWrap` | [Documented] | Not described in the type file. | Type: `'nowrap' \| 'wrap' \| 'wrap-reverse'`. Optional. |
-| `alignItems` | [Documented] | Not described in the type file. | Type: `'flex-start' \| 'center' \| 'flex-end' \| 'stretch'`. Optional. |
-| `alignSelf` | [Documented] | Not described in the type file. | Type: `'flex-start' \| 'center' \| 'flex-end' \| 'auto'`. Optional. |
-| `justifyContent` | [Documented] | Not described in the type file. | Type: `'flex-start' \| 'center' \| 'flex-end' \| 'space-between' \| 'space-around' \| 'space-evenly'`. Optional. |
+| `flexDirection` | [Documented] | The direction of the main axis. | Type: `'row' \| 'column' \| 'row-reverse' \| 'column-reverse'`. Optional. |
+| `flexGrow` | [Documented] | How much the box grows to fill free space. | Type: `number`. Optional. |
+| `flexShrink` | [Documented] | How much the box shrinks when space is short. | Type: `number`. Optional. |
+| `flexWrap` | [Documented] | Whether children wrap onto more lines. | Type: `'nowrap' \| 'wrap' \| 'wrap-reverse'`. Optional. |
+| `alignItems` | [Documented] | How children line up on the cross axis. | Type: `'flex-start' \| 'center' \| 'flex-end' \| 'stretch'`. Optional. |
+| `alignSelf` | [Documented] | How this box lines up on the cross axis, overriding its parent. | Type: `'flex-start' \| 'center' \| 'flex-end' \| 'auto'`. Optional. |
+| `justifyContent` | [Documented] | How children line up on the main axis. | Type: `'flex-start' \| 'center' \| 'flex-end' \| 'space-between' \| 'space-around' \| 'space-evenly'`. Optional. |
 | `gap` | [Documented] | Space between the children, in cells or a step name. Set `gap` on the `Box` rather than a margin on each child. | Type: `Space`. Optional. |
-| `columnGap` | [Documented] | Not described in the type file. | Type: `Space`. Optional. |
-| `rowGap` | [Documented] | Not described in the type file. | Type: `Space`. Optional. |
-| `width` | [Documented] | Not described in the type file. | Type: `number \| string`. Optional. |
-| `height` | [Documented] | Not described in the type file. | Type: `number \| string`. Optional. |
-| `minWidth` | [Documented] | Not described in the type file. | Type: `number \| string`. Optional. |
-| `minHeight` | [Documented] | Not described in the type file. | Type: `number \| string`. Optional. |
-| `margin` | [Documented] | Not described in the type file. | Type: `Space`. Optional. |
-| `marginX` | [Documented] | Not described in the type file. | Type: `Space`. Optional. |
-| `marginY` | [Documented] | Not described in the type file. | Type: `Space`. Optional. |
-| `marginTop` | [Documented] | Not described in the type file. | Type: `Space`. Optional. |
-| `marginBottom` | [Documented] | Not described in the type file. | Type: `Space`. Optional. |
-| `marginLeft` | [Documented] | Not described in the type file. | Type: `Space`. Optional. |
-| `marginRight` | [Documented] | Not described in the type file. | Type: `Space`. Optional. |
-| `padding` | [Documented] | Not described in the type file. | Type: `Space`. Optional. |
-| `paddingX` | [Documented] | Not described in the type file. | Type: `Space`. Optional. |
-| `paddingY` | [Documented] | Not described in the type file. | Type: `Space`. Optional. |
-| `paddingTop` | [Documented] | Not described in the type file. | Type: `Space`. Optional. |
-| `paddingBottom` | [Documented] | Not described in the type file. | Type: `Space`. Optional. |
-| `paddingLeft` | [Documented] | Not described in the type file. | Type: `Space`. Optional. |
-| `paddingRight` | [Documented] | Not described in the type file. | Type: `Space`. Optional. |
-| `borderStyle` | [Documented] | Not described in the type file. | Type: `string`. Optional. |
-| `borderColor` | [Documented] | Not described in the type file. | Type: `Color`. Optional. |
-| `borderDimColor` | [Documented] | Not described in the type file. | Type: `boolean`. Optional. |
-| `backgroundColor` | [Documented] | Not described in the type file. | Type: `Color`. Optional. |
-| `overflow` | [Documented] | Not described in the type file. | Type: `'visible' \| 'hidden'`. Optional. |
-| `display` | [Documented] | Not described in the type file. | Type: `'flex' \| 'none'`. Optional. |
+| `columnGap` | [Documented] | The space between columns. | Type: `Space`. Optional. |
+| `rowGap` | [Documented] | The space between rows. | Type: `Space`. Optional. |
+| `width` | [Documented] | The width, in cells or as a percentage string. | Type: `number \| string`. Optional. |
+| `height` | [Documented] | The height, in cells or as a percentage string. | Type: `number \| string`. Optional. |
+| `minWidth` | [Documented] | The smallest width, in cells or as a percentage string. | Type: `number \| string`. Optional. |
+| `minHeight` | [Documented] | The smallest height, in cells or as a percentage string. | Type: `number \| string`. Optional. |
+| `margin` | [Documented] | The margin on all four sides. | Type: `Space`. Optional. |
+| `marginX` | [Documented] | The left and right margin. | Type: `Space`. Optional. |
+| `marginY` | [Documented] | The top and bottom margin. | Type: `Space`. Optional. |
+| `marginTop` | [Documented] | The top margin. | Type: `Space`. Optional. |
+| `marginBottom` | [Documented] | The bottom margin. | Type: `Space`. Optional. |
+| `marginLeft` | [Documented] | The left margin. | Type: `Space`. Optional. |
+| `marginRight` | [Documented] | The right margin. | Type: `Space`. Optional. |
+| `padding` | [Documented] | The padding on all four sides. | Type: `Space`. Optional. |
+| `paddingX` | [Documented] | The left and right padding. | Type: `Space`. Optional. |
+| `paddingY` | [Documented] | The top and bottom padding. | Type: `Space`. Optional. |
+| `paddingTop` | [Documented] | The top padding. | Type: `Space`. Optional. |
+| `paddingBottom` | [Documented] | The bottom padding. | Type: `Space`. Optional. |
+| `paddingLeft` | [Documented] | The left padding. | Type: `Space`. Optional. |
+| `paddingRight` | [Documented] | The right padding. | Type: `Space`. Optional. |
+| `borderStyle` | [Documented] | The border style. | Type: `string`. Optional. |
+| `borderColor` | [Documented] | The border color. | Type: `Color`. Optional. |
+| `borderDimColor` | [Documented] | `true` dims the border color. | Type: `boolean`. Optional. |
+| `backgroundColor` | [Documented] | The background color. | Type: `Color`. Optional. |
+| `overflow` | [Documented] | Whether content outside the box shows or is cut. | Type: `'visible' \| 'hidden'`. Optional. |
+| `display` | [Documented] | `flex` shows the box. `none` hides it. | Type: `'flex' \| 'none'`. Optional. |
 
 ### `ButtonProps`
 
@@ -160,8 +160,8 @@ One key the person pressed while a `Client` had the focus, as `surface.onKey` ha
 | --- | --- | --- | --- |
 | `key` | [Documented] | A special key's name (`up`, `down`, `left`, `right`, `return`, `tab`, `backspace`, `delete`, `pageup`, `home`, ...) or the character typed. | Type: `string`. |
 | `ctrl` | [Documented] | Modifier keys held with it, each present only when true. | Type: `true`. Optional. |
-| `shift` | [Documented] | Not described in the type file. | Type: `true`. Optional. |
-| `meta` | [Documented] | Not described in the type file. | Type: `true`. Optional. |
+| `shift` | [Documented] | `true` when Shift was held. | Type: `true`. Optional. |
+| `meta` | [Documented] | `true` when Meta was held. | Type: `true`. Optional. |
 
 ### `ClientPointerEvent`
 
@@ -169,14 +169,14 @@ One pointer event over a `Client`'s region, as `surface.onPointer` hands it: reg
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `type` | [Documented] | Not described in the type file. | Type: `ClientPointerType`. |
+| `type` | [Documented] | What the pointer did. | Type: `ClientPointerType`. |
 | `x` | [Documented] | The column under the pointer, 0 at the region's left edge, on `enter` and `leave`, the last column a move reported. | Type: `number`. |
 | `y` | [Documented] | The row under the pointer, 0 at the region's top edge. | Type: `number`. |
 | `fine` | [Documented] | The same position with the fraction of a cell kept (`x: 12`, `fine.x: 12.375`), where the surface knows it: a terminal that reports pixels. | Type: `object`. Optional. Sub-cell pointer position. Kitty, Ghostty, iTerm2, WezTerm, and foot send it. tmux passes none. |
 | `button` | [Documented] | Which button is down (`down`, `move` while held) or came up (`up`), absent on a hover `move`, `enter` and `leave`. | Type: `'left' \| 'middle' \| 'right'`. Optional. |
 | `shift` | [Documented] | Modifier keys the terminal reported held, each present only when true. | Type: `true`. Optional. |
-| `alt` | [Documented] | Not described in the type file. | Type: `true`. Optional. |
-| `ctrl` | [Documented] | Not described in the type file. | Type: `true`. Optional. |
+| `alt` | [Documented] | `true` when Alt was held. | Type: `true`. Optional. |
+| `ctrl` | [Documented] | `true` when Ctrl was held. | Type: `true`. Optional. |
 
 ### `ClientProps`
 
@@ -226,7 +226,7 @@ The `children` field every element constructor's props carry, appended beside it
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `children` | [Documented] | Not described in the type file. | Type: `RenderChildren`. Optional. |
+| `children` | [Documented] | One child, or a list of children that may nest. | Type: `RenderChildren`. Optional. |
 
 ### `ElementName`
 
@@ -234,7 +234,7 @@ Every element name of every surface: what a table handed out is completed to (an
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `[P in RenderSurface]` | [Documented] | Not described in the type file. | Type: `keyof Elements[P]`. |
+| `[P in RenderSurface]` | [Documented] | For each render surface, the names of its elements. | Type: `keyof Elements[P]`. |
 
 ### `ImageBlitArgs`
 
@@ -419,44 +419,44 @@ What a render hook returns, and what `next(e)` resolves to: a plain-data tree of
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
 | `type` | [Documented] | A button, on every surface: `[ label ]` on the terminal, a native button on a desktop, a press raises `ui.press` (`e.element` the key). | Type: `'Button'`. Built by `<Button>`. The `onPress` closure stays in the plugin's own environment under `press.handle`. |
-| `props` | [Documented] | Not described in the type file. | Type: `object`. |
+| `props` | [Documented] | The props of the element, typed `object`. | Type: `object`. |
 | `press` | [Documented] | Where the handler lives: the plugin whose hook drew the element, and the handle its environment keeps the `onPress` closure under. | Type: `object`. The runtime stamps the plugin as the tree leaves that hook. |
 | `hover` | [Documented] | Label style overrides (the Text set) the surface applies while the nearest keyed Box, or the group `scope` names, is hovered, plain data. | Type: `TextHoverProps`. Optional. |
 | `children` | [Documented] | What is drawn in the label's place, all of it one pressable: strings and `Text` (a chip, a dim part), any other element refused. | Type: `RenderNode[]`. Optional. Absent for a Button of a label alone, drawn as it always was. |
 | `type` | [Documented] | A text field on every surface, of one line or of `rows`, a change and Enter raise `ui.input` (`e.element`, `e.kind`, `e.value` the text). | Type: `'Input'`. Built by `<Input>`. The `onInput` and `onSubmit` closures stay in the plugin's environment. A leaf with no children. |
-| `props` | [Documented] | Not described in the type file. | Type: `object`. |
+| `props` | [Documented] | The props of the element, typed `object`. | Type: `object`. |
 | `press` | [Documented] | Where the handlers live: the plugin whose hook drew the element, and the handle its environment keeps the closures under. | Type: `object`. The runtime stamps the plugin as the tree leaves that hook. |
 | `children` | [Documented] | Never set in this form. | Type: `undefined`. Optional. |
 | `type` | [Documented] | A one-of-several picker on every surface, a pick raises `ui.select` (`e.element` the key, `e.value` the option's value). | Type: `'Select'`. Built by `<Select>` or the table's `t.Select`. The `onSelect` closure stays in the plugin's own environment under `press.handle`, held as a Button's is. A leaf: no children. |
-| `props` | [Documented] | Not described in the type file. | Type: `object`. |
+| `props` | [Documented] | The props of the element, typed `object`. | Type: `object`. |
 | `press` | [Documented] | Where the handler lives: the plugin whose hook drew the element, and the handle its environment keeps the closure under. | Type: `object`. The runtime stamps the plugin as the tree leaves that hook. |
 | `children` | [Documented] | Never set in this form. | Type: `undefined`. Optional. |
 | `type` | [Documented] | A hyperlink every surface draws: an OSC 8 span on the terminal (its text then the URL in dim where unsupported), an anchor on desktop. | Type: `'Link'`. Inline: its children are the text, strings and inline elements, absent children the label, absent both the URL. `href` is drawn as written, one that is no string draws the text plain. |
-| `props` | [Documented] | Not described in the type file. | Type: `LinkProps`. |
-| `children` | [Documented] | Not described in the type file. | Type: `RenderNode[]`. Optional. |
+| `props` | [Documented] | The props of the element, typed `LinkProps`. | Type: `LinkProps`. |
+| `children` | [Documented] | The child nodes. | Type: `RenderNode[]`. Optional. |
 | `type` | [Documented] | Source code every surface draws with the engine's highlighter, tokens coloured by language, under `format: 'diff'`, unified-diff hunks. | Type: `'Code'`. A leaf. A dim gutter numbers the lines from `startLine`. A diff has two gutters and add and remove backgrounds. |
-| `props` | [Documented] | Not described in the type file. | Type: `CodeProps`. |
+| `props` | [Documented] | The props of the element, typed `CodeProps`. | Type: `CodeProps`. |
 | `children` | [Documented] | Never set in this form. | Type: `undefined`. Optional. |
 | `type` | [Documented] | A block of markdown every surface draws as it draws an assistant reply's text: its own renderer, theme, hyperlinks and highlighting. | Type: `'Markdown'`. Built by `<Markdown>`. A leaf. Without a `press` its links open as the surface opens links. |
-| `props` | [Documented] | Not described in the type file. | Type: `MarkdownLeafProps`. |
+| `props` | [Documented] | The props of the element, typed `MarkdownLeafProps`. | Type: `MarkdownLeafProps`. |
 | `children` | [Documented] | Never set in this form. | Type: `undefined`. Optional. |
 | `type` | [Documented] | A `Markdown` whose plugin answers the links it drew (`onLinkPress`): a press on one raises `ui.press` with `e.link`, the surface opens none. | Type: `'Markdown'`. |
-| `props` | [Documented] | Not described in the type file. | Type: `MarkdownLeafProps`. |
+| `props` | [Documented] | The props of the element, typed `MarkdownLeafProps`. | Type: `MarkdownLeafProps`. |
 | `press` | [Documented] | Where the `onLinkPress` handler lives: the plugin whose hook drew the element, and the handle its environment keeps the closure under. | Type: `object`. The runtime stamps the plugin as the tree leaves that hook. |
 | `children` | [Documented] | Never set in this form. | Type: `undefined`. Optional. |
 | `type` | [Documented] | A region one of the plugin's SURFACE MODULES, named by path, draws and handles input for on the drawing thread, without `$` (ClientModule). | Type: `'Client'`. One instance for each plugin. It lives while the node stays in the tree and talks to the plugin through `ui.message`. |
-| `props` | [Documented] | Not described in the type file. | Type: `ClientProps`. |
+| `props` | [Documented] | The props of the element, typed `ClientProps`. | Type: `ClientProps`. |
 | `client` | [Documented] | Whose surface module `props.module` names: the plugin whose hook drew the element, stamped by the runtime as the tree leaves it. | Type: `object`. |
 | `children` | [Documented] | Never set in this form. | Type: `undefined`. Optional. |
 | `type` | [Documented] | A vector drawing, the remote surfaces' alone: the SVG markup is the element's data, drawn in an isolated box, off the page. | Type: `'Svg'`. A leaf. A surface whose table lacks it refuses the tree. Put a press that others should see on an enclosing `Button`. |
-| `props` | [Documented] | Not described in the type file. | Type: `SvgProps`. |
+| `props` | [Documented] | The props of the element, typed `SvgProps`. | Type: `SvgProps`. |
 | `children` | [Documented] | Never set in this form. | Type: `undefined`. Optional. |
 | `type` | [Documented] | A grid of terminal cells, the terminal surface's alone: each cell a glyph, a foreground and a background, packed in `props.cells`. | Type: `'Raster'`. A leaf, one node however many cells. `$.ui.blit` repaints it in place. A surface whose table lacks it refuses the tree. |
-| `props` | [Documented] | Not described in the type file. | Type: `RasterProps`. |
+| `props` | [Documented] | The props of the element, typed `RasterProps`. | Type: `RasterProps`. |
 | `raster` | [Documented] | Whose Raster: the plugin whose hook drew the element, stamped by the runtime as the tree leaves it, the one plugin whose blit reaches it. | Type: `object`. |
 | `children` | [Documented] | Never set in this form. | Type: `undefined`. Optional. |
 | `type` | [Documented] | A picture, the terminal surface's alone: `props.source` drawn over a box of cells where the terminal can, `props.alt` where it cannot. | Type: `'Image'`. A leaf. `$.ui.blit` swaps its picture. A surface without it refuses the tree. |
-| `props` | [Documented] | Not described in the type file. | Type: `ImageProps`. |
+| `props` | [Documented] | The props of the element, typed `ImageProps`. | Type: `ImageProps`. |
 | `image` | [Documented] | Whose Image: the plugin whose hook drew the element, stamped by the runtime as the tree leaves it, the one plugin whose blit reaches it. | Type: `object`. |
 | `children` | [Documented] | Never set in this form. | Type: `undefined`. Optional. |
 | `type` | [Documented] | The component core draws itself, with the props held under `ref`. | Type: `'engine'`. |
@@ -480,7 +480,7 @@ What a `ui.render` hook returns and what `next(e)` resolves to: a RenderElement 
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `[C in RenderComponent]` | [Documented] | Not described in the type file. | Type: `RenderElement`. |
+| `[C in RenderComponent]` | [Documented] | For each component, a `RenderElement` tree. | Type: `RenderElement`. |
 
 ### `RenderViewport`
 
@@ -507,8 +507,8 @@ One option of a `Select`: the value `onSelect` and `ui.select` carry, and the te
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `value` | [Documented] | Not described in the type file. | Type: `string`. |
-| `label` | [Documented] | Not described in the type file. | Type: `string`. Optional. |
+| `value` | [Documented] | The value `onSelect` and `ui.select` carry. | Type: `string`. |
+| `label` | [Documented] | The text drawn for the option. The value when absent. | Type: `string`. Optional. |
 
 ### `SelectProps`
 
@@ -546,7 +546,7 @@ The shape a `Box` and a `Text` share in a render tree: allowlisted props, an opt
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `type` | [Documented] | Not described in the type file. | Type: `Tag`. |
+| `type` | [Documented] | Which of the two it is: `Box` or `Text`. | Type: `Tag`. |
 | `props` | [Documented] | A Box's layout, position, spacing and border props and the `key` that makes it a hover scope, a Text's colors and styles. Others are refused. | Type: `Record<string, string \| number \| boolean>`. Optional. |
 | `hover` | [Documented] | Style overrides the surface applies while the pointer is over the nearest keyed Box, or over any member of the group `scope` names. | Type: `Hover`. Optional. Plain data, no hook. It never moves a sibling. `display` only reveals a `Box` that is drawn as `"none"`. |
 | `group` | [Documented] | Whose group `hover.scope` names, absent without a `scope`. | Type: `PluginStamp`. Optional. |
@@ -572,14 +572,14 @@ The `Text` props a `hover` may override (its colors and styles, not its wrapping
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
 | `scope` | [Documented] | Names a hover group of this plugin's: every element it draws with the same `scope`, in any site on the surface, lights while any is hovered. | Type: `string`. Optional. A scope is 1 to 64 characters with no control characters. Other plugins' elements with the same string are a different group. |
-| `color` | [Documented] | Not described in the type file. | Type: `Color`. Optional. |
-| `backgroundColor` | [Documented] | Not described in the type file. | Type: `Color`. Optional. |
-| `dimColor` | [Documented] | Not described in the type file. | Type: `boolean`. Optional. |
-| `bold` | [Documented] | Not described in the type file. | Type: `boolean`. Optional. |
-| `italic` | [Documented] | Not described in the type file. | Type: `boolean`. Optional. |
-| `underline` | [Documented] | Not described in the type file. | Type: `boolean`. Optional. |
-| `strikethrough` | [Documented] | Not described in the type file. | Type: `boolean`. Optional. |
-| `inverse` | [Documented] | Not described in the type file. | Type: `boolean`. Optional. |
+| `color` | [Documented] | The text color. | Type: `Color`. Optional. |
+| `backgroundColor` | [Documented] | The background color. | Type: `Color`. Optional. |
+| `dimColor` | [Documented] | `true` dims the color. | Type: `boolean`. Optional. |
+| `bold` | [Documented] | `true` makes the text bold. | Type: `boolean`. Optional. |
+| `italic` | [Documented] | `true` makes the text italic. | Type: `boolean`. Optional. |
+| `underline` | [Documented] | `true` underlines the text. | Type: `boolean`. Optional. |
+| `strikethrough` | [Documented] | `true` strikes the text through. | Type: `boolean`. Optional. |
+| `inverse` | [Documented] | `true` swaps the text and background colors. | Type: `boolean`. Optional. |
 
 ### `TextProps`
 
@@ -588,20 +588,20 @@ The props of `Text`: colors, styles, and the size, weight, face and digits each 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
 | `hover` | [Documented] | Style overrides applied by the surface while the pointer is over the nearest enclosing keyed `Box`, or, given a `scope`, over its group. | Type: `TextHoverProps`. Optional. No hook runs and nothing crosses to the plugin. Refused outside a keyed Box unless it names a `scope`. |
-| `color` | [Documented] | Not described in the type file. | Type: `Color`. Optional. |
-| `backgroundColor` | [Documented] | Not described in the type file. | Type: `Color`. Optional. |
+| `color` | [Documented] | The text color. | Type: `Color`. Optional. |
+| `backgroundColor` | [Documented] | The background color. | Type: `Color`. Optional. |
 | `dimColor` | [Documented] | The run dimmed: on the terminal, drawn in the theme's dim color. | Type: `boolean`. Optional. Faint too where that color is the palette's own white or black, as plain text is, unless the run is bold, inverse or on a background of any other color. |
 | `size` | [Documented] | The text size, a step on a scale each surface maps to its own type sizes. | Type: `'caption' \| 'footnote' \| 'body' \| 'heading' \| 'title'`. Optional. Absent, the enclosing Text's, or `body`. The terminal has one size and ignores it. |
 | `weight` | [Documented] | How heavy the text is, drawn at the nearest weight the surface has. | Type: `'regular' \| 'medium' \| 'semibold' \| 'bold'`. Optional. Absent, the enclosing Text's. The terminal draws `semibold` and `bold` as bold and cannot draw a lighter weight inside a bold Text. |
 | `mono` | [Documented] | The surface's monospaced face at the same size. The terminal is always monospaced and ignores it. | Type: `boolean`. Optional. |
 | `tabular` | [Documented] | Digits of one width, for a number that changes by itself on screen (a timer, a percentage) or numbers stacked in a column to line up. | Type: `boolean`. Optional. The terminal's digits are already one cell each. |
 | `bold` | [Documented] [Deprecated: Use weight] | The older spelling of a semibold weight. | Type: `boolean`. Optional. Deprecated: Use `weight`. `bold: true` is read as `weight: 'semibold'`, and an explicit `weight` outranks it, a `hover`'s `bold` still applies. |
-| `italic` | [Documented] | Not described in the type file. | Type: `boolean`. Optional. |
-| `underline` | [Documented] | Not described in the type file. | Type: `boolean`. Optional. |
-| `strikethrough` | [Documented] | Not described in the type file. | Type: `boolean`. Optional. |
-| `inverse` | [Documented] | Not described in the type file. | Type: `boolean`. Optional. |
+| `italic` | [Documented] | `true` makes the text italic. | Type: `boolean`. Optional. |
+| `underline` | [Documented] | `true` underlines the text. | Type: `boolean`. Optional. |
+| `strikethrough` | [Documented] | `true` strikes the text through. | Type: `boolean`. Optional. |
+| `inverse` | [Documented] | `true` swaps the text and background colors. | Type: `boolean`. Optional. |
 | `dir` | [Documented] | The direction the text reads in: `rtl` for a right-to-left script, so a row of it that opens with a Latin word or a number reads right to left. | Type: `'ltr' \| 'rtl'`. Optional. When absent, each row reads by its first strong letter. `rtl` rows are flush right. |
-| `wrap` | [Documented] | Not described in the type file. | Type: `'wrap' \| 'end' \| 'middle' \| 'truncate' \| 'truncate-start' \| 'truncate-middle' \| 'truncate-end'`. Optional. |
+| `wrap` | [Documented] | How text that is too long is wrapped or cut. | Type: `'wrap' \| 'end' \| 'middle' \| 'truncate' \| 'truncate-start' \| 'truncate-middle' \| 'truncate-end'`. Optional. |
 
 ### `ToastOptions`
 
@@ -869,8 +869,8 @@ What `$.ui.scroll` brings into view: never a row number, always a thing drawn so
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `requestId` | [Documented] | Not described in the type file. | Type: `string`. |
-| `key` | [Documented] | Not described in the type file. | Type: `string`. |
+| `requestId` | [Documented] | The ID of a render instance, as its `ui.render` hook saw it. | Type: `string`. |
+| `key` | [Documented] | The `key` of an element this plugin drew. | Type: `string`. |
 
 ### `UiSelectArgument`
 

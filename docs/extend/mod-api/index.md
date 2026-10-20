@@ -19,7 +19,7 @@ These pages cover `2.1.304`. Official pages: [Mods Overview](https://code.claude
 | Can you change it? | ✅ Yes. Edit the module. Claude Code reloads it when you save. |
 | Can you turn it on or off? | `disableAllHooks` stops installed mods. `--safe-mode` and `--bare` load none. See [Files, Nouns, and Gates](nouns-and-gates.md#gates-that-stop-mods). |
 | Where does it live? | A plugin folder: `.claude-plugin/plugin.json`, `hooks/hooks.json`, and the hooks module. |
-| Status | <Documented /> <Differs note="The docs add the re-entry value of next.error.kind, which the type file lacks." /> <Differs note="The type file says the VS Code extension attaches no surface yet. The docs say it draws from 2.1.299." /> <Gated note="Remote rollout switch for installed mods" /> |
+| Status | <Documented /> <Differs note="The docs add the re-entry value of next.error.kind, which the type file lacks." /> <Differs note="The type file says the VS Code extension attaches no surface yet. The docs say it draws from 2.1.299." /> <Gated note="Remote rollout switch for installed mods: the server flag tengu_plugin_hooks_modules" /> |
 
 ## Example
 
@@ -133,7 +133,7 @@ The [type pages](types/index.md) hold the detailed shapes of inputs and results:
 ## Known Gaps
 
 - The 50 millisecond limit of a `prompt.edit` hook is set on the event in the program, not in the type file.
-- The name of the rollout flag for installed mods is not in the program strings.
+- The rollout flag for installed mods is the server flag `tengu_plugin_hooks_modules`. The program has no local switch for it.
 - The value `re-entry` of `next.error.kind` is in the docs and in a program debug string, and not in the type file.
 - Many doc comments in the type file name code items without backticks. The tables keep the wording of the type file where it matters.
 

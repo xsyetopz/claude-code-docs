@@ -108,8 +108,8 @@ The rest of the chain, as one hook receives it: made once per dispatch per hook,
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `[K in N]` | <Documented /> | Not described in the type file. | Type: `unknown`. Optional. |
-| `[K in N]` | <Documented /> | Not described in the type file. | Type: `Args<K>`. |
+| `[K in N]` | <Documented /> | What `next.is` narrows `e` to, for each event `K` in `N`: an optional value of any type. | Type: `unknown`. Optional. |
+| `[K in N]` | <Documented /> | The default for each event `K` in `N`: the event argument `Args<K>`. | Type: `Args<K>`. |
 | `to` | <Documented /> | Continues this dispatch at a tier: `next(e)` with every link between this hook's own tier and that one skipped, by tier and narrowing only. | Type: `object`. Lets a managed hook skip to a lower tier. It never skips a tier with more authority, so a user hook cannot skip the organization's. Read-only. |
 | `signal` | <Documented /> | Aborts when the call this dispatch belongs to is abandoned: the user interrupted, a hook above settled first, or this hook ran out of budget. | Type: `AbortSignal`. Anything the hook started (timers, requests) should stop on it. It is an AbortSignal of the plugin's own environment, driven by the chain's. Read-only. |
 | `is` | <Documented /> | Whether this dispatch's event is selected by `pattern` (a name, a glob, a negation), as a type predicate on `e`: `next.is("tool.call", e)`. | Type: `<M extends PatternOver<N>>(pattern: M, e: unknown) => e is ...`. Narrows `e` to the events the pattern names. A name outside the hook's events is a compile error. Read-only. |
@@ -125,12 +125,12 @@ The rest of the chain, as one hook receives it: made once per dispatch per hook,
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
 | `to` | <Documented /> | Continues this dispatch at a tier, as Next's `to` (a managed hook's): `e` still unknown resolves to `unknown`. | Type: `(e: unknown, tier: TargetTier) => Promise<unknown>`. Read-only. |
-| `signal` | <Documented /> | Not described in the type file. | Type: `AbortSignal`. Read-only. |
-| `is` | <Documented /> | Not described in the type file. | Type: `<M extends Pattern>(pattern: M, e: unknown) => e is Frozen<Args<Selected<M>>>`. Read-only. |
-| `event` | <Documented /> | Not described in the type file. | Type: `EventName`. Read-only. |
-| `origin` | <Documented /> | Not described in the type file. | Type: `Origin`. Read-only. |
-| `trace` | <Documented /> | Not described in the type file. | Type: `readonly TraceEntry<EventName, unknown, unknown>[]`. Read-only. |
-| `budget` | <Documented /> | Not described in the type file. | Type: `NextBudget`. Read-only. |
+| `signal` | <Documented /> | Aborts when the call this dispatch belongs to is abandoned: the user interrupted, a hook above settled first, or this hook ran out of budget. | Type: `AbortSignal`. Read-only. |
+| `is` | <Documented /> | Whether this dispatch's event is selected by `pattern` (a name, a glob, a negation), as a type predicate on `e`. | Type: `<M extends Pattern>(pattern: M, e: unknown) => e is Frozen<Args<Selected<M>>>`. Read-only. |
+| `event` | <Documented /> | The name of this dispatch's event, as a value. | Type: `EventName`. Read-only. |
+| `origin` | <Documented /> | Who raised this dispatch: the calling plugin's name and its tier. | Type: `Origin`. Read-only. |
+| `trace` | <Documented /> | What settled beneath this hook on its latest `next()` call: an entry per link beneath, nearest first. | Type: `readonly TraceEntry<EventName, unknown, unknown>[]`. Read-only. |
+| `budget` | <Documented /> | How much time this hook runs under and how much is left. | Type: `NextBudget`. Read-only. |
 
 ### `StreamNext`
 
@@ -138,8 +138,8 @@ The rest of the chain as a hook on a streaming event receives it: Next, except t
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `[K in N]` | <Documented /> | Not described in the type file. | Type: `unknown`. Optional. |
-| `[K in N]` | <Documented /> | Not described in the type file. | Type: `Args<K>`. |
+| `[K in N]` | <Documented /> | What `next.is` narrows `e` to, for each event `K` in `N`: an optional value of any type. | Type: `unknown`. Optional. |
+| `[K in N]` | <Documented /> | The default for each event `K` in `N`: the event argument `Args<K>`. | Type: `Args<K>`. |
 | `to` | <Documented /> | Continues this dispatch at a tier, as Next's `to`: the stream beneath with the links between this hook's tier and that one skipped. | Type: `(e: E, tier: TargetTier) => HookStream<Chunk<N>, O>`. Read-only. |
 | `trace` | <Documented /> | What settled beneath on the latest `next()` stream, as Next's, a streaming link's entry counts the chunks it yielded up (`chunks`). | Type: `readonly TraceEntry<N, E, O>[]`. Read-only. |
 
@@ -158,7 +158,7 @@ Why a hook failed, as its `.catch` handler reads it on `next.error`: plain froze
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `kind` | <Documented /> | Not described in the type file. | Type: `'throw' \| 'timeout'`. Read-only. |
+| `kind` | <Documented /> | `throw` when the hook threw, returned what the site refuses, or its worker ended. `timeout` when it outran its budget. | Type: `'throw' \| 'timeout'`. Read-only. |
 | `message` | <Documented /> | What was thrown or why the worker ended, or for a timeout what the last `next()` rejected with, absent for a timeout with nothing rejected. | Type: `string`. Optional. Read-only. |
 | `budget` | <Documented /> | The grace the handler runs under, in milliseconds, past it, the hook is absent as if it had no handler. | Type: `number`. Read-only. |
 
@@ -190,12 +190,12 @@ One settled run of a link beneath the caller, as `next.trace` lists it: data, no
 | `index` | <Documented /> | The link's place in the chain, 0 the outermost. | Type: `number`. Read-only. |
 | `plugin` | <Documented /> | The hook's plugin, `"engine"` for the engine's own core or bottom. | Type: `string`. Read-only. |
 | `tier` | <Documented /> | The link's tier (Tier), `"core"` for the engine's own core or bottom. | Type: `Tier`. Read-only. |
-| `event` | <Documented /> | Not described in the type file. | Type: `N`. Read-only. |
-| `outcome` | <Documented /> | Not described in the type file. | Type: `TraceOutcome`. Read-only. |
+| `event` | <Documented /> | The event the link ran on. | Type: `N`. Read-only. |
+| `outcome` | <Documented /> | What the chain decided for this link. | Type: `TraceOutcome`. Read-only. |
 | `reason` | <Documented /> | Why the link was skipped without running, when it was: `bypassed by <plugin>`, whose `next.to` went beneath this tier. Absent when it ran. | Type: `string`. Optional. Read-only. |
 | `ms` | <Documented /> | Its own wall time, its `next()` calls' time in flight taken out. | Type: `number`. The engine entry's is everything beneath the last hook: in a hooks module, the host round trip. Read-only. |
 | `chunks` | <Documented /> | How many chunks the link yielded up, on a streaming event, absent on every other. A link left mid-stream counts what it yielded before. | Type: `number`. Optional. Read-only. |
-| `received` | <Documented /> | Not described in the type file. | Type: `E`. Read-only. |
+| `received` | <Documented /> | The argument the link received. | Type: `E`. Read-only. |
 | `returned` | <Documented /> | What the link settled on, undefined when it was skipped or rejected. | Type: `O \| undefined`. Read-only. |
 
 ### `Origin`
@@ -213,7 +213,7 @@ What `on(event, matcher, hook)` takes for an argument of type `I`: the shape of 
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `[K in KnownKeys<I>]` | <Documented /> | Not described in the type file. | Type: `MatcherValue<I[K & keyof I], MatcherValueOf<All, K>>`. Optional. |
+| `[K in KnownKeys<I>]` | <Documented /> | For each key of the event argument, an optional matcher value for it. | Type: `MatcherValue<I[K & keyof I], MatcherValueOf<All, K>>`. Optional. |
 
 ### `HookStream`
 
@@ -229,7 +229,7 @@ What a hooks module exports: `register`, and nothing the loader reads besides.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `register` | <Documented /> | Not described in the type file. | Type: `Register`. |
+| `register` | <Documented /> | The hooks module's entry function. | Type: `Register`. |
 
 ## Related Pages
 
