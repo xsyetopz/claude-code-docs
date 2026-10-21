@@ -31,13 +31,25 @@ export type ClaimRow = {
   diffNames?: string[];
 };
 export type ClaimResult = ClaimRow & {
-  result?: "changed" | "unchanged" | "not-run";
+  result?: "changed" | "unchanged" | "not-run" | "invalid-run";
   why?: string;
+  /** probe case id -> fact -> why it was ignored for this claim (same rules as Compare.noise) */
+  noise?: Record<string, Record<string, string>>;
 };
 export type Compare = {
   from: string;
   to: string;
-  counts: { cases: number; changed: number; unchanged: number };
+  counts: {
+    cases: number;
+    changed: number;
+    unchanged: number;
+    /** cases where either side has precondition=false; not diffed */
+    invalid: number;
+  };
+  /** case id -> fact -> why it was ignored (known run-to-run noise, or a version string only); not diffs */
+  noise?: Record<string, Record<string, string>>;
+  /** case id -> precondition.detail for each invalid run */
+  invalidRuns?: Record<string, string>;
   onlyFrom: string[];
   onlyTo: string[];
   cases: Record<string, CaseDiff>;
@@ -51,19 +63,116 @@ export type Compare = {
 const same = (a: Fact, b: Fact): boolean =>
   JSON.stringify(a) === JSON.stringify(b);
 
+/** Facts that describe how a run went, not what the program does: never a diff. */
+const IGNORED_FACTS = new Set(["retried", "startLagS"]);
+
+/**
+ * Known noise by case id: facts that differ between two runs of the SAME version, so they are not release changes.
+ * `facts` matches whole fact names and drops them. `items` removes those array elements from the facts that
+ * `itemFacts` matches, then drops the fact when the two sides are then equal.
+ * Ignored facts are listed under "Noise (ignored)" in compare.md, never dropped silently.
+ */
+type Noisy = {
+  why: string;
+  facts?: RegExp;
+  itemFacts?: RegExp;
+  items?: string[];
+};
+export const NOISY: Record<string, Noisy[]> = {
+  // The /insights text holds the sandbox path (ccrel-XXXX) that changes every run. The probe now normalises it,
+  // but captures taken before that hold raw hashes. Drop this entry once both sides of a compare are newer;
+  // userTextChars still shows a real change in the text.
+  "pty.captures.skill-insights": [
+    {
+      why: "hash of text with a random sandbox path; differs between runs of one version",
+      facts: /^(userTextSha8|perRequestSha8)$/,
+    },
+  ],
+  "print.sweep": [
+    {
+      why: "API_TIMEOUT_MS sets a tiny timeout, so the retry count depends on machine load",
+      facts: /^API_TIMEOUT_MS\.[AB]$/,
+    },
+    {
+      why: "cfgfiles flips for a random name on each run",
+      itemFacts: /\.[AB]$/,
+      items: ["cfgfiles"],
+    },
+    {
+      why: "list derived from the NAME.A and NAME.B facts, which are compared on their own",
+      facts: /^changed$/,
+    },
+  ],
+};
+
+/** `old` with every `from` replaced by `to` equals `now`: the only change is the version string. */
+const versionOnly = (old: Fact, now: Fact, v?: [string, string]): boolean =>
+  !!v &&
+  JSON.stringify(old).includes(v[0]) &&
+  JSON.stringify(old).replaceAll(v[0], v[1]) === JSON.stringify(now);
+
+/** Why a changed fact is not a release change, or null. */
+const noiseReason = (
+  id: string | undefined,
+  k: string,
+  old: Fact,
+  now: Fact,
+  v?: [string, string],
+): string | null => {
+  if (versionOnly(old, now, v)) return "version string only";
+  for (const n of (id && NOISY[id]) || []) {
+    if (n.facts?.test(k)) return n.why;
+    if (
+      n.itemFacts?.test(k) &&
+      n.items &&
+      Array.isArray(old) &&
+      Array.isArray(now)
+    ) {
+      const strip = (a: Fact[]) =>
+        JSON.stringify(a.filter((x) => !n.items?.includes(String(x))));
+      if (strip(old as Fact[]) === strip(now as Fact[])) return n.why;
+    }
+  }
+  return null;
+};
+
+export type DiffOpts = {
+  /** case id, to look up NOISY */
+  id?: string;
+  /** [from, to]: a fact that differs only by this version string is ignored */
+  versions?: [string, string];
+  /** receives fact -> reason for each ignored fact */
+  ignored?: Record<string, string>;
+};
+
+/** The precondition.detail of an invalid run (either side), or null when both runs are valid. */
+export const invalidDetail = (a: CaseResult, b: CaseResult): string | null => {
+  for (const [side, r] of [
+    ["old", a],
+    ["new", b],
+  ] as const)
+    if (r.facts["precondition"] === false)
+      return `${side}: ${String(r.facts["precondition.detail"] ?? r.facts["error"] ?? "precondition false")}`;
+  return null;
+};
+
 export const diffCase = (
   a: CaseResult,
   b: CaseResult,
   withSamples: boolean,
   only?: (key: string) => boolean,
+  opts: DiffOpts = {},
 ): CaseDiff => {
-  const keep = (k: string) => !only || only(k);
+  const keep = (k: string) => !IGNORED_FACTS.has(k) && (!only || only(k));
   const d: CaseDiff = { added: {}, removed: {}, changed: {} };
   for (const [k, v] of Object.entries(b.facts)) {
     if (!keep(k)) continue;
     if (!(k in a.facts)) d.added[k] = v;
-    else if (!same(a.facts[k] as Fact, v))
-      d.changed[k] = { old: a.facts[k] as Fact, new: v };
+    else if (!same(a.facts[k] as Fact, v)) {
+      const why = noiseReason(opts.id, k, a.facts[k] as Fact, v, opts.versions);
+      if (why !== null && opts.ignored) opts.ignored[k] = why;
+      if (why === null) d.changed[k] = { old: a.facts[k] as Fact, new: v };
+    }
   }
   for (const [k, v] of Object.entries(a.facts))
     if (keep(k) && !(k in b.facts)) d.removed[k] = v;
@@ -99,11 +208,24 @@ export const compareResults = (
   const am = new Map(a.map((r) => [r.id, r]));
   const bm = new Map(b.map((r) => [r.id, r]));
   const cases: Record<string, CaseDiff> = {};
+  const invalidRuns: Record<string, string> = {};
+  const noise: Record<string, Record<string, string>> = {};
   let unchanged = 0;
   for (const [id, r] of bm) {
     const o = am.get(id);
     if (!o) continue;
-    const d = diffCase(o, r, withSamples);
+    const bad = invalidDetail(o, r);
+    if (bad !== null) {
+      invalidRuns[id] = bad;
+      continue;
+    }
+    const ignored: Record<string, string> = {};
+    const d = diffCase(o, r, withSamples, undefined, {
+      id,
+      versions: [from, to],
+      ignored,
+    });
+    if (Object.keys(ignored).length) noise[id] = ignored;
     if (
       Object.keys(d.added).length +
         Object.keys(d.removed).length +
@@ -120,7 +242,10 @@ export const compareResults = (
       cases: [...bm.keys()].filter((id) => am.has(id)).length,
       changed: Object.keys(cases).length,
       unchanged,
+      invalid: Object.keys(invalidRuns).length,
     },
+    ...(Object.keys(invalidRuns).length ? { invalidRuns } : {}),
+    ...(Object.keys(noise).length ? { noise } : {}),
     onlyFrom: [...am.keys()].filter((id) => !bm.has(id)).sort(),
     onlyTo: [...bm.keys()].filter((id) => !am.has(id)).sort(),
     cases,
@@ -134,6 +259,7 @@ export const claimResults = (
   b: CaseResult[],
   diffChanged: Set<string> | null,
   schemaText: string | null = null,
+  versions?: [string, string],
 ): ClaimResult[] => {
   const am = new Map(a.map((r) => [r.id, r]));
   const bm = new Map(b.map((r) => [r.id, r]));
@@ -142,8 +268,10 @@ export const claimResults = (
       return c;
     if (c.probes.length) {
       const why: string[] = [];
+      const noise: Record<string, Record<string, string>> = {};
       let notRun = false;
       let changed = false;
+      let invalid = false;
       for (const p of c.probes) {
         const o = am.get(p);
         const n = bm.get(p);
@@ -157,13 +285,25 @@ export const claimResults = (
           why.push(`${p}: new case, no result for the old version`);
           continue;
         }
+        const bad = invalidDetail(o, n);
+        if (bad !== null) {
+          invalid = true;
+          why.push(`${p}: ${bad}`);
+          continue;
+        }
         // the sweep holds every env name: look at the facts of the claim's names only
         const only =
           p.endsWith("sweep") && c.diffNames?.length
             ? (k: string) =>
                 c.diffNames?.some((n2) => k.startsWith(`${n2}.`)) ?? false
             : undefined;
-        const d = diffCase(o, n, false, only);
+        const ignored: Record<string, string> = {};
+        const d = diffCase(o, n, false, only, {
+          id: p,
+          ignored,
+          ...(versions ? { versions } : {}),
+        });
+        if (Object.keys(ignored).length) noise[p] = ignored;
         if (!isEmpty(d)) {
           changed = true;
           why.push(
@@ -172,8 +312,28 @@ export const claimResults = (
         }
       }
       // a probe that did not run hides what the others say, so it comes first
-      const result = notRun ? "not-run" : changed ? "changed" : "unchanged";
-      return { ...c, result, why: why.join("; ") };
+      const result = notRun
+        ? "not-run"
+        : invalid
+          ? "invalid-run"
+          : changed
+            ? "changed"
+            : "unchanged";
+      const noted = Object.entries(noise).flatMap(([p, m]) =>
+        Object.keys(m).map((k) => `${p} ${k}`),
+      );
+      const text = why.join("; ");
+      const note = noted.length ? `noise ignored: ${noted.join(", ")}` : "";
+      return {
+        ...c,
+        result,
+        why: !note
+          ? text
+          : result === "unchanged"
+            ? `unchanged (${note})`
+            : `${text}; ${note}`,
+        ...(noted.length ? { noise } : {}),
+      };
     }
     const notRun = (why: string): ClaimResult => ({
       ...c,
@@ -239,8 +399,20 @@ export const renderCompare = (c: Compare): string => {
   const L: string[] = [`# Compare ${c.from} to ${c.to}`, ""];
   if (c.warning) L.push(`> **WARNING:** ${c.warning}`, "");
   const work = (c.claims ?? []).filter(
-    (x) => x.result === "changed" || x.result === "not-run",
+    (x) =>
+      x.result === "changed" ||
+      x.result === "not-run" ||
+      x.result === "invalid-run",
   );
+  if (c.counts.invalid)
+    L.push(
+      `> **${c.counts.invalid} invalid runs - re-run these cases, do not edit docs from them:** ${Object.keys(
+        c.invalidRuns ?? {},
+      )
+        .map((i) => `\`${i}\``)
+        .join(", ")}`,
+      "",
+    );
   L.push("## Worklist", "");
   if (c.claims) {
     L.push(`Claims to re-check: ${work.length} of ${c.claims.length}.`, "");
@@ -264,9 +436,11 @@ export const renderCompare = (c: Compare): string => {
   L.push(
     "## Cases",
     "",
-    `${c.counts.cases} in both, ${c.counts.changed} changed, ${c.counts.unchanged} unchanged, ${c.onlyFrom.length} only in ${c.from}, ${c.onlyTo.length} only in ${c.to}.`,
+    `${c.counts.cases} in both, ${c.counts.changed} changed, ${c.counts.unchanged} unchanged, ${c.counts.invalid} invalid runs, ${c.onlyFrom.length} only in ${c.from}, ${c.onlyTo.length} only in ${c.to}.`,
     "",
   );
+  for (const [id, why] of Object.entries(c.invalidRuns ?? {}))
+    L.push(`### \`${id}\` (invalid run)`, "", `- ${why}`, "");
   for (const [id, d] of Object.entries(c.cases)) {
     L.push(`### \`${id}\``, "");
     for (const [k, v] of Object.entries(d.changed))
@@ -279,6 +453,24 @@ export const renderCompare = (c: Compare): string => {
       L.push(`- sample \`${k}\` differs`);
     L.push("");
   }
+  if (c.noise || (c.claims ?? []).some((r) => r.noise))
+    L.push(
+      "## Noise (ignored)",
+      "",
+      "Facts that differ but are not release changes (run-to-run noise, or a version string only). Rules: `NOISY` in `tools/release/claims/compare.ts`.",
+      "",
+      ...Object.entries(c.noise ?? {}).flatMap(([id, m]) =>
+        Object.entries(m).map(([k, why]) => `- \`${id}\` \`${k}\`: ${why}`),
+      ),
+      ...(c.claims ?? []).flatMap((r) =>
+        Object.entries(r.noise ?? {}).flatMap(([id, m]) =>
+          Object.entries(m).map(
+            ([k, why]) => `- claim \`${r.id}\`: \`${id}\` \`${k}\`: ${why}`,
+          ),
+        ),
+      ),
+      "",
+    );
   if (c.onlyFrom.length)
     L.push(
       `## Only in ${c.from}`,
@@ -340,6 +532,7 @@ export const compareRuns = (
       b,
       diffs.length ? changedNames : null,
       existsSync(sp) ? readFileSync(sp, "utf8") : null,
+      [from, to],
     );
   }
   if (diffs.length) {
@@ -370,10 +563,13 @@ export const runCompare = async (ctx: Ctx): Promise<number> => {
   const jsonPath = join(dir, `${from}..${to}.json`);
   const mdPath = join(dir, "compare.md");
   const work = (c.claims ?? []).filter(
-    (x) => x.result === "changed" || x.result === "not-run",
+    (x) =>
+      x.result === "changed" ||
+      x.result === "not-run" ||
+      x.result === "invalid-run",
   ).length;
   console.log(
-    `release:compare ${from}..${to}: ${c.counts.cases} cases in both (${c.counts.changed} changed), ${c.onlyFrom.length} only in from, ${c.onlyTo.length} only in to; worklist ${c.claims ? `${work} claims` : "no claims.json"}${c.uncoveredNames ? `, ${c.uncoveredNames.length} uncovered names` : ""}`,
+    `release:compare ${from}..${to}: ${c.counts.cases} cases in both (${c.counts.changed} changed, ${c.counts.invalid} invalid), ${c.onlyFrom.length} only in from, ${c.onlyTo.length} only in to; worklist ${c.claims ? `${work} claims` : "no claims.json"}${c.uncoveredNames ? `, ${c.uncoveredNames.length} uncovered names` : ""}`,
   );
   if (ctx.dry) return 0;
   writeJson(jsonPath, c);

@@ -14,8 +14,14 @@ import { dirname, isAbsolute, join } from "node:path";
 import { assertSafeEnv } from "../env.ts";
 import { assertLiveEnv } from "../live-env.ts";
 import { registerPid, runChild, unregisterPid } from "../proc.ts";
+import { assertShimReady } from "../shim.ts";
 
-export type PtyStep = { label?: string; send?: string } & (
+/** `rebase: true` restarts the clock when the step is reached: later `t` values and `secs` count from there (spawn otherwise). */
+export type PtyStep = {
+  label?: string;
+  send?: string;
+  rebase?: boolean;
+} & (
   | { t: number; wait_for?: undefined; timeout?: undefined }
   | { wait_for: string; timeout?: number; t?: undefined }
 );
@@ -55,6 +61,7 @@ const pairs = (file: string): [number, string][] =>
     : [];
 
 export const runPty = async (o: PtyOpts): Promise<PtyResult> => {
+  assertShimReady(o.env);
   if (o.liveToken) assertLiveEnv(o.env, o.liveToken);
   else assertSafeEnv(o.env);
   if (!isAbsolute(o.bin) || !existsSync(o.bin) || !statSync(o.bin).isFile())
@@ -109,7 +116,7 @@ export const runPty = async (o: PtyOpts): Promise<PtyResult> => {
     res = await runChild(argv, {
       cwd: dir,
       env: PY_ENV,
-      timeoutMs: o.secs * 1000 + 15_000,
+      timeoutMs: o.secs * 1000 + 45_000,
     });
   } finally {
     clearInterval(watch);

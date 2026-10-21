@@ -12,6 +12,7 @@ import {
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { CLAUDE_CODE_VERSION } from "../../src/version.ts";
+import { assertShimReady, writeSecurityShim } from "../release/lib/shim.ts";
 import { FAKE_KEY, startStub } from "./stub.ts";
 import { SUB_MARK, VARIANTS, type Variant } from "./variants.ts";
 
@@ -47,6 +48,7 @@ const run = async (v: Variant) => {
   writeFileSync(log, "");
   const cfg = realpathSync(mkdtempSync(join(tmpdir(), "cap-cfg-")));
   const home = realpathSync(mkdtempSync(join(tmpdir(), "cap-home-")));
+  const shimDir = writeSecurityShim(home);
   const proj = realpathSync(mkdtempSync(join(tmpdir(), "cap-proj-")));
   for (const [base, files] of [
     [cfg, v.cfgFiles],
@@ -84,6 +86,24 @@ const run = async (v: Variant) => {
     toolInput: v.tool?.input,
   });
   const spawnOnce = async (prompt: string, extra: string[]) => {
+    const env: Record<string, string> = {
+      PATH: `${shimDir}:${requireEnv("PATH")}`,
+      HOME: home,
+      GIT_CONFIG_NOSYSTEM: "1",
+      TMPDIR: tmpdir(),
+      CLAUDE_CONFIG_DIR: cfg,
+      ANTHROPIC_API_KEY: FAKE_KEY,
+      ANTHROPIC_BASE_URL: `http://127.0.0.1:${stub.port}`,
+      CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: "1",
+      DISABLE_TELEMETRY: "1",
+      // fail-closed net: anything proxied or direct to the real API breaks
+      HTTPS_PROXY: "http://127.0.0.1:9",
+      HTTP_PROXY: "http://127.0.0.1:9",
+      NO_PROXY: "127.0.0.1,localhost",
+      ...genv,
+      ...(v.env ?? {}),
+    };
+    assertShimReady(env);
     const p = Bun.spawn(
       [
         BIN,
@@ -102,22 +122,7 @@ const run = async (v: Variant) => {
         stdin: "ignore",
         stdout: "pipe",
         stderr: "pipe",
-        env: {
-          PATH: requireEnv("PATH"),
-          HOME: home,
-          TMPDIR: tmpdir(),
-          CLAUDE_CONFIG_DIR: cfg,
-          ANTHROPIC_API_KEY: FAKE_KEY,
-          ANTHROPIC_BASE_URL: `http://127.0.0.1:${stub.port}`,
-          CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: "1",
-          DISABLE_TELEMETRY: "1",
-          // fail-closed net: anything proxied or direct to the real API breaks
-          HTTPS_PROXY: "http://127.0.0.1:9",
-          HTTP_PROXY: "http://127.0.0.1:9",
-          NO_PROXY: "127.0.0.1,localhost",
-          ...genv,
-          ...(v.env ?? {}),
-        },
+        env,
       },
     );
     const t = setTimeout(() => p.kill(), 60000);

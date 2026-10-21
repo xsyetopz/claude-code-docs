@@ -23,8 +23,11 @@ export type CaseResult = {
   timedOut: boolean;
   facts: Record<string, Fact>;
   samples?: Record<string, string>;
-  /** Timing cases that were rerun: the facts and samples of the first run. */
-  firstRun?: { facts: Record<string, Fact>; samples?: Record<string, string> };
+  /** Earlier program launches of a case that was rerun (timing rerun, or retry of an invalid run), oldest first. The case's own facts are the last launch. */
+  attempts?: {
+    facts: Record<string, Fact>;
+    samples?: Record<string, string>;
+  }[];
   requests?: {
     count: number;
     paths: string[];

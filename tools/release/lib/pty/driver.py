@@ -233,6 +233,8 @@ def main() -> int:
                     break
             if eof or stop:
                 break
+            if step.get("rebase"):
+                t0 = time.monotonic()  # later "t" and the "secs" deadline count from here (the READY screen)
             if "send" in step:
                 send(step["send"], label)
             else:

@@ -10,6 +10,7 @@ import {
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { childEnv } from "../env.ts";
+import { writeSecurityShim } from "../shim.ts";
 import { runPty } from "./driver.ts";
 
 const PROGRAM = `#!/bin/sh
@@ -33,6 +34,7 @@ export const runPtySelftest = async (
     const prog = join(dir, "prog.sh");
     writeFileSync(prog, PROGRAM);
     chmodSync(prog, 0o755);
+    writeSecurityShim(dir);
     const env = childEnv({
       home: dir,
       configDir: dir,
@@ -75,6 +77,31 @@ export const runPtySelftest = async (
       r.idx.length > 0 &&
         r.idx.every((x, i) => i === 0 || x.off >= (r.idx[i - 1]?.off ?? 0)),
       `${r.idx.length} reads`,
+    );
+    // rebase: a slow start (2 s of silence) must not eat the "t" of a later step.
+    const slow = join(dir, "slow.sh");
+    writeFileSync(
+      slow,
+      "#!/bin/sh\nsleep 2\nprintf 'up> '\nread a\nprintf 'got:%s\\r\\n' \"$a\"\nsleep 30\n",
+    );
+    chmodSync(slow, 0o755);
+    const rb = await runPty({
+      cwd: dir,
+      env,
+      bin: slow,
+      secs: 3,
+      out: join(dir, "RAWSLOW"),
+      schedule: [
+        { wait_for: "up>", timeout: 10, label: "up", rebase: true },
+        { t: 1, send: "x\r", label: "after" },
+      ],
+    });
+    const up = rb.sent.find((x) => x.label === "up")?.t ?? 0;
+    const after = rb.sent.find((x) => x.label === "after")?.t ?? 0;
+    step(
+      "pty: rebase counts t from the rebased step",
+      up > 0 && after - up >= 0.9 && rb.screen.includes("got:x"),
+      `after - up = ${(after - up).toFixed(2)}s`,
     );
     let dead = false;
     try {

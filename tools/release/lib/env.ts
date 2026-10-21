@@ -2,6 +2,7 @@
 // The parent shell exports CLAUDE_CODE_* names that must not reach a probe.
 import { dirname, join } from "node:path";
 import { binaryPath, DEFAULT_PROMPT, installedVersions } from "../util.ts";
+import { shimDir } from "./shim.ts";
 
 export { binaryPath, installedVersions };
 export const FAKE_KEY = "sk-ant-fake-probe";
@@ -55,7 +56,7 @@ export const assertSafeEnv = (
 
 export const childEnv = (o: ChildEnvOpts): Record<string, string> => {
   const env: Record<string, string> = {
-    PATH: `${SYSTEM_PATH}:${dirname(process.execPath)}`,
+    PATH: `${shimDir(o.home)}:${SYSTEM_PATH}:${dirname(process.execPath)}`,
     HOME: o.home,
     TMPDIR: join(o.home, "tmp"),
     CLAUDE_CONFIG_DIR: o.configDir,
@@ -66,6 +67,7 @@ export const childEnv = (o: ChildEnvOpts): Record<string, string> => {
     HTTP_PROXY: "http://127.0.0.1:9",
     NO_PROXY: "127.0.0.1,localhost",
     GIT_CONFIG_GLOBAL: join(o.home, ".gitconfig"),
+    GIT_CONFIG_NOSYSTEM: "1", // git's osxkeychain helper must not run
   };
   if ((o.auth ?? "fake-key") === "fake-key")
     env["ANTHROPIC_API_KEY"] = FAKE_KEY;

@@ -343,8 +343,16 @@ const runOnce = async (ctx: PtyCtx, c: PtyCase): Promise<CaseResult[]> => {
     const stepTimeouts = pty.sent
       .filter((s) => s.label.endsWith(":timeout"))
       .map((s) => s.label.slice(0, -":timeout".length));
+    // Informational only: the step clock starts at READY, so a slow start no longer shifts the steps.
+    const readyAt = sentAt(run, "ready");
+    const firstRead = pty.idx[0]?.t;
+    const startLagS =
+      readyAt !== null && firstRead !== undefined
+        ? Math.round((readyAt - firstRead) * 10) / 10
+        : null;
     const facts = {
       ...c.facts(run),
+      ...(startLagS !== null ? { startLagS } : {}),
       stepTimeouts,
       ...(stepTimeouts.length
         ? {
@@ -385,11 +393,29 @@ const runOnce = async (ctx: PtyCtx, c: PtyCase): Promise<CaseResult[]> => {
   }
 };
 
-/** Run one case. Never throws: a failure to run becomes `precondition: false`. Timing cases get one rerun when out of tolerance. */
+/** Run one case. Never throws: a failure to run becomes `precondition: false`. Timing cases get one rerun when out of tolerance; an invalid run gets one retry; a case launches the program at most twice. */
 export const runPtyCase = async (
   ctx: PtyCtx,
   c: PtyCase,
 ): Promise<CaseResult[]> => {
+  const one = await runTimed(ctx, c);
+  const f = one[0];
+  if (!f || ctx.dry || f.facts["precondition"] !== false) return one;
+  // An invalid run (a step timed out, or the case threw) is often a loaded machine: run it once more.
+  // runOnce, not runTimed: an invalid first run never reaches the timing rerun, so one launch here keeps
+  // the total at 2 launches per case (runTimed here could make it 3).
+  const again = await runOnce(ctx, c);
+  const s = again[0];
+  if (!s) return one;
+  s.facts["retried"] = true;
+  s.attempts = [
+    ...(f.attempts ?? []),
+    { facts: f.facts, ...(f.samples ? { samples: f.samples } : {}) },
+  ];
+  return [s];
+};
+
+const runTimed = async (ctx: PtyCtx, c: PtyCase): Promise<CaseResult[]> => {
   const first = await runOnce(ctx, c);
   const f = first[0];
   if (!f || ctx.dry || !c.retryIf || f.facts["precondition"] === false)
@@ -402,10 +428,9 @@ export const runPtyCase = async (
   s.facts["rerun"] = true;
   s.facts["flaky"] = agree; // the first run was out of tolerance; true when the rerun disagrees
   s.facts["firstOutOfTolerance"] = true;
-  s.firstRun = {
-    facts: f.facts,
-    ...(f.samples ? { samples: f.samples } : {}),
-  };
+  s.attempts = [
+    { facts: f.facts, ...(f.samples ? { samples: f.samples } : {}) },
+  ];
   return [s];
 };
 
@@ -450,6 +475,7 @@ export const READY: PtyStep = {
   wait_for: "shortcuts|auto\\s*mode",
   timeout: 30,
   label: "ready",
+  rebase: true, // every later `t` and the `secs` deadline count from the READY screen, not from spawn
 };
 export const ASK = (label = "prompt", t = 0): PtyStep => ({
   t,

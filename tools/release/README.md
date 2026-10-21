@@ -12,6 +12,8 @@ The toolkit runs the program only against a local stub with a fake key. Results 
 - `release:prompts` renders `docs/prompts/` unless you pass `--no-render`. With `--only`, it never renders. Review `git diff docs/prompts/` after a full run.
 - `bun run release:claims -- --check` prints `probe print.sweep does not list claim ...` until `release:probe:print` runs again with the new claim lists. These are warnings, and the exit code stays 0.
 - `release:probe:pty` takes about 11 minutes. Run it when the machine is idle, because the status line cases measure timing.
+- pty probes need an idle machine (no other sessions running gates or builds). Step times count from the READY screen. An invalid case is retried once, and compare lists invalid runs separately (`invalid-run`): never edit docs from them.
+- Probes put a `security` shim first on PATH (`<home>/.probe-bin`), so the program never touches the macOS keychain.
 - Never commit `captures/` or `.env`. Both are gitignored. Do not use `git add -f` on them.
 - Secrets go only through `tools/release/secret-runner.sh`. Never print, log, or commit a token. Never open `.env` yourself.
 - Prompts sent to the model are always `Reply with 'OK'.` (`PROMPT` in `tools/release/lib/env.ts`). Do not use `hi` or other text. A case that needs other input must give a `promptReason`.

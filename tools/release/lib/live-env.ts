@@ -4,6 +4,7 @@
 import { dirname, join } from "node:path";
 import { CREDENTIAL_NAME, NON_SECRET_NAMES, SYSTEM_PATH } from "./env.ts";
 import { registerSecret } from "./results.ts";
+import { shimDir } from "./shim.ts";
 
 const TOKEN_VAR = "CLAUDE_CODE_OAUTH_TOKEN";
 
@@ -61,12 +62,13 @@ export type LiveEnvOpts = {
 export const liveEnv = (o: LiveEnvOpts): Record<string, string> => {
   const token = o.token ?? liveToken();
   const env: Record<string, string> = {
-    PATH: `${SYSTEM_PATH}:${dirname(process.execPath)}`,
+    PATH: `${shimDir(o.home)}:${SYSTEM_PATH}:${dirname(process.execPath)}`,
     HOME: o.home,
     TMPDIR: join(o.home, "tmp"),
     CLAUDE_CONFIG_DIR: o.configDir,
     DISABLE_TELEMETRY: "1",
     GIT_CONFIG_GLOBAL: join(o.home, ".gitconfig"),
+    GIT_CONFIG_NOSYSTEM: "1", // git's osxkeychain helper must not run
     [TOKEN_VAR]: token,
   };
   if (!o.allowNonessential)

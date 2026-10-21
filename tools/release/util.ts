@@ -8,7 +8,7 @@ import {
   readlinkSync,
   writeFileSync,
 } from "node:fs";
-import { arch, homedir, platform, release } from "node:os";
+import { arch, constants, homedir, platform, release } from "node:os";
 import { dirname, join } from "node:path";
 import { CLAUDE_CODE_VERSION } from "../../src/version.ts";
 
@@ -133,4 +133,19 @@ export const recordCommand = (version: string, rec: CommandRecord): void => {
   };
   run.commands = [...(run.commands ?? []), rec];
   writeJson(path, run);
+};
+
+/** Exit code of a finished Bun.spawnSync child. A signal kill (exitCode null) is reported, not hidden as 1. */
+export const exitCodeOf = (
+  step: string,
+  r: { exitCode: number | null; signalCode?: string | number | null },
+): number => {
+  if (r.exitCode !== null) return r.exitCode;
+  const sig = r.signalCode;
+  const n =
+    typeof sig === "number"
+      ? sig
+      : ((constants.signals as Record<string, number>)[sig ?? ""] ?? 0);
+  console.error(`${step} killed by ${sig ?? "unknown signal"}`);
+  return 128 + n;
 };

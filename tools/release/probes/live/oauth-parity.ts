@@ -9,6 +9,7 @@ import { startMitm } from "../../lib/mitm.ts";
 import { allocPort } from "../../lib/ports.ts";
 import { runChild } from "../../lib/proc.ts";
 import type { Fact } from "../../lib/results.ts";
+import { assertShimReady } from "../../lib/shim.ts";
 import { startStub } from "../../lib/stub.ts";
 import {
   arr,
@@ -101,6 +102,7 @@ export const oauthParity: LiveCase = {
       env["HTTPS_PROXY"] = mitmKey.proxyUrl;
       env["NODE_EXTRA_CA_CERTS"] = mitmKey.caFile;
       assertSafeEnv(env);
+      assertShimReady(env);
       const st = await runChild(
         [x.bin, "-p", PROMPT, "--output-format", "stream-json", "--verbose"],
         { cwd: sb.proj, env, timeoutMs: 120_000 },

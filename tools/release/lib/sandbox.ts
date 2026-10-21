@@ -11,6 +11,7 @@ import { tmpdir } from "node:os";
 import { dirname, join, resolve, sep } from "node:path";
 import { onCleanup } from "./cleanup.ts";
 import { FAKE_KEY } from "./env.ts";
+import { writeSecurityShim } from "./shim.ts";
 
 export type Files = Record<string, string>;
 export type Sandbox = {
@@ -55,6 +56,7 @@ export const makeSandbox = (opts: SandboxOpts = {}): Sandbox => {
   const proj = join(root, "proj");
   for (const d of [home, cfg, proj, join(home, "tmp")])
     mkdirSync(d, { recursive: true });
+  writeSecurityShim(home);
   const sb = { home, cfg, proj };
   for (const [base, files] of [
     [cfg, opts.cfgFiles],

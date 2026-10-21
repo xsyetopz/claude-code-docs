@@ -6,6 +6,7 @@ import {
   binaryPath,
   type Ctx,
   DEFAULT_PROMPT,
+  exitCodeOf,
   ROOT,
   toolEnv,
   versionDir,
@@ -80,7 +81,7 @@ export const runSchemas = async (ctx: Ctx): Promise<number> => {
     stdout: "inherit",
     stderr: "inherit",
   });
-  if (r.exitCode !== 0) return r.exitCode ?? 1;
+  if (r.exitCode !== 0) return exitCodeOf("release:schemas", r);
   const report: Record<string, ReturnType<typeof diffJson>> = {};
   for (const n of readdirSync(dir).filter((x) => x.endsWith(".json"))) {
     const d = diffJson(
@@ -127,5 +128,5 @@ export const runPrompts = async (ctx: Ctx): Promise<number> => {
     stdout: "inherit",
     stderr: "inherit",
   });
-  return r.exitCode ?? 1;
+  return exitCodeOf("release:prompts", r);
 };

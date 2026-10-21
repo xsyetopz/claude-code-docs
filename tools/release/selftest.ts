@@ -19,6 +19,7 @@ import { runChild } from "./lib/proc.ts";
 import { runPtySelftest } from "./lib/pty/selftest.ts";
 import { openRun, readRun, writeCase } from "./lib/results.ts";
 import { makeSandbox } from "./lib/sandbox.ts";
+import { assertShimReady, shimDir, writeSecurityShim } from "./lib/shim.ts";
 import { readLog, startStub } from "./lib/stub.ts";
 import { binaryPath, type Ctx } from "./util.ts";
 
@@ -94,6 +95,44 @@ export const runSelftest = async (ctx: Ctx): Promise<number> => {
         !names.includes("CLAUDECODE"),
       `${names.length} names`,
     );
+    const ghost = "/nonexistent-x";
+    let pure = true;
+    try {
+      childEnv({
+        home: ghost,
+        configDir: ghost,
+        baseUrl: "http://127.0.0.1:1/x",
+      });
+    } catch {
+      pure = false;
+    }
+    step(
+      "childEnv: pure (no throw, creates nothing)",
+      pure && !existsSync(ghost),
+    );
+    writeSecurityShim(sb.home);
+    writeSecurityShim(sb.home); // idempotent
+    const which = Bun.spawnSync(["/bin/sh", "-c", "command -v security"], {
+      env,
+    });
+    const found = which.stdout.toString().trim();
+    step(
+      "childEnv: security shim first on PATH",
+      found.startsWith(join(shimDir(sb.home), "security")),
+      found,
+    );
+    const shim = Bun.spawnSync(
+      ["security", "find-generic-password", "-w", "-s", "x"],
+      { env },
+    );
+    let guarded = false;
+    try {
+      assertShimReady(childEnv({ home: ghost, configDir: ghost, baseUrl: "" }));
+    } catch {
+      guarded = true;
+    }
+    step("assertShimReady refuses a missing shim", guarded);
+    step("security shim exits 44", shim.exitCode === 44, `${shim.exitCode}`);
     step("childEnv: fake key only", env["ANTHROPIC_API_KEY"] === FAKE_KEY);
     let threw = false;
     try {
@@ -114,6 +153,8 @@ export const runSelftest = async (ctx: Ctx): Promise<number> => {
     }
     const log = join(sb.root, "requests.jsonl");
     const baseUrl = stub.register("selftest", { log });
+    const progEnv = childEnv({ home: sb.home, configDir: sb.cfg, baseUrl });
+    assertShimReady(progEnv);
     const res = await runChild(
       [
         bin,
@@ -127,7 +168,7 @@ export const runSelftest = async (ctx: Ctx): Promise<number> => {
       ],
       {
         cwd: sb.proj,
-        env: childEnv({ home: sb.home, configDir: sb.cfg, baseUrl }),
+        env: progEnv,
         timeoutMs: 90_000,
       },
     );

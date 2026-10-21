@@ -87,7 +87,7 @@ const norm0 = (s: string, r: Run): string =>
       /"(duration_ms|duration_api_ms|total_cost_usd|ttft_ms)":[\d.]+/g,
       '"$1":0',
     )
-    .replace(/cc_version=([\d.]+)\.[0-9a-f]{3}/g, "cc_version=$1.XXX")
+    .replace(/cc_version=[\d.]+\.[0-9a-f]{3}/g, "cc_version=<VER>.XXX")
     .replace(/[0-9a-f]{64}/g, "<DEV>")
     .replace(/\.backup\.\d+/g, ".backup.N")
     .replace(/ccrel-[A-Za-z0-9]+/g, "ccrel-X")

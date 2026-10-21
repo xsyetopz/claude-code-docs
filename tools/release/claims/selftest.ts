@@ -18,7 +18,13 @@ import {
   classify,
   loadDiffNames,
 } from "./claims.ts";
-import { compareRuns, renderCompare } from "./compare.ts";
+import {
+  type ClaimRow,
+  claimResults,
+  compareResults,
+  compareRuns,
+  renderCompare,
+} from "./compare.ts";
 
 const DOC = [
   "---",
@@ -268,6 +274,151 @@ export const runClaimsSelftest = (
         "fresh" in one.added &&
         "gone" in one.removed,
     );
+    {
+      const bad = kase("1.0.1", "pty.bad", {
+        x: 2,
+        precondition: false,
+        "precondition.detail": "wait_for timed out: dialog",
+        retried: true,
+        startLagS: 5,
+      });
+      const ok = kase("1.0.0", "pty.bad", { x: 1, startLagS: 0.5 });
+      const iv = compareResults("1.0.0", "1.0.1", [ok], [bad], false);
+      const row = {
+        id: "c.bad",
+        file: "f.md",
+        line: 1,
+        text: "t",
+        kind: "pty",
+        probes: ["pty.bad"],
+        status: "ok",
+      } as ClaimRow;
+      const cr = claimResults([row], [ok], [bad], null)[0];
+      const same = compareResults(
+        "1.0.0",
+        "1.0.1",
+        [kase("1.0.0", "p.same", { x: 1, startLagS: 0.5 })],
+        [kase("1.0.1", "p.same", { x: 1, startLagS: 7, retried: true })],
+        false,
+      );
+      const md = renderCompare({ ...iv, claims: [cr as never] });
+      step(
+        "compare: precondition=false is invalid-run, not changed; retried/startLagS never diff",
+        iv.counts.invalid === 1 &&
+          iv.counts.changed === 0 &&
+          cr?.result === "invalid-run" &&
+          same.counts.unchanged === 1 &&
+          md.includes("1 invalid runs - re-run these cases") &&
+          md.includes("invalid-run: `c.bad`") &&
+          md.includes("wait_for timed out: dialog"),
+        JSON.stringify([iv.counts, cr?.result]),
+      );
+    }
+    {
+      const nz = compareResults(
+        "1.0.0",
+        "1.0.1",
+        [
+          kase("1.0.0", "pty.captures.skill-insights", {
+            userTextSha8: "aaaaaaaa",
+            userTextChars: 5,
+          }),
+          kase("1.0.0", "print.sweep", {
+            "API_TIMEOUT_MS.A": ["nreq"],
+            "FOO.A": ["cfgfiles"],
+            "BAR.A": ["cfgfiles", "m0.ua"],
+            changed: ["FOO"],
+          }),
+          kase("1.0.0", "print.request.v", {
+            "m0.ua": "claude-cli/1.0.0 (x)",
+            other: "a",
+          }),
+        ],
+        [
+          kase("1.0.1", "pty.captures.skill-insights", {
+            userTextSha8: "bbbbbbbb",
+            userTextChars: 5,
+          }),
+          kase("1.0.1", "print.sweep", {
+            "API_TIMEOUT_MS.A": ["nreq", "events"],
+            "FOO.A": [],
+            "BAR.A": ["m0.ua", "events"],
+            changed: ["BAR"],
+          }),
+          kase("1.0.1", "print.request.v", {
+            "m0.ua": "claude-cli/1.0.1 (x)",
+            other: "b",
+          }),
+        ],
+        false,
+      );
+      const md = renderCompare(nz);
+      step(
+        "compare: known noise and version-only changes are listed under Noise, not as changes",
+        nz.counts.changed === 2 &&
+          !nz.cases["pty.captures.skill-insights"] &&
+          Object.keys(nz.cases["print.sweep"]?.changed ?? {}).join() ===
+            "BAR.A" &&
+          Object.keys(nz.cases["print.request.v"]?.changed ?? {}).join() ===
+            "other" &&
+          nz.noise?.["pty.captures.skill-insights"]?.["userTextSha8"] !==
+            undefined &&
+          nz.noise["print.sweep"]?.["FOO.A"] !== undefined &&
+          nz.noise["print.request.v"]?.["m0.ua"] === "version string only" &&
+          md.includes("## Noise (ignored)") &&
+          md.includes("`print.sweep` `API_TIMEOUT_MS.A`"),
+        JSON.stringify([nz.counts, nz.noise]),
+      );
+    }
+    {
+      const rows = [
+        {
+          id: "c.noise",
+          file: "f.md",
+          line: 1,
+          text: "t",
+          kind: "env",
+          probes: ["print.sweep"],
+          status: "ok",
+          diffNames: ["API_TIMEOUT_MS"],
+        },
+        {
+          id: "c.real",
+          file: "f.md",
+          line: 2,
+          text: "t",
+          kind: "env",
+          probes: ["print.sweep"],
+          status: "ok",
+          diffNames: ["FOO"],
+        },
+      ] as ClaimRow[];
+      const old = kase("1.0.0", "print.sweep", {
+        "API_TIMEOUT_MS.A": ["nreq"],
+        "FOO.A": ["x"],
+      });
+      const now = kase("1.0.1", "print.sweep", {
+        "API_TIMEOUT_MS.A": ["nreq", "events"],
+        "FOO.A": ["y"],
+      });
+      const crs = claimResults(rows, [old], [now], null, null, [
+        "1.0.0",
+        "1.0.1",
+      ]);
+      const cc = compareResults("1.0.0", "1.0.1", [old], [now], false);
+      const md = renderCompare({ ...cc, claims: crs });
+      step(
+        "compare: a claim that differs only by noise says so and is listed under Noise",
+        crs[0]?.result === "unchanged" &&
+          crs[0].why ===
+            "unchanged (noise ignored: print.sweep API_TIMEOUT_MS.A)" &&
+          crs[1]?.result === "changed" &&
+          crs[1].noise === undefined &&
+          cc.noise?.["print.sweep"]?.["API_TIMEOUT_MS.A"] !== undefined &&
+          md.includes("- claim `c.noise`: `print.sweep` `API_TIMEOUT_MS.A`"),
+        JSON.stringify(crs.map((r) => [r.result, r.why])),
+      );
+    }
     step(
       "compare: unchanged and one-sided cases",
       !c1.cases["print.same"] &&

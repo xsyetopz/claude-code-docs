@@ -1,5 +1,6 @@
 // Text captures that need the interactive screen: the claude-code-guide subagent system text and the /insights skill text.
 // Facts are length and hash (diffable); the full text is kept beside the JSON as <case>.system.txt / <case>.requests.txt.
+import { normalise } from "../../lib/results.ts";
 import { agentCase, subSystem } from "./agents.ts";
 import {
   arr,
@@ -78,12 +79,14 @@ const insights: PtyCase = {
   notes: "Interactive /insights; the stub answers every request with OK.",
   facts: (x) => {
     const b = x.messages.map((q) => lastUser(q.body));
+    // hash the text with the random sandbox path and ids normalised, so two runs of one version match
+    const nb = b.map((t) => normalise(t));
     return {
       ...pre(x.messages.length > 0, "/insights made no model request"),
       requests: x.messages.length,
       userTextChars: b.reduce((n, t) => n + t.length, 0),
-      userTextSha8: sha8(b.join("\n")),
-      perRequestSha8: b.map(sha8),
+      userTextSha8: sha8(nb.join("\n")),
+      perRequestSha8: nb.map(sha8),
       mentionsProbeArg: b.some((t) => t.includes("PROBE-ARG")),
     };
   },

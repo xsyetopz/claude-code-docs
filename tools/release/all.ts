@@ -1,7 +1,7 @@
 // `release:all`: the automatic steps of the runbook, in order, each as its own `cli.ts` child process so every
 // step records itself in run.json. Never runs probe:managed or probe:live: those are printed as "needs you".
 import { join } from "node:path";
-import type { Ctx } from "./util.ts";
+import { type Ctx, exitCodeOf } from "./util.ts";
 
 const CLI = join(import.meta.dir, "cli.ts");
 
@@ -62,7 +62,7 @@ export const runAll = async (ctx: Ctx): Promise<number> => {
         stderr: "inherit",
       },
     );
-    const code = r.exitCode ?? 1;
+    const code = exitCodeOf(label(step), r);
     if (code === 0) continue;
     if (step.soft) {
       failed.push({ step, code });

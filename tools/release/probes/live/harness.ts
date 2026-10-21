@@ -10,6 +10,7 @@ import { runChild } from "../../lib/proc.ts";
 import { type PtyResult, type PtyStep, runPty } from "../../lib/pty/driver.ts";
 import type { CaseResult, Fact } from "../../lib/results.ts";
 import { type Files, makeSandbox, type Sandbox } from "../../lib/sandbox.ts";
+import { assertShimReady } from "../../lib/shim.ts";
 import type { Stub } from "../../lib/stub.ts";
 
 export { PROMPT };
@@ -87,6 +88,8 @@ export const runPrint = async (
   args: string[],
   o: EnvOpts & { model?: string } = {},
 ) => {
+  const env = envFor(x, sb, o);
+  assertShimReady(env);
   const res = await runChild(
     [
       x.bin,
@@ -96,7 +99,7 @@ export const runPrint = async (
       "--verbose",
       ...(o.model ? ["--model", o.model] : []),
     ],
-    { cwd: sb.proj, env: envFor(x, sb, o), timeoutMs: 120_000 },
+    { cwd: sb.proj, env, timeoutMs: 120_000 },
   );
   return { ...res, events: events(res.stdout) };
 };

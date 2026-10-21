@@ -16,6 +16,7 @@ import { childEnv } from "./env.ts";
 import { assertLiveEnv, DRY_TOKEN, liveEnv } from "./live-env.ts";
 import { startMitm, USAGE_PATH } from "./mitm.ts";
 import { runPty } from "./pty/driver.ts";
+import { writeSecurityShim } from "./shim.ts";
 
 const throws = (f: () => unknown): boolean => {
   try {
@@ -31,6 +32,7 @@ export const runLiveSelftest = async (
 ): Promise<void> => {
   const dir = mkdtempSync(join(realpathSync(tmpdir()), "ccrel-livesel-"));
   try {
+    writeSecurityShim(dir);
     const env = liveEnv({ home: dir, configDir: dir, token: DRY_TOKEN });
     step(
       "liveEnv: token only, no base url, no api key, no proxy",

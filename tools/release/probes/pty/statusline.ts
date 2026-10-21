@@ -22,7 +22,7 @@ import {
 } from "./harness.ts";
 
 /** The status line row appears once the UI is up (the footer hint is replaced while a status line is set). */
-const UP = WAIT("SL-ROW1", "ready", 30);
+const UP = { ...WAIT("SL-ROW1", "ready", 30), rebase: true };
 
 const SL = (extra: Obj = {}): Obj => ({
   statusLine: {

@@ -12,6 +12,7 @@ import {
   type Sandbox,
   subst,
 } from "../../lib/sandbox.ts";
+import { assertShimReady } from "../../lib/shim.ts";
 import {
   type LoggedRequest,
   readLog,
@@ -159,15 +160,17 @@ export const runCase = async (bin: string, c: Case): Promise<Run> => {
     const extra = Object.fromEntries(
       Object.entries(c.env ?? {}).map(([k, v]) => [k, subst(v, sb)]),
     );
+    const childEnvVars = childEnv({
+      home: sb.home,
+      configDir: sb.cfg,
+      baseUrl,
+      extra,
+      ...(c.fakeCredentials ? { fakeCredentials: c.fakeCredentials } : {}),
+    });
+    assertShimReady(childEnvVars);
     const res = await runChild([bin, ...args], {
       cwd: sb.proj,
-      env: childEnv({
-        home: sb.home,
-        configDir: sb.cfg,
-        baseUrl,
-        extra,
-        ...(c.fakeCredentials ? { fakeCredentials: c.fakeCredentials } : {}),
-      }),
+      env: childEnvVars,
       ...(c.afterExit
         ? {
             beforeReap: () => {
