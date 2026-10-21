@@ -131,13 +131,13 @@ export const startStub = (o: StubOpts) => {
       } catch {}
       appendFileSync(
         o.log,
-        JSON.stringify({
+        `${JSON.stringify({
           method: req.method,
           path: url.pathname + url.search,
           authIsFakeKey: authOk,
           headers,
           body,
-        }) + "\n",
+        })}\n`,
       );
       if (url.pathname === "/v1/messages" && req.method === "POST") {
         const m = reply(body as ApiBody | null, o);

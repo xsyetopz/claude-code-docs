@@ -17,19 +17,25 @@ import { SUB_MARK, VARIANTS, type Variant } from "./variants.ts";
 
 export const ROOT = join(import.meta.dir, "..", "..");
 export const DEFAULT_PROMPT = "Reply with 'OK'.";
-export const CAPTURES = join(ROOT, "captures");
+// `--out <dir>` (release:prompts) writes the per-variant folders there; render.ts reads the same place.
+const outArg = process.argv.indexOf("--out");
+export const CAPTURES =
+  outArg >= 0 ? (process.argv[outArg + 1] ?? "") : join(ROOT, "captures");
+process.env["CAPTURE_OUT"] = CAPTURES;
 const requireEnv = (name: string): string => {
   const v = process.env[name];
   if (!v) throw new Error(`${name} is not set`);
   return v;
 };
 
-const BIN = join(
-  requireEnv("HOME"),
-  `.local/share/claude/versions/${CLAUDE_CODE_VERSION}`,
-);
-
 const argv = process.argv.slice(2);
+// `--bin <path>` lets release:prompts point at another installed version.
+const BIN = argv.includes("--bin")
+  ? (argv[argv.indexOf("--bin") + 1] ?? "")
+  : join(
+      requireEnv("HOME"),
+      `.local/share/claude/versions/${CLAUDE_CODE_VERSION}`,
+    );
 const only = argv.includes("--only")
   ? argv[argv.indexOf("--only") + 1].split(",")
   : null;

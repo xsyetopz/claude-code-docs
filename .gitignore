@@ -8,3 +8,7 @@ HANDOVER.md
 
 # check-examples scratch (removed after each run)
 tools/.examples-tmp/
+
+# Python bytecode from the pty driver
+__pycache__/
+*.pyc

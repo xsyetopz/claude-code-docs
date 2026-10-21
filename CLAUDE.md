@@ -10,6 +10,7 @@ Not made by or tied to Anthropic. Hosted at <https://xsyetopz.github.io/claude-c
 - Gates: `typecheck` (`bun --check`, Bun's built-in), `format:check`/`format` (Biome), `lint:code` (Biome lint), `lint` (markdownlint), `check:docs`, `check:examples` (Biome on doc code blocks; `skip-lint` fence meta to skip), `schemas:check`.
 - `bun install` installs lefthook hooks: pre-commit runs the gates on staged files, commit-msg runs commitlint, pre-push runs `verify:locked`.
 - `bun run schemas`: regenerate `schemas/` from the installed Claude Code binary.
+- New Claude Code version: follow the runbook in `tools/release/README.md`.
 
 ## Layout
 

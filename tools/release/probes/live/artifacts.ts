@@ -1,0 +1,56 @@
+// Live /artifacts panel, read-only: open the panel, read the screen, press Esc. Ports the open step of p305-lv
+// s_art2.json / s_art3.json. The later steps there (d, y, r: delete, confirm, rename) are NOT ported: they change the
+// account. The old publishing run is dropped too: the Artifact tool really publishes. Every live sandbox also
+// denies the Artifact tool in settings as a safety net.
+import { READY } from "../pty/harness.ts";
+import {
+  baseResult,
+  type LiveCase,
+  liveSandbox,
+  runLivePty,
+  tolerant,
+} from "./harness.ts";
+
+const ID = "artifacts";
+
+export const artifactsCase: LiveCase = {
+  id: ID,
+  title: "/artifacts panel (open, read, Esc; read-only)",
+  requests: "no prompt; startup sends a few small requests",
+  run: async (x) => {
+    const sb = liveSandbox();
+    try {
+      const pty = await runLivePty(x, sb, {
+        schedule: [
+          READY,
+          { t: 10, send: "/artifacts\r", label: "artifacts" },
+          { t: 17, send: "\u001b", label: "esc" },
+        ],
+        secs: 20,
+      });
+      const s = pty.screen;
+      const ready = /shortcuts|auto\s*mode|Claude Code/i.test(s);
+      const shows = (p: string): boolean => tolerant(p).test(s);
+      return [
+        baseResult(x, ID, {
+          prompt: "",
+          exit: pty.exit,
+          facts: {
+            precondition: ready,
+            ...(ready ? {} : { "precondition.detail": "UI never started" }),
+            panelShown: shows("Artifacts"),
+            showsPublished: shows("Published"),
+            showsNone: shows("No artifacts"),
+            showsFailed: shows("Failed to load"),
+          },
+          samples: { screenTail: s.split("\n").slice(-30).join("\n") },
+          claims: [],
+          notes:
+            "No prompt is sent (prompt is empty): /artifacts is a local command and only the panel is read. Matching tolerates dropped letters in the rendered screen. URLs and ids are scrubbed from the sample.",
+        }),
+      ];
+    } finally {
+      sb.cleanup();
+    }
+  },
+};

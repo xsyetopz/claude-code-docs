@@ -1,0 +1,490 @@
+{
+  "docs/configure/env-vars/context-and-compaction.md#variables:ff4e5b79": {
+    "kind": "env",
+    "probes": ["print.sweep"]
+  },
+  "docs/configure/env-vars/models-and-effort.md#variables:5ad3d32b": {
+    "kind": "env",
+    "probes": ["print.sweep"]
+  },
+  "docs/configure/env-vars/network-and-proxy.md#variables:69a02397": {
+    "kind": "env",
+    "probes": ["print.sweep"]
+  },
+  "docs/configure/env-vars/network-and-proxy.md#variables:ad52476a": {
+    "kind": "env",
+    "probes": ["print.sweep"]
+  },
+  "docs/configure/env-vars/network-and-proxy.md#variables:4f633750": {
+    "kind": "env",
+    "probes": ["print.sweep"]
+  },
+  "docs/configure/env-vars/plugins-and-mcp.md#variables:ba5ee169": {
+    "kind": "env",
+    "probes": ["print.sweep"]
+  },
+  "docs/configure/env-vars/plugins-and-mcp.md#variables:e236bfd3": {
+    "kind": "env",
+    "probes": ["print.sweep"]
+  },
+  "docs/configure/env-vars/plugins-and-mcp.md#variables:dfd0d592": {
+    "kind": "env",
+    "probes": ["print.sweep"]
+  },
+  "docs/configure/env-vars/plugins-and-mcp.md#variables:16f1ccc0": {
+    "kind": "env",
+    "probes": ["print.sweep"]
+  },
+  "docs/configure/env-vars/sdk-and-automation.md#variables:3b3ce8c4": {
+    "kind": "env",
+    "probes": ["print.sweep"]
+  },
+  "docs/configure/env-vars/tools-and-bash.md#variables:f2f64fed": {
+    "kind": "env",
+    "probes": ["print.sweep"]
+  },
+  "docs/configure/env-vars/tools-and-bash.md#variables:6039177c": {
+    "kind": "env",
+    "probes": ["print.sweep"]
+  },
+  "docs/configure/env-vars/tools-and-bash.md#variables:4b4957ad": {
+    "kind": "env",
+    "probes": ["print.sweep"]
+  },
+  "docs/configure/memory-and-rules.md#imports-and-rule-files:edb805a0": {
+    "kind": "manual",
+    "probes": [],
+    "note": "plugin option; the `/config` match is a label, not a command"
+  },
+  "docs/configure/memory-and-rules.md#auto-memory:97437ff5": {
+    "kind": "static",
+    "probes": [],
+    "note": "release history: when it started; recheck only if the feature is removed"
+  },
+  "docs/configure/models-and-providers.md#choose-a-model:37f6c029": {
+    "kind": "setting",
+    "probes": []
+  },
+  "docs/configure/models-and-providers.md#aliases:9f9af634": {
+    "kind": "static",
+    "probes": [],
+    "note": "release history: when it started; recheck only if the feature is removed"
+  },
+  "docs/configure/output-styles.md#the-outputstyle-setting-and-switching:6e63c269": {
+    "kind": "static",
+    "probes": [],
+    "note": "release history: when it started; recheck only if the feature is removed"
+  },
+  "docs/configure/permissions/auto-mode.md#the-claude-auto-mode-commands:631a5e2f": {
+    "kind": "command",
+    "probes": []
+  },
+  "docs/configure/permissions/rules.md#related-top-level-keys:749df5b1": {
+    "kind": "external",
+    "probes": [],
+    "note": "cites the official release notes"
+  },
+  "docs/configure/permissions/sandbox.md#core-keys:b054c9cf": {
+    "kind": "schema",
+    "probes": [],
+    "note": "dotted key sandbox.allowNestedUserNamespaces in schemas/"
+  },
+  "docs/configure/permissions/sandbox.md#other-behavior:4810bc2c": {
+    "kind": "external",
+    "probes": [],
+    "note": "cites the official release notes"
+  },
+  "docs/configure/settings/enterprise.md#require-a-version-range:bba38eb3": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour; no probe checks it yet"
+  },
+  "docs/configure/settings/extra-keys.md#auto-mode-voice-and-display-keys:6b723237": {
+    "kind": "setting",
+    "probes": []
+  },
+  "docs/configure/settings/hooks-and-plugins.md#keys:4004381f": {
+    "kind": "setting",
+    "probes": []
+  },
+  "docs/configure/settings/hooks-and-plugins.md#keys:39aba15f": {
+    "kind": "static",
+    "probes": [],
+    "note": "release history: when it started; recheck only if the feature is removed"
+  },
+  "docs/configure/settings/hooks-and-plugins.md#keys:e49b1181": {
+    "kind": "external",
+    "probes": [],
+    "note": "cites the official release notes"
+  },
+  "docs/configure/settings/index.md#where-settings-live:4bd22d12": {
+    "kind": "static",
+    "probes": [],
+    "note": "release history: when it started; recheck only if the feature is removed"
+  },
+  "docs/configure/settings/index.md#how-lists-and-model-keys-merge:ea06b51d": {
+    "kind": "static",
+    "probes": [],
+    "note": "release history: when it started; recheck only if the feature is removed"
+  },
+  "docs/configure/settings/index.md#exceptions-to-managed-precedence:4be3bfd3": {
+    "kind": "setting",
+    "probes": []
+  },
+  "docs/configure/settings/index.md#left-out-on-purpose:a0efb02a": {
+    "kind": "static",
+    "probes": [],
+    "note": "release history: when it started; recheck only if the feature is removed"
+  },
+  "docs/configure/settings/index.md#left-out-on-purpose:b977ba78": {
+    "kind": "static",
+    "probes": [],
+    "note": "release history: when it started; recheck only if the feature is removed"
+  },
+  "docs/configure/settings/mcp-and-channels.md#keys:85755270": {
+    "kind": "setting",
+    "probes": []
+  },
+  "docs/configure/settings/model.md#keys:0fd378de": {
+    "kind": "setting",
+    "probes": []
+  },
+  "docs/extend/hooks/configuration.md#the-if-filter:ec074a99": {
+    "kind": "static",
+    "probes": [],
+    "note": "release history: when it started; recheck only if the feature is removed"
+  },
+  "docs/extend/hooks/configuration.md#environment-variables-for-hooks:335ac6d4": {
+    "kind": "env",
+    "probes": ["print.sweep"]
+  },
+  "docs/extend/hooks/events.md#elicitation-and-elicitationresult:aac08a8b": {
+    "kind": "static",
+    "probes": [],
+    "note": "release history: when it started; recheck only if the feature is removed"
+  },
+  "docs/extend/mcp/auth.md#headershelper:d1084239": {
+    "kind": "static",
+    "probes": [],
+    "note": "release history: when it started; recheck only if the feature is removed"
+  },
+  "docs/extend/mcp/cli.md#the-mcp-command:399098f2": {
+    "kind": "static",
+    "probes": [],
+    "note": "history: needs 2.1.284 or later"
+  },
+  "docs/extend/mcp/config.md#server-options:9de35760": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour; no probe checks it yet"
+  },
+  "docs/extend/mcp/config.md#precedence:a75f98fb": {
+    "kind": "external",
+    "probes": [],
+    "note": "cites the official release notes"
+  },
+  "docs/extend/mcp/index.md#transports:452d3528": {
+    "kind": "static",
+    "probes": [],
+    "note": "release history: when it started; recheck only if the feature is removed"
+  },
+  "docs/extend/mcp/index.md#scopes:a724f45b": {
+    "kind": "static",
+    "probes": [],
+    "note": "release history: when it started; recheck only if the feature is removed"
+  },
+  "docs/extend/mcp/runtime.md#limits:11085191": {
+    "kind": "static",
+    "probes": [],
+    "note": "release history: when it started; recheck only if the feature is removed"
+  },
+  "docs/extend/mcp/runtime.md#timing-and-recovery:5794e73f": {
+    "kind": "external",
+    "probes": [],
+    "note": "cites the official release notes"
+  },
+  "docs/extend/mcp/settings.md#files-and-flags:e17a496e": {
+    "kind": "flag",
+    "probes": []
+  },
+  "docs/extend/mcp/settings.md#approval-rules:891e26db": {
+    "kind": "static",
+    "probes": [],
+    "note": "release history: when it started; recheck only if the feature is removed"
+  },
+  "docs/extend/mod-api/clock-http-process-env-settings.md#members:ae63aa8b": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour; no probe checks it yet"
+  },
+  "docs/extend/mod-api/clock-http-process-env-settings.md#events-raised-by-these-calls:3640bf80": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour; no probe checks it yet"
+  },
+  "docs/extend/mod-api/hooks.md#failure-behavior:313afbf3": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour; no probe checks it yet"
+  },
+  "docs/extend/mod-api/index.md#at-a-glance:1325b7a6": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour; no probe checks it yet"
+  },
+  "docs/extend/mod-api/tool-command-config.md#engine-events:c3471c0e": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour; no probe checks it yet"
+  },
+  "docs/extend/mod-api/turn-prompt.md#engine-events:f56dd72d": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour; no probe checks it yet"
+  },
+  "docs/extend/mod-api/types/infra.md#types-without-fields:9ff82136": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour; no probe checks it yet"
+  },
+  "docs/extend/mod-api/types/tool-command-config.md#toolcheckinput:88ec56be": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour; no probe checks it yet"
+  },
+  "docs/extend/mod-api/types/tool-command-config.md#toolcheckresult:0d6d1197": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour; no probe checks it yet"
+  },
+  "docs/extend/mod-api/types/turn-prompt.md#example:c8f55818": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour; no probe checks it yet"
+  },
+  "docs/extend/mod-api/types/turn-prompt.md#promptsectioninput:c8f55818": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour; no probe checks it yet"
+  },
+  "docs/extend/mod-api/types/turn-prompt.md#promptsectioninput:a9e63007": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour; no probe checks it yet"
+  },
+  "docs/extend/mod-api/types/ui.md#imageprops:09ae9a1f": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour; no probe checks it yet"
+  },
+  "docs/extend/mod-api/types/ui.md#paneopenargs:2336ece3": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour (also in the release notes); no probe checks it yet"
+  },
+  "docs/extend/mod-api/ui-elements.md#surfaces:ce5563fb": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour; no probe checks it yet"
+  },
+  "docs/extend/plugins/cli.md#subcommands:ae6630e1": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour; no probe checks it yet"
+  },
+  "docs/extend/plugins/cli.md#subcommands:36b66bbf": {
+    "kind": "static",
+    "probes": [],
+    "note": "release history: when it started; recheck only if the feature is removed"
+  },
+  "docs/extend/plugins/manifest.md#userconfig-option-keys:e2d3923d": {
+    "kind": "static",
+    "probes": [],
+    "note": "release history: when it started; recheck only if the feature is removed"
+  },
+  "docs/extend/plugins/marketplace.md#top-level-keys:831397d4": {
+    "kind": "static",
+    "probes": [],
+    "note": "release history: when it started; recheck only if the feature is removed"
+  },
+  "docs/extend/plugins/marketplace.md#plugin-entry-keys:021133fc": {
+    "kind": "static",
+    "probes": [],
+    "note": "release history: when it started; recheck only if the feature is removed"
+  },
+  "docs/extend/plugins/marketplace.md#plugin-sources:e2716f9c": {
+    "kind": "static",
+    "probes": [],
+    "note": "release history: when it started; recheck only if the feature is removed"
+  },
+  "docs/extend/skills-and-commands/bundled-skills.md#skills:0142f207": {
+    "kind": "external",
+    "probes": [],
+    "note": "cites the official release notes"
+  },
+  "docs/extend/skills-and-commands/bundled-skills.md#skills:86834214": {
+    "kind": "external",
+    "probes": [],
+    "note": "cites the official release notes"
+  },
+  "docs/extend/skills-and-commands/frontmatter.md#rules:24090c40": {
+    "kind": "static",
+    "probes": [],
+    "note": "release history: when it started; recheck only if the feature is removed"
+  },
+  "docs/extend/skills-and-commands/frontmatter.md#keys:d23f9847": {
+    "kind": "external",
+    "probes": [],
+    "note": "cites the official release notes"
+  },
+  "docs/extend/skills-and-commands/frontmatter.md#keys:0947a0e6": {
+    "kind": "static",
+    "probes": [],
+    "note": "release history: when it started; recheck only if the feature is removed"
+  },
+  "docs/extend/skills-and-commands/index.md#skill-locations:0ff0459a": {
+    "kind": "static",
+    "probes": [],
+    "note": "release history: when it started; recheck only if the feature is removed"
+  },
+  "docs/extend/skills-and-commands/index.md#skill-locations:e20ae4eb": {
+    "kind": "static",
+    "probes": [],
+    "note": "release history: when it started; recheck only if the feature is removed"
+  },
+  "docs/extend/skills-and-commands/index.md#loading-and-controls:92e9dc19": {
+    "kind": "flag",
+    "probes": []
+  },
+  "docs/extend/skills-and-commands/slash-commands.md#session-and-conversation-commands:4b2fb94f": {
+    "kind": "command",
+    "probes": []
+  },
+  "docs/extend/skills-and-commands/slash-commands.md#session-and-conversation-commands:6f12d364": {
+    "kind": "command",
+    "probes": []
+  },
+  "docs/extend/skills-and-commands/slash-commands.md#setup-interface-and-config-commands:77d4f222": {
+    "kind": "command",
+    "probes": []
+  },
+  "docs/extend/skills-and-commands/slash-commands.md#setup-interface-and-config-commands:5517ad3b": {
+    "kind": "command",
+    "probes": []
+  },
+  "docs/extend/skills-and-commands/slash-commands.md#setup-interface-and-config-commands:82e5e57f": {
+    "kind": "behaviour",
+    "probes": ["live.usage.429", "live.usage.429-retry-after"],
+    "note": "covers the rate-limit-end text only; the 2.1.305 fix lines are not probed"
+  },
+  "docs/extend/skills-and-commands/slash-commands.md#account-cloud-and-other-commands:5180841c": {
+    "kind": "external",
+    "probes": [],
+    "note": "cites the official release notes"
+  },
+  "docs/extend/skills-and-commands/slash-commands.md#account-cloud-and-other-commands:ef1e5797": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour; no probe checks it yet"
+  },
+  "docs/extend/skills-and-commands/slash-commands.md#how-usage-and-artifacts-work:ed40969f": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour; no probe checks it yet"
+  },
+  "docs/extend/skills-and-commands/slash-commands.md#how-usage-and-artifacts-work:ca2acac0": {
+    "kind": "external",
+    "probes": [],
+    "note": "cites the official release notes"
+  },
+  "docs/extend/skills-and-commands/slash-commands.md#how-usage-and-artifacts-work:3bfd871d": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour; no probe checks it yet"
+  },
+  "docs/extend/subagents/frontmatter.md#the---agents-json:df1ddbef": {
+    "kind": "static",
+    "probes": [],
+    "note": "release history: when it started; recheck only if the feature is removed"
+  },
+  "docs/extend/subagents/index.md#overview:780fb0f0": {
+    "kind": "static",
+    "probes": [],
+    "note": "release history: when it started; recheck only if the feature is removed"
+  },
+  "docs/extend/subagents/runtime.md#limits-and-switches:70b4dc60": {
+    "kind": "env",
+    "probes": ["print.sweep"]
+  },
+  "docs/how-it-works/context-and-compaction.md#controls:26caffcc": {
+    "kind": "env",
+    "probes": ["print.sweep"]
+  },
+  "docs/how-it-works/context-and-compaction.md#the-summary-prompt:ce2a0e68": {
+    "kind": "static",
+    "probes": [],
+    "note": "release history: when it started; recheck only if the feature is removed"
+  },
+  "docs/how-it-works/permission-flow.md#step-by-step:4b10b522": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour; no probe checks it yet"
+  },
+  "docs/how-it-works/system-prompt.md#ways-to-change-it:f3d51160": {
+    "kind": "flag",
+    "probes": []
+  },
+  "docs/how-it-works/system-prompt.md#ways-to-change-it:5488df9f": {
+    "kind": "static",
+    "probes": [],
+    "note": "release history: when it started; recheck only if the feature is removed"
+  },
+  "docs/how-it-works/system-prompt.md#shared-sections:7836be5d": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour; no probe checks it yet"
+  },
+  "docs/reference/api/endpoints.md#request-headers:cdde4fd1": {
+    "kind": "static",
+    "probes": [],
+    "note": "release history: when it started; recheck only if the feature is removed"
+  },
+  "docs/reference/tools/agents-and-tasks.md#agent-parameters:4ec0043c": {
+    "kind": "static",
+    "probes": [],
+    "note": "release history: when it started; recheck only if the feature is removed"
+  },
+  "docs/reference/tools/files.md#tools:5c10ad8a": {
+    "kind": "static",
+    "probes": [],
+    "note": "release history: when it started; recheck only if the feature is removed"
+  },
+  "docs/reference/tools/index.md#switches-for-tool-search:0c33dfc5": {
+    "kind": "env",
+    "probes": ["print.sweep"]
+  },
+  "docs/reference/tools/shell-and-web.md#tools:1fb4f438": {
+    "kind": "static",
+    "probes": [],
+    "note": "release history: when it started; recheck only if the feature is removed"
+  },
+  "docs/reference/tools/shell-and-web.md#how-it-works:af1c8f0f": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour; no probe checks it yet"
+  },
+  "docs/start/what-changed.md#older-releases:0d10f2a9": {
+    "kind": "static",
+    "probes": [],
+    "note": "scope or example text, not a claim about the program"
+  },
+  "docs/start/what-changed.md#older-releases:e2b4b69c": {
+    "kind": "behaviour",
+    "probes": ["live.usage.429", "live.usage.429-retry-after"]
+  },
+  "docs/start/what-changed.md#example:0688c778": {
+    "kind": "static",
+    "probes": [],
+    "note": "scope or example text, not a claim about the program"
+  }
+}

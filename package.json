@@ -25,7 +25,18 @@
     "format:check": "biome format .",
     "plugin:build": "bun build plugin/mcp/src/server.ts --target=bun --outfile=plugin/mcp/dist/server.js",
     "plugin:check": "bun tools/plugin/check.ts",
-    "plugin:smoke": "bun tools/plugin/smoke.ts"
+    "plugin:smoke": "bun tools/plugin/smoke.ts",
+    "release:check": "bun tools/release/cli.ts check",
+    "release:diff": "bun tools/release/cli.ts diff",
+    "release:schemas": "bun tools/release/cli.ts schemas",
+    "release:prompts": "bun tools/release/cli.ts prompts",
+    "release:probe:print": "bun tools/release/cli.ts probe:print",
+    "release:probe:pty": "bun tools/release/cli.ts probe:pty",
+    "release:probe:managed": "bun tools/release/cli.ts probe:managed",
+    "release:probe:live": "bun tools/release/cli.ts probe:live",
+    "release:claims": "bun tools/release/cli.ts claims",
+    "release:compare": "bun tools/release/cli.ts compare",
+    "release:all": "bun tools/release/cli.ts all"
   },
   "dependencies": {
     "@docusaurus/core": "^3.10.2",

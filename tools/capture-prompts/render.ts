@@ -16,7 +16,7 @@ import { BADGE_NOTES, INDEX_FACTS, NOTES } from "./notes.ts";
 import { SUB_MARK, VARIANTS, type Variant } from "./variants.ts";
 
 const ROOT = join(import.meta.dir, "..", "..");
-const CAPTURES = join(ROOT, "captures");
+const CAPTURES = process.env["CAPTURE_OUT"] ?? join(ROOT, "captures");
 const OUT = join(import.meta.dir, "out");
 const DOCS = join(ROOT, "docs", "prompts");
 mkdirSync(OUT, { recursive: true });
@@ -123,7 +123,7 @@ const load = (v: Variant): Cap => {
     typeof b.system === "string" ? [{ text: b.system }] : (b.system ?? []);
   for (const [i, s] of sys.entries()) {
     parts.push({
-      label: `system[${i}] (${s.cache_control ? "cache marker: " + JSON.stringify(s.cache_control) : "no cache marker"})`,
+      label: `system[${i}] (${s.cache_control ? `cache marker: ${JSON.stringify(s.cache_control)}` : "no cache marker"})`,
       text: n(s.text),
     });
   }
@@ -252,12 +252,11 @@ const toolDiff = (a: Tool[], b: Tool[]): string => {
     })
     .map((t) => t.name);
   const out: string[] = [];
-  if (add.length) out.push(`adds ${add.map((x) => "`" + x + "`").join(", ")}.`);
-  if (rem.length)
-    out.push(`removes ${rem.map((x) => "`" + x + "`").join(", ")}.`);
+  if (add.length) out.push(`adds ${add.map((x) => `\`${x}\``).join(", ")}.`);
+  if (rem.length) out.push(`removes ${rem.map((x) => `\`${x}\``).join(", ")}.`);
   if (chg.length)
     out.push(
-      `changes the text or schema of ${chg.map((x) => "`" + x + "`").join(", ")}.`,
+      `changes the text or schema of ${chg.map((x) => `\`${x}\``).join(", ")}.`,
     );
   return out.join(" ");
 };
@@ -475,7 +474,7 @@ for (const [id, c] of caps) {
     if (!d) same.push(`[${c.v.title}](./${id}.md)`);
     else L.push(`| [${c.v.title}](./${id}.md) | ${c.tools.length} | ${d} |`);
   }
-  L.push("", "## Same Tools as the Default", "", same.join(", ") + ".", "");
+  L.push("", "## Same Tools as the Default", "", `${same.join(", ")}.`, "");
   const bare = caps.get("bare");
   if (bare)
     L.push(
@@ -552,10 +551,10 @@ for (const [id, c] of caps) {
   for (const [id, c] of caps) {
     const dup = dupOf.get(id);
     const secs = c.sections.length
-      ? c.sections.map((s) => "`" + s + "`").join(", ")
+      ? c.sections.map((s) => `\`${s}\``).join(", ")
       : "none";
     L.push(
-      `| [${c.v.title}](./${id}.md)${dup ? " (same text as " + dup + ")" : ""} | ${c.v.select} | ${fmt(c.chars)} | ${c.tools.length} | ${secs} |`,
+      `| [${c.v.title}](./${id}.md)${dup ? ` (same text as ${dup})` : ""} | ${c.v.select} | ${fmt(c.chars)} | ${c.tools.length} | ${secs} |`,
       ...allRows(id),
     );
   }
@@ -574,5 +573,5 @@ for (const [id, c] of caps) {
   writeFileSync(join(DOCS, "index.md"), stripTrailing(L.join("\n")));
 }
 console.log(
-  `rendered ${caps.size} variants, ${dupOf.size} duplicates: ${[...dupOf].map(([a, b]) => a + "=" + b).join(" ")}`,
+  `rendered ${caps.size} variants, ${dupOf.size} duplicates: ${[...dupOf].map(([a, b]) => `${a}=${b}`).join(" ")}`,
 );
