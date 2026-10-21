@@ -31,7 +31,7 @@ The text below is every part of the request that Claude Code builds before your 
 
 ```text
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.305.<build>; cc_entrypoint=sdk-cli;
+x-anthropic-billing-header: cc_version=2.1.306.<build>; cc_entrypoint=sdk-cli;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -48,7 +48,7 @@ Your response must be a JSON object with one of these shapes:
 Always include a "reason" field.
 
 === messages[0].content[0] (role: user) ===
-PROBE-HOOK-PROMPT: check this call. {"session_id":"4e902b6c-461a-496e-a860-53e22952a50f","transcript_path":"<config-dir>/projects/<project-slug>/4e902b6c-461a-496e-a860-53e22952a50f.jsonl","cwd":"<cwd>","prompt_id":"a7b6f564-82a1-4936-b3a9-dbb2c53f220b","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"PreToolUse","tool_name":"Bash","tool_input":{"command":"echo probe"},"tool_use_id":"toolu_probe1"}
+PROBE-HOOK-PROMPT: check this call. {"session_id":"22eacd5e-a703-46d7-964f-3729a386fc7b","transcript_path":"<config-dir>/projects/<project-slug>/22eacd5e-a703-46d7-964f-3729a386fc7b.jsonl","cwd":"<cwd>","prompt_id":"94b988e0-0d49-436b-9dac-5bb99783de02","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"PreToolUse","tool_name":"Bash","tool_input":{"command":"echo probe"},"tool_use_id":"toolu_probe1"}
 ```
 
 ## Compared to the Default
@@ -192,7 +192,7 @@ Lines added: 7. Lines removed: 115. Size change: -13,953 characters.
 -<total_tokens>15000000 tokens left</total_tokens>
 -
 -Today's date is <date>.
-+PROBE-HOOK-PROMPT: check this call. {"session_id":"4e902b6c-461a-496e-a860-53e22952a50f","transcript_path":"<config-dir>/projects/<project-slug>/4e902b6c-461a-496e-a860-53e22952a50f.jsonl","cwd":"<cwd>","prompt_id":"a7b6f564-82a1-4936-b3a9-dbb2c53f220b","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"PreToolUse","tool_name":"Bash","tool_input":{"command":"echo probe"},"tool_use_id":"toolu_probe1"}
++PROBE-HOOK-PROMPT: check this call. {"session_id":"22eacd5e-a703-46d7-964f-3729a386fc7b","transcript_path":"<config-dir>/projects/<project-slug>/22eacd5e-a703-46d7-964f-3729a386fc7b.jsonl","cwd":"<cwd>","prompt_id":"94b988e0-0d49-436b-9dac-5bb99783de02","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"PreToolUse","tool_name":"Bash","tool_input":{"command":"echo probe"},"tool_use_id":"toolu_probe1"}
 ````
 
 Tool list: removes `Agent`, `Bash`, `Edit`, `ListAgents`, `Read`, `ReportFindings`, `ScheduleWakeup`, `Skill`, `ToolSearch`, `Workflow`, `DeferredToolPlaceholder`, `Write`. See [Tools per Variant](./tools-per-variant.md).

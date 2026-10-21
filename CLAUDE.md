@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Unofficial Docusaurus site documenting Claude Code `2.1.305` (version in `src/version.ts`).
+Unofficial Docusaurus site documenting Claude Code `2.1.306` (version in `src/version.ts`).
 Not made by or tied to Anthropic. Hosted at <https://xsyetopz.github.io/claude-code-docs/>.
 
 ## Commands

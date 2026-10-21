@@ -1,10 +1,10 @@
 ---
 title: What Changed
-description: What changed in the Claude Code releases near 2.1.305, newest first, as far as the changelog and a version comparison show.
+description: What changed in the Claude Code releases near 2.1.306, newest first, as far as the changelog and a version comparison show.
 sidebar_position: 4
 ---
 
-This page lists changes in the last few releases up to `2.1.305`.
+This page lists changes in the last few releases up to `2.1.306`.
 It is short on purpose. The site only repeats what its sources say, and it does not guess.
 For every fix and small change, read the official [Changelog](https://code.claude.com/docs/en/changelog).
 
@@ -12,7 +12,18 @@ For every fix and small change, read the official [Changelog](https://code.claud
 
 Run `claude --version`.
 The `/release-notes` command shows a cached copy of the [changelog](https://code.claude.com/docs/en/changelog).
-This site covers `2.1.305`, the version shown in the navbar.
+This site covers `2.1.306`, the version shown in the navbar.
+
+## Version 2.1.306
+
+Released October 21, 2026. Source: [release notes](https://github.com/anthropics/claude-code/releases/tag/v2.1.306).
+
+| Change | Status | What it means for you | Where to read more |
+| --- | --- | --- | --- |
+| `claude -p` in cloud sessions | <Documented /> | `claude -p` no longer reports "Not logged in" when you start it without the session's environment variables. | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
+| "Prompt is too long" with many MCP tools | <Documented /> | In a session with many MCP tools, an API error is no longer replaced by "prompt is too long", and Claude Code no longer runs a compaction it does not need. | [Context and Compaction](../how-it-works/context-and-compaction.md) |
+
+A comparison of the `2.1.305` and `2.1.306` programs found no change to environment variables, flags, commands, settings, hooks, or gates (the program).
 
 ## Version 2.1.305
 

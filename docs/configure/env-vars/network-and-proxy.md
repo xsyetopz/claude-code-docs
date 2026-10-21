@@ -106,4 +106,4 @@ Numeric variables such as timeouts accept forms like `2e3` and `64_000` in addit
 - [System and Third-Party](system-and-third-party.md): `ALL_PROXY` and CA bundle names owned by other tools.
 - [Undocumented Items](../../reference/undocumented.md): every item that only the program shows.
 
-Source: the program (variable names found in the `2.1.305` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
+Source: the program (variable names found in the `2.1.306` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.

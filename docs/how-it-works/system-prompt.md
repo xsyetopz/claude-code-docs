@@ -61,7 +61,7 @@ See [Request and Cache](request-and-cache.md#system-blocks-and-cache-markers) fo
 
 A model gets the short prompt (one `lean_body` section, about 5.7k characters) or the full prompt (six longer sections, about 26.9k characters).
 The official docs and the real request captures agree here. Only the old wiki was wrong.
-Captures of 2.1.305 show the following. See [Captured System Prompts](../prompts/index.md) for the texts.
+Captures of 2.1.306 show the following. See [Captured System Prompts](../prompts/index.md) for the texts.
 
 ```mermaid
 flowchart TD

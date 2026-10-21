@@ -1,5 +1,5 @@
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.305.<build>; cc_entrypoint=sdk-cli;
+x-anthropic-billing-header: cc_version=2.1.306.<build>; cc_entrypoint=sdk-cli;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -93,4 +93,4 @@ Based on the conversation transcript above, has the following stopping condition
 
 Condition: PROBE-HOOK-STOP: is the work done?
 
-ARGUMENTS: {"session_id":"b86a028d-60e2-4a7e-9c5b-55f5d0496329","transcript_path":"<config-dir>/projects/<project-slug>/b86a028d-60e2-4a7e-9c5b-55f5d0496329.jsonl","cwd":"<cwd>","prompt_id":"9f949ee3-a7d4-4c26-9373-ad9586ede55c","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"Stop","stop_hook_active":false,"last_assistant_message":"OK","background_tasks":[],"session_crons":[]}
+ARGUMENTS: {"session_id":"1005a8cb-5d32-4a7e-9af5-b29f3cf3423f","transcript_path":"<config-dir>/projects/<project-slug>/1005a8cb-5d32-4a7e-9af5-b29f3cf3423f.jsonl","cwd":"<cwd>","prompt_id":"24984d3f-72b8-4b13-bb17-4e1f4a835258","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"Stop","stop_hook_active":false,"last_assistant_message":"OK","background_tasks":[],"session_crons":[]}
