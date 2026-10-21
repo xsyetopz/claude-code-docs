@@ -119,7 +119,7 @@ The debug log says `server_no_result` and falls back to billed local classifier 
 
 ### `autoMode.classifyAllShell`
 
-We ran `claude -p --permission-mode auto` against the stub with the command `curl -s http://127.0.0.1:9/x` and a user allow rule `Bash(curl -s http://127.0.0.1:9/x)`. The table shows whether the stub got requests that carried the classifier system prompt: `1` means the classifier ran, `0` means it did not. A classifier run sent about 10 requests per `Bash` call, because the stub's canned reply makes the program retry. A managed folder needed `sudo`, so the user ran the managed cases on `2.1.305`: managed `true` and `false` each in all 7 settings combinations.
+We ran `claude -p --permission-mode auto` against the stub with the command `curl -s http://127.0.0.1:9/x` and a user allow rule `Bash(curl -s http://127.0.0.1:9/x)`. The table shows whether the stub got requests that carried the classifier system prompt: `1` means the classifier ran, `0` means it did not. A classifier run sent about 10 requests per `Bash` call, because the stub's canned reply makes the program retry. A managed folder needed `sudo`, so the user ran the managed cases on `2.1.306` (managed cases `classify-*`): managed `true`, managed `false`, and managed unset, each in all 7 settings combinations.
 
 | Settings | Classifier Requests |
 | --- | --- |
@@ -199,7 +199,7 @@ These runs used `2.1.305`, the same stub, a fake key, a temp home folder, and a 
 
 ## Managed Folder Probe
 
-These runs used the real `2.1.305` binary on macOS with the stub, a fake key, and a temp home and config folder. The managed folder `/Library/Application Support/ClaudeCode` was made with `sudo` (owner `root:wheel`). It held `CLAUDE.md`, a rule, a skill, an output style, `managed-settings.json`, a `managed-settings.d/` drop-in, and `managed-mcp.json` with one stdio server. Each run also had a user server and a project `.mcp.json` server. A baseline ran without the folder. Runs used `-p --output-format stream-json`, plus `claude mcp list` and `claude mcp get`.
+These runs used the real `2.1.306` binary on macOS with the stub, a fake key, and a temp home and config folder. The managed folder `/Library/Application Support/ClaudeCode` was made with `sudo` (owner `root:wheel`). It held `CLAUDE.md`, a rule, a skill, an output style, `managed-settings.json`, a `managed-settings.d/` drop-in, and `managed-mcp.json` with one stdio server. Each run also had a user server and a project `.mcp.json` server. A baseline ran without the folder. Runs used `-p --output-format stream-json`, plus `claude mcp list` and `claude mcp get`. Every row below was seen in the managed cases of `2.1.306`: `mcp-run`, `mcp-list`, `mcp-get-managed`, `mcp-get-user`, `mcp-config-flag`, `outputstyle`, `skill-default`, `skill-disabled`, `claudemd-order`, `excludes-any-claude-md-user` and `-project`, `excludes-managed-abs-user` and `-project`, `excludes-managed-glob-user` and `-project`, `agent-mcp`, and `auto-mode-config`. The `NotebookEdit` deny is in `claudemd-order`.
 
 | What We Ran | Status | What We Saw |
 | --- | --- | --- |

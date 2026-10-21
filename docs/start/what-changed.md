@@ -29,6 +29,7 @@ Live runs on `2.1.306` with a subscription login found these (see [Probes](../re
 
 - `/artifacts` said `Unknown command: /artifacts` in the interactive screen, and no panel opened. This differs from `2.1.305`. The cause is not known.
 - `/usage` with proxy faults (a `429`, a `429` with `Retry-After: 1800`, and a `200` error envelope): the usage endpoint was again never called, so the rate-limit texts are still seen only against the stub.
+- The managed folder probe (cases `mcp-*`, `outputstyle`, `skill-*`, `claudemd-order`, `excludes-*`, `agent-mcp`, `auto-mode-config`, `classify-*`) matched every row of the table in [Managed Folder Probe](../reference/probes.md#managed-folder-probe).
 - The main request of a login run and a fake-key run had the same body keys and tools. The login sent two more betas. See [Betas](../reference/api/betas.md#observed-request).
 
 ## Version 2.1.305
