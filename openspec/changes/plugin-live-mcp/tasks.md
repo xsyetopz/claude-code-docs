@@ -5,4 +5,4 @@
 - [x] 1.3 Server: platform.claude.com tools (search llms.txt, read page .md)
 - [x] 1.4 Remove snapshot, plugin:snapshot script, and their checks; update plugin:check and verify
 - [x] 1.5 Tests (mock HTTP; offline fallback), evaluation.xml, skill, plugin.json, docs pages about the plugin
-- [ ] 1.6 build, verify:locked, reviewer, commit, push
+- [x] 1.6 build, verify:locked, reviewer, commit, push
