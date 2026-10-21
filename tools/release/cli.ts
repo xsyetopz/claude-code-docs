@@ -1,5 +1,5 @@
 // Usage: bun tools/release/cli.ts <command> [--from V] [--to V] [--only a,b] [--dry] [...]
-// Runbook: tools/release/README.md. Design: openspec/changes/release-toolkit/design.md. `all` runs the automatic steps in order.
+// Runbook: tools/release/README.md. Design: openspec/changes/archive/2026-10-21-release-toolkit/design.md. `all` runs the automatic steps in order.
 import { runAll } from "./all.ts";
 import { runCheck } from "./check.ts";
 import { normaliseArgs } from "./claims/args.ts";

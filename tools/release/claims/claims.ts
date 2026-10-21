@@ -1,5 +1,5 @@
 // release:claims - finds version-labelled claims in docs/, maps each to a probe or a kind, writes claims.json.
-// Design: openspec/changes/release-toolkit/design.md, section "Claim Map".
+// Design: openspec/changes/archive/2026-10-21-release-toolkit/design.md, section "Claim Map".
 //   bun tools/release/cli.ts claims [--check] [--all] [--to V]
 import { createHash } from "node:crypto";
 import { existsSync, readdirSync, readFileSync } from "node:fs";

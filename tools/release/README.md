@@ -1,7 +1,7 @@
 # Release Runbook
 
 How to update this docs site when a new Claude Code version ships. The toolkit lives in this folder.
-The design is in `openspec/changes/release-toolkit/design.md`. Every `bun run release:*` command is defined in `package.json`.
+The design is in `openspec/changes/archive/2026-10-21-release-toolkit/design.md`. Every `bun run release:*` command is defined in `package.json`.
 
 The toolkit runs the program only against a local stub with a fake key. Results are JSON under `captures/<version>/`. Prose is written later, from the diff.
 
