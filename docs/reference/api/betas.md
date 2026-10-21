@@ -118,8 +118,9 @@ Claude Code does not put them in the model request. All of them are <Undocumente
 A transcript of `2.1.305` records each request in an `api-request` line. In a stub run with an API key, that line held 10 betas, from `claude-code-20250219` to `thinking-display-updates-2026-08-18`.
 On a local machine, the `api-request` lines of `2.1.305` held 19 betas (with `claude-sonnet-5-5` and with `claude-opus-5-5`) or 20 betas (with `claude-opus-5-5` only, which added `extended-cache-ttl-2025-04-11`).
 The list ran from `claude-code-20250219` and `oauth-2025-04-20` to `message-threads-2026-08-12`.
-On `2.1.306` we compared the first request with tools (the main request) of `claude -p "Reply with 'OK'."` with a subscription login (`CLAUDE_CODE_OAUTH_TOKEN`) and with a fake API key (live case `oauth-parity`, seen through a local proxy). Each side sent one `/v1/messages` request. The body had the same keys (`context_management`, `diagnostics`, `max_tokens`, `messages`, `metadata`, `model`, `output_config`, `stream`, `system`, `thinking`, and `tools`), the same tool names, and 4 system blocks. The login sent 15 betas, and the key sent 13. The two only the login sent were `oauth-2025-04-20` and `extended-cache-ttl-2025-04-11`. The default model differed: `claude-sonnet-5-5` with the login and `claude-opus-5-5` with the key. The login run also called `GET /api/claude_code/policy_limits` (`200`) and `GET /api/claude_code/settings` (`404`).
 This is one observation and not a rule. See [Transcript Format](../transcript-format.md).
+
+On `2.1.306` we compared the first request with tools (the main request) of `claude -p "Reply with 'OK'."` with a subscription login (`CLAUDE_CODE_OAUTH_TOKEN`) and with a fake API key. Each side sent one `/v1/messages` request. The body had the same keys, the same tool names, and 4 system blocks. The login sent 15 betas, and the key sent 13. The two only the login sent were `oauth-2025-04-20` and `extended-cache-ttl-2025-04-11`. The default model differed: `claude-sonnet-5-5` with the login and `claude-opus-5-5` with the key. See [Probes](../probes.md#live-login-probes).
 
 ## Example
 

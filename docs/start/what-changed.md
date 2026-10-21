@@ -25,6 +25,12 @@ Released October 21, 2026. Source: [release notes](https://github.com/anthropics
 
 A comparison of the `2.1.305` and `2.1.306` programs found no change to environment variables, flags, commands, settings, hooks, or gates (the program).
 
+Live runs on `2.1.306` with a subscription login found these (see [Probes](../reference/probes.md#live-login-probes)):
+
+- `/artifacts` said `Unknown command: /artifacts` in the interactive screen, and no panel opened. This differs from `2.1.305`. The cause is not known.
+- `/usage` with proxy faults (a `429`, a `429` with `Retry-After: 1800`, and a `200` error envelope): the usage endpoint was again never called, so the rate-limit texts are still seen only against the stub.
+- The main request of a login run and a fake-key run had the same body keys and tools. The login sent two more betas. See [Betas](../reference/api/betas.md#observed-request).
+
 ## Version 2.1.305
 
 Released October 20, 2026. Source: [release notes](https://github.com/anthropics/claude-code/releases/tag/v2.1.305).
@@ -149,11 +155,10 @@ We also ran these against a local stub with a fake key:
 - `denyRead` brackets are a Linux fix. On macOS a sandboxed `echo` with `denyRead` globs holding `[user-id]` ran fine, which does not show the Linux fix.
 
 The `/artifacts` delete confirmation was seen live on `2.1.305`, with a throwaway artifact that the run published and deleted. The panel asks `Delete <title>? This cannot be undone.` It offers `1. No, keep it` and `2. Yes, delete it`, with the first one selected, and the footer says `Esc to go back`. Pressing `y` did nothing. Down then Enter chose yes, the list showed `Deleting…`, then `Artifact deleted`, and a refresh showed an empty list. `2.1.304` added the numbered choices and kept `y`, `n`, and Esc; `2.1.305` dropped `y` and `n`. With an API key and no login, `/artifacts` says `Unknown command`. In print mode with `CLAUDE_CODE_OAUTH_TOKEN` it says `/artifacts isn't available in this environment.` In the interactive screen with that token it opens a panel with the tabs `All`, `Mine`, and `Shared`, and an empty list says `No artifacts yet. Publish one with the Artifact tool.`
-On `2.1.306` (live case `artifacts`, interactive screen, `CLAUDE_CODE_OAUTH_TOKEN`, a few requests at start that included `GET /api/claude_cli/bootstrap`, which answered `403`), `/artifacts` said `Unknown command: /artifacts` and no panel opened. This differs from the `2.1.305` run above. The cause is not known.
 
 On `2.1.305`, `/usage` with an API key shows only session cost and tokens. With `CLAUDE_CODE_OAUTH_TOKEN` it also shows the rate-limit rows (`Current session`, `Current week (all models)`, their `Resets` lines) and then `What's contributing to your limits usage?` with `Scanning local sessions…`. With the token the program did not call the usage endpoint in a 35 second run. The rows came from the rate-limit headers of a model reply. A fuller panel needs a claude.ai login with the `user:inference` and `user:profile` scopes (the program). A local stub with fake subscriber credentials showed the `Resets` lines too. The `rate limited until <time>` text is new in `2.1.304`. It appears only when the usage endpoint is rate limited (the program). A stub that answered `429` showed it, in four forms. See [Slash Commands](../extend/skills-and-commands/slash-commands.md). With `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` set, `/usage` shows `Failed to load usage data` and sends no request.
 
-For the `/artifacts` and `/usage` rows, <Documented /> means the release notes name them. A local stub saw the rate-limit end-time text. The live run with a real token could not reach it, because the usage endpoint was never called. The `2.1.306` live run with a real token (cases `usage.429`, `usage.429-retry-after`, and `usage.envelope`) did not call it either, so the texts are still seen only against the stub.
+For the `/artifacts` and `/usage` rows, <Documented /> means the release notes name them. A local stub saw the rate-limit end-time text. The live run with a real token could not reach it, because the usage endpoint was never called.
 :::
 
 ## Example
