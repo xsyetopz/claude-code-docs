@@ -478,6 +478,16 @@
     "probes": [],
     "note": "scope or example text, not a claim about the program"
   },
+  "docs/reference/probes.md#interactive-probes:dd254133": {
+    "kind": "manual",
+    "probes": [],
+    "note": "texts seen only against the local stub; live.usage.429* never reach the usage endpoint"
+  },
+  "docs/start/what-changed.md#version-21306:dcc6649e": {
+    "kind": "manual",
+    "probes": [],
+    "note": "live.artifacts showed Unknown command on 2.1.306; no panel-shown capture exists"
+  },
   "docs/start/what-changed.md#older-releases:e2b4b69c": {
     "kind": "manual",
     "probes": [],
