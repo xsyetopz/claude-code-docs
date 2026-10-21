@@ -79,15 +79,6 @@ type Noisy = {
   items?: string[];
 };
 export const NOISY: Record<string, Noisy[]> = {
-  // The /insights text holds the sandbox path (ccrel-XXXX) that changes every run. The probe now normalises it,
-  // but captures taken before that hold raw hashes. Drop this entry once both sides of a compare are newer;
-  // userTextChars still shows a real change in the text.
-  "pty.captures.skill-insights": [
-    {
-      why: "hash of text with a random sandbox path; differs between runs of one version",
-      facts: /^(userTextSha8|perRequestSha8)$/,
-    },
-  ],
   "print.sweep": [
     {
       why: "API_TIMEOUT_MS sets a tiny timeout, so the retry count depends on machine load",

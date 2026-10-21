@@ -319,10 +319,6 @@ export const runClaimsSelftest = (
         "1.0.0",
         "1.0.1",
         [
-          kase("1.0.0", "pty.captures.skill-insights", {
-            userTextSha8: "aaaaaaaa",
-            userTextChars: 5,
-          }),
           kase("1.0.0", "print.sweep", {
             "API_TIMEOUT_MS.A": ["nreq"],
             "FOO.A": ["cfgfiles"],
@@ -333,12 +329,11 @@ export const runClaimsSelftest = (
             "m0.ua": "claude-cli/1.0.0 (x)",
             other: "a",
           }),
+          kase("1.0.0", "print.request.w", {
+            "m0.ua": "claude-cli/1.0.0 (x)",
+          }),
         ],
         [
-          kase("1.0.1", "pty.captures.skill-insights", {
-            userTextSha8: "bbbbbbbb",
-            userTextChars: 5,
-          }),
           kase("1.0.1", "print.sweep", {
             "API_TIMEOUT_MS.A": ["nreq", "events"],
             "FOO.A": [],
@@ -349,6 +344,9 @@ export const runClaimsSelftest = (
             "m0.ua": "claude-cli/1.0.1 (x)",
             other: "b",
           }),
+          kase("1.0.1", "print.request.w", {
+            "m0.ua": "claude-cli/1.0.1 (x)",
+          }),
         ],
         false,
       );
@@ -356,15 +354,16 @@ export const runClaimsSelftest = (
       step(
         "compare: known noise and version-only changes are listed under Noise, not as changes",
         nz.counts.changed === 2 &&
-          !nz.cases["pty.captures.skill-insights"] &&
           Object.keys(nz.cases["print.sweep"]?.changed ?? {}).join() ===
             "BAR.A" &&
           Object.keys(nz.cases["print.request.v"]?.changed ?? {}).join() ===
             "other" &&
-          nz.noise?.["pty.captures.skill-insights"]?.["userTextSha8"] !==
-            undefined &&
-          nz.noise["print.sweep"]?.["FOO.A"] !== undefined &&
+          nz.noise?.["print.sweep"]?.["FOO.A"] !== undefined &&
           nz.noise["print.request.v"]?.["m0.ua"] === "version string only" &&
+          // a case whose only difference is noise counts as unchanged
+          !nz.cases["print.request.w"] &&
+          nz.noise["print.request.w"]?.["m0.ua"] === "version string only" &&
+          nz.counts.unchanged === 1 &&
           md.includes("## Noise (ignored)") &&
           md.includes("`print.sweep` `API_TIMEOUT_MS.A`"),
         JSON.stringify([nz.counts, nz.noise]),

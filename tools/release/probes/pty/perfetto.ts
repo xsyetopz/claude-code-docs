@@ -1,4 +1,4 @@
-// Interactive Perfetto trace (ported from captures/p305-scripts/p305-fix/run.sh + drv.py): one standard prompt, then list trace files.
+// Interactive Perfetto trace: one standard prompt, then list trace files.
 // Print mode wrote no trace file on 2.1.305; this records whether the interactive screen does.
 import { readdirSync, statSync } from "node:fs";
 import { join } from "node:path";

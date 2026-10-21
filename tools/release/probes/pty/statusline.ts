@@ -1,4 +1,4 @@
-// Status line timing probes (ported from captures/p305-scripts/sl/ and p305-pty sl.sh, settings-h1/t9/t10).
+// Status line timing probes.
 // The helper logs one row per call into the sandbox; intervals come from those times and from RAW.idx read bursts.
 // Out of tolerance is not a failure: the case reruns once and is marked flaky when the rerun disagrees.
 import {
