@@ -373,9 +373,9 @@
     "probes": []
   },
   "docs/extend/skills-and-commands/slash-commands.md#setup-interface-and-config-commands:82e5e57f": {
-    "kind": "behaviour",
-    "probes": ["live.usage.429", "live.usage.429-retry-after"],
-    "note": "covers the rate-limit-end text only; the 2.1.305 fix lines are not probed"
+    "kind": "manual",
+    "probes": [],
+    "note": "texts seen only against the local stub; live.usage.429* never reach the usage endpoint"
   },
   "docs/extend/skills-and-commands/slash-commands.md#account-cloud-and-other-commands:5180841c": {
     "kind": "external",
@@ -479,8 +479,9 @@
     "note": "scope or example text, not a claim about the program"
   },
   "docs/start/what-changed.md#older-releases:e2b4b69c": {
-    "kind": "behaviour",
-    "probes": ["live.usage.429", "live.usage.429-retry-after"]
+    "kind": "manual",
+    "probes": [],
+    "note": "texts seen only against the local stub; live.usage.429* never reach the usage endpoint"
   },
   "docs/start/what-changed.md#example:0688c778": {
     "kind": "static",
