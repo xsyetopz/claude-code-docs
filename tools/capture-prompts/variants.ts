@@ -805,7 +805,7 @@ VARIANTS.push(
     can: ovCan(
       "Partly. The `autoMode` setting edits the rule lists.",
       '`--permission-mode auto` or `defaultMode: "auto"`.',
-      "`autoMode` in user, local, flag, or managed settings.",
+      "`autoMode` in user, flag, or managed settings.",
     ),
   },
   {
@@ -830,7 +830,7 @@ VARIANTS.push(
     can: ovCan(
       "Yes. You write the rules.",
       "`autoMode` setting.",
-      "`autoMode` in user, local, flag, or managed settings.",
+      "`autoMode` in user, flag, or managed settings.",
     ),
   },
 );

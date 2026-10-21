@@ -21,7 +21,9 @@ export const DEFAULT_PROMPT = "Reply with 'OK'.";
 // `--out <dir>` (release:prompts) writes the per-variant folders there; render.ts reads the same place.
 const outArg = process.argv.indexOf("--out");
 export const CAPTURES =
-  outArg >= 0 ? (process.argv[outArg + 1] ?? "") : join(ROOT, "captures");
+  outArg >= 0
+    ? (process.argv[outArg + 1] ?? "")
+    : join(ROOT, "captures", CLAUDE_CODE_VERSION, "prompts");
 process.env["CAPTURE_OUT"] = CAPTURES;
 const requireEnv = (name: string): string => {
   const v = process.env[name];

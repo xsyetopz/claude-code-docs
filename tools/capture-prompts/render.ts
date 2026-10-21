@@ -1,4 +1,4 @@
-// Reads ROOT/captures/*, normalizes machine-specific values, and writes
+// Reads captures/<version>/prompts/* (or CAPTURE_OUT), normalizes machine-specific values, and writes
 //   tools/capture-prompts/out/<id>.txt        normalized prompt text
 //   docs/prompts/*.md                         the pages
 // Run by capture.ts, or alone: bun tools/capture-prompts/render.ts
@@ -11,12 +11,15 @@ import {
   writeFileSync,
 } from "node:fs";
 import { join } from "node:path";
+import { CLAUDE_CODE_VERSION } from "../../src/version.ts";
 import { normalizeHost } from "./normalize.ts";
 import { BADGE_NOTES, INDEX_FACTS, NOTES } from "./notes.ts";
 import { SUB_MARK, VARIANTS, type Variant } from "./variants.ts";
 
 const ROOT = join(import.meta.dir, "..", "..");
-const CAPTURES = process.env["CAPTURE_OUT"] ?? join(ROOT, "captures");
+const CAPTURES =
+  process.env["CAPTURE_OUT"] ??
+  join(ROOT, "captures", CLAUDE_CODE_VERSION, "prompts");
 const OUT = join(import.meta.dir, "out");
 const DOCS = join(ROOT, "docs", "prompts");
 mkdirSync(OUT, { recursive: true });
