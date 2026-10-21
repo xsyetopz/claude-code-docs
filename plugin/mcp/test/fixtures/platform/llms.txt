@@ -1,0 +1,25 @@
+# Claude Developer Platform
+
+> Docs for the Claude API.
+
+| Language | Link |
+| --- | --- |
+| English | See below |
+| Deutsch | 3 pages |
+
+## English
+
+### Getting Started
+- [Home](https://platform.claude.com/docs/en/home.md) - Welcome to the Claude docs
+- [Build With Claude Overview](https://platform.claude.com/docs/en/build-with-claude/overview.md) - Features for building with Claude
+
+### Messages
+- [Create a Message](https://platform.claude.com/docs/en/api/messages.md) - Send structured input and get a model reply
+- [Prompt Caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching.md) - Reuse prompt prefixes to cut latency and cost
+- [Streaming](https://platform.claude.com/docs/en/api/messages-streaming.md)
+- [Foreign](https://evil.example/docs/en/api/evil.md) - Dropped, other host
+
+## Deutsch
+
+### Erste Schritte
+- [Startseite](https://platform.claude.com/docs/de/home.md) - Nicht Englisch

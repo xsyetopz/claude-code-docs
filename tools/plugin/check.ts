@@ -12,6 +12,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import Ajv2020 from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
+import { SCHEMA_NAMES } from "../../plugin/mcp/src/content.ts";
 
 const ROOT = join(import.meta.dir, "..", "..");
 const ajv = new Ajv2020({ strict: true, strictTypes: false, allErrors: true });
@@ -54,7 +55,6 @@ for (const f of [
   "plugin/.mcp.json",
   "plugin/skills/claude-code-docs/SKILL.md",
   "plugin/mcp/dist/server.js",
-  "plugin/mcp/snapshot/manifest.json",
 ])
   if (!existsSync(join(ROOT, f))) problems.push(`${f}: missing`);
 
@@ -83,38 +83,11 @@ if (existsSync(join(ROOT, "plugin/mcp/dist/server.js"))) {
     );
 }
 
-// Freshness: the committed snapshot must equal a fresh snapshot of build/, and dist/server.js must
-// equal a fresh bundle of the sources (bun build is deterministic for the same inputs and versions).
-const files = (dir: string, rel = ""): string[] =>
-  readdirSync(join(dir, rel), { withFileTypes: true }).flatMap((d) =>
-    d.isDirectory() ? files(dir, join(rel, d.name)) : [join(rel, d.name)],
-  );
-if (existsSync(join(ROOT, "build", "llms-manifest.json"))) {
+// Freshness: dist/server.js must equal a fresh bundle of the sources (bun build is deterministic
+// for the same inputs and versions).
+{
   const tmp = mkdtempSync(join(tmpdir(), "plugin-check-"));
   try {
-    const snap = join(tmp, "snapshot");
-    const a = Bun.spawnSync(
-      ["bun", "tools/plugin-snapshot.ts", "--out", snap],
-      { cwd: ROOT },
-    );
-    if (a.exitCode !== 0)
-      problems.push(`snapshot: ${a.stderr.toString().trim()}`);
-    else {
-      const cur = join(ROOT, "plugin/mcp/snapshot");
-      const want = files(snap).sort();
-      const have = existsSync(cur) ? files(cur).sort() : [];
-      const stale =
-        want.length !== have.length ||
-        want.some(
-          (f, i) =>
-            f !== have[i] ||
-            !readFileSync(join(snap, f)).equals(readFileSync(join(cur, f))),
-        );
-      if (stale)
-        problems.push(
-          'plugin/mcp/snapshot is stale: run "bun run build && bun run plugin:snapshot"',
-        );
-    }
     const bundle = join(tmp, "server.js");
     const b = Bun.spawnSync(
       [
@@ -128,6 +101,10 @@ if (existsSync(join(ROOT, "build", "llms-manifest.json"))) {
     );
     if (b.exitCode !== 0)
       problems.push(`bundle: ${b.stderr.toString().trim()}`);
+    else if (!existsSync(join(ROOT, "plugin/mcp/dist/server.js")))
+      problems.push(
+        'plugin/mcp/dist/server.js is missing: run "bun run plugin:build"',
+      );
     else if (
       !readFileSync(bundle).equals(
         readFileSync(join(ROOT, "plugin/mcp/dist/server.js")),
@@ -139,9 +116,32 @@ if (existsSync(join(ROOT, "build", "llms-manifest.json"))) {
   } finally {
     rmSync(tmp, { recursive: true, force: true });
   }
+}
+
+// Contract with the built site: what the server fetches must exist in build/.
+if (existsSync(join(ROOT, "build", "llms-manifest.json"))) {
+  const manifest = JSON.parse(
+    readFileSync(join(ROOT, "build", "llms-manifest.json"), "utf8"),
+  ) as { route: string }[];
+  for (const { route } of manifest) {
+    const rel = route === "/" ? "index" : route.replace(/^\/+|\/+$/g, "");
+    if (!existsSync(join(ROOT, "build", `${rel}.md`)))
+      problems.push(`build/${rel}.md: missing for manifest route ${route}`);
+  }
+  const dir = join(ROOT, "build", "schemas");
+  const built = existsSync(dir)
+    ? readdirSync(dir)
+        .filter((f) => f.endsWith(".json"))
+        .map((f) => f.slice(0, -5))
+        .sort()
+    : [];
+  if (JSON.stringify(built) !== JSON.stringify([...SCHEMA_NAMES].sort()))
+    problems.push(
+      `SCHEMA_NAMES (${[...SCHEMA_NAMES].sort().join(", ")}) differs from build/schemas/ (${built.join(", ")})`,
+    );
 } else
   console.warn(
-    'plugin:check: build/ missing, skipped freshness checks (run "bun run build")',
+    'plugin:check: build/ missing, skipped site contract check (run "bun run build")',
   );
 
 if (problems.length) {

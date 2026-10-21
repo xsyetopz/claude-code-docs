@@ -21580,34 +21580,508 @@ class StdioServerTransport {
     });
   }
 }
+// plugin/mcp/package.json
+var package_default = {
+  name: "claude-code-docs-mcp",
+  version: "0.2.0",
+  private: true,
+  license: "MIT",
+  type: "module",
+  description: "MCP server for the Claude Code Docs. Source for dist/server.js, which is committed.",
+  scripts: {
+    build: "bun build src/server.ts --target=bun --outfile=dist/server.js"
+  },
+  dependencies: {
+    "@modelcontextprotocol/sdk": "^1.32.1",
+    zod: "^4.6.7"
+  }
+};
 
-// plugin/mcp/src/content.ts
+// plugin/mcp/src/cache.ts
+import { createHash } from "crypto";
 import {
-  existsSync,
   mkdirSync,
+  readdirSync,
   readFileSync,
+  renameSync,
+  rmSync,
   statSync,
   writeFileSync
 } from "fs";
 import { homedir } from "os";
 import { dirname, join, resolve, sep } from "path";
-import { fileURLToPath } from "url";
-var SITE = "https://xsyetopz.github.io/claude-code-docs";
-var fetchBase = () => {
-  const raw = process.env["CLAUDE_CODE_DOCS_SITE"];
+var CACHE_CAP_BYTES = 60 * 1024 * 1024;
+var capBytes = () => {
+  const n = Number(process.env["CC_DOCS_CACHE_CAP_BYTES"]);
+  return process.env["CC_DOCS_CACHE_CAP_BYTES"] !== undefined && Number.isFinite(n) && n >= 0 ? n : CACHE_CAP_BYTES;
+};
+var cacheRoot = () => {
+  const env = process.env;
+  if (env["CC_DOCS_CACHE_DIR"])
+    return resolve(env["CC_DOCS_CACHE_DIR"]);
+  if (env["CLAUDE_PLUGIN_DATA"])
+    return resolve(env["CLAUDE_PLUGIN_DATA"], "cache");
+  return join(env["XDG_CACHE_HOME"] || join(homedir(), ".cache"), "claude-code-docs");
+};
+var inside = (base, ...parts) => {
+  const root = resolve(base);
+  const p = resolve(root, ...parts);
+  return p.startsWith(root + sep) ? p : undefined;
+};
+var sha = (b) => createHash("sha256").update(b).digest("hex");
+var isMeta = (m) => {
+  if (typeof m !== "object" || m === null)
+    return false;
+  const o = m;
+  return typeof o["url"] === "string" && typeof o["fetchedAt"] === "string" && typeof o["bytes"] === "number" && typeof o["sha256"] === "string";
+};
+var pruneRank = (relPath) => {
+  const rel = relPath.replaceAll("\\", "/");
+  if (rel.startsWith("platform/pages/"))
+    return 0;
+  if (rel.startsWith("site/pages/") || rel.startsWith("site/schemas/"))
+    return 1;
+  return 2;
+};
+
+class DiskCache {
+  root;
+  memory;
+  approx;
+  constructor(root = cacheRoot()) {
+    this.root = root;
+    try {
+      mkdirSync(root, { recursive: true });
+      const probe = join(root, `.probe.${process.pid}`);
+      writeFileSync(probe, "");
+      rmSync(probe);
+    } catch {
+      this.memory = new Map;
+    }
+  }
+  file(rel) {
+    return inside(this.root, rel);
+  }
+  get(rel) {
+    if (this.memory)
+      return this.memory.get(rel);
+    const file = this.file(rel);
+    if (!file)
+      return;
+    let buf;
+    try {
+      buf = readFileSync(file);
+    } catch {
+      return;
+    }
+    let meta;
+    try {
+      const m = JSON.parse(readFileSync(`${file}.meta.json`, "utf8"));
+      if (!isMeta(m))
+        throw new Error("bad meta");
+      meta = m;
+    } catch {
+      meta = undefined;
+    }
+    if (meta && (buf.length !== meta.bytes || sha(buf) !== meta.sha256)) {
+      this.delete(rel);
+      return;
+    }
+    return { body: buf.toString("utf8"), meta };
+  }
+  put(rel, body, v) {
+    const buf = Buffer.from(body, "utf8");
+    const meta = {
+      url: v.url,
+      ...v.etag ? { etag: v.etag } : {},
+      ...v.lastModified ? { lastModified: v.lastModified } : {},
+      fetchedAt: new Date().toISOString(),
+      status: 200,
+      bytes: buf.length,
+      sha256: sha(buf)
+    };
+    if (this.memory) {
+      this.memory.set(rel, { body, meta });
+      this.pruneMemory(rel);
+      return;
+    }
+    const file = this.file(rel);
+    if (!file)
+      return;
+    try {
+      let before = 0;
+      try {
+        before = statSync(file).size;
+      } catch {}
+      this.atomic(file, buf);
+      this.atomic(`${file}.meta.json`, JSON.stringify(meta));
+      if (this.approx === undefined)
+        this.approx = this.total();
+      else
+        this.approx += buf.length - before;
+      if (this.approx > capBytes())
+        this.prune(rel);
+    } catch {}
+  }
+  touch(rel) {
+    const c = this.get(rel);
+    if (!c?.meta)
+      return;
+    const meta = { ...c.meta, fetchedAt: new Date().toISOString() };
+    if (this.memory) {
+      this.memory.set(rel, { body: c.body, meta });
+      return;
+    }
+    const file = this.file(rel);
+    if (!file)
+      return;
+    try {
+      this.atomic(`${file}.meta.json`, JSON.stringify(meta));
+    } catch {}
+  }
+  delete(rel) {
+    if (this.memory) {
+      this.memory.delete(rel);
+      return;
+    }
+    const file = this.file(rel);
+    if (!file)
+      return;
+    try {
+      rmSync(file, { force: true });
+      rmSync(`${file}.meta.json`, { force: true });
+    } catch {}
+  }
+  atomic(file, data) {
+    mkdirSync(dirname(file), { recursive: true });
+    const tmp = `${file}.${process.pid}.tmp`;
+    try {
+      writeFileSync(tmp, data);
+      renameSync(tmp, file);
+    } catch (e) {
+      rmSync(tmp, { force: true });
+      throw e;
+    }
+  }
+  files() {
+    const out = [];
+    let names;
+    try {
+      names = readdirSync(this.root, { recursive: true });
+    } catch {
+      return out;
+    }
+    for (const rel of names) {
+      if (rel.endsWith(".meta.json") || rel.endsWith(".tmp"))
+        continue;
+      try {
+        const s = statSync(join(this.root, rel));
+        if (!s.isFile())
+          continue;
+        let at = s.mtimeMs;
+        try {
+          at = Date.parse(JSON.parse(readFileSync(join(this.root, `${rel}.meta.json`), "utf8")).fetchedAt);
+        } catch {}
+        out.push({ rel, size: s.size, at });
+      } catch {}
+    }
+    return out;
+  }
+  total() {
+    return this.files().reduce((n, f) => n + f.size, 0);
+  }
+  pruneMemory(keep) {
+    const mem = this.memory;
+    if (!mem)
+      return;
+    const all = [...mem].map(([rel, c]) => ({
+      rel,
+      size: Buffer.byteLength(c.body),
+      at: c.meta ? Date.parse(c.meta.fetchedAt) : 0
+    }));
+    let size = all.reduce((n, f) => n + f.size, 0);
+    const victims = all.filter((f) => pruneRank(f.rel) < 2 && f.rel !== keep).sort((a, b) => pruneRank(a.rel) - pruneRank(b.rel) || a.at - b.at);
+    for (const f of victims) {
+      if (size <= capBytes())
+        break;
+      mem.delete(f.rel);
+      size -= f.size;
+    }
+  }
+  prune(keep) {
+    const all = this.files();
+    let size = all.reduce((n, f) => n + f.size, 0);
+    const victims = all.filter((f) => pruneRank(f.rel) < 2 && f.rel !== keep).sort((a, b) => pruneRank(a.rel) - pruneRank(b.rel) || a.at - b.at);
+    for (const f of victims) {
+      if (size <= capBytes())
+        break;
+      this.delete(f.rel);
+      size -= f.size;
+    }
+    this.approx = size;
+  }
+}
+
+// plugin/mcp/src/fetcher.ts
+var FETCH_TIMEOUT_MS = 8000;
+var MAX_REDIRECTS = 3;
+var MAX_CONCURRENT = 6;
+var UA = `claude-code-docs-mcp/${package_default.version} (+https://github.com/xsyetopz/claude-code-docs)`;
+var ACCEPT = "text/markdown, text/plain, application/json;q=0.9";
+var MB = 1024 * 1024;
+var ttlScale = () => {
+  const n = Number(process.env["CC_DOCS_TTL_SCALE"]);
+  return process.env["CC_DOCS_TTL_SCALE"] !== undefined && Number.isFinite(n) && n >= 0 ? n : 1;
+};
+var ttl = (ms) => ms * ttlScale();
+var baseUrl = (envName, fallback) => {
+  const raw = process.env[envName];
   if (!raw)
-    return SITE;
+    return fallback;
   try {
     const u = new URL(raw);
     const local = u.hostname === "localhost" || u.hostname === "127.0.0.1";
     if (u.protocol === "https:" || u.protocol === "http:" && local)
       return raw.replace(/\/+$/, "");
   } catch {}
-  console.error("claude-code-docs: ignoring CLAUDE_CODE_DOCS_SITE (needs https)");
-  return SITE;
+  console.error(`claude-code-docs: ignoring ${envName} (needs https)`);
+  return fallback;
 };
-var FETCH_TIMEOUT_MS = 5000;
-var CACHE_TTL_MS = 24 * 60 * 60 * 1000;
+var cache;
+var diskCache = () => {
+  cache ??= new DiskCache;
+  return cache;
+};
+var active = 0;
+var waiting = [];
+var acquire = async () => {
+  if (active < MAX_CONCURRENT) {
+    active++;
+    return;
+  }
+  await new Promise((r) => waiting.push(r));
+};
+var release = () => {
+  const next = waiting.shift();
+  if (next)
+    next();
+  else
+    active--;
+};
+var readCapped = async (res, max) => {
+  const len = Number(res.headers.get("content-length"));
+  if (Number.isFinite(len) && len > max) {
+    await res.body?.cancel();
+    return;
+  }
+  if (!res.body)
+    return "";
+  const chunks = [];
+  let size = 0;
+  const reader = res.body.getReader();
+  for (;; ) {
+    const { done, value } = await reader.read();
+    if (done)
+      break;
+    size += value.length;
+    if (size > max) {
+      await reader.cancel();
+      return;
+    }
+    chunks.push(value);
+  }
+  return Buffer.concat(chunks).toString("utf8");
+};
+var httpGet = async (url, maxBytes, validators) => {
+  const origin = new URL(url).origin;
+  const headers = {
+    "User-Agent": UA,
+    Accept: ACCEPT
+  };
+  if (validators.etag)
+    headers["If-None-Match"] = validators.etag;
+  else if (validators.lastModified)
+    headers["If-Modified-Since"] = validators.lastModified;
+  try {
+    const signal = AbortSignal.timeout(FETCH_TIMEOUT_MS);
+    let cur = url;
+    for (let hop = 0;; hop++) {
+      const res = await fetch(cur, { headers, signal, redirect: "manual" });
+      if (res.status >= 300 && res.status < 400 && res.status !== 304) {
+        await res.body?.cancel();
+        const loc = res.headers.get("location");
+        if (!loc)
+          return { kind: "fail", message: "redirect without Location" };
+        if (hop >= MAX_REDIRECTS)
+          return { kind: "fail", message: "too many redirects" };
+        const next = new URL(loc, cur);
+        if (next.origin !== origin)
+          return { kind: "fail", message: "redirect to another origin" };
+        cur = next.href;
+        continue;
+      }
+      if (res.status === 304) {
+        await res.body?.cancel();
+        return { kind: "not-modified" };
+      }
+      if (res.status === 404) {
+        await res.body?.cancel();
+        return { kind: "notfound" };
+      }
+      if (!res.ok) {
+        await res.body?.cancel();
+        return { kind: "fail", message: `HTTP ${res.status}` };
+      }
+      const body = await readCapped(res, maxBytes);
+      if (body === undefined)
+        return { kind: "fail", message: `response over ${maxBytes} bytes` };
+      const etag = res.headers.get("etag");
+      const lastModified = res.headers.get("last-modified");
+      return {
+        kind: "ok",
+        body,
+        ...etag ? { etag } : {},
+        ...lastModified ? { lastModified } : {}
+      };
+    }
+  } catch (e) {
+    return {
+      kind: "fail",
+      message: e instanceof Error ? e.message : String(e)
+    };
+  }
+};
+var inflight = new Map;
+var getResource = (spec) => {
+  const key = `${spec.rel}
+${spec.url}`;
+  let p = inflight.get(key);
+  if (!p) {
+    p = resolveResource(spec).finally(() => inflight.delete(key));
+    inflight.set(key, p);
+  }
+  return p;
+};
+var resolveResource = async (spec) => {
+  const dc = diskCache();
+  const origin = new URL(spec.url).host;
+  let cached = dc.get(spec.rel);
+  if (cached?.meta && cached.meta.url !== spec.url)
+    cached = undefined;
+  if (cached && spec.validate && !spec.validate(cached.body)) {
+    dc.delete(spec.rel);
+    cached = undefined;
+  }
+  const fetchedMs = cached?.meta ? Date.parse(cached.meta.fetchedAt) : NaN;
+  if (cached?.meta && Date.now() - fetchedMs < spec.ttlMs) {
+    return {
+      status: "ok",
+      body: cached.body,
+      source: {
+        origin,
+        state: "cached",
+        fetchedAt: cached.meta.fetchedAt,
+        revalidated: false
+      }
+    };
+  }
+  await acquire();
+  let got;
+  try {
+    got = await httpGet(spec.url, spec.maxBytes, {
+      ...cached?.meta?.etag ? { etag: cached.meta.etag } : {},
+      ...cached?.meta?.lastModified ? { lastModified: cached.meta.lastModified } : {}
+    });
+  } finally {
+    release();
+  }
+  if (got.kind === "ok" && spec.validate && !spec.validate(got.body))
+    got = { kind: "fail", message: "response is not valid" };
+  if (got.kind === "notfound" && !spec.deleteOn404)
+    got = { kind: "fail", message: "HTTP 404" };
+  if (got.kind === "notfound") {
+    if (spec.deleteOn404)
+      dc.delete(spec.rel);
+    return { status: "notfound", origin };
+  }
+  if (got.kind === "ok") {
+    dc.put(spec.rel, got.body, {
+      url: spec.url,
+      ...got.etag ? { etag: got.etag } : {},
+      ...got.lastModified ? { lastModified: got.lastModified } : {}
+    });
+    return {
+      status: "ok",
+      body: got.body,
+      source: {
+        origin,
+        state: "live",
+        fetchedAt: new Date().toISOString(),
+        revalidated: false
+      }
+    };
+  }
+  if (got.kind === "not-modified" && cached) {
+    dc.touch(spec.rel);
+    return {
+      status: "ok",
+      body: cached.body,
+      source: {
+        origin,
+        state: "cached",
+        fetchedAt: new Date().toISOString(),
+        revalidated: true
+      }
+    };
+  }
+  const message = got.kind === "fail" ? got.message : "unexpected 304 without a cached copy";
+  if (cached) {
+    return {
+      status: "ok",
+      body: cached.body,
+      source: {
+        origin,
+        state: "stale-offline",
+        fetchedAt: cached.meta?.fetchedAt ?? new Date(0).toISOString(),
+        revalidated: false
+      }
+    };
+  }
+  return {
+    status: "error",
+    origin,
+    message: `could not reach ${origin} and nothing is cached (${message})`
+  };
+};
+var ago = (iso) => {
+  const s = Math.max(0, (Date.now() - Date.parse(iso)) / 1000);
+  if (s < 90)
+    return `${Math.round(s)} s ago`;
+  if (s < 5400)
+    return `${Math.round(s / 60)} min ago`;
+  if (s < 129600)
+    return `${Math.round(s / 3600)} h ago`;
+  return `${Math.round(s / 86400)} d ago`;
+};
+var sourceLine = (s) => {
+  const what = s.state === "live" ? "live" : s.state === "stale-offline" ? `cache (fetched ${ago(s.fetchedAt)}, offline)` : s.revalidated ? "cache (revalidated, 304)" : `cache (fetched ${ago(s.fetchedAt)})`;
+  return `Source: ${s.origin}, ${what}`;
+};
+var sourceData = (s) => ({
+  origin: s.origin,
+  state: s.state,
+  fetchedAt: s.fetchedAt
+});
+
+// plugin/mcp/src/content.ts
+var SITE = "https://xsyetopz.github.io/claude-code-docs";
+var siteBase = () => baseUrl("CC_DOCS_BASE_URL", SITE);
+var MANIFEST_TTL_MS = 10 * 60 * 1000;
+var PAGE_TTL_MS = 60 * 60 * 1000;
+var MANIFEST_MAX = 1 * MB;
+var PAGE_MAX = 2 * MB;
+var SCHEMA_MAX = 1 * MB;
+var STALE_OFFLINE_MEM_TTL_MS = 60 * 1000;
 var SCHEMA_NAMES = [
   "claude-code-settings",
   "claude-code-managed-settings",
@@ -21616,21 +22090,20 @@ var SCHEMA_NAMES = [
   "claude-code-marketplace",
   "claude-code-keybindings"
 ];
-var SNAPSHOT = join(dirname(fileURLToPath(import.meta.url)), "..", "snapshot");
-var refreshEnabled = () => process.env["CLAUDE_CODE_DOCS_REFRESH"] === "1";
-var cacheDir = () => join(process.env["XDG_CACHE_HOME"] || join(homedir(), ".cache"), "claude-code-docs");
 var normalizeRoute = (input) => {
   let r = input.trim();
-  if (r.startsWith(SITE))
-    r = r.slice(SITE.length);
+  for (const o of new Set([siteBase(), SITE]))
+    if (r === o || r.startsWith(`${o}/`)) {
+      r = r.slice(o.length);
+      break;
+    }
   r = r.replace(/[?#].*$/, "").replace(/\.(md|html)$/, "");
   return r.replace(/^\/+|\/+$/g, "") || "index";
 };
 var ROUTE_RE = /^\/?[a-z0-9][a-z0-9/_-]*$/i;
-var sanitizeManifest = (list) => {
+var sanitizeManifest = (list, base = siteBase()) => {
   if (!Array.isArray(list))
     return [];
-  const origins = [SITE, fetchBase()];
   const out = [];
   for (const raw of list) {
     if (!raw || typeof raw !== "object")
@@ -21639,7 +22112,7 @@ var sanitizeManifest = (list) => {
     if (typeof route !== "string" || typeof title !== "string" || typeof description !== "string" || typeof section !== "string" || typeof url !== "string")
       continue;
     const okRoute = route === "/" || ROUTE_RE.test(route) && !route.includes("//") && !route.includes("..");
-    if (!okRoute || !origins.some((o) => url === o || url.startsWith(`${o}/`)))
+    if (!okRoute || !(url === base || url.startsWith(`${base}/`)))
       continue;
     out.push({
       route: normalizeRoute(route),
@@ -21652,116 +22125,145 @@ var sanitizeManifest = (list) => {
   }
   return out;
 };
-var inside = (base, ...parts) => {
-  const root = resolve(base);
-  const p = resolve(root, ...parts);
-  return p.startsWith(root + sep) ? p : undefined;
-};
-var readJson = (file) => JSON.parse(readFileSync(file, "utf8"));
-var freshFile = (file) => {
+var parseManifest = (text) => {
   try {
-    return Date.now() - statSync(file).mtimeMs < CACHE_TTL_MS;
+    return sanitizeManifest(JSON.parse(text));
   } catch {
-    return false;
+    return [];
   }
-};
-var fetchText = async (url) => {
-  try {
-    const res = await fetch(url, {
-      signal: AbortSignal.timeout(FETCH_TIMEOUT_MS)
-    });
-    if (!res.ok)
-      return;
-    return await res.text();
-  } catch {
-    return;
-  }
-};
-var writeCache = (rel, text) => {
-  try {
-    const file = inside(cacheDir(), rel);
-    if (!file)
-      return;
-    mkdirSync(dirname(file), { recursive: true });
-    writeFileSync(file, text);
-  } catch {}
 };
 
+class ContentError extends Error {
+}
+
 class Content {
-  entries;
-  byRoute = new Map;
-  claudeCode;
-  source = "snapshot";
+  mem;
+  ver;
+  verRetryAt = 0;
   version = 0;
-  constructor() {
-    this.entries = sanitizeManifest(readJson(join(SNAPSHOT, "manifest.json")));
-    this.claudeCode = readJson(join(SNAPSHOT, "version.json")).claudeCode;
-    this.index();
-    if (refreshEnabled()) {
-      const cached = join(cacheDir(), "llms-manifest.json");
-      if (existsSync(cached) && freshFile(cached))
-        this.adopt(readFileSync(cached, "utf8"));
-      else
-        this.refreshManifest();
+  async manifest() {
+    const m = this.mem;
+    const memTtl = m?.source.state === "stale-offline" ? STALE_OFFLINE_MEM_TTL_MS : MANIFEST_TTL_MS;
+    if (m && Date.now() - m.at < ttl(memTtl))
+      return {
+        entries: m.entries,
+        source: {
+          ...m.source,
+          state: m.source.state === "live" ? "cached" : m.source.state
+        }
+      };
+    const r = await getResource({
+      url: `${siteBase()}/llms-manifest.json`,
+      rel: "site/llms-manifest.json",
+      ttlMs: ttl(MANIFEST_TTL_MS),
+      maxBytes: MANIFEST_MAX,
+      validate: (b) => parseManifest(b).length > 0
+    });
+    if (r.status !== "ok") {
+      if (m)
+        return {
+          entries: m.entries,
+          source: { ...m.source, state: "stale-offline" }
+        };
+      throw new ContentError(r.status === "error" ? r.message : `the page list was not found on ${r.origin}`);
     }
+    const entries = parseManifest(r.body);
+    const same = m && m.entries.length === entries.length && m.entries.every((e, i) => e.route === entries[i]?.route);
+    if (!same)
+      this.version++;
+    this.mem = {
+      entries,
+      byRoute: new Map(entries.map((e) => [e.route, e])),
+      source: r.source,
+      at: Date.now()
+    };
+    return { entries, source: r.source };
   }
-  index() {
-    this.byRoute = new Map(this.entries.map((e) => [e.route, e]));
-    this.version++;
+  async find(input) {
+    await this.manifest();
+    return this.mem?.byRoute.get(normalizeRoute(input));
   }
-  adopt(text) {
-    try {
-      const list = sanitizeManifest(JSON.parse(text));
-      if (list.length === 0)
-        return false;
-      this.entries = list;
-      this.index();
-      this.source = "refreshed";
-      return true;
-    } catch {
-      return false;
-    }
+  readPage(e) {
+    return getResource({
+      url: `${siteBase()}/${e.route}.md`,
+      rel: `site/pages/${e.route}.md`,
+      deleteOn404: true,
+      ttlMs: ttl(PAGE_TTL_MS),
+      maxBytes: PAGE_MAX
+    });
   }
-  async refreshManifest() {
-    const text = await fetchText(`${fetchBase()}/llms-manifest.json`);
-    if (text && this.adopt(text))
-      writeCache("llms-manifest.json", text);
+  async loadPages(entries) {
+    const out = {
+      texts: new Map,
+      total: entries.length,
+      offline: 0,
+      fromCache: 0,
+      oldest: undefined
+    };
+    await Promise.all(entries.map(async (e) => {
+      const r = await this.readPage(e);
+      if (r.status !== "ok")
+        return;
+      out.texts.set(e.route, r.body);
+      if (r.source.state !== "live")
+        out.fromCache++;
+      if (r.source.state === "stale-offline")
+        out.offline++;
+      if (!out.oldest || r.source.fetchedAt < out.oldest)
+        out.oldest = r.source.fetchedAt;
+    }));
+    return out;
   }
-  pages() {
-    return this.entries;
-  }
-  find(input) {
-    return this.byRoute.get(normalizeRoute(input));
-  }
-  readLocal(e) {
-    if (refreshEnabled()) {
-      const c = inside(cacheDir(), "pages", `${e.route}.md`);
-      if (c && existsSync(c) && freshFile(c))
-        return readFileSync(c, "utf8");
-    }
-    const s = inside(SNAPSHOT, "pages", `${e.route}.md`);
-    return s && existsSync(s) ? readFileSync(s, "utf8") : undefined;
-  }
-  async read(e) {
-    if (refreshEnabled()) {
-      const c = inside(cacheDir(), "pages", `${e.route}.md`);
-      if (c && existsSync(c) && freshFile(c))
-        return readFileSync(c, "utf8");
-      const remote = await fetchText(`${fetchBase()}/${e.route}.md`);
-      if (remote) {
-        writeCache(join("pages", `${e.route}.md`), remote);
-        this.version++;
-        return remote;
-      }
-    }
-    return this.readLocal(e);
-  }
-  schema(name) {
+  async schema(name) {
     const n = name.replace(/\.json$/, "");
     const full = n.startsWith("claude-code-") ? n : `claude-code-${n}`;
     if (!SCHEMA_NAMES.includes(full))
+      return "unknown";
+    const r = await getResource({
+      url: `${siteBase()}/schemas/${full}.json`,
+      rel: `site/schemas/${full}.json`,
+      deleteOn404: true,
+      ttlMs: ttl(PAGE_TTL_MS),
+      maxBytes: SCHEMA_MAX,
+      validate: (b) => {
+        try {
+          const j = JSON.parse(b);
+          return typeof j === "object" && j !== null && !Array.isArray(j);
+        } catch {
+          return false;
+        }
+      }
+    });
+    if (r.status !== "ok")
+      return r;
+    const schema = JSON.parse(r.body);
+    this.ver ??= /\(Claude Code (\d+\.\d+\.\d+)\)/.exec(String(schema["title"]))?.[1];
+    return {
+      status: "ok",
+      schema,
+      source: r.source
+    };
+  }
+  async claudeCode() {
+    if (this.ver)
+      return this.ver;
+    if (Date.now() < this.verRetryAt)
       return;
-    return readJson(join(SNAPSHOT, "schemas", `${full}.json`));
+    const r = await getResource({
+      url: `${siteBase()}/llms.txt`,
+      rel: "site/llms.txt",
+      ttlMs: ttl(MANIFEST_TTL_MS),
+      maxBytes: PAGE_MAX
+    });
+    if (r.status !== "ok") {
+      this.verRetryAt = Date.now() + ttl(MANIFEST_TTL_MS);
+      return;
+    }
+    const head = r.body.split(`
+`).slice(0, 6).join(`
+`);
+    this.ver = /Claude Code (\d+\.\d+\.\d+)/.exec(head)?.[1];
+    return this.ver;
   }
 }
 
@@ -21769,6 +22271,7 @@ class Content {
 var W_TITLE = 5;
 var W_DESC = 3;
 var W_HEAD = 3;
+var W_EXTRA = 2;
 var K1 = 1.4;
 var B = 0.75;
 var tokenize = (text) => {
@@ -21802,9 +22305,9 @@ class SearchIndex {
   docs = [];
   df = new Map;
   avg = 1;
-  constructor(content) {
-    for (const entry of content.pages()) {
-      const raw = content.readLocal(entry);
+  constructor(source) {
+    for (const entry of source.entries()) {
+      const raw = source.text(entry);
       if (raw === undefined)
         continue;
       const body = stripFrontMatter(raw);
@@ -21820,6 +22323,7 @@ class SearchIndex {
       add(entry.description, W_DESC);
       add(headingsOf(body).join(`
 `), W_HEAD);
+      add(source.extra?.(entry) ?? "", W_EXTRA);
       add(body, 1);
       this.docs.push({ entry, body, tf, len });
       for (const t of tf.keys())
@@ -21891,6 +22395,145 @@ var snippetOf = (body, terms) => {
   return best.heading ? `[${best.heading}] ${line}` : line;
 };
 
+// plugin/mcp/src/platform.ts
+var PLATFORM = "https://platform.claude.com";
+var platformBase = () => baseUrl("PLATFORM_DOCS_BASE_URL", PLATFORM);
+var INDEX_TTL_MS = 10 * 60 * 1000;
+var PAGE_TTL_MS2 = 6 * 60 * 60 * 1000;
+var FILE_MAX = 2 * MB;
+var PATH_RE = /^[a-z0-9][a-z0-9/_-]*$/;
+var normalizePlatformPath = (input) => {
+  let r = input.trim();
+  if (/^[a-z][a-z0-9+.-]*:\/\//i.test(r) || r.startsWith("//")) {
+    const hosts = new Set([platformBase(), PLATFORM]);
+    const o = [...hosts].find((h) => r === h || r.startsWith(`${h}/`));
+    if (!o)
+      return;
+    r = r.slice(o.length);
+  }
+  r = r.replace(/[?#].*$/, "").replace(/\.md$/, "");
+  r = r.replace(/^\/+|\/+$/g, "");
+  if (r === "docs" || r.startsWith("docs/")) {
+    if (!r.startsWith("docs/en/"))
+      return;
+    r = r.slice("docs/en/".length);
+  }
+  if (!PATH_RE.test(r) || r.includes("//"))
+    return;
+  return r;
+};
+var parseLlmsTxt = (text, base = platformBase()) => {
+  const hosts = [...new Set([base, PLATFORM])].map((h) => h.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|");
+  const line = new RegExp(`^- \\[(.+?)\\]\\(((?:${hosts})/docs/en/[^)\\s]+?)\\.md\\)(?: - (.*))?$`);
+  const out = [];
+  let inEnglish = false;
+  let group = "";
+  for (const raw of text.split(/\r?\n/)) {
+    const h2 = /^##\s+(.*?)\s*$/.exec(raw);
+    if (h2 && !raw.startsWith("###")) {
+      inEnglish = h2[1] === "English";
+      group = "";
+      continue;
+    }
+    if (!inEnglish)
+      continue;
+    const h3 = /^###\s+(.*?)\s*$/.exec(raw);
+    if (h3) {
+      group = h3[1] ?? "";
+      continue;
+    }
+    const m = line.exec(raw);
+    if (!m)
+      continue;
+    const path = normalizePlatformPath(`${m[2]}.md`);
+    if (!path)
+      continue;
+    out.push({
+      path,
+      title: m[1] ?? path,
+      description: m[3] ?? "",
+      group,
+      url: `${base}/docs/en/${path}`
+    });
+  }
+  return out;
+};
+var asEntry = (p) => ({
+  route: p.path,
+  title: p.title,
+  description: `${p.description} ${p.path.replace(/[/_-]+/g, " ")}`,
+  section: p.group,
+  md: "",
+  url: p.url
+});
+
+class Platform {
+  memo;
+  async index() {
+    const r = await getResource({
+      url: `${platformBase()}/llms.txt`,
+      rel: "platform/llms.txt",
+      ttlMs: ttl(INDEX_TTL_MS),
+      maxBytes: FILE_MAX,
+      validate: (b) => parseLlmsTxt(b).length > 0
+    });
+    if (r.status !== "ok")
+      throw new ContentError(r.status === "error" ? `platform docs are offline and not cached yet: could not reach ${r.origin}` : `llms.txt was not found on ${r.origin}`);
+    if (this.memo?.body !== r.body) {
+      const entries = parseLlmsTxt(r.body);
+      const asE = entries.map(asEntry);
+      const idx = new SearchIndex({
+        entries: () => asE,
+        text: () => "",
+        extra: (e) => e.section
+      });
+      this.memo = { body: r.body, entries, idx };
+    }
+    const { entries, idx } = this.memo;
+    const byPath = new Map(entries.map((e) => [e.path, e]));
+    return {
+      entries,
+      source: r.source,
+      search(query, limit, group) {
+        const want = group?.trim().toLowerCase();
+        return idx.search(query, entries.length).filter((h) => !want || h.entry.section.toLowerCase() === want).slice(0, limit).flatMap((h) => {
+          const entry = byPath.get(h.entry.route);
+          return entry ? [
+            {
+              entry,
+              score: h.score,
+              snippet: entry.description || entry.title
+            }
+          ] : [];
+        });
+      }
+    };
+  }
+  known() {
+    return this.memo?.entries;
+  }
+  readPage(path) {
+    return getResource({
+      url: `${platformBase()}/docs/en/${path}.md`,
+      rel: `platform/pages/${path}.md`,
+      deleteOn404: true,
+      ttlMs: ttl(PAGE_TTL_MS2),
+      maxBytes: FILE_MAX
+    });
+  }
+}
+var nearPlatform = (path, entries) => {
+  const want = new Set(tokenize(path.replace(/[/_-]+/g, " ")));
+  const near = entries.map((e) => ({
+    e,
+    n: tokenize(`${e.path.replace(/[/_-]+/g, " ")} ${e.title}`).filter((t) => want.has(t)).length
+  })).filter((x) => x.n > 0 && x.e.path !== path).sort((a, b) => b.n - a.n).slice(0, 5).map((x) => `  - ${x.e.path}`).join(`
+`);
+  return near ? `
+Closest matches:
+${near}` : "";
+};
+
 // plugin/mcp/src/server.ts
 var DEFAULT_PAGE_CHARS = 20000;
 var MAX_PAGE_CHARS = 40000;
@@ -21898,15 +22541,54 @@ var READ_ONLY = {
   readOnlyHint: true,
   destructiveHint: false,
   idempotentHint: true,
-  openWorldHint: false
+  openWorldHint: true
 };
 var content = new Content;
+var INDEX_TTL_MS2 = 60 * 60 * 1000;
+var PARTIAL_INDEX_TTL_MS = 60 * 1000;
 var index;
-var searchIndex = () => {
-  if (index?.built !== content.version)
-    index = { built: content.version, idx: new SearchIndex(content) };
-  return index.idx;
+var building;
+var buildIndex = () => {
+  building ??= (async () => {
+    const built = content.version;
+    const { entries, source } = await content.manifest();
+    const load = await content.loadPages(entries);
+    const idx = new SearchIndex({
+      entries: () => entries,
+      text: (e) => load.texts.get(e.route)
+    });
+    index = { built, at: Date.now(), idx, load, source };
+    return index;
+  })().finally(() => {
+    building = undefined;
+  });
+  return building;
 };
+var searchIndex = async () => {
+  await content.manifest();
+  if (!index || index.built !== content.version)
+    return await buildIndex();
+  const partial = index.load.texts.size < index.load.total;
+  if (Date.now() - index.at > ttl(partial ? PARTIAL_INDEX_TTL_MS : INDEX_TTL_MS2))
+    buildIndex().catch(() => {});
+  return index;
+};
+var indexSource = (b) => ({
+  origin: b.source.origin,
+  state: b.load.offline > 0 ? "stale-offline" : b.load.fromCache < b.load.texts.size && Date.now() - b.at < 60000 ? "live" : "cached",
+  fetchedAt: b.load.oldest ?? b.source.fetchedAt,
+  revalidated: false
+});
+var indexLine = (b) => {
+  const n = b.load.texts.size;
+  const cover = n < b.load.total ? ` (${n} of ${b.load.total} pages)` : "";
+  return `Source: ${b.source.origin}, index built from ${n} pages${cover}, ${b.load.fromCache} from cache${b.load.offline > 0 ? " (offline)" : ""}`;
+};
+var sourceSchema = object2({
+  origin: string2(),
+  state: _enum(["live", "cached", "stale-offline"]),
+  fetchedAt: string2()
+});
 var text = (t, structured) => ({
   content: [{ type: "text", text: t }],
   ...structured ? { structuredContent: structured } : {}
@@ -21915,17 +22597,35 @@ var fail = (t) => ({
   isError: true,
   content: [{ type: "text", text: t }]
 });
-var server = new McpServer({ name: "claude-code-docs", version: "0.1.0" });
+var guarded = async (f) => {
+  try {
+    return await f();
+  } catch (e) {
+    if (e instanceof ContentError)
+      return fail(e.message);
+    throw e;
+  }
+};
+var heading = async () => {
+  const v = await content.claudeCode();
+  return v ? `Claude Code Docs (Claude Code ${v})
+
+` : "";
+};
+var server = new McpServer({
+  name: "claude-code-docs",
+  version: package_default.version
+});
 server.registerTool("search_docs", {
   title: "Search Claude Code docs",
-  description: `Full-text search (BM25) over the Claude Code Docs for Claude Code ${content.claudeCode}: settings, environment variables, hooks, plugins, MCP, CLI flags, permissions, internals, and undocumented behavior.
+  description: `Full-text search (BM25) over the live Claude Code Docs: settings, environment variables, hooks, plugins, MCP, CLI flags, permissions, internals, and undocumented behavior.
 Ranks pages by title, description, headings, and body. Returns the route, title, URL, and a snippet for each hit. Use read_page with a returned route to get the full text.
 Tips: search exact names (CLAUDE_CODE_USE_BEDROCK, PreToolUse, apiKeyHelper) or short keyword phrases; not whole questions. Use list_pages to browse instead.
 Args:
   - query (string): keywords or an exact identifier.
   - limit (number 1-25, default 8): maximum hits.
   - section (string, optional): top-level section to restrict to, as shown by list_pages (e.g. "configure" or "Start Here").
-Returns: markdown list of hits; structuredContent {hits:[{route,title,url,section,score,snippet}]}.
+Returns: markdown list of hits and a final "Source:" line; structuredContent {hits:[{route,title,url,section,score,snippet}], source:{origin,state,fetchedAt}}. The first search fetches every page once (cached after that); offline it uses the last cached copies.
 Does not modify anything. Not for general web search.`,
   inputSchema: {
     query: string2().min(1).max(200).describe("Keywords or an identifier, e.g. 'PreToolUse timeout'"),
@@ -21940,11 +22640,14 @@ Does not modify anything. Not for general web search.`,
       section: string2(),
       score: number2(),
       snippet: string2()
-    }))
+    })),
+    source: sourceSchema
   },
   annotations: { title: "Search Claude Code docs", ...READ_ONLY }
-}, async ({ query, limit, section }) => {
-  const hits = searchIndex().search(query, limit, section).map((h) => ({
+}, ({ query, limit, section }) => guarded(async () => {
+  const b = await searchIndex();
+  const src = sourceData(indexSource(b));
+  const hits = b.idx.search(query, limit, section).map((h) => ({
     route: h.entry.route,
     title: h.entry.title,
     url: h.entry.url,
@@ -21952,16 +22655,21 @@ Does not modify anything. Not for general web search.`,
     score: Math.round(h.score * 100) / 100,
     snippet: h.snippet
   }));
+  const head = await heading();
   if (hits.length === 0)
-    return text(`No pages match "${query}"${section ? ` in section "${section}"` : ""}. Try fewer or different keywords, drop the section filter, or browse with list_pages.`, { hits });
+    return text(`${head}No pages match "${query}"${section ? ` in section "${section}"` : ""}. Try fewer or different keywords, drop the section filter, or browse with list_pages.
+
+${indexLine(b)}`, { hits, source: src });
   const md = hits.map((h, i) => `${i + 1}. **${h.title}** (route \`${h.route}\`)
    ${h.url}
    ${h.snippet}`).join(`
 `);
-  return text(`${hits.length} hit(s) for "${query}":
+  return text(`${head}${hits.length} hit(s) for "${query}":
 
-${md}`, { hits });
-});
+${md}
+
+${indexLine(b)}`, { hits, source: src });
+}));
 var sectionOf = (md, heading) => {
   const want = heading.trim().toLowerCase().replace(/^#+\s*/, "");
   const lines = md.split(`
@@ -21984,22 +22692,27 @@ var sectionOf = (md, heading) => {
   return lines.slice(from.at, to).join(`
 `);
 };
-var unknownRoute = (route) => {
-  const near = searchIndex().search(route.replace(/[/_-]+/g, " "), 5).map((h) => `  - ${h.entry.route}`).join(`
+var nearList = (route, entries) => {
+  const want = new Set(tokenize(route.replace(/[/_-]+/g, " ")));
+  const near = entries.map((e) => ({
+    e,
+    n: tokenize(`${e.route.replace(/[/_-]+/g, " ")} ${e.title}`).filter((t) => want.has(t)).length
+  })).filter((x) => x.n > 0 && x.e.route !== route).sort((a, b) => b.n - a.n).slice(0, 5).map((x) => `  - ${x.e.route}`).join(`
 `);
-  return fail(`No page with route "${route}". Routes look like "configure/status-line" (see list_pages).${near ? `
+  return near ? `
 Closest matches:
-${near}` : ""}`);
+${near}` : "";
 };
+var unknownRoute = (route, entries) => fail(`No page with route "${route}". Routes look like "configure/status-line" (see list_pages).${nearList(route, entries)}`);
 server.registerTool("read_page", {
   title: "Read a Claude Code docs page",
-  description: `Read one page of the Claude Code Docs as markdown (Claude Code ${content.claudeCode}). Tables carry a Status column with badges: [Documented] (an official docs page names it), [Undocumented] (only the program shows it; may change without notice), [Differs] (official docs and program disagree), [Gated] (behind a flag or server gate).
+  description: `Read one page of the live Claude Code Docs as markdown. Tables carry a Status column with badges: [Documented] (an official docs page names it), [Undocumented] (only the program shows it; may change without notice), [Differs] (official docs and program disagree), [Gated] (behind a flag or server gate).
 Args:
   - route (string): page route from search_docs/list_pages, e.g. "configure/status-line". A leading slash, ".md", or the full site URL also work.
   - section_heading (string, optional): return only the H2 section with this heading (case-insensitive, e.g. "At a Glance").
   - offset (number, default 0): character offset to continue a long page; use next_offset from the previous reply.
   - max_chars (number, default ${DEFAULT_PAGE_CHARS}, max ${MAX_PAGE_CHARS}): page size in characters.
-Returns: markdown text, headed by a line with the range and next_offset when more remains.
+Returns: markdown text, headed by a line with the range and next_offset when more remains, ending with a "Source:" line (live, or cache when offline); structuredContent {source:{origin,state,fetchedAt}}.
 Errors: unknown route lists the closest pages; unknown heading lists the page's H2 headings.`,
   inputSchema: {
     route: string2().min(1).describe("e.g. 'configure/status-line'"),
@@ -22007,14 +22720,18 @@ Errors: unknown route lists the closest pages; unknown heading lists the page's 
     offset: number2().int().min(0).default(0).describe("Character offset"),
     max_chars: number2().int().min(1000).max(MAX_PAGE_CHARS).default(DEFAULT_PAGE_CHARS).describe("Page size in characters")
   },
+  outputSchema: { source: sourceSchema },
   annotations: { title: "Read a Claude Code docs page", ...READ_ONLY }
-}, async ({ route, section_heading, offset, max_chars }) => {
-  const entry = content.find(route);
+}, ({ route, section_heading, offset, max_chars }) => guarded(async () => {
+  const entry = await content.find(route);
   if (!entry)
-    return unknownRoute(normalizeRoute(route));
-  let md = await content.read(entry);
-  if (md === undefined)
-    return fail(`Page "${entry.route}" has no content in this build.`);
+    return unknownRoute(normalizeRoute(route), (await content.manifest()).entries);
+  const r = await content.readPage(entry);
+  if (r.status === "notfound")
+    return fail(`Page "${entry.route}" is listed but no longer exists on ${r.origin}; any cached copy was removed.${nearList(entry.route, (await content.manifest()).entries)}`);
+  if (r.status === "error")
+    return fail(r.message);
+  let md = r.body;
   if (section_heading) {
     const sec = sectionOf(md, section_heading);
     if (sec === undefined) {
@@ -22033,15 +22750,19 @@ ${hs}`);
   const head = `${entry.title} | ${entry.url} | chars ${offset}-${end} of ${total}${end < total ? ` | more: call again with offset=${end}` : ""}`;
   return text(`${head}
 
-${chunk}`);
-});
+${chunk}
+
+${sourceLine(r.source)}`, {
+    source: sourceData(r.source)
+  });
+}));
 server.registerTool("list_pages", {
   title: "List Claude Code docs pages",
-  description: `List pages of the Claude Code Docs (Claude Code ${content.claudeCode}) in sidebar order, with route and title. Without \`section\`, shows every section and its pages (titles only). With \`section\`, adds each page's description.
+  description: `List pages of the live Claude Code Docs in sidebar order, with route and title. Without \`section\`, shows every section and its pages (titles only). With \`section\`, adds each page's description.
 Args:
   - section (string, optional): top-level section, e.g. "configure" or "Start Here", "reference", "how-it-works", "start".
-Returns: markdown; structuredContent {pages:[{route,title,section,description}]}.
-Use to discover routes for read_page. Source: ${refreshEnabled() ? "bundled snapshot, refreshed from the site when reachable" : "bundled snapshot"}.`,
+Returns: markdown ending with a "Source:" line; structuredContent {pages:[{route,title,section,description}], source:{origin,state,fetchedAt}}.
+Use to discover routes for read_page. Reads the site's page list (cached for offline use).`,
   inputSchema: {
     section: string2().optional().describe("Top-level section such as 'configure'")
   },
@@ -22051,11 +22772,12 @@ Use to discover routes for read_page. Source: ${refreshEnabled() ? "bundled snap
       title: string2(),
       section: string2(),
       description: string2()
-    }))
+    })),
+    source: sourceSchema
   },
   annotations: { title: "List Claude Code docs pages", ...READ_ONLY }
-}, async ({ section }) => {
-  const all = content.pages();
+}, ({ section }) => guarded(async () => {
+  const { entries: all, source } = await content.manifest();
   const list = section ? all.filter((e) => matchesSection(e, section)) : all;
   if (list.length === 0) {
     const secs = [...new Set(all.map((e) => e.section))].join(", ");
@@ -22071,16 +22793,19 @@ Use to discover routes for read_page. Source: ${refreshEnabled() ? "bundled snap
     }
     lines.push(section ? `- \`${e.route}\`: ${e.title}. ${e.description}` : `- \`${e.route}\`: ${e.title}`);
   }
-  return text(`${list.length} page(s):${lines.join(`
-`)}`, {
+  return text(`${await heading()}${list.length} page(s):${lines.join(`
+`)}
+
+${sourceLine(source)}`, {
     pages: list.map(({ route, title, section: s, description }) => ({
       route,
       title,
       section: s,
       description
-    }))
+    })),
+    source: sourceData(source)
   });
-});
+}));
 var isObj = (v) => typeof v === "object" && v !== null && !Array.isArray(v);
 var walk = (schema, path) => {
   let cur = schema;
@@ -22103,24 +22828,30 @@ var walk = (schema, path) => {
 };
 server.registerTool("get_schema", {
   title: "Get a Claude Code JSON Schema",
-  description: `Get one of the six JSON Schemas generated from Claude Code ${content.claudeCode} itself: ${SCHEMA_NAMES.join(", ")}.
+  description: `Get one of the six JSON Schemas generated from the Claude Code program itself (fetched live from the docs site): ${SCHEMA_NAMES.join(", ")}.
 A short name works too ("settings", "plugin-manifest", "keybindings").
 Schemas are large (up to 300k characters), so without \`property\` this returns an outline: each top-level property with its type and first description sentence. Pass \`property\` (dotted path such as "permissions" or "hooks.PreToolUse") to get that sub-schema as JSON.
 Args:
   - name (string): schema name.
   - property (string, optional): top-level property or dotted path.
   - offset (number, default 0): character offset for long output.
-Returns: JSON text (or outline). Errors list valid names or properties.`,
+Returns: JSON text (or outline) ending with a "Source:" line; structuredContent {source:{origin,state,fetchedAt}}. Errors list valid names or properties.`,
   inputSchema: {
     name: string2().min(1).describe("e.g. 'settings' or 'claude-code-plugin-manifest'"),
     property: string2().optional().describe("Dotted property path, e.g. 'permissions'"),
     offset: number2().int().min(0).default(0).describe("Character offset")
   },
+  outputSchema: { source: sourceSchema },
   annotations: { title: "Get a Claude Code JSON Schema", ...READ_ONLY }
-}, async ({ name, property, offset }) => {
-  const schema = content.schema(name);
-  if (!schema)
+}, ({ name, property, offset }) => guarded(async () => {
+  const got = await content.schema(name);
+  if (got === "unknown")
     return fail(`Unknown schema "${name}". Valid names: ${SCHEMA_NAMES.join(", ")}`);
+  if (got.status === "notfound")
+    return fail(`Schema "${name}" was not found on ${got.origin}.`);
+  if (got.status === "error")
+    return fail(got.message);
+  const { schema, source } = got;
   let out;
   if (property) {
     const sub = walk(schema, property);
@@ -22150,6 +22881,189 @@ ${rows.join(`
   const end = offset + chunk.length;
   const note = end < out.length ? `[chars ${offset}-${end} of ${out.length}; call again with offset=${end}]
 ` : "";
-  return text(`${note}${chunk}`);
-});
+  return text(`${note}${chunk}
+
+${sourceLine(source)}`, {
+    source: sourceData(source)
+  });
+}));
+var platform = new Platform;
+server.registerTool("search_platform_docs", {
+  title: "Search Claude API and platform docs",
+  description: `Search the Claude API and platform docs (platform.claude.com/docs/en): Messages API, models, pricing, tool use, prompt caching, Agent SDK, and client SDKs. Not for Claude Code itself; use search_docs for that.
+Search finds pages by title, summary, URL path, and group (BM25 over llms.txt). It does not search page text; use read_platform_page for the text.
+Args:
+  - query (string): keywords, e.g. "prompt caching".
+  - limit (number 1-25, default 8): maximum hits.
+  - group (string, optional): a llms.txt group such as "Messages", as shown by list_platform_pages.
+Returns: markdown list ending with a "Source:" line; structuredContent {hits:[{path,title,url,group,score,snippet}], source:{origin,state,fetchedAt}}.`,
+  inputSchema: {
+    query: string2().min(1).max(200).describe("Keywords, e.g. 'prompt caching'"),
+    limit: number2().int().min(1).max(25).default(8).describe("Maximum hits"),
+    group: string2().optional().describe("llms.txt group, e.g. 'Messages'")
+  },
+  outputSchema: {
+    hits: array(object2({
+      path: string2(),
+      title: string2(),
+      url: string2(),
+      group: string2(),
+      score: number2(),
+      snippet: string2()
+    })),
+    source: sourceSchema
+  },
+  annotations: { title: "Search Claude API and platform docs", ...READ_ONLY }
+}, ({ query, limit, group }) => guarded(async () => {
+  const ix = await platform.index();
+  const hits = ix.search(query, limit, group).map((h) => ({
+    path: h.entry.path,
+    title: h.entry.title,
+    url: h.entry.url,
+    group: h.entry.group,
+    score: Math.round(h.score * 100) / 100,
+    snippet: h.snippet
+  }));
+  const src = sourceData(ix.source);
+  const line = sourceLine(ix.source);
+  if (hits.length === 0)
+    return text(`No platform pages match "${query}"${group ? ` in group "${group}"` : ""}. Try fewer or different keywords, drop the group filter, or browse with list_platform_pages.
+
+${line}`, { hits, source: src });
+  const md = hits.map((h, i) => `${i + 1}. **${h.title}** (path \`${h.path}\`)
+   ${h.url}${h.snippet ? `
+   ${h.snippet}` : ""}`).join(`
+`);
+  return text(`${hits.length} hit(s) for "${query}":
+
+${md}
+
+${line}`, {
+    hits,
+    source: src
+  });
+}));
+server.registerTool("read_platform_page", {
+  title: "Read a Claude API and platform docs page",
+  description: `Read one English page of the Claude API and platform docs as markdown. Pages can contain JSX tags (for example <HomePage>); they are returned as is.
+Args:
+  - path (string): page path from search_platform_docs/list_platform_pages, e.g. "build-with-claude/overview". "/docs/en/<path>", ".md", or the full platform.claude.com URL also work. Only English pages under /docs/en/ are read.
+  - section_heading (string, optional): return only the H2 section with this heading (case-insensitive).
+  - offset (number, default 0): character offset to continue a long page; use next offset from the previous reply.
+  - max_chars (number, default ${DEFAULT_PAGE_CHARS}, max ${MAX_PAGE_CHARS}): page size in characters.
+Returns: markdown text, headed by a line with the range, ending with a "Source:" line; structuredContent {source:{origin,state,fetchedAt}}.
+Errors: invalid path is rejected; unknown page lists the closest pages.`,
+  inputSchema: {
+    path: string2().min(1).describe("e.g. 'build-with-claude/overview'"),
+    section_heading: string2().optional().describe("H2 heading to return alone"),
+    offset: number2().int().min(0).default(0).describe("Character offset"),
+    max_chars: number2().int().min(1000).max(MAX_PAGE_CHARS).default(DEFAULT_PAGE_CHARS).describe("Page size in characters")
+  },
+  outputSchema: { source: sourceSchema },
+  annotations: {
+    title: "Read a Claude API and platform docs page",
+    ...READ_ONLY
+  }
+}, ({ path: input, section_heading, offset, max_chars }) => guarded(async () => {
+  const path = normalizePlatformPath(input);
+  if (!path)
+    return fail(`Invalid path "${input}". Use a path under docs/en/ such as "build-with-claude/overview" (letters, digits, "-", "_" and "/" only; English pages on ${platformBase()} only).`);
+  const r = await platform.readPage(path);
+  if (r.status === "notfound") {
+    const near = await platform.index().then((ix) => nearPlatform(path, ix.entries)).catch(() => "");
+    return fail(`No platform page "${path}" on ${r.origin}; any cached copy was removed.${near}`);
+  }
+  if (r.status === "error")
+    return fail(r.message);
+  const known = platform.known()?.find((e) => e.path === path);
+  const title = known?.title ?? /^title:\s*(.+)$/m.exec(r.body.slice(0, 1000))?.[1]?.trim() ?? path;
+  const url = `${platformBase()}/docs/en/${path}`;
+  let md = r.body;
+  if (section_heading) {
+    const sec = sectionOf(md, section_heading);
+    if (sec === undefined) {
+      const hs = headingsOf(md).map((h) => `  - ${h}`).join(`
+`);
+      return fail(`No H2 section "${section_heading}" on "${path}". Headings:
+${hs}`);
+    }
+    md = sec;
+  }
+  const total = md.length;
+  if (offset >= total && total > 0)
+    return fail(`offset ${offset} is past the end (${total} characters).`);
+  const chunk = md.slice(offset, offset + max_chars);
+  const end = offset + chunk.length;
+  const head = `${title} | ${url} | chars ${offset}-${end} of ${total}${end < total ? ` | more: call again with offset=${end}` : ""}`;
+  return text(`${head}
+
+${chunk}
+
+${sourceLine(r.source)}`, {
+    source: sourceData(r.source)
+  });
+}));
+server.registerTool("list_platform_pages", {
+  title: "List Claude API and platform docs pages",
+  description: `List English pages of the Claude API and platform docs (from llms.txt). Without \`group\`, shows each group with its page count. With \`group\`, lists "path: title. description" for that group.
+Args:
+  - group (string, optional): a group name as shown without the argument, e.g. "Messages".
+Returns: markdown ending with a "Source:" line; structuredContent {groups:[{group,count}]} without \`group\`, or {pages:[{path,title,group,description}]} with it; both include source:{origin,state,fetchedAt}.
+Use to discover paths for read_platform_page.`,
+  inputSchema: {
+    group: string2().optional().describe("Group name, e.g. 'Messages'")
+  },
+  outputSchema: {
+    groups: array(object2({ group: string2(), count: number2() })).optional(),
+    pages: array(object2({
+      path: string2(),
+      title: string2(),
+      group: string2(),
+      description: string2()
+    })).optional(),
+    source: sourceSchema
+  },
+  annotations: {
+    title: "List Claude API and platform docs pages",
+    ...READ_ONLY
+  }
+}, ({ group }) => guarded(async () => {
+  const { entries, source } = await platform.index();
+  const line = sourceLine(source);
+  const src = sourceData(source);
+  const groups = new Map;
+  for (const e of entries)
+    groups.set(e.group, (groups.get(e.group) ?? 0) + 1);
+  if (!group) {
+    const rows = [...groups].map(([g, n]) => `- ${g || "(none)"}: ${n}`);
+    return text(`${entries.length} page(s) in ${groups.size} group(s). Pass \`group\` to list pages:
+
+${rows.join(`
+`)}
+
+${line}`, {
+      groups: [...groups].map(([g, count]) => ({ group: g, count })),
+      source: src
+    });
+  }
+  const want = group.trim().toLowerCase();
+  const list = entries.filter((e) => e.group.toLowerCase() === want);
+  if (list.length === 0)
+    return fail(`No group "${group}". Groups: ${[...groups.keys()].join(", ")}`);
+  const rows = list.map((e) => `- \`${e.path}\`: ${e.title}${e.description ? `. ${e.description}` : ""}`);
+  return text(`${list.length} page(s) in "${list[0]?.group}":
+
+${rows.join(`
+`)}
+
+${line}`, {
+    pages: list.map(({ path, title, group: g, description }) => ({
+      path,
+      title,
+      group: g,
+      description
+    })),
+    source: src
+  });
+}));
 await server.connect(new StdioServerTransport);

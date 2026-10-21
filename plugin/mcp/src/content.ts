@@ -1,38 +1,22 @@
-// Content access: bundled snapshot by default; optional refresh from the published site.
-// Refresh is opt-in (CLAUDE_CODE_DOCS_REFRESH=1), lazy, time-limited, and always falls back to the snapshot.
+// Our docs site as a model: manifest, pages, schemas. All I/O goes through fetcher.ts (cache and network).
 import {
-  existsSync,
-  mkdirSync,
-  readFileSync,
-  statSync,
-  writeFileSync,
-} from "node:fs";
-import { homedir } from "node:os";
-import { dirname, join, resolve, sep } from "node:path";
-import { fileURLToPath } from "node:url";
+  baseUrl,
+  getResource,
+  MB,
+  type Resource,
+  type Source,
+  ttl,
+} from "./fetcher.ts";
 
 export const SITE = "https://xsyetopz.github.io/claude-code-docs";
-// Override for mirrors and tests: CLAUDE_CODE_DOCS_SITE=https://example.org/docs
-// Only https is accepted; plain http only for localhost and 127.0.0.1 (tests).
-const fetchBase = (): string => {
-  const raw = process.env["CLAUDE_CODE_DOCS_SITE"];
-  if (!raw) return SITE;
-  try {
-    const u = new URL(raw);
-    const local = u.hostname === "localhost" || u.hostname === "127.0.0.1";
-    if (u.protocol === "https:" || (u.protocol === "http:" && local))
-      return raw.replace(/\/+$/, "");
-  } catch {
-    // Fall through to the default.
-  }
-  console.error(
-    "claude-code-docs: ignoring CLAUDE_CODE_DOCS_SITE (needs https)",
-  );
-  return SITE;
-};
+// Override for mirrors and tests: CC_DOCS_BASE_URL (https; http only for localhost and 127.0.0.1).
+export const siteBase = (): string => baseUrl("CC_DOCS_BASE_URL", SITE);
 
-export const FETCH_TIMEOUT_MS = 5000;
-const CACHE_TTL_MS = 24 * 60 * 60 * 1000;
+const MANIFEST_TTL_MS = 10 * 60 * 1000;
+const PAGE_TTL_MS = 60 * 60 * 1000;
+const MANIFEST_MAX = 1 * MB;
+const PAGE_MAX = 2 * MB;
+const SCHEMA_MAX = 1 * MB;
 
 export type Entry = {
   route: string;
@@ -43,6 +27,8 @@ export type Entry = {
   url: string;
 };
 
+const STALE_OFFLINE_MEM_TTL_MS = 60 * 1000;
+
 export const SCHEMA_NAMES = [
   "claude-code-settings",
   "claude-code-managed-settings",
@@ -52,26 +38,14 @@ export const SCHEMA_NAMES = [
   "claude-code-keybindings",
 ] as const;
 
-// dist/server.js sits next to snapshot/ (plugin/mcp/dist and plugin/mcp/snapshot).
-const SNAPSHOT = join(
-  dirname(fileURLToPath(import.meta.url)),
-  "..",
-  "snapshot",
-);
-
-export const refreshEnabled = (): boolean =>
-  process.env["CLAUDE_CODE_DOCS_REFRESH"] === "1";
-
-const cacheDir = (): string =>
-  join(
-    process.env["XDG_CACHE_HOME"] || join(homedir(), ".cache"),
-    "claude-code-docs",
-  );
-
 /** Normalizes "/a/b/", "a/b.md", or a full site URL to "a/b". */
 export const normalizeRoute = (input: string): string => {
   let r = input.trim();
-  if (r.startsWith(SITE)) r = r.slice(SITE.length);
+  for (const o of new Set([siteBase(), SITE]))
+    if (r === o || r.startsWith(`${o}/`)) {
+      r = r.slice(o.length);
+      break;
+    }
   r = r.replace(/[?#].*$/, "").replace(/\.(md|html)$/, "");
   return r.replace(/^\/+|\/+$/g, "") || "index";
 };
@@ -79,9 +53,8 @@ export const normalizeRoute = (input: string): string => {
 const ROUTE_RE = /^\/?[a-z0-9][a-z0-9/_-]*$/i;
 
 /** Keeps only well-formed manifest entries. A hostile or broken manifest cannot add paths or foreign URLs. */
-export const sanitizeManifest = (list: unknown): Entry[] => {
+export const sanitizeManifest = (list: unknown, base = siteBase()): Entry[] => {
   if (!Array.isArray(list)) return [];
-  const origins = [SITE, fetchBase()];
   const out: Entry[] = [];
   for (const raw of list as Record<string, unknown>[]) {
     if (!raw || typeof raw !== "object") continue;
@@ -97,8 +70,7 @@ export const sanitizeManifest = (list: unknown): Entry[] => {
     const okRoute =
       route === "/" ||
       (ROUTE_RE.test(route) && !route.includes("//") && !route.includes(".."));
-    if (!okRoute || !origins.some((o) => url === o || url.startsWith(`${o}/`)))
-      continue;
+    if (!okRoute || !(url === base || url.startsWith(`${base}/`))) continue;
     out.push({
       route: normalizeRoute(route),
       title,
@@ -111,134 +83,186 @@ export const sanitizeManifest = (list: unknown): Entry[] => {
   return out;
 };
 
-/** Joins and checks that the result stays inside base. Returns undefined otherwise. */
-const inside = (base: string, ...parts: string[]): string | undefined => {
-  const root = resolve(base);
-  const p = resolve(root, ...parts);
-  return p.startsWith(root + sep) ? p : undefined;
-};
-
-const readJson = <T>(file: string): T =>
-  JSON.parse(readFileSync(file, "utf8")) as T;
-
-const freshFile = (file: string): boolean => {
+const parseManifest = (text: string): Entry[] => {
   try {
-    return Date.now() - statSync(file).mtimeMs < CACHE_TTL_MS;
+    return sanitizeManifest(JSON.parse(text));
   } catch {
-    return false;
+    return [];
   }
 };
 
-const fetchText = async (url: string): Promise<string | undefined> => {
-  try {
-    const res = await fetch(url, {
-      signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
-    });
-    if (!res.ok) return undefined;
-    return await res.text();
-  } catch {
-    return undefined;
-  }
-};
+/** Thrown when the site cannot be reached and nothing is cached. The message is safe to show. */
+export class ContentError extends Error {}
 
-const writeCache = (rel: string, text: string): void => {
-  try {
-    const file = inside(cacheDir(), rel);
-    if (!file) return;
-    mkdirSync(dirname(file), { recursive: true });
-    writeFileSync(file, text);
-  } catch {
-    // A read-only cache dir only costs the cache.
-  }
+export type PagesLoad = {
+  texts: Map<string, string>;
+  total: number;
+  /** Pages that came from the cache because the network failed. */
+  offline: number;
+  /** Pages served from the cache (fresh, revalidated, or offline). */
+  fromCache: number;
+  oldest: string | undefined;
 };
 
 export class Content {
-  private entries: Entry[];
-  private byRoute = new Map<string, Entry>();
-  readonly claudeCode: string;
-  /** "snapshot" until a refreshed manifest arrives. */
-  source: "snapshot" | "refreshed" = "snapshot";
-  /** Bumped whenever the page list changes, so derived indexes can rebuild. */
+  private mem:
+    | {
+        entries: Entry[];
+        byRoute: Map<string, Entry>;
+        source: Source;
+        at: number;
+      }
+    | undefined;
+  private ver: string | undefined;
+  private verRetryAt = 0;
+
+  /** Bumped when the page list changes, so derived indexes can rebuild. */
   version = 0;
 
-  constructor() {
-    this.entries = sanitizeManifest(
-      readJson<unknown>(join(SNAPSHOT, "manifest.json")),
+  /** The page list. Cheap inside the TTL. Throws ContentError if the site is unreachable and nothing is cached. */
+  async manifest(): Promise<{ entries: readonly Entry[]; source: Source }> {
+    const m = this.mem;
+    // A stale-offline copy is retried soon, so the page list recovers when the network returns.
+    const memTtl =
+      m?.source.state === "stale-offline"
+        ? STALE_OFFLINE_MEM_TTL_MS
+        : MANIFEST_TTL_MS;
+    if (m && Date.now() - m.at < ttl(memTtl))
+      return {
+        entries: m.entries,
+        source: {
+          ...m.source,
+          state: m.source.state === "live" ? "cached" : m.source.state,
+        },
+      };
+    const r = await getResource({
+      url: `${siteBase()}/llms-manifest.json`,
+      rel: "site/llms-manifest.json",
+      ttlMs: ttl(MANIFEST_TTL_MS),
+      maxBytes: MANIFEST_MAX,
+      validate: (b) => parseManifest(b).length > 0,
+    });
+    if (r.status !== "ok") {
+      if (m)
+        return {
+          entries: m.entries,
+          source: { ...m.source, state: "stale-offline" },
+        };
+      throw new ContentError(
+        r.status === "error"
+          ? r.message
+          : `the page list was not found on ${r.origin}`,
+      );
+    }
+    const entries = parseManifest(r.body);
+    const same =
+      m &&
+      m.entries.length === entries.length &&
+      m.entries.every((e, i) => e.route === entries[i]?.route);
+    if (!same) this.version++;
+    this.mem = {
+      entries,
+      byRoute: new Map(entries.map((e) => [e.route, e])),
+      source: r.source,
+      at: Date.now(),
+    };
+    return { entries, source: r.source };
+  }
+
+  async find(input: string): Promise<Entry | undefined> {
+    await this.manifest();
+    return this.mem?.byRoute.get(normalizeRoute(input));
+  }
+
+  /** Page text (with front matter) for an entry from the manifest. */
+  readPage(e: Entry): Promise<Resource> {
+    return getResource({
+      url: `${siteBase()}/${e.route}.md`,
+      rel: `site/pages/${e.route}.md`,
+      deleteOn404: true,
+      ttlMs: ttl(PAGE_TTL_MS),
+      maxBytes: PAGE_MAX,
+    });
+  }
+
+  /** Reads many pages (6 requests at once, cache first). Failed pages are left out. */
+  async loadPages(entries: readonly Entry[]): Promise<PagesLoad> {
+    const out: PagesLoad = {
+      texts: new Map(),
+      total: entries.length,
+      offline: 0,
+      fromCache: 0,
+      oldest: undefined,
+    };
+    await Promise.all(
+      entries.map(async (e) => {
+        const r = await this.readPage(e);
+        if (r.status !== "ok") return;
+        out.texts.set(e.route, r.body);
+        if (r.source.state !== "live") out.fromCache++;
+        if (r.source.state === "stale-offline") out.offline++;
+        if (!out.oldest || r.source.fetchedAt < out.oldest)
+          out.oldest = r.source.fetchedAt;
+      }),
     );
-    this.claudeCode = readJson<{ claudeCode: string }>(
-      join(SNAPSHOT, "version.json"),
-    ).claudeCode;
-    this.index();
-    if (refreshEnabled()) {
-      // Use a cached manifest at once, then refresh in the background. Never awaited at startup.
-      const cached = join(cacheDir(), "llms-manifest.json");
-      if (existsSync(cached) && freshFile(cached))
-        this.adopt(readFileSync(cached, "utf8"));
-      else void this.refreshManifest();
-    }
+    return out;
   }
 
-  private index(): void {
-    this.byRoute = new Map(this.entries.map((e) => [e.route, e]));
-    this.version++;
-  }
-
-  /** Takes a manifest from JSON text. Returns false (and keeps the current list) if it is unusable. */
-  private adopt(text: string): boolean {
-    try {
-      const list = sanitizeManifest(JSON.parse(text));
-      if (list.length === 0) return false;
-      this.entries = list;
-      this.index();
-      this.source = "refreshed";
-      return true;
-    } catch {
-      return false;
-    }
-  }
-
-  private async refreshManifest(): Promise<void> {
-    const text = await fetchText(`${fetchBase()}/llms-manifest.json`);
-    if (text && this.adopt(text)) writeCache("llms-manifest.json", text);
-  }
-
-  pages(): readonly Entry[] {
-    return this.entries;
-  }
-
-  find(input: string): Entry | undefined {
-    return this.byRoute.get(normalizeRoute(input));
-  }
-
-  /** Page text without any network: cache (when refresh is on and fresh), else snapshot. */
-  readLocal(e: Entry): string | undefined {
-    if (refreshEnabled()) {
-      const c = inside(cacheDir(), "pages", `${e.route}.md`);
-      if (c && existsSync(c) && freshFile(c)) return readFileSync(c, "utf8");
-    }
-    const s = inside(SNAPSHOT, "pages", `${e.route}.md`);
-    return s && existsSync(s) ? readFileSync(s, "utf8") : undefined;
-  }
-
-  /** Page text; with refresh on, fetches lazily into the cache and falls back to the snapshot. */
-  async read(e: Entry): Promise<string | undefined> {
-    if (refreshEnabled()) {
-      const c = inside(cacheDir(), "pages", `${e.route}.md`);
-      if (c && existsSync(c) && freshFile(c)) return readFileSync(c, "utf8");
-      const remote = await fetchText(`${fetchBase()}/${e.route}.md`);
-      if (remote) {
-        writeCache(join("pages", `${e.route}.md`), remote);
-        this.version++; // a newly cached page changes what the search index can see
-        return remote;
-      }
-    }
-    return this.readLocal(e);
-  }
-
-  schema(name: string): Record<string, unknown> | undefined {
+  /** Short name or full name to the schema, parsed. "unknown" for names outside SCHEMA_NAMES. */
+  async schema(
+    name: string,
+  ): Promise<
+    | "unknown"
+    | { status: "ok"; schema: Record<string, unknown>; source: Source }
+    | Exclude<Resource, { status: "ok" }>
+  > {
     const n = name.replace(/\.json$/, "");
     const full = n.startsWith("claude-code-") ? n : `claude-code-${n}`;
-    if (!(SCHEMA_NAMES as readonly string[]).includes(full)) return undefined;
-    return readJson(join(SNAPSHOT, "schemas", `${full}.json`));
+    if (!(SCHEMA_NAMES as readonly string[]).includes(full)) return "unknown";
+    const r = await getResource({
+      url: `${siteBase()}/schemas/${full}.json`,
+      rel: `site/schemas/${full}.json`,
+      deleteOn404: true,
+      ttlMs: ttl(PAGE_TTL_MS),
+      maxBytes: SCHEMA_MAX,
+      validate: (b) => {
+        try {
+          const j: unknown = JSON.parse(b);
+          return typeof j === "object" && j !== null && !Array.isArray(j);
+        } catch {
+          return false;
+        }
+      },
+    });
+    if (r.status !== "ok") return r;
+    const schema = JSON.parse(r.body) as Record<string, unknown>;
+    // The schema title ends with "(Claude Code 2.1.305)": a second source for the version.
+    this.ver ??= /\(Claude Code (\d+\.\d+\.\d+)\)/.exec(
+      String(schema["title"]),
+    )?.[1];
+    return {
+      status: "ok",
+      schema,
+      source: r.source,
+    };
+  }
+
+  /** "2.1.305" from llms.txt (line 3). Best effort: undefined when it cannot be read. Cached for the process. */
+  async claudeCode(): Promise<string | undefined> {
+    if (this.ver) return this.ver;
+    if (Date.now() < this.verRetryAt) return undefined;
+    const r = await getResource({
+      url: `${siteBase()}/llms.txt`,
+      rel: "site/llms.txt",
+      ttlMs: ttl(MANIFEST_TTL_MS),
+      maxBytes: PAGE_MAX,
+    });
+    if (r.status !== "ok") {
+      this.verRetryAt = Date.now() + ttl(MANIFEST_TTL_MS);
+      return undefined;
+    }
+    const head = r.body.split("\n").slice(0, 6).join("\n");
+    this.ver = /Claude Code (\d+\.\d+\.\d+)/.exec(head)?.[1];
+    return this.ver;
   }
 }

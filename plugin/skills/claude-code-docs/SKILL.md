@@ -14,6 +14,8 @@ The Claude Code Docs describe what Claude Code 2.1.305 does, checked against the
    - `read_page` with `section_heading` (for example `At a Glance`) when a page is long.
    - `get_schema` for the exact shape of `settings`, `plugin-manifest`, `plugin-hooks`, `marketplace`, `keybindings`, or `managed-settings`. Pass `property` to get one key.
    - `list_pages` to browse the sections.
+   - For the Claude API, SDKs, models, or prompt caching (not Claude Code itself), use `search_platform_docs`, `read_platform_page`, and `list_platform_pages`. They read platform.claude.com/docs, which is not covered by the badges.
+   - Each result ends with a `Source:` line. If it says offline, the text comes from the disk cache and may be old: say so.
 2. If the tools are not available, fetch plain text from the site:
    - `https://xsyetopz.github.io/claude-code-docs/llms.txt` is the index with one line per page.
    - Add `.md` to a page URL for its markdown, for example `https://xsyetopz.github.io/claude-code-docs/configure/status-line.md`.

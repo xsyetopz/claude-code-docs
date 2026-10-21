@@ -1,0 +1,26 @@
+[
+  {
+    "route": "/",
+    "title": "Overview",
+    "description": "What Claude Code is.",
+    "section": "Overview",
+    "md": "https://xsyetopz.github.io/claude-code-docs/index.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/"
+  },
+  {
+    "route": "/configure/hooks",
+    "title": "Hook Events",
+    "description": "Run commands on events such as PreToolUse.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/hooks.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/hooks"
+  },
+  {
+    "route": "/configure/status-line",
+    "title": "Status Line",
+    "description": "Show a custom line below the prompt.",
+    "section": "Configure",
+    "md": "https://xsyetopz.github.io/claude-code-docs/configure/status-line.md",
+    "url": "https://xsyetopz.github.io/claude-code-docs/configure/status-line"
+  }
+]

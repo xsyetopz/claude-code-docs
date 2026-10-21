@@ -1,9 +1,10 @@
 // Small BM25 index over the pages: title, description, headings, and body, weighted.
-import type { Content, Entry } from "./content.ts";
+import type { Entry } from "./content.ts";
 
 const W_TITLE = 5;
 const W_DESC = 3;
 const W_HEAD = 3;
+const W_EXTRA = 2;
 const K1 = 1.4;
 const B = 0.75;
 
@@ -42,6 +43,14 @@ export const headingsOf = (md: string): string[] => {
   return out;
 };
 
+/** Where the index reads pages from. Text is front matter plus body, or undefined when unavailable. */
+export type DocSource = {
+  entries(): readonly Entry[];
+  text(entry: Entry): string | undefined;
+  /** Optional extra field indexed with weight 2 (for example a group name). Not part of the body. */
+  extra?(entry: Entry): string | undefined;
+};
+
 export type Hit = { entry: Entry; score: number; snippet: string };
 
 export class SearchIndex {
@@ -49,9 +58,9 @@ export class SearchIndex {
   private df = new Map<string, number>();
   private avg = 1;
 
-  constructor(content: Content) {
-    for (const entry of content.pages()) {
-      const raw = content.readLocal(entry);
+  constructor(source: DocSource) {
+    for (const entry of source.entries()) {
+      const raw = source.text(entry);
       if (raw === undefined) continue;
       const body = stripFrontMatter(raw);
       const tf = new Map<string, number>();
@@ -65,6 +74,7 @@ export class SearchIndex {
       add(entry.title, W_TITLE);
       add(entry.description, W_DESC);
       add(headingsOf(body).join("\n"), W_HEAD);
+      add(source.extra?.(entry) ?? "", W_EXTRA);
       add(body, 1);
       this.docs.push({ entry, body, tf, len });
       for (const t of tf.keys()) this.df.set(t, (this.df.get(t) ?? 0) + 1);
