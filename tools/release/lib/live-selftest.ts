@@ -11,6 +11,7 @@ import {
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { artifactsPanelShown } from "../probes/live/artifacts.ts";
 import { cacheMarker, planLive } from "./cache.ts";
 import { childEnv } from "./env.ts";
 import { assertLiveEnv, DRY_TOKEN, liveEnv } from "./live-env.ts";
@@ -71,6 +72,15 @@ export const runLiveSelftest = async (
     step(
       "planLive: cold-sensitive first, markers unique",
       planned.join() === "b,a,c" && marker1 !== marker2,
+    );
+
+    const unknownScreen =
+      "> /artifacts\n\n⏺ Unknown command: /artifacts\n\n/exit Exit the CLI\n/context Visualize current context usage\n";
+    step(
+      "artifacts probe: echoed command and Unknown command are not a panel",
+      !artifactsPanelShown("> /artifacts\n") &&
+        !artifactsPanelShown(unknownScreen) &&
+        artifactsPanelShown("> /artifacts\n\n Artifacts\n No artifacts yet\n"),
     );
 
     // pty with the live token: needs liveToken, the env file is gone after the run

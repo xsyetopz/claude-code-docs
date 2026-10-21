@@ -13,6 +13,17 @@ import {
 
 const ID = "artifacts";
 
+/** The panel is open only when "Artifacts" shows outside the echoed `/artifacts` input line and the program did not answer
+ * "Unknown command". The echo alone contains the word, so it must not count. */
+export const artifactsPanelShown = (screen: string): boolean => {
+  if (tolerant("Unknown command").test(screen)) return false;
+  const rest = screen
+    .split("\n")
+    .filter((l) => !/\/artifacts/i.test(l))
+    .join("\n");
+  return tolerant("Artifacts").test(rest);
+};
+
 export const artifactsCase: LiveCase = {
   id: ID,
   title: "/artifacts panel (open, read, Esc; read-only)",
@@ -38,7 +49,7 @@ export const artifactsCase: LiveCase = {
           facts: {
             precondition: ready,
             ...(ready ? {} : { "precondition.detail": "UI never started" }),
-            panelShown: shows("Artifacts"),
+            panelShown: artifactsPanelShown(s),
             showsPublished: shows("Published"),
             showsNone: shows("No artifacts"),
             showsFailed: shows("Failed to load"),
