@@ -8,3 +8,5 @@
 - [x] 1.3 Update labels, the observer probe row, `what-changed.md`, plugin manifest, and skill.
   Map the new claim in `map.json`
 - [x] 1.4 `release:claims -- --check`, `verify:locked`, read the diff, commit
+- [x] 1.5 Run the managed and live probes; add noise rules for the observer counts, Mantle `stderr`, and MCP start order
+- [x] 1.6 Check each skill prompt page by running the skill on both versions; update the probe pages

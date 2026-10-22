@@ -19,4 +19,4 @@ Commit `09c903b` bumped `src/version.ts` and the schemas, but no page text chang
   Change notes ("new in 2.1.307") and dated live and managed probe records stay as they are.
 - Add a 2.1.308 section to `docs/start/what-changed.md`.
   Update the plugin manifest and skill.
-- Steps 9 (managed) and 10 (live) were not run.
+- Steps 9 (managed, 55 cases) and 10 (live, 6 cases) ran after the first commit. They matched 2.1.307 apart from noise: MCP server start order, and a warm-cache live run moved by up to 3 tokens.
