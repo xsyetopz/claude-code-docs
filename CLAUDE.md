@@ -5,7 +5,7 @@ Not made by or tied to Anthropic. Hosted at <https://xsyetopz.github.io/claude-c
 
 ## Commands
 
-- Bun `1.4.3`. `bun install`, `bun run start` (dev server).
+- Bun `1.4.4`. `bun install`, `bun run start` (dev server).
 - `bun run verify:locked`: the one check (every gate plus build).
 - Gates: `typecheck` (`bun --check`, Bun's built-in), `format:check`/`format` (Biome), `lint:code` (Biome lint), `lint` (markdownlint), `check:docs`, `check:examples` (Biome on doc code blocks; `skip-lint` fence meta to skip), `schemas:check`.
 - `bun install` installs lefthook hooks: pre-commit runs the gates on staged files, commit-msg runs commitlint, pre-push runs `verify:locked`.

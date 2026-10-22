@@ -11,7 +11,7 @@ Live site: <https://xsyetopz.github.io/claude-code-docs/>
 
 ## Run It
 
-You need [Bun](https://bun.sh) `1.4.3` (see `.bun-version`).
+You need [Bun](https://bun.sh) `1.4.4` (see `.bun-version`).
 
 ```sh
 bun install

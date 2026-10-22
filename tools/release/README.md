@@ -22,7 +22,7 @@ The toolkit runs the program only against a local stub with a fake key. Results 
 
 ## Prerequisites
 
-- Bun `1.4.3`, `python3` 3.8 or newer, and `strings`. `openssl` is needed only for the live fault tests.
+- Bun `1.4.4`, `python3` 3.8 or newer, and `strings`. `openssl` is needed only for the live fault tests.
 - The new binary is installed at `~/.local/share/claude/versions/<to>`. The user installs it. `release:check` fails without it.
 - The OLD binary is installed at `~/.local/share/claude/versions/<from>`. `release:diff` needs it. `release:check` only warns when it is missing.
 - For `compare`: toolkit results for `<from>` in `captures/<from>/` (`print/` and `pty/` from an earlier toolkit run). `release:diff` creates `captures/<from>/strings.txt`, so the folder exists even with no results. Then every probed claim shows as `changed` (new case, no result for the old version). `compare` warns on stderr and at the top of `compare.md` when it finds none. If they are missing, run `bun run release:probe:print -- --to <from>` and `bun run release:probe:pty -- --to <from>` first, with the old binary still installed.
