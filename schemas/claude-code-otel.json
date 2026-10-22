@@ -863,6 +863,24 @@
         "managed_settings.helper.applied": {
           "x-unverified": true
         },
+        "managed_settings.helper.entry": {
+          "x-unverified": true
+        },
+        "managed_settings.helper.path": {
+          "x-unverified": true
+        },
+        "managed_settings.helper.script_sha256": {
+          "x-unverified": true
+        },
+        "managed_settings.resolved_sha256": {
+          "x-unverified": true
+        },
+        "managed_settings.settings": {
+          "x-unverified": true
+        },
+        "managed_settings.settings_truncated": {
+          "x-unverified": true
+        },
         "error.type": {
           "x-unverified": true
         }
@@ -1559,6 +1577,15 @@
         "mcp_server_scope": {
           "x-unverified": true
         },
+        "vcs.ref.head.revision": {
+          "x-unverified": true
+        },
+        "vcs.ref.head.name": {
+          "x-unverified": true
+        },
+        "vcs.ref.head.type": {
+          "const": "branch"
+        },
         "error_type": {
           "x-unverified": true
         },
@@ -2012,7 +2039,7 @@
     "span:claude_code.mcp.rpc": {
       "x-otel-kind": "span",
       "type": "object",
-      "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Also set on every span: gen_ai.provider.name. Attributes set after the span starts (at its end) are not listed. Creation sites read: 2.",
+      "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Also set on every span: gen_ai.provider.name. Attributes set after the span starts (at its end) are not listed. Creation sites read: 2. Added only when content logging is on (contentAttrs: mcp_args; contentAttrs: mcp_args).",
       "properties": {
         "user.id": {
           "x-unverified": true
@@ -2039,6 +2066,9 @@
           "x-unverified": true
         },
         "attempt": {
+          "x-unverified": true
+        },
+        "mcp_args": {
           "x-unverified": true
         },
         "span.type": {

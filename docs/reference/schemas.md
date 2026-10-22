@@ -73,6 +73,7 @@ The generator in `tools/schemas/` reads the executable without changing it and w
 It adds a capture line to the modules that hold the validators, then loads them in a child process with a fake API key, a closed proxy port, and a temp home folder.
 Last, it calls the `toJSONSchema` function that is inside the program on each validator and writes the result in draft 2020-12.
 For the payloads with no validator, `tools/schemas/code.ts` reads the program's code instead.
+It parses each module with [meriyah](https://github.com/meriyah/meriyah) and resolves names with [eslint-scope](https://github.com/eslint/js/tree/main/packages/eslint-scope), so it follows a name to its value, a parameter to the argument of each call, a call to what the function returns, imports between modules, and computed keys like `[name]` whose value is a constant string.
 Nothing is sent over the network and no real credentials are used.
 
 Two parts need extra steps:

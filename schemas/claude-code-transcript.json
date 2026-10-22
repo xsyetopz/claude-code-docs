@@ -247,6 +247,12 @@
         "requestDigest": {
           "x-unverified": true,
           "x-observed": true
+        },
+        "cut": {
+          "x-unverified": true
+        },
+        "cutRequestDigest": {
+          "x-unverified": true
         }
       },
       "$comment": "Registry policy: boundary-cleared. Code sites used: 1."
@@ -364,7 +370,6 @@
           "x-observed": true
         },
         "message": {
-          "type": "object",
           "properties": {
             "diagnostics": {
               "x-unverified": true
@@ -379,23 +384,29 @@
               "x-unverified": true
             },
             "role": {
-              "const": "assistant"
+              "x-unverified": true
             },
             "stop_details": {
               "x-unverified": true
             },
             "stop_reason": {
-              "const": "stop_sequence"
+              "x-unverified": true
             },
             "stop_sequence": {
-              "const": ""
+              "x-unverified": true
             },
             "type": {
-              "const": "message"
+              "x-unverified": true
             },
             "usage": {
-              "type": "object",
               "properties": {
+                "output_tokens_details": {
+                  "properties": {
+                    "thinking_tokens": {
+                      "x-unverified": true
+                    }
+                  }
+                },
                 "input_tokens": {
                   "x-unverified": true
                 },
@@ -408,16 +419,7 @@
                 "output_tokens": {
                   "x-unverified": true
                 },
-                "output_tokens_details": {
-                  "type": "object",
-                  "properties": {
-                    "thinking_tokens": {
-                      "x-unverified": true
-                    }
-                  }
-                },
                 "server_tool_use": {
-                  "type": "object",
                   "properties": {
                     "web_search_requests": {
                       "x-unverified": true
@@ -431,7 +433,6 @@
                   "x-unverified": true
                 },
                 "cache_creation": {
-                  "type": "object",
                   "properties": {
                     "ephemeral_1h_input_tokens": {
                       "x-unverified": true
@@ -456,7 +457,7 @@
               }
             },
             "content": {
-              "type": "array"
+              "x-unverified": true
             },
             "context_management": {
               "x-unverified": true
@@ -489,10 +490,10 @@
           "x-unverified": true
         },
         "isApiErrorMessage": {
-          "type": "boolean"
+          "x-unverified": true
         },
         "isVirtual": {
-          "type": "boolean"
+          "x-unverified": true
         },
         "isMeta": {
           "x-unverified": true
@@ -531,7 +532,7 @@
           "x-unverified": true
         },
         "isAbortedMidStream": {
-          "type": "boolean"
+          "x-unverified": true
         },
         "batchToolUses": {
           "x-unverified": true
@@ -550,7 +551,7 @@
           "x-unverified": true
         },
         "apiBlockIndex": {
-          "type": "number",
+          "x-unverified": true,
           "x-observed": true
         },
         "requestRef": {
@@ -677,17 +678,9 @@
           "x-observed": true
         },
         "attachment": {
-          "type": "object",
           "properties": {
             "type": {
-              "enum": [
-                "queued_command",
-                "goal_status",
-                "batching_reminder",
-                "secondary_reminder",
-                "async_hook_response_batch",
-                "teammate_shutdown_batch"
-              ]
+              "x-unverified": true
             },
             "prompt": {
               "x-unverified": true
@@ -696,10 +689,9 @@
               "x-unverified": true
             },
             "origin": {
-              "type": "object",
               "properties": {
                 "kind": {
-                  "const": "unclassified"
+                  "x-unverified": true
                 }
               }
             },
@@ -707,10 +699,9 @@
               "x-unverified": true
             },
             "isMeta": {
-              "type": "boolean"
+              "x-unverified": true
             },
             "forwardedIntent": {
-              "type": "object",
               "properties": {
                 "lineage": {
                   "x-unverified": true
@@ -727,7 +718,7 @@
               "x-unverified": true
             },
             "sentinel": {
-              "type": "boolean"
+              "x-unverified": true
             },
             "condition": {
               "x-unverified": true
@@ -837,7 +828,7 @@
           "x-unverified": true
         },
         "lastSequenceNum": {
-          "type": "number"
+          "x-unverified": true
         },
         "declaredDialogKinds": {
           "x-unverified": true
@@ -1258,24 +1249,9 @@
           "const": "progress"
         },
         "data": {
-          "type": "object",
           "properties": {
             "type": {
-              "enum": [
-                "hook_progress",
-                "tool_heartbeat",
-                "bash_progress",
-                "agent_progress",
-                "agent_api_retry",
-                "skill_progress",
-                "search_results_received",
-                "query_update",
-                "workflow_log",
-                "workflow_phase",
-                "workflow_agent",
-                "powershell_progress",
-                "artifact_publish_retry"
-              ]
+              "x-unverified": true
             },
             "hookEvent": {
               "x-unverified": true
@@ -1341,7 +1317,7 @@
               "x-unverified": true
             },
             "resolved": {
-              "type": "boolean"
+              "x-unverified": true
             },
             "attempt": {
               "x-unverified": true
@@ -1392,7 +1368,7 @@
               "x-unverified": true
             },
             "blocked": {
-              "type": "boolean"
+              "x-unverified": true
             },
             "error": {
               "x-unverified": true
@@ -1410,7 +1386,7 @@
               "x-unverified": true
             },
             "cached": {
-              "type": "boolean"
+              "x-unverified": true
             },
             "resultPreview": {
               "x-unverified": true
@@ -1440,7 +1416,7 @@
               "x-unverified": true
             },
             "skipped": {
-              "type": "boolean"
+              "x-unverified": true
             },
             "remoteSessionId": {
               "x-unverified": true
@@ -1821,7 +1797,60 @@
           "x-unverified": true
         },
         "error": {
-          "x-unverified": true
+          "type": "object",
+          "properties": {
+            "message": {
+              "x-unverified": true
+            },
+            "status": {
+              "x-unverified": true
+            },
+            "requestId": {
+              "x-unverified": true
+            },
+            "formatted": {
+              "x-unverified": true
+            },
+            "connection": {
+              "properties": {
+                "code": {
+                  "x-unverified": true
+                },
+                "message": {
+                  "x-unverified": true
+                },
+                "isSSLError": {
+                  "x-unverified": true
+                }
+              }
+            },
+            "isNetworkDown": {
+              "x-unverified": true
+            },
+            "rateLimits": {
+              "properties": {
+                "rateLimitType": {
+                  "x-unverified": true
+                },
+                "resetsAt": {
+                  "x-unverified": true
+                }
+              }
+            },
+            "noResponse": {
+              "properties": {
+                "waitedMs": {
+                  "x-unverified": true
+                },
+                "retryWaitMs": {
+                  "x-unverified": true
+                }
+              }
+            },
+            "isCloudCredentialError": {
+              "type": "boolean"
+            }
+          }
         },
         "retryInMs": {
           "x-unverified": true
@@ -1845,7 +1874,7 @@
           "type": "boolean"
         },
         "retractedMessageUuids": {
-          "type": "array"
+          "x-unverified": true
         },
         "refusedUserMessageUuid": {
           "x-unverified": true
@@ -2046,19 +2075,18 @@
           "x-observed": true
         },
         "message": {
-          "type": "object",
           "properties": {
             "role": {
-              "const": "user"
+              "x-unverified": true
             },
             "content": {
-              "type": "array"
+              "x-unverified": true
             }
           },
           "x-observed": true
         },
         "isMeta": {
-          "type": "boolean"
+          "x-unverified": true
         },
         "promptShellHandOff": {
           "x-unverified": true
@@ -2082,13 +2110,13 @@
           "x-unverified": true
         },
         "isVirtual": {
-          "type": "boolean"
+          "x-unverified": true
         },
         "isCompactSummary": {
-          "type": "boolean"
+          "x-unverified": true
         },
         "repeatsCompactSummary": {
-          "type": "boolean"
+          "x-unverified": true
         },
         "modelOnlyText": {
           "x-unverified": true
@@ -2105,10 +2133,9 @@
           "x-observed": true
         },
         "toolUseResult": {
-          "type": "object",
           "properties": {
             "type": {
-              "const": "create"
+              "x-unverified": true
             },
             "filePath": {
               "x-unverified": true
@@ -2117,7 +2144,7 @@
               "x-unverified": true
             },
             "structuredPatch": {
-              "type": "array"
+              "x-unverified": true
             },
             "originalFile": {
               "x-unverified": true
@@ -2276,7 +2303,6 @@
           "const": "worktree-state"
         },
         "worktreeSession": {
-          "type": "object",
           "properties": {
             "originalCwd": {
               "x-unverified": true

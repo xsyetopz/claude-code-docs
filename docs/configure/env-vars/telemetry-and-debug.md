@@ -178,6 +178,8 @@ In the program the event is `safety_event`, behind a feature flag that is on by 
 Its attributes include `category` (such as `permission_rule`, `auto_mode_block`, `hook`, `hook_review`, `sandbox_network`, and `user_rejected`), `decision`, `decision_source`, `reason_type`, `reason_code`, `rule_source`, `tool_name`, `tool_class`, `tool_source`, `permission_mode`, `tool_use_id`, `sandbox_enabled`, and `sandbox_violation_count`.
 A `PostToolUse` hook that sends a result back gives `category` `hook_review`, `decision` `sent_back`, and `decision_source` `hook` (the program).
 
+When the output of a command shows a git commit, the `tool_result` event for that call also has `vcs.ref.head.revision` (the commit ID), and, when the branch is known, `vcs.ref.head.name` and `vcs.ref.head.type` `branch` (the program).
+
 ## Exact Fields
 
 The exact fields of each OpenTelemetry metric, span, and event: `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-otel.json`. The program builds this payload in code, not with a validator, so the schema is read from that code: a field marked `x-unverified` has a type the code does not show, and `x-observed` marks a field that a probe saw.
