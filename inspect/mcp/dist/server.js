@@ -34160,12 +34160,18 @@ var extractModules = (binaryPath) => {
 };
 
 // inspect/mcp/src/resolve.ts
+var kindType = (v) => v.k === "str" || v.k === "enum" ? "string" : v.k === "num" ? "number" : v.k === "bool" ? "boolean" : v.k === "arr" ? "array" : v.k === "obj" ? "object" : undefined;
+var union3 = (a, b) => a && b ? [...new Set([...a, ...b])].sort() : undefined;
+var jsonTypes = (t) => {
+  const out = t?.filter((x) => x !== "absent");
+  return out?.length ? out : undefined;
+};
 var loosen = (v) => v.k === "obj" ? {
   k: "obj",
   e: v.e.map((x) => ("key" in x) ? { ...x, val: loosen(x.val) } : x),
   open: true
 } : { k: "unk", text: "" };
-var mergeEntries = (lists) => {
+var mergeEntries = (lists, ty = (v) => v.k === "unk" ? v.t ?? undefined : kindType(v) && [kindType(v)]) => {
   const seen = new Map;
   const count = new Map;
   for (const l of lists)
@@ -34182,22 +34188,36 @@ var mergeEntries = (lists) => {
         seen.set(e.key, {
           ...prev,
           opt: prev.opt || e.opt,
-          val: known.k === "obj" ? loosen(known) : unknown
+          val: known.k === "obj" ? loosen(known) : unknown.k === "unk" ? {
+            ...unknown,
+            t: jsonTypes(union3(ty(known), ty(unknown))) ?? null
+          } : unknown
         });
-      } else if (prev.val.k === "str" || prev.val.k === "enum") {
-        const v = e.val.k === "str" || e.val.k === "enum" ? e.val.v : null;
-        const all = new Set([prev.val.v, v ?? []].flat());
-        if (v === null)
-          seen.set(e.key, { ...prev, val: e.val });
-        else if (all.size > 1)
+      } else if ((prev.val.k === "str" || prev.val.k === "enum") && (e.val.k === "str" || e.val.k === "enum")) {
+        const all = new Set([prev.val.v, e.val.v].flat());
+        if (all.size > 1)
           seen.set(e.key, { ...prev, val: { k: "enum", v: [...all] } });
       } else if (prev.val.k === "obj" && e.val.k === "obj")
         seen.set(e.key, {
           ...prev,
           val: {
             k: "obj",
-            e: mergeEntries([prev.val.e, e.val.e]),
+            e: mergeEntries([prev.val.e, e.val.e], ty),
             ...(prev.val.open || e.val.open) && { open: true }
+          }
+        });
+      else if (prev.val.k === "obj" || e.val.k === "obj")
+        seen.set(e.key, {
+          ...prev,
+          val: loosen(prev.val.k === "obj" ? prev.val : e.val)
+        });
+      else if (prev.val.k !== e.val.k)
+        seen.set(e.key, {
+          ...prev,
+          val: {
+            k: "unk",
+            text: "",
+            t: jsonTypes(union3(ty(prev.val), ty(e.val))) ?? null
           }
         });
     }
@@ -34216,11 +34236,264 @@ var memberPath = (m, n) => {
   }
   return x.type === "Identifier" ? { root: x, path } : undefined;
 };
+var bind = (m, call, env, dm, fn) => {
+  const inner = new Map;
+  const args = call.arguments;
+  const spreadAt = args.findIndex((a) => a.type === "SpreadElement");
+  fn.params.forEach((p, i) => {
+    if (p.type !== "Identifier" || spreadAt >= 0 && i >= spreadAt)
+      return;
+    const v = dm.variable(p);
+    const a = args[i];
+    if (v)
+      inner.set(v, a && !isVoid(a) ? { m, n: a, env } : null);
+  });
+  return inner;
+};
+var GLOBAL_CALLS = {
+  String: "string",
+  Number: "number",
+  parseInt: "number",
+  parseFloat: "number",
+  Boolean: "boolean",
+  isNaN: "boolean",
+  isFinite: "boolean",
+  encodeURIComponent: "string",
+  decodeURIComponent: "string"
+};
+var STATIC_CALLS = {
+  Math: {},
+  Date: { now: "number", parse: "number" },
+  JSON: { stringify: "string" },
+  Object: { keys: "array", values: "array", entries: "array" },
+  Array: { isArray: "boolean", from: "array", of: "array" },
+  Number: {
+    isFinite: "boolean",
+    isInteger: "boolean",
+    isNaN: "boolean",
+    isSafeInteger: "boolean",
+    parseInt: "number",
+    parseFloat: "number"
+  },
+  performance: { now: "number" }
+};
+var METHODS = {
+  toISOString: "string",
+  toLowerCase: "string",
+  toUpperCase: "string",
+  trim: "string",
+  trimStart: "string",
+  trimEnd: "string",
+  toFixed: "string",
+  padStart: "string",
+  padEnd: "string",
+  replace: "string",
+  replaceAll: "string",
+  join: "string",
+  includes: "boolean",
+  startsWith: "boolean",
+  endsWith: "boolean",
+  getTime: "number",
+  indexOf: "number",
+  lastIndexOf: "number",
+  findIndex: "number",
+  map: "array",
+  filter: "array",
+  flatMap: "array",
+  split: "array"
+};
+var COMPARE = new Set([
+  "==",
+  "!=",
+  "===",
+  "!==",
+  "<",
+  ">",
+  "<=",
+  ">=",
+  "instanceof",
+  "in"
+]);
 
 class Resolver {
   unresolved = [];
   #names = new Map;
   #params = new Map;
+  #varTypes = new Map;
+  #ty = (v) => this.typeOfVal(v);
+  typeOfVal(v) {
+    if (v.k !== "unk")
+      return kindType(v) && [kindType(v)];
+    if (v.t !== undefined)
+      return v.t ?? undefined;
+    if (!v.ref || this.#nested > 4)
+      return;
+    this.#nested++;
+    try {
+      return jsonTypes(this.typeOf(v.ref.m, v.ref.n, v.ref.env));
+    } finally {
+      this.#nested--;
+    }
+  }
+  #nested = 0;
+  typeOf(m, n, env, depth = 0) {
+    if (!n || env)
+      return this.#typeOf(m, n, env, depth);
+    if (this.#types.has(n))
+      return this.#types.get(n);
+    this.#types.set(n, undefined);
+    const got = this.#typeOf(m, n, env, depth);
+    this.#types.set(n, got);
+    return got;
+  }
+  #types = new Map;
+  #typeOf(m, n, env, depth = 0) {
+    if (n?.type === "Literal" && n.value === null)
+      return ["null"];
+    if (!n || isVoid(n))
+      return ["absent"];
+    if (depth > 12)
+      return;
+    const t = (x) => this.typeOf(m, x ?? null, env, depth + 1);
+    switch (n.type) {
+      case "Literal":
+        return n.value === null ? ["null"] : typeof n.value === "string" ? ["string"] : typeof n.value === "number" ? ["number"] : typeof n.value === "boolean" ? ["boolean"] : undefined;
+      case "TemplateLiteral":
+        return ["string"];
+      case "ArrayExpression":
+        return ["array"];
+      case "ObjectExpression":
+        return ["object"];
+      case "UnaryExpression":
+        return n.operator === "!" || n.operator === "delete" ? ["boolean"] : n.operator === "typeof" ? ["string"] : ["number"];
+      case "UpdateExpression":
+        return ["number"];
+      case "BinaryExpression": {
+        if (COMPARE.has(n.operator))
+          return ["boolean"];
+        if (n.operator !== "+")
+          return ["number"];
+        const [a, b] = [t(n.left), t(n.right)];
+        if (a?.length === 1 && a[0] === "string")
+          return ["string"];
+        if (b?.length === 1 && b[0] === "string")
+          return ["string"];
+        return a && b && [...a, ...b].every((x) => x === "number") ? ["number"] : undefined;
+      }
+      case "LogicalExpression": {
+        const a = t(n.left);
+        const b = t(n.right);
+        return n.operator === "??" ? union3(a?.filter((x) => x !== "null" && x !== "absent"), b) : union3(a, b);
+      }
+      case "ConditionalExpression":
+        return union3(t(n.consequent), t(n.alternate));
+      case "SequenceExpression":
+        return t(n.expressions.at(-1));
+      case "AssignmentExpression":
+        return n.operator === "=" ? t(n.right) : undefined;
+      case "ChainExpression":
+        return union3(t(n.expression), ["absent"]);
+      case "AwaitExpression":
+        return n.argument.type === "CallExpression" ? this.#callType(m, n.argument, env, depth, true) : t(n.argument);
+      case "CallExpression":
+        return this.#callType(m, n, env, depth, false);
+      case "Identifier":
+        return this.#identType(m, n, env, depth);
+      case "MemberExpression": {
+        if (!n.computed && n.property.type === "Identifier" && (n.property.name === "length" || n.property.name === "size"))
+          return ["number"];
+        const key = n.computed ? constString(m, n.property) : n.property.type === "Identifier" ? n.property.name : undefined;
+        const obj = this.expr(m, n.object, env, depth + 1);
+        const e = obj?.find((x) => ("key" in x) && x.key === key);
+        if (!e || !("key" in e))
+          return;
+        const got = this.typeOfVal(e.val);
+        return got && (e.opt ? [...got, "absent"] : got);
+      }
+    }
+    return;
+  }
+  #callType(m, call, env, depth, awaited) {
+    const c = call.callee;
+    const isGlobal = (id) => id.type === "Identifier" && m.reference(id)?.resolved === null;
+    const own = (o, k) => o && Object.hasOwn(o, k) ? o[k] : undefined;
+    if (c.type === "Identifier" && isGlobal(c)) {
+      const g = own(GLOBAL_CALLS, c.name);
+      if (g)
+        return [g];
+    }
+    if (c.type === "MemberExpression" && !c.computed && c.property.type === "Identifier") {
+      const o = c.object;
+      const name = c.property.name;
+      const statics = o.type === "Identifier" && isGlobal(o) ? own(STATIC_CALLS, o.name) : undefined;
+      const got = statics ? o.type === "Identifier" && o.name === "Math" ? "number" : own(statics, name) : own(METHODS, name);
+      return got ? [got] : undefined;
+    }
+    const f = functionOf(m, c);
+    if (!f || f.fn.generator || f.fn.async && !awaited)
+      return;
+    const inner = bind(m, call, env, f.module, f.fn);
+    const rets = returnsOf(f.fn);
+    if (rets.length === 0)
+      return ["absent"];
+    let out = [];
+    for (const r of rets)
+      out = union3(out, this.typeOf(f.module, r, inner, depth + 1));
+    return out;
+  }
+  #identType(m, id, env, depth) {
+    if (id.type !== "Identifier")
+      return;
+    const v = m.variable(id);
+    if (!v)
+      return id.name === "undefined" ? ["absent"] : id.name === "NaN" || id.name === "Infinity" ? ["number"] : undefined;
+    if (env?.has(v)) {
+      const arg = env.get(v);
+      return arg ? this.typeOf(arg.m, arg.n, arg.env, depth + 1) : ["absent"];
+    }
+    const o = m.bundle?.origin(m, v) ?? { module: m, variable: v };
+    if (this.#varTypes.has(o.variable))
+      return this.#varTypes.get(o.variable);
+    this.#varTypes.set(o.variable, undefined);
+    const got = this.#varType(o.module, o.variable, depth);
+    this.#varTypes.set(o.variable, got);
+    return got;
+  }
+  #varType(m, v, depth) {
+    const def = v.defs[0];
+    if (def?.type === "Parameter") {
+      const fn = def.node;
+      const index = fn.params.indexOf(def.name);
+      if (index < 0)
+        return;
+      let out = [];
+      for (const c of callsOf(m, fn)) {
+        const args = c?.call.arguments ?? [];
+        if (!c || args.slice(0, index + 1).some((a) => a.type === "SpreadElement"))
+          return;
+        out = union3(out, this.typeOf(c.module, args[index] ?? null, undefined, depth + 1));
+      }
+      return out?.length ? out : undefined;
+    }
+    if (def?.type !== "Variable" || def.node.id !== def.name)
+      return;
+    const loop = m.parent(def.parent);
+    if ((loop?.type === "ForOfStatement" || loop?.type === "ForInStatement") && loop.left === def.parent)
+      return;
+    let out = def.node.init ? [] : ["absent"];
+    for (const r of v.references) {
+      if (!r.isWrite())
+        continue;
+      const p = m.parent(r.identifier);
+      const op = p?.type === "AssignmentExpression" ? p.operator : "=";
+      const w = p?.type === "UpdateExpression" ? ["number"] : this.typeOf(m, r.writeExpr, undefined, depth + 1);
+      const one = (k) => w?.length && w.every((x) => x === k);
+      out = op === "=" || op === "??=" || op === "||=" || op === "&&=" ? union3(out, w) : op !== "+=" ? union3(out, ["number"]) : one("number") || one("string") ? union3(out, w) : undefined;
+      if (!out)
+        return;
+    }
+    return out;
+  }
   objectAt(m, pos) {
     const o = m.at(pos, "ObjectExpression");
     return o ? this.entries(m, o) : [];
@@ -34303,7 +34576,7 @@ class Resolver {
       case "ConditionalExpression": {
         const a = this.expr(m, n.consequent, env, depth);
         const c = this.expr(m, n.alternate, env, depth);
-        return a && c ? mergeEntries([a, c]) : undefined;
+        return a && c ? mergeEntries([a, c], this.#ty) : undefined;
       }
       case "ObjectExpression":
         return this.pin(this.entries(m, n, env), depth + 1);
@@ -34375,7 +34648,7 @@ class Resolver {
           });
       }
     }
-    const merged = [...mergeEntries(lists), ...later];
+    const merged = [...mergeEntries(lists, this.#ty), ...later];
     const out = merged.length > 0 ? merged : undefined;
     if (cacheable)
       this.#names.set(def.name, out);
@@ -34411,7 +34684,7 @@ class Resolver {
         }
         lists.push(got);
       }
-    const merged = mergeEntries(lists);
+    const merged = mergeEntries(lists, this.#ty);
     const out = ok && merged.length > 0 ? merged : undefined;
     this.#params.set(v, out);
     return out;
@@ -34426,18 +34699,10 @@ class Resolver {
     const rets = returnsOf(fn).filter((r) => r !== null);
     if (rets.length === 0)
       return;
-    const inner = new Map;
-    const args = call.arguments;
-    const spreadAt = args.findIndex((a) => a.type === "SpreadElement");
-    fn.params.forEach((p, i) => {
-      if (p.type !== "Identifier" || spreadAt >= 0 && i >= spreadAt)
-        return;
-      const v = dm.variable(p);
-      const a = args[i];
-      if (v)
-        inner.set(v, a && !isVoid(a) ? { m, n: a, env } : null);
-    });
+    const inner = bind(m, call, env, dm, fn);
     const isUndef = (n) => {
+      if (n?.type === "Literal" && n.value === null)
+        return false;
       if (!n || isVoid(n))
         return true;
       if (n.type === "Identifier") {
@@ -34489,7 +34754,7 @@ class Resolver {
         return;
       lists.push(...got);
     }
-    return this.pin(mergeEntries(lists), depth + 1);
+    return this.pin(mergeEntries(lists, this.#ty), depth + 1);
   }
   spreads(entries, depth = 0) {
     const out = [];
@@ -34529,7 +34794,14 @@ class Resolver {
             ...e.val.k === "obj" && e.val.open && { open: true }
           }
         };
-      return e.val.k === "unk" ? { ...e, val: { k: "unk", text: e.val.text } } : e;
+      return e.val.k === "unk" ? {
+        ...e,
+        val: {
+          k: "unk",
+          text: e.val.text,
+          t: this.typeOfVal(e.val) ?? null
+        }
+      } : e;
     });
   }
 }
@@ -34633,8 +34905,8 @@ import { basename as basename2, join as join2 } from "path";
 var claude_code_transcript_default = {
   $schema: "https://json-schema.org/draft/2020-12/schema",
   $id: "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-transcript.json",
-  title: "Claude Code transcript JSONL entry (Claude Code 2.1.307)",
-  $comment: `For one line of a session transcript (.jsonl). Generated from Claude Code 2.1.307 by tools/schemas/code.ts. Anchors: the entry type registry (an object literal whose first keys are user, assistant, system, attachment, mapped to "transcript"); the literal built in the writer's insertMessageChain (key logicalParentUuid) and its two spreads for the common fields of message lines; every object literal with a top-level type:"<entry type>" (non-message types need a sessionId key), with its spreads resolved in the module that declares each function (imports followed); and, for a key a probe saw that no such literal has, the later write: a copy of the line ({...line, key}), a function spread into one, or last a property assignment. Keys are the union over all write sites; a string value that differs between sites is an enum, and one that is a literal at one site and computed at another is x-unverified. Probe print/transcripts.lines.json marks the observed keys. Do not edit by hand.`,
+  title: "Claude Code transcript JSONL entry (Claude Code 2.1.308)",
+  $comment: `For one line of a session transcript (.jsonl). Generated from Claude Code 2.1.308 by tools/schemas/code.ts. Anchors: the entry type registry (an object literal whose first keys are user, assistant, system, attachment, mapped to "transcript"); the literal built in the writer's insertMessageChain (key logicalParentUuid) and its two spreads for the common fields of message lines; every object literal with a top-level type:"<entry type>" (non-message types need a sessionId key), with its spreads resolved in the module that declares each function (imports followed); and, for a key a probe saw that no such literal has, the later write: a copy of the line ({...line, key}), a function spread into one, or last a property assignment. Keys are the union over all write sites; a string value that differs between sites is an enum, and one that is a literal at one site and computed at another is x-unverified. Probe print/transcripts.lines.json marks the observed keys. Do not edit by hand.`,
   type: "object",
   oneOf: [
     {
@@ -34838,11 +35110,11 @@ var claude_code_transcript_default = {
           "x-observed": true
         },
         timestamp: {
-          "x-unverified": true,
+          type: "string",
           "x-observed": true
         },
         version: {
-          "x-unverified": true,
+          type: "string",
           "x-observed": true
         },
         querySource: {
@@ -34854,18 +35126,18 @@ var claude_code_transcript_default = {
           "x-observed": true
         },
         params: {
-          "x-unverified": true,
+          type: "object",
           "x-observed": true
         },
         withheld: {
-          "x-unverified": true
+          type: "array"
         },
         base: {
           "x-unverified": true,
           "x-observed": true
         },
         keep: {
-          "x-unverified": true,
+          type: "number",
           "x-observed": true
         },
         tail: {
@@ -34873,7 +35145,7 @@ var claude_code_transcript_default = {
           "x-observed": true
         },
         cacheControl: {
-          "x-unverified": true,
+          type: "array",
           "x-observed": true
         },
         requestDigest: {
@@ -35206,7 +35478,7 @@ var claude_code_transcript_default = {
           "x-unverified": true
         },
         thinkingDurationMs: {
-          "x-unverified": true
+          type: "number"
         },
         thinkingDisplay: {
           "x-unverified": true
@@ -35247,7 +35519,7 @@ var claude_code_transcript_default = {
           "x-unverified": true
         },
         userType: {
-          "x-unverified": true,
+          type: "string",
           "x-observed": true
         },
         entrypoint: {
@@ -35263,7 +35535,7 @@ var claude_code_transcript_default = {
           "x-observed": true
         },
         version: {
-          "x-unverified": true,
+          type: "string",
           "x-observed": true
         },
         gitBranch: {
@@ -35359,20 +35631,20 @@ var claude_code_transcript_default = {
               "x-unverified": true
             },
             hooks: {
-              "x-unverified": true
+              type: "array"
             },
             count: {
-              "x-unverified": true
+              type: "number"
             }
           },
           "x-observed": true
         },
         rendered: {
-          "x-unverified": true,
+          type: "array",
           "x-observed": true
         },
         renderedRole: {
-          "x-unverified": true,
+          type: "string",
           "x-observed": true
         },
         renderedBesideToolResult: {
@@ -35380,7 +35652,7 @@ var claude_code_transcript_default = {
           "x-observed": true
         },
         renderedInHumanTurn: {
-          "x-unverified": true
+          type: "array"
         },
         parentUuid: {
           "x-unverified": true,
@@ -35409,7 +35681,7 @@ var claude_code_transcript_default = {
           "x-unverified": true
         },
         userType: {
-          "x-unverified": true,
+          type: "string",
           "x-observed": true
         },
         entrypoint: {
@@ -35425,7 +35697,7 @@ var claude_code_transcript_default = {
           "x-observed": true
         },
         version: {
-          "x-unverified": true,
+          type: "string",
           "x-observed": true
         },
         gitBranch: {
@@ -35505,7 +35777,7 @@ var claude_code_transcript_default = {
           const: "continued-in"
         },
         timestamp: {
-          "x-unverified": true
+          type: "string"
         },
         sessionId: {
           "x-unverified": true
@@ -35607,7 +35879,7 @@ var claude_code_transcript_default = {
           const: "ended-by-model"
         },
         timestamp: {
-          "x-unverified": true
+          type: "string"
         },
         sessionId: {
           "x-unverified": true
@@ -35634,7 +35906,7 @@ var claude_code_transcript_default = {
           "x-unverified": true
         },
         timestamp: {
-          "x-unverified": true
+          type: "string"
         }
       },
       $comment: "Registry policy: boundary-cleared. Code sites used: 1."
@@ -35673,7 +35945,7 @@ var claude_code_transcript_default = {
           "x-unverified": true
         },
         contextLength: {
-          "x-unverified": true
+          type: "number"
         }
       },
       $comment: "Registry policy: accumulate. Code sites used: 1."
@@ -35691,7 +35963,7 @@ var claude_code_transcript_default = {
           "x-unverified": true
         },
         timestamp: {
-          "x-unverified": true
+          type: "string"
         },
         path: {
           "x-unverified": true
@@ -35721,7 +35993,7 @@ var claude_code_transcript_default = {
           "x-unverified": true
         },
         ts: {
-          "x-unverified": true
+          type: "string"
         }
       },
       $comment: "Registry policy: last-wins. Code sites used: 1."
@@ -35830,7 +36102,7 @@ var claude_code_transcript_default = {
           "x-unverified": true
         },
         timestamp: {
-          "x-unverified": true
+          type: "string"
         }
       },
       $comment: "Registry policy: last-wins. Code sites used: 1."
@@ -35869,7 +36141,7 @@ var claude_code_transcript_default = {
           "x-unverified": true
         },
         timestamp: {
-          "x-unverified": true
+          type: "string"
         }
       },
       $comment: "Registry policy: last-wins. Code sites used: 2."
@@ -36068,7 +36340,7 @@ var claude_code_transcript_default = {
           "x-unverified": true
         },
         timestamp: {
-          "x-unverified": true
+          type: "string"
         },
         uuid: {
           "x-unverified": true
@@ -36098,7 +36370,7 @@ var claude_code_transcript_default = {
           "x-unverified": true
         },
         userType: {
-          "x-unverified": true
+          type: "string"
         },
         entrypoint: {
           "x-unverified": true
@@ -36110,7 +36382,7 @@ var claude_code_transcript_default = {
           "x-unverified": true
         },
         version: {
-          "x-unverified": true
+          type: "string"
         },
         gitBranch: {
           "x-unverified": true
@@ -36129,11 +36401,11 @@ var claude_code_transcript_default = {
           "x-observed": true
         },
         operation: {
-          "x-unverified": true,
+          type: "string",
           "x-observed": true
         },
         timestamp: {
-          "x-unverified": true,
+          type: "string",
           "x-observed": true
         },
         sessionId: {
@@ -36188,7 +36460,7 @@ var claude_code_transcript_default = {
           "x-observed": true
         },
         subtype: {
-          "x-unverified": true,
+          type: "string",
           "x-observed": true
         },
         content: {
@@ -36213,7 +36485,7 @@ var claude_code_transcript_default = {
           "x-unverified": true
         },
         snapshotFiles: {
-          "x-unverified": true
+          type: "array"
         },
         direction: {
           "x-unverified": true
@@ -36243,13 +36515,13 @@ var claude_code_transcript_default = {
           "x-unverified": true
         },
         url: {
-          "x-unverified": true
+          type: "string"
         },
         upgradeNudge: {
           "x-unverified": true
         },
         entry: {
-          "x-unverified": true
+          type: "string"
         },
         taskId: {
           "x-unverified": true
@@ -36264,7 +36536,7 @@ var claude_code_transcript_default = {
           const: "loop"
         },
         cronKind: {
-          "x-unverified": true
+          type: "string"
         },
         noOpStreak: {
           "x-unverified": true
@@ -36273,26 +36545,26 @@ var claude_code_transcript_default = {
           "x-unverified": true
         },
         foldedUuids: {
-          "x-unverified": true
+          type: "array"
         },
         hookCount: {
-          "x-unverified": true,
+          type: "number",
           "x-observed": true
         },
         hookInfos: {
-          "x-unverified": true,
+          type: "array",
           "x-observed": true
         },
         hookErrors: {
-          "x-unverified": true,
+          type: "array",
           "x-observed": true
         },
         hookAdditionalContext: {
-          "x-unverified": true,
+          type: "array",
           "x-observed": true
         },
         preventedContinuation: {
-          "x-unverified": true,
+          type: "boolean",
           "x-observed": true
         },
         stopReason: {
@@ -36300,7 +36572,7 @@ var claude_code_transcript_default = {
           "x-observed": true
         },
         hasOutput: {
-          "x-unverified": true,
+          type: "boolean",
           "x-observed": true
         },
         toolUseID: {
@@ -36317,7 +36589,7 @@ var claude_code_transcript_default = {
           "x-unverified": true
         },
         messageCount: {
-          "x-unverified": true
+          type: "number"
         },
         pendingBackgroundAgentCount: {
           "x-unverified": true
@@ -36393,7 +36665,7 @@ var claude_code_transcript_default = {
               type: "array"
             },
             preCompactArtifactReadVersions: {
-              "x-unverified": true
+              type: "array"
             },
             preservedSegment: {
               type: "object",
@@ -36485,7 +36757,7 @@ var claude_code_transcript_default = {
           }
         },
         retryInMs: {
-          "x-unverified": true
+          type: "number"
         },
         retryAttempt: {
           "x-unverified": true
@@ -36494,10 +36766,10 @@ var claude_code_transcript_default = {
           "x-unverified": true
         },
         source: {
-          "x-unverified": true
+          type: "string"
         },
         message: {
-          "x-unverified": true
+          type: "string"
         },
         remoteSourced: {
           type: "boolean"
@@ -36614,13 +36886,13 @@ var claude_code_transcript_default = {
           type: "boolean"
         },
         launchedAgentId: {
-          "x-unverified": true
+          type: "string"
         },
         live_turn_id: {
           "x-unverified": true
         },
         stored_through_live_index: {
-          "x-unverified": true
+          type: "number"
         },
         fromRemoteErrorResult: {
           type: "boolean"
@@ -36655,7 +36927,7 @@ var claude_code_transcript_default = {
           "x-unverified": true
         },
         userType: {
-          "x-unverified": true,
+          type: "string",
           "x-observed": true
         },
         entrypoint: {
@@ -36671,7 +36943,7 @@ var claude_code_transcript_default = {
           "x-observed": true
         },
         version: {
-          "x-unverified": true,
+          type: "string",
           "x-observed": true
         },
         gitBranch: {
@@ -36788,7 +37060,7 @@ var claude_code_transcript_default = {
           "x-unverified": true
         },
         classifierBoundary: {
-          "x-unverified": true
+          type: "boolean"
         },
         serverClassifierContext: {
           "x-unverified": true
@@ -36889,7 +37161,7 @@ var claude_code_transcript_default = {
           "x-unverified": true
         },
         userType: {
-          "x-unverified": true,
+          type: "string",
           "x-observed": true
         },
         entrypoint: {
@@ -36905,7 +37177,7 @@ var claude_code_transcript_default = {
           "x-observed": true
         },
         version: {
-          "x-unverified": true,
+          type: "string",
           "x-observed": true
         },
         gitBranch: {
@@ -36921,7 +37193,7 @@ var claude_code_transcript_default = {
           "x-observed": true
         },
         turnPosition: {
-          "x-unverified": true,
+          type: ["object", "string"],
           $comment: "Added after the line is built, by a copy of the line or a spread into one.",
           "x-observed": true
         }

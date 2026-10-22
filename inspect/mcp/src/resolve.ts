@@ -26,10 +26,44 @@ export type Val =
   | { k: "num"; v: number }
   | { k: "bool"; v: boolean }
   | { k: "arr" }
-  | { k: "unk"; text: string; ref?: Ref };
+  /** `t`: the JSON types the code shows for it; null when no type is known (the `ref` is not read for one). */
+  | { k: "unk"; text: string; ref?: Ref; t?: JType[] | null };
 export type Entry =
   | { key: string; opt: boolean; val: Val }
   | { spread: string; opt: boolean; ref?: Ref };
+export type JType =
+  | "string"
+  | "number"
+  | "boolean"
+  | "array"
+  | "object"
+  | "null";
+/** A value that JSON drops: undefined. Only used while types are worked out. */
+type Ty = JType | "absent";
+
+/** The JSON type of a value that is no unknown. */
+const kindType = (v: Val): JType | undefined =>
+  v.k === "str" || v.k === "enum"
+    ? "string"
+    : v.k === "num"
+      ? "number"
+      : v.k === "bool"
+        ? "boolean"
+        : v.k === "arr"
+          ? "array"
+          : v.k === "obj"
+            ? "object"
+            : undefined;
+/** Both type lists joined, or undefined when either is unknown. */
+const union = (
+  a: readonly Ty[] | undefined,
+  b: readonly Ty[] | undefined,
+): Ty[] | undefined => (a && b ? [...new Set([...a, ...b])].sort() : undefined);
+/** The types JSON can hold; undefined when there are none. */
+const jsonTypes = (t: readonly Ty[] | undefined): JType[] | undefined => {
+  const out = t?.filter((x): x is JType => x !== "absent");
+  return out?.length ? out : undefined;
+};
 
 /** A value that is one case of several: an object keeps its keys, every other value becomes unknown. */
 const loosen = (v: Val): Val =>
@@ -41,8 +75,15 @@ const loosen = (v: Val): Val =>
       }
     : { k: "unk", text: "" };
 
-/** Merge several literals of one thing: a key missing from any of them becomes optional. */
-export const mergeEntries = (lists: Entry[][]): Entry[] => {
+/**
+ * Merge several literals of one thing: a key missing from any of them becomes optional. `ty` gives the
+ * types of an unknown value; without it, a value whose sites differ in type keeps only the types it holds.
+ */
+export const mergeEntries = (
+  lists: Entry[][],
+  ty: (v: Val) => JType[] | undefined = (v) =>
+    v.k === "unk" ? (v.t ?? undefined) : kindType(v) && [kindType(v) as JType],
+): Entry[] => {
   const seen = new Map<string, Entry>();
   const count = new Map<string, number>();
   for (const l of lists)
@@ -59,21 +100,46 @@ export const mergeEntries = (lists: Entry[][]): Entry[] => {
         seen.set(e.key, {
           ...prev,
           opt: prev.opt || e.opt,
-          val: known.k === "obj" ? loosen(known) : unknown,
+          val:
+            known.k === "obj"
+              ? loosen(known)
+              : unknown.k === "unk"
+                ? {
+                    ...unknown,
+                    t: jsonTypes(union(ty(known), ty(unknown))) ?? null,
+                  }
+                : unknown,
         });
-      } else if (prev.val.k === "str" || prev.val.k === "enum") {
-        const v = e.val.k === "str" || e.val.k === "enum" ? e.val.v : null;
-        const all = new Set([prev.val.v, v ?? []].flat());
-        if (v === null) seen.set(e.key, { ...prev, val: e.val });
-        else if (all.size > 1)
+      } else if (
+        (prev.val.k === "str" || prev.val.k === "enum") &&
+        (e.val.k === "str" || e.val.k === "enum")
+      ) {
+        const all = new Set([prev.val.v, e.val.v].flat());
+        if (all.size > 1)
           seen.set(e.key, { ...prev, val: { k: "enum", v: [...all] } });
       } else if (prev.val.k === "obj" && e.val.k === "obj")
         seen.set(e.key, {
           ...prev,
           val: {
             k: "obj",
-            e: mergeEntries([prev.val.e, e.val.e]),
+            e: mergeEntries([prev.val.e, e.val.e], ty),
             ...((prev.val.open || e.val.open) && { open: true }),
+          },
+        });
+      // An object at one site and another value at another: the object is one case only.
+      else if (prev.val.k === "obj" || e.val.k === "obj")
+        seen.set(e.key, {
+          ...prev,
+          val: loosen(prev.val.k === "obj" ? prev.val : e.val),
+        });
+      // Two kinds, such as a string and a number: both types.
+      else if (prev.val.k !== e.val.k)
+        seen.set(e.key, {
+          ...prev,
+          val: {
+            k: "unk",
+            text: "",
+            t: jsonTypes(union(ty(prev.val), ty(e.val))) ?? null,
           },
         });
     }
@@ -110,11 +176,355 @@ const memberPath = (
   return x.type === "Identifier" ? { root: x, path } : undefined;
 };
 
+/** The parameters of `fn` (in module `dm`) bound to the arguments of `call` (in `m`). */
+const bind = (
+  m: Module,
+  call: Node & (ES.CallExpression | ES.NewExpression),
+  env: Env | undefined,
+  dm: Module,
+  fn: Fn,
+): Env => {
+  const inner: Env = new Map();
+  const args = call.arguments as Node[];
+  const spreadAt = args.findIndex((a) => a.type === "SpreadElement");
+  fn.params.forEach((p, i) => {
+    if (p.type !== "Identifier" || (spreadAt >= 0 && i >= spreadAt)) return;
+    const v = dm.variable(p as Node);
+    const a = args[i];
+    if (v) inner.set(v, a && !isVoid(a) ? { m, n: a, env } : null);
+  });
+  return inner;
+};
+
+// Built-ins whose result type does not depend on what they are called on. Minified code keeps these
+// names, as they are properties of the built-in objects.
+const GLOBAL_CALLS: Record<string, Ty> = {
+  String: "string",
+  Number: "number",
+  parseInt: "number",
+  parseFloat: "number",
+  Boolean: "boolean",
+  isNaN: "boolean",
+  isFinite: "boolean",
+  encodeURIComponent: "string",
+  decodeURIComponent: "string",
+};
+const STATIC_CALLS: Record<string, Record<string, Ty>> = {
+  Math: {},
+  Date: { now: "number", parse: "number" },
+  JSON: { stringify: "string" },
+  Object: { keys: "array", values: "array", entries: "array" },
+  Array: { isArray: "boolean", from: "array", of: "array" },
+  Number: {
+    isFinite: "boolean",
+    isInteger: "boolean",
+    isNaN: "boolean",
+    isSafeInteger: "boolean",
+    parseInt: "number",
+    parseFloat: "number",
+  },
+  performance: { now: "number" },
+};
+const METHODS: Record<string, Ty> = {
+  toISOString: "string",
+  toLowerCase: "string",
+  toUpperCase: "string",
+  trim: "string",
+  trimStart: "string",
+  trimEnd: "string",
+  toFixed: "string",
+  padStart: "string",
+  padEnd: "string",
+  replace: "string",
+  replaceAll: "string",
+  join: "string",
+  includes: "boolean",
+  startsWith: "boolean",
+  endsWith: "boolean",
+  getTime: "number",
+  indexOf: "number",
+  lastIndexOf: "number",
+  findIndex: "number",
+  map: "array",
+  filter: "array",
+  flatMap: "array",
+  split: "array",
+};
+const COMPARE = new Set([
+  "==",
+  "!=",
+  "===",
+  "!==",
+  "<",
+  ">",
+  "<=",
+  ">=",
+  "instanceof",
+  "in",
+]);
+
 export class Resolver {
-  /** Each time a spread could not be followed, as `<module>@<index>: ...<text>`. */
+  /**
+   * Each time a spread could not be followed, as `<module>@<index>: ...<text>`, also in an object read
+   * only for the type of one of its keys. A result is cached, so a spread is logged at its first visit.
+   */
   readonly unresolved: string[] = [];
   #names = new Map<Node, Entry[] | undefined>();
   #params = new Map<Variable, Entry[] | undefined>();
+  #varTypes = new Map<Variable, Ty[] | undefined>();
+  readonly #ty = (v: Val): JType[] | undefined => this.typeOfVal(v);
+
+  /** The JSON types a value can have, or undefined when the code does not show them. */
+  typeOfVal(v: Val): JType[] | undefined {
+    if (v.k !== "unk") return kindType(v) && [kindType(v) as JType];
+    if (v.t !== undefined) return v.t ?? undefined;
+    // A type can lead to keys, and keys to types: past a few levels, the type is not known.
+    if (!v.ref || this.#nested > 4) return undefined;
+    this.#nested++;
+    try {
+      return jsonTypes(this.typeOf(v.ref.m, v.ref.n, v.ref.env));
+    } finally {
+      this.#nested--;
+    }
+  }
+  #nested = 0;
+
+  /** The types an expression gives, "absent" for undefined; undefined when one of them is not known. */
+  typeOf(m: Module, n: Node | null, env?: Env, depth = 0): Ty[] | undefined {
+    // Without the arguments of a call, a node has one type: it is worked out once.
+    if (!n || env) return this.#typeOf(m, n, env, depth);
+    if (this.#types.has(n)) return this.#types.get(n);
+    this.#types.set(n, undefined);
+    const got = this.#typeOf(m, n, env, depth);
+    this.#types.set(n, got);
+    return got;
+  }
+  #types = new Map<Node, Ty[] | undefined>();
+
+  #typeOf(m: Module, n: Node | null, env?: Env, depth = 0): Ty[] | undefined {
+    if (n?.type === "Literal" && n.value === null) return ["null"];
+    if (!n || isVoid(n)) return ["absent"];
+    if (depth > 12) return undefined;
+    const t = (x: Node | null | undefined) =>
+      this.typeOf(m, (x as Node) ?? null, env, depth + 1);
+    switch (n.type) {
+      case "Literal":
+        return n.value === null
+          ? ["null"]
+          : typeof n.value === "string"
+            ? ["string"]
+            : typeof n.value === "number"
+              ? ["number"]
+              : typeof n.value === "boolean"
+                ? ["boolean"]
+                : undefined;
+      case "TemplateLiteral":
+        return ["string"];
+      case "ArrayExpression":
+        return ["array"];
+      case "ObjectExpression":
+        return ["object"];
+      case "UnaryExpression":
+        return n.operator === "!" || n.operator === "delete"
+          ? ["boolean"]
+          : n.operator === "typeof"
+            ? ["string"]
+            : ["number"];
+      case "UpdateExpression":
+        return ["number"];
+      case "BinaryExpression": {
+        if (COMPARE.has(n.operator)) return ["boolean"];
+        if (n.operator !== "+") return ["number"];
+        const [a, b] = [t(n.left as Node), t(n.right as Node)];
+        if (a?.length === 1 && a[0] === "string") return ["string"];
+        if (b?.length === 1 && b[0] === "string") return ["string"];
+        return a && b && [...a, ...b].every((x) => x === "number")
+          ? ["number"]
+          : undefined;
+      }
+      case "LogicalExpression": {
+        const a = t(n.left as Node);
+        const b = t(n.right as Node);
+        return n.operator === "??"
+          ? union(
+              a?.filter((x) => x !== "null" && x !== "absent"),
+              b,
+            )
+          : union(a, b);
+      }
+      case "ConditionalExpression":
+        return union(t(n.consequent as Node), t(n.alternate as Node));
+      case "SequenceExpression":
+        return t(n.expressions.at(-1) as Node);
+      case "AssignmentExpression":
+        return n.operator === "=" ? t(n.right as Node) : undefined;
+      case "ChainExpression":
+        return union(t(n.expression as Node), ["absent"]);
+      case "AwaitExpression":
+        return n.argument.type === "CallExpression"
+          ? this.#callType(
+              m,
+              n.argument as Node & ES.CallExpression,
+              env,
+              depth,
+              true,
+            )
+          : t(n.argument as Node);
+      case "CallExpression":
+        return this.#callType(m, n, env, depth, false);
+      case "Identifier":
+        return this.#identType(m, n, env, depth);
+      case "MemberExpression": {
+        if (
+          !n.computed &&
+          n.property.type === "Identifier" &&
+          (n.property.name === "length" || n.property.name === "size")
+        )
+          return ["number"];
+        const key = n.computed
+          ? constString(m, n.property as Node)
+          : n.property.type === "Identifier"
+            ? n.property.name
+            : undefined;
+        const obj = this.expr(m, n.object as Node, env, depth + 1);
+        const e = obj?.find((x) => "key" in x && x.key === key);
+        if (!e || !("key" in e)) return undefined;
+        const got = this.typeOfVal(e.val);
+        return got && (e.opt ? [...got, "absent"] : got);
+      }
+    }
+    return undefined;
+  }
+
+  #callType(
+    m: Module,
+    call: Node & ES.CallExpression,
+    env: Env | undefined,
+    depth: number,
+    awaited: boolean,
+  ): Ty[] | undefined {
+    const c = call.callee as Node;
+    const isGlobal = (id: Node) =>
+      id.type === "Identifier" && m.reference(id)?.resolved === null;
+    // Own keys only: `toString` and `constructor` are on every object's prototype.
+    const own = <T>(o: Record<string, T> | undefined, k: string) =>
+      o && Object.hasOwn(o, k) ? o[k] : undefined;
+    if (c.type === "Identifier" && isGlobal(c)) {
+      const g = own(GLOBAL_CALLS, c.name);
+      if (g) return [g];
+    }
+    if (
+      c.type === "MemberExpression" &&
+      !c.computed &&
+      c.property.type === "Identifier"
+    ) {
+      const o = c.object as Node;
+      const name = c.property.name;
+      const statics =
+        o.type === "Identifier" && isGlobal(o)
+          ? own(STATIC_CALLS, o.name)
+          : undefined;
+      const got = statics
+        ? o.type === "Identifier" && o.name === "Math"
+          ? "number"
+          : own(statics, name)
+        : own(METHODS, name);
+      return got ? [got] : undefined;
+    }
+    const f = functionOf(m, c);
+    if (!f || f.fn.generator || (f.fn.async && !awaited)) return undefined;
+    const inner = bind(m, call, env, f.module, f.fn);
+    const rets = returnsOf(f.fn);
+    if (rets.length === 0) return ["absent"];
+    let out: Ty[] | undefined = [];
+    for (const r of rets)
+      out = union(out, this.typeOf(f.module, r, inner, depth + 1));
+    return out;
+  }
+
+  /** The types of a name: its argument in this call, the arguments at every call, or each write. */
+  #identType(
+    m: Module,
+    id: Node,
+    env: Env | undefined,
+    depth: number,
+  ): Ty[] | undefined {
+    if (id.type !== "Identifier") return undefined;
+    const v = m.variable(id);
+    if (!v)
+      return id.name === "undefined"
+        ? ["absent"]
+        : id.name === "NaN" || id.name === "Infinity"
+          ? ["number"]
+          : undefined;
+    if (env?.has(v)) {
+      const arg = env.get(v);
+      return arg ? this.typeOf(arg.m, arg.n, arg.env, depth + 1) : ["absent"];
+    }
+    const o = m.bundle?.origin(m, v) ?? { module: m, variable: v };
+    if (this.#varTypes.has(o.variable)) return this.#varTypes.get(o.variable);
+    this.#varTypes.set(o.variable, undefined);
+    const got = this.#varType(o.module, o.variable, depth);
+    this.#varTypes.set(o.variable, got);
+    return got;
+  }
+
+  #varType(m: Module, v: Variable, depth: number): Ty[] | undefined {
+    const def = v.defs[0];
+    if (def?.type === "Parameter") {
+      const fn = def.node as Fn;
+      const index = fn.params.indexOf(def.name as ES.Pattern);
+      if (index < 0) return undefined;
+      let out: Ty[] | undefined = [];
+      for (const c of callsOf(m, fn)) {
+        const args = c?.call.arguments ?? [];
+        if (
+          !c ||
+          args.slice(0, index + 1).some((a) => a.type === "SpreadElement")
+        )
+          return undefined;
+        out = union(
+          out,
+          this.typeOf(
+            c.module,
+            (args[index] as Node) ?? null,
+            undefined,
+            depth + 1,
+          ),
+        );
+      }
+      return out?.length ? out : undefined;
+    }
+    if (def?.type !== "Variable" || def.node.id !== def.name) return undefined;
+    const loop = m.parent(def.parent as unknown as Node);
+    if (
+      (loop?.type === "ForOfStatement" || loop?.type === "ForInStatement") &&
+      loop.left === (def.parent as unknown)
+    )
+      return undefined;
+    let out: Ty[] | undefined = def.node.init ? [] : ["absent"];
+    for (const r of v.references) {
+      if (!r.isWrite()) continue;
+      const p = m.parent(r.identifier as Node);
+      const op = p?.type === "AssignmentExpression" ? p.operator : "=";
+      const w =
+        p?.type === "UpdateExpression"
+          ? (["number"] as Ty[])
+          : this.typeOf(m, r.writeExpr as Node, undefined, depth + 1);
+      // `x+=y` stays a number only for numbers; a string makes it a string.
+      const one = (k: Ty) => w?.length && w.every((x) => x === k);
+      out =
+        op === "=" || op === "??=" || op === "||=" || op === "&&="
+          ? union(out, w)
+          : op !== "+="
+            ? union(out, ["number"])
+            : one("number") || one("string")
+              ? union(out, w)
+              : undefined;
+      if (!out) return undefined;
+    }
+    return out;
+  }
 
   /** Entries of the object literal whose `{` is at `pos`; empty when there is none. */
   objectAt(m: Module, pos: number): Entry[] {
@@ -224,7 +634,7 @@ export class Resolver {
       case "ConditionalExpression": {
         const a = this.expr(m, n.consequent as Node, env, depth);
         const c = this.expr(m, n.alternate as Node, env, depth);
-        return a && c ? mergeEntries([a, c]) : undefined;
+        return a && c ? mergeEntries([a, c], this.#ty) : undefined;
       }
       case "ObjectExpression":
         return this.pin(this.entries(m, n, env), depth + 1);
@@ -306,7 +716,7 @@ export class Resolver {
           });
       }
     }
-    const merged = [...mergeEntries(lists), ...later];
+    const merged = [...mergeEntries(lists, this.#ty), ...later];
     // No key at all: the name may hold a string or a number, so it is no known object.
     const out = merged.length > 0 ? merged : undefined;
     if (cacheable) this.#names.set(def.name as Node, out);
@@ -356,7 +766,7 @@ export class Resolver {
         }
         lists.push(got);
       }
-    const merged = mergeEntries(lists);
+    const merged = mergeEntries(lists, this.#ty);
     const out = ok && merged.length > 0 ? merged : undefined;
     this.#params.set(v, out);
     return out;
@@ -379,16 +789,10 @@ export class Resolver {
     const { module: dm, fn } = f;
     const rets = returnsOf(fn).filter((r): r is Node => r !== null);
     if (rets.length === 0) return undefined;
-    const inner: Env = new Map();
-    const args = call.arguments as Node[];
-    const spreadAt = args.findIndex((a) => a.type === "SpreadElement");
-    fn.params.forEach((p, i) => {
-      if (p.type !== "Identifier" || (spreadAt >= 0 && i >= spreadAt)) return;
-      const v = dm.variable(p as Node);
-      const a = args[i];
-      if (v) inner.set(v, a && !isVoid(a) ? { m, n: a, env } : null);
-    });
+    const inner = bind(m, call, env, dm, fn);
+    // Undefined, which JSON drops; null stays.
     const isUndef = (n: Node | null | undefined): boolean => {
+      if (n?.type === "Literal" && n.value === null) return false;
       if (!n || isVoid(n)) return true;
       if (n.type === "Identifier") {
         const v = dm.variable(n);
@@ -448,7 +852,7 @@ export class Resolver {
       if (!got) return undefined;
       lists.push(...got);
     }
-    return this.pin(mergeEntries(lists), depth + 1);
+    return this.pin(mergeEntries(lists, this.#ty), depth + 1);
   }
 
   /** Inline the spreads that resolve; count the others as unresolved. */
@@ -496,8 +900,16 @@ export class Resolver {
             ...(e.val.k === "obj" && e.val.open && { open: true }),
           },
         };
+      // It keeps its types, which are worked out while its place is known.
       return e.val.k === "unk"
-        ? { ...e, val: { k: "unk", text: e.val.text } }
+        ? {
+            ...e,
+            val: {
+              k: "unk",
+              text: e.val.text,
+              t: this.typeOfVal(e.val) ?? null,
+            },
+          }
         : e;
     });
   }

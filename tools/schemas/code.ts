@@ -7,7 +7,9 @@
 //
 // --spreads lists each spread the adapter cannot resolve, with its module and the index of its literal.
 //
-// Conventions in the output: a field whose type the code does not show is `{}` with "x-unverified": true.
+// Conventions in the output: a field's type is the type the code gives it (a literal, or a computed value
+// followed through names, calls, members, and built-ins such as String() or .length). A field whose type
+// the code does not show is `{}` with "x-unverified": true.
 // A field that a probe in captures/<version>/ saw is marked "x-observed": true.
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
@@ -67,11 +69,6 @@ const bundle = new Bundle(
 );
 const mods: Src[] = [...bundle.modules.values()];
 const R = new Resolver();
-const mod = (name: string): Src => {
-  const m = bundle.get(name);
-  if (!m) throw new Error(`module ${name} not found`);
-  return m;
-};
 /** Modules whose text contains `needle`. */
 const withText = (needle: string): Src[] => bundle.withText(needle);
 const only = (needle: string): Src => {
@@ -168,7 +165,7 @@ const valSchema = (v: Val, mode: Mode, depth: number): Json => {
         const asObj = R.objectValue(v);
         if (asObj) return objSchema(asObj, mode, depth);
       }
-      return { ...UNVERIFIED };
+      return valType(v);
     }
   }
 };
@@ -500,18 +497,11 @@ const laterWrite = (key: string): Json | undefined => {
   }
   return undefined;
 };
-const valType = (v: Val): Json =>
-  v.k === "str" || v.k === "enum"
-    ? { type: "string" }
-    : v.k === "num"
-      ? { type: "number" }
-      : v.k === "bool"
-        ? { type: "boolean" }
-        : v.k === "obj"
-          ? { type: "object" }
-          : v.k === "arr"
-            ? { type: "array" }
-            : { "x-unverified": true };
+/** The JSON type the code shows for a value, or x-unverified when it shows none. */
+const valType = (v: Val): Json => {
+  const t = R.typeOfVal(v);
+  return t ? { type: t.length === 1 ? t[0] : t } : { ...UNVERIFIED };
+};
 
 const buildTranscript = (): { file: string; schema: Json } => {
   const reg = only('{user:"transcript",assistant:"transcript"');
@@ -1000,10 +990,9 @@ const buildFrontmatter = (): { file: string; schema: Json } => {
       `frontmatter skill: schema keys not read in the skill loader function itself: ${unread.join(", ")}`,
     );
   }
-  const allow =
-    /var [\w$]+=\["name","description","model","allowed-tools"[^\]]*\]/.exec(
-      mod("chunk-z1pck59r.js").text,
-    );
+  const allowRe =
+    /var [\w$]+=\["name","description","model","allowed-tools"[^\]]*\]/;
+  const allow = mods.map((m) => allowRe.exec(m.text)).find((x) => x !== null);
   if (allow) {
     const keys = JSON.parse(allow[0].slice(allow[0].indexOf("["))) as string[];
     const have = new Set(
