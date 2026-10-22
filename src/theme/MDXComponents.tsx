@@ -1,4 +1,4 @@
-import { makeBadge } from "@site/src/components/Badge";
+import * as Badges from "@site/src/components/Badge";
 import FileTree from "@site/src/components/FileTree";
 import CodeInline from "@theme/CodeInline";
 import MDXComponents from "@theme-original/MDXComponents";
@@ -18,13 +18,6 @@ const Code = (props: ComponentProps<"code">) => {
 export default {
   ...MDXComponents,
   code: Code,
-  Documented: makeBadge("documented"),
-  Undocumented: makeBadge("undocumented"),
-  Differs: makeBadge("differs"),
-  Gated: makeBadge("gated"),
-  ManagedOnly: makeBadge("managed-only"),
-  Experimental: makeBadge("experimental"),
-  Deprecated: makeBadge("deprecated"),
-  Caution: makeBadge("caution"),
+  ...Badges,
   FileTree,
 };

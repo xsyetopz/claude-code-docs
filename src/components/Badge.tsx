@@ -42,18 +42,25 @@ const META: Record<Kind, { label: string; tip: string }> = {
   },
 };
 
-export const makeBadge = (kind: Kind) => {
+type Props = { note?: string };
+
+const Badge = ({ kind, note }: Props & { kind: Kind }): React.JSX.Element => {
   const { label, tip } = META[kind];
-  return function BadgeComponent({
-    note,
-  }: {
-    note?: string;
-  }): React.JSX.Element {
-    const title = note ? `${tip} ${note}` : tip;
-    return (
-      <span className={`cc-badge cc-badge--${kind}`} title={title}>
-        {label}
-      </span>
-    );
-  };
+  return (
+    <span
+      className={`cc-badge cc-badge--${kind}`}
+      title={note ? `${tip} ${note}` : tip}
+    >
+      {label}
+    </span>
+  );
 };
+
+export const Documented = (p: Props) => <Badge kind="documented" {...p} />;
+export const Undocumented = (p: Props) => <Badge kind="undocumented" {...p} />;
+export const Differs = (p: Props) => <Badge kind="differs" {...p} />;
+export const Gated = (p: Props) => <Badge kind="gated" {...p} />;
+export const ManagedOnly = (p: Props) => <Badge kind="managed-only" {...p} />;
+export const Experimental = (p: Props) => <Badge kind="experimental" {...p} />;
+export const Deprecated = (p: Props) => <Badge kind="deprecated" {...p} />;
+export const Caution = (p: Props) => <Badge kind="caution" {...p} />;

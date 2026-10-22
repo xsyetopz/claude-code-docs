@@ -1,12 +1,12 @@
 import Link from "@docusaurus/Link";
-import { makeBadge } from "@site/src/components/Badge";
+import {
+  Differs,
+  Documented,
+  Gated,
+  Undocumented,
+} from "@site/src/components/Badge";
 import { CLAUDE_CODE_VERSION } from "@site/src/version";
 import type React from "react";
-
-const Documented = makeBadge("documented");
-const Undocumented = makeBadge("undocumented");
-const Differs = makeBadge("differs");
-const Gated = makeBadge("gated");
 
 export default function Hero(): React.JSX.Element {
   return (
