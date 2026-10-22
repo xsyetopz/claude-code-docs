@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Unofficial Docusaurus site documenting Claude Code `2.1.306` (version in `src/version.ts`).
+Unofficial Docusaurus site documenting Claude Code `2.1.307` (version in `src/version.ts`).
 Not made by or tied to Anthropic. Hosted at <https://xsyetopz.github.io/claude-code-docs/>.
 
 ## Commands
@@ -9,19 +9,20 @@ Not made by or tied to Anthropic. Hosted at <https://xsyetopz.github.io/claude-c
 - `bun run verify:locked`: the one check (every gate plus build).
 - Gates: `typecheck` (`bun --check`, Bun's built-in), `format:check`/`format` (Biome), `lint:code` (Biome lint), `lint` (markdownlint), `check:docs`, `check:examples` (Biome on doc code blocks; `skip-lint` fence meta to skip), `schemas:check`.
 - `bun install` installs lefthook hooks: pre-commit runs the gates on staged files, commit-msg runs commitlint, pre-push runs `verify:locked`.
-- `bun run schemas`: regenerate `schemas/` from the installed Claude Code binary.
+- `bun run schemas`: regenerate `schemas/` (the JSON Schemas and the Mod API type file `schemas/claude-code.d.ts`) from the installed Claude Code binary.
 - New Claude Code version: follow the runbook in `tools/release/README.md`.
 
 ## Layout
 
 `docs/` pages (style guide: `docs/contributing/style-guide.md`), `src/` theme and components,
-`tools/` checks and generators, `schemas/` generated JSON Schemas, `openspec/changes/<change>/` specs and tasks.
+`tools/` checks and generators, `schemas/` generated JSON Schemas and the type file, `openspec/changes/<change>/` specs and tasks.
 
 ## Writing Rules
 
 - Simple English. Chicago Title Case for titles, headings, and sidebar labels.
 - At a Glance table: on a section's index page only (or a standalone page); subpages skip it. Mark items with `<Documented />`, `<Undocumented />`, `<Differs />`, or `<Gated />`, plus status labels `<ManagedOnly />`, `<Experimental />`, `<Deprecated note />`, `<Caution note />` in the Status column (not before the name).
 - List only items a user can use or change. Never invent a fact.
+- Before you state a field of a payload (a `$` call, an event, a hook input or output, a tool input), find it in `schemas/claude-code.d.ts` or a schema in `schemas/`. State only the fields you found there, and mark any other field as unconfirmed.
 - Cite external sources as markdown links to the exact page and section. Facts from the binary: "the program".
 - Emojis only from the allow-list in `tools/check-docs.ts` (✅ and ❌). Code identifiers in headings and admonition titles go in backticks. Escape MDX: `\{`, `\}`, `<` in code, `\|` in table code cells.
 
