@@ -1,0 +1,2326 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-transcript.json",
+  "title": "Claude Code transcript JSONL entry (Claude Code 2.1.307)",
+  "$comment": "For one line of a session transcript (.jsonl). Generated from Claude Code 2.1.307 by tools/schemas/code.ts. Anchors: the entry type registry (an object literal whose first keys are user, assistant, system, attachment, mapped to \"transcript\"); the literal built in the writer's insertMessageChain (key logicalParentUuid) and its two spreads for the common fields of message lines; every object literal with a top-level type:\"<entry type>\" (non-message types need a sessionId key), with its spreads resolved in the module that declares each function (imports followed); and, for a key a probe saw that no such literal has, the later write: a copy of the line ({...line, key}), a function spread into one, or last a property assignment. Keys are the union over all write sites; a string value that differs between sites is an enum, and one that is a literal at one site and computed at another is x-unverified. Probe print/transcripts.lines.json marks the observed keys. Do not edit by hand.",
+  "type": "object",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/agent-color"
+    },
+    {
+      "$ref": "#/$defs/agent-name"
+    },
+    {
+      "$ref": "#/$defs/agent-setting"
+    },
+    {
+      "$ref": "#/$defs/ai-title"
+    },
+    {
+      "$ref": "#/$defs/api-request"
+    },
+    {
+      "$ref": "#/$defs/api-request-blob"
+    },
+    {
+      "$ref": "#/$defs/api-request-shape"
+    },
+    {
+      "$ref": "#/$defs/artifact-autoreact-ledger"
+    },
+    {
+      "$ref": "#/$defs/artifact-comment-monitor"
+    },
+    {
+      "$ref": "#/$defs/assistant"
+    },
+    {
+      "$ref": "#/$defs/atis-latch"
+    },
+    {
+      "$ref": "#/$defs/attachment"
+    },
+    {
+      "$ref": "#/$defs/attribution-snapshot"
+    },
+    {
+      "$ref": "#/$defs/bridge-session"
+    },
+    {
+      "$ref": "#/$defs/content-replacement"
+    },
+    {
+      "$ref": "#/$defs/continued-in"
+    },
+    {
+      "$ref": "#/$defs/cost-state"
+    },
+    {
+      "$ref": "#/$defs/custom-title"
+    },
+    {
+      "$ref": "#/$defs/dev-mods"
+    },
+    {
+      "$ref": "#/$defs/ended-by-model"
+    },
+    {
+      "$ref": "#/$defs/file-history-delta"
+    },
+    {
+      "$ref": "#/$defs/file-history-snapshot"
+    },
+    {
+      "$ref": "#/$defs/fork-context-ref"
+    },
+    {
+      "$ref": "#/$defs/frame-link"
+    },
+    {
+      "$ref": "#/$defs/history-suppression"
+    },
+    {
+      "$ref": "#/$defs/isolation-latch"
+    },
+    {
+      "$ref": "#/$defs/last-prompt"
+    },
+    {
+      "$ref": "#/$defs/memory-mode"
+    },
+    {
+      "$ref": "#/$defs/mode"
+    },
+    {
+      "$ref": "#/$defs/observer-ref"
+    },
+    {
+      "$ref": "#/$defs/permission-mode"
+    },
+    {
+      "$ref": "#/$defs/pr-link"
+    },
+    {
+      "$ref": "#/$defs/progress"
+    },
+    {
+      "$ref": "#/$defs/queue-operation"
+    },
+    {
+      "$ref": "#/$defs/relocated"
+    },
+    {
+      "$ref": "#/$defs/summary"
+    },
+    {
+      "$ref": "#/$defs/system"
+    },
+    {
+      "$ref": "#/$defs/tag"
+    },
+    {
+      "$ref": "#/$defs/user"
+    },
+    {
+      "$ref": "#/$defs/worktree-state"
+    }
+  ],
+  "$defs": {
+    "agent-color": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "agent-color"
+        },
+        "agentColor": {
+          "x-unverified": true
+        },
+        "sessionId": {
+          "x-unverified": true
+        }
+      },
+      "$comment": "Registry policy: last-wins. Code sites used: 2."
+    },
+    "agent-name": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "agent-name"
+        },
+        "agentName": {
+          "x-unverified": true
+        },
+        "sessionId": {
+          "x-unverified": true
+        }
+      },
+      "$comment": "Registry policy: last-wins. Code sites used: 2."
+    },
+    "agent-setting": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "agent-setting"
+        },
+        "agentSetting": {
+          "x-unverified": true
+        },
+        "sessionId": {
+          "x-unverified": true
+        }
+      },
+      "$comment": "Registry policy: last-wins. Code sites used: 1."
+    },
+    "ai-title": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "ai-title"
+        },
+        "aiTitle": {
+          "x-unverified": true
+        },
+        "sessionId": {
+          "x-unverified": true
+        }
+      },
+      "$comment": "Registry policy: last-wins. Code sites used: 2."
+    },
+    "api-request": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "api-request",
+          "x-observed": true
+        },
+        "sessionId": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "agentId": {
+          "x-unverified": true
+        },
+        "id": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "timestamp": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "version": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "querySource": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "shapeHash": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "params": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "withheld": {
+          "x-unverified": true
+        },
+        "base": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "keep": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "tail": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "cacheControl": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "requestDigest": {
+          "x-unverified": true,
+          "x-observed": true
+        }
+      },
+      "$comment": "Registry policy: boundary-cleared. Code sites used: 1."
+    },
+    "api-request-blob": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "api-request-blob",
+          "x-observed": true
+        },
+        "sessionId": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "agentId": {
+          "x-unverified": true
+        },
+        "hash": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "message": {
+          "x-unverified": true,
+          "x-observed": true
+        }
+      },
+      "$comment": "Registry policy: boundary-cleared. Code sites used: 1."
+    },
+    "api-request-shape": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "api-request-shape",
+          "x-observed": true
+        },
+        "sessionId": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "agentId": {
+          "x-unverified": true
+        },
+        "shapeHash": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "timestamp": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "version": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "shape": {
+          "x-unverified": true,
+          "x-observed": true
+        }
+      },
+      "$comment": "Registry policy: boundary-cleared. Code sites used: 1."
+    },
+    "artifact-autoreact-ledger": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "artifact-autoreact-ledger"
+        },
+        "sessionId": {
+          "x-unverified": true
+        },
+        "accountUuid": {
+          "x-unverified": true
+        },
+        "artifacts": {
+          "x-unverified": true
+        },
+        "v": {
+          "type": "number"
+        }
+      },
+      "$comment": "Registry policy: last-wins. Code sites used: 2."
+    },
+    "artifact-comment-monitor": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "artifact-comment-monitor"
+        },
+        "v": {
+          "type": "number"
+        },
+        "sessionId": {
+          "x-unverified": true
+        },
+        "artifacts": {
+          "x-unverified": true
+        }
+      },
+      "$comment": "Registry policy: accumulate. Code sites used: 7."
+    },
+    "assistant": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "assistant",
+          "x-observed": true
+        },
+        "uuid": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "timestamp": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "message": {
+          "type": "object",
+          "properties": {
+            "diagnostics": {
+              "x-unverified": true
+            },
+            "id": {
+              "x-unverified": true
+            },
+            "container": {
+              "x-unverified": true
+            },
+            "model": {
+              "x-unverified": true
+            },
+            "role": {
+              "const": "assistant"
+            },
+            "stop_details": {
+              "x-unverified": true
+            },
+            "stop_reason": {
+              "const": "stop_sequence"
+            },
+            "stop_sequence": {
+              "const": ""
+            },
+            "type": {
+              "const": "message"
+            },
+            "usage": {
+              "type": "object",
+              "properties": {
+                "input_tokens": {
+                  "x-unverified": true
+                },
+                "cache_creation_input_tokens": {
+                  "x-unverified": true
+                },
+                "cache_read_input_tokens": {
+                  "x-unverified": true
+                },
+                "output_tokens": {
+                  "x-unverified": true
+                },
+                "output_tokens_details": {
+                  "type": "object",
+                  "properties": {
+                    "thinking_tokens": {
+                      "x-unverified": true
+                    }
+                  }
+                },
+                "server_tool_use": {
+                  "type": "object",
+                  "properties": {
+                    "web_search_requests": {
+                      "x-unverified": true
+                    },
+                    "web_fetch_requests": {
+                      "x-unverified": true
+                    }
+                  }
+                },
+                "service_tier": {
+                  "x-unverified": true
+                },
+                "cache_creation": {
+                  "type": "object",
+                  "properties": {
+                    "ephemeral_1h_input_tokens": {
+                      "x-unverified": true
+                    },
+                    "ephemeral_5m_input_tokens": {
+                      "x-unverified": true
+                    }
+                  }
+                },
+                "inference_geo": {
+                  "x-unverified": true
+                },
+                "iterations": {
+                  "x-unverified": true
+                },
+                "speed": {
+                  "x-unverified": true
+                },
+                "fallback_credit": {
+                  "x-unverified": true
+                }
+              }
+            },
+            "content": {
+              "type": "array"
+            },
+            "context_management": {
+              "x-unverified": true
+            }
+          },
+          "x-observed": true
+        },
+        "requestId": {
+          "x-unverified": true
+        },
+        "apiError": {
+          "x-unverified": true
+        },
+        "apiErrorParams": {
+          "x-unverified": true
+        },
+        "apiErrorIsTransient": {
+          "x-unverified": true
+        },
+        "quotaLimits": {
+          "x-unverified": true
+        },
+        "error": {
+          "x-unverified": true
+        },
+        "errorDetails": {
+          "x-unverified": true
+        },
+        "truncatedAfterOutput": {
+          "x-unverified": true
+        },
+        "isApiErrorMessage": {
+          "type": "boolean"
+        },
+        "isVirtual": {
+          "type": "boolean"
+        },
+        "isMeta": {
+          "x-unverified": true
+        },
+        "isUnmetered": {
+          "type": "boolean"
+        },
+        "cloudMemoryToolUseIds": {
+          "x-unverified": true
+        },
+        "apiErrorCode": {
+          "x-unverified": true
+        },
+        "sessionFailureNotice": {
+          "type": "boolean"
+        },
+        "advisorModel": {
+          "x-unverified": true
+        },
+        "attributionAgent": {
+          "x-unverified": true
+        },
+        "attributionSkill": {
+          "x-unverified": true
+        },
+        "attributionPlugin": {
+          "x-unverified": true
+        },
+        "attributionMcpServer": {
+          "x-unverified": true
+        },
+        "attributionMcpTool": {
+          "x-unverified": true
+        },
+        "healsDistinctCarrier": {
+          "x-unverified": true
+        },
+        "isAbortedMidStream": {
+          "type": "boolean"
+        },
+        "batchToolUses": {
+          "x-unverified": true
+        },
+        "wireToolInputs": {
+          "x-unverified": true
+        },
+        "wireIngestContext": {
+          "x-unverified": true
+        },
+        "serverClassifierRequest": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "serverClassifierResults": {
+          "x-unverified": true
+        },
+        "apiBlockIndex": {
+          "type": "number",
+          "x-observed": true
+        },
+        "requestRef": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "requestedModel": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "effort": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "perTurnEffort": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "perTurnTiming": {
+          "x-unverified": true
+        },
+        "thinkingDurationMs": {
+          "x-unverified": true
+        },
+        "thinkingDisplay": {
+          "x-unverified": true
+        },
+        "resumedFromIncompleteThinking": {
+          "type": "boolean"
+        },
+        "apiErrorStatus": {
+          "x-unverified": true
+        },
+        "remoteSourced": {
+          "type": "boolean"
+        },
+        "parentUuid": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "logicalParentUuid": {
+          "x-unverified": true
+        },
+        "isSidechain": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "teamName": {
+          "x-unverified": true
+        },
+        "agentName": {
+          "x-unverified": true
+        },
+        "promptId": {
+          "x-unverified": true
+        },
+        "agentId": {
+          "x-unverified": true
+        },
+        "sessionKind": {
+          "x-unverified": true
+        },
+        "userType": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "entrypoint": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "cwd": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "sessionId": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "version": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "gitBranch": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "slug": {
+          "x-unverified": true
+        }
+      },
+      "$comment": "Registry policy: transcript. Code sites used: 10."
+    },
+    "atis-latch": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "atis-latch",
+          "x-observed": true
+        },
+        "atis": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "sessionId": {
+          "x-unverified": true,
+          "x-observed": true
+        }
+      },
+      "$comment": "Registry policy: last-wins. Code sites used: 4."
+    },
+    "attachment": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "attachment",
+          "x-observed": true
+        },
+        "uuid": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "timestamp": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "attachment": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "enum": [
+                "queued_command",
+                "goal_status",
+                "batching_reminder",
+                "secondary_reminder",
+                "async_hook_response_batch",
+                "teammate_shutdown_batch"
+              ]
+            },
+            "prompt": {
+              "x-unverified": true
+            },
+            "source_uuid": {
+              "x-unverified": true
+            },
+            "origin": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "unclassified"
+                }
+              }
+            },
+            "timestamp": {
+              "x-unverified": true
+            },
+            "isMeta": {
+              "type": "boolean"
+            },
+            "forwardedIntent": {
+              "type": "object",
+              "properties": {
+                "lineage": {
+                  "x-unverified": true
+                },
+                "source": {
+                  "x-unverified": true
+                }
+              }
+            },
+            "reminderId": {
+              "x-unverified": true
+            },
+            "met": {
+              "x-unverified": true
+            },
+            "sentinel": {
+              "type": "boolean"
+            },
+            "condition": {
+              "x-unverified": true
+            },
+            "text": {
+              "x-unverified": true
+            },
+            "hooks": {
+              "x-unverified": true
+            },
+            "count": {
+              "x-unverified": true
+            }
+          },
+          "x-observed": true
+        },
+        "rendered": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "renderedRole": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "renderedBesideToolResult": {
+          "type": "boolean",
+          "x-observed": true
+        },
+        "renderedInHumanTurn": {
+          "x-unverified": true
+        },
+        "parentUuid": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "logicalParentUuid": {
+          "x-unverified": true
+        },
+        "isSidechain": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "teamName": {
+          "x-unverified": true
+        },
+        "agentName": {
+          "x-unverified": true
+        },
+        "promptId": {
+          "x-unverified": true
+        },
+        "agentId": {
+          "x-unverified": true
+        },
+        "sessionKind": {
+          "x-unverified": true
+        },
+        "userType": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "entrypoint": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "cwd": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "sessionId": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "version": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "gitBranch": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "slug": {
+          "x-unverified": true
+        }
+      },
+      "$comment": "Registry policy: transcript. Code sites used: 7."
+    },
+    "attribution-snapshot": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "attribution-snapshot"
+        }
+      },
+      "$comment": "Registry policy: last-wins. Code sites used: 0. The program reads this type, and no code in this build writes it, so only `type` is known."
+    },
+    "bridge-session": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "bridge-session"
+        },
+        "sessionId": {
+          "x-unverified": true
+        },
+        "bridgeSessionId": {
+          "x-unverified": true
+        },
+        "lastSequenceNum": {
+          "type": "number"
+        },
+        "declaredDialogKinds": {
+          "x-unverified": true
+        },
+        "sessionGroupingId": {
+          "x-unverified": true
+        },
+        "noHistoryBackfill": {
+          "type": "boolean"
+        },
+        "ownerAccountUuid": {
+          "x-unverified": true
+        },
+        "ownerOrganizationUuid": {
+          "x-unverified": true
+        }
+      },
+      "$comment": "Registry policy: last-wins. Code sites used: 3."
+    },
+    "content-replacement": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "content-replacement"
+        },
+        "sessionId": {
+          "x-unverified": true
+        },
+        "agentId": {
+          "x-unverified": true
+        },
+        "replacements": {
+          "x-unverified": true
+        }
+      },
+      "$comment": "Registry policy: accumulate. Code sites used: 3."
+    },
+    "continued-in": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "continued-in"
+        },
+        "timestamp": {
+          "x-unverified": true
+        },
+        "sessionId": {
+          "x-unverified": true
+        },
+        "continuedInSessionId": {
+          "x-unverified": true
+        }
+      },
+      "$comment": "Registry policy: boundary-cleared. Code sites used: 1."
+    },
+    "cost-state": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "cost-state",
+          "x-observed": true
+        },
+        "sessionId": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "totalCostUSD": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "totalAPIDuration": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "totalAPIDurationWithoutRetries": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "totalToolDuration": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "totalLinesAdded": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "totalLinesRemoved": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "totalDuration": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "startTime": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "modelUsage": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "hasUnknownModelCost": {
+          "x-unverified": true,
+          "x-observed": true
+        }
+      },
+      "$comment": "Registry policy: last-wins. Code sites used: 1."
+    },
+    "custom-title": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "custom-title"
+        },
+        "customTitle": {
+          "x-unverified": true
+        },
+        "sessionId": {
+          "x-unverified": true
+        }
+      },
+      "$comment": "Registry policy: last-wins. Code sites used: 4."
+    },
+    "dev-mods": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "dev-mods"
+        },
+        "folder": {
+          "x-unverified": true
+        },
+        "sessionId": {
+          "x-unverified": true
+        }
+      },
+      "$comment": "Registry policy: last-wins. Code sites used: 2."
+    },
+    "ended-by-model": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "ended-by-model"
+        },
+        "timestamp": {
+          "x-unverified": true
+        },
+        "sessionId": {
+          "x-unverified": true
+        }
+      },
+      "$comment": "Registry policy: last-wins. Code sites used: 1."
+    },
+    "file-history-delta": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "file-history-delta"
+        },
+        "messageId": {
+          "x-unverified": true
+        },
+        "snapshotMessageId": {
+          "x-unverified": true
+        },
+        "trackingPath": {
+          "x-unverified": true
+        },
+        "backup": {
+          "x-unverified": true
+        },
+        "timestamp": {
+          "x-unverified": true
+        }
+      },
+      "$comment": "Registry policy: boundary-cleared. Code sites used: 1."
+    },
+    "file-history-snapshot": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "file-history-snapshot"
+        },
+        "messageId": {
+          "x-unverified": true
+        },
+        "snapshot": {
+          "x-unverified": true
+        },
+        "isSnapshotUpdate": {
+          "x-unverified": true
+        }
+      },
+      "$comment": "Registry policy: boundary-cleared. Code sites used: 1."
+    },
+    "fork-context-ref": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "fork-context-ref"
+        },
+        "agentId": {
+          "x-unverified": true
+        },
+        "parentSessionId": {
+          "x-unverified": true
+        },
+        "parentLastUuid": {
+          "x-unverified": true
+        },
+        "contextLength": {
+          "x-unverified": true
+        }
+      },
+      "$comment": "Registry policy: accumulate. Code sites used: 1."
+    },
+    "frame-link": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "frame-link"
+        },
+        "artifactCount": {
+          "x-unverified": true
+        },
+        "sessionId": {
+          "x-unverified": true
+        },
+        "timestamp": {
+          "x-unverified": true
+        },
+        "path": {
+          "x-unverified": true
+        },
+        "frameUrl": {
+          "x-unverified": true
+        },
+        "title": {
+          "x-unverified": true
+        }
+      },
+      "$comment": "Registry policy: accumulate. Code sites used: 2."
+    },
+    "history-suppression": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "history-suppression"
+        },
+        "sessionId": {
+          "x-unverified": true
+        },
+        "cause": {
+          "x-unverified": true
+        },
+        "vetoedAgainstAccountUuid": {
+          "x-unverified": true
+        },
+        "ts": {
+          "x-unverified": true
+        }
+      },
+      "$comment": "Registry policy: last-wins. Code sites used: 1."
+    },
+    "isolation-latch": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "isolation-latch"
+        },
+        "side": {
+          "x-unverified": true
+        },
+        "sessionId": {
+          "x-unverified": true
+        }
+      },
+      "$comment": "Registry policy: last-wins. Code sites used: 2."
+    },
+    "last-prompt": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "last-prompt",
+          "x-observed": true
+        },
+        "lastPrompt": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "leafUuid": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "sessionId": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "explicit": {
+          "type": "boolean"
+        },
+        "rewound": {
+          "type": "boolean"
+        }
+      },
+      "$comment": "Registry policy: boundary-cleared. Code sites used: 6."
+    },
+    "memory-mode": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "memory-mode"
+        },
+        "mode": {
+          "x-unverified": true
+        },
+        "afterUuid": {
+          "x-unverified": true
+        },
+        "timestamp": {
+          "x-unverified": true
+        },
+        "reason": {
+          "x-unverified": true
+        },
+        "account": {
+          "x-unverified": true
+        },
+        "accountChoice": {
+          "x-unverified": true
+        },
+        "sessionId": {
+          "x-unverified": true
+        }
+      },
+      "$comment": "Registry policy: accumulate. Code sites used: 2."
+    },
+    "mode": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "mode"
+        },
+        "mode": {
+          "x-unverified": true
+        },
+        "sessionId": {
+          "x-unverified": true
+        }
+      },
+      "$comment": "Registry policy: last-wins. Code sites used: 1."
+    },
+    "observer-ref": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "observer-ref"
+        },
+        "agentId": {
+          "x-unverified": true
+        },
+        "observerTaskId": {
+          "x-unverified": true
+        },
+        "observerAgentType": {
+          "x-unverified": true
+        },
+        "timestamp": {
+          "x-unverified": true
+        }
+      },
+      "$comment": "Registry policy: last-wins. Code sites used: 1."
+    },
+    "permission-mode": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "permission-mode"
+        },
+        "permissionMode": {
+          "x-unverified": true
+        },
+        "sessionId": {
+          "x-unverified": true
+        }
+      },
+      "$comment": "Registry policy: last-wins. Code sites used: 1."
+    },
+    "pr-link": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "pr-link"
+        },
+        "sessionId": {
+          "x-unverified": true
+        },
+        "prNumber": {
+          "x-unverified": true
+        },
+        "prUrl": {
+          "x-unverified": true
+        },
+        "prRepository": {
+          "x-unverified": true
+        },
+        "timestamp": {
+          "x-unverified": true
+        }
+      },
+      "$comment": "Registry policy: last-wins. Code sites used: 2."
+    },
+    "progress": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "progress"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "enum": [
+                "hook_progress",
+                "tool_heartbeat",
+                "bash_progress",
+                "agent_progress",
+                "agent_api_retry",
+                "skill_progress",
+                "search_results_received",
+                "query_update",
+                "workflow_log",
+                "workflow_phase",
+                "workflow_agent",
+                "powershell_progress",
+                "artifact_publish_retry"
+              ]
+            },
+            "hookEvent": {
+              "x-unverified": true
+            },
+            "hookName": {
+              "x-unverified": true
+            },
+            "command": {
+              "x-unverified": true
+            },
+            "promptText": {
+              "x-unverified": true
+            },
+            "statusMessage": {
+              "x-unverified": true
+            },
+            "toolName": {
+              "x-unverified": true
+            },
+            "elapsedTimeSeconds": {
+              "x-unverified": true
+            },
+            "output": {
+              "x-unverified": true
+            },
+            "fullOutput": {
+              "x-unverified": true
+            },
+            "totalLines": {
+              "x-unverified": true
+            },
+            "totalBytes": {
+              "x-unverified": true
+            },
+            "taskId": {
+              "x-unverified": true
+            },
+            "timeoutMs": {
+              "x-unverified": true
+            },
+            "message": {
+              "x-unverified": true
+            },
+            "prompt": {
+              "x-unverified": true
+            },
+            "agentId": {
+              "x-unverified": true
+            },
+            "agentType": {
+              "x-unverified": true
+            },
+            "isBuiltIn": {
+              "x-unverified": true
+            },
+            "description": {
+              "x-unverified": true
+            },
+            "resolvedModel": {
+              "x-unverified": true
+            },
+            "modelsUsed": {
+              "x-unverified": true
+            },
+            "resolved": {
+              "type": "boolean"
+            },
+            "attempt": {
+              "x-unverified": true
+            },
+            "maxRetries": {
+              "x-unverified": true
+            },
+            "retryDelayMs": {
+              "x-unverified": true
+            },
+            "errorStatus": {
+              "x-unverified": true
+            },
+            "errorCategory": {
+              "x-unverified": true
+            },
+            "resultCount": {
+              "x-unverified": true
+            },
+            "query": {
+              "x-unverified": true
+            },
+            "index": {
+              "x-unverified": true
+            },
+            "title": {
+              "x-unverified": true
+            },
+            "kind": {
+              "x-unverified": true
+            },
+            "label": {
+              "x-unverified": true
+            },
+            "phaseIndex": {
+              "x-unverified": true
+            },
+            "phaseTitle": {
+              "x-unverified": true
+            },
+            "isolation": {
+              "x-unverified": true
+            },
+            "model": {
+              "x-unverified": true
+            },
+            "state": {
+              "x-unverified": true
+            },
+            "blocked": {
+              "type": "boolean"
+            },
+            "error": {
+              "x-unverified": true
+            },
+            "queuedAt": {
+              "x-unverified": true
+            },
+            "promptPreview": {
+              "x-unverified": true
+            },
+            "lastProgressAt": {
+              "x-unverified": true
+            },
+            "startedAt": {
+              "x-unverified": true
+            },
+            "cached": {
+              "type": "boolean"
+            },
+            "resultPreview": {
+              "x-unverified": true
+            },
+            "fallbackModel": {
+              "x-unverified": true
+            },
+            "lastAttemptReason": {
+              "x-unverified": true
+            },
+            "lastToolName": {
+              "x-unverified": true
+            },
+            "lastToolSummary": {
+              "x-unverified": true
+            },
+            "promptFramed": {
+              "x-unverified": true
+            },
+            "tokens": {
+              "x-unverified": true
+            },
+            "toolCalls": {
+              "x-unverified": true
+            },
+            "durationMs": {
+              "x-unverified": true
+            },
+            "skipped": {
+              "type": "boolean"
+            },
+            "remoteSessionId": {
+              "x-unverified": true
+            },
+            "status": {
+              "x-unverified": true
+            },
+            "maxAttempts": {
+              "x-unverified": true
+            }
+          }
+        },
+        "parentToolUseID": {
+          "x-unverified": true
+        },
+        "toolUseID": {
+          "x-unverified": true
+        },
+        "timestamp": {
+          "x-unverified": true
+        },
+        "uuid": {
+          "x-unverified": true
+        },
+        "parentUuid": {
+          "x-unverified": true
+        },
+        "logicalParentUuid": {
+          "x-unverified": true
+        },
+        "isSidechain": {
+          "x-unverified": true
+        },
+        "teamName": {
+          "x-unverified": true
+        },
+        "agentName": {
+          "x-unverified": true
+        },
+        "promptId": {
+          "x-unverified": true
+        },
+        "agentId": {
+          "x-unverified": true
+        },
+        "sessionKind": {
+          "x-unverified": true
+        },
+        "userType": {
+          "x-unverified": true
+        },
+        "entrypoint": {
+          "x-unverified": true
+        },
+        "cwd": {
+          "x-unverified": true
+        },
+        "sessionId": {
+          "x-unverified": true
+        },
+        "version": {
+          "x-unverified": true
+        },
+        "gitBranch": {
+          "x-unverified": true
+        },
+        "slug": {
+          "x-unverified": true
+        }
+      },
+      "$comment": "Registry policy: boundary-cleared. Code sites used: 42."
+    },
+    "queue-operation": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "queue-operation",
+          "x-observed": true
+        },
+        "operation": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "timestamp": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "sessionId": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "content": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "reason": {
+          "x-unverified": true
+        },
+        "commandUuid": {
+          "x-unverified": true
+        },
+        "deliveryId": {
+          "x-unverified": true
+        }
+      },
+      "$comment": "Registry policy: last-wins. Code sites used: 1."
+    },
+    "relocated": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "relocated"
+        },
+        "relocatedCwd": {
+          "x-unverified": true
+        },
+        "sessionId": {
+          "x-unverified": true
+        }
+      },
+      "$comment": "Registry policy: last-wins. Code sites used: 5."
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "summary"
+        }
+      },
+      "$comment": "Registry policy: last-wins. Code sites used: 0. The program reads this type, and no code in this build writes it, so only `type` is known."
+    },
+    "system": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "system",
+          "x-observed": true
+        },
+        "subtype": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "content": {
+          "x-unverified": true
+        },
+        "isMeta": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "uuid": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "level": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "highlight": {
+          "x-unverified": true
+        },
+        "snapshotFiles": {
+          "x-unverified": true
+        },
+        "direction": {
+          "x-unverified": true
+        },
+        "scope": {
+          "x-unverified": true
+        },
+        "trigger": {
+          "x-unverified": true
+        },
+        "originalModel": {
+          "x-unverified": true
+        },
+        "fallbackModel": {
+          "x-unverified": true
+        },
+        "requestId": {
+          "x-unverified": true
+        },
+        "apiRefusalCategory": {
+          "x-unverified": true
+        },
+        "apiRefusalExplanation": {
+          "x-unverified": true
+        },
+        "commands": {
+          "x-unverified": true
+        },
+        "url": {
+          "x-unverified": true
+        },
+        "upgradeNudge": {
+          "x-unverified": true
+        },
+        "entry": {
+          "x-unverified": true
+        },
+        "taskId": {
+          "x-unverified": true
+        },
+        "cron": {
+          "x-unverified": true
+        },
+        "prompt": {
+          "x-unverified": true
+        },
+        "taskKind": {
+          "const": "loop"
+        },
+        "cronKind": {
+          "x-unverified": true
+        },
+        "noOpStreak": {
+          "x-unverified": true
+        },
+        "streakStartedAt": {
+          "x-unverified": true
+        },
+        "foldedUuids": {
+          "x-unverified": true
+        },
+        "hookCount": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "hookInfos": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "hookErrors": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "hookAdditionalContext": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "preventedContinuation": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "stopReason": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "hasOutput": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "toolUseID": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "hookLabel": {
+          "x-unverified": true
+        },
+        "totalDurationMs": {
+          "x-unverified": true
+        },
+        "durationMs": {
+          "x-unverified": true
+        },
+        "messageCount": {
+          "x-unverified": true
+        },
+        "pendingBackgroundAgentCount": {
+          "x-unverified": true
+        },
+        "pendingWorkflowCount": {
+          "x-unverified": true
+        },
+        "writtenPaths": {
+          "x-unverified": true
+        },
+        "contextUsage": {
+          "x-unverified": true
+        },
+        "usageReport": {
+          "x-unverified": true
+        },
+        "commandRun": {
+          "type": "object",
+          "properties": {
+            "command": {
+              "x-unverified": true
+            },
+            "args": {
+              "x-unverified": true
+            },
+            "plugin": {
+              "x-unverified": true
+            }
+          }
+        },
+        "commandOutcome": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "x-unverified": true
+            },
+            "suggestion": {
+              "x-unverified": true
+            }
+          }
+        },
+        "submitUuid": {
+          "x-unverified": true
+        },
+        "compactMetadata": {
+          "type": "object",
+          "properties": {
+            "trigger": {
+              "x-unverified": true
+            },
+            "preTokens": {
+              "x-unverified": true
+            },
+            "userContext": {
+              "x-unverified": true
+            },
+            "messagesSummarized": {
+              "x-unverified": true
+            },
+            "postTokens": {
+              "x-unverified": true
+            },
+            "cumulativeDroppedTokens": {
+              "x-unverified": true
+            },
+            "durationMs": {
+              "x-unverified": true
+            },
+            "precomputed": {
+              "x-unverified": true
+            },
+            "preCompactDiscoveredTools": {
+              "type": "array"
+            },
+            "preCompactArtifactReadVersions": {
+              "x-unverified": true
+            },
+            "preservedSegment": {
+              "type": "object",
+              "properties": {
+                "headUuid": {
+                  "x-unverified": true
+                },
+                "anchorUuid": {
+                  "x-unverified": true
+                },
+                "tailUuid": {
+                  "x-unverified": true
+                }
+              }
+            },
+            "preservedMessages": {
+              "type": "object",
+              "properties": {
+                "anchorUuid": {
+                  "x-unverified": true
+                },
+                "uuids": {
+                  "type": "array"
+                },
+                "allUuids": {
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "logicalParentUuid": {
+          "x-unverified": true
+        },
+        "error": {
+          "x-unverified": true
+        },
+        "retryInMs": {
+          "x-unverified": true
+        },
+        "retryAttempt": {
+          "x-unverified": true
+        },
+        "maxRetries": {
+          "x-unverified": true
+        },
+        "source": {
+          "x-unverified": true
+        },
+        "message": {
+          "x-unverified": true
+        },
+        "remoteSourced": {
+          "type": "boolean"
+        },
+        "sawCyberRefusal": {
+          "type": "boolean"
+        },
+        "retractedMessageUuids": {
+          "type": "array"
+        },
+        "refusedUserMessageUuid": {
+          "x-unverified": true
+        },
+        "provisional": {
+          "x-unverified": true
+        },
+        "choice": {
+          "x-unverified": true
+        },
+        "originalModelName": {
+          "x-unverified": true
+        },
+        "persistedAsDefault": {
+          "x-unverified": true
+        },
+        "compact_metadata": {
+          "type": "object",
+          "properties": {
+            "trigger": {
+              "x-unverified": true
+            },
+            "pre_tokens": {
+              "x-unverified": true
+            },
+            "post_tokens": {
+              "x-unverified": true
+            },
+            "cumulative_dropped_tokens": {
+              "x-unverified": true
+            },
+            "duration_ms": {
+              "x-unverified": true
+            },
+            "user_context": {
+              "x-unverified": true
+            },
+            "messages_summarized": {
+              "x-unverified": true
+            },
+            "precomputed": {
+              "x-unverified": true
+            },
+            "pre_compact_discovered_tools": {
+              "x-unverified": true
+            },
+            "pre_compact_artifact_read_versions": {
+              "x-unverified": true
+            },
+            "preserved_segment": {
+              "type": "object",
+              "properties": {
+                "head_uuid": {
+                  "x-unverified": true
+                },
+                "anchor_uuid": {
+                  "x-unverified": true
+                },
+                "tail_uuid": {
+                  "x-unverified": true
+                }
+              }
+            },
+            "preserved_messages": {
+              "type": "object",
+              "properties": {
+                "anchor_uuid": {
+                  "x-unverified": true
+                },
+                "uuids": {
+                  "x-unverified": true
+                },
+                "all_uuids": {
+                  "x-unverified": true
+                }
+              }
+            }
+          }
+        },
+        "logical_parent_uuid": {
+          "x-unverified": true
+        },
+        "original_model": {
+          "x-unverified": true
+        },
+        "fallback_model": {
+          "x-unverified": true
+        },
+        "request_id": {
+          "x-unverified": true
+        },
+        "api_refusal_category": {
+          "x-unverified": true
+        },
+        "api_refusal_explanation": {
+          "x-unverified": true
+        },
+        "retracted_message_uuids": {
+          "x-unverified": true
+        },
+        "refused_user_message_uuid": {
+          "x-unverified": true
+        },
+        "saw_cyber_refusal": {
+          "type": "boolean"
+        },
+        "launchedAgentId": {
+          "x-unverified": true
+        },
+        "live_turn_id": {
+          "x-unverified": true
+        },
+        "stored_through_live_index": {
+          "x-unverified": true
+        },
+        "fromRemoteErrorResult": {
+          "type": "boolean"
+        },
+        "preventContinuation": {
+          "x-unverified": true
+        },
+        "source_uuid": {
+          "x-unverified": true
+        },
+        "parentUuid": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "isSidechain": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "teamName": {
+          "x-unverified": true
+        },
+        "agentName": {
+          "x-unverified": true
+        },
+        "promptId": {
+          "x-unverified": true
+        },
+        "agentId": {
+          "x-unverified": true
+        },
+        "sessionKind": {
+          "x-unverified": true
+        },
+        "userType": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "entrypoint": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "cwd": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "sessionId": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "version": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "gitBranch": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "slug": {
+          "x-unverified": true
+        }
+      },
+      "$comment": "Registry policy: transcript. Code sites used: 47."
+    },
+    "tag": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "tag"
+        },
+        "tag": {
+          "x-unverified": true
+        },
+        "sessionId": {
+          "x-unverified": true
+        }
+      },
+      "$comment": "Registry policy: last-wins. Code sites used: 1."
+    },
+    "user": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "user",
+          "x-observed": true
+        },
+        "message": {
+          "type": "object",
+          "properties": {
+            "role": {
+              "const": "user"
+            },
+            "content": {
+              "type": "array"
+            }
+          },
+          "x-observed": true
+        },
+        "isMeta": {
+          "type": "boolean"
+        },
+        "promptShellHandOff": {
+          "x-unverified": true
+        },
+        "mcpSkill": {
+          "x-unverified": true
+        },
+        "ephemeral": {
+          "x-unverified": true
+        },
+        "turnCompanion": {
+          "x-unverified": true
+        },
+        "usageLimitNote": {
+          "x-unverified": true
+        },
+        "replacesSpan": {
+          "x-unverified": true
+        },
+        "isVisibleInTranscriptOnly": {
+          "x-unverified": true
+        },
+        "isVirtual": {
+          "type": "boolean"
+        },
+        "isCompactSummary": {
+          "type": "boolean"
+        },
+        "repeatsCompactSummary": {
+          "type": "boolean"
+        },
+        "modelOnlyText": {
+          "x-unverified": true
+        },
+        "summarizeMetadata": {
+          "x-unverified": true
+        },
+        "uuid": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "timestamp": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "toolUseResult": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "create"
+            },
+            "filePath": {
+              "x-unverified": true
+            },
+            "content": {
+              "x-unverified": true
+            },
+            "structuredPatch": {
+              "type": "array"
+            },
+            "originalFile": {
+              "x-unverified": true
+            }
+          },
+          "x-observed": true
+        },
+        "classifierMetaLines": {
+          "x-unverified": true
+        },
+        "classifierBoundary": {
+          "x-unverified": true
+        },
+        "serverClassifierContext": {
+          "x-unverified": true
+        },
+        "hostClassifierContext": {
+          "x-unverified": true
+        },
+        "toolDenialKind": {
+          "x-unverified": true
+        },
+        "toolDenialEndsTurn": {
+          "x-unverified": true
+        },
+        "toolDenialMonitorBlocked": {
+          "x-unverified": true
+        },
+        "toolDenialUnanswered": {
+          "x-unverified": true
+        },
+        "userFeedback": {
+          "x-unverified": true
+        },
+        "toolResultRemedy": {
+          "x-unverified": true
+        },
+        "permissionDecision": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "sandboxViolations": {
+          "x-unverified": true
+        },
+        "sandboxed": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "mcpMeta": {
+          "x-unverified": true
+        },
+        "toolEndsTurn": {
+          "x-unverified": true
+        },
+        "imagePasteIds": {
+          "x-unverified": true
+        },
+        "sourceToolAssistantUUID": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "permissionMode": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "origin": {
+          "x-unverified": true
+        },
+        "promptSource": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "promptId": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "interruptedMessageId": {
+          "x-unverified": true
+        },
+        "refusedMessageId": {
+          "x-unverified": true
+        },
+        "interruptedByShutdown": {
+          "x-unverified": true
+        },
+        "remoteToolDenialKind": {
+          "x-unverified": true
+        },
+        "parentUuid": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "logicalParentUuid": {
+          "x-unverified": true
+        },
+        "isSidechain": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "teamName": {
+          "x-unverified": true
+        },
+        "agentName": {
+          "x-unverified": true
+        },
+        "agentId": {
+          "x-unverified": true
+        },
+        "sessionKind": {
+          "x-unverified": true
+        },
+        "userType": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "entrypoint": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "cwd": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "sessionId": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "version": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "gitBranch": {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        "slug": {
+          "x-unverified": true
+        },
+        "turnOrigin": {
+          "x-unverified": true,
+          "$comment": "Added after the line is built, by a copy of the line or a spread into one.",
+          "x-observed": true
+        },
+        "turnPosition": {
+          "x-unverified": true,
+          "$comment": "Added after the line is built, by a copy of the line or a spread into one.",
+          "x-observed": true
+        }
+      },
+      "$comment": "Registry policy: transcript. Code sites used: 5."
+    },
+    "worktree-state": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "worktree-state"
+        },
+        "worktreeSession": {
+          "type": "object",
+          "properties": {
+            "originalCwd": {
+              "x-unverified": true
+            },
+            "preEnterOriginalCwd": {
+              "x-unverified": true
+            },
+            "worktreePath": {
+              "x-unverified": true
+            },
+            "worktreeName": {
+              "x-unverified": true
+            },
+            "worktreeBranch": {
+              "x-unverified": true
+            },
+            "originalBranch": {
+              "x-unverified": true
+            },
+            "originalHeadCommit": {
+              "x-unverified": true
+            },
+            "sessionId": {
+              "x-unverified": true
+            },
+            "tmuxSessionName": {
+              "x-unverified": true
+            },
+            "hookBased": {
+              "x-unverified": true
+            },
+            "enteredExisting": {
+              "x-unverified": true
+            },
+            "madeElsewhere": {
+              "x-unverified": true
+            }
+          }
+        },
+        "sessionId": {
+          "x-unverified": true
+        }
+      },
+      "$comment": "Registry policy: last-wins. Code sites used: 2."
+    }
+  }
+}

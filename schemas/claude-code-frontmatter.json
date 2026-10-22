@@ -1,0 +1,297 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-frontmatter.json",
+  "title": "Claude Code frontmatter of skills, subagents, and output styles (Claude Code 2.1.307)",
+  "$comment": "For the YAML header of skill/command, subagent, and output style .md files. Generated from Claude Code 2.1.307 by tools/schemas/code.ts. Anchors: \"tengu_frontmatter_shadow_unknown_key\" and the table {skill, agent, \"output-style\"} of strict zod objects next to it; descriptions are the program's .describe() text; the loose value type of most keys (string, number, boolean, or null) is why they are x-unverified. Keys with a description that starts with \"@internal\" are internal. No probe in captures/ records frontmatter keys. Do not edit by hand.",
+  "$defs": {
+    "skill": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Display name. Defaults to the filename without extension.",
+          "x-unverified": true
+        },
+        "description": {
+          "description": "One-line summary shown in listings and the Skill tool.",
+          "x-unverified": true
+        },
+        "model": {
+          "description": "Model override (`haiku`, `sonnet`, `opus`, `fable`, or a full ID). Use `inherit` to match the parent conversation.",
+          "x-unverified": true
+        },
+        "allowed-tools": {
+          "description": "Tools available to the model while this file is active. Comma-separated string or YAML list.",
+          "x-unverified": true
+        },
+        "disallowed-tools": {
+          "description": "Tools removed from the model while this file is active. Comma-separated string or YAML list. Cleared when the user sends the next message.",
+          "x-unverified": true
+        },
+        "disallowedTools": {
+          "description": "Canonical (normalized) alias of `disallowed-tools`.",
+          "x-unverified": true
+        },
+        "argument-hint": {
+          "description": "Placeholder text shown after the slash command name.",
+          "x-unverified": true
+        },
+        "arguments": {
+          "description": "@internal — typed variant of argument-hint; argument-hint is the documented form",
+          "x-unverified": true
+        },
+        "disable-model-invocation": {
+          "description": "If true, the model cannot invoke this via the Skill tool; only users can type the slash command.",
+          "x-unverified": true
+        },
+        "user-invocable": {
+          "description": "If false, hides the slash command from users; only the model can invoke it via the Skill tool.",
+          "x-unverified": true
+        },
+        "effort": {
+          "description": "Thinking effort for the model: `low`, `medium`, `high`, `max`, or an integer.",
+          "x-unverified": true
+        },
+        "shell": {
+          "description": "Shell for `!`-command blocks: `bash` or `powershell`. Defaults to bash regardless of platform.",
+          "x-unverified": true
+        },
+        "version": {
+          "description": "@internal — bookkeeping, not surfaced to users",
+          "x-unverified": true
+        },
+        "when_to_use": {
+          "description": "Guidance for when the model should reach for this skill. Becomes part of the tool description.",
+          "x-unverified": true
+        },
+        "paths": {
+          "description": "Glob patterns this skill applies to. The skill only loads when the model touches matching files.",
+          "x-unverified": true
+        },
+        "hooks": {
+          "description": "Hooks registered while this skill is active. Same shape as settings.json `hooks`.",
+          "x-unverified": true
+        },
+        "context": {
+          "description": "Where the skill runs: `inline` expands into the current conversation; `fork` spawns a subagent.",
+          "enum": ["inline", "fork", null]
+        },
+        "agent": {
+          "description": "Agent type to spawn when `context: fork`.",
+          "x-unverified": true
+        },
+        "background": {
+          "description": "Only for `context: fork`. Forks run as background agents that report back as a task notification instead of blocking the turn; set `false` to keep the caller waiting for the result in-line.",
+          "x-unverified": true
+        },
+        "fallback": {
+          "description": "@internal — interim defense-in-depth for thin-pointer skill stubs. If true, this skill yields to a same-suffix plugin or MCP skill (`<plugin>:<name>` / `<server>:<name>`) when one is loaded. Stubs carrying this should be deleted once their canonical plugin/MCP skill ships, not maintained.",
+          "x-unverified": true
+        },
+        "created_by": {
+          "description": "@internal — provenance marker (e.g. dream-proposal)",
+          "x-unverified": true
+        },
+        "improved_by": {
+          "description": "@internal — provenance marker (e.g. dream-proposal)",
+          "x-unverified": true
+        },
+        "mcpServers": {
+          "description": "@internal",
+          "x-unverified": true
+        },
+        "lspServers": {
+          "description": "@internal",
+          "x-unverified": true
+        },
+        "agents": {
+          "description": "@internal",
+          "x-unverified": true
+        },
+        "outputStyles": {
+          "description": "@internal",
+          "x-unverified": true
+        },
+        "themes": {
+          "description": "@internal",
+          "x-unverified": true
+        },
+        "workflows": {
+          "description": "@internal",
+          "x-unverified": true
+        },
+        "channels": {
+          "description": "@internal",
+          "x-unverified": true
+        },
+        "monitors": {
+          "description": "@internal",
+          "x-unverified": true
+        },
+        "settings": {
+          "description": "@internal",
+          "x-unverified": true
+        },
+        "userConfig": {
+          "description": "@internal",
+          "x-unverified": true
+        },
+        "defaultEnabled": {
+          "description": "@internal",
+          "x-unverified": true
+        },
+        "experimental": {
+          "description": "@internal",
+          "x-unverified": true
+        },
+        "dependencies": {
+          "description": "@internal",
+          "x-unverified": true
+        },
+        "metadata": {
+          "description": "Free-form map for the skill author's own use (e.g. entitlement or catalog fields). Preserved on the loaded skill.",
+          "x-unverified": true
+        },
+        "displayName": {
+          "description": "@internal",
+          "x-unverified": true
+        },
+        "author": {
+          "description": "@internal",
+          "x-unverified": true
+        },
+        "homepage": {
+          "description": "@internal",
+          "x-unverified": true
+        },
+        "repository": {
+          "description": "@internal",
+          "x-unverified": true
+        },
+        "license": {
+          "description": "@internal",
+          "x-unverified": true
+        },
+        "keywords": {
+          "description": "@internal",
+          "x-unverified": true
+        }
+      },
+      "$comment": "Skills and commands (.md files with a YAML header)."
+    },
+    "agent": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Agent identifier. Required — this is how the Agent tool and `--agent` flag address it.",
+          "x-unverified": true
+        },
+        "description": {
+          "description": "When to use this agent. Required — shown in the Agent tool listing.",
+          "x-unverified": true
+        },
+        "model": {
+          "description": "Model override for this agent. Use `inherit` to match the spawning conversation.",
+          "x-unverified": true
+        },
+        "tools": {
+          "description": "Tools available to this agent. Replaces the default set.",
+          "x-unverified": true
+        },
+        "disallowedTools": {
+          "description": "Tools removed from the default set. Ignored if `tools` is set.",
+          "x-unverified": true
+        },
+        "color": {
+          "description": "@internal — display color in the agents UI",
+          "x-unverified": true
+        },
+        "effort": {
+          "description": "Thinking effort: `low`, `medium`, `high`, `max`, or an integer.",
+          "x-unverified": true
+        },
+        "permissionMode": {
+          "description": "Permission mode the agent runs in.",
+          "x-unverified": true
+        },
+        "mcpServers": {
+          "description": "MCP servers to connect when this agent runs.",
+          "x-unverified": true
+        },
+        "hooks": {
+          "description": "Hooks registered while this agent runs.",
+          "x-unverified": true
+        },
+        "maxTurns": {
+          "description": "Maximum conversation turns before the agent stops.",
+          "x-unverified": true
+        },
+        "autoCompactWindow": {
+          "x-unverified": true
+        },
+        "skills": {
+          "description": "Skills preloaded for this agent.",
+          "x-unverified": true
+        },
+        "initialPrompt": {
+          "description": "Auto-submitted first message when this agent runs as the main session (via `--agent` or settings). Not read when spawned as a subagent.",
+          "x-unverified": true
+        },
+        "memory": {
+          "description": "Memory scope: `user`, `project`, or `local`.",
+          "x-unverified": true
+        },
+        "background": {
+          "description": "If true, the agent runs in the background by default.",
+          "x-unverified": true
+        },
+        "omitClaudeMd": {
+          "description": "If true, the agent runs without the user, project and local CLAUDE.md instruction files when spawned as a subagent; managed policy files are kept. For agents that take everything they need from the delegation prompt.",
+          "x-unverified": true
+        },
+        "isolation": {
+          "description": "Filesystem isolation: `worktree` runs in a temporary git worktree.",
+          "x-unverified": true
+        },
+        "observer": {
+          "description": "Agent type auto-spawned as a background observer whenever this agent runs.",
+          "x-unverified": true
+        },
+        "observerMessage": {
+          "description": "Supplemental postamble appended (after the harness-owned default) to each activity digest sent to the observer.",
+          "x-unverified": true
+        },
+        "observeSubagents": {
+          "description": "If false, subagents this agent spawns do not inherit its observer. Defaults to true.",
+          "x-unverified": true
+        },
+        "experimental": {
+          "description": "Experimental per-agent options; unknown keys are ignored.",
+          "x-unverified": true
+        }
+      },
+      "$comment": "Subagent files (.md with a YAML header)."
+    },
+    "output-style": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Style name used in the Output style picker in `/config` and in settings. Defaults to the filename.",
+          "x-unverified": true
+        },
+        "description": {
+          "description": "Shown in the Output style picker in `/config`.",
+          "x-unverified": true
+        },
+        "keep-coding-instructions": {
+          "description": "If true, the default coding instructions stay in the system prompt alongside this style.",
+          "x-unverified": true
+        },
+        "force-for-plugin": {
+          "description": "@internal — only meaningful for plugin-bundled styles; ignored for user styles",
+          "x-unverified": true
+        }
+      },
+      "$comment": "Output style files (.md with a YAML header)."
+    }
+  }
+}
