@@ -66,28 +66,42 @@
       "schema": {
         "type": "string"
       },
-      "anchors": ["{type:\"atis-latch\",atis:«»,sessionId:«»}"],
+      "anchors": [
+        "«».push({type:\"atis-latch\",atis:«»,sessionId:«»})",
+        "await this.appendEntry({type:\"atis-latch\",atis:«»,sessionId:«»},«»,void 0,«»)"
+      ],
       "note": "The writer appends it when the atis latch getter returns a defined value; the reader accepts only a string of printable ASCII (/^[\\x21-\\x7e]*$/) for atis. sessionId is a string."
     },
     "atis-latch.sessionId": {
       "schema": {
         "type": "string"
       },
-      "anchors": ["{type:\"atis-latch\",atis:«»,sessionId:«»}"],
+      "anchors": [
+        "«».push({type:\"atis-latch\",atis:«»,sessionId:«»})",
+        "await this.appendEntry({type:\"atis-latch\",atis:«»,sessionId:«»},«»,void 0,«»)"
+      ],
       "note": "The writer appends it when the atis latch getter returns a defined value; the reader accepts only a string of printable ASCII (/^[\\x21-\\x7e]*$/) for atis. sessionId is a string."
     },
     "custom-title.customTitle": {
       "schema": {
         "type": "string"
       },
-      "anchors": ["{type:\"custom-title\",customTitle:«»,sessionId:«»}"],
+      "anchors": [
+        "«»(«»,{type:\"custom-title\",customTitle:«»,sessionId:«»},«».storageV5)",
+        "«»({type:\"custom-title\",customTitle:«»,sessionId:«»})",
+        "await «»(«»,{type:\"custom-title\",customTitle:«»,sessionId:«»},«»)"
+      ],
       "note": "saveCustomTitle(sessionId, title) appends the line; the title is the string of /rename or --name. sessionId is a string."
     },
     "custom-title.sessionId": {
       "schema": {
         "type": "string"
       },
-      "anchors": ["{type:\"custom-title\",customTitle:«»,sessionId:«»}"],
+      "anchors": [
+        "«»(«»,{type:\"custom-title\",customTitle:«»,sessionId:«»},«».storageV5)",
+        "«»({type:\"custom-title\",customTitle:«»,sessionId:«»})",
+        "await «»(«»,{type:\"custom-title\",customTitle:«»,sessionId:«»},«»)"
+      ],
       "note": "saveCustomTitle(sessionId, title) appends the line; the title is the string of /rename or --name. sessionId is a string."
     },
     "dev-mods.folder": {
@@ -151,7 +165,10 @@
       },
       "anchors": [
         "K.push({type:\"mode\",mode:this.currentSessionMode,sessionId:«»})",
-        "Uz(«»()?\"coordinator\":\"normal\")"
+        "function «»(«»){«»().currentSessionMode=«»}",
+        "«»(«»()?\"coordinator\":\"normal\");let «»=«»();if(«»)«»(«»,«»);",
+        "«»(«»()?\"coordinator\":\"normal\"),«»(«»);",
+        "«»(«»()?\"coordinator\":\"normal\"),«»(),«»(«»),"
       ],
       "note": "currentSessionMode is set by saveMode, which every caller calls with 'coordinator' or 'normal' (coordinator-mode flag). sessionId is a string."
     },
@@ -161,7 +178,10 @@
       },
       "anchors": [
         "K.push({type:\"mode\",mode:this.currentSessionMode,sessionId:«»})",
-        "Uz(«»()?\"coordinator\":\"normal\")"
+        "function «»(«»){«»().currentSessionMode=«»}",
+        "«»(«»()?\"coordinator\":\"normal\");let «»=«»();if(«»)«»(«»,«»);",
+        "«»(«»()?\"coordinator\":\"normal\"),«»(«»);",
+        "«»(«»()?\"coordinator\":\"normal\"),«»(),«»(«»),"
       ],
       "note": "currentSessionMode is set by saveMode, which every caller calls with 'coordinator' or 'normal' (coordinator-mode flag). sessionId is a string."
     },
@@ -683,8 +703,7 @@
       },
       "anchors": [
         "{type:\"cost-state\",sessionId:«»(),totalCostUSD:«»(),totalAPIDuration:«»()",
-        "costUSD:«».costUSD}",
-        "hasUnknownModelCost:«»()"
+        "modelUsage:«»(«»(),(«»)=>({inputTokens:«».inputTokens,outputTokens:«».outputTokens,thinkingTokens:«».thinkingTokens,cacheReadInputTokens:«».cacheReadInputTokens,cacheCreationInputTokens:«».cacheCreationInputTokens,webSearchRequests:«».webSearchRequests,costUSD:«».costUSD})),hasUnknownModelCost:«»()}}function «»("
       ],
       "note": "The cost snapshot builder fills every total from the cost tracker's getters (finite non-negative numbers; the reader's zod schema AZt requires nonnegative().finite() for each and a record of model name to usage for modelUsage). totalCostUSD is a float; the durations (ms), line counts and startTime (epoch ms) are integers in practice but the schema is number. hasUnknownModelCost is a boolean (optional in the reader schema). modelUsage maps a model name to {inputTokens, outputTokens, thinkingTokens (optional), cacheReadInputTokens, cacheCreationInputTokens, webSearchRequests, costUSD}."
     },
@@ -694,8 +713,7 @@
       },
       "anchors": [
         "{type:\"cost-state\",sessionId:«»(),totalCostUSD:«»(),totalAPIDuration:«»()",
-        "costUSD:«».costUSD}",
-        "hasUnknownModelCost:«»()"
+        "modelUsage:«»(«»(),(«»)=>({inputTokens:«».inputTokens,outputTokens:«».outputTokens,thinkingTokens:«».thinkingTokens,cacheReadInputTokens:«».cacheReadInputTokens,cacheCreationInputTokens:«».cacheCreationInputTokens,webSearchRequests:«».webSearchRequests,costUSD:«».costUSD})),hasUnknownModelCost:«»()}}function «»("
       ],
       "note": "The cost snapshot builder fills every total from the cost tracker's getters (finite non-negative numbers; the reader's zod schema AZt requires nonnegative().finite() for each and a record of model name to usage for modelUsage). totalCostUSD is a float; the durations (ms), line counts and startTime (epoch ms) are integers in practice but the schema is number. hasUnknownModelCost is a boolean (optional in the reader schema). modelUsage maps a model name to {inputTokens, outputTokens, thinkingTokens (optional), cacheReadInputTokens, cacheCreationInputTokens, webSearchRequests, costUSD}."
     },
@@ -705,8 +723,7 @@
       },
       "anchors": [
         "{type:\"cost-state\",sessionId:«»(),totalCostUSD:«»(),totalAPIDuration:«»()",
-        "costUSD:«».costUSD}",
-        "hasUnknownModelCost:«»()"
+        "modelUsage:«»(«»(),(«»)=>({inputTokens:«».inputTokens,outputTokens:«».outputTokens,thinkingTokens:«».thinkingTokens,cacheReadInputTokens:«».cacheReadInputTokens,cacheCreationInputTokens:«».cacheCreationInputTokens,webSearchRequests:«».webSearchRequests,costUSD:«».costUSD})),hasUnknownModelCost:«»()}}function «»("
       ],
       "note": "The cost snapshot builder fills every total from the cost tracker's getters (finite non-negative numbers; the reader's zod schema AZt requires nonnegative().finite() for each and a record of model name to usage for modelUsage). totalCostUSD is a float; the durations (ms), line counts and startTime (epoch ms) are integers in practice but the schema is number. hasUnknownModelCost is a boolean (optional in the reader schema). modelUsage maps a model name to {inputTokens, outputTokens, thinkingTokens (optional), cacheReadInputTokens, cacheCreationInputTokens, webSearchRequests, costUSD}."
     },
@@ -716,8 +733,7 @@
       },
       "anchors": [
         "{type:\"cost-state\",sessionId:«»(),totalCostUSD:«»(),totalAPIDuration:«»()",
-        "costUSD:«».costUSD}",
-        "hasUnknownModelCost:«»()"
+        "modelUsage:«»(«»(),(«»)=>({inputTokens:«».inputTokens,outputTokens:«».outputTokens,thinkingTokens:«».thinkingTokens,cacheReadInputTokens:«».cacheReadInputTokens,cacheCreationInputTokens:«».cacheCreationInputTokens,webSearchRequests:«».webSearchRequests,costUSD:«».costUSD})),hasUnknownModelCost:«»()}}function «»("
       ],
       "note": "The cost snapshot builder fills every total from the cost tracker's getters (finite non-negative numbers; the reader's zod schema AZt requires nonnegative().finite() for each and a record of model name to usage for modelUsage). totalCostUSD is a float; the durations (ms), line counts and startTime (epoch ms) are integers in practice but the schema is number. hasUnknownModelCost is a boolean (optional in the reader schema). modelUsage maps a model name to {inputTokens, outputTokens, thinkingTokens (optional), cacheReadInputTokens, cacheCreationInputTokens, webSearchRequests, costUSD}."
     },
@@ -727,8 +743,7 @@
       },
       "anchors": [
         "{type:\"cost-state\",sessionId:«»(),totalCostUSD:«»(),totalAPIDuration:«»()",
-        "costUSD:«».costUSD}",
-        "hasUnknownModelCost:«»()"
+        "modelUsage:«»(«»(),(«»)=>({inputTokens:«».inputTokens,outputTokens:«».outputTokens,thinkingTokens:«».thinkingTokens,cacheReadInputTokens:«».cacheReadInputTokens,cacheCreationInputTokens:«».cacheCreationInputTokens,webSearchRequests:«».webSearchRequests,costUSD:«».costUSD})),hasUnknownModelCost:«»()}}function «»("
       ],
       "note": "The cost snapshot builder fills every total from the cost tracker's getters (finite non-negative numbers; the reader's zod schema AZt requires nonnegative().finite() for each and a record of model name to usage for modelUsage). totalCostUSD is a float; the durations (ms), line counts and startTime (epoch ms) are integers in practice but the schema is number. hasUnknownModelCost is a boolean (optional in the reader schema). modelUsage maps a model name to {inputTokens, outputTokens, thinkingTokens (optional), cacheReadInputTokens, cacheCreationInputTokens, webSearchRequests, costUSD}."
     },
@@ -738,8 +753,7 @@
       },
       "anchors": [
         "{type:\"cost-state\",sessionId:«»(),totalCostUSD:«»(),totalAPIDuration:«»()",
-        "costUSD:«».costUSD}",
-        "hasUnknownModelCost:«»()"
+        "modelUsage:«»(«»(),(«»)=>({inputTokens:«».inputTokens,outputTokens:«».outputTokens,thinkingTokens:«».thinkingTokens,cacheReadInputTokens:«».cacheReadInputTokens,cacheCreationInputTokens:«».cacheCreationInputTokens,webSearchRequests:«».webSearchRequests,costUSD:«».costUSD})),hasUnknownModelCost:«»()}}function «»("
       ],
       "note": "The cost snapshot builder fills every total from the cost tracker's getters (finite non-negative numbers; the reader's zod schema AZt requires nonnegative().finite() for each and a record of model name to usage for modelUsage). totalCostUSD is a float; the durations (ms), line counts and startTime (epoch ms) are integers in practice but the schema is number. hasUnknownModelCost is a boolean (optional in the reader schema). modelUsage maps a model name to {inputTokens, outputTokens, thinkingTokens (optional), cacheReadInputTokens, cacheCreationInputTokens, webSearchRequests, costUSD}."
     },
@@ -749,8 +763,7 @@
       },
       "anchors": [
         "{type:\"cost-state\",sessionId:«»(),totalCostUSD:«»(),totalAPIDuration:«»()",
-        "costUSD:«».costUSD}",
-        "hasUnknownModelCost:«»()"
+        "modelUsage:«»(«»(),(«»)=>({inputTokens:«».inputTokens,outputTokens:«».outputTokens,thinkingTokens:«».thinkingTokens,cacheReadInputTokens:«».cacheReadInputTokens,cacheCreationInputTokens:«».cacheCreationInputTokens,webSearchRequests:«».webSearchRequests,costUSD:«».costUSD})),hasUnknownModelCost:«»()}}function «»("
       ],
       "note": "The cost snapshot builder fills every total from the cost tracker's getters (finite non-negative numbers; the reader's zod schema AZt requires nonnegative().finite() for each and a record of model name to usage for modelUsage). totalCostUSD is a float; the durations (ms), line counts and startTime (epoch ms) are integers in practice but the schema is number. hasUnknownModelCost is a boolean (optional in the reader schema). modelUsage maps a model name to {inputTokens, outputTokens, thinkingTokens (optional), cacheReadInputTokens, cacheCreationInputTokens, webSearchRequests, costUSD}."
     },
@@ -760,8 +773,7 @@
       },
       "anchors": [
         "{type:\"cost-state\",sessionId:«»(),totalCostUSD:«»(),totalAPIDuration:«»()",
-        "costUSD:«».costUSD}",
-        "hasUnknownModelCost:«»()"
+        "modelUsage:«»(«»(),(«»)=>({inputTokens:«».inputTokens,outputTokens:«».outputTokens,thinkingTokens:«».thinkingTokens,cacheReadInputTokens:«».cacheReadInputTokens,cacheCreationInputTokens:«».cacheCreationInputTokens,webSearchRequests:«».webSearchRequests,costUSD:«».costUSD})),hasUnknownModelCost:«»()}}function «»("
       ],
       "note": "The cost snapshot builder fills every total from the cost tracker's getters (finite non-negative numbers; the reader's zod schema AZt requires nonnegative().finite() for each and a record of model name to usage for modelUsage). totalCostUSD is a float; the durations (ms), line counts and startTime (epoch ms) are integers in practice but the schema is number. hasUnknownModelCost is a boolean (optional in the reader schema). modelUsage maps a model name to {inputTokens, outputTokens, thinkingTokens (optional), cacheReadInputTokens, cacheCreationInputTokens, webSearchRequests, costUSD}."
     },
@@ -771,8 +783,7 @@
       },
       "anchors": [
         "{type:\"cost-state\",sessionId:«»(),totalCostUSD:«»(),totalAPIDuration:«»()",
-        "costUSD:«».costUSD}",
-        "hasUnknownModelCost:«»()"
+        "modelUsage:«»(«»(),(«»)=>({inputTokens:«».inputTokens,outputTokens:«».outputTokens,thinkingTokens:«».thinkingTokens,cacheReadInputTokens:«».cacheReadInputTokens,cacheCreationInputTokens:«».cacheCreationInputTokens,webSearchRequests:«».webSearchRequests,costUSD:«».costUSD})),hasUnknownModelCost:«»()}}function «»("
       ],
       "note": "The cost snapshot builder fills every total from the cost tracker's getters (finite non-negative numbers; the reader's zod schema AZt requires nonnegative().finite() for each and a record of model name to usage for modelUsage). totalCostUSD is a float; the durations (ms), line counts and startTime (epoch ms) are integers in practice but the schema is number. hasUnknownModelCost is a boolean (optional in the reader schema). modelUsage maps a model name to {inputTokens, outputTokens, thinkingTokens (optional), cacheReadInputTokens, cacheCreationInputTokens, webSearchRequests, costUSD}."
     },
@@ -782,8 +793,7 @@
       },
       "anchors": [
         "{type:\"cost-state\",sessionId:«»(),totalCostUSD:«»(),totalAPIDuration:«»()",
-        "costUSD:«».costUSD}",
-        "hasUnknownModelCost:«»()"
+        "modelUsage:«»(«»(),(«»)=>({inputTokens:«».inputTokens,outputTokens:«».outputTokens,thinkingTokens:«».thinkingTokens,cacheReadInputTokens:«».cacheReadInputTokens,cacheCreationInputTokens:«».cacheCreationInputTokens,webSearchRequests:«».webSearchRequests,costUSD:«».costUSD})),hasUnknownModelCost:«»()}}function «»("
       ],
       "note": "The cost snapshot builder fills every total from the cost tracker's getters (finite non-negative numbers; the reader's zod schema AZt requires nonnegative().finite() for each and a record of model name to usage for modelUsage). totalCostUSD is a float; the durations (ms), line counts and startTime (epoch ms) are integers in practice but the schema is number. hasUnknownModelCost is a boolean (optional in the reader schema). modelUsage maps a model name to {inputTokens, outputTokens, thinkingTokens (optional), cacheReadInputTokens, cacheCreationInputTokens, webSearchRequests, costUSD}."
     },
@@ -819,8 +829,7 @@
       },
       "anchors": [
         "{type:\"cost-state\",sessionId:«»(),totalCostUSD:«»(),totalAPIDuration:«»()",
-        "costUSD:«».costUSD}",
-        "hasUnknownModelCost:«»()"
+        "modelUsage:«»(«»(),(«»)=>({inputTokens:«».inputTokens,outputTokens:«».outputTokens,thinkingTokens:«».thinkingTokens,cacheReadInputTokens:«».cacheReadInputTokens,cacheCreationInputTokens:«».cacheCreationInputTokens,webSearchRequests:«».webSearchRequests,costUSD:«».costUSD})),hasUnknownModelCost:«»()}}function «»("
       ],
       "note": "The cost snapshot builder fills every total from the cost tracker's getters (finite non-negative numbers; the reader's zod schema AZt requires nonnegative().finite() for each and a record of model name to usage for modelUsage). totalCostUSD is a float; the durations (ms), line counts and startTime (epoch ms) are integers in practice but the schema is number. hasUnknownModelCost is a boolean (optional in the reader schema). modelUsage maps a model name to {inputTokens, outputTokens, thinkingTokens (optional), cacheReadInputTokens, cacheCreationInputTokens, webSearchRequests, costUSD}."
     },
@@ -830,7 +839,8 @@
       },
       "anchors": [
         "{type:\"file-history-delta\",messageId:«»,snapshotMessageId:«»,trackingPath:«»,backup:«»,timestamp:new Date().toISOString()}",
-        "backupFileName:null,version:«»,backupTime:new Date"
+        "«»(«»,«»,{backupFileName:null,version:«»,backupTime:new Date,realParentDir:await «»(«»)}),«»(\"tengu_file_history_backup_deleted_file\"",
+        "catch(«»){if(«»(«»))return{backupFileName:null,version:«»,backupTime:new Date,realParentDir:await «»(«»)};throw «»}"
       ],
       "note": "HMs(messageId, snapshotMessageId, trackingPath, backup) appends the line. messageId and snapshotMessageId are message uuid strings, trackingPath a file path string. backup is the object the file-history backup step returns: {backupFileName: string or null (null when the file did not exist), version: integer, backupTime: a Date, which JSON.stringify writes as an ISO string}. The same object also has realParentDir, whose type is not shown here, so it is left out."
     },
@@ -840,7 +850,8 @@
       },
       "anchors": [
         "{type:\"file-history-delta\",messageId:«»,snapshotMessageId:«»,trackingPath:«»,backup:«»,timestamp:new Date().toISOString()}",
-        "backupFileName:null,version:«»,backupTime:new Date"
+        "«»(«»,«»,{backupFileName:null,version:«»,backupTime:new Date,realParentDir:await «»(«»)}),«»(\"tengu_file_history_backup_deleted_file\"",
+        "catch(«»){if(«»(«»))return{backupFileName:null,version:«»,backupTime:new Date,realParentDir:await «»(«»)};throw «»}"
       ],
       "note": "HMs(messageId, snapshotMessageId, trackingPath, backup) appends the line. messageId and snapshotMessageId are message uuid strings, trackingPath a file path string. backup is the object the file-history backup step returns: {backupFileName: string or null (null when the file did not exist), version: integer, backupTime: a Date, which JSON.stringify writes as an ISO string}. The same object also has realParentDir, whose type is not shown here, so it is left out."
     },
@@ -850,7 +861,8 @@
       },
       "anchors": [
         "{type:\"file-history-delta\",messageId:«»,snapshotMessageId:«»,trackingPath:«»,backup:«»,timestamp:new Date().toISOString()}",
-        "backupFileName:null,version:«»,backupTime:new Date"
+        "«»(«»,«»,{backupFileName:null,version:«»,backupTime:new Date,realParentDir:await «»(«»)}),«»(\"tengu_file_history_backup_deleted_file\"",
+        "catch(«»){if(«»(«»))return{backupFileName:null,version:«»,backupTime:new Date,realParentDir:await «»(«»)};throw «»}"
       ],
       "note": "HMs(messageId, snapshotMessageId, trackingPath, backup) appends the line. messageId and snapshotMessageId are message uuid strings, trackingPath a file path string. backup is the object the file-history backup step returns: {backupFileName: string or null (null when the file did not exist), version: integer, backupTime: a Date, which JSON.stringify writes as an ISO string}. The same object also has realParentDir, whose type is not shown here, so it is left out."
     },
@@ -879,7 +891,8 @@
       },
       "anchors": [
         "{type:\"file-history-delta\",messageId:«»,snapshotMessageId:«»,trackingPath:«»,backup:«»,timestamp:new Date().toISOString()}",
-        "backupFileName:null,version:«»,backupTime:new Date"
+        "«»(«»,«»,{backupFileName:null,version:«»,backupTime:new Date,realParentDir:await «»(«»)}),«»(\"tengu_file_history_backup_deleted_file\"",
+        "catch(«»){if(«»(«»))return{backupFileName:null,version:«»,backupTime:new Date,realParentDir:await «»(«»)};throw «»}"
       ],
       "note": "HMs(messageId, snapshotMessageId, trackingPath, backup) appends the line. messageId and snapshotMessageId are message uuid strings, trackingPath a file path string. backup is the object the file-history backup step returns: {backupFileName: string or null (null when the file did not exist), version: integer, backupTime: a Date, which JSON.stringify writes as an ISO string}. The same object also has realParentDir, whose type is not shown here, so it is left out."
     },
@@ -1173,7 +1186,7 @@
       },
       "anchors": [
         "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:Gxt",
-        "process.env.CLAUDE_CODE_ENTRYPOINT"
+        "function «»(){return process.env.CLAUDE_CODE_ENTRYPOINT}async function «»(){let «»=«»();return{cwd:«»()??void 0,gitBranch:"
       ],
       "note": "The session fields function returns the CLAUDE_CODE_ENTRYPOINT environment value, a string; not written when it is unset."
     },
@@ -1202,7 +1215,7 @@
       },
       "anchors": [
         "gitBranch:«»,slug:xe",
-        "rev-parse\",\"--abbrev-«»\",\"HEAD\""
+        "\"rev-parse\",\"--abbrev-ref\",\"HEAD\"],{cwd:«»,preserveOutputOnError:!1,...«»});return «»===0?«».trim()||\"HEAD\":\"HEAD\"};async function «»("
       ],
       "note": "gitBranch is the awaited current branch (a string from git rev-parse --abbrev-ref HEAD, 'HEAD' when detached); the writer leaves it out when the lookup throws."
     },
@@ -1210,7 +1223,10 @@
       "schema": {
         "type": "string"
       },
-      "anchors": ["gitBranch:«»,slug:xe", "planSlugCache()"],
+      "anchors": [
+        "gitBranch:«»,slug:xe",
+        "«»(){return this.#«»}«»(«»){this.#«».delete(«»)}"
+      ],
       "note": "slug is the session's plan slug from the plan slug cache (a string); left out when the session has none."
     },
     "assistant.parentUuid": {
@@ -1306,7 +1322,7 @@
       },
       "anchors": [
         "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:Gxt",
-        "process.env.CLAUDE_CODE_ENTRYPOINT"
+        "function «»(){return process.env.CLAUDE_CODE_ENTRYPOINT}async function «»(){let «»=«»();return{cwd:«»()??void 0,gitBranch:"
       ],
       "note": "The session fields function returns the CLAUDE_CODE_ENTRYPOINT environment value, a string; not written when it is unset."
     },
@@ -1335,7 +1351,7 @@
       },
       "anchors": [
         "gitBranch:«»,slug:xe",
-        "rev-parse\",\"--abbrev-«»\",\"HEAD\""
+        "\"rev-parse\",\"--abbrev-ref\",\"HEAD\"],{cwd:«»,preserveOutputOnError:!1,...«»});return «»===0?«».trim()||\"HEAD\":\"HEAD\"};async function «»("
       ],
       "note": "gitBranch is the awaited current branch (a string from git rev-parse --abbrev-ref HEAD, 'HEAD' when detached); the writer leaves it out when the lookup throws."
     },
@@ -1343,7 +1359,10 @@
       "schema": {
         "type": "string"
       },
-      "anchors": ["gitBranch:«»,slug:xe", "planSlugCache()"],
+      "anchors": [
+        "gitBranch:«»,slug:xe",
+        "«»(){return this.#«»}«»(«»){this.#«».delete(«»)}"
+      ],
       "note": "slug is the session's plan slug from the plan slug cache (a string); left out when the session has none."
     },
     "system.parentUuid": {
@@ -1439,7 +1458,7 @@
       },
       "anchors": [
         "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:Gxt",
-        "process.env.CLAUDE_CODE_ENTRYPOINT"
+        "function «»(){return process.env.CLAUDE_CODE_ENTRYPOINT}async function «»(){let «»=«»();return{cwd:«»()??void 0,gitBranch:"
       ],
       "note": "The session fields function returns the CLAUDE_CODE_ENTRYPOINT environment value, a string; not written when it is unset."
     },
@@ -1468,7 +1487,7 @@
       },
       "anchors": [
         "gitBranch:«»,slug:xe",
-        "rev-parse\",\"--abbrev-«»\",\"HEAD\""
+        "\"rev-parse\",\"--abbrev-ref\",\"HEAD\"],{cwd:«»,preserveOutputOnError:!1,...«»});return «»===0?«».trim()||\"HEAD\":\"HEAD\"};async function «»("
       ],
       "note": "gitBranch is the awaited current branch (a string from git rev-parse --abbrev-ref HEAD, 'HEAD' when detached); the writer leaves it out when the lookup throws."
     },
@@ -1476,7 +1495,10 @@
       "schema": {
         "type": "string"
       },
-      "anchors": ["gitBranch:«»,slug:xe", "planSlugCache()"],
+      "anchors": [
+        "gitBranch:«»,slug:xe",
+        "«»(){return this.#«»}«»(«»){this.#«».delete(«»)}"
+      ],
       "note": "slug is the session's plan slug from the plan slug cache (a string); left out when the session has none."
     },
     "attachment.parentUuid": {
@@ -1572,7 +1594,7 @@
       },
       "anchors": [
         "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:Gxt",
-        "process.env.CLAUDE_CODE_ENTRYPOINT"
+        "function «»(){return process.env.CLAUDE_CODE_ENTRYPOINT}async function «»(){let «»=«»();return{cwd:«»()??void 0,gitBranch:"
       ],
       "note": "The session fields function returns the CLAUDE_CODE_ENTRYPOINT environment value, a string; not written when it is unset."
     },
@@ -1601,7 +1623,7 @@
       },
       "anchors": [
         "gitBranch:«»,slug:xe",
-        "rev-parse\",\"--abbrev-«»\",\"HEAD\""
+        "\"rev-parse\",\"--abbrev-ref\",\"HEAD\"],{cwd:«»,preserveOutputOnError:!1,...«»});return «»===0?«».trim()||\"HEAD\":\"HEAD\"};async function «»("
       ],
       "note": "gitBranch is the awaited current branch (a string from git rev-parse --abbrev-ref HEAD, 'HEAD' when detached); the writer leaves it out when the lookup throws."
     },
@@ -1609,7 +1631,10 @@
       "schema": {
         "type": "string"
       },
-      "anchors": ["gitBranch:«»,slug:xe", "planSlugCache()"],
+      "anchors": [
+        "gitBranch:«»,slug:xe",
+        "«»(){return this.#«»}«»(«»){this.#«».delete(«»)}"
+      ],
       "note": "slug is the session's plan slug from the plan slug cache (a string); left out when the session has none."
     },
     "progress.parentUuid": {
@@ -1705,7 +1730,7 @@
       },
       "anchors": [
         "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:Gxt",
-        "process.env.CLAUDE_CODE_ENTRYPOINT"
+        "function «»(){return process.env.CLAUDE_CODE_ENTRYPOINT}async function «»(){let «»=«»();return{cwd:«»()??void 0,gitBranch:"
       ],
       "note": "The session fields function returns the CLAUDE_CODE_ENTRYPOINT environment value, a string; not written when it is unset."
     },
@@ -1734,7 +1759,7 @@
       },
       "anchors": [
         "gitBranch:«»,slug:xe",
-        "rev-parse\",\"--abbrev-«»\",\"HEAD\""
+        "\"rev-parse\",\"--abbrev-ref\",\"HEAD\"],{cwd:«»,preserveOutputOnError:!1,...«»});return «»===0?«».trim()||\"HEAD\":\"HEAD\"};async function «»("
       ],
       "note": "gitBranch is the awaited current branch (a string from git rev-parse --abbrev-ref HEAD, 'HEAD' when detached); the writer leaves it out when the lookup throws."
     },
@@ -1742,7 +1767,10 @@
       "schema": {
         "type": "string"
       },
-      "anchors": ["gitBranch:«»,slug:xe", "planSlugCache()"],
+      "anchors": [
+        "gitBranch:«»,slug:xe",
+        "«»(){return this.#«»}«»(«»){this.#«».delete(«»)}"
+      ],
       "note": "slug is the session's plan slug from the plan slug cache (a string); left out when the session has none."
     },
     "system.content": {
@@ -1762,7 +1790,7 @@
       },
       "anchors": [
         "subtype:\"informational\",content:«»,isMeta:!1,timestamp:new Date().toISOString(),uuid:«»(),level:n",
-        "timestamp:«».timestamp??new Date().toISOString()"
+        "{type:\"system\",subtype:\"local_command\",content:«».local_command_source,level:\"info\",timestamp:«».timestamp??new Date().toISOString(),uuid:«».uuid??«»(),isMeta:!1"
       ],
       "note": "The program builds system lines in the message constructors of the session code (createSystemMessage and the other subtype builders), and the remote-session path rebuilds some from stream-json frames. timestamp is new Date().toISOString(), a clock-function string of the same form, or the timestamp string of the source message."
     },
@@ -1772,7 +1800,7 @@
       },
       "anchors": [
         "subtype:\"informational\",content:«»,isMeta:!1,timestamp:new Date().toISOString(),uuid:«»(),level:n",
-        "uuid:«».uuid??«»()"
+        "{type:\"system\",subtype:\"local_command\",content:«».local_command_source,level:\"info\",timestamp:«».timestamp??new Date().toISOString(),uuid:«».uuid??«»(),isMeta:!1"
       ],
       "note": "The program builds system lines in the message constructors of the session code (createSystemMessage and the other subtype builders), and the remote-session path rebuilds some from stream-json frames. uuid is crypto.randomUUID() (imported as h_ and _io), or the uuid string of the frame the line is rebuilt from."
     },
@@ -1804,7 +1832,10 @@
       },
       "anchors": [
         "subtype:\"model_refusal_fallback\",content:«».content,level:\"warning\",trigger:«».trigger,direction:«».direction,...e.scope!==void 0&&{scope:«».scope},originalModel:«».original_model,fallbackModel:«».fallback_model,requestId:«».request_id,apiRefusalCategory:«».api_refusal_category,apiRefusalExplanation:«».api_refusal_explanation",
-        "subtype:\"model_refusal_fallback\",direction:\"retry\""
+        "content:«».content,level:\"warning\",trigger:«».trigger,direction:«».direction",
+        "subtype:\"model_refusal_fallback\",direction:\"retry\",scope:\"session\"",
+        "subtype:\"model_refusal_fallback\",direction:\"retry\",scope:«»?\"session\":\"local\"",
+        "subtype:\"model_refusal_fallback\",direction:\"retry\",scope:«»,content:«»===\"local\"?(«».retainedText?.length??0)>0?«»(«».fromModel,«».toModel,«».apiRefusalCategory):«»(«».fromModel,«».toModel,«».apiRefusalCategory):«».reason===\"refusal\"?«»(«».fromModel,«».toModel,«».apiRefusalCategory):«»(«».fromModel,«».toModel,«».apiRefusalCategory)"
       ],
       "note": "model_refusal_fallback lines: the literal 'retry' where the program makes the line, and the direction of a remote frame, whose stream-json schema is the enum retry|revert|sticky."
     },
@@ -1823,7 +1854,10 @@
       "anchors": [
         "subtype:\"model_refusal_fallback\",content:«».content,level:\"warning\",trigger:«».trigger,direction:«».direction,...e.scope!==void 0&&{scope:«».scope},originalModel:«».original_model,fallbackModel:«».fallback_model,requestId:«».request_id,apiRefusalCategory:«».api_refusal_category,apiRefusalExplanation:«».api_refusal_explanation",
         "subtype:\"model_fallback\",content:«».content,level:\"warning\",trigger:«».trigger,originalModel:«».original_model,fallbackModel:«».fallback_model",
-        "level:\"warning\",trigger:\"refusal\""
+        "content:«».content,level:\"warning\",trigger:«».trigger,direction:«».direction",
+        "level:\"warning\",trigger:\"refusal\",originalModel:«».originModel",
+        "level:\"warning\",trigger:«».trigger,originalModel:«».originalModel",
+        "level:\"warning\",trigger:\"refusal\",originalModel:«».fromModel"
       ],
       "note": "model_refusal_fallback has trigger 'refusal'; model_fallback has the reason of the fallback (stream-json schema enum model_not_found|permission_denied|overloaded|server_error|last_resort|model_blocked)."
     },
@@ -1881,7 +1915,11 @@
       "anchors": [
         "subtype:\"model_refusal_fallback\",content:«».content,level:\"warning\",trigger:«».trigger,direction:«».direction,...e.scope!==void 0&&{scope:«».scope},originalModel:«».original_model,fallbackModel:«».fallback_model,requestId:«».request_id,apiRefusalCategory:«».api_refusal_category,apiRefusalExplanation:«».api_refusal_explanation",
         "subtype:\"model_refusal_no_fallback\",content:«».content,level:\"warning\",originalModel:«».original_model,requestId:«».request_id,apiRefusalCategory:«».api_refusal_category,apiRefusalExplanation:«».api_refusal_explanation,refusedUserMessageUuid:«».refused_user_message_uuid",
-        "api_refusal_category:«».apiRefusalCategory??null"
+        "fallbackModel:«».fallback_model,requestId:«».request_id,apiRefusalCategory:«».api_refusal_category",
+        "originalModel:«».original_model,requestId:«».request_id,apiRefusalCategory:«».api_refusal_category",
+        "fallbackModel:«».servingModel,requestId:«».requestId,apiRefusalCategory:«».apiRefusalCategory",
+        "fallbackModel:«».fallbackModel,requestId:«».requestId,apiRefusalCategory:«».apiRefusalCategory",
+        "fallbackModel:«».toModel,requestId:«».requestId,apiRefusalCategory:«».apiRefusalCategory"
       ],
       "note": "The refusal category string from the API stop_details (Anthropic SDK BetaRefusalStopDetails.category: cyber|bio|frontier_llm|reasoning_extraction|general_harms|null); the stream builders write ?? null, so null is written."
     },
@@ -1899,7 +1937,11 @@
       "anchors": [
         "subtype:\"model_refusal_fallback\",content:«».content,level:\"warning\",trigger:«».trigger,direction:«».direction,...e.scope!==void 0&&{scope:«».scope},originalModel:«».original_model,fallbackModel:«».fallback_model,requestId:«».request_id,apiRefusalCategory:«».api_refusal_category,apiRefusalExplanation:«».api_refusal_explanation",
         "subtype:\"model_refusal_no_fallback\",content:«».content,level:\"warning\",originalModel:«».original_model,requestId:«».request_id,apiRefusalCategory:«».api_refusal_category,apiRefusalExplanation:«».api_refusal_explanation,refusedUserMessageUuid:«».refused_user_message_uuid",
-        "apiRefusalExplanation:null"
+        "apiRefusalCategory:«».api_refusal_category,apiRefusalExplanation:«».api_refusal_explanation,...«».saw_cyber_refusal&&{sawCyberRefusal:!0}",
+        "apiRefusalCategory:«».api_refusal_category,apiRefusalExplanation:«».api_refusal_explanation,refusedUserMessageUuid:«».refused_user_message_uuid",
+        "apiRefusalCategory:«».apiRefusalCategory,apiRefusalExplanation:null,retractedMessageUuids:[...«».retractedMessageUuids]",
+        "apiRefusalCategory:«».apiRefusalCategory,apiRefusalExplanation:«».apiRefusalExplanation,retractedMessageUuids:«»",
+        "apiRefusalCategory:«».apiRefusalCategory,apiRefusalExplanation:null,isMeta:!1"
       ],
       "note": "The explanation string of BetaRefusalStopDetails.explanation, or the literal null that the local fallback sites write."
     },
@@ -2138,7 +2180,7 @@
       },
       "anchors": [
         "subtype:\"local_command\",content:«»,level:\"info\",timestamp:new Date().toISOString(),uuid:«»(),isMeta:!1,...n?.contextUsage!==void 0&&{contextUsage:«».contextUsage},...n?.usageReport!==void 0&&{usageReport:«».usageReport},...n?.commandRun!==void 0&&{commandRun:«».commandRun},...n?.commandOutcome!==void 0&&{commandOutcome:«».commandOutcome},...n?.submitUuid&&{submitUuid:«».submitUuid}",
-        "usageReport:g"
+        "return{type:\"text\",value:«»,...«»!==void 0&&{usageReport:«»}}"
       ],
       "note": "local_command: the /usage command passes the parsed result of the usage-report schema (session and rate_limits data) as an object; its inner keys are set by that zod schema, not typed here."
     },
@@ -2168,7 +2210,7 @@
       },
       "anchors": [
         "subtype:\"local_command\",content:«»,level:\"info\",timestamp:new Date().toISOString(),uuid:«»(),isMeta:!1,...n?.contextUsage!==void 0&&{contextUsage:«».contextUsage},...n?.usageReport!==void 0&&{usageReport:«».usageReport},...n?.commandRun!==void 0&&{commandRun:«».commandRun},...n?.commandOutcome!==void 0&&{commandOutcome:«».commandOutcome},...n?.submitUuid&&{submitUuid:«».submitUuid}",
-        "...s!==void 0&&{plugin:«»}"
+        "function «»(«»,«»,«»){let «»=«»??«».registeredBy;return{command:«»(«»),args:«»(«»,«»)?\"***\":«»,...«»!==void 0&&{plugin:«»}}}"
       ],
       "note": "local_command: plugin is the registeredBy string of the command or the plugin name; written only when defined."
     },
@@ -2178,8 +2220,9 @@
       },
       "anchors": [
         "subtype:\"local_command\",content:«»,level:\"info\",timestamp:new Date().toISOString(),uuid:«»(),isMeta:!1,...n?.contextUsage!==void 0&&{contextUsage:«».contextUsage},...n?.usageReport!==void 0&&{usageReport:«».usageReport},...n?.commandRun!==void 0&&{commandRun:«».commandRun},...n?.commandOutcome!==void 0&&{commandOutcome:«».commandOutcome},...n?.submitUuid&&{submitUuid:«».submitUuid}",
-        "commandOutcome:{kind:\"unavailable_headless\"}",
-        "commandOutcome:«».outcome??(«».level===\"error\"?{kind:\"failed\"}:void 0)"
+        "commandOutcome:«».outcome??(«».level===\"error\"?{kind:\"failed\"}:void 0)",
+        "«»(`<local-command-stdout>${ze}</local-command-stdout>`,{commandOutcome:{kind:\"unavailable_headless\"}})],shouldQuery:!1,resultText:«»})",
+        "«»(`<local-command-stdout>${u}</local-command-stdout>`,{commandOutcome:{kind:\"unavailable_headless\"}})],shouldQuery:!1,command:«»,resultText:«»}"
       ],
       "note": "local_command: kind is a string: 'failed', 'unavailable_headless', 'unknown', or the outcome.kind a command result returns."
     },
@@ -2279,7 +2322,7 @@
       },
       "anchors": [
         "function «»(«»){let{preserved_segment:«»,preserved_messages:«»}=«»;return{trigger:«».trigger,preTokens:«».pre_tokens",
-        "{precomputed:«».precomputed}"
+        "...«».messages_summarized!==void 0&&{messagesSummarized:«».messages_summarized},...«».precomputed!==void 0&&{precomputed:«».precomputed},...«».pre_compact_discovered_tools!==void 0&&{preCompactDiscoveredTools:"
       ],
       "note": "compact_boundary: compactMetadata is built by d2() for local compaction and by qyr() for a remote frame, from the compaction result. precomputed is a boolean (the stream-json schema M())."
     },
@@ -2359,7 +2402,7 @@
       },
       "anchors": [
         "formatted:«»(«»),connection:«»(«»),isNetworkDown:«»(«»),rateLimits:«»||«»?{...a&&{rateLimitType:«»},...s&&{resetsAt:Math.round(Number(«»))}}:null,noResponse:«»?{waitedMs:«»(«».deadline),retryWaitMs:«».deadline.retryWindowMs}:null",
-        "formatted:«»(«»)"
+        "{message:«»(«»),status:void 0,requestId:void 0,formatted:«»(«»),connection:null,isNetworkDown:!1,rateLimits:null,noResponse:null}:null"
       ],
       "note": "api_error: error is the plain-data snapshot of the API error built by Itr() for an APIError, or by the fallback literal in pJe() ({message, status: undefined, requestId: undefined, formatted, connection: null, isNetworkDown: false, rateLimits: null, noResponse: null}); formatted is the display string from r_e(e) (and d(e) at the fallback)."
     },
@@ -2400,7 +2443,7 @@
       "anchors": [
         "formatted:«»(«»),connection:«»(«»),isNetworkDown:«»(«»),rateLimits:«»||«»?{...a&&{rateLimitType:«»},...s&&{resetsAt:Math.round(Number(«»))}}:null,noResponse:«»?{waitedMs:«»(«».deadline),retryWaitMs:«».deadline.retryWindowMs}:null",
         "isNetworkDown:«»(«»)",
-        "isNetworkDown:!1"
+        "{message:«»(«»),status:void 0,requestId:void 0,formatted:«»(«»),connection:null,isNetworkDown:!1,rateLimits:null,noResponse:null}:null"
       ],
       "note": "api_error: error is the plain-data snapshot of the API error built by Itr() for an APIError, or by the fallback literal in pJe() ({message, status: undefined, requestId: undefined, formatted, connection: null, isNetworkDown: false, rateLimits: null, noResponse: null}); isNetworkDown is a boolean (we(e) tests the connection code; the fallback writes false)."
     },
@@ -2470,8 +2513,9 @@
         }
       },
       "anchors": [
-        "...e.retracted_message_uuids!==void 0&&{retractedMessageUuids:«».retracted_message_uuids}",
-        "retractedMessageUuids:«».retracted_message_uuids}"
+        "...«».saw_cyber_refusal&&{sawCyberRefusal:!0},...«».retracted_message_uuids!==void 0&&{retractedMessageUuids:«».retracted_message_uuids}",
+        "apiRefusalExplanation:null,retractedMessageUuids:[...«».retractedMessageUuids]",
+        "apiRefusalExplanation:«».apiRefusalExplanation,retractedMessageUuids:«»"
       ],
       "note": "model_refusal_fallback: an array of message uuid strings."
     },
@@ -2540,320 +2584,30 @@
       "anchors": ["subtype:\"rewind_stand_in\",source_uuid:e"],
       "note": "rewind_stand_in: source_uuid is the uuid string of the message the stand-in replaces."
     },
-    "system.live_turn_id": {
-      "schema": {
-        "type": "string"
-      },
-      "anchors": ["live_turn_id:«»,stored_through_live_index"],
-      "note": "checkpoint_done payload: live_turn_id is the writer's liveTurnId, a string."
-    },
-    "system.compact_metadata.trigger": {
-      "schema": {
-        "enum": ["manual", "auto"]
-      },
-      "anchors": [
-        "function «»(«»){let{preservedSegment:«»,preservedMessages:«»}=«»;return{trigger:«».trigger,pre_tokens:«».preTokens"
-      ],
-      "note": "The stream-json frame for a compact_boundary: gYt() converts compactMetadata to snake_case keys. trigger is copied from compactMetadata.trigger."
-    },
-    "system.compact_metadata.pre_tokens": {
-      "schema": {
-        "type": "number"
-      },
-      "anchors": [
-        "function «»(«»){let{preservedSegment:«»,preservedMessages:«»}=«»;return{trigger:«».trigger,pre_tokens:«».preTokens"
-      ],
-      "note": "The stream-json frame for a compact_boundary: gYt() converts compactMetadata to snake_case keys. A token count."
-    },
-    "system.compact_metadata.post_tokens": {
-      "schema": {
-        "type": "number"
-      },
-      "anchors": [
-        "function «»(«»){let{preservedSegment:«»,preservedMessages:«»}=«»;return{trigger:«».trigger,pre_tokens:«».preTokens",
-        "{post_tokens:«».postTokens}"
-      ],
-      "note": "The stream-json frame for a compact_boundary: gYt() converts compactMetadata to snake_case keys. A token count, written when defined."
-    },
-    "system.compact_metadata.cumulative_dropped_tokens": {
-      "schema": {
-        "type": "number"
-      },
-      "anchors": [
-        "function «»(«»){let{preservedSegment:«»,preservedMessages:«»}=«»;return{trigger:«».trigger,pre_tokens:«».preTokens",
-        "{cumulative_dropped_tokens:«».cumulativeDroppedTokens}"
-      ],
-      "note": "The stream-json frame for a compact_boundary: gYt() converts compactMetadata to snake_case keys. A token count, written when defined."
-    },
-    "system.compact_metadata.duration_ms": {
-      "schema": {
-        "type": "number"
-      },
-      "anchors": [
-        "function «»(«»){let{preservedSegment:«»,preservedMessages:«»}=«»;return{trigger:«».trigger,pre_tokens:«».preTokens",
-        "{duration_ms:«».durationMs}"
-      ],
-      "note": "The stream-json frame for a compact_boundary: gYt() converts compactMetadata to snake_case keys. Milliseconds, written when defined."
-    },
-    "system.compact_metadata.user_context": {
-      "schema": {
-        "type": "string"
-      },
-      "anchors": [
-        "function «»(«»){let{preservedSegment:«»,preservedMessages:«»}=«»;return{trigger:«».trigger,pre_tokens:«».preTokens",
-        "{user_context:«».userContext}"
-      ],
-      "note": "The stream-json frame for a compact_boundary: gYt() converts compactMetadata to snake_case keys. The user's focus text."
-    },
-    "system.compact_metadata.messages_summarized": {
-      "schema": {
-        "type": "number"
-      },
-      "anchors": [
-        "function «»(«»){let{preservedSegment:«»,preservedMessages:«»}=«»;return{trigger:«».trigger,pre_tokens:«».preTokens",
-        "{messages_summarized:«».messagesSummarized}"
-      ],
-      "note": "The stream-json frame for a compact_boundary: gYt() converts compactMetadata to snake_case keys. A message count."
-    },
-    "system.compact_metadata.precomputed": {
-      "schema": {
-        "type": "boolean"
-      },
-      "anchors": [
-        "function «»(«»){let{preservedSegment:«»,preservedMessages:«»}=«»;return{trigger:«».trigger,pre_tokens:«».preTokens",
-        "{precomputed:«».precomputed}"
-      ],
-      "note": "The stream-json frame for a compact_boundary: gYt() converts compactMetadata to snake_case keys. A boolean."
-    },
-    "system.compact_metadata.pre_compact_discovered_tools": {
-      "schema": {
-        "type": "array",
-        "items": {
-          "type": "string"
-        }
-      },
-      "anchors": [
-        "function «»(«»){let{preservedSegment:«»,preservedMessages:«»}=«»;return{trigger:«».trigger,pre_tokens:«».preTokens",
-        "{pre_compact_discovered_tools:«».preCompactDiscoveredTools}"
-      ],
-      "note": "The stream-json frame for a compact_boundary: gYt() converts compactMetadata to snake_case keys. An array of tool name strings (the stream-json schema C(o()))."
-    },
-    "system.compact_metadata.pre_compact_artifact_read_versions": {
-      "schema": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "slug": {
-              "type": "string"
-            },
-            "ver": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "anchors": [
-        "function «»(«»){let{preservedSegment:«»,preservedMessages:«»}=«»;return{trigger:«».trigger,pre_tokens:«».preTokens",
-        "{pre_compact_artifact_read_versions:«».preCompactArtifactReadVersions}"
-      ],
-      "note": "The stream-json frame for a compact_boundary: gYt() converts compactMetadata to snake_case keys. An array of {slug, ver} string pairs (the stream-json schema)."
-    },
-    "system.compact_metadata.preserved_segment.head_uuid": {
-      "schema": {
-        "type": "string"
-      },
-      "anchors": [
-        "function «»(«»){let{preservedSegment:«»,preservedMessages:«»}=«»;return{trigger:«».trigger,pre_tokens:«».preTokens",
-        "preserved_segment:{head_uuid:«».headUuid"
-      ],
-      "note": "The stream-json frame for a compact_boundary: gYt() converts compactMetadata to snake_case keys. A message uuid string."
-    },
-    "system.compact_metadata.preserved_segment.anchor_uuid": {
-      "schema": {
-        "type": "string"
-      },
-      "anchors": [
-        "function «»(«»){let{preservedSegment:«»,preservedMessages:«»}=«»;return{trigger:«».trigger,pre_tokens:«».preTokens",
-        "anchor_uuid:«».anchorUuid,tail_uuid:«».tailUuid"
-      ],
-      "note": "The stream-json frame for a compact_boundary: gYt() converts compactMetadata to snake_case keys. A message uuid string."
-    },
-    "system.compact_metadata.preserved_segment.tail_uuid": {
-      "schema": {
-        "type": "string"
-      },
-      "anchors": [
-        "function «»(«»){let{preservedSegment:«»,preservedMessages:«»}=«»;return{trigger:«».trigger,pre_tokens:«».preTokens",
-        "tail_uuid:«».tailUuid"
-      ],
-      "note": "The stream-json frame for a compact_boundary: gYt() converts compactMetadata to snake_case keys. A message uuid string."
-    },
-    "system.compact_metadata.preserved_messages.anchor_uuid": {
-      "schema": {
-        "type": "string"
-      },
-      "anchors": [
-        "function «»(«»){let{preservedSegment:«»,preservedMessages:«»}=«»;return{trigger:«».trigger,pre_tokens:«».preTokens",
-        "preserved_messages:{anchor_uuid:«».anchorUuid"
-      ],
-      "note": "The stream-json frame for a compact_boundary: gYt() converts compactMetadata to snake_case keys. A message uuid string."
-    },
-    "system.compact_metadata.preserved_messages.uuids": {
-      "schema": {
-        "type": "array",
-        "items": {
-          "type": "string"
-        }
-      },
-      "anchors": [
-        "function «»(«»){let{preservedSegment:«»,preservedMessages:«»}=«»;return{trigger:«».trigger,pre_tokens:«».preTokens",
-        "uuids:«».uuids"
-      ],
-      "note": "The stream-json frame for a compact_boundary: gYt() converts compactMetadata to snake_case keys. An ordered array of message uuid strings."
-    },
-    "system.compact_metadata.preserved_messages.all_uuids": {
-      "schema": {
-        "type": "array",
-        "items": {
-          "type": "string"
-        }
-      },
-      "anchors": [
-        "function «»(«»){let{preservedSegment:«»,preservedMessages:«»}=«»;return{trigger:«».trigger,pre_tokens:«».preTokens",
-        "{all_uuids:«».allUuids}"
-      ],
-      "note": "The stream-json frame for a compact_boundary: gYt() converts compactMetadata to snake_case keys. An array of message uuid strings, written when defined."
-    },
-    "system.logical_parent_uuid": {
-      "schema": {
-        "anyOf": [
-          {
-            "type": "string"
-          },
-          {
-            "type": "null"
-          }
-        ]
-      },
-      "anchors": [
-        "...u.logicalParentUuid!==void 0&&{logical_parent_uuid:«».logicalParentUuid}"
-      ],
-      "note": "Stream-json frame of a compact_boundary: copies logicalParentUuid when defined; the stream-json schema (logical_parent_uuid: p().nullable().optional()) allows null."
-    },
-    "system.original_model": {
-      "schema": {
-        "type": "string"
-      },
-      "anchors": [
-        "subtype:\"model_refusal_fallback\",uuid:«».uuid,trigger:«».trigger,direction:«».direction",
-        "original_model:«».originalModel"
-      ],
-      "note": "Stream-json frame: copies originalModel."
-    },
-    "system.fallback_model": {
-      "schema": {
-        "type": "string"
-      },
-      "anchors": [
-        "subtype:\"model_refusal_fallback\",uuid:«».uuid,trigger:«».trigger,direction:«».direction",
-        "fallback_model:«».fallbackModel"
-      ],
-      "note": "Stream-json frame: copies fallbackModel."
-    },
-    "system.request_id": {
-      "schema": {
-        "anyOf": [
-          {
-            "type": "string"
-          },
-          {
-            "type": "null"
-          }
-        ]
-      },
-      "anchors": [
-        "subtype:\"model_refusal_fallback\",uuid:«».uuid,trigger:«».trigger,direction:«».direction",
-        "request_id:«».requestId"
-      ],
-      "note": "Stream-json frame: copies requestId (nullable in the stream-json schema)."
-    },
-    "system.api_refusal_category": {
-      "schema": {
-        "anyOf": [
-          {
-            "type": "string"
-          },
-          {
-            "type": "null"
-          }
-        ]
-      },
-      "anchors": [
-        "subtype:\"model_refusal_fallback\",uuid:«».uuid,trigger:«».trigger,direction:«».direction",
-        "api_refusal_category:«».apiRefusalCategory??null"
-      ],
-      "note": "Stream-json frame: apiRefusalCategory ?? null."
-    },
-    "system.api_refusal_explanation": {
-      "schema": {
-        "anyOf": [
-          {
-            "type": "string"
-          },
-          {
-            "type": "null"
-          }
-        ]
-      },
-      "anchors": [
-        "subtype:\"model_refusal_fallback\",uuid:«».uuid,trigger:«».trigger,direction:«».direction",
-        "api_refusal_explanation:«».apiRefusalExplanation??null"
-      ],
-      "note": "Stream-json frame: apiRefusalExplanation ?? null."
-    },
-    "system.retracted_message_uuids": {
-      "schema": {
-        "type": "array",
-        "items": {
-          "type": "string"
-        }
-      },
-      "anchors": [
-        "subtype:\"model_refusal_fallback\",uuid:«».uuid,trigger:«».trigger,direction:«».direction",
-        "retracted_message_uuids:«».retractedMessageUuids"
-      ],
-      "note": "Stream-json frame: array of message uuid strings, written when defined."
-    },
-    "system.refused_user_message_uuid": {
-      "schema": {
-        "anyOf": [
-          {
-            "type": "string"
-          },
-          {
-            "type": "null"
-          }
-        ]
-      },
-      "anchors": [
-        "subtype:\"model_refusal_fallback\",uuid:«».uuid,trigger:«».trigger,direction:«».direction",
-        "refused_user_message_uuid:«».refusedUserMessageUuid??null"
-      ],
-      "note": "Stream-json frame: refusedUserMessageUuid ?? null."
-    },
     "assistant.uuid": {
       "schema": {
         "type": "string"
       },
-      "anchors": ["uuid:«»(),timestamp:new Date().toISOString()"],
+      "anchors": [
+        "type:\"assistant\",uuid:«»(),timestamp:new Date().toISOString(),...!1,...«»&&{advisorModel:«»},...«»!==void 0&&{effort:«»},perTurnEffort:«»,perTurnTiming:«»,...{}};return",
+        "type:\"assistant\",uuid:«»(),timestamp:new Date().toISOString(),isAbortedMidStream:!0",
+        "type:\"assistant\",uuid:«»(),timestamp:new Date().toISOString(),...!1,...«»&&{advisorModel:«»},...«»!==void 0&&{effort:«»},perTurnEffort:«»,perTurnTiming:«»,...{}};if(",
+        "uuid:«».uuid??«»(),requestId:void 0,timestamp:«».timestamp??new Date().toISOString(),...«».resumed_from_incomplete_thinking===!0&&",
+        "uuid:«».uuid,requestId:void 0,timestamp:«».timestamp??new Date().toISOString(),remoteSourced:!0"
+      ],
       "note": "The assistant line uuid: pee() (a randomUUID string) at the stream sites, a uuid string from the source message at the copy sites."
     },
     "assistant.timestamp": {
       "schema": {
         "type": "string"
       },
-      "anchors": ["uuid:«»(),timestamp:new Date().toISOString()"],
+      "anchors": [
+        "uuid:«»(),timestamp:new Date().toISOString(),...!1,...«»&&{advisorModel:«»},...«»!==void 0&&{effort:«»},perTurnEffort:«»,perTurnTiming:«»,...{}};return",
+        "uuid:«»(),timestamp:new Date().toISOString(),isAbortedMidStream:!0",
+        "uuid:«»(),timestamp:new Date().toISOString(),...!1,...«»&&{advisorModel:«»},...«»!==void 0&&{effort:«»},perTurnEffort:«»,perTurnTiming:«»,...{}};if(",
+        "uuid:«».uuid??«»(),requestId:void 0,timestamp:«».timestamp??new Date().toISOString(),...«».resumed_from_incomplete_thinking===!0&&",
+        "uuid:«».uuid,requestId:void 0,timestamp:«».timestamp??new Date().toISOString(),remoteSourced:!0"
+      ],
       "note": "An ISO timestamp string (new Date().toISOString(), or the timestamp of the copied message)."
     },
     "assistant.message.id": {
@@ -3511,7 +3265,11 @@
       "schema": {
         "type": "string"
       },
-      "anchors": ["requestId:«»??void 0,requestRef:«»,requestedModel:«».model"],
+      "anchors": [
+        "apiBlockIndex:0,requestId:«»??void 0,requestRef:«»,requestedModel:«».model",
+        "apiBlockIndex:«».length,requestId:«»??void 0,requestRef:«»,requestedModel:«».model",
+        "apiBlockIndex:«».index,requestId:«»??void 0,requestRef:«»,requestedModel:«».model"
+      ],
       "note": "assistant top-level fields come from the object literals of the stream path, the error-message factory Ws/r7n and the stream-json rebuild; requestedModel is the model id string of the request (Q.model)."
     },
     "assistant.attributionAgent": {
@@ -3519,10 +3277,12 @@
         "type": "string"
       },
       "anchors": [
-        "...Hle(«».querySource,«».spawnedBySkill,«».activeSkill,«».activeMcpServer,«».activeMcpTool)",
         "attributionAgent:«».slice(14),...A(«»)",
         "attributionSkill:«»,...n&&{attributionPlugin:«»}",
-        "o.attributionMcpServer=«»,«»)«».attributionMcpTool=r"
+        "o.attributionMcpServer=«»,«»)«».attributionMcpTool=r",
+        "apiBlockIndex:0,requestId:«»??void 0,requestRef:«»,requestedModel:«».model,...«»(«».querySource,«».spawnedBySkill,«».activeSkill,«».activeMcpServer,«».activeMcpTool)",
+        "apiBlockIndex:«».length,requestId:«»??void 0,requestRef:«»,requestedModel:«».model,...«»(«».querySource,«».spawnedBySkill,«».activeSkill,«».activeMcpServer,«».activeMcpTool)",
+        "apiBlockIndex:«».index,requestId:«»??void 0,requestRef:«»,requestedModel:«».model,...«»(«».querySource,«».spawnedBySkill,«».activeSkill,«».activeMcpServer,«».activeMcpTool)"
       ],
       "note": "assistant top-level fields come from the object literals of the stream path, the error-message factory Ws/r7n and the stream-json rebuild; attributionAgent is set by Hle(): the agent name (query source 'agent:builtin:x' or 'agent:custom:x'), the skill name, the plugin name, the MCP server name and tool name, all strings."
     },
@@ -3531,10 +3291,12 @@
         "type": "string"
       },
       "anchors": [
-        "...Hle(«».querySource,«».spawnedBySkill,«».activeSkill,«».activeMcpServer,«».activeMcpTool)",
         "attributionAgent:«».slice(14),...A(«»)",
         "attributionSkill:«»,...n&&{attributionPlugin:«»}",
-        "o.attributionMcpServer=«»,«»)«».attributionMcpTool=r"
+        "o.attributionMcpServer=«»,«»)«».attributionMcpTool=r",
+        "apiBlockIndex:0,requestId:«»??void 0,requestRef:«»,requestedModel:«».model,...«»(«».querySource,«».spawnedBySkill,«».activeSkill,«».activeMcpServer,«».activeMcpTool)",
+        "apiBlockIndex:«».length,requestId:«»??void 0,requestRef:«»,requestedModel:«».model,...«»(«».querySource,«».spawnedBySkill,«».activeSkill,«».activeMcpServer,«».activeMcpTool)",
+        "apiBlockIndex:«».index,requestId:«»??void 0,requestRef:«»,requestedModel:«».model,...«»(«».querySource,«».spawnedBySkill,«».activeSkill,«».activeMcpServer,«».activeMcpTool)"
       ],
       "note": "assistant top-level fields come from the object literals of the stream path, the error-message factory Ws/r7n and the stream-json rebuild; attributionSkill is set by Hle(): the agent name (query source 'agent:builtin:x' or 'agent:custom:x'), the skill name, the plugin name, the MCP server name and tool name, all strings."
     },
@@ -3543,10 +3305,12 @@
         "type": "string"
       },
       "anchors": [
-        "...Hle(«».querySource,«».spawnedBySkill,«».activeSkill,«».activeMcpServer,«».activeMcpTool)",
         "attributionAgent:«».slice(14),...A(«»)",
         "attributionSkill:«»,...n&&{attributionPlugin:«»}",
-        "o.attributionMcpServer=«»,«»)«».attributionMcpTool=r"
+        "o.attributionMcpServer=«»,«»)«».attributionMcpTool=r",
+        "apiBlockIndex:0,requestId:«»??void 0,requestRef:«»,requestedModel:«».model,...«»(«».querySource,«».spawnedBySkill,«».activeSkill,«».activeMcpServer,«».activeMcpTool)",
+        "apiBlockIndex:«».length,requestId:«»??void 0,requestRef:«»,requestedModel:«».model,...«»(«».querySource,«».spawnedBySkill,«».activeSkill,«».activeMcpServer,«».activeMcpTool)",
+        "apiBlockIndex:«».index,requestId:«»??void 0,requestRef:«»,requestedModel:«».model,...«»(«».querySource,«».spawnedBySkill,«».activeSkill,«».activeMcpServer,«».activeMcpTool)"
       ],
       "note": "assistant top-level fields come from the object literals of the stream path, the error-message factory Ws/r7n and the stream-json rebuild; attributionPlugin is set by Hle(): the agent name (query source 'agent:builtin:x' or 'agent:custom:x'), the skill name, the plugin name, the MCP server name and tool name, all strings."
     },
@@ -3555,10 +3319,12 @@
         "type": "string"
       },
       "anchors": [
-        "...Hle(«».querySource,«».spawnedBySkill,«».activeSkill,«».activeMcpServer,«».activeMcpTool)",
         "attributionAgent:«».slice(14),...A(«»)",
         "attributionSkill:«»,...n&&{attributionPlugin:«»}",
-        "o.attributionMcpServer=«»,«»)«».attributionMcpTool=r"
+        "o.attributionMcpServer=«»,«»)«».attributionMcpTool=r",
+        "apiBlockIndex:0,requestId:«»??void 0,requestRef:«»,requestedModel:«».model,...«»(«».querySource,«».spawnedBySkill,«».activeSkill,«».activeMcpServer,«».activeMcpTool)",
+        "apiBlockIndex:«».length,requestId:«»??void 0,requestRef:«»,requestedModel:«».model,...«»(«».querySource,«».spawnedBySkill,«».activeSkill,«».activeMcpServer,«».activeMcpTool)",
+        "apiBlockIndex:«».index,requestId:«»??void 0,requestRef:«»,requestedModel:«».model,...«»(«».querySource,«».spawnedBySkill,«».activeSkill,«».activeMcpServer,«».activeMcpTool)"
       ],
       "note": "assistant top-level fields come from the object literals of the stream path, the error-message factory Ws/r7n and the stream-json rebuild; attributionMcpServer is set by Hle(): the agent name (query source 'agent:builtin:x' or 'agent:custom:x'), the skill name, the plugin name, the MCP server name and tool name, all strings."
     },
@@ -3567,10 +3333,12 @@
         "type": "string"
       },
       "anchors": [
-        "...Hle(«».querySource,«».spawnedBySkill,«».activeSkill,«».activeMcpServer,«».activeMcpTool)",
         "attributionAgent:«».slice(14),...A(«»)",
         "attributionSkill:«»,...n&&{attributionPlugin:«»}",
-        "o.attributionMcpServer=«»,«»)«».attributionMcpTool=r"
+        "o.attributionMcpServer=«»,«»)«».attributionMcpTool=r",
+        "apiBlockIndex:0,requestId:«»??void 0,requestRef:«»,requestedModel:«».model,...«»(«».querySource,«».spawnedBySkill,«».activeSkill,«».activeMcpServer,«».activeMcpTool)",
+        "apiBlockIndex:«».length,requestId:«»??void 0,requestRef:«»,requestedModel:«».model,...«»(«».querySource,«».spawnedBySkill,«».activeSkill,«».activeMcpServer,«».activeMcpTool)",
+        "apiBlockIndex:«».index,requestId:«»??void 0,requestRef:«»,requestedModel:«».model,...«»(«».querySource,«».spawnedBySkill,«».activeSkill,«».activeMcpServer,«».activeMcpTool)"
       ],
       "note": "assistant top-level fields come from the object literals of the stream path, the error-message factory Ws/r7n and the stream-json rebuild; attributionMcpTool is set by Hle(): the agent name (query source 'agent:builtin:x' or 'agent:custom:x'), the skill name, the plugin name, the MCP server name and tool name, all strings."
     },
@@ -3579,8 +3347,10 @@
         "type": "string"
       },
       "anchors": [
-        "...dv!==void 0&&{effort:«»},perTurnEffort:RR",
-        "dv=typeof «»===\"string\"&&«»(«»)?DS:void 0"
+        "dv=typeof «»===\"string\"&&«»(«»)?DS:void 0",
+        "...«»&&{advisorModel:«»},...«»!==void 0&&{effort:«»},perTurnEffort:«»,perTurnTiming:«»,...{}};return",
+        "...void 0,...«»!==void 0&&{effort:«»}",
+        "...«»&&{advisorModel:«»},...«»!==void 0&&{effort:«»},perTurnEffort:«»,perTurnTiming:«»,...{}};if("
       ],
       "note": "assistant top-level fields come from the object literals of the stream path, the error-message factory Ws/r7n and the stream-json rebuild; effort is output_config.effort of the request when it is a known effort level (a string; the SDK lists low|medium|high|xhigh|max), and not written otherwise."
     },
@@ -3596,9 +3366,10 @@
         ]
       },
       "anchors": [
-        "perTurnEffort:«»,perTurnTiming:CR",
-        "RR=null,«»=void 0",
-        "RR=«».outputConfig.effort??RR"
+        "RR=«».outputConfig.effort??RR",
+        "...«»!==void 0&&{effort:«»},perTurnEffort:«»,perTurnTiming:«»,...{}};return",
+        "...void 0,...«»!==void 0&&{effort:«»},perTurnEffort:«»",
+        "...«»!==void 0&&{effort:«»},perTurnEffort:«»,perTurnTiming:«»,...{}};if("
       ],
       "note": "assistant top-level fields come from the object literals of the stream path, the error-message factory Ws/r7n and the stream-json rebuild; perTurnEffort starts as null and becomes the outputConfig.effort string of the last api_system message, so a string or null."
     },
@@ -3606,7 +3377,10 @@
       "schema": {
         "type": "string"
       },
-      "anchors": ["...cn&&{advisorModel:«»}", "advisorModel:«».advisorModel"],
+      "anchors": [
+        "...!1,...«»&&{advisorModel:«»},...«»!==void 0&&{effort:«»},perTurnEffort:«»,perTurnTiming:«»,...{}};return",
+        "...!1,...«»&&{advisorModel:«»},...«»!==void 0&&{effort:«»},perTurnEffort:«»,perTurnTiming:«»,...{}};if("
+      ],
       "note": "assistant top-level fields come from the object literals of the stream path, the error-message factory Ws/r7n and the stream-json rebuild; advisorModel is the advisor model id string; written only when set."
     },
     "assistant.thinkingDisplay": {
@@ -3662,7 +3436,8 @@
       },
       "anchors": [
         "...zd!==void 0&&{wireIngestContext:«»}",
-        "...Zc!==void 0&&{wireIngestContext:«»}"
+        "...«»!==void 0&&{wireToolInputs:«»},...«»!==void 0&&{wireIngestContext:«»},...«»!==void 0&&«»(«»)",
+        "...«»!==void 0&&{wireToolInputs:«»},...«»!==void 0&&{wireIngestContext:«»},...«»!==void 0&&{wireIngestContext:«»}"
       ],
       "note": "assistant top-level fields come from the object literals of the stream path, the error-message factory Ws/r7n and the stream-json rebuild; wireIngestContext is an object keyed like wireToolInputs (the stream-json schema is a record of string to unknown)."
     },
@@ -4206,13 +3981,26 @@
     },
     "user.turnOrigin": {
       "schema": {
-        "type": "string"
+        "type": "string",
+        "enum": [
+          "human",
+          "sdk",
+          "scheduled",
+          "task_notification",
+          "auto_continuation",
+          "peer",
+          "host_synthetic",
+          "system",
+          "unknown"
+        ]
       },
       "anchors": [
-        "Or.turnOrigin!==void 0&&!«».has(«».turnOrigin)",
-        "Z8t=[\"human\",\"sdk\",\"scheduled\",\"task_notification\",\"auto_continuation\",\"peer\",\"host_synthetic\",\"system\",\"unknown\"]"
+        "«».turnOrigin=«»({origin:«»,isMeta:«»,wakeupSource:«»,promptSource:«»,hostInitiator:«»})",
+        "function «»({origin:«»,isMeta:«»,wakeupSource:«»,promptSource:«»,hostInitiator:«»}){if(«»!==void 0)return\"scheduled\";let «»=«»(«»);switch(«»?.kind){case\"human\":return «»??\"human\";case\"auto-continuation\":return\"auto_continuation\";case\"task-notification\":if(«».subkind===\"scheduled-trigger\")return\"scheduled\";if(«».subkind===\"peer-send-message\"||«».subkind===\"projects-relay\")return\"peer\";return\"task_notification\";case\"peer\":case\"channel\":case\"coordinator\":case\"observer\":case\"observer-activity\":case\"slack-ping\":return\"peer\";case\"unclassified\":return\"host_synthetic\";case\"plugin\":return\"system\";case void 0:break}if(«»)return\"system\";if(«»!==void 0)return «»;if(«»===\"sdk\")return\"sdk\";return\"unknown\"}",
+        "case\"scheduled-task\":return\"scheduled\";case\"sleep-auto-resume\":case\"quit-auto-resume\":case\"remote-restart-auto-resume\":case\"ci-monitor\":return\"auto_continuation\";case\"dispatch\":return\"peer\";case\"side-session-brief\":case\"side-session-start\":case\"side-session-wake\":case\"other\":return\"host_synthetic\"",
+        "«»=[\"human\",\"sdk\",\"scheduled\",\"task_notification\",\"auto_continuation\",\"peer\",\"host_synthetic\",\"system\",\"unknown\"]"
       ],
-      "note": "The reader accepts turnOrigin only when it is in the list human, sdk, scheduled, task_notification, auto_continuation, peer, host_synthetic, system, unknown, so those are the values the writer is meant to produce; the write site is not in the createUserMessage function, so the type is a string, not an enum."
+      "note": "The only assignment of a new value is the turn-start code: when the last user message has no turnOrigin, `message.turnOrigin = mxs({origin, isMeta, wakeupSource, promptSource, hostInitiator})` (chunk-kmqdx9zz). mxs returns only string literals: scheduled, human, auto_continuation, peer, task_notification, host_synthetic, system, sdk, unknown, or the result of w8e(hostInitiator), which maps to scheduled, auto_continuation, peer or host_synthetic (or undefined, which falls through to the other returns). The other write, Ows (chunk-a1cg2ptw), copies turnOrigin from an earlier user message (J2n) into messages that lack it, so it adds no new value. The loader deletes any turnOrigin outside the 9-value list (Z8t), and the list equals the set mxs can return. So the values are a closed set of 9 literals. Not every value is written by each path, but all 9 are producible."
     },
     "user.toolUseResult.type": {
       "schema": {
@@ -4444,18 +4232,44 @@
     },
     "progress.data.type": {
       "schema": {
-        "type": "string"
+        "enum": [
+          "hook_progress",
+          "tool_heartbeat",
+          "bash_progress",
+          "powershell_progress",
+          "mcp_progress",
+          "agent_progress",
+          "skill_progress",
+          "agent_api_retry",
+          "search_results_received",
+          "query_update",
+          "workflow_log",
+          "workflow_phase",
+          "workflow_agent",
+          "artifact_publish_retry"
+        ]
       },
       "anchors": [
         "type:\"hook_progress\",hookEvent:«»,hookName:«»,command:«»(«»)",
         "type:\"tool_heartbeat\",toolName:«»,elapsedTimeSeconds:Math.floor((Date.now()-«»)/1000)",
-        "type:\"bash_progress\",output:«».output,fullOutput:«».fullOutput,elapsedTimeSeconds:«».elapsedTimeSeconds,totalLines:«».totalLines,totalBytes:«».totalBytes,taskId:«».taskId,timeoutMs:«».timeoutMs",
-        "type:\"agent_progress\",prompt:«»,agentId:«»,agentType:«».agentType,isBuiltIn:«»(«»),description:«»,resolvedModel:«»,modelsUsed:E",
-        "type:\"agent_api_retry\",agentId:«»,agentType:«».agentType,attempt:«».retryAttempt,maxRetries:«».maxRetries,retryDelayMs:«».retryInMs,errorStatus:«».error.status,errorCategory:V",
-        "type:\"search_results_received\",resultCount:«».results.length,query:b",
-        "type:\"powershell_progress\",output:«».output,fullOutput:«».fullOutput,elapsedTimeSeconds:«».elapsedTimeSeconds,totalLines:«».totalLines,totalBytes:«».totalBytes,timeoutMs:«».timeoutMs,taskId:«».taskId"
+        "data:{type:\"bash_progress\",output:«».output,fullOutput:«».fullOutput,",
+        "data:{type:\"powershell_progress\",output:«».output,fullOutput:«».fullOutput,",
+        "type:\"mcp_progress\",status:\"started\",serverName:«».name,toolName:«».name",
+        "type:\"agent_progress\",prompt:«»,agentId:«»,agentType:«».agentType,isBuiltIn:«»(«»),description:«»,resolvedModel:«»,modelsUsed:«»",
+        "type:\"agent_progress\",prompt:«»,agentId:«»,agentType:«».agentType,isBuiltIn:«».source===\"built-in\",description:«».description}",
+        "type:\"agent_progress\",prompt:\"\",agentId:«»,agentType:«».agentType,isBuiltIn:«»(«»),resolvedModel:«»,",
+        "type:\"skill_progress\",prompt:«»,agentId:«»,agentType:«».agentType,description:«».description}",
+        "type:\"agent_api_retry\",agentId:«»,agentType:«».agentType,attempt:«».retryAttempt,maxRetries:«».maxRetries,retryDelayMs:«».retryInMs,errorStatus:«».error.status,errorCategory:«»",
+        "type:\"agent_api_retry\",resolved:!0,agentId:«»,agentType:«».agentType}",
+        "type:\"search_results_received\",resultCount:«».results.length,query:«»",
+        "type:\"query_update\",query:«»}",
+        "data:{type:\"workflow_log\",message:«»}",
+        "data:{type:\"workflow_phase\",index:«».index,title:«».title,kind:«».kind}",
+        "type:\"workflow_agent\",index:«»,label:«»,phaseIndex:«»,phaseTitle:«»,agentId:«»,",
+        "type:\"artifact_publish_retry\",resolved:!0}",
+        "type:\"artifact_publish_retry\",status:«».status,attempt:«».attempt,maxAttempts:«».maxAttempts"
       ],
-      "note": "The progress line is {type:'progress', data, toolUseID, parentToolUseID, uuid}; data is a different object per progress type (hook_progress, bash_progress, powershell_progress, tool_heartbeat, agent_progress, skill_progress, agent_api_retry, search_results_received, query_update, workflow_log, workflow_phase, workflow_agent, artifact_publish_retry, ...); the key below is the union over the literals of those types. type is the string tag of the progress kind; the kinds are listed above."
+      "note": "Every producer of a progress line's data object in the program (grep of type:\"progress\" and of the generic wrapper ODt/qMn that forwards data): hook_progress (hook runner, chunk-a1cg2ptw), tool_heartbeat (chunk-a1cg2ptw), bash_progress (chunk-a1cg2ptw, and the REPL in chunk-f3waybkd), powershell_progress (chunk-n4seqtct), mcp_progress (chunk-9dvdjy85/tvv9e5m1, forwarded as data:wt), agent_progress (chunk-sj79q3n5, chunk-z2ctr57c, chunk-zjfzcfy1), skill_progress (chunk-cws6a3x0), agent_api_retry (chunk-sj79q3n5), search_results_received and query_update (chunk-y97djc3b), workflow_log, workflow_phase, workflow_agent (chunk-5vm6s6e2), artifact_publish_retry (chunk-e4nj3r2k). The data forwarded as data:xt.data / R.data / b.data / e.data comes from these same tool onProgress calls (every tool call site that passes data was found: a search for 'toolUseID:..,data:' gives only these). compact_progress, thinking_progress, task_progress, control_request_progress are other message kinds, not progress data. So a closed enum of 14 values."
     },
     "progress.data.hookEvent": {
       "schema": {
@@ -4697,13 +4511,15 @@
     },
     "progress.data.index": {
       "schema": {
-        "type": "number"
+        "type": "integer"
       },
       "anchors": [
         "type:\"workflow_phase\",index:«».index,title:«».title,kind:«».kind",
-        "type:\"workflow_agent\",index:«»,label:«»,phaseIndex:«»,phaseTitle:Re"
+        "{index:++«»,kind:«»,announced:!1,title:«»}",
+        "type:\"workflow_agent\",index:«»,label:«»,phaseIndex:«»,phaseTitle:«»,agentId:«».agentId,model:",
+        "let «»=++«»,«»=«»(«»),"
       ],
-      "note": "The progress line is {type:'progress', data, toolUseID, parentToolUseID, uuid}; data is a different object per progress type (hook_progress, bash_progress, powershell_progress, tool_heartbeat, agent_progress, skill_progress, agent_api_retry, search_results_received, query_update, workflow_log, workflow_phase, workflow_agent, artifact_publish_retry, ...); the key below is the union over the literals of those types. index (workflow_phase, workflow_agent) is an index number."
+      "note": "workflow_phase (chunk-5vm6s6e2): index is the phase counter ++bn (1, 2, ...), an integer. workflow_agent: index is the agent counter ve=++U (an integer) passed to the writers as idx/M, in the running, queued, cached, blocked and remote writers. Always an integer, never null."
     },
     "progress.data.title": {
       "schema": {
@@ -4762,14 +4578,24 @@
     },
     "progress.data.state": {
       "schema": {
-        "type": "string"
+        "enum": ["start", "progress", "done", "error"]
       },
       "anchors": [
         "state:\"error\",blocked:!0,error:«»,queuedAt:«»,promptPreview:«»(«»),lastProgressAt:Date.now()",
-        "type:\"workflow_agent\",index:«»,label:«»,phaseIndex:«»,phaseTitle:«»,agentId:«».agentId,model:«»(«»?.model),state:\"done\",startedAt:Date.now(),lastProgressAt:Date.now(),cached:!0,resultPreview:«»(«».result),promptPreview:Lt",
-        "type:\"workflow_agent\",index:«»,label:«»,phaseIndex:«»,phaseTitle:«»,agentType:«»?.agentType!=null?String(«».agentType):void 0,isolation:«»?.isolation===\"worktree\"||«»?.isolation===\"remote\"?«».isolation:void 0,model:«»(«»?.model),state:\"start\",queuedAt:«»,promptPreview:«»,lastProgressAt:it"
+        "model:«»(«»?.model),state:\"done\",startedAt:Date.now(),lastProgressAt:Date.now(),cached:!0",
+        "model:«»(«»?.model),state:\"start\",queuedAt:«»,promptPreview:«»,lastProgressAt:«»}",
+        "model:«»(«»?.model),state:\"error\",error:«» instanceof Error?",
+        "fallbackModel:«»,state:«»,startedAt:«»,queuedAt:«»,attempt:«»",
+        "Dt(\"start\",«»||«»?{tokens:«»,toolCalls:«»}:void 0)",
+        "Dt(\"progress\",{tokens:«»+«»,toolCalls:«»+«»})",
+        "Dt(\"done\",{tokens:",
+        "Dt(\"error\",{error:",
+        "«»(«»,{state:\"start\"})",
+        "«»(«»,{state:\"error\",error:«»,durationMs:",
+        "isolation:\"remote\",remoteSessionId:«»,state:«»,startedAt:«»,queuedAt:«»,promptPreview:«»,lastProgressAt:Date.now(),...«»}",
+        "«»(\"start\"),«»(«»);let «»;try{"
       ],
-      "note": "The progress line is {type:'progress', data, toolUseID, parentToolUseID, uuid}; data is a different object per progress type (hook_progress, bash_progress, powershell_progress, tool_heartbeat, agent_progress, skill_progress, agent_api_retry, search_results_received, query_update, workflow_log, workflow_phase, workflow_agent, artifact_publish_retry, ...); the key below is the union over the literals of those types. state (workflow_agent) is a state string: the literals 'start', 'done' and 'error' at the sites read, and a state variable at the live-update sites."
+      "note": "workflow_agent writers (chunk-5vm6s6e2). Literal states: blocked spawn 'error', cached result 'done', queued 'start' and the queued failure 'error'; the running-agent writer Dt(state,extra) is only called with 'start', 'progress', 'done' and 'error'; the queued-update writer passes the object {state:'start'} or {state:'error',...} through a spread; the remote writer (isolation 'remote', not reachable in this build) takes its state from calls Ve('start'|'progress'|'done'|'error'). No call passes another value, so the set is closed. Only workflow_agent has a state key."
     },
     "progress.data.blocked": {
       "schema": {
@@ -5121,8 +4947,8 @@
         "type": "boolean"
       },
       "anchors": [
-        "isAbortedMidStream:!0",
-        "isAbortedMidStream:«».isAbortedMidStream"
+        "isAbortedMidStream:«».isAbortedMidStream",
+        "timestamp:new Date().toISOString(),isAbortedMidStream:!0"
       ],
       "note": "assistant lines made when a stream is aborted midway: isAbortedMidStream is the literal true (the other site copies the flag), so a boolean that is only written as true."
     },
@@ -5146,6 +4972,890 @@
       },
       "anchors": ["tokens:«»+«».tokens,toolCalls:«»+«».toolCalls"],
       "note": "workflow_agent progress: toolCalls is a sum of two call counts (ft + te.toolCalls), a number."
+    },
+    "api-request.cut": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "const": "laptop-account-memory"
+          },
+          "cuts": {
+            "type": "integer"
+          },
+          "placeholders": {
+            "type": "integer"
+          },
+          "messages": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          }
+        },
+        "required": ["kind", "cuts", "placeholders", "messages"]
+      },
+      "anchors": [
+        "{cut:«».cut,cutRequestDigest:«»}",
+        "cut:{kind:\"laptop-account-memory\",cuts:«».hits,placeholders:«».placeholders,messages:«»}"
+      ],
+      "note": "vEt (request-replay capture) builds the api-request line xt; `...y===void 0?{requestDigest:xe}:{cut:y.cut,cutRequestDigest:xe}`. y is the result of XFe(...), registered by UCs(XFo) in chunk-3ghxrna3 (Ayt). XFo returns undefined (no cut key written) or {messages,cut:{kind:'laptop-account-memory',cuts:Z.hits,placeholders:Se.placeholders,messages:Ce}}. Z.hits comes from Ocr (chunk-axnb2fag), starts at 0 and counts; placeholders is a counter starting at 0; Ce collects message indexes (Ve from Array.map index)."
+    },
+    "assistant.healsDistinctCarrier": {
+      "schema": {
+        "type": "boolean",
+        "enum": [true]
+      },
+      "anchors": ["if(«»(«»))«».healsDistinctCarrier=!0"],
+      "note": "Ws(...) (API-error assistant message builder, chunk-a1cg2ptw ~3682) builds K=r7n({...}) then `if(y7n(K))K.healsDistinctCarrier=!0;return K`. Only ever assigned !0; otherwise the key is absent. The other mention (GLo) only copies it into a test fixture."
+    },
+    "assistant.isMeta": {
+      "schema": {
+        "not": {}
+      },
+      "anchors": [
+        "context_management:«».message.context_management??null},isMeta:«».isMeta,isVirtual:«».isVirtual"
+      ],
+      "note": "No assistant message literal sets isMeta: the streaming literals, the API-error builder r7n/Ws/Rd and all `type:\"assistant\"` literals in all modules were checked. Only Nws (API normalization, chunk-a1cg2ptw) has isMeta:e.isMeta on an assistant, copying an undefined value. Never written. The program never writes it, so no value is valid."
+    },
+    "assistant.perTurnTiming": {
+      "schema": {
+        "type": "string"
+      },
+      "anchors": [
+        "perTurnEffort:«»,perTurnTiming:«»",
+        "«»=«».outputConfig.timing?.now",
+        "timing:{type:\"now\",now:«»}"
+      ],
+      "note": "Streaming assistant literals (success and aborted-mid-stream, and the api-error yield) set perTurnTiming:CR. CR is void 0 or, scanning the request messages, an api_system message's outputConfig.timing?.now. That is built in bmn from Dmr's times array: the initial value xe.now=n.perTurnNow=_l=Rmn(new Date,tz) which returns a template string like 2026-01-01T12:00:00+00:00, and older values copied from earlier assistant messages' perTurnTiming. All strings or undefined (omitted in JSON)."
+    },
+    "assistant.requestRef": {
+      "schema": {
+        "type": "string"
+      },
+      "anchors": [
+        "requestId:«»??void 0,requestRef:«»,requestedModel:«».model",
+        "\"transcript_request_replay\",\"write_threw\")}),«»}catch(«»){«»(«»),«»(\"transcript_request_replay\",\"capture_threw\")"
+      ],
+      "note": "The streaming assistant literals (3 sites in chunk-a1cg2ptw, fn at ~2681) set requestRef:Sm. Sm=vEt({params,querySource,agentId,storageV5,conversation,stickyBetas,readInjectedBody}) (request-replay capture). vEt returns kt on success (kt=Dao(), crypto.randomUUID() string, which is also the api-request line id) and bare `return;` (undefined, key dropped in JSON) on every skip/error path. So string, or absent."
+    },
+    "assistant.serverClassifierResults": {
+      "schema": {
+        "not": {}
+      },
+      "anchors": [
+        "{return{serverClassifierRequest:«».key,serverClassifierResults:«»}}",
+        "noteRewrittenCall(){this.#n=!0}hasRewrittenCall(){return this.#n}toJSON(){return}}"
+      ],
+      "note": "Written in memory: ...Hg!==void 0&&nKe(Hg) gives {serverClassifierRequest:key,serverClassifierResults:Hg}, Hg=mKt(...)=new Zqe(...). Class Zqe defines toJSON(){return} so JSON serialization omits the key. Also stripped by EKt/qa before other uses. So the transcript never holds it. Never serialized. The program never writes it, so no value is valid."
+    },
+    "attachment.attachment.forwardedIntent.lineage": {
+      "schema": {
+        "type": "string"
+      },
+      "anchors": [
+        "isMeta:!0,forwardedIntent:{lineage:«».lineage,source:«».source},...«»({forwardedIntent:{lineage:«».lineage,source:«».source}})",
+        "lineage:`${«».uuid}:${«»}`,source:«»===\"human-principal\"?\"relay\":\"unattributed\"",
+        "default:return[{text:«»,timestamp:«»,lineage:«».uuid,source:«»}]",
+        "lineage:«».id,source:«»?\"owner\":\"unattributed\",projectsRow:!0"
+      ],
+      "note": "Single write site: the function that builds queued_command attachments from forwarded turns (chunk-dxcygj28) sets forwardedIntent:{lineage:A.lineage,source:A.source}, where A is an entry {text,timestamp,lineage,source}. Entries come from gp/fp: lineage is a message uuid (e.uuid, a string), `${e.uuid}:${index}` for poll_events provenance rows, the row id w.id (zod string from nZn), or the lineage of an already forwarded intent (Phn: z.string().min(1)). So always a non-empty string."
+    },
+    "attachment.attachment.forwardedIntent.source": {
+      "schema": {
+        "type": "string",
+        "enum": ["typed", "relay", "owner", "unattributed"]
+      },
+      "anchors": [
+        "isMeta:!0,forwardedIntent:{lineage:«».lineage,source:«».source},...«»({forwardedIntent:{lineage:«».lineage,source:«».source}})",
+        "source:«»===\"human-principal\"?\"relay\":\"unattributed\"",
+        "if(«».frame===\"relay-human\")return\"relay\";if(«».verifiedSlackHumanTurn===!0)return\"stop\"",
+        "«».kind===\"human\"&&(«»===\"queued_command\"||«».isMeta!==!0))return\"typed\"",
+        "source:«»?\"owner\":\"unattributed\",projectsRow:!0",
+        "function «»(«»){return «»===\"owner\"&&«»()?\"unattributed\":«»}",
+        "«»?«».map((«»)=>({...«»,source:\"unattributed\"})):«»"
+      ],
+      "note": "Same write site as lineage. source comes from: Rl() (default case returns only 'relay' or 'typed'; other results skip/stop/owner-rows are handled before), poll_events rows ('relay' or 'unattributed'), projects rows fp ('owner' or 'unattributed'), Hk(Phn(...).source) (Phn maps any input to typed/relay/owner/unattributed; Hk turns owner into unattributed when OK() is true), '!h&&P===owner ? unattributed', and the contextOnly path which forces 'unattributed'. So the closed set is typed, relay, owner, unattributed."
+    },
+    "attachment.attachment.text": {
+      "schema": {
+        "type": ["string", "null"]
+      },
+      "anchors": [
+        "{type:\"batching_reminder\",text:«»}",
+        "{type:\"secondary_reminder\",text:«»}",
+        "{type:\"elapsed_time_reminder\",text:«»(«»-«».startedAt)}",
+        "{type:\"fork_briefing\",text:«»}",
+        "{type:\"model\",identity:«»,text:«»}",
+        "{type:\"output_limit_note\",model:«»,text:«»}",
+        "{type:\"prefix_delta\",text:«»}",
+        "{type:\"silent_turn_reminder\",text:«»()}",
+        "{type:\"total_tokens_reminder\",text:«»(«»,«»)}",
+        "{type:\"total_tokens_reminder\",text:«»(\"padded-countdown\",«».totalTokensBudget)}"
+      ],
+      "note": "Attachment kinds whose object literal sets `text` (found by scanning every {type:\"<kind>\"...} literal for a top-level text key, and checking the spread ones: artifact_opening_prefetch, *_delta, cowork_memory_context, instructions have no text): batching_reminder and secondary_reminder (enhx8a0q, only built when the reminder text is non-null: the latched string), elapsed_time_reminder (template string 'Elapsed time so far: Nm SSs'), fork_briefing (template string about the forked worktree), output_limit_note (jNr.replace(...) string), prefix_delta (text from the prefix ledger, K.text, a string, only used when not undefined), silent_turn_reminder (env override string, a feature flag string, or the HTn default string), total_tokens_reminder (template '<total_tokens>N tokens left</total_tokens>'). The model kind sets text from Hbt('env_info_model', text), which returns `cache.get(key) ?? null` or the prompt-section resolver result, and the reader schema for it is string|null|undefined, so model.text can be null. Every other kind writes a string. Only model can write null, so the union is string|null."
+    },
+    "progress.data.durationMs": {
+      "schema": {
+        "type": "number"
+      },
+      "anchors": [
+        "Dt(\"done\",{tokens:«»,toolCalls:«»+«»,durationMs:«»+«»,resultPreview:«»(«»?«»:«»)})",
+        "Dt(\"error\",{error:«»,tokens:«»,toolCalls:«»+«»,durationMs:«»+«»})",
+        "Dt(\"error\",{error:«» instanceof Error?«».message:String(«»),tokens:«»+«»,toolCalls:«»+«»,durationMs:«»+(Date.now()-«»)})",
+        "Dt(\"error\",{error:\"skipped by user\",skipped:!0,tokens:«»+«»,toolCalls:«»+«»,durationMs:«»+(Date.now()-«»)})",
+        "(«»,{state:\"error\",error:«»,durationMs:«»+«».durationMs})",
+        "«»(\"error\",{error:\"skipped by user\",skipped:!0,durationMs:Date.now()-«»})",
+        "«»(\"done\",{tokens:«»?«»(«»):0,toolCalls:«»,durationMs:Date.now()-«»,resultPreview:"
+      ],
+      "note": "workflow_agent (chunk-5vm6s6e2): durationMs is spread into the state 'done' and 'error' writes as a millisecond number: the running writer Dt gets xt+(Date.now()-Zt) or xt+Pn (xt=0 plus accumulated ms; Pn=Date.now()-Zt), the queued usage-limit-wait error gets xt+ae.durationMs, and the unused remote writer Ve gets Date.now()-Ke. Always a number; absent on 'start' and 'progress'."
+    },
+    "progress.data.errorCategory": {
+      "schema": {
+        "enum": [
+          "overloaded",
+          "rate_limit",
+          "authentication_failed",
+          "server_error",
+          "cloud_credential_error",
+          "unknown"
+        ]
+      },
+      "anchors": [
+        "errorStatus:«».error.status,errorCategory:«»}",
+        "function «»(«»){if(«».status===529||«».message?.includes('\"type\":\"overloaded_error\"'))return\"overloaded\";if(«».status===429)return\"rate_limit\";if(«».status===401||«».status===403)return\"authentication_failed\";if(«».status!==void 0&&«».status>=408)return\"server_error\";if(«».isCloudCredentialError)return\"cloud_credential_error\";return\"unknown\"}"
+      ],
+      "note": "agent_api_retry (chunk-sj79q3n5): errorCategory:V where V=cBn(b.error) for each system api_error event of the agent loop. cBn (chunk-a1cg2ptw) returns one of six string literals. The resolved:true form of agent_api_retry has no errorCategory. No other writer."
+    },
+    "progress.data.fallbackModel": {
+      "schema": {
+        "type": "string"
+      },
+      "anchors": [
+        "fallbackModel:«»,state:«»,startedAt:«»,queuedAt:«»,attempt:«»",
+        "=«».message.model;if(«»&&«»&&«»(«»,«»))«»=«»}"
+      ],
+      "note": "workflow_agent running writer Dt (chunk-5vm6s6e2): fallbackModel:No. No starts undefined (key then absent in JSON) and is set to the message.model of an assistant message from the API when the check wOe(message, resolvedModel) holds; message.model is a model-name string. No other writer."
+    },
+    "progress.data.lastAttemptReason": {
+      "schema": {
+        "enum": ["stalled", "throttled", "user-retry"]
+      },
+      "anchors": [
+        "attempt:«»,lastAttemptReason:«»===\"rate_limited\"?\"throttled\":«»,lastToolName:",
+        "if(«»===\"stalled\"||«»===\"user-retry\"){if(«»===\"stalled\"&&«»!==void 0)",
+        "stalledReason:«»,replyLost:«»===\"stalled\"&&«»,",
+        "let «»=«».stalledReason??\"stalled\",",
+        "«»(«»,`${«»} (throttle-retry)`,2,\"throttled\")",
+        "`${«»}${«»}`,«»,\"rate_limited\")",
+        "«»(«»,`${«»} (retry ${«»})`,«»+1,«»)"
+      ],
+      "note": "workflow_agent running writer Dt, via the ts(...) parameter te (chunk-5vm6s6e2). The agent is run by vn(...,reason): no reason on the first run (key absent), 'rate_limited' after a usage-limit wait (mapped to 'throttled' at the write), 'throttled' for the throttle retry, and A.stalledReason??'stalled' for stall retries; stalledReason is the abort reason when it is 'stalled' or 'user-retry' (else the run is not marked stalled). So the set is closed: stalled, throttled, user-retry."
+    },
+    "progress.data.lastToolName": {
+      "schema": {
+        "type": "string"
+      },
+      "anchors": [
+        "lastToolName:«»,lastToolSummary:«»,promptPreview:«»,promptFramed:«»,lastProgressAt:Date.now()",
+        "«»=«».name,«»=«»(«».input,«».name)||void 0,«»=«».id,"
+      ],
+      "note": "workflow_agent running writer Dt (chunk-5vm6s6e2): lastToolName:be, set to the name of the latest tool_use block of the agent's assistant message (a string). The other assignment, from yi(), reads the name of an entry of the Qn/ns maps; those maps are created empty in ts and never filled in the module, so it only sets undefined. Key absent before the first tool call."
+    },
+    "progress.data.lastToolSummary": {
+      "schema": {
+        "type": "string"
+      },
+      "anchors": [
+        "lastToolName:«»,lastToolSummary:«»,promptPreview:«»,promptFramed:«»,lastProgressAt:Date.now()",
+        "«»=«».name,«»=«»(«».input,«».name)||void 0,«»=«».id,",
+        "for(let «» of Object.values(«»))if(typeof «»===\"string\")return «»(«».replace(/\\s+/g,\" \").trim(),60);return\"\"}"
+      ],
+      "note": "workflow_agent running writer Dt (chunk-5vm6s6e2): lastToolSummary:Ge = A8t(tool_use.input, name)||void 0. A8t (chunk-9paxzxzz) returns '' or ps(text,60), a string of at most 60 cells; '' becomes undefined (key absent). So a string."
+    },
+    "progress.data.maxAttempts": {
+      "schema": {
+        "type": "integer",
+        "enum": [2, 3]
+      },
+      "anchors": [
+        "type:\"artifact_publish_retry\",status:«».status,attempt:«».attempt,maxAttempts:«».maxAttempts",
+        "«»({status:503,attempt:«»,maxAttempts:«»,delayMs:«»})",
+        "«»({status:429,attempt:2,maxAttempts:2,delayMs:«»})",
+        "«»?.({status:503,attempt:2,maxAttempts:2,delayMs:«»})",
+        "}var «»=3,«»=5000,«»=20000,«»=30000;function «»(«»){let «»=«»(«»)??2000;"
+      ],
+      "note": "artifact_publish_retry only (chunk-e4nj3r2k forwards the event of chunk-eawd4gc3): maxAttempts is the literal 2, or the constant is=3 (var is=3 in that module). The 'attempt' of the same event is 2 or the loop counter V from 2 up to 3. The resolved:true form has no maxAttempts."
+    },
+    "progress.data.model": {
+      "schema": {
+        "type": "string"
+      },
+      "anchors": [
+        "agentId:«»,agentType:«»?.agentType,isolation:«»?\"worktree\":void 0,model:«»,fallbackModel:«»,state:«»,startedAt:«»,queuedAt:«»,attempt:«»",
+        "model:«»(«»?.model),state:\"start\",queuedAt:«»,promptPreview:«»,lastProgressAt:«»}",
+        "model:«»(«»?.model),state:\"error\",error:«» instanceof Error?«».message:String(«»),queuedAt:",
+        "model:«»(«»?.model),state:\"done\",startedAt:Date.now(),lastProgressAt:Date.now(),cached:!0",
+        "model:«»(«»?.model),state:\"error\",blocked:!0,error:",
+        "model:«»,queuedAt:Date.now(),tokens:«»+«».tokens,toolCalls:«»+«».toolCalls,promptPreview:«»,promptFramed:«»,lastProgressAt:Date.now(),...«»}",
+        "function «»(«»){if(«»)return «»;let «»=«»();if(«»!==void 0)return «»;let «»=«»();return «»!==\"inherit\"?«»:«».options.mainLoopModel}"
+      ],
+      "note": "workflow_agent (chunk-5vm6s6e2, the workflow runtime): five writers set model. The running-agent writer Dt and the queued-update writer use ze=fW(...), the model resolver (a model-name string on every branch). The queued (start), error, blocked and cached writers use Sn(opts.model): opts.model if truthy, else sMe() (the CLAUDE_CODE_WORKFLOW_SUBAGENT_MODEL env string), else _ae() (CLAUDE_CODE_SUBAGENT_MODEL env string), else mainLoopModel (string). So a string. The queued, blocked and cached writers pass Sn(opts.model), which returns opts.model unchanged when it is truthy; the workflow script API declares model as a string but the program does not check its type there (Ao tests typeof model==='string' only later), so a non-string from a script is unconfirmed."
+    },
+    "progress.data.modelsUsed": {
+      "schema": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "anchors": [
+        "resolvedModel:«»,modelsUsed:«»}",
+        "function «»(«»,«»){return «».at(-1)===«»?«»:[...«»,«»]}",
+        "=«»,«»=«»([],«»);if(«».length>0){"
+      ],
+      "note": "agent_progress (chunk-sj79q3n5, both sites): modelsUsed:E where E starts as ZMn([],model) and becomes ZMn(E,toModel) on each query_model_change. ZMn(list,model) returns list or [...list,model], so it is an array of the model-name strings (at least one entry). Not written by the other agent_progress writers (chunk-z2ctr57c, chunk-zjfzcfy1)."
+    },
+    "progress.data.promptFramed": {
+      "schema": {
+        "type": "boolean"
+      },
+      "anchors": [
+        "promptFramed:«»,lastProgressAt:Date.now()",
+        "let «»=«»();if(await «»({idx:«»,promptStr:«»,label:«»,ownPhaseTitle:«»,ownPhaseIndex:«»,opts:«»,queuedAt:«»,provenanceOn:«»}))return null",
+        "function «»(){let «»=«».CLAUDE_CODE_WORKFLOW_PROMPT_PROVENANCE;if(«»!==void 0)return «»;return «»(\"tengu_bubbly_harbor\",!0)}",
+        "udsInboxShape,«»=«»(«»,null)"
+      ],
+      "note": "workflow_agent running writer Dt and the queued-update writer (chunk-5vm6s6e2): promptFramed:Q with Q=Iio() (chunk-9paxzxzz). Iio reads a key of Jn, an env proxy built from an empty key table (chunk-96zs3wmc: kN={}, Jn=SG(kN,null)), so it is always undefined, and it returns k('tengu_bubbly_harbor',true), the feature-flag value with default true. A boolean; the flag value is not coerced, so a non-boolean server value is unconfirmed."
+    },
+    "progress.data.promptText": {
+      "schema": {
+        "type": "string"
+      },
+      "anchors": [
+        "type:\"hook_progress\",hookEvent:«»,hookName:«»,command:«»(«»),...«».type===\"prompt\"&&{promptText:«»(«».prompt)}",
+        "function «»(«»){return «»(«»).replace(/\\n/g,\"\\u2424\").replace(/\\t/g,\"\\u2409\")}",
+        "prompt:«»().describe(\"Prompt to evaluate with LLM."
+      ],
+      "note": "hook_progress (a1cg2ptw, the hook runner): promptText is only spread in when the hook's type is \"prompt\", as tu(hook.prompt). tu (chunk-awtg6f5t) is nH(t) with newline and tab replaced by visible symbols; nH returns t unchanged or a rebuilt string, so a string stays a string. A prompt hook's prompt is a string by the hook schema (chunk-p709670a, PromptHookSchema). No other producer writes promptText."
+    },
+    "progress.data.resolvedModel": {
+      "schema": {
+        "type": "string"
+      },
+      "anchors": [
+        "resolvedModel:«»,modelsUsed:«»}",
+        "if(«».type===\"query_model_change\"){«»=«».toModel,«»=«»(«»,«».toModel);return}",
+        "resolvedModel:«»,...«»&&{description:«»}}",
+        "if(«».type===\"query_model_change\"){«»=«».toModel,yield «»;continue}",
+        "function «»(«»,«»){return «».at(-1)===«»?«»:[...«»,«»]}"
+      ],
+      "note": "agent_progress, written at two sites in chunk-sj79q3n5 (the Agent tool run: data {message,type:'agent_progress',prompt,agentId,agentType,isBuiltIn,description,resolvedModel,modelsUsed}) and one in chunk-zjfzcfy1 (background sub-agent run, resolvedModel:ze). The value starts as the result of the model resolver fW/tRs (chunk-a1cg2ptw; every branch returns a model-name string) and is replaced by the toModel of each query_model_change event (the model chain or fallback model name). So it is a model-name string. Not every toModel source was traced one by one; all read as model ids."
+    },
+    "progress.data.skipped": {
+      "schema": {
+        "type": "boolean",
+        "const": true
+      },
+      "anchors": [
+        "Dt(\"error\",{error:\"skipped by user\",skipped:!0,",
+        "«»(\"error\",{error:\"skipped by user\",skipped:!0,durationMs:"
+      ],
+      "note": "workflow_agent (chunk-5vm6s6e2): skipped:!0 is written only with state 'error' and error 'skipped by user' (user-skip abort), by Dt and by the remote writer Ve. Only the value true is written; the key is absent otherwise."
+    },
+    "progress.data.status": {
+      "schema": {
+        "type": ["string", "integer"],
+        "enum": ["started", "completed", "failed", "progress", 429, 503]
+      },
+      "anchors": [
+        "type:\"mcp_progress\",status:\"started\",serverName:«».name,toolName:«».name",
+        "type:\"mcp_progress\",status:\"completed\",serverName:«».name,toolName:«».name,elapsedTimeMs:",
+        "type:\"mcp_progress\",status:\"failed\",serverName:«».name,toolName:«».name,elapsedTimeMs:",
+        "type:\"mcp_progress\",status:\"progress\",serverName:«»,toolName:«»,progress:",
+        "«»(\"progress\",«».boundMcpStatusMessage(",
+        "type:\"mcp_progress\",status:«»,serverName:«»,toolName:«»,progress:«»,progressMessage:«»})",
+        "type:\"artifact_publish_retry\",status:«».status,attempt:«».attempt,maxAttempts:«».maxAttempts",
+        "«»({status:429,attempt:2,maxAttempts:2,delayMs:«»})",
+        "«»({status:503,attempt:2,maxAttempts:2,delayMs:«»})",
+        "«»({status:503,attempt:«»,maxAttempts:«»,delayMs:«»})",
+        "«»?.({status:503,attempt:2,maxAttempts:2,delayMs:«»})"
+      ],
+      "note": "Two producers (chunk-9dvdjy85, plus an older copy in chunk-tvv9e5m1): mcp_progress data from the MCP tool call, status is the literal 'started', 'completed' or 'failed', or 'progress' (the progress notification, and the task-polling updates through Ie('progress',...)); all strings. The other producer is artifact_publish_retry (chunk-e4nj3r2k forwards onRetry events from chunk-eawd4gc3): status is the HTTP status of the retried publish, the literal 429 or 503 (numbers). The resolved:true form has no status. No other progress writer has a status key."
+    },
+    "progress.data.statusMessage": {
+      "schema": {
+        "type": "string"
+      },
+      "anchors": [
+        "...\"statusMessage\"in «»&&«».statusMessage!=null&&{statusMessage:«»(«».statusMessage)}",
+        "function «»(«»){return «»(«»).replace(/\\n/g,\"\\u2424\").replace(/\\t/g,\"\\u2409\")}",
+        "statusMessage:«»().optional().describe(\"Custom status message to display in spinner while hook runs\")"
+      ],
+      "note": "hook_progress (a1cg2ptw, hook runner): statusMessage is spread in when the hook has a non-null statusMessage, as tu(hook.statusMessage); tu returns a string for a string. Every hook schema (command, prompt, mcp_tool, http, agent in chunk-p709670a) declares statusMessage as an optional string. No other producer writes statusMessage."
+    },
+    "system.highlight": {
+      "schema": {
+        "not": {}
+      },
+      "anchors": ["uuid:«»(),level:«»,...«»&&{highlight:«»}}"],
+      "note": "Only writer is Qv(e,n,r) (informational, ...r&&{highlight:r}) in chunk-a1cg2ptw. Parsed every Qv( call in all importing modules plus the $t wrapper: all pass 2 args (message, level). Other informational literals (qs9rj311, qw7c6vka, etc.) have no highlight. Never written. The program never writes it, so no value is valid."
+    },
+    "system.hookLabel": {
+      "schema": {
+        "not": {}
+      },
+      "anchors": [
+        "yield «»(«»,«»,«»,«»,«»,«»,\"suggestion\",«»,void 0,void 0,«»)",
+        "toolUseID:«»,hookLabel:«»,totalDurationMs:«»}"
+      ],
+      "note": "Only writer is c0s (chunk-a1cg2ptw, stop_hook_summary: ...,hookLabel:H,totalDurationMs:q). The single caller (chunk-enhx8a0q, `yield c0s(xe,an,oo,pe,bt,It,\"suggestion\",Qt,void 0,void 0,Bt)`) passes void 0 for H and q; no other module imports/calls c0s (rg checked all mods). The normalizer (wEe) only copies an existing hookLabel. Never written. The program never writes it, so no value is valid."
+    },
+    "system.totalDurationMs": {
+      "schema": {
+        "not": {}
+      },
+      "anchors": [
+        "yield «»(«»,«»,«»,«»,«»,«»,\"suggestion\",«»,void 0,void 0,«»)",
+        "toolUseID:«»,hookLabel:«»,totalDurationMs:«»}"
+      ],
+      "note": "Same as hookLabel: c0s argument q is void 0 at the only call site. The pndhv0fp merge that computes Math.max(totalDurationMs) runs only when hookLabel is defined (cS), which is never. Never written. The program never writes it, so no value is valid."
+    },
+    "system.upgradeNudge": {
+      "schema": {
+        "not": {}
+      },
+      "anchors": ["url:«»,upgradeNudge:«»,isMeta:!1,timestamp:new Date("],
+      "note": "Only writer is l0s(e,n) (bridge_status, upgradeNudge:n). Only caller is chunk-3ghxrna3 `l0s(Ls)`, one argument, so n is undefined. No other callers in any module. Never written. The program never writes it, so no value is valid."
+    },
+    "user.classifierMetaLines": {
+      "schema": {
+        "type": "string"
+      },
+      "anchors": [
+        "classifierMetaLines:«»,...«»!==void 0&&{classifierBoundary:«»}",
+        "«»=«»(«»[0].tool_use_id),«»=«»(«»[0].tool_use_id)?!0:void 0,«»=«»(«»[0].tool_use_id),«»=«»}return{type:\"user\"",
+        "if(«».length>0&&«»!==void 0&&«».type===\"tool_use\"&&«».id!==void 0)«»(«».id,«».join(\"\"));",
+        "{navigation:{from:«»(«»),to:«»(«»)}});«»(«»,«»)}"
+      ],
+      "note": "The user-message constructor (chunk-a1cg2ptw) sets classifierMetaLines:To where To=E3(tool_use_id) only when content is an array with exactly one tool_result. E3 reads a Map filled by TFe(id, text), whose two callers pass fo.join('') (an array of strings joined) and eet({navigation}) (PH(...)+newline, a string). Map.get on a missing id gives undefined, which JSON drops. Never null."
+    },
+    "user.hostClassifierContext": {
+      "schema": {
+        "type": "string"
+      },
+      "anchors": [
+        "hostClassifierContext:«»,...«»(«»,«»,«»,{toolUseId:",
+        "«»=«»!==void 0?«»(«»,«»):void 0;if(«»!==void 0)if(«».length<«».length)",
+        "«»=«»(«»[0].tool_use_id),«»=«»}return{type:\"user\""
+      ],
+      "note": "Only Pe() caller that passes hostClassifierContext is the tool-result builder (chunk-a1cg2ptw): RF = re(EF, R0), the join of host classifier context entries truncated by re() (a string slicer returning a string, '' when limit<=0), or undefined when no entries. Pe copies the arg into the message only when content is an array with exactly one tool_result ($n=ve); otherwise undefined and dropped. Readers check typeof === 'string'."
+    },
+    "user.modelOnlyText": {
+      "schema": {
+        "not": {}
+      },
+      "anchors": ["return{content:«»,...«»!==void 0&&{modelOnlyText:«»}}}"],
+      "note": "Pe writes it via `...Se!==void 0&&{modelOnlyText:Se}`. The only source is QZ (compact summary builder, chunk-a1cg2ptw) which returns `...s!==void 0&&{modelOnlyText:s}` in both branches, but its local `s` is declared (`let r=hur(e),s,h=...`) and never assigned in the function body, so it is always undefined and the key is never written. Other occurrences are readers (cpe(m,d) ignores d) or deletes. No other Pe call passes it. Type is unconfirmed (never written by this version). The program never writes it, so no value is valid."
+    },
+    "user.permissionDecision": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "decision": {
+            "enum": ["accept", "reject", "cancelled"]
+          },
+          "source": {
+            "enum": [
+              "config",
+              "classifier",
+              "hook",
+              "user_temporary",
+              "user_permanent",
+              "user_reject",
+              "user_abort",
+              "unknown",
+              "server_fallback_tombstone",
+              "invalid_input",
+              "permission_updated_input_invalid"
+            ]
+          },
+          "reasonType": {
+            "enum": [
+              "rule",
+              "mode",
+              "hook",
+              "classifier",
+              "other",
+              "safetyCheck",
+              "workingDir",
+              "asyncAgent",
+              "sandboxOverride",
+              "subcommandResults",
+              "permissionPromptTool"
+            ]
+          },
+          "ruleSource": {
+            "type": "string"
+          },
+          "grantScope": {
+            "enum": ["once", "session"]
+          },
+          "reasonCode": {
+            "type": "string"
+          },
+          "circuitBreaker": {
+            "enum": [
+              "dangerousRemoval",
+              "backgroundOperator",
+              "suspiciousWindowsPath",
+              "isolatePeerMachines",
+              "restrictedMode",
+              "outsideReadsBlocked",
+              "claudeSettingsFile",
+              "internalHardDeny",
+              "unfinishedCheck"
+            ]
+          },
+          "classifierCategory": {
+            "enum": [
+              "account_standing_rule_changes",
+              "auto_mode_bypass",
+              "blind_apply",
+              "browser_file_upload_exfil",
+              "browser_input_exfil",
+              "browser_js_exfil",
+              "browser_navigate_exfil",
+              "browser_shortcut_execution",
+              "chatops_trigger_comments",
+              "ci_bypass",
+              "cloud_storage_mass_delete",
+              "cluster_wide_workload_creation",
+              "code_from_external",
+              "code_that_leaks_when_run",
+              "command_network_lists",
+              "containment_escape",
+              "create_public_surface",
+              "create_rce_surface",
+              "create_unsafe_agents",
+              "credential_exploration",
+              "credential_leakage",
+              "credential_materialization",
+              "data_exfiltration",
+              "dns_domain_cert_changes",
+              "excess_sensitive_detail",
+              "exfil_scouting",
+              "expose_local_services",
+              "external_ingress_tunnel",
+              "external_system_writes",
+              "feature_flag_writes",
+              "git_destructive",
+              "instruction_poisoning",
+              "interfere_with_workloads",
+              "irreversible_deletion_general",
+              "irreversible_local_destruction",
+              "live_shared_artifact_sensitive_delta",
+              "logging_audit_tampering",
+              "merge_without_review",
+              "modify_shared_resources",
+              "node_lifecycle_operations",
+              "out_of_place_publication",
+              "package_registry_bypass",
+              "permission_grant",
+              "pii_data_handling",
+              "production_deploy",
+              "production_reads",
+              "protected_scope_iac_apply",
+              "public_data_sharing_upload",
+              "real_world_transactions",
+              "remote_repoint",
+              "remote_shell_writes",
+              "safety_bypass_flag",
+              "sandbox_network_callback",
+              "secret_store_writes",
+              "security_test_removal",
+              "security_weaken",
+              "self_approval",
+              "self_modification",
+              "sensitive_remote_exec",
+              "sensitive_source_provenance",
+              "session_transcript_tampering",
+              "shared_cluster_mutation",
+              "shared_scratch_sweep",
+              "third_party_attack",
+              "tls_auth_weaken",
+              "tmux_self_drive",
+              "traffic_redirection",
+              "unauthorized_persistence",
+              "unrequested_artifact_publish",
+              "unrequested_commit_in_a_connected_app",
+              "untrusted_code_integration",
+              "unverifiable_deletion_scope",
+              "unverifiable_deletion_target",
+              "cowork_delete_grant",
+              "cowork_folder_access",
+              "cowork_run_routine_now",
+              "cowork_scheduled_task_delete",
+              "cowork_scheduled_task_write",
+              "cowork_skill_persistence"
+            ]
+          }
+        },
+        "required": ["decision", "source"]
+      },
+      "anchors": [
+        "...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»}",
+        "for(let «» of «»(«»,«»))«».permissionDecision=«»;return «»",
+        "return{decision:«»,source:«»,...«»!==void 0&&!«»&&{reasonType:«».type}",
+        "return\"classifier\";switch(«».type){case\"hook\":return\"hook\";case\"user\":return «».permanent?\"user_permanent\":\"user_temporary\"",
+        "«»=new Set([...«»,...«»]);function «»(«»){return «»!==void 0&&«».has(«»)?",
+        ":«»?.recorded?.grantScope??(«»?.outcome.behavior===\"allow\"?«».outcome.grantScope:void 0)"
+      ],
+      "note": "s9r(messages,toolUseId,record) assigns the record built by PU(decision,source,ctx), stored by EY. Callers: PU('cancelled','server_fallback_tombstone'|'user_abort'), PU('reject','invalid_input'|'permission_updated_input_invalid'), LOn (reject, source from Rst), Cst (decision/source from the recorded tool decision or IOn). source: Rst/IOn give user_temporary, user_permanent, user_reject, hook, config, user_abort; the recorded tool decision source (aYr) gives classifier, hook, user_permanent, user_temporary, user_abort, user_reject, unknown, or config. reasonType: decisionReason.type; the program's exhaustive switch (bIe) lists these 11 types. grantScope: 'once' or 'session' (the helper Mut returns always/session/once, and 'always' is filtered out both for the recorded scope and the outcome scope). circuitBreaker: a key of the safety-check table (checked with Object.hasOwn), 9 keys. classifierCategory: only for classifier reasons, and only if the category is in the closed set ZFo+e$o (79 names). reasonCode: string built by zne (e.g. 'rule:<source>', 'mode:<mode>', 'hook:<name>', 'classifier:auto-mode', 'subcommands:a+b', 'unknown', 'subcommandResults'), open set. ruleSource: a permission rule source string (e.g. userSettings, projectSettings, localSettings, flagSettings, policySettings, cliArg, session, command, toolsNarrowing); the full set is not closed in the code I read, so it is typed string. Keys other than decision and source are omitted when undefined. Matches the observed object."
+    },
+    "user.refusedMessageId": {
+      "schema": {
+        "type": "string"
+      },
+      "anchors": [
+        "«».refusedMessageId=«»,«».message.stop_reason=\"refusal\"",
+        "refusedMessageId:«».refusedMessageId,now:«».now",
+        "...«»!==void 0&&{refusedMessageId:«»}"
+      ],
+      "note": "Only writer: the refusal-retry nudge user message (turnCompanion) takes the refused assistant message's refusedMessageId. That is set from Q5t(message id): a string matching /^[A-Za-z0-9_-]{1,255}$/, else undefined; the spread omits the key when undefined."
+    },
+    "user.remoteToolDenialKind": {
+      "schema": {
+        "enum": [
+          "user-rejected",
+          "permission-rule",
+          "automode-blocked",
+          "automode-unavailable",
+          "automode-parsing-error",
+          "interrupted",
+          "cancelled"
+        ]
+      },
+      "anchors": [
+        "...«»!==void 0&&{remoteToolDenialKind:«»}",
+        "return «».data.non_execution_kind",
+        "[\"user-rejected\",\"permission-rule\",\"automode-blocked\",\"automode-unavailable\",\"automode-parsing-error\",\"interrupted\",\"cancelled\"]"
+      ],
+      "note": "Set on user lines rebuilt from a remote/SDK stream. Value is the non_execution_kind of the tool_result_meta entry (Kyr), validated by a zod enum of seven strings, only when the sole tool_result is_error. Key omitted otherwise."
+    },
+    "user.replacesSpan": {
+      "schema": {
+        "not": {}
+      },
+      "anchors": [
+        "usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»"
+      ],
+      "note": "Written only by the user-message constructor Pe (chunk-a1cg2ptw: `replacesSpan:w` from its destructured parameter). No Pe call site in any module passes replacesSpan (the identifier appears only in Pe's parameter list, the object literal and two readers that test `=== !0`, in chunk-dxcygj28), and no spread source (QZ, u4r, gDn...) has the key. So 2.1.308 never writes a value; a boolean is implied only by the readers and is unconfirmed. The program never writes it, so no value is valid."
+    },
+    "user.serverClassifierContext": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "request": {
+            "type": "string"
+          },
+          "context": {
+            "type": "object",
+            "properties": {
+              "git_state": {
+                "type": "object",
+                "properties": {
+                  "cwd": {
+                    "type": ["string", "null"]
+                  },
+                  "root": {
+                    "type": ["string", "null"]
+                  },
+                  "branch": {
+                    "type": ["string", "null"]
+                  },
+                  "default_branch": {
+                    "type": ["string", "null"]
+                  },
+                  "status": {
+                    "type": ["object", "null"]
+                  },
+                  "visibility": {
+                    "type": ["object", "null"]
+                  },
+                  "error": {
+                    "type": "string",
+                    "enum": ["timeout", "not_a_repo", "error", "pending"]
+                  },
+                  "truncated": {
+                    "type": "boolean"
+                  }
+                }
+              },
+              "chrome_navigation": {
+                "type": "object",
+                "properties": {
+                  "enabled": {
+                    "type": "boolean"
+                  },
+                  "baselines": {
+                    "type": "object"
+                  },
+                  "tabs": {
+                    "type": "object"
+                  }
+                }
+              },
+              "live_cwd": {
+                "type": "string"
+              },
+              "platform": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "anchors": [
+        "serverClassifierContext:«»,hostClassifierContext:«»,toolDenialKind:",
+        "«»=«»(«»[0].tool_use_id),«»=«»}return{type:\"user\"",
+        "settleRequest(«»,«»){let «»=this.inFlight.get(«»);if(«»===void 0)return;this.inFlight.delete(«»);let «»={request:«»,context:«»};for(let «» of «»)this.judged.set(«»,«»)}",
+        "historyFor(«»){return this.judged.get(«»)}",
+        "function «»(«»){return{git_state:«».git_state,...«».chrome_navigation!==void 0&&{chrome_navigation:«».chrome_navigation},...«».live_cwd!==void 0&&{live_cwd:«».live_cwd},platform:«».platform}}",
+        "?«»(«»(),{artifacts:«»?.artifacts,thread:«»!==null,exactMcpAllowRules:",
+        "!==void 0)«»(«».key,«»(«»))}"
+      ],
+      "note": "The constructor sets serverClassifierContext:Cvt(tool_use_id) (only for a single tool_result in an array content). Cvt reads the judged Map filled by settleRequest(requestKey, toolUseIds), which stores {request:requestKey, context:inFlightContext}. The in-flight context is kpn(ac), recorded by wvt(Hg.key, kpn(ac)) where Hg.key is crypto.randomUUID() (string, passed through mKt(pee(),...) to Zqe.key). kpn picks git_state, chrome_navigation (if defined), live_cwd (if defined), platform from the auto-mode server context built by Lpr: git_state is the host git object (non-null, since Lpr reads its .visibility), chrome_navigation {enabled, baselines, tabs?}, live_cwd and platform strings (platform:O()). The reader (nio, MFe zod) takes request as a non-empty string and context as an object with those four optional keys. Inner property types of git_state come from the zod schema qso (reader side), not from a writer literal, so they are listed as that schema states. If never settled or no context is held, the key is undefined and dropped; never null."
+    },
+    "user.toolDenialUnanswered": {
+      "schema": {
+        "enum": ["stream-closed"]
+      },
+      "anchors": [
+        "toolDenialUnanswered:«»(«»),userFeedback:",
+        ".type===\"other\"&&«».reason===«»?\"stream-closed\":void 0"
+      ],
+      "note": "Written once, on the denied tool_result user line: toolDenialUnanswered:Myn(decision). Myn returns 'stream-closed' for a deny whose decisionReason is type 'other' with the stream-closed reason, else undefined (key then omitted). createUserMessage passes it through; the replay copy keeps it as is."
+    },
+    "user.toolResultRemedy": {
+      "schema": {
+        "anyOf": [
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "mcp_needs_auth"
+              },
+              "servers": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": ["kind", "servers"]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "mcp_disabled"
+              },
+              "servers": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": ["kind", "servers"]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "mcp_required_missing"
+              },
+              "servers": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": ["kind", "servers"]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "auth_expired"
+              },
+              "provider": {
+                "enum": ["claude_ai", "claude_design"]
+              }
+            },
+            "required": ["kind", "provider"]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "auth_overridden"
+              },
+              "provider": {
+                "const": "claude_ai"
+              },
+              "managed": {
+                "type": "boolean"
+              }
+            },
+            "required": ["kind", "provider", "managed"]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "auth_missing_scope"
+              },
+              "provider": {
+                "const": "claude_design"
+              }
+            },
+            "required": ["kind", "provider"]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "design_needs_authorization"
+              },
+              "provider": {
+                "const": "claude_design"
+              }
+            },
+            "required": ["kind", "provider"]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "sandbox_violation"
+              }
+            },
+            "required": ["kind"]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "outside_reads_blocked"
+              },
+              "path": {
+                "type": "string"
+              },
+              "managed": {
+                "type": "boolean"
+              }
+            },
+            "required": ["kind", "managed"]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "memory_paused"
+              }
+            },
+            "required": ["kind"]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "feature_disabled"
+              },
+              "feature": {
+                "const": "workflows"
+              },
+              "cause": {
+                "enum": [
+                  "managed_settings",
+                  "org_policy",
+                  "unavailable",
+                  "user_setting",
+                  "unsupported_runtime"
+                ]
+              }
+            },
+            "required": ["kind", "feature", "cause"]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "policy_denied"
+              },
+              "feature": {
+                "const": "artifacts"
+              },
+              "policy_kind": {
+                "enum": ["org_denied", "latched"]
+              }
+            },
+            "required": ["kind", "feature", "policy_kind"]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "spawn_arg_limit"
+              }
+            },
+            "required": ["kind"]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "staged_for_review"
+              },
+              "path": {
+                "type": "string"
+              }
+            },
+            "required": ["kind", "path"]
+          }
+        ]
+      },
+      "anchors": [
+        "toolResultRemedy:«».validationErrorRemedy?.(«»)",
+        "managed:«»()};case\"memory_paused\":return{kind:\"memory_paused\"}",
+        "{kind:\"auth_overridden\",provider:\"claude_ai\",managed:«»}",
+        "{kind:\"auth_expired\",provider:\"claude_ai\"}",
+        "{kind:\"mcp_needs_auth\",servers:[«».serverName]}",
+        "{kind:\"mcp_disabled\",servers:[«».name]}",
+        "{kind:\"feature_disabled\",feature:\"workflows\",cause:«»}",
+        "{kind:\"policy_denied\",feature:\"artifacts\",policy_kind:«»}",
+        "{kind:\"staged_for_review\",path:«»?.path??«»}",
+        "{kind:\"mcp_required_missing\",servers:«»}",
+        "{kind:\"design_needs_authorization\",provider:\"claude_design\"}",
+        "{kind:\"auth_missing_scope\",provider:\"claude_design\"}",
+        "{kind:\"sandbox_violation\"}",
+        "{kind:\"spawn_arg_limit\"}"
+      ],
+      "note": "Sources: validationErrorRemedy(input); MCP validation remedy (fpr/Nfn/ppr: mcp_needs_auth, mcp_disabled, auth_expired); Lfn(decision) for denies (outside_reads_blocked, memory_paused); tool-result remedy (Qr.remedy: sandbox_violation from Bash, memory_paused, mcp_needs_auth/mcp_disabled from the MCP wait tool, staged_for_review from file writes, feature_disabled from the workflow tool validateInput); error remedy via ND(error,{...}) (spawn_arg_limit, auth_*, design_needs_authorization, mcp_required_missing, policy_denied, auth_expired). Per kind properties follow the literal objects at each site. managed for outside_reads_blocked is kFr() = some(settings layer).permissions.blockReadsOutsideWorkingDirectories===true, a boolean; path is added only when blockedPath is defined. auth_overridden managed is true (fd) or false (env). Provider/servers/path/cause are strings from the cited enums or values (server names, setting path). Undefined remedies are not written."
+    },
+    "user.userFeedback": {
+      "schema": {
+        "type": "string"
+      },
+      "anchors": [
+        "userFeedback:«».behavior===\"ask\"?«».userFeedback:void 0",
+        "...«»?.feedbackIsFromUser&&«»&&{userFeedback:«»}",
+        "...«».feedback&&{userFeedback:«».feedback}"
+      ],
+      "note": "Tool-result path writes userFeedback only for an 'ask' decision. The only producers of that key on a permission result are cancelAndAbort(feedback,...) (truthy feedback string, only when feedbackIsFromUser) and the outside-read decline (v.feedback, truthy). Both are user-typed text; the key is omitted when absent or empty, never null."
     }
   }
 }

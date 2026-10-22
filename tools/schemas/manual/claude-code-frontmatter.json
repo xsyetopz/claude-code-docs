@@ -97,8 +97,9 @@
         "type": ["string", "number", "boolean", "null", "array", "object"]
       },
       "anchors": [
-        "argumentHint:«»[\"argument-hint\"]!=null?String(«»[\"argument-hint\"]):void 0",
-        "\"argument-hint\":«»().optional().describe(\"Placeholder text shown after the slash command name.\")"
+        "\"argument-hint\":«»().optional().describe(\"Placeholder text shown after the slash command name.\")",
+        "{description:«»??«»(«»,«»?\"Plugin skill\":\"Plugin command\"),argumentHint:«»[\"argument-hint\"]!=null?String(«»[\"argument-hint\"]):void 0",
+        "hasUserSpecifiedDescription:«»!==null,allowedTools:«»,disallowedTools:«»(«»),argumentHint:«»[\"argument-hint\"]!=null?String(«»[\"argument-hint\"]):void 0"
       ],
       "note": "The skill loader reads argumentHint:q[\"argument-hint\"]!=null?String(q[\"argument-hint\"]):void 0, so it takes any YAML value that is not null and turns it into a string (a list becomes a comma list). The program's own validator AI declares the key as mg() (string, number, boolean, null) and reports a mismatch for a list; real skills use a list, so the loader is the wider and right source."
     },
@@ -677,8 +678,8 @@
         "type": ["string", "number", "boolean", "null"]
       },
       "anchors": [
-        "observer:«»().optional().describe(\"Agent type auto-spawned as a ",
-        "lPo={skill:«»(()=>«»().strict()),agent:«»(()=>«»().strict()),\"output-style\":«»(()=>«»().strict())}"
+        "lPo={skill:«»(()=>«»().strict()),agent:«»(()=>«»().strict()),\"output-style\":«»(()=>«»().strict())}",
+        "observer:«»().optional().describe(\"Agent type auto-spawned as a background observer whenever this agent runs.\"),observerMessage:"
       ],
       "note": "The program's own frontmatter validator AI(kind, parsed) checks the parsed YAML with lPo.agent (a strict zod object). That declares observer as string, number, boolean or null (zod Ue([o(),E(),M(),Uf()])). Frontmatter is parsed with Bun.YAML.parse, so YAML scalars and lists reach it as these JSON types."
     },
@@ -687,8 +688,8 @@
         "type": ["string", "number", "boolean", "null"]
       },
       "anchors": [
-        "observerMessage:«»().optional().describe(\"Supplemental postamble append",
-        "lPo={skill:«»(()=>«»().strict()),agent:«»(()=>«»().strict()),\"output-style\":«»(()=>«»().strict())}"
+        "lPo={skill:«»(()=>«»().strict()),agent:«»(()=>«»().strict()),\"output-style\":«»(()=>«»().strict())}",
+        "observerMessage:«»().optional().describe(\"Supplemental postamble appended (after the harness-owned default) to each activity digest sent to the observer.\"),observeSubagents:"
       ],
       "note": "The program's own frontmatter validator AI(kind, parsed) checks the parsed YAML with lPo.agent (a strict zod object). That declares observerMessage as string, number, boolean or null (zod Ue([o(),E(),M(),Uf()])). Frontmatter is parsed with Bun.YAML.parse, so YAML scalars and lists reach it as these JSON types."
     },

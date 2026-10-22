@@ -35156,7 +35156,25 @@ var claude_code_transcript_default = {
           type: "string"
         },
         cut: {
-          "x-unverified": true
+          type: "object",
+          properties: {
+            kind: {
+              const: "laptop-account-memory"
+            },
+            cuts: {
+              type: "integer"
+            },
+            placeholders: {
+              type: "integer"
+            },
+            messages: {
+              type: "array",
+              items: {
+                type: "integer"
+              }
+            }
+          },
+          required: ["kind", "cuts", "placeholders", "messages"]
         },
         cutRequestDigest: {
           type: "string"
@@ -35882,7 +35900,7 @@ var claude_code_transcript_default = {
           type: "boolean"
         },
         isMeta: {
-          "x-unverified": true
+          not: {}
         },
         isUnmetered: {
           type: "boolean"
@@ -35918,7 +35936,8 @@ var claude_code_transcript_default = {
           type: "string"
         },
         healsDistinctCarrier: {
-          "x-unverified": true
+          type: "boolean",
+          enum: [true]
         },
         isAbortedMidStream: {
           type: "boolean"
@@ -35948,16 +35967,15 @@ var claude_code_transcript_default = {
           type: "string"
         },
         serverClassifierResults: {
-          "x-unverified": true
+          not: {}
         },
         apiBlockIndex: {
           "x-observed": true,
           type: "integer"
         },
         requestRef: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         requestedModel: {
           "x-observed": true,
@@ -35979,7 +35997,7 @@ var claude_code_transcript_default = {
           ]
         },
         perTurnTiming: {
-          "x-unverified": true
+          type: "string"
         },
         thinkingDurationMs: {
           type: "number"
@@ -36136,10 +36154,11 @@ var claude_code_transcript_default = {
             forwardedIntent: {
               properties: {
                 lineage: {
-                  "x-unverified": true
+                  type: "string"
                 },
                 source: {
-                  "x-unverified": true
+                  type: "string",
+                  enum: ["typed", "relay", "owner", "unattributed"]
                 }
               }
             },
@@ -36156,8 +36175,7 @@ var claude_code_transcript_default = {
               type: "string"
             },
             text: {
-              "x-unverified": true,
-              "x-observed-type": ["string"]
+              type: ["string", "null"]
             },
             hooks: {
               type: "array"
@@ -36817,7 +36835,22 @@ var claude_code_transcript_default = {
         data: {
           properties: {
             type: {
-              type: "string"
+              enum: [
+                "hook_progress",
+                "tool_heartbeat",
+                "bash_progress",
+                "powershell_progress",
+                "mcp_progress",
+                "agent_progress",
+                "skill_progress",
+                "agent_api_retry",
+                "search_results_received",
+                "query_update",
+                "workflow_log",
+                "workflow_phase",
+                "workflow_agent",
+                "artifact_publish_retry"
+              ]
             },
             hookEvent: {
               type: "string"
@@ -36829,10 +36862,10 @@ var claude_code_transcript_default = {
               type: "string"
             },
             promptText: {
-              "x-unverified": true
+              type: "string"
             },
             statusMessage: {
-              "x-unverified": true
+              type: "string"
             },
             toolName: {
               type: "string"
@@ -36884,10 +36917,13 @@ var claude_code_transcript_default = {
               type: "string"
             },
             resolvedModel: {
-              "x-unverified": true
+              type: "string"
             },
             modelsUsed: {
-              "x-unverified": true
+              type: "array",
+              items: {
+                type: "string"
+              }
             },
             resolved: {
               type: "boolean"
@@ -36905,7 +36941,14 @@ var claude_code_transcript_default = {
               type: "number"
             },
             errorCategory: {
-              "x-unverified": true
+              enum: [
+                "overloaded",
+                "rate_limit",
+                "authentication_failed",
+                "server_error",
+                "cloud_credential_error",
+                "unknown"
+              ]
             },
             resultCount: {
               type: "number"
@@ -36914,7 +36957,7 @@ var claude_code_transcript_default = {
               type: "string"
             },
             index: {
-              type: "number"
+              type: "integer"
             },
             title: {
               type: "string"
@@ -36935,10 +36978,10 @@ var claude_code_transcript_default = {
               enum: ["worktree", "remote"]
             },
             model: {
-              "x-unverified": true
+              type: "string"
             },
             state: {
-              type: "string"
+              enum: ["start", "progress", "done", "error"]
             },
             blocked: {
               type: "boolean"
@@ -36965,19 +37008,19 @@ var claude_code_transcript_default = {
               type: "string"
             },
             fallbackModel: {
-              "x-unverified": true
+              type: "string"
             },
             lastAttemptReason: {
-              "x-unverified": true
+              enum: ["stalled", "throttled", "user-retry"]
             },
             lastToolName: {
-              "x-unverified": true
+              type: "string"
             },
             lastToolSummary: {
-              "x-unverified": true
+              type: "string"
             },
             promptFramed: {
-              "x-unverified": true
+              type: "boolean"
             },
             tokens: {
               type: "number"
@@ -36986,19 +37029,22 @@ var claude_code_transcript_default = {
               type: "number"
             },
             durationMs: {
-              "x-unverified": true
+              type: "number"
             },
             skipped: {
-              "x-unverified": true
+              type: "boolean",
+              const: true
             },
             remoteSessionId: {
               type: "string"
             },
             status: {
-              "x-unverified": true
+              type: ["string", "integer"],
+              enum: ["started", "completed", "failed", "progress", 429, 503]
             },
             maxAttempts: {
-              "x-unverified": true
+              type: "integer",
+              enum: [2, 3]
             }
           }
         },
@@ -37165,7 +37211,7 @@ var claude_code_transcript_default = {
           enum: ["info", "notice", "suggestion", "warning", "error"]
         },
         highlight: {
-          "x-unverified": true
+          not: {}
         },
         snapshotFiles: {
           type: "array"
@@ -37233,7 +37279,7 @@ var claude_code_transcript_default = {
           type: "string"
         },
         upgradeNudge: {
-          "x-unverified": true
+          not: {}
         },
         entry: {
           type: "string"
@@ -37295,10 +37341,10 @@ var claude_code_transcript_default = {
           type: "string"
         },
         hookLabel: {
-          "x-unverified": true
+          not: {}
         },
         totalDurationMs: {
-          "x-unverified": true
+          not: {}
         },
         durationMs: {
           type: "number"
@@ -37643,162 +37689,8 @@ var claude_code_transcript_default = {
         persistedAsDefault: {
           type: "boolean"
         },
-        compact_metadata: {
-          type: "object",
-          properties: {
-            trigger: {
-              enum: ["manual", "auto"]
-            },
-            pre_tokens: {
-              type: "number"
-            },
-            post_tokens: {
-              type: "number"
-            },
-            cumulative_dropped_tokens: {
-              type: "number"
-            },
-            duration_ms: {
-              type: "number"
-            },
-            user_context: {
-              type: "string"
-            },
-            messages_summarized: {
-              type: "number"
-            },
-            precomputed: {
-              type: "boolean"
-            },
-            pre_compact_discovered_tools: {
-              type: "array",
-              items: {
-                type: "string"
-              }
-            },
-            pre_compact_artifact_read_versions: {
-              type: "array",
-              items: {
-                type: "object",
-                properties: {
-                  slug: {
-                    type: "string"
-                  },
-                  ver: {
-                    type: "string"
-                  }
-                }
-              }
-            },
-            preserved_segment: {
-              type: "object",
-              properties: {
-                head_uuid: {
-                  type: "string"
-                },
-                anchor_uuid: {
-                  type: "string"
-                },
-                tail_uuid: {
-                  type: "string"
-                }
-              }
-            },
-            preserved_messages: {
-              type: "object",
-              properties: {
-                anchor_uuid: {
-                  type: "string"
-                },
-                uuids: {
-                  type: "array",
-                  items: {
-                    type: "string"
-                  }
-                },
-                all_uuids: {
-                  type: "array",
-                  items: {
-                    type: "string"
-                  }
-                }
-              }
-            }
-          }
-        },
-        logical_parent_uuid: {
-          anyOf: [
-            {
-              type: "string"
-            },
-            {
-              type: "null"
-            }
-          ]
-        },
-        original_model: {
-          type: "string"
-        },
-        fallback_model: {
-          type: "string"
-        },
-        request_id: {
-          anyOf: [
-            {
-              type: "string"
-            },
-            {
-              type: "null"
-            }
-          ]
-        },
-        api_refusal_category: {
-          anyOf: [
-            {
-              type: "string"
-            },
-            {
-              type: "null"
-            }
-          ]
-        },
-        api_refusal_explanation: {
-          anyOf: [
-            {
-              type: "string"
-            },
-            {
-              type: "null"
-            }
-          ]
-        },
-        retracted_message_uuids: {
-          type: "array",
-          items: {
-            type: "string"
-          }
-        },
-        refused_user_message_uuid: {
-          anyOf: [
-            {
-              type: "string"
-            },
-            {
-              type: "null"
-            }
-          ]
-        },
-        saw_cyber_refusal: {
-          type: "boolean"
-        },
         launchedAgentId: {
           type: "string"
-        },
-        live_turn_id: {
-          type: "string"
-        },
-        stored_through_live_index: {
-          type: "number"
         },
         fromRemoteErrorResult: {
           type: "boolean"
@@ -37867,7 +37759,7 @@ var claude_code_transcript_default = {
           type: "string"
         }
       },
-      $comment: "Registry policy: transcript. Code sites used: 47."
+      $comment: "Registry policy: transcript. Code sites used: 42."
     },
     tag: {
       type: "object",
@@ -37951,7 +37843,7 @@ var claude_code_transcript_default = {
           enum: ["wrap_up", "release", "near_limit"]
         },
         replacesSpan: {
-          "x-unverified": true
+          not: {}
         },
         isVisibleInTranscriptOnly: {
           type: "boolean"
@@ -37966,7 +37858,7 @@ var claude_code_transcript_default = {
           type: "boolean"
         },
         modelOnlyText: {
-          "x-unverified": true
+          not: {}
         },
         summarizeMetadata: {
           type: "object",
@@ -38049,17 +37941,76 @@ var claude_code_transcript_default = {
           "x-observed": true
         },
         classifierMetaLines: {
-          "x-unverified": true
+          type: "string"
         },
         classifierBoundary: {
           type: "boolean"
         },
         serverClassifierContext: {
-          "x-unverified": true,
-          "x-observed-type": ["object"]
+          type: "object",
+          properties: {
+            request: {
+              type: "string"
+            },
+            context: {
+              type: "object",
+              properties: {
+                git_state: {
+                  type: "object",
+                  properties: {
+                    cwd: {
+                      type: ["string", "null"]
+                    },
+                    root: {
+                      type: ["string", "null"]
+                    },
+                    branch: {
+                      type: ["string", "null"]
+                    },
+                    default_branch: {
+                      type: ["string", "null"]
+                    },
+                    status: {
+                      type: ["object", "null"]
+                    },
+                    visibility: {
+                      type: ["object", "null"]
+                    },
+                    error: {
+                      type: "string",
+                      enum: ["timeout", "not_a_repo", "error", "pending"]
+                    },
+                    truncated: {
+                      type: "boolean"
+                    }
+                  }
+                },
+                chrome_navigation: {
+                  type: "object",
+                  properties: {
+                    enabled: {
+                      type: "boolean"
+                    },
+                    baselines: {
+                      type: "object"
+                    },
+                    tabs: {
+                      type: "object"
+                    }
+                  }
+                },
+                live_cwd: {
+                  type: "string"
+                },
+                platform: {
+                  type: "string"
+                }
+              }
+            }
+          }
         },
         hostClassifierContext: {
-          "x-unverified": true
+          type: "string"
         },
         toolDenialKind: {
           type: "string"
@@ -38071,18 +38022,345 @@ var claude_code_transcript_default = {
           type: "boolean"
         },
         toolDenialUnanswered: {
-          "x-unverified": true
+          enum: ["stream-closed"]
         },
         userFeedback: {
-          "x-unverified": true
+          type: "string"
         },
         toolResultRemedy: {
-          "x-unverified": true
+          anyOf: [
+            {
+              type: "object",
+              properties: {
+                kind: {
+                  const: "mcp_needs_auth"
+                },
+                servers: {
+                  type: "array",
+                  items: {
+                    type: "string"
+                  }
+                }
+              },
+              required: ["kind", "servers"]
+            },
+            {
+              type: "object",
+              properties: {
+                kind: {
+                  const: "mcp_disabled"
+                },
+                servers: {
+                  type: "array",
+                  items: {
+                    type: "string"
+                  }
+                }
+              },
+              required: ["kind", "servers"]
+            },
+            {
+              type: "object",
+              properties: {
+                kind: {
+                  const: "mcp_required_missing"
+                },
+                servers: {
+                  type: "array",
+                  items: {
+                    type: "string"
+                  }
+                }
+              },
+              required: ["kind", "servers"]
+            },
+            {
+              type: "object",
+              properties: {
+                kind: {
+                  const: "auth_expired"
+                },
+                provider: {
+                  enum: ["claude_ai", "claude_design"]
+                }
+              },
+              required: ["kind", "provider"]
+            },
+            {
+              type: "object",
+              properties: {
+                kind: {
+                  const: "auth_overridden"
+                },
+                provider: {
+                  const: "claude_ai"
+                },
+                managed: {
+                  type: "boolean"
+                }
+              },
+              required: ["kind", "provider", "managed"]
+            },
+            {
+              type: "object",
+              properties: {
+                kind: {
+                  const: "auth_missing_scope"
+                },
+                provider: {
+                  const: "claude_design"
+                }
+              },
+              required: ["kind", "provider"]
+            },
+            {
+              type: "object",
+              properties: {
+                kind: {
+                  const: "design_needs_authorization"
+                },
+                provider: {
+                  const: "claude_design"
+                }
+              },
+              required: ["kind", "provider"]
+            },
+            {
+              type: "object",
+              properties: {
+                kind: {
+                  const: "sandbox_violation"
+                }
+              },
+              required: ["kind"]
+            },
+            {
+              type: "object",
+              properties: {
+                kind: {
+                  const: "outside_reads_blocked"
+                },
+                path: {
+                  type: "string"
+                },
+                managed: {
+                  type: "boolean"
+                }
+              },
+              required: ["kind", "managed"]
+            },
+            {
+              type: "object",
+              properties: {
+                kind: {
+                  const: "memory_paused"
+                }
+              },
+              required: ["kind"]
+            },
+            {
+              type: "object",
+              properties: {
+                kind: {
+                  const: "feature_disabled"
+                },
+                feature: {
+                  const: "workflows"
+                },
+                cause: {
+                  enum: [
+                    "managed_settings",
+                    "org_policy",
+                    "unavailable",
+                    "user_setting",
+                    "unsupported_runtime"
+                  ]
+                }
+              },
+              required: ["kind", "feature", "cause"]
+            },
+            {
+              type: "object",
+              properties: {
+                kind: {
+                  const: "policy_denied"
+                },
+                feature: {
+                  const: "artifacts"
+                },
+                policy_kind: {
+                  enum: ["org_denied", "latched"]
+                }
+              },
+              required: ["kind", "feature", "policy_kind"]
+            },
+            {
+              type: "object",
+              properties: {
+                kind: {
+                  const: "spawn_arg_limit"
+                }
+              },
+              required: ["kind"]
+            },
+            {
+              type: "object",
+              properties: {
+                kind: {
+                  const: "staged_for_review"
+                },
+                path: {
+                  type: "string"
+                }
+              },
+              required: ["kind", "path"]
+            }
+          ]
         },
         permissionDecision: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["object"]
+          type: "object",
+          properties: {
+            decision: {
+              enum: ["accept", "reject", "cancelled"]
+            },
+            source: {
+              enum: [
+                "config",
+                "classifier",
+                "hook",
+                "user_temporary",
+                "user_permanent",
+                "user_reject",
+                "user_abort",
+                "unknown",
+                "server_fallback_tombstone",
+                "invalid_input",
+                "permission_updated_input_invalid"
+              ]
+            },
+            reasonType: {
+              enum: [
+                "rule",
+                "mode",
+                "hook",
+                "classifier",
+                "other",
+                "safetyCheck",
+                "workingDir",
+                "asyncAgent",
+                "sandboxOverride",
+                "subcommandResults",
+                "permissionPromptTool"
+              ]
+            },
+            ruleSource: {
+              type: "string"
+            },
+            grantScope: {
+              enum: ["once", "session"]
+            },
+            reasonCode: {
+              type: "string"
+            },
+            circuitBreaker: {
+              enum: [
+                "dangerousRemoval",
+                "backgroundOperator",
+                "suspiciousWindowsPath",
+                "isolatePeerMachines",
+                "restrictedMode",
+                "outsideReadsBlocked",
+                "claudeSettingsFile",
+                "internalHardDeny",
+                "unfinishedCheck"
+              ]
+            },
+            classifierCategory: {
+              enum: [
+                "account_standing_rule_changes",
+                "auto_mode_bypass",
+                "blind_apply",
+                "browser_file_upload_exfil",
+                "browser_input_exfil",
+                "browser_js_exfil",
+                "browser_navigate_exfil",
+                "browser_shortcut_execution",
+                "chatops_trigger_comments",
+                "ci_bypass",
+                "cloud_storage_mass_delete",
+                "cluster_wide_workload_creation",
+                "code_from_external",
+                "code_that_leaks_when_run",
+                "command_network_lists",
+                "containment_escape",
+                "create_public_surface",
+                "create_rce_surface",
+                "create_unsafe_agents",
+                "credential_exploration",
+                "credential_leakage",
+                "credential_materialization",
+                "data_exfiltration",
+                "dns_domain_cert_changes",
+                "excess_sensitive_detail",
+                "exfil_scouting",
+                "expose_local_services",
+                "external_ingress_tunnel",
+                "external_system_writes",
+                "feature_flag_writes",
+                "git_destructive",
+                "instruction_poisoning",
+                "interfere_with_workloads",
+                "irreversible_deletion_general",
+                "irreversible_local_destruction",
+                "live_shared_artifact_sensitive_delta",
+                "logging_audit_tampering",
+                "merge_without_review",
+                "modify_shared_resources",
+                "node_lifecycle_operations",
+                "out_of_place_publication",
+                "package_registry_bypass",
+                "permission_grant",
+                "pii_data_handling",
+                "production_deploy",
+                "production_reads",
+                "protected_scope_iac_apply",
+                "public_data_sharing_upload",
+                "real_world_transactions",
+                "remote_repoint",
+                "remote_shell_writes",
+                "safety_bypass_flag",
+                "sandbox_network_callback",
+                "secret_store_writes",
+                "security_test_removal",
+                "security_weaken",
+                "self_approval",
+                "self_modification",
+                "sensitive_remote_exec",
+                "sensitive_source_provenance",
+                "session_transcript_tampering",
+                "shared_cluster_mutation",
+                "shared_scratch_sweep",
+                "third_party_attack",
+                "tls_auth_weaken",
+                "tmux_self_drive",
+                "traffic_redirection",
+                "unauthorized_persistence",
+                "unrequested_artifact_publish",
+                "unrequested_commit_in_a_connected_app",
+                "untrusted_code_integration",
+                "unverifiable_deletion_scope",
+                "unverifiable_deletion_target",
+                "cowork_delete_grant",
+                "cowork_folder_access",
+                "cowork_run_routine_now",
+                "cowork_scheduled_task_delete",
+                "cowork_scheduled_task_write",
+                "cowork_skill_persistence"
+              ]
+            }
+          },
+          required: ["decision", "source"]
         },
         sandboxViolations: {
           type: "array"
@@ -38161,13 +38439,21 @@ var claude_code_transcript_default = {
           type: "string"
         },
         refusedMessageId: {
-          "x-unverified": true
+          type: "string"
         },
         interruptedByShutdown: {
           type: "boolean"
         },
         remoteToolDenialKind: {
-          "x-unverified": true
+          enum: [
+            "user-rejected",
+            "permission-rule",
+            "automode-blocked",
+            "automode-unavailable",
+            "automode-parsing-error",
+            "interrupted",
+            "cancelled"
+          ]
         },
         parentUuid: {
           "x-observed": true,
@@ -38236,7 +38522,18 @@ var claude_code_transcript_default = {
         turnOrigin: {
           $comment: "Added after the line is built, by a copy of the line or a spread into one.",
           "x-observed": true,
-          type: "string"
+          type: "string",
+          enum: [
+            "human",
+            "sdk",
+            "scheduled",
+            "task_notification",
+            "auto_continuation",
+            "peer",
+            "host_synthetic",
+            "system",
+            "unknown"
+          ]
         },
         turnPosition: {
           type: ["object", "string"],

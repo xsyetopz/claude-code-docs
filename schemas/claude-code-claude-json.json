@@ -199,7 +199,6 @@
       "type": "boolean"
     },
     "taskCompleteNotifEnabled": {
-      "x-unverified": true,
       "x-user-settable": true
     },
     "inputNeededNotifEnabled": {
@@ -258,7 +257,6 @@
       "type": "boolean"
     },
     "autoAddRemoteControlDaemonWorker": {
-      "x-unverified": true,
       "x-user-settable": true
     },
     "remoteDialogSeen": {

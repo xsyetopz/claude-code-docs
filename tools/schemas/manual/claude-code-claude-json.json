@@ -8,10 +8,11 @@
       },
       "anchors": [
         "installMethod:\"native\",autoUpdates:!1",
-        "installMethod:\"global\"}",
         "installMethod:\"local\"}",
         "e=\"unknown\";switch(«».installationType)",
-        "\"npm-local\":\"local\",\"npm-global\":\"global\",native:\"native\",development:\"development\",unknown:\"unknown\""
+        "\"npm-local\":\"local\",\"npm-global\":\"global\",native:\"native\",development:\"development\",unknown:\"unknown\"",
+        "if(«».outcome===\"landed\")return await «»((«»)=>({...«»,installMethod:\"global\"}),«»)",
+        "case\"landed\":«»}return await «»((«»)=>({...«»,installMethod:\"global\"}),«»)"
       ],
       "note": "Write sites: the native installer sets \"native\"; npm update sets \"global\" or \"local\"; the migration Wo sets \"unknown\", \"local\" or \"global\" (r=\"unknown\", then \"local\"/\"global\" by autoUpdaterStatus); claude update sets e from the installation type (\"local\", \"native\", \"global\", \"unknown\") or k from the map {\"npm-local\":\"local\",\"npm-global\":\"global\",native:\"native\",development:\"development\",unknown:\"unknown\"}. The default is installMethod:void 0, which JSON drops."
     },
@@ -70,7 +71,9 @@
       "schema": {
         "type": "boolean"
       },
-      "anchors": ["showStatusInTerminalTab??!1"],
+      "anchors": [
+        "value:«».showStatusInTerminalTab??!1,type:\"boolean\",«»(«»){«»((«»)=>({...«»,showStatusInTerminalTab:«»}))"
+      ],
       "note": "The /config toggle writes the boolean e (a type:\"boolean\" setting) and readers use ??!1."
     },
     "inputNeededNotifEnabled": {
@@ -78,9 +81,9 @@
         "type": "boolean"
       },
       "anchors": [
-        "inputNeededNotifEnabled??!1",
         "inputNeededNotifEnabled:(",
-        "inputNeededNotifEnabled:()=>«»().optional().describe(\"Push to mobile when a permission prompt or question is waiting\")"
+        "inputNeededNotifEnabled:()=>«»().optional().describe(\"Push to mobile when a permission prompt or question is waiting\")",
+        "function «»(«»){«»(\"inputNeededNotifEnabled\",«»),«»((«»)=>({...«»,inputNeededNotifEnabled:«»}))"
       ],
       "note": "The settings schema key is a boolean (zod M().optional()) and readers use ??!1; the toggle writes the boolean e."
     },
@@ -89,9 +92,9 @@
         "type": "boolean"
       },
       "anchors": [
-        "agentPushNotifEnabled??!1",
         "agentPushNotifEnabled:(",
-        "agentPushNotifEnabled:()=>«»().op"
+        "agentPushNotifEnabled:()=>«»().op",
+        "function «»(«»){«»(\"agentPushNotifEnabled\",«»),«»((«»)=>({...«»,agentPushNotifEnabled:«»}))"
       ],
       "note": "The settings schema key is a boolean (zod M().optional()) and readers use ??!1; the toggle writes the boolean e."
     },
@@ -102,7 +105,7 @@
       "anchors": [
         "claudeInChromeDefaultEnabled:«».enabledByDefault",
         "Ne({enabledByDefault:«»()})",
-        "claudeInChromeDefaultEnabled??!1"
+        "value:«».claudeInChromeDefaultEnabled??!1,type:\"boolean\",«»(«»){«»((«»)=>({...«»,claudeInChromeDefaultEnabled:«»}))"
       ],
       "note": "Written from enabledByDefault, which the program validates as a boolean (zod object Ne({enabledByDefault:M()})); readers use ??!1."
     },
@@ -110,7 +113,11 @@
       "schema": {
         "type": "boolean"
       },
-      "anchors": ["hasCompletedClaudeInChromeOnboarding:!0"],
+      "anchors": [
+        "function «»(«»){return{...«»,hasCompletedClaudeInChromeOnboarding:!0}}",
+        "{...«»,claudeInChromeDefaultEnabled:!0,hasCompletedClaudeInChromeOnboarding:!0,cachedChromeExtensionInstalled:!0}",
+        "claudeInChromeDefaultEnabled:«»,...«»&&{hasCompletedClaudeInChromeOnboarding:!0}}"
+      ],
       "note": "All three write sites set it to !0."
     },
     "lspRecommendationDisabled": {
@@ -150,28 +157,36 @@
       "schema": {
         "type": "boolean"
       },
-      "anchors": ["copyOnSelect??!0", "copyOnSelect:e"],
+      "anchors": [
+        "value:«».copyOnSelect??!0,type:\"boolean\",«»(«»){«»((«»)=>({...«»,copyOnSelect:«»}))"
+      ],
       "note": "The /config boolean toggle writes copyOnSelect:e; readers use ??!0."
     },
     "leftArrowOpensAgents": {
       "schema": {
         "type": "boolean"
       },
-      "anchors": ["leftArrowOpensAgents??!0", "leftArrowOpensAgents:e"],
+      "anchors": [
+        "value:«».leftArrowOpensAgents??!0,type:\"boolean\",«»(«»){«»((«»)=>({...«»,leftArrowOpensAgents:«»}))"
+      ],
       "note": "The /config toggle writes a boolean; readers use ??!0."
     },
     "defaultToAgentsView": {
       "schema": {
         "type": "boolean"
       },
-      "anchors": ["defaultToAgentsView??!1", "defaultToAgentsView:e"],
+      "anchors": [
+        "value:«».defaultToAgentsView??!1,type:\"boolean\",«»(«»){«»((«»)=>({...«»,defaultToAgentsView:«»}))"
+      ],
       "note": "The /config toggle writes a boolean; readers use ??!1."
     },
     "prStatusFooterEnabled": {
       "schema": {
         "type": "boolean"
       },
-      "anchors": ["prStatusFooterEnabled??!0", "prStatusFooterEnabled:e"],
+      "anchors": [
+        "value:«».prStatusFooterEnabled??!0,type:\"boolean\",«»(«»){«»((«»)=>{if(«».prStatusFooterEnabled===«»)return «»;return{...«»,prStatusFooterEnabled:«»}})"
+      ],
       "note": "The /config toggle writes a boolean; readers use ??!0."
     },
     "remoteControlAtStartup": {
@@ -199,7 +214,10 @@
       "schema": {
         "type": "boolean"
       },
-      "anchors": ["remoteDialogSeen:!0"],
+      "anchors": [
+        "function «»(«»){return «».remoteDialogSeen?«»:{...«»,remoteDialogSeen:!0}}",
+        "await «»((«»)=>{if(«».remoteDialogSeen)return «»;return{...«»,remoteDialogSeen:!0}},«»)"
+      ],
       "note": "All write sites set it to !0."
     },
     "workflowSizeGuideline": {
@@ -208,9 +226,23 @@
       },
       "anchors": [
         "V$o=[\"unrestricted\",\"small\",\"medium\",\"large\"]",
-        "workflowSizeGuideline:o"
+        "let «»=«»(«»)??\"unrestricted\";«»((«»)=>{if(«».workflowSizeGuideline===«»)return «»;return{...«»,workflowSizeGuideline:«»}})"
       ],
       "note": "The /config picker writes o=lpn(e)??\"unrestricted\"; lpn(e) returns e only when it is in V$o=[\"unrestricted\",\"small\",\"medium\",\"large\"]."
+    },
+    "taskCompleteNotifEnabled": {
+      "schema": {},
+      "anchors": [
+        "\"showStatusInTerminalTab\",\"taskCompleteNotifEnabled\",\"inputNeededNotifEnabled\""
+      ],
+      "note": "Only a name in the global config key list (xzr, tested by isGlobalConfigKey). No code in this build reads or writes the key as a property, so the program gives it no type and keeps any value a user writes."
+    },
+    "autoAddRemoteControlDaemonWorker": {
+      "schema": {},
+      "anchors": [
+        "\"autoUploadSessions\",\"autoAddRemoteControlDaemonWorker\",\"remoteDialogSeen\""
+      ],
+      "note": "Only a name in the global config key list (xzr, tested by isGlobalConfigKey). No code in this build reads or writes the key as a property, so the program gives it no type and keeps any value a user writes."
     }
   }
 }

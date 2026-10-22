@@ -43,6 +43,7 @@ import { CLAUDE_CODE_VERSION } from "../../src/version.ts";
 import { splitTop } from "./jsparse.ts";
 import { anchorIn, applyManual } from "./manual.ts";
 import { applyObserved } from "./observed.ts";
+import { isTranscriptSite } from "./transcript-sites.ts";
 
 type Json = Record<string, unknown>;
 type Src = Module;
@@ -557,6 +558,15 @@ const buildTranscript = (): { file: string; schema: Json } => {
   }
   const keysOf = (entries: Entry[]) =>
     entries.flatMap((e) => ("key" in e ? [e.key] : []));
+  // Every property name in the stream-json schema, which generate.ts wrote before this step.
+  const streamKeys = new Set<string>();
+  const walk = (o: unknown): void => {
+    if (!o || typeof o !== "object") return;
+    const p = (o as Json)["properties"];
+    if (p && typeof p === "object") for (const k in p) streamKeys.add(k);
+    for (const v of Object.values(o)) walk(v);
+  };
+  walk(readJson(join(OUT, "claude-code-stream-json.json")));
 
   const probe = readJson(join(CAPTURES, "print/transcripts.lines.json"));
   const facts = (probe?.["facts"] ?? {}) as Json;
@@ -567,16 +577,15 @@ const buildTranscript = (): { file: string; schema: Json } => {
     const all = sites.get(t) ?? [];
     let use: typeof all;
     if (CHAIN.includes(t)) {
-      // Message constructors: they carry uuid, and none of the stream-json snake_case keys.
-      use = all.filter((s) => {
-        const k = keysOf(s.entries);
-        const ok = k.includes("uuid") || k.includes("toolUseID");
-        const stream =
-          k.includes("session_id") ||
-          k.includes("parent_tool_use_id") ||
-          k.includes("user_id");
-        return ok && !stream && (t !== "system" || k.includes("subtype"));
-      });
+      // Message constructors: they carry uuid, and no stream-json snake_case key.
+      use = all.filter((s) =>
+        isTranscriptSite(
+          t,
+          keysOf(s.entries),
+          streamKeys,
+          s.src.text.slice(Math.max(0, s.at - 8), s.at),
+        ),
+      );
     } else {
       use = all.filter((s) => keysOf(s.entries).includes("sessionId"));
       if (use.length === 0) use = all.filter((s) => s.src === reg);
