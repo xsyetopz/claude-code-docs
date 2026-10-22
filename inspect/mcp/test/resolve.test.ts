@@ -194,6 +194,29 @@ describe("computed keys", () => {
   });
 });
 
+describe("values", () => {
+  test("a ternary of string literals is an enum; any other branch is unknown", () => {
+    const { b, r } = load({
+      "a.js":
+        'let o={a:x?"a":"b",b:x?"a":y?"b":"c",c:x?"a":"a",d:x?"a":n,e:x?1:2}',
+    });
+    const m = b.get("a.js");
+    if (!m) throw new Error("no module");
+    const vals = r
+      .objectAt(m, m.text.indexOf("{"))
+      .map((e) =>
+        "key" in e ? [e.key, e.val.k, "v" in e.val && e.val.v] : [],
+      );
+    expect(vals).toEqual([
+      ["a", "enum", ["a", "b"]],
+      ["b", "enum", ["a", "b", "c"]],
+      ["c", "str", "a"],
+      ["d", "unk", false],
+      ["e", "unk", false],
+    ]);
+  });
+});
+
 describe("returnsOf", () => {
   test("skips the returns of nested functions and keeps an arrow's body", () => {
     const { b } = load({

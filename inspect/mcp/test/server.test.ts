@@ -158,12 +158,11 @@ describe("binary", () => {
       module: "app.js",
       anchor: '"Bash"',
     });
-    // A computed value (here a ternary) is shown as its code.
     expect(r.structuredContent).toEqual({
       keys: {
         tool_name: { const: "Bash" },
         success: { const: "true" },
-        "tool.kind": { unknown: expect.stringContaining('?"a":"b"') },
+        "tool.kind": { enum: ["a", "b"] },
       },
       unresolved: [],
     });

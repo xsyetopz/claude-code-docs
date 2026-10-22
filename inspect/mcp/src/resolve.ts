@@ -188,6 +188,21 @@ export class Resolver {
       if (n.operator === "!") return { k: "bool", v: !n.argument.value };
       if (n.operator === "-") return { k: "num", v: -n.argument.value };
     }
+    // `c ? "a" : "b"`: the strings of both branches. Any other branch makes it unknown.
+    if (n.type === "ConditionalExpression") {
+      const all = [n.consequent, n.alternate].map((b) =>
+        this.value(m, b as Node, env),
+      );
+      const v = [
+        ...new Set(
+          all.flatMap((x) => (x.k === "str" || x.k === "enum" ? x.v : [])),
+        ),
+      ];
+      if (all.every((x) => x.k === "str" || x.k === "enum"))
+        return v.length === 1
+          ? { k: "str", v: v[0] as string }
+          : { k: "enum", v };
+    }
     if (n.type === "ArrayExpression") return { k: "arr" };
     if (n.type === "ObjectExpression")
       return { k: "obj", e: this.entries(m, n, env) };

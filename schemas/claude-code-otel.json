@@ -55,7 +55,7 @@
           "x-unverified": true
         },
         "speed": {
-          "x-unverified": true
+          "enum": ["fast", "normal"]
         },
         "query_source": {
           "x-unverified": true
@@ -119,7 +119,7 @@
           "x-unverified": true
         },
         "speed": {
-          "x-unverified": true
+          "enum": ["fast", "normal"]
         },
         "attempt": {
           "x-unverified": true
@@ -231,7 +231,7 @@
           "x-unverified": true
         },
         "speed": {
-          "x-unverified": true
+          "enum": ["fast", "normal"]
         },
         "query_source": {
           "x-unverified": true
@@ -304,7 +304,7 @@
           "x-unverified": true
         },
         "speed": {
-          "x-unverified": true
+          "enum": ["fast", "normal"]
         },
         "query_source": {
           "x-unverified": true
@@ -631,7 +631,7 @@
           "x-unverified": true
         },
         "hook_source": {
-          "x-unverified": true
+          "enum": ["policySettings", "merged"]
         },
         "safe_mode": {
           "x-unverified": true
@@ -683,7 +683,7 @@
           "x-unverified": true
         },
         "hook_source": {
-          "x-unverified": true
+          "enum": ["policySettings", "merged"]
         },
         "safe_mode": {
           "x-unverified": true
@@ -1906,7 +1906,7 @@
           "x-unverified": true
         },
         "trigger": {
-          "x-unverified": true
+          "enum": ["auto", "manual"]
         },
         "message_count": {
           "x-unverified": true
@@ -2023,10 +2023,10 @@
           "x-unverified": true
         },
         "llm_request.context": {
-          "x-unverified": true
+          "enum": ["tool", "interaction", "standalone"]
         },
         "speed": {
-          "x-unverified": true
+          "enum": ["fast", "normal"]
         },
         "gen_ai.conversation.id": {
           "x-unverified": true
