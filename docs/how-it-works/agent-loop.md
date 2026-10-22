@@ -166,7 +166,7 @@ stateDiagram-v2
 | `blocking_limit` | The context hit the blocked level. See [Context and Compaction](context-and-compaction.md#when-compaction-runs). |
 | `rapid_refill_breaker` | Autocompact refilled the context too fast. |
 | `model_error`, `api_error`, `image_error` | The API or an image failed. |
-| `malformed_tool_use_exhausted` | The model sent two bad tool calls in a row. |
+| `malformed_tool_use_exhausted` | The model sent a tool call that could not be parsed, and the retries failed too. Since `2.1.307` Claude Code retries the call up to twice ([release notes](https://github.com/anthropics/claude-code/releases/tag/v2.1.307)). Before, the turn ended after two bad calls in a row. |
 | `prompt_too_long` | The prompt did not fit the context window. |
 | `budget_exhausted` | The budget for the run was used up. |
 | `structured_output_retry_exhausted` | The model did not give valid structured output after the allowed retries. |

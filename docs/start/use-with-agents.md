@@ -20,7 +20,7 @@ Every build writes these files. The base URL is `https://xsyetopz.github.io/clau
 | `/llms-full.txt` | The text of every page in one file, in sidebar order. It is large. |
 | `/<route>.md` | One page as clean Markdown. For example, `/configure/status-line.md`. |
 | `/llms-manifest.json` | A list of pages with `route`, `title`, `description`, `section`, `md`, and `url`, in sidebar order. |
-| `/schemas/*.json` | The six JSON Schemas of Claude Code settings, plugin files, and keybindings. |
+| `/schemas/` | The JSON Schemas of every config file and payload, and the Mod API type file `claude-code.d.ts`. See [JSON Schemas](../reference/schemas.md). |
 
 An agent with a web fetch tool can start at `llms.txt`, pick a page, and fetch its `.md` file.
 
@@ -52,7 +52,7 @@ The first four read this site. The last three read the Claude API and platform d
 | `search_docs` | Ranks pages for a query. Gives the route, title, URL, and a snippet for each hit. It takes `query`, `limit`, and `section`. The first search fetches every page once. |
 | `read_page` | Gives a page as Markdown, or one H2 section of it. A long page comes in parts: pass `offset` to read the next part. |
 | `list_pages` | Lists the pages in sidebar order. Pass `section` to see descriptions. |
-| `get_schema` | Gives one of the six JSON Schemas. A schema is large, so you get an outline first. Pass `property` for one key, such as `hooks.PreToolUse`. |
+| `get_schema` | Gives one JSON Schema, or with `name: "types"` the Mod API type file. A schema is large, so you get an outline first. Pass `property` for one key, such as `hooks.PreToolUse`, a definition such as `BashInput`, or a type such as `ToolCheckResult`. For a name it does not have, it returns the closest names it has. |
 | `search_platform_docs` | Ranks platform pages by title, summary, path, and group, using the platform `llms.txt`. It does not search page text. It takes `query`, `limit`, and `group`. |
 | `read_platform_page` | Gives one English platform page as Markdown, or one H2 section of it. It takes `path`, `section_heading`, `offset`, and `max_chars`. Only English pages under `/docs/en/` are read. |
 | `list_platform_pages` | Lists the platform groups with their page counts. Pass `group` to list the pages of one group. |

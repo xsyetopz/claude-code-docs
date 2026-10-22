@@ -1,10 +1,10 @@
 ---
 title: What Changed
-description: What changed in the Claude Code releases near 2.1.306, newest first, as far as the changelog and a version comparison show.
+description: What changed in the Claude Code releases near 2.1.307, newest first, as far as the changelog and a version comparison show.
 sidebar_position: 4
 ---
 
-This page lists changes in the last few releases up to `2.1.306`.
+This page lists changes in the last few releases up to `2.1.307`.
 It is short on purpose. The site only repeats what its sources say, and it does not guess.
 For every fix and small change, read the official [Changelog](https://code.claude.com/docs/en/changelog).
 
@@ -12,7 +12,35 @@ For every fix and small change, read the official [Changelog](https://code.claud
 
 Run `claude --version`.
 The `/release-notes` command shows a cached copy of the [changelog](https://code.claude.com/docs/en/changelog).
-This site covers `2.1.306`, the version shown in the navbar.
+This site covers `2.1.307`, the version shown in the navbar.
+
+## Version 2.1.307
+
+Released October 21, 2026. Source: [release notes](https://github.com/anthropics/claude-code/releases/tag/v2.1.307).
+Rows marked with the program come from a comparison of the `2.1.306` and `2.1.307` programs.
+
+| Change | Status | What it means for you | Where to read more |
+| --- | --- | --- | --- |
+| `set_model` reply | <Undocumented /> | A `set_model` control reply now has `response.model`, the model the session uses. An alias comes back as the full ID. Probe `print.control.requests` saw the new field. The release notes say the Agent SDK's `setModel()` now waits up to 15 seconds, not 5. | [Control Protocol](../extend/headless/control-protocol.md) |
+| `prompt-caching-scope` beta | <Documented /> | Not sent behind a custom `ANTHROPIC_BASE_URL` gateway or on Foundry. A stub run sent 9 betas, not 10. | [Betas](../reference/api/betas.md) |
+| Bad tool calls | <Documented /> | Claude Code retries a tool call it cannot parse up to twice before it ends the turn. | [Agent Loop](../how-it-works/agent-loop.md) |
+| Fork subagents | <Documented /> | Forks started together are each told which launch is their own. | [Subagent Runtime](../extend/subagents/runtime.md) |
+| `Agent` tool text | <Undocumented /> | The description grew from 1,989 to 3,227 characters. It now lists the costs of a subagent and how to brief one (the program). | [Tool Descriptions](../prompts/tools.md#agent) |
+| Web-reading agent | <Undocumented /> | Its prompt has one new line: give the date of a stored copy of a page, and do not fetch it again (the program). | [Subagent, Web Fetch](../prompts/subagent-web-fetch.md) |
+| Transcript `sandboxed` key | <Undocumented /> | A shell tool result line can carry `sandboxed` (the program). | [Transcript Format](../reference/transcript-format.md) |
+| `/claude-api api-version` | <Documented /> | Moves Claude API code to API version `2026-10-21`. | [Bundled Skills](../extend/skills-and-commands/bundled-skills.md) |
+| `claude_code.safety_event` | <Documented /> | A new OpenTelemetry event for each tool call that a rule, auto mode, a safety check, a hook, or the sandbox stopped, prompted, or sent back. | [Telemetry and Debug Variables](../configure/env-vars/telemetry-and-debug.md#how-it-works) |
+| Checkout hook time limit | <Documented /> | A self-hosted runner stops a checkout hook after 30 minutes by default, and the setup fails. `--checkout-hook-timeout-min` raises it, and `0` turns it off. | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
+| `--diff-finds-nested-repository` | <Undocumented /> | A self-hosted runner flag. The web Changes pane can show a repository cloned in a subfolder (the program). | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
+| `axScreenReader` | <Documented /> | The setting and `CLAUDE_AX_SCREEN_READER` in a settings `env` block apply only from user, managed, or `--settings` settings. The program already did this in `2.1.306`. | [UI and Terminal Variables](../configure/env-vars/ui-and-terminal.md) |
+| `sshHostCommands` | <Undocumented /> | A new setting for the desktop app: SSH connections whose host comes from a command. Claude Code itself does not use it (the settings schema). | [Agents and Remote Settings](../configure/settings/agents-and-remote.md) |
+| Mod API `tool.check` | <Documented /> | The input carries `approver`, who answers an ask. Every ask a hook makes goes to a person, and the engine marks it with `plugin`. The type file drops `decider`. A test's `$.tool.call` takes `agentId` (the type file). | [Tool and Command Config Types](../extend/mod-api/types/tool-command-config.md) |
+| New variables | <Undocumented /> | `CLAUDE_CODE_SUBAGENT_HISTORY`, `CLAUDE_CODE_DISABLE_LAUNCHER_SIGN_IN`, `CLAUDE_CODE_WITTY_DEWDROP`, and `CLAUDE_CODE_IGNORE_PERSISTED_TRUST` (the program). `CLAUDE_CODE_ADOPT_UNDERIVABLE_PARKED_PERMISSION` is gone. | [Environment Variables](../configure/env-vars/index.md) |
+
+The release also fixes MCP servers after a computer sleeps or the macOS keychain is locked, HTTP MCP tool calls that were sent twice, `CLAUDE_CODE_DISABLE_1M_CONTEXT` with a `[1m]` alias such as `opus[1m]`, and many cloud session, self-hosted runner, and VS Code issues.
+Read the [release notes](https://github.com/anthropics/claude-code/releases/tag/v2.1.307) for the full list.
+
+A comparison of the `2.1.306` and `2.1.307` programs also found runner-internal names (`--runner-declares`, `CLAUDE_CODE_DIFF_COPY_ROOT`, `CLAUDE_CODE_FOUND_REPOSITORY_GIT`, `CLAUDE_RUNNER_UPDATE_BIN`) that you do not set, so this site does not list them (the program).
 
 ## Version 2.1.306
 

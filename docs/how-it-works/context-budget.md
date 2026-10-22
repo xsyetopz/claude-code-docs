@@ -50,7 +50,7 @@ Your own prompt (`Reply with 'OK'.`) is a few tokens.
 See the captured [first-turn messages](../prompts/index.md).
 
 The real first request matched `/context` exactly: input 2, cache write 5,441, and cache read 10,834 make 16,277.
-A rerun on `2.1.306` matched the same way: input, cache write, and cache read of the first reply added up to the `/context` total. That run used the default model, `claude-sonnet-5-5`, and a warm cache, so its counts are not shown here. It listed the same categories, no memory files, no agents, and no MCP tools. See [Probes](../reference/probes.md#context-budget).
+Reruns on `2.1.306` and `2.1.307` matched the same way: input, cache write, and cache read of the first reply added up to the `/context` total. Those runs used the default model, `claude-sonnet-5-5`, and a warm cache, so their counts are not shown here. They listed the same categories, no memory files, no agents, and no MCP tools. See [Probes](../reference/probes.md#context-budget).
 The split between cache write and cache read depends on the cache, not on the request. A subscription login writes with a 1-hour lifetime, so another session on the account with the same tools and system prompt within the last hour lets this one read them. A cold first request wrote almost all of it and read nothing.
 `/context` itself only calls the token counting endpoint, so it does not run a model turn. We checked this: `claude -p "/context"` against the stub sent 24 requests to `/v1/messages/count_tokens` and none to `/v1/messages`.
 
@@ -122,7 +122,7 @@ Each row is a session after `Reply with 'OK'.` on Opus 5.5, compared to the defa
 | Haiku 5.5 | 17,459 | +1,182 | The system prompt is 3,198. |
 
 Messages still vary by a few tokens between runs, even though every reply was exactly `OK`. Two runs of the default session gave totals of 16,274 and 16,277, but the split differed more (for example deferred tools 15,919 in one and 13,425 in the other, and messages 3,769 and 3,698), so trust the totals more than single categories.
-`--disable-slash-commands` makes the request larger, not smaller. In a test with `2.1.305` (`claude -p "Reply with 'OK'."` against a local stub, Opus 5.5, no skills of your own), the request body grew by 9,057 bytes (from 44,332 to 53,389 here; the totals shift a little with the length of the project path), about 2,300 more tokens at 4 bytes per token (an estimate, not a count). The `Skill` tool (1,803 bytes) and the list of skills in the messages (the text of that message fell from 8,947 to 2,952 bytes, 5,995 bytes less) went away. The `Workflow` tool description grew by 16,955 bytes, because it then holds the workflow authoring reference that it otherwise loads through the `workflow-authoring` skill. Your own skills and commands are left out too, so with many of them the net change is smaller.
+`--disable-slash-commands` makes the request larger, not smaller. In a test with `2.1.305` (`claude -p "Reply with 'OK'."` against a local stub, Opus 5.5, no skills of your own), the request body grew by 9,057 bytes (from 44,332 to 53,389 here; the totals shift a little with the length of the project path; on `2.1.307` the growth was the same 9,057 bytes, from 45,388 to 54,445), about 2,300 more tokens at 4 bytes per token (an estimate, not a count). The `Skill` tool (1,803 bytes) and the list of skills in the messages (the text of that message fell from 8,947 to 2,952 bytes, 5,995 bytes less) went away. The `Workflow` tool description grew by 16,955 bytes, because it then holds the workflow authoring reference that it otherwise loads through the `workflow-authoring` skill. Your own skills and commands are left out too, so with many of them the net change is smaller.
 
 ## Best Practices
 
@@ -188,6 +188,7 @@ Each switch below removes a block of the start. Use one only if you do not need 
 
 ```json title="~/.claude/settings.json"
 {
+  "$schema": "https://raw.githubusercontent.com/xsyetopz/claude-code-docs/refs/heads/main/schemas/claude-code-settings.json",
   "includeGitInstructions": false,
   "env": {
     "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1",

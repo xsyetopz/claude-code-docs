@@ -1,6 +1,6 @@
 ---
 title: Betas
-description: Every anthropic-beta value in Claude Code 2.1.306, when it is sent, and how the list is built and turned off.
+description: Every anthropic-beta value in Claude Code 2.1.307, when it is sent, and how the list is built and turned off.
 sidebar_position: 3
 ---
 
@@ -61,7 +61,7 @@ The Registry Name column is the internal name of the value in the program.
 | `tool-search-tool-2025-10-19` | <Undocumented /> | `tool_search` | With tool search. On Bedrock it goes in the body instead. |
 | `effort-2025-11-24` | <Undocumented /> | `effort` | The program lists it, and no source states when it is sent. |
 | `task-budgets-2026-03-13` | <Undocumented /> | `task_budgets` | The program lists it, and no source states when it is sent. |
-| `prompt-caching-scope-2026-01-05` | <Undocumented /> | `prompt_caching_scope` | On the Anthropic API and Anthropic-run clouds, and when MCP tools are in the tool list. |
+| `prompt-caching-scope-2026-01-05` | <Undocumented /> | `prompt_caching_scope` | On the Anthropic API and Anthropic-run clouds, and when MCP tools are in the tool list. Since `2.1.307` it is not sent behind a custom `ANTHROPIC_BASE_URL` gateway or on Foundry ([release notes](https://github.com/anthropics/claude-code/releases/tag/v2.1.307)). |
 | `prompt-caching-evict-2026-05-12` | <Undocumented /> | `prompt_caching_evict` | When a message has the `evict_on_complete` cache control. |
 | `cache-keepalive-2026-09-03` | <Undocumented /> | `cache_keepalive` | When the keep-alive switch is on. It needs a subscriber login (see [Probes](../probes.md)). |
 | `extended-cache-ttl-2025-04-11` | <Documented /> | `extended_cache_ttl` | When the cache time is `1h` on the Anthropic API. The docs name it as `extended-cache-ttl`. |
@@ -116,6 +116,7 @@ Claude Code does not put them in the model request. All of them are <Undocumente
 ## Observed Request
 
 A transcript of `2.1.305` records each request in an `api-request` line. In a stub run with an API key, that line held 10 betas, from `claude-code-20250219` to `thinking-display-updates-2026-08-18`.
+On `2.1.307` the same stub run held 9 betas: `prompt-caching-scope-2026-01-05` is gone, because the stub is a custom `ANTHROPIC_BASE_URL` (probe `print.transcripts.lines`).
 On a local machine, the `api-request` lines of `2.1.305` held 19 betas (with `claude-sonnet-5-5` and with `claude-opus-5-5`) or 20 betas (with `claude-opus-5-5` only, which added `extended-cache-ttl-2025-04-11`).
 The list ran from `claude-code-20250219` and `oauth-2025-04-20` to `message-threads-2026-08-12`.
 This is one observation and not a rule. See [Transcript Format](../transcript-format.md).

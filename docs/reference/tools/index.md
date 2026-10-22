@@ -143,6 +143,11 @@ Claude Code builds the tool list for each request. A deferred tool appears only 
 When Claude needs a deferred tool, it calls `ToolSearch`. Claude Code then loads the full schema, and Claude calls the tool.
 Permission rules run when a tool is called, not when it is listed.
 
+## Exact Fields
+
+The exact fields: `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-tools.json`, made from each built-in tool's own input and output validator. It has an `<Tool>Input` and an `<Tool>Result` definition for each tool the program could export; its `description` names the few it lacks.
+It lists every field of this release, so build on the fields it names and look each one up there before you rely on it.
+
 ## Related Pages
 
 - [Tools Reference](https://code.claude.com/docs/en/tools-reference) is the official page for the built-in tools.

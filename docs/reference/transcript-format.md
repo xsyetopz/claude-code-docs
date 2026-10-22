@@ -82,10 +82,10 @@ The key lists come from transcripts that 2.1.305 wrote on a real machine and in 
 
 | `type` | Main keys | Meaning |
 | --- | --- | --- |
-| `user` | `message`, `promptId`, `permissionMode`, `permissionDecision`, `toolUseResult`, `sourceToolAssistantUUID`, `origin`, `promptSource`, `turnOrigin`, `turnPosition` | A user turn or a tool result. |
+| `user` | `message`, `promptId`, `permissionMode`, `permissionDecision`, `toolUseResult`, `sourceToolAssistantUUID`, `origin`, `promptSource`, `turnOrigin`, `turnPosition`, `sandboxed` | A user turn or a tool result. Since `2.1.307` a shell tool result can carry `sandboxed`, whether the command ran in the sandbox (the program, and probe `print.transcripts.lines`). |
 | `assistant` | `message`, `requestId`, `requestRef`, `requestedModel`, `effort`, `perTurnEffort`, `advisorModel`, `apiBlockIndex` | A reply of the model. |
 | `system` | `subtype`, `content`, `level`, `durationMs`, `messageCount` | A note that the model never reads. |
-| `attachment` | `attachment`, `rendered`, `renderedRole`, `renderedInHumanTurn` | Context that Claude Code adds beside the conversation. |
+| `attachment` | `attachment`, `rendered`, `renderedRole`, `renderedInHumanTurn`, `renderedBesideToolResult` | Context that Claude Code adds beside the conversation. `rendered` is the text the model sees and `renderedRole` is `user` or `system`. `renderedBesideToolResult` is `true` on a `remote_session_change` attachment, and `renderedInHumanTurn` is on a `queued_command` attachment whose text differs inside a human turn (the program). |
 | `queue-operation` | `operation`, `content`, `commandUuid`, `deliveryId`, `reason` | A prompt or command that waits in the queue. |
 | `api-request` | `params`, `shapeHash`, `cacheControl`, `requestDigest`, `querySource`, `base`, `keep`, `tail`, `id` | The shape of one request. |
 | `api-request-shape` | `shape`, `shapeHash` | The `system` and `tools` of a request, stored once. |
@@ -115,9 +115,10 @@ These names are in the program next to the writer. The meanings come from the wr
 | `pr-link` | `prNumber`, `prUrl`, `prRepository`, `timestamp` | Ties the session to a pull request. |
 | `bridge-session` | `bridgeSessionId`, `lastSequenceNum`, `sessionGroupingId`, owner ids | The Remote Control link. |
 | `content-replacement` | `replacements`, `agentId` | Records which large tool results were replaced by a short stand-in, so a resume uses the same stand-ins. |
-| `attribution-snapshot` | | A snapshot of file-contribution data for commits. Only the type is clear. A large one is trimmed on load. |
+| `attribution-snapshot` | `messageId` | A snapshot of file-contribution data for commits. On load the program keeps only the last one and trims a large one. In `2.1.307` the program exports its writer function and no code calls it, so only older sessions hold these lines (the program). |
 | `fork-context-ref` | `agentId`, `parentSessionId`, `parentLastUuid`, `contextLength` | A forked agent's pointer to its parent. The fork reads the parent's lines and does not copy them. |
 | `observer-ref` | `observerTaskId`, `observerAgentType`, `agentId`, `timestamp` | An observer agent's pointer. |
+| `progress` | `toolUseID`, `parentToolUseID`, `data` | Progress of a running tool, hook, skill, or agent. `data.type` is `hook_progress`, `tool_heartbeat`, `bash_progress`, `powershell_progress`, `agent_progress`, `agent_api_retry`, `skill_progress`, `search_results_received`, `query_update`, `workflow_log`, `workflow_phase`, `workflow_agent`, or `artifact_publish_retry`. |
 | `isolation-latch` | `side` | Records a one-time choice about where the session runs, kept for resume. |
 | `memory-mode` | `mode`, `afterUuid`, `reason`, `account` | A stamp that auto memory switched mode. One per switch. |
 | `dev-mods` | `folder` | The folder of a mod under development that the session uses. |
@@ -126,7 +127,7 @@ These names are in the program next to the writer. The meanings come from the wr
 | `line-withheld` | `bytes` | Not a stored type. A line that could not be read or was too large is swapped for `{"type":"line-withheld","bytes":N}` when a transcript is uploaded. |
 | `artifact-autoreact-ledger` | `artifacts`, `accountUuid`, `v` | Bookkeeping for automatic replies to artifact comments. |
 | `relocated` | `relocatedCwd` | The working folder was moved. |
-| `summary` | `leafUuid` | A summary line. |
+| `summary` | `leafUuid`, `summary` | A summary line. The program reads these lines on load, and no code in `2.1.307` writes them, so only older sessions hold them. |
 | `continued-in` | `continuedInSessionId` | Points to the session that continued this one. |
 | `history-suppression`, `artifact-comment-monitor` | | Also in the program's table. No further meaning was read. |
 
@@ -256,6 +257,11 @@ jq -r 'select(.type=="assistant") | .message.content[]? | select(.type=="tool_us
 The file is plain text. A secret that a tool prints goes into it.
 Set `cleanupPeriodDays` low, or `CLAUDE_CODE_SKIP_PROMPT_HISTORY`, if that matters to you.
 :::
+
+## Exact Fields
+
+The exact fields: `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-transcript.json`, with one definition for each line `type`. The program builds this payload in code, not with a validator, so the schema is read from that code: a field marked `x-unverified` has a type the code does not show, and `x-observed` marks a field that a probe saw.
+It lists every field of this release, so build on the fields it names and look each one up there before you rely on it.
 
 ## Related Pages
 
