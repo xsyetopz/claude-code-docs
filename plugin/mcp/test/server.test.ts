@@ -191,6 +191,62 @@ describe("get_schema", () => {
   });
 });
 
+describe("get_schema definitions", () => {
+  test("finds a definition and its fields, and lists definitions", async () => {
+    const { call } = await connect();
+    const def = await call("get_schema", {
+      name: "tools",
+      property: "BashInput",
+    });
+    expect(def.text).toContain('"required"');
+    const field = await call("get_schema", {
+      name: "tools",
+      property: "BashInput.command",
+    });
+    expect(field.text).toContain("The command to run");
+    const outline = await call("get_schema", { name: "tools" });
+    expect(outline.text).toContain("1 definitions");
+    const miss = await call("get_schema", {
+      name: "tools",
+      property: "BashInput.decider",
+    });
+    expect(miss.error).toBe(true);
+  });
+});
+
+describe("get_schema types", () => {
+  test("finds a type, a member, a call, and an event", async () => {
+    const { call } = await connect();
+    const get = async (property: string) =>
+      (await call("get_schema", { name: "types", property })).text;
+    expect(await get("ToolCheckResult")).toContain("decision: 'allow'");
+    const member = await get("ToolCheckResult.plugin");
+    expect(member).toContain("readonly plugin?: string;");
+    expect(member).not.toContain("decision");
+    expect(await get("$.tool.check")).toContain(
+      "check(input: { tool: string }): Promise<ToolCheckResult>;",
+    );
+    expect(await get("tool.check")).toContain(
+      "'tool.check': { tool: string };",
+    );
+  });
+  test("a missing name is an error that gives the closest names", async () => {
+    const { call } = await connect();
+    const r = await call("get_schema", {
+      name: "types",
+      property: "ToolCheckResult.decider",
+    });
+    expect(r.error).toBe(true);
+    expect(r.text).toContain("Closest names in the file: ToolCheckResult");
+  });
+  test("without property, lists the declared names", async () => {
+    const { call } = await connect();
+    const r = await call("get_schema", { name: "claude-code.d.ts" });
+    expect(r.error).toBe(false);
+    expect(r.text).toContain("3 declarations");
+  });
+});
+
 describe("search and offline", () => {
   test("search ranks a description match above a body mention", async () => {
     const { call } = await connect();

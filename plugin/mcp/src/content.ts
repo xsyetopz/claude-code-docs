@@ -36,7 +36,22 @@ export const SCHEMA_NAMES = [
   "claude-code-plugin-hooks",
   "claude-code-marketplace",
   "claude-code-keybindings",
+  "claude-code-mcp",
+  "claude-code-hook-output",
+  "claude-code-tools",
+  "claude-code-control-protocol",
+  "claude-code-stream-json",
+  "claude-code-agents-json",
+  "claude-code-status-line",
+  "claude-code-transcript",
+  "claude-code-otel",
+  "claude-code-frontmatter",
+  "claude-code-claude-json",
 ] as const;
+
+/** The Mod API type file the program ships; get_schema reads it with the names in TYPE_NAMES. */
+export const TYPE_FILE = "claude-code.d.ts";
+export const TYPE_NAMES = ["types", "claude-code", TYPE_FILE] as const;
 
 /** Normalizes "/a/b/", "a/b.md", or a full site URL to "a/b". */
 export const normalizeRoute = (input: string): string => {
@@ -245,6 +260,18 @@ export class Content {
       schema,
       source: r.source,
     };
+  }
+
+  /** The Mod API type file, schemas/claude-code.d.ts, as text. */
+  async typeFile(): Promise<Resource> {
+    return getResource({
+      url: `${siteBase()}/schemas/${TYPE_FILE}`,
+      rel: `site/schemas/${TYPE_FILE}`,
+      deleteOn404: true,
+      ttlMs: ttl(PAGE_TTL_MS),
+      maxBytes: SCHEMA_MAX,
+      validate: (b) => b.includes("declare module"),
+    });
   }
 
   /** "2.1.305" from llms.txt (line 3). Best effort: undefined when it cannot be read. Cached for the process. */

@@ -12,7 +12,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import Ajv2020 from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
-import { SCHEMA_NAMES } from "../../plugin/mcp/src/content.ts";
+import { SCHEMA_NAMES, TYPE_FILE } from "../../plugin/mcp/src/content.ts";
 
 const ROOT = join(import.meta.dir, "..", "..");
 const ajv = new Ajv2020({ strict: true, strictTypes: false, allErrors: true });
@@ -138,6 +138,10 @@ if (existsSync(join(ROOT, "build", "llms-manifest.json"))) {
   if (JSON.stringify(built) !== JSON.stringify([...SCHEMA_NAMES].sort()))
     problems.push(
       `SCHEMA_NAMES (${[...SCHEMA_NAMES].sort().join(", ")}) differs from build/schemas/ (${built.join(", ")})`,
+    );
+  if (!existsSync(join(dir, TYPE_FILE)))
+    problems.push(
+      `build/schemas/${TYPE_FILE}: missing, so get_schema "types" fails`,
     );
 } else
   console.warn(

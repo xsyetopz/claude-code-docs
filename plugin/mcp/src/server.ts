@@ -11,6 +11,7 @@ import {
   normalizeRoute,
   type PagesLoad,
   SCHEMA_NAMES,
+  TYPE_NAMES,
 } from "./content.ts";
 import { type Source, sourceData, sourceLine, ttl } from "./fetcher.ts";
 import {
@@ -20,6 +21,7 @@ import {
   platformBase,
 } from "./platform.ts";
 import { headingsOf, matchesSection, SearchIndex, tokenize } from "./search.ts";
+import { lookup, outline } from "./types.ts";
 
 const DEFAULT_PAGE_CHARS = 20000;
 const MAX_PAGE_CHARS = 40000;
@@ -400,10 +402,18 @@ type Json = Record<string, unknown>;
 const isObj = (v: unknown): v is Json =>
   typeof v === "object" && v !== null && !Array.isArray(v);
 
-/** Follows a dotted path through properties, then additionalProperties (a map's values), then items ("[]" also works). */
+/** Follows a dotted path from a $defs name or the root through properties, then additionalProperties (a map's values), then items ("[]" also works). */
 const walk = (schema: Json, path: string): Json | undefined => {
   let cur: Json = schema;
-  for (const key of path.split(".").filter(Boolean)) {
+  const keys = path.split(".").filter(Boolean);
+  // A file made of definitions (tools, control protocol): the first key may name one.
+  const defs = schema["$defs"];
+  if (isObj(defs) && keys[0] && Object.hasOwn(defs, keys[0])) {
+    const def = defs[keys.shift() as string];
+    if (!isObj(def)) return undefined;
+    cur = def;
+  }
+  for (const key of keys) {
     if (key === "__proto__" || key === "constructor" || key === "prototype")
       return undefined;
     const props = cur["properties"];
@@ -421,23 +431,25 @@ server.registerTool(
   "get_schema",
   {
     title: "Get a Claude Code JSON Schema",
-    description: `Get one of the six JSON Schemas generated from the Claude Code program itself (fetched live from the docs site): ${SCHEMA_NAMES.join(", ")}.
-A short name works too ("settings", "plugin-manifest", "keybindings").
-Schemas are large (up to 300k characters), so without \`property\` this returns an outline: each top-level property with its type and first description sentence. Pass \`property\` (dotted path such as "permissions" or "hooks.PreToolUse") to get that sub-schema as JSON.
+    description: `Get the exact fields of a Claude Code payload, from files generated from the program itself (fetched live from the docs site). Look a field up here before you state it, and name only the fields it returns.
+- JSON Schemas: ${SCHEMA_NAMES.join(", ")}. A short name works too ("settings", "tools", "hook-output", "status-line"). Without \`property\` this returns an outline: each top-level property with its type and first description sentence, then the names in $defs. Pass \`property\` (dotted path such as "permissions" or "hooks.PreToolUse", or a definition such as "BashInput" or "BashInput.command") to get that sub-schema as JSON.
+- "types": the Mod API type file the program ships (claude-code.d.ts): every \`$\` call, event, and their types, with doc comments (not the built-in tool fields). Without \`property\` this returns the declared names. Pass \`property\` as a type name ("ToolCheckResult"), a member path ("ToolCheckResult.plugin"), a call ("$.tool.check"), or an event name ("tool.check", which returns its entries in the event maps).
 Args:
-  - name (string): schema name.
-  - property (string, optional): top-level property or dotted path.
+  - name (string): schema name, or "types".
+  - property (string, optional): property path, or for "types" a name, member path, call, or event.
   - offset (number, default 0): character offset for long output.
 Returns: JSON text (or outline) ending with a "Source:" line; structuredContent {source:{origin,state,fetchedAt}}. Errors list valid names or properties.`,
     inputSchema: {
       name: z
         .string()
         .min(1)
-        .describe("e.g. 'settings' or 'claude-code-plugin-manifest'"),
+        .describe("e.g. 'settings', 'claude-code-plugin-manifest', or 'types'"),
       property: z
         .string()
         .optional()
-        .describe("Dotted property path, e.g. 'permissions'"),
+        .describe(
+          "Dotted property path, e.g. 'permissions'; for 'types': 'ToolCheckResult', '$.tool.check', or 'tool.check'",
+        ),
       offset: z.number().int().min(0).default(0).describe("Character offset"),
     },
     outputSchema: { source: sourceSchema },
@@ -445,10 +457,23 @@ Returns: JSON text (or outline) ending with a "Source:" line; structuredContent 
   },
   ({ name, property, offset }) =>
     guarded(async () => {
+      if ((TYPE_NAMES as readonly string[]).includes(name)) {
+        const got = await content.typeFile();
+        if (got.status === "notfound")
+          return fail(`The type file was not found on ${got.origin}.`);
+        if (got.status === "error") return fail(got.message);
+        if (!property) return page(outline(got.body), offset, got.source);
+        const found = lookup(got.body, property);
+        if (found.kind === "missing")
+          return fail(
+            `"${property}" is not in the type file, so its fields are unconfirmed for this release.${found.near.length ? ` Closest names in the file: ${found.near.join(", ")}. Look one of them up.` : " Call without `property` for the list of names."}`,
+          );
+        return page(`// ${found.title}\n${found.text}`, offset, got.source);
+      }
       const got = await content.schema(name);
       if (got === "unknown")
         return fail(
-          `Unknown schema "${name}". Valid names: ${SCHEMA_NAMES.join(", ")}`,
+          `Unknown schema "${name}". Valid names: ${SCHEMA_NAMES.join(", ")}, types`,
         );
       if (got.status === "notfound")
         return fail(`Schema "${name}" was not found on ${got.origin}.`);
@@ -458,9 +483,12 @@ Returns: JSON text (or outline) ending with a "Source:" line; structuredContent 
       if (property) {
         const sub = walk(schema, property);
         if (!sub) {
-          const props = Object.keys((schema["properties"] as Json) ?? {});
+          const keys = [
+            ...Object.keys((schema["properties"] as Json) ?? {}),
+            ...Object.keys((schema["$defs"] as Json) ?? {}),
+          ];
           return fail(
-            `No property "${property}" in ${name}. Top-level properties: ${props.join(", ")}`,
+            `"${property}" is not in ${name}, so its fields are unconfirmed for this release. Its top-level properties and definitions: ${keys.join(", ")}. Look one of them up.`,
           );
         }
         out = JSON.stringify(sub, null, 2);
@@ -475,24 +503,31 @@ Returns: JSON text (or outline) ending with a "Source:" line; structuredContent 
             ?.slice(0, 140);
           return `- ${k} (${type})${first ? `: ${first}` : ""}`;
         });
-        out = `${String(schema["title"])}\n$id: ${String(schema["$id"])}\n${rows.length} top-level properties. Pass \`property\` for details.\n\n${rows.join("\n")}`;
-      }
-      const LIMIT = 25000;
-      if (offset >= out.length && out.length > 0)
-        return fail(
-          `offset ${offset} is past the end (${out.length} characters).`,
-        );
-      const chunk = out.slice(offset, offset + LIMIT);
-      const end = offset + chunk.length;
-      const note =
-        end < out.length
-          ? `[chars ${offset}-${end} of ${out.length}; call again with offset=${end}]\n`
+        const defs = Object.keys((schema["$defs"] as Json) ?? {});
+        const defList = defs.length
+          ? `\n\n${defs.length} definitions (pass one as \`property\`): ${defs.join(", ")}`
           : "";
-      return text(`${note}${chunk}\n\n${sourceLine(source)}`, {
-        source: sourceData(source),
-      });
+        out = `${String(schema["title"])}\n$id: ${String(schema["$id"])}\n${rows.length} top-level properties. Pass \`property\` for details.\n\n${rows.join("\n")}${defList}`;
+      }
+      return page(out, offset, source);
     }),
 );
+
+/** One 25k-character chunk of `out`, with a note that gives the next offset. */
+const page = (out: string, offset: number, source: Source) => {
+  const LIMIT = 25000;
+  if (offset >= out.length && out.length > 0)
+    return fail(`offset ${offset} is past the end (${out.length} characters).`);
+  const chunk = out.slice(offset, offset + LIMIT);
+  const end = offset + chunk.length;
+  const note =
+    end < out.length
+      ? `[chars ${offset}-${end} of ${out.length}; call again with offset=${end}]\n`
+      : "";
+  return text(`${note}${chunk}\n\n${sourceLine(source)}`, {
+    source: sourceData(source),
+  });
+};
 
 // ---- platform.claude.com tools ----
 const platform = new Platform();

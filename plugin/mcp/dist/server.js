@@ -22088,8 +22088,21 @@ var SCHEMA_NAMES = [
   "claude-code-plugin-manifest",
   "claude-code-plugin-hooks",
   "claude-code-marketplace",
-  "claude-code-keybindings"
+  "claude-code-keybindings",
+  "claude-code-mcp",
+  "claude-code-hook-output",
+  "claude-code-tools",
+  "claude-code-control-protocol",
+  "claude-code-stream-json",
+  "claude-code-agents-json",
+  "claude-code-status-line",
+  "claude-code-transcript",
+  "claude-code-otel",
+  "claude-code-frontmatter",
+  "claude-code-claude-json"
 ];
+var TYPE_FILE = "claude-code.d.ts";
+var TYPE_NAMES = ["types", "claude-code", TYPE_FILE];
 var normalizeRoute = (input) => {
   let r = input.trim();
   for (const o of new Set([siteBase(), SITE]))
@@ -22243,6 +22256,16 @@ class Content {
       schema,
       source: r.source
     };
+  }
+  async typeFile() {
+    return getResource({
+      url: `${siteBase()}/schemas/${TYPE_FILE}`,
+      rel: `site/schemas/${TYPE_FILE}`,
+      deleteOn404: true,
+      ttlMs: ttl(PAGE_TTL_MS),
+      maxBytes: SCHEMA_MAX,
+      validate: (b) => b.includes("declare module")
+    });
   }
   async claudeCode() {
     if (this.ver)
@@ -22534,6 +22557,174 @@ Closest matches:
 ${near}` : "";
 };
 
+// plugin/mcp/src/types.ts
+var HEAD = /^(\s*)(?:export )?(?:declare )?(?:type|interface|function|const|class|namespace) ([\w$]+)/;
+var MODULE = /^declare module '([^']+)' \{/;
+var code = (line, inDoc) => {
+  let out = "";
+  let i = 0;
+  let doc = inDoc;
+  while (i < line.length) {
+    if (doc) {
+      const close = line.indexOf("*/", i);
+      if (close < 0)
+        return { text: out, inDoc: true };
+      i = close + 2;
+      doc = false;
+    } else if (line.startsWith("/*", i)) {
+      doc = true;
+      i += 2;
+    } else if (line.startsWith("//", i))
+      break;
+    else if (line[i] === "'" || line[i] === '"' || line[i] === "`") {
+      const q = line[i];
+      i++;
+      while (i < line.length && line[i] !== q)
+        i += line[i] === "\\" ? 2 : 1;
+      i++;
+      out += "''";
+    } else
+      out += line[i++];
+  }
+  return { text: out, inDoc: doc };
+};
+var blockEnd = (lines, start) => {
+  let depth = 0;
+  let inDoc = false;
+  for (let i = start;i < lines.length; i++) {
+    const c = code(lines[i] ?? "", inDoc);
+    inDoc = c.inDoc;
+    for (const ch of c.text) {
+      if ("{[(".includes(ch))
+        depth++;
+      else if ("}])".includes(ch))
+        depth--;
+    }
+    const t = c.text.trim();
+    if (depth <= 0 && !inDoc && /[;},]$/.test(t))
+      return i;
+    if (depth < 0)
+      return i;
+  }
+  return lines.length - 1;
+};
+var docStart = (lines, line) => {
+  let i = line - 1;
+  if (!(lines[i] ?? "").trim().endsWith("*/"))
+    return line;
+  while (i >= 0 && !(lines[i] ?? "").trim().startsWith("/**"))
+    i--;
+  return i >= 0 ? i : line;
+};
+var declarations = (lines) => {
+  const out = [];
+  let module = "";
+  let inDoc = false;
+  for (let i = 0;i < lines.length; i++) {
+    const line = lines[i] ?? "";
+    const m = MODULE.exec(line);
+    if (m) {
+      module = m[1] ?? "";
+      continue;
+    }
+    const wasDoc = inDoc;
+    inDoc = code(line, inDoc).inDoc;
+    if (wasDoc)
+      continue;
+    const h = HEAD.exec(line);
+    if (!h || (h[1] ?? "").length !== 2)
+      continue;
+    const end = blockEnd(lines, i);
+    out.push({ name: h[2] ?? "", module, start: docStart(lines, i), end });
+    i = end;
+  }
+  return out;
+};
+var member = (lines, from, to, name) => {
+  const indent = (lines[from + 1] ?? "").match(/^\s*/)?.[0].length ?? 0;
+  const n = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const key = new RegExp(`^\\s{${indent}}(?:readonly )?(?:(['"])${n}\\1|${n})\\??\\s*[:(<]`);
+  let inDoc = false;
+  for (let i = from + 1;i < to; i++) {
+    const line = lines[i] ?? "";
+    const wasDoc = inDoc;
+    inDoc = code(line, inDoc).inDoc;
+    if (wasDoc || !key.test(line))
+      continue;
+    return { start: docStart(lines, i), end: blockEnd(lines, i) };
+  }
+  return;
+};
+var lookup = (src, query) => {
+  const lines = src.split(`
+`);
+  const decls = declarations(lines);
+  const slice = (a, b) => lines.slice(a, b + 1).join(`
+`);
+  const q = query.trim();
+  const [head, ...rest] = q.startsWith("$.") ? ["EngineInterface", ...q.slice(2).split(".")] : q.split(".");
+  const [mod, bare] = (head ?? "").includes(":") ? (head ?? "").split(":") : [undefined, head];
+  const candidates = decls.filter((d) => d.name === bare && (mod === undefined || d.module === mod));
+  if (q.startsWith("$."))
+    candidates.push(...decls.filter((d) => d.name === "CoreEngineInterface"));
+  for (const d of candidates) {
+    let at = { start: d.start, end: d.end };
+    let head = lineOfHead(lines, d);
+    let ok = true;
+    for (const part of rest) {
+      const m = member(lines, head, at.end, part);
+      if (!m) {
+        ok = false;
+        break;
+      }
+      at = m;
+      head = lineOfHead(lines, m);
+    }
+    if (ok)
+      return {
+        kind: "text",
+        title: `${d.module ? `${d.module}: ` : ""}${[d.name, ...rest].join(".")}`,
+        text: slice(at.start, at.end)
+      };
+  }
+  if (/^[a-z]+\.[\w.]+$|^classic\.\w+$/.test(q)) {
+    const hits = [];
+    for (const d of decls) {
+      const m = member(lines, lineOfHead(lines, d), d.end, q);
+      if (m)
+        hits.push(`// ${d.name}['${q}']
+${slice(m.start, m.end)}`);
+    }
+    if (hits.length)
+      return { kind: "text", title: `event ${q}`, text: hits.join(`
+
+`) };
+  }
+  const low = (bare ?? q).toLowerCase();
+  const near = [...new Set(decls.map((d) => d.name))].filter((n) => n.toLowerCase().includes(low) || low.includes(n.toLowerCase())).slice(0, 20);
+  return { kind: "missing", near };
+};
+var lineOfHead = (lines, d) => {
+  let i = d.start;
+  if ((lines[i] ?? "").trim().startsWith("/**"))
+    while (i < d.end && !(lines[i] ?? "").trim().endsWith("*/"))
+      i++;
+  return (lines[i] ?? "").trim().endsWith("*/") ? i + 1 : i;
+};
+var outline = (src) => {
+  const decls = declarations(src.split(`
+`));
+  const by = new Map;
+  for (const d of decls)
+    by.set(d.module, [...by.get(d.module) ?? [], d.name]);
+  const parts = [...by].map(([m, names]) => `${m || "(global)"} (${names.length}): ${names.join(", ")}`);
+  return `${decls.length} declarations. Pass \`property\`: a name ("ToolCheckResult"), a member path ("ToolCheckResult.plugin"), a call ("$.tool.check"), or an event ("tool.check").
+
+${parts.join(`
+
+`)}`;
+};
+
 // plugin/mcp/src/server.ts
 var DEFAULT_PAGE_CHARS = 20000;
 var MAX_PAGE_CHARS = 40000;
@@ -22809,7 +23000,15 @@ ${sourceLine(source)}`, {
 var isObj = (v) => typeof v === "object" && v !== null && !Array.isArray(v);
 var walk = (schema, path) => {
   let cur = schema;
-  for (const key of path.split(".").filter(Boolean)) {
+  const keys = path.split(".").filter(Boolean);
+  const defs = schema["$defs"];
+  if (isObj(defs) && keys[0] && Object.hasOwn(defs, keys[0])) {
+    const def = defs[keys.shift()];
+    if (!isObj(def))
+      return;
+    cur = def;
+  }
+  for (const key of keys) {
     if (key === "__proto__" || key === "constructor" || key === "prototype")
       return;
     const props = cur["properties"];
@@ -22828,25 +23027,39 @@ var walk = (schema, path) => {
 };
 server.registerTool("get_schema", {
   title: "Get a Claude Code JSON Schema",
-  description: `Get one of the six JSON Schemas generated from the Claude Code program itself (fetched live from the docs site): ${SCHEMA_NAMES.join(", ")}.
-A short name works too ("settings", "plugin-manifest", "keybindings").
-Schemas are large (up to 300k characters), so without \`property\` this returns an outline: each top-level property with its type and first description sentence. Pass \`property\` (dotted path such as "permissions" or "hooks.PreToolUse") to get that sub-schema as JSON.
+  description: `Get the exact fields of a Claude Code payload, from files generated from the program itself (fetched live from the docs site). Look a field up here before you state it, and name only the fields it returns.
+- JSON Schemas: ${SCHEMA_NAMES.join(", ")}. A short name works too ("settings", "tools", "hook-output", "status-line"). Without \`property\` this returns an outline: each top-level property with its type and first description sentence, then the names in $defs. Pass \`property\` (dotted path such as "permissions" or "hooks.PreToolUse", or a definition such as "BashInput" or "BashInput.command") to get that sub-schema as JSON.
+- "types": the Mod API type file the program ships (claude-code.d.ts): every \`$\` call, event, and their types, with doc comments (not the built-in tool fields). Without \`property\` this returns the declared names. Pass \`property\` as a type name ("ToolCheckResult"), a member path ("ToolCheckResult.plugin"), a call ("$.tool.check"), or an event name ("tool.check", which returns its entries in the event maps).
 Args:
-  - name (string): schema name.
-  - property (string, optional): top-level property or dotted path.
+  - name (string): schema name, or "types".
+  - property (string, optional): property path, or for "types" a name, member path, call, or event.
   - offset (number, default 0): character offset for long output.
 Returns: JSON text (or outline) ending with a "Source:" line; structuredContent {source:{origin,state,fetchedAt}}. Errors list valid names or properties.`,
   inputSchema: {
-    name: string2().min(1).describe("e.g. 'settings' or 'claude-code-plugin-manifest'"),
-    property: string2().optional().describe("Dotted property path, e.g. 'permissions'"),
+    name: string2().min(1).describe("e.g. 'settings', 'claude-code-plugin-manifest', or 'types'"),
+    property: string2().optional().describe("Dotted property path, e.g. 'permissions'; for 'types': 'ToolCheckResult', '$.tool.check', or 'tool.check'"),
     offset: number2().int().min(0).default(0).describe("Character offset")
   },
   outputSchema: { source: sourceSchema },
   annotations: { title: "Get a Claude Code JSON Schema", ...READ_ONLY }
 }, ({ name, property, offset }) => guarded(async () => {
+  if (TYPE_NAMES.includes(name)) {
+    const got = await content.typeFile();
+    if (got.status === "notfound")
+      return fail(`The type file was not found on ${got.origin}.`);
+    if (got.status === "error")
+      return fail(got.message);
+    if (!property)
+      return page(outline(got.body), offset, got.source);
+    const found = lookup(got.body, property);
+    if (found.kind === "missing")
+      return fail(`"${property}" is not in the type file, so its fields are unconfirmed for this release.${found.near.length ? ` Closest names in the file: ${found.near.join(", ")}. Look one of them up.` : " Call without `property` for the list of names."}`);
+    return page(`// ${found.title}
+${found.text}`, offset, got.source);
+  }
   const got = await content.schema(name);
   if (got === "unknown")
-    return fail(`Unknown schema "${name}". Valid names: ${SCHEMA_NAMES.join(", ")}`);
+    return fail(`Unknown schema "${name}". Valid names: ${SCHEMA_NAMES.join(", ")}, types`);
   if (got.status === "notfound")
     return fail(`Schema "${name}" was not found on ${got.origin}.`);
   if (got.status === "error")
@@ -22856,8 +23069,11 @@ Returns: JSON text (or outline) ending with a "Source:" line; structuredContent 
   if (property) {
     const sub = walk(schema, property);
     if (!sub) {
-      const props = Object.keys(schema["properties"] ?? {});
-      return fail(`No property "${property}" in ${name}. Top-level properties: ${props.join(", ")}`);
+      const keys = [
+        ...Object.keys(schema["properties"] ?? {}),
+        ...Object.keys(schema["$defs"] ?? {})
+      ];
+      return fail(`"${property}" is not in ${name}, so its fields are unconfirmed for this release. Its top-level properties and definitions: ${keys.join(", ")}. Look one of them up.`);
     }
     out = JSON.stringify(sub, null, 2);
   } else {
@@ -22867,13 +23083,20 @@ Returns: JSON text (or outline) ending with a "Source:" line; structuredContent 
       const first = String(v["description"] ?? "").split(/(?<=\.)\s/)[0]?.slice(0, 140);
       return `- ${k} (${type})${first ? `: ${first}` : ""}`;
     });
+    const defs = Object.keys(schema["$defs"] ?? {});
+    const defList = defs.length ? `
+
+${defs.length} definitions (pass one as \`property\`): ${defs.join(", ")}` : "";
     out = `${String(schema["title"])}
 $id: ${String(schema["$id"])}
 ${rows.length} top-level properties. Pass \`property\` for details.
 
 ${rows.join(`
-`)}`;
+`)}${defList}`;
   }
+  return page(out, offset, source);
+}));
+var page = (out, offset, source) => {
   const LIMIT = 25000;
   if (offset >= out.length && out.length > 0)
     return fail(`offset ${offset} is past the end (${out.length} characters).`);
@@ -22886,7 +23109,7 @@ ${rows.join(`
 ${sourceLine(source)}`, {
     source: sourceData(source)
   });
-}));
+};
 var platform = new Platform;
 server.registerTool("search_platform_docs", {
   title: "Search Claude API and platform docs",
