@@ -69,17 +69,36 @@ const IGNORED_FACTS = new Set(["retried", "startLagS"]);
 /**
  * Known noise by case id: facts that differ between two runs of the SAME version, so they are not release changes.
  * `facts` matches whole fact names and drops them. `items` removes those array elements from the facts that
- * `itemFacts` matches, then drops the fact when the two sides are then equal.
+ * `itemFacts` matches, then drops the fact when the two sides are then equal. With `values`, a `facts` match is
+ * noise only when both sides are in that list, so a value outside the range seen across reruns still shows.
  * Ignored facts are listed under "Noise (ignored)" in compare.md, never dropped silently.
  */
 type Noisy = {
   why: string;
   facts?: RegExp;
+  values?: Fact[];
   itemFacts?: RegExp;
   items?: string[];
 };
 export const NOISY: Record<string, Noisy[]> = {
+  "print.subagents.observer.on": [
+    {
+      why: "the background observer sends 3 or 5 requests from run to run (seen on 2.1.306 to 2.1.308)",
+      facts: /^(observerReportToolIn|observerMessageIn)$/,
+      values: [3, 5],
+    },
+    {
+      why: "the request count follows the observer's 3 or 5 requests",
+      facts: /^messages$/,
+      values: [10, 12],
+    },
+  ],
   "print.sweep": [
+    {
+      why: "with Mantle on, the run times out before any stub request, so its stderr varies from run to run",
+      itemFacts: /^CLAUDE_CODE_USE_MANTLE\.[AB]$/,
+      items: ["stderr", "cfgfiles"],
+    },
     {
       why: "API_TIMEOUT_MS sets a tiny timeout, so the retry count depends on machine load",
       facts: /^API_TIMEOUT_MS\.[AB]$/,
@@ -112,7 +131,8 @@ const noiseReason = (
 ): string | null => {
   if (versionOnly(old, now, v)) return "version string only";
   for (const n of (id && NOISY[id]) || []) {
-    if (n.facts?.test(k)) return n.why;
+    const inRange = (f: Fact) => n.values?.some((x) => same(x, f)) ?? true;
+    if (n.facts?.test(k) && inRange(old) && inRange(now)) return n.why;
     if (
       n.itemFacts?.test(k) &&
       n.items &&

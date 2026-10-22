@@ -370,6 +370,48 @@ export const runClaimsSelftest = (
       );
     }
     {
+      const OBS = "print.subagents.observer.on";
+      const obs = (v: string, n: number, m: number) =>
+        kase(v, OBS, {
+          messages: n,
+          observerReportToolIn: m,
+          observerMessageIn: m,
+        });
+      const ok = compareResults(
+        "1.0.0",
+        "1.0.1",
+        [
+          obs("1.0.0", 10, 3),
+          kase("1.0.0", "print.sweep", {
+            "CLAUDE_CODE_USE_MANTLE.A": ["nreq", "code", "stderr"],
+          }),
+        ],
+        [
+          obs("1.0.1", 12, 5),
+          kase("1.0.1", "print.sweep", {
+            "CLAUDE_CODE_USE_MANTLE.A": ["nreq", "cfgfiles", "code"],
+          }),
+        ],
+        false,
+      );
+      const gone = compareResults(
+        "1.0.0",
+        "1.0.1",
+        [obs("1.0.0", 10, 3)],
+        [obs("1.0.1", 2, 0)],
+        false,
+      );
+      step(
+        "compare: observer counts within the seen range and Mantle stderr are noise; a lost observer is a change",
+        ok.counts.changed === 0 &&
+          ok.noise?.[OBS]?.["observerReportToolIn"] !== undefined &&
+          ok.noise["print.sweep"]?.["CLAUDE_CODE_USE_MANTLE.A"] !== undefined &&
+          gone.counts.changed === 1 &&
+          Object.keys(gone.cases[OBS]?.changed ?? {}).length === 3,
+        JSON.stringify([ok.counts, ok.noise, gone.counts]),
+      );
+    }
+    {
       const rows = [
         {
           id: "c.noise",
