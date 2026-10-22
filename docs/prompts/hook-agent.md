@@ -33,13 +33,13 @@ The text below is every part of the request that Claude Code builds before your 
 
 ```text
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.307.<build>; cc_entrypoint=sdk-cli;
+x-anthropic-billing-header: cc_version=2.1.308.<build>; cc_entrypoint=sdk-cli;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
 
 === system[2] (cache marker: {"type":"ephemeral"}) ===
-You are evaluating a PreToolUse hook in Claude Code. Your task is to evaluate the condition described in the user message. The conversation transcript is available at: <config-dir>/projects/<project-slug>/7920c83c-a1bf-44ca-a3f6-cb353434a035.jsonl
+You are evaluating a PreToolUse hook in Claude Code. Your task is to evaluate the condition described in the user message. The conversation transcript is available at: <config-dir>/projects/<project-slug>/de0d7f80-2efa-423c-8235-86f5bdd372af.jsonl
 You can read this file to analyze the conversation history if needed.
 
 Use the available tools to inspect the codebase and verify the condition.
@@ -59,7 +59,7 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
 </system-reminder>
 
 === messages[0].content[1] (role: user) ===
-PROBE-HOOK-AGENT: check this call. {"session_id":"7920c83c-a1bf-44ca-a3f6-cb353434a035","transcript_path":"<config-dir>/projects/<project-slug>/7920c83c-a1bf-44ca-a3f6-cb353434a035.jsonl","cwd":"<cwd>","prompt_id":"ad290b2d-efb5-4591-96b2-4334fd159fb4","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"PreToolUse","tool_name":"Bash","tool_input":{"command":"echo probe"},"tool_use_id":"toolu_probe1"}
+PROBE-HOOK-AGENT: check this call. {"session_id":"de0d7f80-2efa-423c-8235-86f5bdd372af","transcript_path":"<config-dir>/projects/<project-slug>/de0d7f80-2efa-423c-8235-86f5bdd372af.jsonl","cwd":"<cwd>","prompt_id":"3d6af103-9312-45d9-8c7b-347e520cfd3e","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"PreToolUse","tool_name":"Bash","tool_input":{"command":"echo probe"},"tool_use_id":"toolu_probe1"}
 
 === messages[1].content[0] (role: system) ===
 Today's date is <date>.
@@ -78,7 +78,7 @@ Lines added: 7. Lines removed: 103. Size change: -13,041 characters.
  You are a Claude agent, built on Anthropic's Claude Agent SDK.
 
  === system[2] (cache marker: {"type":"ephemeral"}) ===
-+You are evaluating a PreToolUse hook in Claude Code. Your task is to evaluate the condition described in the user message. The conversation transcript is available at: <config-dir>/projects/<project-slug>/7920c83c-a1bf-44ca-a3f6-cb353434a035.jsonl
++You are evaluating a PreToolUse hook in Claude Code. Your task is to evaluate the condition described in the user message. The conversation transcript is available at: <config-dir>/projects/<project-slug>/de0d7f80-2efa-423c-8235-86f5bdd372af.jsonl
 +You can read this file to analyze the conversation history if needed.
 
 -You are an agent working with the user toward their goals, using your own judgment along the way.
@@ -148,7 +148,7 @@ Lines added: 7. Lines removed: 103. Size change: -13,041 characters.
 
  === messages[0].content[1] (role: user) ===
 -Reply with 'OK'.
-+PROBE-HOOK-AGENT: check this call. {"session_id":"7920c83c-a1bf-44ca-a3f6-cb353434a035","transcript_path":"<config-dir>/projects/<project-slug>/7920c83c-a1bf-44ca-a3f6-cb353434a035.jsonl","cwd":"<cwd>","prompt_id":"ad290b2d-efb5-4591-96b2-4334fd159fb4","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"PreToolUse","tool_name":"Bash","tool_input":{"command":"echo probe"},"tool_use_id":"toolu_probe1"}
++PROBE-HOOK-AGENT: check this call. {"session_id":"de0d7f80-2efa-423c-8235-86f5bdd372af","transcript_path":"<config-dir>/projects/<project-slug>/de0d7f80-2efa-423c-8235-86f5bdd372af.jsonl","cwd":"<cwd>","prompt_id":"3d6af103-9312-45d9-8c7b-347e520cfd3e","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"PreToolUse","tool_name":"Bash","tool_input":{"command":"echo probe"},"tool_use_id":"toolu_probe1"}
 
  === messages[1].content[0] (role: system) ===
 -# Environment

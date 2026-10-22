@@ -134,6 +134,7 @@ export const NOTES: Record<string, string[]> = {
   ],
   "subagent-statusline-setup": [
     "The `statusline-setup` agent is built in. It starts with `You are a status line setup agent for Claude Code.` and has two tools, `Read` and `Edit`.",
+    "Its JSON list matches the real input except in two places. The program sends the agent type as top-level `agent_type`, where the prompt shows `agent.type`. The program also sends `cost`, `exceeds_200k_tokens`, `fast_mode`, `remote`, `agent_type`, and `scratchpad_dir`, which the prompt leaves out. [Status Line](../configure/status-line.md#json-fields) lists every field.",
     "To replace it, save an agent file with `name: statusline-setup`. Your file wins over the built-in one. See [Override a Built-in Agent with a File](./override-agent-file.md).",
   ],
   "subagent-claude": [
