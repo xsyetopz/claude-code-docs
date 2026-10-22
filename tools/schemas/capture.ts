@@ -12,8 +12,8 @@ import {
 } from "node:fs";
 import { homedir, tmpdir } from "node:os";
 import { join } from "node:path";
+import { extractModules } from "../../inspect/mcp/src/bunfs.ts";
 import { CLAUDE_CODE_VERSION } from "../../src/version.ts";
-import { extractModules } from "./extract.ts";
 
 // `module` finds the schema's definition in a chunk; `expr` is the JS expression that evaluates to the zod schema there.
 // `names` holds the expressions of earlier captures (same chunk), so a later anchor can refer to an earlier schema.

@@ -12,31 +12,33 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { basename, join, resolve } from "node:path";
-import { CLAUDE_CODE_VERSION } from "../../src/version.ts";
-import { extractModules } from "./extract.ts";
 import {
-  type Binding,
-  type Brackets,
-  bindingAt,
-  brackets,
+  Bundle,
+  callsOf,
+  children,
+  type Fn,
+  isFn,
+  type Module,
+  type Node,
+} from "../../inspect/mcp/src/ast.ts";
+import { extractModules } from "../../inspect/mcp/src/bunfs.ts";
+import {
+  aliasesOf,
+  argEntries,
+  callAt,
+  eventSites,
+} from "../../inspect/mcp/src/events.ts";
+import {
   type Entry,
-  exprEnd,
-  flatten,
-  frameAt,
-  functionReturns,
-  functionText,
-  inside,
-  matchClose,
   mergeEntries,
-  nameIndex,
-  parseObjectAt,
-  parseValue,
-  splitTop,
+  Resolver,
   type Val,
-} from "./jsparse.ts";
+} from "../../inspect/mcp/src/resolve.ts";
+import { CLAUDE_CODE_VERSION } from "../../src/version.ts";
+import { splitTop } from "./jsparse.ts";
 
 type Json = Record<string, unknown>;
-type Src = { name: string; text: string };
+type Src = Module;
 
 const ROOT = resolve(import.meta.dir, "../..");
 const BASE_URL = "https://xsyetopz.github.io/claude-code-docs/schemas";
@@ -58,17 +60,20 @@ const note = (s: string) => report.push(s);
 
 // ---------------------------------------------------------------- program access
 
-const mods: Src[] = extractModules(BIN)
-  .modules.filter((m) => /\.m?js$/.test(m.name))
-  .map((m) => ({ name: m.name.split("/").pop() as string, text: m.source }));
+const bundle = new Bundle(
+  extractModules(BIN)
+    .modules.filter((m) => /\.m?js$/.test(m.name))
+    .map((m) => ({ name: m.name, text: m.source })),
+);
+const mods: Src[] = [...bundle.modules.values()];
+const R = new Resolver();
 const mod = (name: string): Src => {
-  const m = mods.find((x) => x.name === name);
+  const m = bundle.get(name);
   if (!m) throw new Error(`module ${name} not found`);
   return m;
 };
 /** Modules whose text contains `needle`. */
-const withText = (needle: string): Src[] =>
-  mods.filter((m) => m.text.includes(needle));
+const withText = (needle: string): Src[] => bundle.withText(needle);
 const only = (needle: string): Src => {
   const hit = withText(needle);
   if (hit.length === 0) throw new Error(`anchor not found: ${needle}`);
@@ -93,433 +98,23 @@ const literalAfter = (
   const m = re.exec(src.text);
   if (!m) throw new Error(`anchor not found in ${src.name}: ${re}`);
   const at = m.index + m[0].length - 1;
-  return { entries: parseObjectAt(src.text, at), at };
+  return { entries: R.objectAt(src, at), at };
+};
+/** The innermost function around index `pos` that passes `test`. */
+const fnAround = (
+  src: Src,
+  pos: number,
+  test: (f: Fn) => boolean,
+): Fn | undefined => {
+  for (let n: Node | undefined = src.nodeAt(pos); n; n = src.parent(n))
+    if (isFn(n) && test(n)) return n;
+  return undefined;
 };
 const readJson = (path: string): Json | undefined =>
   existsSync(path)
     ? (JSON.parse(readFileSync(path, "utf8")) as Json)
     : undefined;
 const esc = (id: string) => id.replace(/\$/g, "\\$");
-
-// ---------------------------------------------------------------- resolving entries
-
-const unresolved: string[] = [];
-const lits = (l: (Entry[] | string)[]): Entry[][] =>
-  l.filter((x): x is Entry[] => Array.isArray(x));
-
-const scopeCache = new Map<Src, Brackets>();
-const scopesOf = (src: Src): Brackets => {
-  const b = scopeCache.get(src) ?? brackets(src.text);
-  scopeCache.set(src, b);
-  return b;
-};
-const declares = (src: Src, name: string): boolean =>
-  scopesOf(src).functions.has(name);
-const identCache = new Map<Src, Map<string, number[]>>();
-/** Indexes of the code occurrences of `id` in `src`, not after a `.`. */
-const occurrences = (src: Src, id: string): number[] => {
-  const all = identCache.get(src) ?? nameIndex(src.text, scopesOf(src));
-  identCache.set(src, all);
-  return all.get(id) ?? [];
-};
-
-const identCacheResult = new Map<string, Entry[] | undefined>();
-/**
- * Entries of the object that the name `id` holds at `pos` (or `id.key.key` for a nested object): from its
- * declaration and each later write in scope, or for a parameter from the argument at every call site.
- */
-const resolveIdent = (
-  src: Src,
-  pos: number,
-  id: string,
-  depth = 0,
-): Entry[] | undefined => {
-  const [head, ...path] = id.split(".") as [string, ...string[]];
-  const key = `${src.name}@${pos}:${head}`;
-  let got: Entry[] | undefined;
-  if (identCacheResult.has(key)) got = identCacheResult.get(key);
-  else if (depth <= 6) {
-    identCacheResult.set(key, undefined);
-    const bind = bindingAt(
-      src.text,
-      scopesOf(src),
-      occurrences(src, head),
-      pos,
-      head,
-    );
-    // No binding found, or an unnamed arrow (as in `.then((x)=>`): the older rules.
-    got =
-      bind?.kind === "opaque"
-        ? undefined
-        : bind && (bind.kind === "var" || bind.fn)
-          ? fromBinding(src, pos, head, bind, depth)
-          : fromNearLiteral(src, pos, head);
-    identCacheResult.set(key, got);
-  }
-  for (const k of path) {
-    const e = got?.find((x) => "key" in x && x.key === k);
-    got = e && "key" in e && e.val.k === "obj" ? e.val.e : undefined;
-  }
-  return got;
-};
-
-/** The older rule: the last `id={...}` before `pos` in the same function, or an arrow param of a `.then`. */
-const fromNearLiteral = (
-  src: Src,
-  pos: number,
-  id: string,
-): Entry[] | undefined => {
-  const re = new RegExp(`[,; (]${esc(id)}=\\{`, "g");
-  let best = -1;
-  let m: RegExpExecArray | null = re.exec(src.text);
-  while (m && m.index < pos) {
-    best = m.index + m[0].length - 1;
-    m = re.exec(src.text);
-  }
-  // Same function only: nothing that opens a new scope between the declaration and the use.
-  if (
-    best >= 0 &&
-    pos - best < 6000 &&
-    !/\bfunction\b|\bclass\b/.test(src.text.slice(best, pos))
-  )
-    return parseObjectAt(src.text, best);
-  const before = src.text.slice(Math.max(0, pos - 400), pos);
-  const call = new RegExp(
-    `([\\w$]+)\\([^()]*\\)\\.then\\(\\(${esc(id)}\\)=>[^]*$`,
-  ).exec(before);
-  if (call) {
-    const rets = lits(functionReturns(src.text, call[1] as string));
-    if (rets.length > 0) return mergeEntries(rets.map((r) => flatten(r)));
-  }
-  return undefined;
-};
-
-const fromBinding = (
-  src: Src,
-  pos: number,
-  id: string,
-  bind: Binding,
-  depth: number,
-): Entry[] | undefined => {
-  const s = src.text;
-  const lists: Entry[][] = [];
-  if (bind.kind === "var") {
-    const b = scopesOf(src);
-    const later: Entry[] = [];
-    for (const d of occurrences(src, id)) {
-      if (d < bind.at || d >= pos || !inside(b, frameAt(b, d), bind.frame))
-        continue;
-      const w = /^\s*(?:=(?![=>])|\.([\w$]+)\s*=(?![=>]))/.exec(
-        s.slice(d + id.length, d + id.length + 80),
-      );
-      if (!w) {
-        // The declaration with no value: undefined until a write.
-        if (d === bind.at) lists.push([]);
-        continue;
-      }
-      const from = d + id.length + w[0].length;
-      const text = s.slice(from, exprEnd(s, from, true));
-      if (w[1]) {
-        later.push({ key: w[1], opt: true, val: parseValue(text) });
-        continue;
-      }
-      const got = resolveExpr(src, from, text, depth + 1);
-      if (!got) return undefined;
-      lists.push(got);
-    }
-    const out = [...mergeEntries(lists), ...later];
-    // No key at all: the name may hold a string or a number, so it is no known object.
-    return out.length > 0 ? out : undefined;
-  }
-  if (bind.kind !== "param" || !bind.fn) return undefined;
-  for (const site of callSites(src, bind.fn, bind.fnAt)) {
-    if (!site) return undefined;
-    const args = splitTop(site.args, ",");
-    if (args.slice(0, bind.index + 1).some((a) => a.trim().startsWith("...")))
-      return undefined;
-    const got = resolveExpr(
-      site.src,
-      site.at,
-      args[bind.index] ?? "void 0",
-      depth + 1,
-    );
-    if (!got) return undefined;
-    lists.push(got);
-  }
-  const out = mergeEntries(lists);
-  return out.length > 0 ? out : undefined;
-};
-
-/**
- * The calls of the function `name` declared at `at`: in its scope, and for a top-level function that the
- * module exports, in each module that imports it. Undefined in the list means the function is used as a
- * value somewhere, so not every call is known.
- */
-const callSites = (
-  src: Src,
-  name: string,
-  at: number,
-): ({ src: Src; at: number; args: string } | undefined)[] => {
-  const b = scopesOf(src);
-  const frame = frameAt(b, at);
-  const out: ({ src: Src; at: number; args: string } | undefined)[] = [];
-  const scan = (m: Src, local: string, within: number) => {
-    const mb = scopesOf(m);
-    for (const d of occurrences(m, local)) {
-      if ((m === src && d === at) || !inside(mb, frameAt(mb, d), within))
-        continue;
-      const open = d + local.length;
-      // A name in an `import{...}` or `export{...}` list.
-      const brace = m.text.lastIndexOf("{", d);
-      if (
-        /(?:import|export)$/.test(m.text.slice(brace - 6, brace)) &&
-        !m.text.slice(brace, d).includes("}")
-      )
-        continue;
-      if (m.text[open] !== "(") {
-        out.push(undefined);
-        continue;
-      }
-      out.push({
-        src: m,
-        at: d,
-        args: m.text.slice(open + 1, matchClose(m.text, open)),
-      });
-    }
-  };
-  scan(src, name, frame);
-  const exported =
-    frame < 0 &&
-    /export\{([^}]*)\};?\s*$/
-      .exec(src.text)?.[1]
-      ?.split(",")
-      .map((x) => x.trim().split(/\s+as\s+/))
-      .find(([inner]) => inner === name);
-  if (exported)
-    for (const m of mods)
-      if (m !== src)
-        for (const alias of aliasesOf(
-          m,
-          src.name,
-          (exported[1] ?? exported[0]) as string,
-        ))
-          scan(m, alias, -1);
-  return out;
-};
-
-/**
- * Entries of the object an expression gives: a literal, a call, a name, `a.b`, `await x`, or a ternary of
- * those. Null and undefined give no entries, as a spread of them adds nothing.
- */
-const resolveExpr = (
-  src: Src,
-  pos: number,
-  text: string,
-  depth = 0,
-): Entry[] | undefined => {
-  const t = text.trim().replace(/^await\s+/, "");
-  if (/^(?:null|void 0|undefined)$/.test(t)) return [];
-  const q = ternary(t);
-  if (q) {
-    const a = resolveExpr(src, pos, q[1], depth);
-    const c = resolveExpr(src, pos, q[2], depth);
-    return a && c ? mergeEntries([a, c]) : undefined;
-  }
-  if (t.startsWith("{") && matchClose(t, 0) === t.length - 1)
-    return pin(src, pos, parseObjectAt(t, 0), depth);
-  if (/^[\w$]+(?:\.[\w$]+)*$/.test(t)) return resolveIdent(src, pos, t, depth);
-  return resolveCall(src, t);
-};
-/** `name` in an `import{...}` or `export{...}` list, as [inner, outer]: `a as b` gives [a, b]. */
-const bindings = (list: string): [string, string][] =>
-  list.split(",").map((b) => {
-    const [inner, outer] = b.trim().split(/\s+as\s+/);
-    return [inner as string, (outer ?? inner) as string];
-  });
-/**
- * The top-level function that `name` calls from `src`: declared in `src`, or imported into it from the
- * chunk that exports it. A nested function of the same name is a different function.
- */
-const declaring = (
-  src: Src,
-  name: string,
-): { src: Src; name: string } | undefined => {
-  if (declares(src, name)) return { src, name };
-  for (const im of src.text.matchAll(
-    /import\{([^}]*)\}from"\/\$bunfs\/root\/([^"]+)"/g,
-  )) {
-    const exported = bindings(im[1] as string).find(([, o]) => o === name)?.[0];
-    if (exported === undefined) continue;
-    const from = mods.find((x) => x.name === im[2]);
-    const list = from && /export\{([^}]*)\};?\s*$/.exec(from.text)?.[1];
-    const local = list
-      ? bindings(list).find(([, o]) => o === exported)?.[0]
-      : undefined;
-    return from && local && declares(from, local)
-      ? { src: from, name: local }
-      : undefined;
-  }
-  return undefined;
-};
-
-/** `cond ? a : b` split into its three parts, or undefined. `??` and `?.` are not ternaries. */
-const ternary = (t: string): [string, string, string] | undefined => {
-  const q = splitTop(
-    t.replace(/\?\?/g, "\u0001\u0001").replace(/\?\./g, "\u0002."),
-    "?",
-  ).map((x) => x.replaceAll("\u0001", "?").replaceAll("\u0002", "?"));
-  if (q.length !== 2) return undefined;
-  const b = splitTop(q[1] as string, ":");
-  return b.length === 2
-    ? [q[0] as string, b[0] as string, b[1] as string]
-    : undefined;
-};
-
-/**
- * Entries returned by a call like `f(a,b)`, where `f` is declared in the module or imported into it. Each
- * returned value must be a literal, a call to such a function, or a local built from one (plus the keys
- * that `local.key=` adds later).
- */
-const resolveCall = (
-  src: Src,
-  expr: string,
-  depth = 0,
-): Entry[] | undefined => {
-  const call = expr.trim();
-  const m = /^([\w$]+)\(/.exec(call);
-  // The whole expression is the call: not `f(x).key` or `f(x)||y`.
-  if (!m || depth > 4 || matchClose(call, m[0].length - 1) !== call.length - 1)
-    return undefined;
-  const found = declaring(src, m[1] as string);
-  if (!found) return undefined;
-  const def = found.src;
-  const all = functionReturns(def.text, found.name);
-  if (all.length === 0) return undefined;
-  // A parameter the call leaves out is undefined, and so is a local built only from one;
-  // JSON drops a key whose value is undefined.
-  const fn = functionText(def.text, found.name);
-  const at = def.text.indexOf(fn) + fn.length - 1;
-  const params = /^function [\w$]+\(([^)]*)\)/
-    .exec(fn)?.[1]
-    ?.split(",")
-    .map((x) => x.trim())
-    .filter(Boolean);
-  const args = call.slice(m[0].length, matchClose(call, m[0].length - 1));
-  const passed = args.trim() ? splitTop(args, ",").length : 0;
-  const undef = new Set(params?.slice(passed) ?? []);
-  const isUndef = (expr: string): boolean => {
-    const t = expr.trim();
-    if (t === "void 0") return true;
-    const alts = splitTop(t, "??");
-    if (alts.length > 1) return alts.every(isUndef);
-    const q = ternary(t);
-    // `cond ? a : b` with a cond that is undefined takes `b`.
-    if (q) return isUndef(splitTop(q[0], "&&")[0] ?? "") && isUndef(q[2]);
-    const and = splitTop(t, "&&");
-    if (and.length > 1) return isUndef(and[0] as string);
-    const id = /^([\w$]+)(?:\?\.[\w$?.]*)?$/.exec(t)?.[1];
-    return id !== undefined && undef.has(id);
-  };
-  // Locals in order: `let a=...,b=...;` at the top of the body.
-  const body = fn.slice(fn.indexOf("{") + 1);
-  for (const decl of body.matchAll(/\blet ([^;]*);/g))
-    for (const part of splitTop(decl[1] as string, ",")) {
-      const eq = part.indexOf("=");
-      const name = part.slice(0, eq).trim();
-      if (eq > 0 && /^[\w$]+$/.test(name) && isUndef(part.slice(eq + 1)))
-        undef.add(name);
-    }
-  const unset = (e: Entry) =>
-    "key" in e && e.val.k === "unk" && isUndef(e.val.text);
-  // Spreads resolve here, in the module of `f`; the ones left are counted as unresolved.
-  const own = (entries: Entry[]): Entry[] =>
-    resolveEntries(
-      def,
-      at,
-      flatten(entries).filter((e) => !unset(e)),
-      depth + 1,
-    ).filter((e) => "key" in e);
-  const returned = (expr: string, seen: string[]): Entry[][] | undefined => {
-    // `a,b` returns `b`.
-    const t = (splitTop(expr.trim(), ",").at(-1) ?? "").trim();
-    const q = ternary(t);
-    if (q) {
-      const a = returned(q[1], seen);
-      const b = returned(q[2], seen);
-      return a && b ? [...a, ...b] : undefined;
-    }
-    if (t.startsWith("{") && matchClose(t, 0) === t.length - 1)
-      return [own(parseObjectAt(t, 0))];
-    // A spread of null or undefined adds no keys.
-    if (/^(?:null|void 0|undefined)$/.test(t)) return [[]];
-    if (/^[\w$]+\(/.test(t) && matchClose(t, t.indexOf("(")) === t.length - 1) {
-      const r = resolveCall(def, t, depth + 1);
-      return r && [r];
-    }
-    if (!/^[\w$]+$/.test(t) || seen.includes(t)) return undefined;
-    const d = new RegExp(`(?:\\blet |[,;{])${esc(t)}=(?!=)`).exec(body);
-    if (!d) return undefined;
-    const from = d.index + d[0].length;
-    const later: Entry[] = [
-      ...body.matchAll(
-        new RegExp(`(?<![\\w$.])${esc(t)}\\.([\\w$]+)=(?!=)`, "g"),
-      ),
-    ].map((a) => {
-      const v = a.index + a[0].length;
-      return {
-        key: a[1] as string,
-        opt: true,
-        val: parseValue(body.slice(v, exprEnd(body, v, true))),
-      };
-    });
-    return returned(body.slice(from, exprEnd(body, from, true)), [
-      ...seen,
-      t,
-    ])?.map((l) => [...l, ...later]);
-  };
-  const lists: Entry[][] = [];
-  for (const r of all) {
-    const got = Array.isArray(r) ? [own(r)] : returned(r, []);
-    if (!got) return undefined;
-    lists.push(...got);
-  }
-  // Values resolve here too: a name in them is a name of `f`, not of the caller.
-  return pin(def, at, mergeEntries(lists), depth + 1);
-};
-
-/** Flatten spreads and resolve the ones that call a literal-returning function or name a variable. */
-const resolveEntries = (
-  src: Src,
-  pos: number,
-  entries: Entry[],
-  depth = 0,
-): Entry[] => {
-  const out: Entry[] = [];
-  for (const e of flatten(entries)) {
-    if ("key" in e) {
-      out.push(e);
-      continue;
-    }
-    const got = resolveExpr(src, pos, e.spread, depth);
-    if (got && depth < 3) {
-      for (const inner of resolveEntries(src, pos, got, depth + 1))
-        out.push({ ...inner, opt: inner.opt || e.opt });
-    } else if (!/^!?[01]$|^void 0$/.test(e.spread.trim()))
-      unresolved.push(`${src.name}@${pos}: ...${e.spread}`);
-  }
-  return out;
-};
-
-/** The object a value holds, when it holds one with keys: an empty result may be null or a number. */
-const objectValue = (
-  src: Src,
-  pos: number,
-  text: string,
-  depth = 0,
-): Entry[] | undefined => {
-  const got = text ? resolveExpr(src, pos, text, depth) : undefined;
-  return got?.length ? got : undefined;
-};
 
 // ---------------------------------------------------------------- schema building
 
@@ -528,34 +123,28 @@ type Mode = "const" | "default" | "plain";
 const UNVERIFIED: Json = { "x-unverified": true };
 
 const objSchema = (
-  src: Src,
-  pos: number,
   entries: Entry[],
   mode: Mode,
   depth = 0,
+  open = false,
 ): Json => {
   const properties: Record<string, Json> = {};
-  for (const e of resolveEntries(src, pos, entries)) {
+  for (const e of R.spreads(entries)) {
     if (!("key" in e)) continue;
     const next = properties[e.key];
-    const here = valSchema(src, pos, e.val, mode, depth + 1);
+    const here = valSchema(e.val, mode, depth + 1);
     // The same key twice (a spread then an override): the later one wins, as in JavaScript.
     properties[e.key] =
       next && here["x-unverified"] && !next["x-unverified"] ? next : here;
   }
-  return { type: "object", properties };
+  // An open object may also be another value, so only its keys are known.
+  return open ? { properties } : { type: "object", properties };
 };
 
-const valSchema = (
-  src: Src,
-  pos: number,
-  v: Val,
-  mode: Mode,
-  depth: number,
-): Json => {
+const valSchema = (v: Val, mode: Mode, depth: number): Json => {
   switch (v.k) {
     case "obj":
-      return objSchema(src, pos, v.e, mode, depth);
+      return objSchema(v.e, mode, depth, v.open);
     case "str":
       return mode === "const"
         ? { const: v.v }
@@ -576,8 +165,8 @@ const valSchema = (
       return { type: "array" };
     case "unk": {
       if (depth < 4) {
-        const asObj = objectValue(src, pos, v.text);
-        if (asObj) return objSchema(src, pos, asObj, mode, depth);
+        const asObj = R.objectValue(v);
+        if (asObj) return objSchema(asObj, mode, depth);
       }
       return { ...UNVERIFIED };
     }
@@ -750,8 +339,7 @@ const buildStatusLine = (): { file: string; schema: Json } => {
   );
   // literalAfter points at the `{` before session_name; the full literal starts at the `return{` before it.
   const retAt = src.text.lastIndexOf("return{", main.at) + "return".length;
-  const entries = parseObjectAt(src.text, retAt);
-  const schema = objSchema(src, retAt, entries, "plain");
+  const schema = objSchema(R.objectAt(src, retAt), "plain");
   const tmpl = parseTemplate(src);
   const codeOnly: string[] = [];
   const tmplOnly: string[] = [];
@@ -773,29 +361,31 @@ const buildStatusLine = (): { file: string; schema: Json } => {
   );
   let subDef: Json | undefined;
   if (sm) {
-    const subEntries = parseObjectAt(sub.text, sm.index);
-    const subSchema = objSchema(sub, sm.index, subEntries, "plain");
+    const subEntries = R.objectAt(sub, sm.index);
+    const subSchema = objSchema(subEntries, "plain");
     const tasks = subEntries.find((e) => "key" in e && e.key === "tasks");
-    const tm =
+    // `tasks: list.map((t) => ({...}))`: the object each item is.
+    const item = (n: Node | undefined): Node | undefined =>
+      !n
+        ? undefined
+        : n.type === "ArrowFunctionExpression" &&
+            n.body.type === "ObjectExpression"
+          ? (n.body as Node)
+          : children(n).map(item).find(Boolean);
+    const each =
       tasks && "val" in tasks && tasks.val.k === "unk"
-        ? /=>\(\{/.exec(tasks.val.text)
-        : null;
-    if (tasks && "val" in tasks && tasks.val.k === "unk" && tm) {
-      const item = objSchema(
-        sub,
-        sm.index,
-        parseObjectAt(tasks.val.text, tm.index + 3),
-        "plain",
-      );
-      props(subSchema)["tasks"] = { type: "array", items: item };
-    }
+        ? item(tasks.val.ref?.n)
+        : undefined;
+    if (each?.type === "ObjectExpression")
+      props(subSchema)["tasks"] = {
+        type: "array",
+        items: objSchema(R.entries(sub, each), "plain"),
+      };
     // The common base is spread from the same builder as the main payload, with two arguments as
     // there: copy the keys that builder sends.
-    const baseCall = /return\{\.\.\.([\w$]+\([\w$]+,[\w$]+\))/.exec(
-      src.text.slice(retAt - "return".length),
-    )?.[1];
+    const baseCall = src.at(retAt + "{...".length, "CallExpression");
     const baseKeys = new Set(
-      (baseCall ? (resolveCall(src, baseCall) ?? []) : []).flatMap((e) =>
+      (baseCall ? (R.call(src, baseCall) ?? []) : []).flatMap((e) =>
         "key" in e ? [e.key] : [],
       ),
     );
@@ -837,60 +427,55 @@ const buildStatusLine = (): { file: string; schema: Json } => {
 
 const CHAIN = ["user", "assistant", "system", "attachment", "progress"];
 
-/** The `{` of the nearest object literal around index `i`, or -1. It looks back at most 3000 characters. */
-const enclosing = (text: string, i: number): number => {
-  let open = text.lastIndexOf("{", i);
-  while (open >= 0 && i - open < 3000 && matchClose(text, open) < i)
-    open = text.lastIndexOf("{", open - 1);
-  return open >= 0 && i - open < 3000 ? open : -1;
-};
 /** A literal that copies a line: `{...line, ...}`. */
-const copies = (text: string, open: number): boolean =>
-  open >= 0 && text.startsWith("...", open + 1);
+const copies = (n: Node | undefined): boolean =>
+  n?.type === "ObjectExpression" && n.properties[0]?.type === "SpreadElement";
+/** The nearest object literal around `n`, inside the same function. */
+const outerObject = (m: Src, n: Node): Node | undefined => {
+  for (let x = m.parent(n); x && !isFn(x); x = m.parent(x))
+    if (x.type === "ObjectExpression") return x;
+  return undefined;
+};
 
 /**
  * Where the program adds `key` to a line after building it: a key in a copy of the line (`{...line, key}`),
  * a key in a spread inside such a copy, a key returned by a function spread into one, or last a property
  * assignment (`x.key=`). The type comes from a literal value; else it is unverified.
  */
-const spreadIntoCopy = new Map<string, boolean>();
+const spreadIntoCopy = new Map<Node, boolean>();
 const laterWrite = (key: string): Json | undefined => {
   const k = esc(key);
+  // A literal returned by a function, when a copy of a line spreads that function's result.
+  const returnedIntoCopy = (m: Src, obj: Node): boolean => {
+    if (m.parent(obj)?.type !== "ReturnStatement") return false;
+    let fn = m.parent(obj);
+    while (fn && !isFn(fn)) fn = m.parent(fn);
+    if (!fn) return false;
+    let hit = spreadIntoCopy.get(fn);
+    if (hit === undefined) {
+      hit = callsOf(m, fn as Fn).some((c) => {
+        const sp = c?.module.parent(c.call);
+        return sp?.type === "SpreadElement" && copies(c?.module.parent(sp));
+      });
+      spreadIntoCopy.set(fn, hit);
+    }
+    return hit;
+  };
   for (const m of mods) {
     const re = new RegExp(`[{,]${k}:`, "g");
     for (let h = re.exec(m.text); h; h = re.exec(m.text)) {
-      const open = enclosing(m.text, h.index);
-      if (open < 0) continue;
-      const close = matchClose(m.text, open);
-      // `let{key:a,...rest}=line` reads the key; it does not write it.
-      if (m.text[close + 1] === "=" && m.text[close + 2] !== "=") continue;
-      // A literal returned by a function, when a copy of a line spreads that function's result.
-      const returnedIntoCopy = () => {
-        if (m.text.slice(open - 6, open) !== "return") return false;
-        const fn = [
-          ...m.text
-            .slice(Math.max(0, open - 3000), open)
-            .matchAll(/function ([\w$]+)\(/g),
-        ].at(-1)?.[1];
-        if (fn === undefined) return false;
-        const id = `${m.name}\0${fn}`;
-        let hit = spreadIntoCopy.get(id);
-        if (hit === undefined) {
-          hit = [
-            ...m.text.matchAll(new RegExp(`\\.\\.\\.${esc(fn)}\\(`, "g")),
-          ].some((c) => copies(m.text, enclosing(m.text, c.index)));
-          spreadIntoCopy.set(id, hit);
-        }
-        return hit;
-      };
-      const inCopy =
-        copies(m.text, open) ||
-        copies(m.text, enclosing(m.text, open - 1)) ||
-        returnedIntoCopy();
-      if (!inCopy) continue;
-      const e = parseObjectAt(m.text, open).find(
-        (x) => "key" in x && x.key === key,
-      );
+      // A key of an object literal; `let{key:a,...rest}=line` is a pattern, which reads the key.
+      const prop = m.parent(m.nodeAt(h.index + 1));
+      const obj = prop && m.parent(prop);
+      if (prop?.type !== "Property" || obj?.type !== "ObjectExpression")
+        continue;
+      if (
+        !copies(obj) &&
+        !copies(outerObject(m, obj)) &&
+        !returnedIntoCopy(m, obj)
+      )
+        continue;
+      const e = R.entries(m, obj).find((x) => "key" in x && x.key === key);
       if (!e || !("key" in e)) continue;
       return {
         ...valType(e.val),
@@ -901,13 +486,14 @@ const laterWrite = (key: string): Json | undefined => {
   }
   // Last, a property assignment. It can match an unrelated object, so copies of a line come first.
   for (const m of mods) {
-    const assign = new RegExp(`\\.${k}=(?!=)`).exec(m.text);
-    if (assign) {
-      const v = parseValue(
-        m.text.slice(assign.index + assign[0].length).split(/[;,})]/)[0] ?? "",
-      );
+    const re = new RegExp(`\\.${k}=(?!=)`, "g");
+    for (let h = re.exec(m.text); h; h = re.exec(m.text)) {
+      const member = m.parent(m.nodeAt(h.index + 1));
+      const assign = member && m.parent(member);
+      if (assign?.type !== "AssignmentExpression" || assign.left !== member)
+        continue;
       return {
-        ...valType(v),
+        ...valType(R.value(m, assign.right as Node)),
         $comment: "Added after the line is built, by a property assignment.",
       };
     }
@@ -930,7 +516,7 @@ const valType = (v: Val): Json =>
 const buildTranscript = (): { file: string; schema: Json } => {
   const reg = only('{user:"transcript",assistant:"transcript"');
   const regAt = idx(reg, '{user:"transcript",assistant:"transcript"');
-  const registry = parseObjectAt(reg.text, regAt);
+  const registry = R.objectAt(reg, regAt);
   const types = registry.flatMap((e) => ("key" in e ? [e.key] : []));
   const policy = new Map(
     registry.flatMap((e) =>
@@ -942,7 +528,7 @@ const buildTranscript = (): { file: string; schema: Json } => {
   const wRe = /parentUuid:[\w$]+\?null:[\w$]+,logicalParentUuid:/;
   const w = mods.find((m) => wRe.test(m.text)) as Src;
   const wAt = w.text.lastIndexOf("{", idx(w, wRe));
-  const common = objSchema(w, wAt, parseObjectAt(w.text, wAt), "const");
+  const common = objSchema(R.objectAt(w, wAt), "const");
 
   // Every `{type:"<t>",...}` literal in the program.
   const sites = new Map<string, { src: Src; at: number; entries: Entry[] }[]>();
@@ -953,50 +539,29 @@ const buildTranscript = (): { file: string; schema: Json } => {
       const t = hit[1] as string;
       if (types.includes(t)) {
         const list = sites.get(t) ?? [];
-        list.push({
-          src: m,
-          at: hit.index,
-          entries: parseObjectAt(m.text, hit.index),
-        });
+        list.push({ src: m, at: hit.index, entries: R.objectAt(m, hit.index) });
         sites.set(t, list);
       }
       hit = re.exec(m.text);
     }
     // Literals where `type:"<t>"` comes later, such as an assistant message built as {message, ..., type:"assistant"}:
-    // the nearest `{` before the key whose literal holds it at the top level.
+    // the literal that holds the key.
     const mid = /,type:"([\w-]+)"[,}]/g;
-    let h: RegExpExecArray | null = mid.exec(m.text);
-    while (h) {
+    for (let h = mid.exec(m.text); h; h = mid.exec(m.text)) {
       const t = h[1] as string;
-      if (types.includes(t)) {
-        for (
-          let at = m.text.lastIndexOf("{", h.index);
-          at >= 0 && h.index - at < 3000;
-          at = m.text.lastIndexOf("{", at - 1)
-        ) {
-          if (matchClose(m.text, at) < h.index) continue;
-          const entries = parseObjectAt(m.text, at);
-          const top = entries.some(
-            (e) =>
-              "key" in e &&
-              e.key === "type" &&
-              e.val.k === "str" &&
-              e.val.v === t,
-          );
-          if (top) {
-            const list = sites.get(t) ?? [];
-            if (!list.some((x) => x.src === m && x.at === at))
-              list.push({ src: m, at, entries });
-            sites.set(t, list);
-          }
-          break;
-        }
-      }
-      h = mid.exec(m.text);
+      if (!types.includes(t)) continue;
+      const prop = m.parent(m.nodeAt(h.index + 1));
+      const obj = prop && m.parent(prop);
+      if (prop?.type !== "Property" || obj?.type !== "ObjectExpression")
+        continue;
+      const list = sites.get(t) ?? [];
+      if (!list.some((x) => x.src === m && x.at === obj.start))
+        list.push({ src: m, at: obj.start, entries: R.entries(m, obj) });
+      sites.set(t, list);
     }
   }
   const keysOf = (entries: Entry[]) =>
-    flatten(entries).flatMap((e) => ("key" in e ? [e.key] : []));
+    entries.flatMap((e) => ("key" in e ? [e.key] : []));
 
   const probe = readJson(join(CAPTURES, "print/transcripts.lines.json"));
   const facts = (probe?.["facts"] ?? {}) as Json;
@@ -1021,12 +586,8 @@ const buildTranscript = (): { file: string; schema: Json } => {
       use = all.filter((s) => keysOf(s.entries).includes("sessionId"));
       if (use.length === 0) use = all.filter((s) => s.src === reg);
     }
-    const lists = use.map((s) => pin(s.src, s.at, s.entries));
-    const merged = mergeEntries(lists);
     const schema = objSchema(
-      use[0]?.src ?? w,
-      use[0]?.at ?? 0,
-      merged,
+      mergeEntries(use.map((s) => R.pin(s.entries))),
       "const",
     );
     const p = props(schema);
@@ -1087,53 +648,13 @@ const buildTranscript = (): { file: string; schema: Json } => {
 
 // ---------------------------------------------------------------- 3. OpenTelemetry
 
-/** Local names under which a module imports `exportName` from the chunk `chunk`. */
-const aliasesOf = (src: Src, chunk: string, exportName: string): string[] => {
-  const out: string[] = [];
-  const re = new RegExp(
-    `import\\{([^}]*)\\}from"/\\$bunfs/root/${esc(chunk).replace(/\./g, "\\.")}"`,
-    "g",
-  );
-  let m: RegExpExecArray | null = re.exec(src.text);
-  while (m) {
-    for (const item of (m[1] as string).split(",")) {
-      const [a, b] = item.trim().split(/\s+as\s+/);
-      if (a === exportName) out.push(b ?? a);
-    }
-    m = re.exec(src.text);
-  }
-  return out;
-};
-
-/**
- * Resolve the values of one site's entries in the site's own module, before entries of sites in other
- * modules merge: a name like `VR` is a different function in each chunk. A value left unresolved gets
- * empty text, so that no later step resolves it in another module.
- */
-const pin = (src: Src, pos: number, entries: Entry[], depth = 0): Entry[] =>
-  resolveEntries(src, pos, entries).map((e) => {
-    if (!("key" in e)) return e;
-    const v = e.val;
-    const inner =
-      v.k === "obj"
-        ? v.e
-        : v.k === "unk" && depth < 4
-          ? objectValue(src, pos, v.text, depth)
-          : undefined;
-    if (inner)
-      return { ...e, val: { k: "obj", e: pin(src, pos, inner, depth + 1) } };
-    return v.k === "unk" ? { ...e, val: { k: "unk", text: "" } } : e;
-  });
-
 const attrsToProps = (
-  src: Src,
-  pos: number,
   entries: Entry[] | undefined,
   into: Record<string, Json>,
   mode: Mode = "const",
 ) => {
   if (!entries) return;
-  const s = objSchema(src, pos, entries, mode);
+  const s = objSchema(entries, mode);
   for (const [k, v] of Object.entries(props(s)))
     into[k] = into[k] && !into[k]["x-unverified"] ? into[k] : v;
 };
@@ -1144,11 +665,8 @@ const buildOtel = (): { file: string; schema: Json } => {
   // Base attributes: the keys the metrics/events attribute builder assigns.
   const bSrc = only('["user.id"]=');
   const bAt = idx(bSrc, '["user.id"]=');
-  const bStart = bSrc.text.lastIndexOf("function ", bAt);
-  const bText = bSrc.text.slice(
-    bStart,
-    matchClose(bSrc.text, bSrc.text.indexOf("{", bStart)) + 1,
-  );
+  const bFn = fnAround(bSrc, bAt, () => true);
+  const bText = bFn ? bSrc.src(bFn) : "";
   const baseKeys = [
     ...new Set(
       [...bText.matchAll(/\b[\w$]\["([\w.]+)"\]=/g)].map((m) => m[1] as string),
@@ -1170,7 +688,7 @@ const buildOtel = (): { file: string; schema: Json } => {
   const attrSrc = mods.find((m) => attrRe.test(m.text)) as Src;
   const attrAt = idx(attrSrc, attrRe);
   const attrib: Record<string, Json> = {};
-  attrsToProps(attrSrc, attrAt, parseObjectAt(attrSrc.text, attrAt), attrib);
+  attrsToProps(R.objectAt(attrSrc, attrAt), attrib);
   for (const v of Object.values(attrib)) v["x-unverified"] = true;
 
   // Metrics: installMeter registers each counter; accessors expose them; call sites add values.
@@ -1219,19 +737,15 @@ const buildOtel = (): { file: string; schema: Json } => {
         let hit: RegExpExecArray | null = call.exec(m.text);
         while (hit) {
           const open = hit.index + hit[0].length - 1;
-          const a = splitTop(
-            m.text.slice(open + 1, matchClose(m.text, open)),
-            ",",
+          const entries = argEntries(
+            R,
+            m,
+            callAt(m, open)?.arguments[1] as Node | undefined,
           );
-          const second = a.slice(1).join(",").trim();
-          let entries: Entry[] | undefined;
-          if (second.startsWith("{")) entries = parseObjectAt(second, 0);
-          else if (/^[\w$]+$/.test(second))
-            entries = resolveIdent(m, open, second);
           if (entries) {
-            const before = unresolved.length;
-            attrsToProps(m, open, resolveEntries(m, open, entries), p);
-            if (unresolved.length > before && Object.keys(attrib).length) {
+            const before = R.unresolved.length;
+            attrsToProps(R.spreads(entries), p);
+            if (R.unresolved.length > before && Object.keys(attrib).length) {
               for (const [k, v] of Object.entries(attrib)) p[k] ??= v;
             }
           }
@@ -1289,20 +803,11 @@ const buildOtel = (): { file: string; schema: Json } => {
       if (last) {
         const winStart = Math.max(0, (s.index ?? 0) - 1800);
         const argAt = winStart + (last.index ?? 0) + last[0].length;
-        const rest = m.text.slice(argAt);
-        let entries: Entry[] | undefined;
-        if (rest.startsWith("{")) entries = parseObjectAt(m.text, argAt);
-        else {
-          const call = /^([\w$]+)\(/.exec(rest);
-          const rets = call
-            ? lits(functionReturns(m.text, call[1] as string))
-            : [];
-          entries = rets.length
-            ? mergeEntries(rets.map((r) => flatten(r)))
-            : undefined;
-        }
-        if (entries)
-          attrsToProps(m, argAt, resolveEntries(m, argAt, entries), p);
+        const call = m.at(argAt, "CallExpression");
+        const entries = m.text.startsWith("{", argAt)
+          ? R.objectAt(m, argAt)
+          : call && R.call(m, call);
+        if (entries) attrsToProps(R.spreads(entries), p);
         const between = m.text.slice(argAt, s.index);
         const v = last[1] as string;
         for (const a of between.matchAll(
@@ -1322,11 +827,11 @@ const buildOtel = (): { file: string; schema: Json } => {
       const objAt = (s.index ?? 0) + s[0].indexOf(",{spanType") + 1;
       const p: Record<string, Json> = {};
       const content: string[] = [];
-      for (const e of parseObjectAt(m.text, objAt)) {
+      for (const e of R.objectAt(m, objAt)) {
         if (!("key" in e) || e.val.k !== "obj") continue;
         if (e.key !== "attrs" && e.key !== "contentAttrs") continue;
         const before = Object.keys(p);
-        attrsToProps(m, objAt, resolveEntries(m, objAt, e.val.e), p);
+        attrsToProps(R.spreads(e.val.e), p);
         if (e.key === "contentAttrs")
           content.push(...Object.keys(p).filter((k) => !before.includes(k)));
       }
@@ -1352,12 +857,6 @@ const buildOtel = (): { file: string; schema: Json } => {
   }
 
   // Events: bi(name, attrs) emits a log record with the base attributes and event.* fields.
-  const eSrc = only('"event.sequence"');
-  const eFn =
-    /async function ([\w$]+)\([^)]*\)\{[^{}]*\{\.\.\.[\w$]+\(\),"event\.name":/.exec(
-      eSrc.text,
-    );
-  if (!eFn) throw new Error("event emitter not found");
   const evProps: Record<string, Json> = {
     "event.name": { type: "string" },
     "event.timestamp": { type: "string" },
@@ -1365,42 +864,10 @@ const buildOtel = (): { file: string; schema: Json } => {
     "prompt.id": { ...UNVERIFIED },
     "workspace.host_paths": { type: "array" },
   };
-  const events = new Map<string, Entry[][]>();
-  const evSites = new Map<string, { src: Src; at: number }>();
-  for (const m of mods) {
-    const names =
-      m === eSrc
-        ? [eFn[1] as string]
-        : aliasesOf(m, eSrc.name, eFn[1] as string);
-    for (const nm of names) {
-      const call = new RegExp(`(?<![\\w$.])${esc(nm)}\\("([a-z_]+)"`, "g");
-      let hit: RegExpExecArray | null = call.exec(m.text);
-      while (hit) {
-        const open = hit.index + nm.length;
-        const close = matchClose(m.text, open);
-        const args = splitTop(m.text.slice(open + 1, close), ",");
-        const second = args[1]?.trim();
-        let entries: Entry[] = [];
-        if (second?.startsWith("{"))
-          entries = parseObjectAt(
-            m.text.slice(open + 1, close),
-            m.text.slice(open + 1, close).indexOf(second),
-          );
-        else if (second && /^[\w$]+$/.test(second))
-          entries = resolveIdent(m, open, second) ?? [];
-        const name = hit[1] as string;
-        const list = events.get(name) ?? [];
-        list.push(pin(m, open, entries));
-        events.set(name, list);
-        evSites.set(name, { src: m, at: open });
-        hit = call.exec(m.text);
-      }
-    }
-  }
+  const events = eventSites(bundle, R);
   for (const [name, lists] of events) {
-    const site = evSites.get(name) as { src: Src; at: number };
     const p: Record<string, Json> = {};
-    attrsToProps(site.src, site.at, mergeEntries(lists), p);
+    attrsToProps(mergeEntries(lists), p);
     $defs[`event:${name}`] = {
       "x-otel-kind": "event",
       type: "object",
@@ -1441,7 +908,7 @@ const zodFields = (
   const m = re.exec(src.text);
   if (!m) throw new Error(`zod definition ${name} not found`);
   const at = m.index + m[0].length - 1;
-  return { parent: m[1], fields: parseObjectAt(src.text, at), at };
+  return { parent: m[1], fields: R.objectAt(src, at), at };
 };
 
 const frontmatterField = (e: Entry): [string, Json] | undefined => {
@@ -1508,12 +975,18 @@ const buildFrontmatter = (): { file: string; schema: Json } => {
       ].map((m) => m[1] as string),
     ]);
   const loaderAt = idx(src, /\["user-invocable"\]===void 0\?!0:/);
-  const lm = [
-    ...src.text.slice(0, loaderAt).matchAll(/function ([\w$]+)\(([\w$]+),/g),
-  ].pop();
-  if (lm) {
-    const text = functionText(src.text, lm[1] as string);
-    const reads = readKeys(text, lm[2] as string);
+  // The loader: the named function around the anchor whose first of two or more parameters is a name.
+  const lf = fnAround(
+    src,
+    loaderAt,
+    (f) =>
+      f.type !== "ArrowFunctionExpression" &&
+      f.params.length > 1 &&
+      f.params[0]?.type === "Identifier",
+  );
+  const lp = lf?.params[0];
+  if (lf && lp?.type === "Identifier") {
+    const reads = readKeys(src.src(lf), lp.name);
     const known = new Set(Object.keys(props($defs["skill"] as Json)));
     const miss = [...reads].filter(
       (k) => !known.has(k) && !["length", "map", "filter"].includes(k),
@@ -1559,18 +1032,8 @@ const buildClaudeJson = (): { file: string; schema: Json } => {
   const src = only("numStartups:0");
   const dStart = idx(src, "{numStartups:0,");
   const pStart = idx(src, "{allowedTools:[],mcpContextUris:[],mcpServers:{}");
-  const global = objSchema(
-    src,
-    dStart,
-    parseObjectAt(src.text, dStart),
-    "default",
-  );
-  const project = objSchema(
-    src,
-    pStart,
-    parseObjectAt(src.text, pStart),
-    "default",
-  );
+  const global = objSchema(R.objectAt(src, dStart), "default");
+  const project = objSchema(R.objectAt(src, pStart), "default");
   const al = /\["apiKeyHelper","installMethod","autoUpdates"[^\]]*\]/.exec(
     src.text,
   );
@@ -1648,8 +1111,8 @@ for (const b of builders) {
   } else writeFileSync(path, text);
   console.log(`${file}: ${countProps(schema)} properties`);
 }
-console.log(`unresolved spreads: ${unresolved.length}`);
-if (argv.includes("--spreads"))
-  for (const u of unresolved) console.log(`  ${u}`);
+const spreads = [...new Set(R.unresolved)];
+console.log(`unresolved spreads: ${spreads.length}`);
+if (argv.includes("--spreads")) for (const u of spreads) console.log(`  ${u}`);
 for (const r of report) console.log(`note: ${r}`);
 if (stale) process.exit(1);

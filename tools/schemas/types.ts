@@ -4,8 +4,8 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
+import { extractModules } from "../../inspect/mcp/src/bunfs.ts";
 import { CLAUDE_CODE_VERSION } from "../../src/version.ts";
-import { extractModules } from "./extract.ts";
 
 const ROOT = join(import.meta.dir, "..", "..");
 const OUT = join(ROOT, "schemas", "claude-code.d.ts");
