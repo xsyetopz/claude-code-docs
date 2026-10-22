@@ -32,7 +32,13 @@ type ApiBlock = {
   content?: unknown;
 };
 type Part = { label: string; text: string };
-type Tool = { name: string; desc: number; schema: number };
+type Tool = {
+  name: string;
+  desc: number;
+  schema: number;
+  text: string;
+  schemaText: string;
+};
 type Cap = {
   v: Variant;
   text: string;
@@ -148,6 +154,8 @@ const load = (v: Variant): Cap => {
       name: t.name,
       desc: (t.description ?? "").length,
       schema: JSON.stringify(t.input_schema ?? {}).length,
+      text: n(t.description ?? ""),
+      schemaText: JSON.stringify(t.input_schema ?? {}, null, 2),
     }),
   );
   const sections = [
@@ -441,6 +449,8 @@ for (const [id, c] of caps) {
 }
 
 // tools-per-variant
+const toolLink = (name: string) =>
+  `[\`${name}\`](./tools.md#${name.toLowerCase()})`;
 {
   const def = caps.get("default-lean");
   if (!def) throw new Error("missing default-lean capture");
@@ -460,7 +470,7 @@ for (const [id, c] of caps) {
     "| Tool | Description | Schema |",
     "| --- | --- | --- |",
     ...def.tools.map(
-      (t) => `| \`${t.name}\` | ${fmt(t.desc)} | ${fmt(t.schema)} |`,
+      (t) => `| ${toolLink(t.name)} | ${fmt(t.desc)} | ${fmt(t.schema)} |`,
     ),
     "",
     "## Differences by Variant",
@@ -496,12 +506,149 @@ for (const [id, c] of caps) {
   );
 }
 
+// tools: the default text of every tool, deferred ones from tools-upfront
+{
+  const def = caps.get("default-lean");
+  const all = caps.get("tools-upfront") ?? def;
+  if (!def || !all) throw new Error("missing default-lean capture");
+  const upfront = new Set(def.tools.map((t) => t.name));
+  const sent = new Set(all.tools.map((t) => t.name));
+  const list = [...all.tools, ...def.tools.filter((t) => !sent.has(t.name))];
+  const L: string[] = [
+    "---",
+    `title: "Tool Descriptions"`,
+    `description: "The default description and input schema of every tool Claude Code sends, and how to override them."`,
+    `sidebar_position: ${pos++}`,
+    "---",
+    "",
+    `This page shows the text the model reads for each tool: the description and the JSON input schema. The text comes from [${all.v.title}](./${all.v.id}.md), which sends ${all.tools.length} tools with their full text, and from the default request, which sends ${def.tools.length} tools in full. It lists the rest only by name, and \`ToolSearch\` loads their text when the model asks for it.`,
+    "",
+    "Gated tools, and tools that only the interactive screen or other modes add (such as `AskUserQuestion`, `EnterPlanMode`, and the task tools), are not in this capture. See [Tools](../reference/tools/index.md) for the full list.",
+    "",
+    "## How to Override",
+    "",
+    "| What | How | Where to read more |",
+    "| --- | --- | --- |",
+    "| A tool's description | A Mod API `tool.describe` hook gets the description and returns a new one. It works for built-in and MCP tools. | [Mod API Tools, Commands, and Config](../extend/mod-api/tool-command-config.md) |",
+    "| Deferred or sent upfront | `ENABLE_TOOL_SEARCH`, or `isDeferred` from a `tool.describe` hook. | [Tools and Bash Variables](../configure/env-vars/tools-and-bash.md) |",
+    "| MCP tool description length | `CLAUDE_CODE_MAX_MCP_DESCRIPTION_LENGTH` | [Plugins and MCP Variables](../configure/env-vars/plugins-and-mcp.md) |",
+    "| Which tools are sent | `--tools`, `--disallowedTools`, or a deny rule removes a tool. | [Tools](../reference/tools/index.md) |",
+    "",
+    "## Tools",
+    "",
+  ];
+  for (const t of list) {
+    L.push(
+      `### \`${t.name}\``,
+      "",
+      `Sent in full by default: ${upfront.has(t.name) ? "✅ Yes" : "❌ No, deferred"}. Description: ${fmt(t.desc)} characters. Schema: ${fmt(t.schema)} characters.`,
+      "",
+      fence(t.text || "(no description)", "text"),
+      "",
+      fence(t.schemaText, "json skip-lint"),
+      "",
+    );
+  }
+  writeFileSync(join(DOCS, "tools.md"), stripTrailing(L.join("\n")));
+}
+
+// built-in agents and skills: the listing line each one gets in the default request
+const listingPage = (o: {
+  file: string;
+  title: string;
+  description: string;
+  head: string;
+  intro: string;
+  override: string[];
+  page: (name: string) => { id: string; title: string } | undefined;
+}) => {
+  const def = caps.get("default-lean");
+  if (!def) throw new Error("missing default-lean capture");
+  const block = def.parts.find((p) => p.text.includes(o.head))?.text ?? "";
+  // one "- name: text" item per entry, continuation lines join the item above, a blank line ends the list
+  const items: { name: string; text: string }[] = [];
+  const body = block.slice(block.indexOf(o.head) + o.head.length);
+  for (const l of body.replace(/^\n+/, "").split("\n")) {
+    if (!l.trim()) break;
+    const m = /^- ([^:]+): (.*)$/.exec(l);
+    const last = items[items.length - 1];
+    if (m) items.push({ name: m[1] ?? "", text: m[2] ?? "" });
+    else if (last) last.text += `\n${l}`;
+  }
+  if (!items.length) throw new Error(`no listing after "${o.head}"`);
+  const L: string[] = [
+    "---",
+    `title: ${yaml(o.title)}`,
+    `description: ${yaml(o.description)}`,
+    `sidebar_position: ${pos++}`,
+    "---",
+    "",
+    o.intro.replace("<source>", `[${def.v.title}](./${def.v.id}.md)`),
+    "",
+    "## How to Override",
+    "",
+    "| What | How | Where to read more |",
+    "| --- | --- | --- |",
+    ...o.override,
+    "",
+    `## Default Text (${items.length})`,
+    "",
+  ];
+  for (const { name, text } of items) {
+    const page = o.page(name);
+    L.push(
+      `### \`${name}\``,
+      "",
+      fence(text, "text"),
+      "",
+      page ? `Prompt: [${page.title}](./${page.id}.md).` : "No prompt page.",
+      "",
+    );
+  }
+  writeFileSync(join(DOCS, o.file), stripTrailing(L.join("\n")));
+};
+const titled = (id: string) => {
+  const title = caps.get(id)?.v.title ?? hand.find((x) => x.id === id)?.title;
+  return title ? { id, title } : undefined;
+};
+listingPage({
+  file: "built-in-agents.md",
+  title: "Built-In Agents",
+  description:
+    "The default description and tool list of each built-in agent type, its prompt page, and how to replace it.",
+  head: "Available agent types for the Agent tool:",
+  intro:
+    "The main agent reads one line for each agent type it can start: the description and the tools. The lines below come from <source>, in `-p`. The interactive screen also lists `claude-code-guide`. See [Subagent Runtime](../extend/subagents/runtime.md#built-in-agents) for the model and the other settings of each agent.",
+  override: [
+    "| The whole agent | An agent file or an `--agents` entry with the same `name` replaces the built-in agent: its description, tools, model, and prompt. | [Override a Built-in Agent with a File](./override-agent-file.md) and [Override a Built-in Agent with --agents](./override-agents-flag.md) |",
+    "| Text added to every subagent prompt | `--append-subagent-system-prompt` | [Append to Every Subagent Prompt](./override-append-subagent.md) |",
+    "| Remove `Explore` and `Plan` | `CLAUDE_CODE_DISABLE_EXPLORE_PLAN_AGENTS=1` | [Turn Off the Explore and Plan Agents](./disable-explore-plan.md) |",
+    "| Remove the built-in agents in `-p` | `CLAUDE_AGENT_SDK_DISABLE_BUILTIN_AGENTS=1` | [Turn Off All Built-in Agents](./disable-builtin-agents.md) |",
+  ],
+  page: (n) => titled(`subagent-${n.toLowerCase()}`),
+});
+listingPage({
+  file: "built-in-skills.md",
+  title: "Built-In Skills",
+  description:
+    "The default description of each bundled skill and command that the Skill tool lists, its prompt page, and how to replace it.",
+  head: "The following skills are available for use with the Skill tool:",
+  intro:
+    "The main agent reads one line for each skill or command it can run with the `Skill` tool. The lines below come from <source>, in `-p`, with no skills or plugins of your own. Other entry points and gates change the list. See [Bundled Skills](../extend/skills-and-commands/bundled-skills.md).",
+  override: [
+    "| A skill | A skill folder with the same name replaces the bundled skill. | [Override /simplify with a Skill File](./override-skill-simplify.md) |",
+    "| A command | A command file with the same name replaces the bundled command. | [Override /init with a Command File](./override-command-init.md) |",
+    "| All skills and commands | `--disable-slash-commands` | [Skills and Commands](../extend/skills-and-commands/index.md) |",
+  ],
+  page: (n) => titled(`skill-${n}`) ?? titled(`command-${n}`),
+});
+
 // index
 {
   const L: string[] = [
     "---",
     `title: "Captured System Prompts"`,
-    `description: "Every system prompt variant you can pick in Claude Code 2.1.306, captured offline and compared."`,
+    `description: "Every system prompt variant you can pick in Claude Code ${CLAUDE_CODE_VERSION}, captured offline and compared."`,
     `sidebar_position: 1`,
     "---",
     "",
@@ -525,6 +672,9 @@ for (const [id, c] of caps) {
       ];
     }),
     ...handRows().map(handGlance),
+    "| [Tool Descriptions](./tools.md) (Every request carries them) | ✅ Yes. A Mod API `tool.describe` hook replaces a description. | `ENABLE_TOOL_SEARCH`, `--tools`, `--disallowedTools`. | Built into the program. | <Undocumented /> |",
+    "| [Built-In Skills](./built-in-skills.md) (The main agent reads one line for each) | ✅ Yes. A skill or command with the same name replaces one. | `--disable-slash-commands`. | Built into the program. Override in `.claude/skills/<name>/SKILL.md`. | <Documented /> |",
+    "| [Built-In Agents](./built-in-agents.md) (The main agent reads one line for each) | ✅ Yes. An agent with the same name replaces one. | `CLAUDE_CODE_DISABLE_EXPLORE_PLAN_AGENTS`, `CLAUDE_AGENT_SDK_DISABLE_BUILTIN_AGENTS`. | Built into the program. Override in `.claude/agents/<name>.md`. | <Documented /> |",
     "| [Tools per Variant](./tools-per-variant.md) (Every request carries the list) | ✅ Yes. Use `--tools`, `--allowedTools`, `--disallowedTools`, or settings. | `--bare` and `CLAUDE_CODE_SIMPLE=1` cut the list to three tools. | Built into the program. | <Undocumented /> |",
     "",
     "## How the Captures Were Made",

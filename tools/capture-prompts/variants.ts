@@ -1000,4 +1000,21 @@ VARIANTS.push(
       "`hooks` in any settings scope.",
     ),
   },
+  {
+    id: "tools-upfront",
+    title: "All Tools Sent Upfront",
+    model: LEAN_MODEL,
+    env: { ENABLE_TOOL_SEARCH: "false" },
+    baseline: "default-lean",
+    summary:
+      "`ENABLE_TOOL_SEARCH=false` sends every tool with its full text, the deferred ones too.",
+    how: "Set `ENABLE_TOOL_SEARCH=false`.",
+    select: "`ENABLE_TOOL_SEARCH=false`",
+    status: "Documented",
+    can: ovCan(
+      "Yes. It adds the deferred tools to the request.",
+      "`ENABLE_TOOL_SEARCH`.",
+      "Environment variable, or `env` in any settings scope.",
+    ),
+  },
 );

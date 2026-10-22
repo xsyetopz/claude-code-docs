@@ -1,5 +1,7 @@
 // Hand-written text for the pages. Facts here come from the captures; the wiki is cited where a capture disagrees.
 
+import { CLAUDE_CODE_VERSION } from "../../src/version.ts";
+
 export const BADGE_NOTES: Record<string, string> = {};
 
 export const NOTES: Record<string, string[]> = {
@@ -11,7 +13,7 @@ export const NOTES: Record<string, string[]> = {
   ],
   "default-sonnet": [
     "Sonnet 5.5 gets the same lean prompt as Opus 5.5. Only the model name, the model ID, and the commit trailer change.",
-    "The old wiki says Sonnet gets the full prompt. The capture shows it does not in 2.1.306, and the official docs agree with the capture.",
+    `The old wiki says Sonnet gets the full prompt. The capture shows it does not in ${CLAUDE_CODE_VERSION}, and the official docs agree with the capture.`,
   ],
   "default-haiku": [
     "Haiku 5.5 gets the lean prompt, then five extra paragraphs at the end of the body. They tell the model to finish the whole request, to avoid ending the turn early, and to act when it can name the likely reading of the request.",
@@ -228,7 +230,7 @@ export const INDEX_FACTS = {
   ],
   method: [
     "Every prompt on these pages was captured offline, with no model call and no cost.",
-    "1. A script starts the installed program (version 2.1.306) in print mode (`-p`) once per variant.",
+    `1. A script starts the installed program (version ${CLAUDE_CODE_VERSION}) in print mode (\`-p\`) once per variant.`,
     "2. The program talks to a small fake Messages API on `127.0.0.1`. The fake server writes each request body to a file and sends back a canned reply.",
     "3. The run uses a fake API key, a dead proxy (`HTTPS_PROXY` and `HTTP_PROXY` point to a closed port), `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1`, `DISABLE_TELEMETRY=1`, and a temporary home, config folder, and project folder. No login token is used. The script checks that every request went to the local server.",
     "4. A second script reads the saved request bodies, replaces machine-specific values with placeholders, and writes these pages. It makes the diffs with `diff -u`, not by hand.",
@@ -286,7 +288,7 @@ export const INDEX_FACTS = {
     "  C --> R",
     "```",
     "Subagents skip this chart. They get their own body and notes (see [Subagent, general-purpose](./subagent-general-purpose.md)).",
-    "Captures disagree with the old wiki in one place: the wiki says models with `sonnet` or `haiku` in the name get the full prompt. In 2.1.306 they get the lean prompt, and only `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=0` gives the full one.",
+    `Captures disagree with the old wiki in one place: the wiki says models with \`sonnet\` or \`haiku\` in the name get the full prompt. In ${CLAUDE_CODE_VERSION} they get the lean prompt, and only \`CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=0\` gives the full one.`,
   ],
   placeholders: [
     "## Placeholders",
