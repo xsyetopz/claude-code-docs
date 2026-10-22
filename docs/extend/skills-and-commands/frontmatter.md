@@ -73,6 +73,11 @@ Review the changes under $ARGUMENTS and list the bugs you find.
 claude.ai uploads and the Skills API accept only `name`, `description`, `license`, `compatibility`, `metadata`, and `allowed-tools`.
 Other keys fail the upload.
 
+## Exact Fields
+
+The exact fields: the `skill` definition in `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-frontmatter.json`, made from the program's frontmatter validators.
+It lists every field of this release, so build on the fields it names and look each one up there before you rely on it.
+
 ## Related Pages
 
 - [Skills and Commands](index.md): where skills live.

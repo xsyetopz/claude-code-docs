@@ -72,6 +72,11 @@ In print mode (`-p`), `--agents` also takes a file path (since 2.1.281).
 An interactive session refuses a path.
 The plugin mod call `$.agent.register` uses the same schema.
 
+## Exact Fields
+
+The exact fields: the `--agents` JSON: `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-agents-json.json`, made from the program's own validator. The frontmatter: the `agent` definition in `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-frontmatter.json`, made from the program's frontmatter validators.
+It lists every field of this release, so build on the fields it names and look each one up there before you rely on it.
+
 ## Related Pages
 
 - [Subagents](index.md): where agent files live.

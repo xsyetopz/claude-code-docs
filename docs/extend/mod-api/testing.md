@@ -11,7 +11,7 @@ A hooks module in a session cannot import this module.
 
 Each test ends after 5 seconds unless it sets `timeoutMs`. Test files live in the plugin folder.
 
-Official page: [Test a Mod](https://code.claude.com/docs/en/plugins/mods/test), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the Mod API type file (`types-2.1.303.d.ts`, checked against the 2.1.305 program).
+Official page: [Test a Mod](https://code.claude.com/docs/en/plugins/mods/test), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the Mod API type file of the 2.1.307 program (`schemas/claude-code.d.ts`).
 
 ## Example
 
@@ -40,6 +40,7 @@ test("/tally reports the tool calls the mod has seen", async ($, on) => {
 | `expect(received, message?)` | <Documented /> | Assertions: `Matchers` (the `toBe` family), `AsyncMatchers`, `Negatable` (`not`), and the asymmetric matchers `expect.any` and `expect.objectContaining`. | Typed by `Expect`, `Expectation`, `Matchers`, `Matching`. | Test files. |
 | `tier(tier)` | <Documented /> | Sets the tier that the plugin under test loads in. `PluginTier` excludes `core`. | Call it before the tests. | Test files. |
 | `mock` | <Documented /> | Memory-backed answers for the nouns beneath the plugins: clock, store, env, session, and more. | `MockClock`, `MockSession`, and the options are typed in the testing module. | Test files. |
+| `$.tool.call(input)` | <Documented /> | Raises a tool call as the engine does. `agentId` names the loop it runs in, a subagent's or a teammate's (new in 2.1.307). Left out, the main loop. | A hooked `tool.check` runs as for a background subagent: a test's `classic.PermissionRequest` answers an ask, and no test plays a person's yes. Typed by `EngineToolCall`. | Tests only. |
 | `$.ui.mount(...)` | <Documented /> | Draws a component through the plugin on the surface that the test names. Returns a handle to read and act on by key. | Surfaces: `terminal`, `desktop`, `vscode`, `mobile`. The handle finds, presses, types, selects, resizes, and unmounts. It tests the mod, not the paint. | Tests only. |
 
 ## Related Pages

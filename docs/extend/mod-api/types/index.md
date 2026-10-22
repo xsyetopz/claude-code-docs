@@ -4,7 +4,8 @@ description: A map of the type reference pages for the Mod API, from classic eve
 sidebar_position: 1
 ---
 
-The Mod API ships a type file, `types-2.1.303.d.ts`, that your editor reads. These pages follow that file, checked against the 2.1.305 program.
+The Mod API ships a type file that your editor reads. These pages follow the copy inside the 2.1.307 program.
+This site publishes that copy unchanged as `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code.d.ts`.
 These pages list every type in that file that you can use, grouped by topic.
 Each type is a row or a field row, with its use and its shape.
 Import the types with `import type { ... } from 'claude-code'`. The import is empty at run time.
@@ -29,8 +30,16 @@ Import the types with `import type { ... } from 'claude-code'`. The import is em
 - Each page has a table of types without fields, then one section for each type that has fields.
 - The Documented badge means the type is in the published type file, which the docs call the complete reference.
 - The type file is marked early access, so a type may change between releases.
-- Types have no switch and hold no settings. They live in the published type file `types-2.1.303.d.ts` and in `.claude-plugin/types/claude-code/index.d.ts`.
+- Types have no switch and hold no settings. They live in the type file, which the program also writes beside each mod as `.claude-plugin/types/claude-code/index.d.ts`.
 - Where the type file has a doc comment, the description follows it. Where it has none, the description comes from the name, the shape, and the pages that document the same thing, such as [Input and Output](../../hooks/input-and-output.md).
+
+## Check a Field Before You Use It
+
+The type file is the full list of fields for this release. Build on the fields it names.
+
+- Search `schemas/claude-code.d.ts` for the type, call, or event name, and read its doc comment.
+- An AI agent with the docs plugin can call `get_schema` with `name: "types"` and `property` set to a type (`ToolCheckResult`), a member (`ToolCheckResult.plugin`), a call (`$.tool.check`), or an event (`tool.check`).
+- When a name is missing from the file, report it as unconfirmed for this release and look up the closest name the file has.
 
 ## Related Pages
 

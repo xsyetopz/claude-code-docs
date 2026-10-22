@@ -15,7 +15,7 @@ The protocol is on whenever you start `claude -p --input-format stream-json --ou
 
 The schema does not mark the direction of each request.
 Only the Agent SDK pages describe most of them, and no other docs page does, so every row is marked <Undocumented />.
-Source: the program (the bundled schema of `2.1.306`).
+Source: the program (the bundled schema of `2.1.307`).
 
 | `subtype` | Status | What It Does |
 | --- | --- | --- |
@@ -35,6 +35,9 @@ Source: the program (the bundled schema of `2.1.306`).
 | `get_usage` | <Undocumented /> | Asks for the data of `/usage`, with plan limits when they are known. |
 | `get_status` | <Undocumented /> | Asks for the rows of the `/status` screen as text. |
 | `export_conversation` | <Undocumented /> | Asks for the conversation as the text that `/export` writes. |
+| `list_cloud_sessions` | <Undocumented /> | Asks for the cloud sessions of the signed-in account. The CLI reads them with its own sign-in. Refused in a cloud-hosted session. New in `2.1.307`. |
+| `get_cloud_session` | <Undocumented /> | Asks for the title, branch, and environment kind of one cloud session. Refused in a cloud-hosted session. New in `2.1.307`. |
+| `get_cloud_session_transcript` | <Undocumented /> | Asks for one page of the stored transcript of a cloud session that the account owns. Refused in a cloud-hosted session. New in `2.1.307`. |
 | `get_memory_dialog` | <Undocumented /> | Asks for the rows and switches of the `/memory` dialog. |
 | `get_skills_dialog` | <Undocumented /> | Asks for the rows of the `/skills` menu. |
 | `get_chrome_dialog` | <Undocumented /> | Asks for the state of the `/chrome` dialog. |
@@ -121,16 +124,20 @@ The host must answer them or the turn waits.
 ```
 
 ```json skip-lint title="Reply from Claude Code"
-{"type":"control_response","response":{"subtype":"success","request_id":"req-1"}}
+{"type":"control_response","response":{"subtype":"success","request_id":"req-1","response":{"model":"claude-sonnet-5-5"}}}
 ```
 
-The `set_model` request has a `model` field. A success reply has `subtype: "success"` and the `request_id`.
+The `set_model` request has a `model` field.
+A success reply has `subtype: "success"` and the `request_id`.
+Since `2.1.307` a `set_model` success reply also has `response.model`, the model the session now uses.
+An alias comes back as the full model ID.
 An error reply has `subtype: "error"`, the `request_id`, an `error` text, and sometimes an `error_code`.
 Source: the program (strings of the request and response builders). The fields of the other subtypes are not listed here.
 
-We ran both examples on `2.1.305` with `claude -p --input-format stream-json --output-format stream-json --verbose` (see [Probes](../../reference/probes.md#static-and-print-probes)). The reply matches.
+We ran both examples on `2.1.307` with `claude -p --input-format stream-json --output-format stream-json --verbose` (see [Probes](../../reference/probes.md#static-and-print-probes)). The reply matches.
 The `request_id` is any text you pick, and the reply repeats it.
-`set_model` takes an alias such as `sonnet` or a full model ID. It replies `success` even for a name the API does not know, so the error shows up on the next request.
+`set_model` takes an alias such as `sonnet` or a full model ID. It replies `success` even for a name the API does not know, and `response.model` repeats that name, so the error shows up on the next request.
+The Agent SDK's `setModel()` waits up to 15 seconds for this reply (5 seconds before `2.1.307`). Source: the [release notes](https://github.com/anthropics/claude-code/releases/tag/v2.1.307).
 A reply can come before the first `system` `init` line, because `init` appears only after the first user message.
 
 ```json skip-lint title="Ask for the version"
@@ -168,6 +175,11 @@ sequenceDiagram
 Each reply is a single `control_response` that matches the `request_id`.
 A sender can cancel its own request with `control_cancel_request`.
 Long requests send `control_request_progress` lines first.
+
+## Exact Fields
+
+The exact fields: `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-control-protocol.json`, made from the program's own validators. It has a `Request` and a `Response` definition for each subtype.
+It lists every field of this release, so build on the fields it names and look each one up there before you rely on it.
 
 ## Related Pages
 

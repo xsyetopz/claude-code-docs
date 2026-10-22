@@ -164,6 +164,11 @@ flowchart TD
     B -- other --> I["Non-blocking error,<br/>action goes on"]
 ```
 
+## Exact Fields
+
+The exact fields: the hook input: the `*HookInput` types in the Mod API type file `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code.d.ts`. The hook output: `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-hook-output.json`, made from the program's own validator, with one definition for each `hookSpecificOutput`.
+It lists every field of this release, so build on the fields it names and look each one up there before you rely on it.
+
 ## Related Pages
 
 - [Hooks](index.md): the overview.

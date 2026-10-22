@@ -12,7 +12,7 @@ Flags add more lines: `--include-partial-messages`, `--include-hook-events`, `--
 
 ## Message Types
 
-The tables list the message types that the bundled schema of `2.1.306` defines.
+The tables list the message types that the bundled schema of `2.1.307` defines.
 Each row has a short form of the schema description. A row without a description says so.
 A type is marked <Documented /> when a docs page other than the [changelog](https://code.claude.com/docs/en/changelog) and the Agent SDK pages names it.
 Source: [Run Claude Code Programmatically](https://code.claude.com/docs/en/headless), [CLI Reference](https://code.claude.com/docs/en/cli-reference), and the program (the message schema).
@@ -136,6 +136,11 @@ sequenceDiagram
 
 The `control_request`, `control_response`, `control_cancel_request`, `keep_alive`, and `update_environment_variables` lines share the stream with the messages above.
 Mirror lines (`transcript_mirror`) follow each local transcript write. For the file format, see [Transcript Format](../../reference/transcript-format.md).
+
+## Exact Fields
+
+The exact fields: `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-stream-json.json`, made from the program's own validators. It has a definition for each output and input message type.
+It lists every field of this release, so build on the fields it names and look each one up there before you rely on it.
 
 ## Related Pages
 

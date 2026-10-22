@@ -18,7 +18,7 @@ for (const use of response.serverToolUses ?? []) $.ui.log(use.name);
 ```
 
 :::note[Shared Sections Skip `prompt.section`]
-A `prompt.section` hook does not fire once per named section. From 2.1.302 to 2.1.305, the engine builds shared sections such as `lean_body` without a `prompt.section` call, so a hook does not see them.
+A `prompt.section` hook does not fire once per named section. From 2.1.302 to 2.1.307, the engine builds shared sections such as `lean_body` without a `prompt.section` call, so a hook does not see them.
 A `prompt.compose` hook does see them. See [System Prompt](../../../how-it-works/system-prompt.md).
 :::
 
@@ -467,11 +467,11 @@ Where a `prompt.submit` submission came from, as the engine knows it at the site
 
 ### `PromptSectionInput`
 
-The input of `prompt.section`: one named section of the system prompt, at the moment the engine assembles it. From 2.1.302 to 2.1.305, the engine builds shared sections such as `lean_body` without a `prompt.section` call, so a hook does not see them. A `prompt.compose` hook does. Used by `prompt.section`, `$.prompt.section`.
+The input of `prompt.section`: one named section of the system prompt, at the moment the engine assembles it. From 2.1.302 to 2.1.307, the engine builds shared sections such as `lean_body` without a `prompt.section` call, so a hook does not see them. A `prompt.compose` hook does. Used by `prompt.section`, `$.prompt.section`.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `name` | <Differs note="Docs say every named section; the program skips shared sections such as lean_body." /> | The section's id (`env_info_simple`, `memory`, ...), the same on every model and the one `prompt.compose` lists, the key a matcher narrows on. A `prompt.section` hook sees only sections the engine asks about by name. Shared sections such as `lean_body` are not among them from 2.1.302 to 2.1.305, but `prompt.compose` lists them. | Type: `string`. |
+| `name` | <Differs note="Docs say every named section; the program skips shared sections such as lean_body." /> | The section's id (`env_info_simple`, `memory`, ...), the same on every model and the one `prompt.compose` lists, the key a matcher narrows on. A `prompt.section` hook sees only sections the engine asks about by name. Shared sections such as `lean_body` are not among them from 2.1.302 to 2.1.307, but `prompt.compose` lists them. | Type: `string`. |
 | `text` | <Documented /> | The section's text as core computed it, or null when core omits it. | Type: `string \| null`. |
 
 ### `PromptSectionResult`

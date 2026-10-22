@@ -1,6 +1,6 @@
 ---
 title: Slash Commands
-description: Every built-in slash command in Claude Code 2.1.306, grouped by job, with aliases, arguments, and gates.
+description: Every built-in slash command in Claude Code 2.1.307, grouped by job, with aliases, arguments, and gates.
 sidebar_position: 5
 ---
 

@@ -9,7 +9,7 @@ Its events tell a mod when a session starts, ends, compacts, or gets a message.
 
 Return `{ skip }`, `{ consumed }`, or `{ deny }` from a hook to stop an action.
 
-Official pages: [Use the Mods API](https://code.claude.com/docs/en/plugins/mods/api), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the Mod API type file (`types-2.1.303.d.ts`, checked against the 2.1.305 program).
+Official pages: [Use the Mods API](https://code.claude.com/docs/en/plugins/mods/api), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the Mod API type file of the 2.1.307 program (`schemas/claude-code.d.ts`).
 In a "Where it can be used" cell, "Run time" means in a hook, in a closure that a hook drew, or in a timer callback. It does not mean inside `register`.
 
 ## Example
@@ -42,7 +42,7 @@ on("session.start", async ($, e, next) => {
 | `$.session.send` | <Documented /> | Sends a plain-text message to another agent or session. It is the event `session.send`, the same delivery as the model's SendMessage tool. | `(input) => Promise<SessionSendResult>`. `to` is a name, an agent id, `{ sessionId }`, or `{ agentId }`. Resolves once queued. | Run time. |
 | `$.session.append` | <Documented /> | Appends a row to a conversation of the session. It is the event `session.append`, the engine's own call for every row it keeps. | `(args) => Promise<SessionAppendResult>`. Adds a user-role row of text blocks. Resolves `{ deny: reason }` if a plugin above refused it. | Run time. |
 | `$.session.identity` | <Documented /> | Returns how the session is signed in, to a mod that the organization's managed settings install. Any other mod gets `{ deny }`. No request is made. | `() => Promise<SessionIdentity>`. Full account data only where managed `forceLoginOrgUUID` lists the organization. Otherwise only `kind`. | Mods that managed settings install. |
-| `$.session.authorize` | <Documented /> | Holds the session's Anthropic credential on the host and returns an opaque handle with its kind, for example `{ handle: "auth_00000000000000000000000000000000", kind: "bearer" }`. The secret never reaches the mod. Returns `null` when the session has no first-party credential (a third-party provider, a cloud gateway, no login or key). | `() => Promise<SessionAuthorization>`. Spend the handle with `$.http.fetch(url, { auth: handle })`. The engine sets the credential header, and only for a first-party host. A handle belongs to the mod that minted it, and a mod keeps at most 4 live handles (a fifth evicts the oldest). An unknown or foreign handle makes `$.http.fetch` throw. `kind` is `bearer` or `api-key`. No managed-settings gate, unlike `$.session.identity`. | Run time. |
+| `$.session.authorize` | <Documented /> | Holds the session's Anthropic credential on the host and returns an opaque handle with its kind, for example `{ handle: "auth_00000000000000000000000000000000", kind: "bearer" }`. The secret never reaches the mod. Returns `null` when the session has no first-party credential (a third-party provider, a cloud gateway, no login or key) and, since 2.1.307, when the desktop app's sign-in is in use. | `() => Promise<SessionAuthorization>`. Spend the handle with `$.http.fetch(url, { auth: handle })`. The engine sets the credential header, and only for a first-party host. A handle belongs to the mod that minted it, and a mod keeps at most 4 live handles (a fifth evicts the oldest). An unknown or foreign handle makes `$.http.fetch` throw. `kind` is `bearer` or `api-key`. No managed-settings gate, unlike `$.session.identity`. | Run time. |
 
 ## Engine Events
 
@@ -77,7 +77,7 @@ For each call, a hook above the caller returns `next(e)`, `{ deny: reason }`, or
 
 The `$.http.fetch` handler runs a pre-check before it resolves the handle, when `auth` is set. Its only refusal: if [`CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC`](../../configure/env-vars/network-and-proxy.md) is set, the request throws an error that ends "the session's credential is withheld: nonessential network traffic is disabled for this session".
 
-When no credential resolves, `$.session.authorize` logs `$.session.authorize (<plugin>): no first-party credential (<reason>)` and returns `null`. It does the same if a workload-identity token is minted for another host, or if the auth mode changes during the call.
+When no credential resolves, `$.session.authorize` logs `$.session.authorize (<plugin>): no first-party credential (<reason>)` and returns `null`. It does the same if a workload-identity token is minted for another host, or if the auth mode changes during the call. Since 2.1.307 it also returns `null` when the desktop app signed the session in, and logs `$.session.authorize (<plugin>): no first-party credential (the desktop app's sign-in is not lent to plugins)` (the program).
 
 ## Related Pages
 

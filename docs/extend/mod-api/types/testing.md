@@ -29,6 +29,7 @@ These types are aliases, unions, or plain shapes. Each row gives its use and its
 | `Constructor` | <Documented /> | A class, as `toThrow`, `toBeInstanceOf` and `expect.any` take it. | Alias of `abstract new (...args: never[]) => unknown`. |
 | `describe` | <Documented /> | A group of tests: its name leads the title of each test declared inside, and its body runs at once, while the file loads. | Function `(name, body) => void`. `name` leads the title of each test inside. `body` declares the tests and runs at once. |
 | `EngineCall` | <Documented /> | One call on the engine's `$`: the event's input whole, as an engine call site passes it, to its result, or for a streaming event to its stream. | Alias of `E extends StreamingEventName ? (e: Args<E>) => HookStream<Chunk<E>, ResultOf[E]> : (e: Args<E>) => Promise<ResultOf[E]>`. |
+| `EngineToolCall` | <Documented /> | `$.tool.call` on a test's `$`: a call as the engine raises one, `agentId` the loop it runs in (a subagent's, a teammate's), left out the main loop (new in 2.1.307). | Alias of `{ <T extends string>(input: ToolCallArgs & Pick<ToolCallReserved<T>, 'tool'> & AgentLoop): Promise<ToolCallResult<T>>, (input: ToolCallArgs & AgentLoop): Promise<ToolCallResult> }`. A hooked `tool.check` runs as for a background subagent: a test's `classic.PermissionRequest` answers an ask, and no test plays a person's yes. A test states `isReadOnly` on `$.tool.check`. |
 | `EngineNounEvent` | <Documented /> | The events of one noun a test's `$` carries: every one but `ui.resolve`, which a render hook calls on its own `$` and the engine never raises. | Alias of `` Exclude<keyof EventCalls[N] & string, `${N}.resolve` extends 'ui.resolve' ? 'resolve' : never> ``. |
 | `Expect` | <Documented /> | The checks on a value (`expect(received)`), and with them the matchers that stand inside an expected value (`expect.any(Number)`). | Alias of `Expecting & Matching`. A check that fails throws. In a hook, the engine skips the hook and the test still fails with the check's message. |
 | `expect` | <Documented /> | Checks a value: `expect(received).toEqual(expected)` throws an AssertionError naming both sides when it fails, a message given leading. | Alias of `export const expect: Expect`. `.not` negates, `.resolves` and `.rejects` check what a promise settles with, `expect.any(Number)` and its kin stand inside an expected value. |
@@ -132,11 +133,11 @@ A surface drawing a component instance through the plugins, then driven by key t
 
 ### `EngineNoun`
 
-One noun of the engine's `$`: each of its events as the engine calls it, `tool.call` and `ui.render` typed per tool and component, `ui.resolve` out. Object with fields `[V in EngineNounEvent<N>]`. `skill.prompt` takes a call's input: its frontmatter and source may be left out, as a test written before the event carried them does.
+One noun of the engine's `$`: each of its events as the engine calls it, `tool.call` typed per tool (`EngineToolCall`) and `ui.render` per component, `ui.resolve` out. Object with fields `[V in EngineNounEvent<N>]`. `skill.prompt` takes a call's input: its frontmatter and source may be left out, as a test written before the event carried them does.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `[V in EngineNounEvent<N>]` | <Documented /> | One entry for each event of that noun. | Type: `` `${N}.${V}` extends 'tool.call' \| 'ui.render' \| 'skill.prompt' ? EventCalls[N][V] : EngineCall<`${N}.${V}` & EventName> ``. |
+| `[V in EngineNounEvent<N>]` | <Documented /> | One entry for each event of that noun. | Type: `` `${N}.${V}` extends 'tool.call' ? EngineToolCall : `${N}.${V}` extends 'ui.render' \| 'skill.prompt' ? EventCalls[N][V] : EngineCall<`${N}.${V}` & EventName> ``. |
 
 ### `EnginePress`
 

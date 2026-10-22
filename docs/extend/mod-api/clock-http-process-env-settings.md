@@ -10,7 +10,7 @@ These five nouns reach the machine: `$.clock` for time and timers, `$.http` for 
 
 A policy can refuse a call. For example, the organization's web-fetch policy can refuse `$.http.fetch`.
 
-Official pages: [Use the Mods API](https://code.claude.com/docs/en/plugins/mods/api), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the Mod API type file (`types-2.1.303.d.ts`, checked against the 2.1.305 program).
+Official pages: [Use the Mods API](https://code.claude.com/docs/en/plugins/mods/api), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the Mod API type file of the 2.1.307 program (`schemas/claude-code.d.ts`).
 In a "Where it can be used" cell, "Run time" means in a hook, in a closure that a hook drew, or in a timer callback. It does not mean inside `register`.
 
 ## Example
@@ -41,7 +41,7 @@ on("session.start", async ($, e, next) => {
 | `$.process.spawn` | <Documented /> | Starts a command on the host by its argument list (no shell) and streams what it writes, then how it ended. | `(request) => HookStream`. Leaving the loop, `next.signal`, or an unload kills the child. | CLI only. |
 | `$.env.get` | <Documented /> | Resolves the value of a variable, or `undefined` when unset. | `(name) => Promise<string \| undefined>`. `name` must be a string literal. `claude plugin validate` lists the names your module reads. | The name must be a literal in the module source. |
 | `$.env.set` | <Documented /> | Sets the variable for this process and everything it starts later, or unsets it when `value` is `undefined`. | `(name, value) => Promise<EnvSetResult>`. `name` must be a string literal. Resolves `{}` or `{ deny }`. | The name must be a literal in the module source. |
-| `$.settings.read` | <Documented /> | Resolves the settings merged over every source, or one source's settings as loaded (`{ source }`). | `(args?) => Promise<Settings>`. Returns a snapshot of plain data. The merge takes a key from the last source that has it. A `settings.read` hook gets each settings layer (`layers`) and rewrites the merged settings (new in 2.1.304). | Run time. |
+| `$.settings.read` | <Documented /> | Resolves the settings merged over every source, one source's settings as loaded (`{ source }`), or the value of one top-level key (`{ key }`, with an optional `source`), `undefined` when the settings hold none. | `(args?: { source? } \| { key, source? }) => Promise<Settings \| unknown>`. Returns a snapshot of plain data. A read of one key is the read of the merged object, projected, and raises no event of its own. With no hook, the merge takes a scalar from the last source that has it, joins lists, and merges objects. A `settings.read` hook gets each settings layer (`layers`) and rewrites the merged settings (new in 2.1.304). | Run time. |
 
 ## Events Raised by These Calls
 
@@ -56,7 +56,7 @@ For each call, a hook above the caller returns `next(e)`, `{ deny: reason }`, or
 | `http.fetch` | <Documented /> | `$.http.fetch(url, init)` | Input `{ url: string, init?: HttpInit }`. Value `HttpResponse`. |
 | `process.run` | <Documented /> | `$.process.run(argv, init)` | Input `{ argv: readonly string[], init?: ProcessRunInit }`. Value `ProcessRunResult`. |
 | `process.spawn` | <Documented /> | `$.process.spawn(request)`. It streams. `{ deny }` kills a running child. | Input `ProcessSpawnRequest`. Value `ProcessSpawnResult`. |
-| `settings.read` | <Documented /> | `$.settings.read({ source })` | Input `SettingsReadArgs`. Value `Settings`. Since 2.1.304 the hook also gets each settings layer (`layers`) and rewrites the merged settings. A managed mod can use this to make an organization's setting a ceiling, including `cleanupPeriodDays`, which the retention sweep uses. The program reads each layer's `settings`; no other shape is documented. |
+| `settings.read` | <Documented /> | `$.settings.read({ source })`, `$.settings.read()` | Input `SettingsReadArgs`. Value `Settings`. Since 2.1.304 the hook also gets each settings layer (`layers`) and rewrites the merged settings. A managed mod can use this to make an organization's setting a ceiling, including `cleanupPeriodDays`, which the retention sweep uses. Each layer is `{ source, settings }`, lowest precedence first. `source` is a settings source or `plugin`. A source with no settings, or one the engine bars from the read, is left out. |
 | `env.get` | <Documented /> | `$.env.get(name)`. `name` is pinned. | Input `{ name: string }`. Value `string \| undefined`. |
 | `env.set` | <Documented /> | `$.env.set(name, value)`. `name` is pinned. No `value` unsets. | Input `{ name: string, value?: string }`. Value `EnvSetResult`. |
 
