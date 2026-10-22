@@ -252,6 +252,11 @@
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
   },
+  "docs/extend/mod-api/types/tool-command-config.md#toolcheckresult:c2417643": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour; no probe checks it yet; the decider code reads the same in 2.1.307 and 2.1.308"
+  },
   "docs/extend/mod-api/types/turn-prompt.md#example:c79d0a53": {
     "kind": "manual",
     "probes": [],

@@ -5,7 +5,7 @@ sidebar_position: 79
 generated: false
 ---
 
-This is the verbatim text that Claude Code 2.1.307 uses for the built-in `/update-config` skill.
+This is the verbatim text that Claude Code 2.1.308 uses for the built-in `/update-config` skill.
 
 ## Where It Comes From
 

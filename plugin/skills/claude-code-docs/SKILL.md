@@ -1,11 +1,11 @@
 ---
 name: claude-code-docs
-description: Look up how Claude Code really works, using the Claude Code Docs for version 2.1.307. Use this whenever the user asks about Claude Code settings, settings.json keys, environment variables, CLI flags, permissions, hooks, plugins, skills, subagents, MCP configuration, status line, output styles, files Claude Code reads or writes, internals, or undocumented or version-specific behavior, even if they do not name the docs. Prefer it over memory, because these pages check the real program against the official docs.
+description: Look up how Claude Code really works, using the Claude Code Docs for version 2.1.308. Use this whenever the user asks about Claude Code settings, settings.json keys, environment variables, CLI flags, permissions, hooks, plugins, skills, subagents, MCP configuration, status line, output styles, files Claude Code reads or writes, internals, or undocumented or version-specific behavior, even if they do not name the docs. Prefer it over memory, because these pages check the real program against the official docs.
 ---
 
 # Claude Code Docs
 
-The Claude Code Docs describe what Claude Code 2.1.307 does, checked against the program and not only against the official docs. Use them instead of memory for any detail that the user may act on: a key name, a default, an environment variable, a hook field. Memory of these details is often stale or wrong.
+The Claude Code Docs describe what Claude Code 2.1.308 does, checked against the program and not only against the official docs. Use them instead of memory for any detail that the user may act on: a key name, a default, an environment variable, a hook field. Memory of these details is often stale or wrong.
 
 ## Find the answer
 
@@ -34,7 +34,7 @@ Tables have a Status column. State the badge when you report a fact, because it 
 
 ## Answer
 
-- Say which version the answer is for: Claude Code 2.1.307. If the user runs another version, say the page may not match it.
+- Say which version the answer is for: Claude Code 2.1.308. If the user runs another version, say the page may not match it.
 - Cite the page (its URL) next to each fact.
 - Before you name a field of a payload (a `$` call, an event, a hook input or output, a tool input), look it up in the type file or a schema with `get_schema`, and name only the fields you found. When a lookup comes back empty, tell the user the field is unconfirmed for this version and give the closest names the lookup returned.
 - If the docs do not cover the question, say so. Do not fill the gap from memory as if it were documented.

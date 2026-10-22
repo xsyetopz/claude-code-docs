@@ -5,7 +5,7 @@ sidebar_position: 69
 generated: false
 ---
 
-This is the verbatim text that Claude Code 2.1.307 uses for the built-in `/deep-research` skill.
+This is the verbatim text that Claude Code 2.1.308 uses for the built-in `/deep-research` skill.
 
 ## Where It Comes From
 

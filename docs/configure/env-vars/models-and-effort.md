@@ -129,4 +129,4 @@ The `_NAME`, `_DESCRIPTION`, and `_SUPPORTED_CAPABILITIES` variants only change 
 - [Cloud Providers](cloud-providers.md): provider switches that also change model IDs.
 - [Undocumented Items](../../reference/undocumented.md): every item that only the program shows.
 
-Source: the program (variable names found in the `2.1.307` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
+Source: the program (variable names found in the `2.1.308` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.

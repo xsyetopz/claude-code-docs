@@ -5,7 +5,7 @@ sidebar_position: 86
 generated: false
 ---
 
-This is the verbatim text that Claude Code 2.1.307 uses for memory selection.
+This is the verbatim text that Claude Code 2.1.308 uses for memory selection.
 
 ## Where It Comes From
 

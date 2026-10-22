@@ -25,7 +25,7 @@ Sizes count the text after the placeholders are in place. Each placeholder count
 ## What to Notice
 
 - Sonnet 5.5 gets the same lean prompt as Opus 5.5. Only the model name, the model ID, and the commit trailer change.
-- The old wiki says Sonnet gets the full prompt. The capture shows it does not in 2.1.307, and the official docs agree with the capture.
+- The old wiki says Sonnet gets the full prompt. The capture shows it does not in 2.1.308, and the official docs agree with the capture.
 
 ## Full Text
 

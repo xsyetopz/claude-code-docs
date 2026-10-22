@@ -77,7 +77,7 @@ The table is sorted by name. See [Environment Variables](index.md#how-to-read-th
 | `DISABLE_PROMPT_CACHING_MYTHOS` | <Undocumented /> | Turns off prompt caching for models that the Mythos check matches. | On or off | - |
 | `MAX_MCP_OUTPUT_TOKENS` | <Documented /> | Sets the token limit for one MCP tool result. | A number. Default `25000`. The warning at `10000` is fixed | - |
 | `SLASH_COMMAND_TOOL_CHAR_BUDGET` | <Documented /> | Overrides the character budget for the skill listing shown to the model. | A number, 1 by default. Integer, min `1`. If set, it wins over the dynamic budget (context window times 4 times a fraction, default 1%) | All sessions |
-| `USE_API_CONTEXT_MANAGEMENT` | <Undocumented /> <Gated note="Works only behind a feature flag or server gate" /> | Would turn on the API context-management beta. It is inert in 2.1.307. | On or off. The code ANDs it with a constant false, so it has no effect | Inert, first-party models |
+| `USE_API_CONTEXT_MANAGEMENT` | <Undocumented /> <Gated note="Works only behind a feature flag or server gate" /> | Would turn on the API context-management beta. It is inert in 2.1.308. | On or off. The code ANDs it with a constant false, so it has no effect | Inert, first-party models |
 
 ## How It Works
 
@@ -93,4 +93,4 @@ See [Context and Compaction](../../how-it-works/context-and-compaction.md) for t
 - [Models and Effort](models-and-effort.md)
 - [Undocumented Items](../../reference/undocumented.md): every item that only the program shows.
 
-Source: the program (variable names found in the `2.1.307` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
+Source: the program (variable names found in the `2.1.308` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.

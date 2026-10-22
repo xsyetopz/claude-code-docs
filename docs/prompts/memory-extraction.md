@@ -5,7 +5,7 @@ sidebar_position: 85
 generated: false
 ---
 
-This is the verbatim text that Claude Code 2.1.307 uses for the memory extraction subagent.
+This is the verbatim text that Claude Code 2.1.308 uses for the memory extraction subagent.
 
 ## Where It Comes From
 

@@ -1,6 +1,6 @@
 ---
 title: "Override a Prompt"
-description: "Which built-in prompt texts in Claude Code 2.1.307 you can replace, append to, or turn off, and how."
+description: "Which built-in prompt texts in Claude Code 2.1.308 you can replace, append to, or turn off, and how."
 sidebar_position: 1.5
 generated: false
 index:
@@ -55,7 +55,7 @@ Agents are merged by name. The later source wins: built-in, plugin, user (`~/.cl
 | [claude agent](./subagent-claude.md) | Replace | A same-named agent file. | The program |
 | [claude agent](./subagent-claude.md) | Turn Off | `CLAUDE_CODE_DISABLE_AGENT_VIEW=1` or the `disableAgentView` setting. | The program |
 | [web-fetch agent](./subagent-web-fetch.md) | Replace | A same-named agent file. Off by default. `CLAUDE_CODE_WEB_FETCH_AGENT=1` turns it on and `CLAUDE_CODE_DISABLE_WEB_FETCH` turns it off. | The program |
-| [claude-code-guide agent](./subagent-claude-code-guide.md) | Replace | A same-named agent file. This rests on the shared agent merge code and was not tested for this agent. Not offered when the entry point is `sdk-ts`, `sdk-py`, or `sdk-cli`, so it is not available in `-p`. The interactive screen offers it (checked on 2.1.307). | The program |
+| [claude-code-guide agent](./subagent-claude-code-guide.md) | Replace | A same-named agent file. This rests on the shared agent merge code and was not tested for this agent. Not offered when the entry point is `sdk-ts`, `sdk-py`, or `sdk-cli`, so it is not available in `-p`. The interactive screen offers it (checked on 2.1.308). | The program |
 | [Workflow subagent](./subagent-workflow.md) | No | No override found. | The program |
 | [comment-thread-analyst agent](./subagent-comment-thread-analyst.md) | No | No override found. | The program |
 | [Coordinator and worker prompts](./coordinator-mode.md) | No | No text override. Coordinator mode replaces the agent list and the main prompt. `--append-system-prompt` is still added. | The program |
@@ -78,7 +78,7 @@ The flags `--system-prompt` and `--append-system-prompt` do not reach built-in s
 | [/code-review](./skill-code-review.md) and its `/review` alias | Replace | Same rule as `/simplify`. | The program |
 | Other bundled skills: [batch](./skill-batch.md), [claude-api](./skill-claude-api.md), [dataviz](./skill-dataviz.md), [deep-research](./skill-deep-research.md), [doctor](./skill-doctor.md), [fewer-permission-prompts](./skill-fewer-permission-prompts.md), [goal](./skill-goal.md), [insights](./skill-insights.md), [loop](./skill-loop.md), [plugin-authoring](./skill-plugin-authoring.md), [run](./skill-run.md), [run-skill-generator](./skill-run-skill-generator.md), [team-onboarding](./skill-team-onboarding.md), [update-config](./skill-update-config.md), [verify](./skill-verify.md), [workflow-authoring](./skill-workflow-authoring.md) | Replace | A same-named skill file. | The program |
 
-`/recap`, `/auto-mode-setup`, and `/autocompact` sent no model request, so they have no prompt to change. `/pr-comments` does not exist in 2.1.307.
+`/recap`, `/auto-mode-setup`, and `/autocompact` sent no model request, so they have no prompt to change. `/pr-comments` does not exist in 2.1.308.
 
 ## Output Styles
 

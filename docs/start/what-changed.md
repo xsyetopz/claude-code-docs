@@ -1,10 +1,10 @@
 ---
 title: What Changed
-description: What changed in the Claude Code releases near 2.1.307, newest first, as far as the changelog and a version comparison show.
+description: What changed in the Claude Code releases near 2.1.308, newest first, as far as the changelog and a version comparison show.
 sidebar_position: 4
 ---
 
-This page lists changes in the last few releases up to `2.1.307`.
+This page lists changes in the last few releases up to `2.1.308`.
 It is short on purpose. The site only repeats what its sources say, and it does not guess.
 For every fix and small change, read the official [Changelog](https://code.claude.com/docs/en/changelog).
 
@@ -12,7 +12,14 @@ For every fix and small change, read the official [Changelog](https://code.claud
 
 Run `claude --version`.
 The `/release-notes` command shows a cached copy of the [changelog](https://code.claude.com/docs/en/changelog).
-This site covers `2.1.307`, the version shown in the navbar.
+This site covers `2.1.308`, the version shown in the navbar.
+
+## Version 2.1.308
+
+Released October 22, 2026. Source: [release notes](https://github.com/anthropics/claude-code/releases/tag/v2.1.308). The notes list only bug fixes and reliability improvements.
+
+A comparison of the `2.1.307` and `2.1.308` programs found no change to environment variables, flags, commands, settings, hooks, or gates. The Mod API type file is the same except for the version in its header (the program).
+The print and interactive probes gave the same results as on `2.1.307`. The managed folder and live login probes were not run on `2.1.308`.
 
 ## Version 2.1.307
 

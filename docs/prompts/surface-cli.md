@@ -5,7 +5,7 @@ sidebar_position: 90
 generated: false
 ---
 
-This is the verbatim text that Claude Code 2.1.307 uses for the CLI surface in a terminal.
+This is the verbatim text that Claude Code 2.1.308 uses for the CLI surface in a terminal.
 
 ## Where It Comes From
 

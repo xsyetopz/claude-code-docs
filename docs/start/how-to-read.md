@@ -97,7 +97,7 @@ If a fact is not checked, the page puts it in a "Not Verified" box or leaves it 
 ## One Release Only
 
 This site tracks only the newest release.
-The current release is shown in the top bar, for example "Tracks 2.1.307".
+The current release is shown in the top bar, for example "Tracks 2.1.308".
 There are no old versions of the docs.
 The [What Changed](what-changed.md) page lists breaking changes.
 
