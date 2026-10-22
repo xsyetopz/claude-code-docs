@@ -1,6 +1,6 @@
 ---
 title: "Override a Prompt"
-description: "Which built-in prompt texts in Claude Code 2.1.305 you can replace, append to, or turn off, and how."
+description: "Which built-in prompt texts in Claude Code 2.1.307 you can replace, append to, or turn off, and how."
 sidebar_position: 1.5
 generated: false
 index:
@@ -18,7 +18,7 @@ Some built-in prompt texts can be changed. This page lists each one, says whethe
 - **Indirect** means the text stays the same, but it tells the model to use something you control.
 - **No** means we found no way to change the text.
 
-A subscription (OAuth) login gets the same main system prompt text, the same 12 default tools, and the same Explore subagent prompt as an API key (live subscription runs on 2.1.305 with the prompt `Reply with 'OK'.`, 2026-10-21). The Explore request had the same 7 tools: Bash, ListAgents, Read, ReportFindings, Skill, DeferredToolPlaceholder, and ToolSearch. We compared the main request with an API key request on the same model (Opus 5.5). The system prompt differed only in the memory folder path. Other differences:
+A subscription (OAuth) login gets the same main system prompt text and the same 12 default tools as an API key (live probe `live.oauth-parity` on 2.1.307, 2026-10-22, with the prompt `Reply with 'OK'.`; the text matched once model names, temp paths, and the per-run billing hash were masked). It also got the same Explore subagent prompt in a live run on 2.1.305 (2026-10-21), which was not run again, because the model decides by itself whether to start Explore. The Explore request had the same 7 tools: Bash, ListAgents, Read, ReportFindings, Skill, DeferredToolPlaceholder, and ToolSearch. In the 2.1.305 run, we compared the main request with an API key request on the same model (Opus 5.5). The system prompt differed only in the memory folder path. Other differences:
 
 - The two cached system blocks and `messages[1]` (role `system`) have a cache `ttl` of `"1h"` with a subscription. The API key request had no `ttl`.
 - `thinking.display` was `updates` with a subscription and `omitted` with an API key.
@@ -55,7 +55,7 @@ Agents are merged by name. The later source wins: built-in, plugin, user (`~/.cl
 | [claude agent](./subagent-claude.md) | Replace | A same-named agent file. | The program |
 | [claude agent](./subagent-claude.md) | Turn Off | `CLAUDE_CODE_DISABLE_AGENT_VIEW=1` or the `disableAgentView` setting. | The program |
 | [web-fetch agent](./subagent-web-fetch.md) | Replace | A same-named agent file. Off by default. `CLAUDE_CODE_WEB_FETCH_AGENT=1` turns it on and `CLAUDE_CODE_DISABLE_WEB_FETCH` turns it off. | The program |
-| [claude-code-guide agent](./subagent-claude-code-guide.md) | Replace | A same-named agent file. This rests on the shared agent merge code and was not tested for this agent. Not offered when the entry point is `sdk-ts`, `sdk-py`, or `sdk-cli`, so it is not available in `-p`. The interactive screen offers it (checked on 2.1.305). | The program |
+| [claude-code-guide agent](./subagent-claude-code-guide.md) | Replace | A same-named agent file. This rests on the shared agent merge code and was not tested for this agent. Not offered when the entry point is `sdk-ts`, `sdk-py`, or `sdk-cli`, so it is not available in `-p`. The interactive screen offers it (checked on 2.1.307). | The program |
 | [Workflow subagent](./subagent-workflow.md) | No | No override found. | The program |
 | [comment-thread-analyst agent](./subagent-comment-thread-analyst.md) | No | No override found. | The program |
 | [Coordinator and worker prompts](./coordinator-mode.md) | No | No text override. Coordinator mode replaces the agent list and the main prompt. `--append-system-prompt` is still added. | The program |
@@ -78,7 +78,7 @@ The flags `--system-prompt` and `--append-system-prompt` do not reach built-in s
 | [/code-review](./skill-code-review.md) and its `/review` alias | Replace | Same rule as `/simplify`. | The program |
 | Other bundled skills: [batch](./skill-batch.md), [claude-api](./skill-claude-api.md), [dataviz](./skill-dataviz.md), [deep-research](./skill-deep-research.md), [doctor](./skill-doctor.md), [fewer-permission-prompts](./skill-fewer-permission-prompts.md), [goal](./skill-goal.md), [insights](./skill-insights.md), [loop](./skill-loop.md), [plugin-authoring](./skill-plugin-authoring.md), [run](./skill-run.md), [run-skill-generator](./skill-run-skill-generator.md), [team-onboarding](./skill-team-onboarding.md), [update-config](./skill-update-config.md), [verify](./skill-verify.md), [workflow-authoring](./skill-workflow-authoring.md) | Replace | A same-named skill file. | The program |
 
-`/recap`, `/auto-mode-setup`, and `/autocompact` sent no model request, so they have no prompt to change. `/pr-comments` does not exist in 2.1.305.
+`/recap`, `/auto-mode-setup`, and `/autocompact` sent no model request, so they have no prompt to change. `/pr-comments` does not exist in 2.1.307.
 
 ## Output Styles
 

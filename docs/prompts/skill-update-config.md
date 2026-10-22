@@ -5,7 +5,7 @@ sidebar_position: 79
 generated: false
 ---
 
-This is the verbatim text that Claude Code 2.1.305 uses for the built-in `/update-config` skill.
+This is the verbatim text that Claude Code 2.1.307 uses for the built-in `/update-config` skill.
 
 ## Where It Comes From
 
@@ -17,7 +17,7 @@ Create `.claude/skills/update-config/SKILL.md` with the same name. The program t
 
 ## Full Text
 
-Only the instruction part is shown, up to the end of the hooks troubleshooting list. The rest of the file, about 275 KB, is the settings JSON schema and an unfilled user request placeholder. It is not shown.
+Only the instruction part is shown, up to the end of the hooks troubleshooting list. The rest of the file, about 278 KB, is the settings JSON schema and an unfilled user request placeholder. It is not shown. In 2.1.307 the part that is not shown adds the `sshHostCommands` setting and drops "rootless podman or buildah" from the `sandbox.allowNestedUserNamespaces` description.
 
 Temp folder paths were replaced with `<temp-dir>` or `<bundled-skill-dir>`, and emoji not on the site's allow-list are shown in brackets. `PROBE-ARG` is the test's argument.
 

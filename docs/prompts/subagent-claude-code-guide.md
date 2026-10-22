@@ -19,7 +19,7 @@ The prompt that the built-in Claude Code guide subagent gets. The main agent cal
 
 ## Where It Comes From
 
-Captured from a real interactive session of Claude Code 2.1.305 against a local stub server, with a fake key (see [Interactive Probes](../reference/probes.md#interactive-probes)). The stub answered the first turn with an `Agent` call, and this is the request that the subagent sent. The prompt text is the same as the 2.1.304 capture.
+Captured from a real interactive session of Claude Code 2.1.307 against a local stub server, with a fake key (see [Interactive Probes](../reference/probes.md#interactive-probes)). The stub answered the first turn with an `Agent` call, and this is the request that the subagent sent. The prompt text is the same as the 2.1.305 capture.
 
 - Model: `claude-haiku-5-5`, while the main session ran `claude-opus-5-5`.
 - Tools: `Bash`, `Read`, `WebFetch`, `WebSearch`.
@@ -36,7 +36,7 @@ A user agent file with the same name replaces it. Put the file in `.claude/agent
 The text below is the system text of the request, with the billing header first.
 
 ````text
-x-anthropic-billing-header: cc_version=2.1.305.<build>; cc_entrypoint=cli; cc_is_subagent=true;
+x-anthropic-billing-header: cc_version=2.1.307.<build>; cc_entrypoint=cli; cc_is_subagent=true;
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
 You are the Claude guide agent. Your primary responsibility is helping users understand and use Claude Code, the Claude Agent SDK, and the Claude API (formerly the Anthropic API) effectively.
 

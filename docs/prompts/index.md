@@ -1,6 +1,6 @@
 ---
 title: "Captured System Prompts"
-description: "Every system prompt variant you can pick in Claude Code 2.1.306, captured offline and compared."
+description: "Every system prompt variant you can pick in Claude Code 2.1.307, captured offline and compared."
 sidebar_position: 1
 ---
 
@@ -78,14 +78,18 @@ You can use every prompt here: the answer to "Can you use it?" is ✅ Yes for al
 | [Custom Output Style with a Built-in Name](./style-override-builtin.md) | ✅ Yes. You write the file. | `/output-style` or the `outputStyle` setting. | `~/.claude/output-styles/*.md` or `.claude/output-styles/*.md`. | <Undocumented /> |
 | [Subagent with --system-prompt and --append-system-prompt](./subagent-with-prompt-flags.md) | Not for the subagent. Use `--append-subagent-system-prompt`. | The flags. | Command-line flags. | <Undocumented /> |
 | [Prompt Hook on Stop](./hook-prompt-stop.md) | Partly. You write the prompt and pick the model. The system text is fixed. | Add or remove the hook. | `hooks` in any settings scope. | <Documented /> |
+| [All Tools Sent Upfront](./tools-upfront.md) | ✅ Yes. It adds the deferred tools to the request. | `ENABLE_TOOL_SEARCH`. | Environment variable, or `env` in any settings scope. | <Documented /> |
 | [Override a Prompt](./override.md) | ✅ Yes. The page lists each prompt you can replace, append to, or turn off. | Per prompt. See the page. | Flags, env vars, settings, and files. | <Undocumented /> |
+| [Tool Descriptions](./tools.md) (Every request carries them) | ✅ Yes. A Mod API `tool.describe` hook replaces a description. | `ENABLE_TOOL_SEARCH`, `--tools`, `--disallowedTools`. | Built into the program. | <Undocumented /> |
+| [Built-In Skills](./built-in-skills.md) (The main agent reads one line for each) | ✅ Yes. A skill or command with the same name replaces one. | `--disable-slash-commands`. | Built into the program. Override in `.claude/skills/<name>/SKILL.md`. | <Documented /> |
+| [Built-In Agents](./built-in-agents.md) (The main agent reads one line for each) | ✅ Yes. An agent with the same name replaces one. | `CLAUDE_CODE_DISABLE_EXPLORE_PLAN_AGENTS`, `CLAUDE_AGENT_SDK_DISABLE_BUILTIN_AGENTS`. | Built into the program. Override in `.claude/agents/<name>.md`. | <Documented /> |
 | [Tools per Variant](./tools-per-variant.md) (Every request carries the list) | ✅ Yes. Use `--tools`, `--allowedTools`, `--disallowedTools`, or settings. | `--bare` and `CLAUDE_CODE_SIMPLE=1` cut the list to three tools. | Built into the program. | <Undocumented /> |
 
 ## How the Captures Were Made
 
 Every prompt on these pages was captured offline, with no model call and no cost.
 
-1. A script starts the installed program (version 2.1.306) in print mode (`-p`) once per variant.
+1. A script starts the installed program (version 2.1.307) in print mode (`-p`) once per variant.
 2. The program talks to a small fake Messages API on `127.0.0.1`. The fake server writes each request body to a file and sends back a canned reply.
 3. The run uses a fake API key, a dead proxy (`HTTPS_PROXY` and `HTTP_PROXY` point to a closed port), `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1`, `DISABLE_TELEMETRY=1`, and a temporary home, config folder, and project folder. No login token is used. The script checks that every request went to the local server.
 4. A second script reads the saved request bodies, replaces machine-specific values with placeholders, and writes these pages. It makes the diffs with `diff -u`, not by hand.
@@ -156,7 +160,7 @@ flowchart TD
 
 Subagents skip this chart. They get their own body and notes (see [Subagent, general-purpose](./subagent-general-purpose.md)).
 
-Captures disagree with the old wiki in one place: the wiki says models with `sonnet` or `haiku` in the name get the full prompt. In 2.1.306 they get the lean prompt, and only `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=0` gives the full one.
+Captures disagree with the old wiki in one place: the wiki says models with `sonnet` or `haiku` in the name get the full prompt. In 2.1.307 they get the lean prompt, and only `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=0` gives the full one.
 
 ## All Variants
 
@@ -200,7 +204,7 @@ Size is the number of characters in everything shown on the variant page, after 
 | [Subagent, Custom Agent](./subagent-custom.md) | Custom agent file | 9,553 | 8 | none |
 | [Subagent, Statusline Setup](./subagent-statusline-setup.md) | `Agent` tool, `statusline-setup` | 15,551 | 2 | none |
 | [Subagent, Claude (FleetView)](./subagent-claude.md) | `Agent` tool, `claude` | 11,328 | 8 | none |
-| [Subagent, Web Fetch](./subagent-web-fetch.md) | `CLAUDE_CODE_WEB_FETCH_AGENT=1`, `Agent` tool, `web-fetch` | 5,369 | 1 | none |
+| [Subagent, Web Fetch](./subagent-web-fetch.md) | `CLAUDE_CODE_WEB_FETCH_AGENT=1`, `Agent` tool, `web-fetch` | 5,525 | 1 | none |
 | [Subagent, Claude Code Guide](./subagent-claude-code-guide.md) | Interactive session, `Agent` tool, `claude-code-guide` | 29,062 | 4 | none |
 | [Override a Built-in Agent with a File](./override-agent-file.md) | Agent file with a built-in name | 9,566 | 8 | none |
 | [Override a Built-in Agent with --agents](./override-agents-flag.md) | `--agents` with a built-in name | 9,547 | 8 | none |
@@ -224,6 +228,7 @@ Size is the number of characters in everything shown on the variant page, after 
 | [Custom Output Style with a Built-in Name](./style-override-builtin.md) | Style file with a built-in name | 15,730 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
 | [Subagent with --system-prompt and --append-system-prompt](./subagent-with-prompt-flags.md) | Prompt flags plus a subagent | 11,491 | 5 | none |
 | [Prompt Hook on Stop](./hook-prompt-stop.md) | Hook `type: prompt` on `Stop` | 12,500 | 0 | none |
+| [All Tools Sent Upfront](./tools-upfront.md) | `ENABLE_TOOL_SEARCH=false` | 15,154 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
 
 See also [Tools per Variant](./tools-per-variant.md).
 

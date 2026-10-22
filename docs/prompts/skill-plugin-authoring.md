@@ -5,7 +5,7 @@ sidebar_position: 75
 generated: false
 ---
 
-This is the verbatim text that Claude Code 2.1.305 uses for the built-in `/plugin-authoring` skill.
+This is the verbatim text that Claude Code 2.1.307 uses for the built-in `/plugin-authoring` skill.
 
 ## Where It Comes From
 
@@ -16,6 +16,8 @@ Bundled skill. Captured from the program with `PROBE-ARG`, the argument the test
 Create `.claude/skills/plugin-authoring/SKILL.md` with the same name. The program then uses your file in place of this text, and it adds a `Base directory` line above the skill text. The same-name rule was tested with `/simplify` only. See [Override a Prompt](./override.md).
 
 ## Full Text
+
+In 2.1.307 the paragraph about dim transcript lines says that a `ui.render` hook whose tree does not validate is skipped alone, in place of saying that the engine drew its own tree.
 
 Temp folder paths were replaced with `<temp-dir>` or `<bundled-skill-dir>`, and emoji not on the site's allow-list are shown in brackets. `PROBE-ARG` is the test's argument.
 
@@ -70,7 +72,7 @@ Each example, in `<bundled-skill-dir>/plugin-authoring/examples/`, is one comple
 
 `claude plugin validate <mod folder>` reads the manifest and the module's source the way the engine will, and reports what the module hooks and calls and all the engine would refuse. Type-check the mod: with its types laid, `tsc -p <mod folder>`; else (the first write, `claude -p`, an SDK host), with the `tsconfig.json` from the types file's header, kept outside the mod folder, its `include` naming that file and the mod's `hooks`. Test what was asked in a `*.test.ts` like the example `pane.test.tsx`: run `claude plugin test <mod folder>`. A finished mod is at its full path, loaded or not by the hot-reloading answer: enabled, it is loaded when the turn ends, with nothing to run; any other answer, it is not loaded.
 
-While the session hot-reloads a plugin folder the transcript carries one dim line naming the plugin, the event and the reason when a hook fails or a module does not load, and says when a hook's tree did not validate and the engine drew its own instead: `<plugin>: ui.render (<Component>) refused: <reason>; the engine drew its own`, `<plugin>` being the one plugin whose hook could have drawn the tree, `hooks` otherwise. In any other session those lines go to the debug log alone, as `<plugin>: <line>`. The debug log (`claude --debug`) carries a line for every occurrence and every result the engine refused; in every session such a tree has a line there beginning `ui.render (<Component>): a hook returned a tree that does not validate`, followed by the reason.
+While the session hot-reloads a plugin folder the transcript carries one dim line naming the plugin, the event and the reason when a hook fails or a module does not load, and a hook whose tree does not validate is such a hook, skipped alone: `<plugin>: ui.render hook skipped: returned the wrong shape (a tree <Component> refuses: <reason>)`. In any other session those lines go to the debug log alone, as `<plugin>: <line>`. The debug log (`claude --debug`) carries a line for every occurrence and every result the engine refused.
 
 `<bundled-skill-dir>/plugin-authoring/reference.md` is the long form: the full event list, streaming events, `ui.render` in depth, `$.state` contracts, `--plugin-dir` and `CLAUDE_CODE_PLUGIN_DIRS` while developing, `userConfig` options, what a test holds, and Sharing a mod, the GitHub road, done when the person asks, or says yes where this skill offers it: `.claude-plugin/marketplace.json` in its repository and, in the README, `/plugin install <mod> --marketplace <owner>/<repo>`.
 

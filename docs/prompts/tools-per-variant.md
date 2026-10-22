@@ -1,7 +1,7 @@
 ---
 title: "Tools per Variant"
 description: "Which tools each system prompt variant sends, and how the tool text differs."
-sidebar_position: 61
+sidebar_position: 62
 ---
 
 Tools are part of what the model reads. Each request carries a list of tools, and each tool has a name, a description, and a schema. This page compares the lists across variants.
@@ -12,18 +12,18 @@ The default list has 12 tools on Opus 5.5. The columns show the length of the de
 
 | Tool | Description | Schema |
 | --- | --- | --- |
-| `Agent` | 1,989 | 1,942 |
-| `Bash` | 1,406 | 1,720 |
-| `Edit` | 360 | 552 |
-| `ListAgents` | 777 | 316 |
-| `Read` | 790 | 1,071 |
-| `ReportFindings` | 574 | 1,545 |
-| `ScheduleWakeup` | 3,396 | 1,392 |
-| `Skill` | 1,417 | 327 |
-| `ToolSearch` | 953 | 406 |
-| `Workflow` | 3,480 | 1,775 |
-| `DeferredToolPlaceholder` | 83 | 33 |
-| `Write` | 240 | 348 |
+| [`Agent`](./tools.md#agent) | 3,227 | 1,942 |
+| [`Bash`](./tools.md#bash) | 1,406 | 1,720 |
+| [`Edit`](./tools.md#edit) | 360 | 552 |
+| [`ListAgents`](./tools.md#listagents) | 777 | 316 |
+| [`Read`](./tools.md#read) | 790 | 1,071 |
+| [`ReportFindings`](./tools.md#reportfindings) | 574 | 1,545 |
+| [`ScheduleWakeup`](./tools.md#schedulewakeup) | 3,396 | 1,392 |
+| [`Skill`](./tools.md#skill) | 1,417 | 327 |
+| [`ToolSearch`](./tools.md#toolsearch) | 953 | 406 |
+| [`Workflow`](./tools.md#workflow) | 3,480 | 1,775 |
+| [`DeferredToolPlaceholder`](./tools.md#deferredtoolplaceholder) | 83 | 33 |
+| [`Write`](./tools.md#write) | 240 | 348 |
 
 ## Differences by Variant
 
@@ -58,6 +58,7 @@ Each row compares one variant to the default list. Variants with the same tools 
 | [Git Instructions Turned Off](./git-instructions-off.md) | 12 | changes the text or schema of `Bash`. |
 | [Subagent with --system-prompt and --append-system-prompt](./subagent-with-prompt-flags.md) | 5 | removes `Agent`, `Edit`, `ListAgents`, `ReportFindings`, `ScheduleWakeup`, `Workflow`, `Write`. |
 | [Prompt Hook on Stop](./hook-prompt-stop.md) | 0 | removes `Agent`, `Bash`, `Edit`, `ListAgents`, `Read`, `ReportFindings`, `ScheduleWakeup`, `Skill`, `ToolSearch`, `Workflow`, `DeferredToolPlaceholder`, `Write`. |
+| [All Tools Sent Upfront](./tools-upfront.md) | 20 | adds `CronCreate`, `CronDelete`, `CronList`, `EnterWorktree`, `ExitWorktree`, `NotebookEdit`, `SendMessage`, `TaskStop`, `WebFetch`, `WebSearch`. removes `ToolSearch`, `DeferredToolPlaceholder`. |
 
 ## Same Tools as the Default
 

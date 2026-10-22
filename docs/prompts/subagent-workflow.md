@@ -5,7 +5,7 @@ sidebar_position: 64
 generated: false
 ---
 
-This is the verbatim text that Claude Code 2.1.305 uses for subagents that a workflow orchestration script starts.
+This is the verbatim text that Claude Code 2.1.307 uses for subagents that a workflow orchestration script starts.
 
 ## Where It Comes From
 
@@ -24,5 +24,5 @@ CRITICAL: Your final text response is returned **verbatim** as a string to the c
 - If asked for JSON, return ONLY the raw JSON — no code fences, no prose, no markdown.
 - Do NOT use SendUserMessage to deliver your answer. Put your answer in your final text response.
 - Be concise. The script will parse your output.
-${Un}
+${Hn}
 ````

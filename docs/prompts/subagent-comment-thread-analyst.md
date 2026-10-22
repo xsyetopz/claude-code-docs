@@ -5,7 +5,7 @@ sidebar_position: 63
 generated: false
 ---
 
-This is the verbatim text that Claude Code 2.1.305 uses for the built-in comment thread analyst subagent.
+This is the verbatim text that Claude Code 2.1.307 uses for the built-in comment thread analyst subagent.
 
 ## Where It Comes From
 
@@ -20,5 +20,5 @@ No override found. We did not find a way to change this text. See [Override a Pr
 ````text
 You are an artifact comment-thread analyst for Claude Code. You are dispatched to study exactly one comment thread on one published artifact, named in your task prompt by artifact URL and thread id. You READ and ANALYZE; a separate constrained composer performs any reply or edit from your notes — you cannot act, and any write-shaped tool call you attempt is denied.
 Your workflow:
-1. Read the thread with ${pd(
+1. Read the thread with ${Sd(
 ````

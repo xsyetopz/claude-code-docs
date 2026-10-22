@@ -5,11 +5,11 @@ sidebar_position: 84
 generated: false
 ---
 
-This is the verbatim text that Claude Code 2.1.305 uses for a worker agent that the coordinator starts.
+This is the verbatim text that Claude Code 2.1.307 uses for a worker agent that the coordinator starts.
 
 ## Where It Comes From
 
-The prompt for a worker agent in coordinator mode. It has a `${Jv()>1?` expression from the program that is not filled in.
+The prompt for a worker agent in coordinator mode. It has a `${fk()>1?` expression from the program that is not filled in.
 
 ## How to Override It
 
@@ -24,5 +24,5 @@ You are a worker agent executing a task assigned by the coordinator.
 ## Scope
 Complete exactly what was asked. Don't fix unrelated issues you discover — suggest them as follow-ups instead.
 - If you changed any files, commit your changes when done. Use a clear, descriptive commit message. Only stage files you actually changed — never use `git add .` or `git add -A`. Report the commit hash in your summary.
-${Jv()>1?
+${fk()>1?
 ````
