@@ -207,12 +207,12 @@
     "probes": [],
     "note": "release history: when it started; recheck only if the feature is removed"
   },
-  "docs/extend/mod-api/clock-http-process-env-settings.md#members:ae63aa8b": {
+  "docs/extend/mod-api/clock-http-process-env-settings.md#members:4aa0ff1a": {
     "kind": "manual",
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
   },
-  "docs/extend/mod-api/clock-http-process-env-settings.md#events-raised-by-these-calls:3640bf80": {
+  "docs/extend/mod-api/clock-http-process-env-settings.md#events-raised-by-these-calls:53bdc14e": {
     "kind": "manual",
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
@@ -227,7 +227,7 @@
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
   },
-  "docs/extend/mod-api/tool-command-config.md#engine-events:5420e5f0": {
+  "docs/extend/mod-api/tool-command-config.md#engine-events:1091aee3": {
     "kind": "manual",
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
@@ -247,7 +247,7 @@
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
   },
-  "docs/extend/mod-api/types/tool-command-config.md#toolcheckresult:ed5cf589": {
+  "docs/extend/mod-api/types/tool-command-config.md#toolcheckresult:368947cc": {
     "kind": "manual",
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
@@ -272,7 +272,7 @@
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
   },
-  "docs/extend/mod-api/types/ui.md#paneopenargs:2336ece3": {
+  "docs/extend/mod-api/types/ui.md#paneopenargs:62d7a428": {
     "kind": "manual",
     "probes": [],
     "note": "program behaviour (also in the release notes); no probe checks it yet"
@@ -560,7 +560,7 @@
     "probes": [],
     "note": "release history: when it started; recheck only if the feature is removed"
   },
-  "docs/extend/mod-api/types/tool-command-config.md#toolcheckinput:70c06add": {
+  "docs/extend/mod-api/types/tool-command-config.md#toolcheckinput:1d637a36": {
     "kind": "manual",
     "probes": [],
     "note": "program behaviour (approver set next to tool.check); no probe checks it yet"
@@ -569,5 +569,35 @@
     "kind": "static",
     "probes": [],
     "note": "record of the managed probe runs; release:probe:managed reruns them"
+  },
+  "docs/extend/mod-api/session.md#members:5bea862d": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour; no probe checks it yet"
+  },
+  "docs/extend/mod-api/session.md#events-raised-by-session-calls:99a6b941": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour; no probe checks it yet"
+  },
+  "docs/extend/mod-api/testing.md#exports:8f8b57a8": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour; no probe checks it yet"
+  },
+  "docs/extend/mod-api/types/testing.md#types-without-fields:e66d89ad": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour; no probe checks it yet"
+  },
+  "docs/extend/mod-api/types/tool-command-config.md#types-without-fields:41f72ee2": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour; no probe checks it yet"
+  },
+  "docs/extend/mod-api/types/ui.md#renderelement:2503ee1f": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour; no probe checks it yet"
   }
 }

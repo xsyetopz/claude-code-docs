@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-otel.json",
-  "title": "Claude Code OpenTelemetry metrics, spans, and events (Claude Code 2.1.307)",
-  "$comment": "For the OpenTelemetry data Claude Code emits. Each $defs entry is one metric, span, or event; the kind is in x-otel-kind and the properties are its attributes. Generated from Claude Code 2.1.307 by tools/schemas/code.ts. Anchors: \"Count of CLI sessions started\" (the meter setup that registers each metric with its description and unit) with the counter accessor functions and their .add(value, attributes) call sites; the span helpers (startSpan(\"claude_code.<name>\") with the attribute literal built just before it, and the wrapper that takes {spanType, attrs, contentAttrs}); the event emitter that sets \"event.name\", \"event.timestamp\", \"event.sequence\" and its call sites with the attribute literal; the base attribute builder behind \"OTEL_METRICS_INCLUDE_SESSION_ID\". No probe in captures/ records telemetry, so nothing is marked x-observed. Do not edit by hand.",
+  "title": "Claude Code OpenTelemetry metrics, spans, and events (Claude Code 2.1.308)",
+  "$comment": "For the OpenTelemetry data Claude Code emits. Each $defs entry is one metric, span, or event; the kind is in x-otel-kind and the properties are its attributes. Generated from Claude Code 2.1.308 by tools/schemas/code.ts. Anchors: \"Count of CLI sessions started\" (the meter setup that registers each metric with its description and unit) with the counter accessor functions and their .add(value, attributes) call sites; the span helpers (startSpan(\"claude_code.<name>\") with the attribute literal built just before it, and the wrapper that takes {spanType, attrs, contentAttrs}); the event emitter that sets \"event.name\", \"event.timestamp\", \"event.sequence\" and its call sites with the attribute literal; the base attribute builder behind \"OTEL_METRICS_INCLUDE_SESSION_ID\". No probe in captures/ records telemetry, so nothing is marked x-observed. Do not edit by hand.",
   "$defs": {
     "event:api_error": {
       "x-otel-kind": "event",
@@ -134,10 +134,10 @@
           "x-unverified": true
         },
         "has_category": {
-          "x-unverified": true
+          "type": "boolean"
         },
         "has_explanation": {
-          "x-unverified": true
+          "type": "boolean"
         },
         "category": {
           "x-unverified": true
@@ -216,10 +216,10 @@
           "x-unverified": true
         },
         "cost_usd_micros": {
-          "x-unverified": true
+          "type": "number"
         },
         "duration_ms": {
-          "x-unverified": true
+          "type": "number"
         },
         "ttft_ms": {
           "x-unverified": true
@@ -344,7 +344,7 @@
           "type": "array"
         },
         "response_length": {
-          "x-unverified": true
+          "type": "number"
         },
         "response": {
           "x-unverified": true
@@ -393,10 +393,10 @@
           "type": "array"
         },
         "mention_type": {
-          "x-unverified": true
+          "type": "string"
         },
         "success": {
-          "x-unverified": true
+          "type": "string"
         }
       }
     },
@@ -430,19 +430,19 @@
           "type": "array"
         },
         "action": {
-          "x-unverified": true
+          "type": "string"
         },
         "success": {
-          "x-unverified": true
+          "type": "string"
         },
         "auth_method": {
-          "x-unverified": true
+          "type": "string"
         },
         "error_category": {
-          "x-unverified": true
+          "type": "string"
         },
         "status_code": {
-          "x-unverified": true
+          "type": "string"
         }
       }
     },
@@ -476,25 +476,25 @@
           "type": "array"
         },
         "trigger": {
-          "x-unverified": true
+          "type": "string"
         },
         "success": {
-          "x-unverified": true
+          "type": "string"
         },
         "duration_ms": {
-          "x-unverified": true
+          "type": "string"
         },
         "pre_tokens": {
-          "x-unverified": true
+          "type": "string"
         },
         "post_tokens": {
-          "x-unverified": true
+          "type": "string"
         },
         "error": {
           "x-unverified": true
         },
         "precompute_reuse": {
-          "x-unverified": true
+          "type": "string"
         }
       }
     },
@@ -595,49 +595,49 @@
           "x-unverified": true
         },
         "num_hooks": {
-          "x-unverified": true
+          "type": "string"
         },
         "num_success": {
-          "x-unverified": true
+          "type": "string"
         },
         "num_blocking": {
-          "x-unverified": true
+          "type": "string"
         },
         "num_non_blocking_error": {
-          "x-unverified": true
+          "type": "string"
         },
         "num_cancelled": {
-          "x-unverified": true
+          "type": "string"
         },
         "total_duration_ms": {
-          "x-unverified": true
+          "type": "string"
         },
         "stdout_chars": {
-          "x-unverified": true
+          "type": "string"
         },
         "additional_context_chars": {
-          "x-unverified": true
+          "type": "string"
         },
         "system_message_chars": {
-          "x-unverified": true
+          "type": "string"
         },
         "initial_user_message_chars": {
-          "x-unverified": true
+          "type": "string"
         },
         "num_outputs_persisted": {
-          "x-unverified": true
+          "type": "string"
         },
         "managed_only": {
-          "x-unverified": true
+          "type": "string"
         },
         "hook_source": {
           "enum": ["policySettings", "merged"]
         },
         "safe_mode": {
-          "x-unverified": true
+          "type": "string"
         },
         "hook_definitions": {
-          "x-unverified": true
+          "type": "string"
         }
       }
     },
@@ -677,19 +677,19 @@
           "x-unverified": true
         },
         "num_hooks": {
-          "x-unverified": true
+          "type": "string"
         },
         "managed_only": {
-          "x-unverified": true
+          "type": "string"
         },
         "hook_source": {
           "enum": ["policySettings", "merged"]
         },
         "safe_mode": {
-          "x-unverified": true
+          "type": "string"
         },
         "hook_definitions": {
-          "x-unverified": true
+          "type": "string"
         }
       }
     },
@@ -769,7 +769,7 @@
           "x-unverified": true
         },
         "safe_mode": {
-          "x-unverified": true
+          "type": "string"
         },
         "hook_matcher": {
           "x-unverified": true
@@ -849,7 +849,7 @@
           "type": "array"
         },
         "managed_settings.trigger": {
-          "x-unverified": true
+          "type": "string"
         },
         "managed_settings.sources": {
           "x-unverified": true
@@ -861,7 +861,7 @@
           "x-unverified": true
         },
         "managed_settings.helper.applied": {
-          "x-unverified": true
+          "type": "string"
         },
         "managed_settings.helper.entry": {
           "x-unverified": true
@@ -916,7 +916,7 @@
           "type": "array"
         },
         "status": {
-          "x-unverified": true
+          "type": "string"
         },
         "transport_type": {
           "x-unverified": true
@@ -925,10 +925,10 @@
           "x-unverified": true
         },
         "duration_ms": {
-          "x-unverified": true
+          "type": "string"
         },
         "is_plugin": {
-          "x-unverified": true
+          "type": "boolean"
         },
         "plugin_id_hash": {
           "x-unverified": true
@@ -937,7 +937,7 @@
           "x-unverified": true
         },
         "error_code": {
-          "x-unverified": true
+          "type": "string"
         },
         "server_name": {
           "x-unverified": true
@@ -1026,7 +1026,7 @@
           "x-unverified": true
         },
         "marketplace.is_official": {
-          "x-unverified": true
+          "type": "string"
         },
         "install.trigger": {
           "x-unverified": true
@@ -1075,34 +1075,34 @@
           "x-unverified": true
         },
         "plugin.scope": {
-          "x-unverified": true
+          "type": "string"
         },
         "enabled_via": {
-          "x-unverified": true
+          "type": "string"
         },
         "plugin_id_hash": {
           "x-unverified": true
         },
         "has_hooks": {
-          "x-unverified": true
+          "type": "boolean"
         },
         "has_mcp": {
-          "x-unverified": true
+          "type": "boolean"
         },
         "host_owned_mcp": {
-          "x-unverified": true
+          "type": "boolean"
         },
         "skill_path_count": {
-          "x-unverified": true
+          "type": "number"
         },
         "command_path_count": {
-          "x-unverified": true
+          "type": "number"
         },
         "agent_path_count": {
-          "x-unverified": true
+          "type": "number"
         },
         "safe_mode": {
-          "x-unverified": true
+          "type": "string"
         }
       }
     },
@@ -1136,40 +1136,40 @@
           "type": "array"
         },
         "result": {
-          "x-unverified": true
+          "type": "string"
         },
         "period_days": {
-          "x-unverified": true
+          "type": "string"
         },
         "used_default": {
-          "x-unverified": true
+          "type": "string"
         },
         "skip_reason": {
-          "x-unverified": true
+          "type": ["null", "string"]
         },
         "transcripts_deleted": {
-          "x-unverified": true
+          "type": "string"
         },
         "transcripts_exempted_desktop": {
-          "x-unverified": true
+          "type": "string"
         },
         "session_files_deleted": {
-          "x-unverified": true
+          "type": "string"
         },
         "artifacts_deleted": {
-          "x-unverified": true
+          "type": "string"
         },
         "files_retained_fresh": {
-          "x-unverified": true
+          "type": "string"
         },
         "files_past_cutoff": {
-          "x-unverified": true
+          "type": "string"
         },
         "error_count": {
-          "x-unverified": true
+          "type": "string"
         },
         "history_entries_pruned": {
-          "x-unverified": true
+          "type": "string"
         }
       }
     },
@@ -1233,13 +1233,13 @@
           "x-unverified": true
         },
         "tool_class": {
-          "x-unverified": true
+          "type": "string"
         },
         "tool_name": {
           "x-unverified": true
         },
         "tool_source": {
-          "x-unverified": true
+          "type": "string"
         },
         "permission_mode": {
           "x-unverified": true
@@ -1248,10 +1248,10 @@
           "x-unverified": true
         },
         "sandbox_violation_count": {
-          "x-unverified": true
+          "type": "string"
         },
         "sandbox_enabled": {
-          "x-unverified": true
+          "type": "string"
         }
       }
     },
@@ -1288,7 +1288,7 @@
           "x-unverified": true
         },
         "invocation_trigger": {
-          "x-unverified": true
+          "type": "string"
         },
         "skill.source": {
           "x-unverified": true
@@ -1349,10 +1349,10 @@
           "x-unverified": true
         },
         "total_tool_uses": {
-          "x-unverified": true
+          "type": "number"
         },
         "duration_ms": {
-          "x-unverified": true
+          "type": "number"
         },
         "model": {
           "x-unverified": true
@@ -1361,7 +1361,7 @@
           "x-unverified": true
         },
         "model_swapped": {
-          "x-unverified": true
+          "type": "boolean"
         },
         "plugin_id_hash": {
           "x-unverified": true
@@ -1401,13 +1401,13 @@
           "type": "array"
         },
         "system_prompt_hash": {
-          "x-unverified": true
+          "type": "string"
         },
         "system_prompt": {
           "x-unverified": true
         },
         "system_prompt_length": {
-          "x-unverified": true
+          "type": "string"
         },
         "system_prompt_truncated": {
           "const": "true"
@@ -1499,13 +1499,13 @@
           "x-unverified": true
         },
         "tool_source": {
-          "x-unverified": true
+          "type": "string"
         },
         "tool_parameters": {
-          "x-unverified": true
+          "type": "string"
         },
         "classifier_verdict": {
-          "x-unverified": true
+          "type": "string"
         },
         "classifier_category": {
           "x-unverified": true
@@ -1554,19 +1554,19 @@
           "enum": ["true", "false"]
         },
         "duration_ms": {
-          "x-unverified": true
+          "type": "string"
         },
         "tool_parameters": {
-          "x-unverified": true
+          "type": "string"
         },
         "tool_input": {
-          "x-unverified": true
+          "type": "string"
         },
         "tool_input_size_bytes": {
-          "x-unverified": true
+          "type": "string"
         },
         "tool_result_size_bytes": {
-          "x-unverified": true
+          "type": "string"
         },
         "decision_source": {
           "x-unverified": true
@@ -1624,7 +1624,7 @@
           "type": "array"
         },
         "prompt_length": {
-          "x-unverified": true
+          "type": "string"
         },
         "prompt": {
           "x-unverified": true
@@ -1670,7 +1670,7 @@
           "x-unverified": true
         },
         "source": {
-          "x-unverified": true
+          "type": "string"
         },
         "tool_name": {
           "x-unverified": true
@@ -1719,7 +1719,7 @@
           "const": "fast"
         },
         "query_source": {
-          "x-unverified": true
+          "type": "string"
         },
         "effort": {
           "x-unverified": true
@@ -1826,7 +1826,7 @@
           "const": "fast"
         },
         "query_source": {
-          "x-unverified": true
+          "type": "string"
         },
         "effort": {
           "x-unverified": true
@@ -1872,10 +1872,10 @@
           "x-unverified": true
         },
         "shell.type": {
-          "x-unverified": true
+          "type": "string"
         },
         "command_length": {
-          "x-unverified": true
+          "type": "number"
         },
         "timeout_ms": {
           "x-unverified": true
@@ -1909,7 +1909,7 @@
           "enum": ["auto", "manual"]
         },
         "message_count": {
-          "x-unverified": true
+          "type": "number"
         },
         "span.type": {
           "const": "compaction"
@@ -1943,7 +1943,7 @@
           "x-unverified": true
         },
         "num_hooks": {
-          "x-unverified": true
+          "type": "number"
         },
         "hook_definitions": {
           "x-unverified": true
@@ -1980,10 +1980,10 @@
           "x-unverified": true
         },
         "user_prompt_length": {
-          "x-unverified": true
+          "type": "number"
         },
         "interaction.sequence": {
-          "x-unverified": true
+          "type": "number"
         },
         "parent.source": {
           "x-unverified": true
@@ -2066,7 +2066,7 @@
           "x-unverified": true
         },
         "attempt": {
-          "x-unverified": true
+          "type": "number"
         },
         "mcp_args": {
           "x-unverified": true
@@ -2143,7 +2143,7 @@
           "x-unverified": true
         },
         "file_path": {
-          "x-unverified": true
+          "type": "string"
         },
         "full_command": {
           "x-unverified": true

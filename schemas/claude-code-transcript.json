@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-transcript.json",
-  "title": "Claude Code transcript JSONL entry (Claude Code 2.1.307)",
-  "$comment": "For one line of a session transcript (.jsonl). Generated from Claude Code 2.1.307 by tools/schemas/code.ts. Anchors: the entry type registry (an object literal whose first keys are user, assistant, system, attachment, mapped to \"transcript\"); the literal built in the writer's insertMessageChain (key logicalParentUuid) and its two spreads for the common fields of message lines; every object literal with a top-level type:\"<entry type>\" (non-message types need a sessionId key), with its spreads resolved in the module that declares each function (imports followed); and, for a key a probe saw that no such literal has, the later write: a copy of the line ({...line, key}), a function spread into one, or last a property assignment. Keys are the union over all write sites; a string value that differs between sites is an enum, and one that is a literal at one site and computed at another is x-unverified. Probe print/transcripts.lines.json marks the observed keys. Do not edit by hand.",
+  "title": "Claude Code transcript JSONL entry (Claude Code 2.1.308)",
+  "$comment": "For one line of a session transcript (.jsonl). Generated from Claude Code 2.1.308 by tools/schemas/code.ts. Anchors: the entry type registry (an object literal whose first keys are user, assistant, system, attachment, mapped to \"transcript\"); the literal built in the writer's insertMessageChain (key logicalParentUuid) and its two spreads for the common fields of message lines; every object literal with a top-level type:\"<entry type>\" (non-message types need a sessionId key), with its spreads resolved in the module that declares each function (imports followed); and, for a key a probe saw that no such literal has, the later write: a copy of the line ({...line, key}), a function spread into one, or last a property assignment. Keys are the union over all write sites; a string value that differs between sites is an enum, and one that is a literal at one site and computed at another is x-unverified. Probe print/transcripts.lines.json marks the observed keys. Do not edit by hand.",
   "type": "object",
   "oneOf": [
     {
@@ -206,11 +206,11 @@
           "x-observed": true
         },
         "timestamp": {
-          "x-unverified": true,
+          "type": "string",
           "x-observed": true
         },
         "version": {
-          "x-unverified": true,
+          "type": "string",
           "x-observed": true
         },
         "querySource": {
@@ -222,18 +222,18 @@
           "x-observed": true
         },
         "params": {
-          "x-unverified": true,
+          "type": "object",
           "x-observed": true
         },
         "withheld": {
-          "x-unverified": true
+          "type": "array"
         },
         "base": {
           "x-unverified": true,
           "x-observed": true
         },
         "keep": {
-          "x-unverified": true,
+          "type": "number",
           "x-observed": true
         },
         "tail": {
@@ -241,7 +241,7 @@
           "x-observed": true
         },
         "cacheControl": {
-          "x-unverified": true,
+          "type": "array",
           "x-observed": true
         },
         "requestDigest": {
@@ -574,7 +574,7 @@
           "x-unverified": true
         },
         "thinkingDurationMs": {
-          "x-unverified": true
+          "type": "number"
         },
         "thinkingDisplay": {
           "x-unverified": true
@@ -615,7 +615,7 @@
           "x-unverified": true
         },
         "userType": {
-          "x-unverified": true,
+          "type": "string",
           "x-observed": true
         },
         "entrypoint": {
@@ -631,7 +631,7 @@
           "x-observed": true
         },
         "version": {
-          "x-unverified": true,
+          "type": "string",
           "x-observed": true
         },
         "gitBranch": {
@@ -727,20 +727,20 @@
               "x-unverified": true
             },
             "hooks": {
-              "x-unverified": true
+              "type": "array"
             },
             "count": {
-              "x-unverified": true
+              "type": "number"
             }
           },
           "x-observed": true
         },
         "rendered": {
-          "x-unverified": true,
+          "type": "array",
           "x-observed": true
         },
         "renderedRole": {
-          "x-unverified": true,
+          "type": "string",
           "x-observed": true
         },
         "renderedBesideToolResult": {
@@ -748,7 +748,7 @@
           "x-observed": true
         },
         "renderedInHumanTurn": {
-          "x-unverified": true
+          "type": "array"
         },
         "parentUuid": {
           "x-unverified": true,
@@ -777,7 +777,7 @@
           "x-unverified": true
         },
         "userType": {
-          "x-unverified": true,
+          "type": "string",
           "x-observed": true
         },
         "entrypoint": {
@@ -793,7 +793,7 @@
           "x-observed": true
         },
         "version": {
-          "x-unverified": true,
+          "type": "string",
           "x-observed": true
         },
         "gitBranch": {
@@ -873,7 +873,7 @@
           "const": "continued-in"
         },
         "timestamp": {
-          "x-unverified": true
+          "type": "string"
         },
         "sessionId": {
           "x-unverified": true
@@ -975,7 +975,7 @@
           "const": "ended-by-model"
         },
         "timestamp": {
-          "x-unverified": true
+          "type": "string"
         },
         "sessionId": {
           "x-unverified": true
@@ -1002,7 +1002,7 @@
           "x-unverified": true
         },
         "timestamp": {
-          "x-unverified": true
+          "type": "string"
         }
       },
       "$comment": "Registry policy: boundary-cleared. Code sites used: 1."
@@ -1041,7 +1041,7 @@
           "x-unverified": true
         },
         "contextLength": {
-          "x-unverified": true
+          "type": "number"
         }
       },
       "$comment": "Registry policy: accumulate. Code sites used: 1."
@@ -1059,7 +1059,7 @@
           "x-unverified": true
         },
         "timestamp": {
-          "x-unverified": true
+          "type": "string"
         },
         "path": {
           "x-unverified": true
@@ -1089,7 +1089,7 @@
           "x-unverified": true
         },
         "ts": {
-          "x-unverified": true
+          "type": "string"
         }
       },
       "$comment": "Registry policy: last-wins. Code sites used: 1."
@@ -1198,7 +1198,7 @@
           "x-unverified": true
         },
         "timestamp": {
-          "x-unverified": true
+          "type": "string"
         }
       },
       "$comment": "Registry policy: last-wins. Code sites used: 1."
@@ -1237,7 +1237,7 @@
           "x-unverified": true
         },
         "timestamp": {
-          "x-unverified": true
+          "type": "string"
         }
       },
       "$comment": "Registry policy: last-wins. Code sites used: 2."
@@ -1436,7 +1436,7 @@
           "x-unverified": true
         },
         "timestamp": {
-          "x-unverified": true
+          "type": "string"
         },
         "uuid": {
           "x-unverified": true
@@ -1466,7 +1466,7 @@
           "x-unverified": true
         },
         "userType": {
-          "x-unverified": true
+          "type": "string"
         },
         "entrypoint": {
           "x-unverified": true
@@ -1478,7 +1478,7 @@
           "x-unverified": true
         },
         "version": {
-          "x-unverified": true
+          "type": "string"
         },
         "gitBranch": {
           "x-unverified": true
@@ -1497,11 +1497,11 @@
           "x-observed": true
         },
         "operation": {
-          "x-unverified": true,
+          "type": "string",
           "x-observed": true
         },
         "timestamp": {
-          "x-unverified": true,
+          "type": "string",
           "x-observed": true
         },
         "sessionId": {
@@ -1556,7 +1556,7 @@
           "x-observed": true
         },
         "subtype": {
-          "x-unverified": true,
+          "type": "string",
           "x-observed": true
         },
         "content": {
@@ -1581,7 +1581,7 @@
           "x-unverified": true
         },
         "snapshotFiles": {
-          "x-unverified": true
+          "type": "array"
         },
         "direction": {
           "x-unverified": true
@@ -1611,13 +1611,13 @@
           "x-unverified": true
         },
         "url": {
-          "x-unverified": true
+          "type": "string"
         },
         "upgradeNudge": {
           "x-unverified": true
         },
         "entry": {
-          "x-unverified": true
+          "type": "string"
         },
         "taskId": {
           "x-unverified": true
@@ -1632,7 +1632,7 @@
           "const": "loop"
         },
         "cronKind": {
-          "x-unverified": true
+          "type": "string"
         },
         "noOpStreak": {
           "x-unverified": true
@@ -1641,26 +1641,26 @@
           "x-unverified": true
         },
         "foldedUuids": {
-          "x-unverified": true
+          "type": "array"
         },
         "hookCount": {
-          "x-unverified": true,
+          "type": "number",
           "x-observed": true
         },
         "hookInfos": {
-          "x-unverified": true,
+          "type": "array",
           "x-observed": true
         },
         "hookErrors": {
-          "x-unverified": true,
+          "type": "array",
           "x-observed": true
         },
         "hookAdditionalContext": {
-          "x-unverified": true,
+          "type": "array",
           "x-observed": true
         },
         "preventedContinuation": {
-          "x-unverified": true,
+          "type": "boolean",
           "x-observed": true
         },
         "stopReason": {
@@ -1668,7 +1668,7 @@
           "x-observed": true
         },
         "hasOutput": {
-          "x-unverified": true,
+          "type": "boolean",
           "x-observed": true
         },
         "toolUseID": {
@@ -1685,7 +1685,7 @@
           "x-unverified": true
         },
         "messageCount": {
-          "x-unverified": true
+          "type": "number"
         },
         "pendingBackgroundAgentCount": {
           "x-unverified": true
@@ -1761,7 +1761,7 @@
               "type": "array"
             },
             "preCompactArtifactReadVersions": {
-              "x-unverified": true
+              "type": "array"
             },
             "preservedSegment": {
               "type": "object",
@@ -1853,7 +1853,7 @@
           }
         },
         "retryInMs": {
-          "x-unverified": true
+          "type": "number"
         },
         "retryAttempt": {
           "x-unverified": true
@@ -1862,10 +1862,10 @@
           "x-unverified": true
         },
         "source": {
-          "x-unverified": true
+          "type": "string"
         },
         "message": {
-          "x-unverified": true
+          "type": "string"
         },
         "remoteSourced": {
           "type": "boolean"
@@ -1982,13 +1982,13 @@
           "type": "boolean"
         },
         "launchedAgentId": {
-          "x-unverified": true
+          "type": "string"
         },
         "live_turn_id": {
           "x-unverified": true
         },
         "stored_through_live_index": {
-          "x-unverified": true
+          "type": "number"
         },
         "fromRemoteErrorResult": {
           "type": "boolean"
@@ -2023,7 +2023,7 @@
           "x-unverified": true
         },
         "userType": {
-          "x-unverified": true,
+          "type": "string",
           "x-observed": true
         },
         "entrypoint": {
@@ -2039,7 +2039,7 @@
           "x-observed": true
         },
         "version": {
-          "x-unverified": true,
+          "type": "string",
           "x-observed": true
         },
         "gitBranch": {
@@ -2156,7 +2156,7 @@
           "x-unverified": true
         },
         "classifierBoundary": {
-          "x-unverified": true
+          "type": "boolean"
         },
         "serverClassifierContext": {
           "x-unverified": true
@@ -2257,7 +2257,7 @@
           "x-unverified": true
         },
         "userType": {
-          "x-unverified": true,
+          "type": "string",
           "x-observed": true
         },
         "entrypoint": {
@@ -2273,7 +2273,7 @@
           "x-observed": true
         },
         "version": {
-          "x-unverified": true,
+          "type": "string",
           "x-observed": true
         },
         "gitBranch": {
@@ -2289,7 +2289,7 @@
           "x-observed": true
         },
         "turnPosition": {
-          "x-unverified": true,
+          "type": ["object", "string"],
           "$comment": "Added after the line is built, by a copy of the line or a spread into one.",
           "x-observed": true
         }
