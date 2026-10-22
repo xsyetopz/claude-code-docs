@@ -375,7 +375,7 @@
   "docs/extend/skills-and-commands/slash-commands.md#setup-interface-and-config-commands:82e5e57f": {
     "kind": "manual",
     "probes": [],
-    "note": "texts seen only against the local stub; live.usage.429* never reach the usage endpoint; again on 2.1.307, whose text fragments match 2.1.306"
+    "note": "texts seen only against the local stub; live.usage.429* never reach the usage endpoint; again on 2.1.307 and 2.1.308, whose text fragments match 2.1.306"
   },
   "docs/extend/skills-and-commands/slash-commands.md#account-cloud-and-other-commands:5180841c": {
     "kind": "external",
@@ -478,20 +478,20 @@
     "probes": [],
     "note": "scope or example text, not a claim about the program"
   },
-  "docs/reference/probes.md#interactive-probes:165640f8": {
+  "docs/reference/probes.md#interactive-probes:663ecd72": {
     "kind": "manual",
     "probes": [],
-    "note": "texts seen only against the local stub; live.usage.429* never reach the usage endpoint; again on 2.1.307, whose text fragments match 2.1.306"
+    "note": "texts seen only against the local stub; live.usage.429* never reach the usage endpoint; again on 2.1.307 and 2.1.308, whose text fragments match 2.1.306"
   },
   "docs/start/what-changed.md#version-21306:dcc6649e": {
     "kind": "manual",
     "probes": [],
-    "note": "live.artifacts showed Unknown command on 2.1.306 and 2.1.307; no panel-shown capture exists"
+    "note": "live.artifacts showed Unknown command on 2.1.306, 2.1.307, and 2.1.308; no panel-shown capture exists"
   },
   "docs/start/what-changed.md#older-releases:e2b4b69c": {
     "kind": "manual",
     "probes": [],
-    "note": "texts seen only against the local stub; live.usage.429* never reach the usage endpoint; again on 2.1.307, whose text fragments match 2.1.306"
+    "note": "texts seen only against the local stub; live.usage.429* never reach the usage endpoint; again on 2.1.307 and 2.1.308, whose text fragments match 2.1.306"
   },
   "docs/start/what-changed.md#example:0688c778": {
     "kind": "static",

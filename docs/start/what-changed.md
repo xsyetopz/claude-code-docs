@@ -19,7 +19,7 @@ This site covers `2.1.308`, the version shown in the navbar.
 Released October 22, 2026. Source: [release notes](https://github.com/anthropics/claude-code/releases/tag/v2.1.308). The notes list only bug fixes and reliability improvements.
 
 A comparison of the `2.1.307` and `2.1.308` programs found no change to environment variables, flags, commands, settings, hooks, or gates. The Mod API type file is the same except for the version in its header (the program).
-The print and interactive probes gave the same results as on `2.1.307`. The managed folder and live login probes were not run on `2.1.308`.
+The print, interactive, managed folder, and live login probes matched `2.1.307`, apart from run-to-run noise: a warm-cache live run moved by up to 3 tokens, and MCP servers started in another order.
 
 ## Version 2.1.307
 
