@@ -14,6 +14,7 @@ This page lists 93 variables. `MCP_TIMEOUT` and `MCP_TOOL_TIMEOUT` are common. S
 
 ```json title="~/.claude/settings.json"
 {
+  "$schema": "https://raw.githubusercontent.com/xsyetopz/claude-code-docs/refs/heads/main/schemas/claude-code-settings.json",
   "env": {
     "MCP_TIMEOUT": "30000",
     "MCP_TOOL_TIMEOUT": "120000"
@@ -136,4 +137,4 @@ Some variables are passed to MCP server and hook processes. Claude Code can stri
 - [Hooks](../../extend/hooks/index.md)
 - [Undocumented Items](../../reference/undocumented.md): every item that only the program shows.
 
-Source: the program (variable names found in the `2.1.306` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
+Source: the program (variable names found in the `2.1.307` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.

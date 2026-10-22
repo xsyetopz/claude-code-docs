@@ -8,7 +8,7 @@ These variables control how Claude Code reaches the network.
 They set the API base URL, proxies, custom certificates, timeouts, and retry counts.
 Use them behind a company proxy or when you route traffic through a gateway.
 
-This page lists 64 variables. `HTTPS_PROXY`, `NO_PROXY`, and `ANTHROPIC_BASE_URL` are the usual ones. Project settings cannot set some endpoint variables before you trust the folder.
+This page lists 65 variables. `HTTPS_PROXY`, `NO_PROXY`, and `ANTHROPIC_BASE_URL` are the usual ones. Project settings cannot set some endpoint variables before you trust the folder.
 
 ## Example
 
@@ -106,4 +106,4 @@ Numeric variables such as timeouts accept forms like `2e3` and `64_000` in addit
 - [System and Third-Party](system-and-third-party.md): `ALL_PROXY` and CA bundle names owned by other tools.
 - [Undocumented Items](../../reference/undocumented.md): every item that only the program shows.
 
-Source: the program (variable names found in the `2.1.306` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
+Source: the program (variable names found in the `2.1.307` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.

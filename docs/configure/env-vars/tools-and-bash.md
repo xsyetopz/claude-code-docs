@@ -8,12 +8,13 @@ These variables change how tools run.
 They set Bash time limits and output size, shell choice, search behavior, permission helpers, and the sandbox.
 Use them when long commands time out or when you need to limit what a tool can see.
 
-This page lists 102 variables. `BASH_DEFAULT_TIMEOUT_MS` and `BASH_MAX_OUTPUT_LENGTH` are common. Switch rows take `1` or `0`.
+This page lists 100 variables. `BASH_DEFAULT_TIMEOUT_MS` and `BASH_MAX_OUTPUT_LENGTH` are common. Switch rows take `1` or `0`.
 
 ## Example
 
 ```json title="~/.claude/settings.json"
 {
+  "$schema": "https://raw.githubusercontent.com/xsyetopz/claude-code-docs/refs/heads/main/schemas/claude-code-settings.json",
   "env": {
     "BASH_DEFAULT_TIMEOUT_MS": "300000",
     "BASH_MAX_OUTPUT_LENGTH": "60000"
@@ -37,7 +38,6 @@ The table is sorted by name. See [Environment Variables](index.md#how-to-read-th
 | `CLAUDE_BG_SESSION_PERMISSION_RULES` | <Undocumented /> | Gives allow and deny permission rules and extra dirs to a background session as JSON. | JSON text. Used only when `CLAUDE_CODE_SESSION_KIND` is `bg`. Scrubbed from child env | Background sessions. Not set from project `env` before trust |
 | `CLAUDE_CHROME_CLASSIFIER_FLOOR` | <Undocumented /> | Forces the Chrome auto mode classifier floor on or off. It overrides a feature flag. No visible effect in a print-mode probe ([Probes](../../reference/probes.md)). | On, off, or unset, `false` by default. Without it the flag decides, default `false`. Remote sessions read the flag in safe mode | Claude in Chrome with auto mode. Not set from project `env` before trust |
 | `CLAUDE_CHROME_PERMISSION_MODE` | <Undocumented /> | Sets the permission mode of Claude in Chrome. No visible effect in a print-mode probe ([Probes](../../reference/probes.md)). | Text. An unknown value logs a warning. Claude Code sets `skip_all_permission_checks` for the native host when permission checks are skipped | Claude in Chrome. Not set from project `env` before trust |
-| `CLAUDE_CODE_ADOPT_UNDERIVABLE_PARKED_PERMISSION` | <Undocumented /> | Lets a resumed session adopt a parked sidechain permission that it cannot re-derive. It then does not re-run the permission. | On or off. Part of the parked permission settings. A log line names this var when it adopts one | Print and SDK mode with parked permissions. Not set from project `env` before trust |
 | `CLAUDE_CODE_AUTO_BACKGROUND_TIMEOUT_MS` | <Undocumented /> | Caps the timeout of a Bash call that can auto-background in the main agent. | A number of milliseconds. The cap is at least `2000`. A missing or non-positive value is ignored | Main agent, Bash |
 | `CLAUDE_CODE_AUTO_MODE_ARTIFACT_CONSENT_RULE` | <Undocumented /> <Gated note="Works only behind a feature flag or server gate" /> | Turns the artifact consent rule of the auto mode classifier on or off. | On by default. Env value wins. Else a feature flag set to true turns it off | Auto mode, gated by a feature flag |
 | `CLAUDE_CODE_AUTO_MODE_CLASSIFY_ASK_USER_QUESTION` | <Undocumented /> | Overrides whether the auto mode classifier looks at `AskUserQuestion` calls. | On by default. Env value, else the `classifyAskUserQuestion` server setting | Auto mode |
@@ -156,4 +156,4 @@ While the scrub is on (`CLAUDE_CODE_SUBPROCESS_ENV_SCRUB` true, or `GITHUB_ACTIO
 - [Permissions](../permissions/index.md)
 - [Undocumented Items](../../reference/undocumented.md): every item that only the program shows.
 
-Source: the program (variable names found in the `2.1.306` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
+Source: the program (variable names found in the `2.1.307` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.

@@ -14,6 +14,7 @@ The sandbox works on macOS, Linux, and WSL. `sandbox.enabled` turns it on, and i
 
 ```json title="~/.claude/settings.json"
 {
+  "$schema": "https://raw.githubusercontent.com/xsyetopz/claude-code-docs/refs/heads/main/schemas/claude-code-settings.json",
   "sandbox": {
     "enabled": true,
     "failIfUnavailable": true,
@@ -46,7 +47,7 @@ Official pages: [Configure the Sandboxed Bash Tool](https://code.claude.com/docs
 | `sandbox.enableWeakerNestedSandbox` | <Documented /> | Linux: no fresh `/proc` mount | For hosts like unprivileged Docker. Reduces security. Default `false` | Each scope |
 | `sandbox.enableWeakerNetworkIsolation` | <Documented /> | macOS: allow `com.apple.trustd.agent` | For Go tools with a MITM proxy. Reduces security. Default `false` | Each scope |
 | `sandbox.allowAppleEvents` | <Documented /> | macOS: allow Apple Events | Needed for `open` and `osascript`. Removes code-execution isolation. Default `false` | User, managed, `--settings` |
-| `sandbox.allowNestedUserNamespaces` | <Documented /> <Caution note="Removes code-execution isolation" /> | Linux and WSL: lets sandboxed commands create user namespaces of their own | Added in `2.1.305`. Needed by tools that sandbox themselves that way, such as Chromium and Electron, rootless podman or buildah, a nested `bwrap`, and `unshare`. Default `false`. In any folder a hostile command may write, it can then get around `filesystem.denyWrite`, `filesystem.denyRead`, `credentials.files` entries, and the paths the sandbox always write-protects (such as `.claude/settings.json`, git hooks, and git config). Source: the [v2.1.305 release](https://github.com/anthropics/claude-code/releases/tag/v2.1.305) and the settings schema | User, managed, `--settings`. `true` from project settings is ignored |
+| `sandbox.allowNestedUserNamespaces` | <Documented /> <Caution note="Removes code-execution isolation" /> | Linux and WSL: lets sandboxed commands create user namespaces of their own | Added in `2.1.305`. Needed by tools that sandbox themselves that way, such as Chromium and Electron, a nested `bwrap`, and `unshare`. The `2.1.305` and `2.1.306` schemas also named rootless podman and buildah. The `2.1.307` schema does not. Default `false`. In any folder a hostile command may write, it can then get around `filesystem.denyWrite`, `filesystem.denyRead`, `credentials.files` entries, and the paths the sandbox always write-protects (such as `.claude/settings.json`, git hooks, and git config). Source: the [v2.1.305 release](https://github.com/anthropics/claude-code/releases/tag/v2.1.305) and the settings schema | User, managed, `--settings`. `true` from project settings is ignored |
 | `sandbox.ripgrep.command`, `sandbox.ripgrep.args` | <Undocumented /> | Custom `rg` for bundled ripgrep support | Strings | User, managed, `--settings` |
 | `sandbox.bwrapPath` | <Documented /> | Linux and WSL: path to `bwrap` | Absolute path. Overrides `PATH` detection | Managed only |
 | `sandbox.socatPath` | <Documented /> | Linux and WSL: path to `socat` | Absolute path | Managed only |

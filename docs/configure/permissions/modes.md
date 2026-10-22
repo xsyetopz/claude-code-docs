@@ -14,6 +14,7 @@ Run `/permissions` in the chat, or start with `--permission-mode`, which wins fo
 
 ```json title="~/.claude/settings.json"
 {
+  "$schema": "https://raw.githubusercontent.com/xsyetopz/claude-code-docs/refs/heads/main/schemas/claude-code-settings.json",
   "permissions": {
     "defaultMode": "acceptEdits",
     "disableBypassPermissionsMode": "disable"

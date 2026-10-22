@@ -8,7 +8,7 @@ These variables control subagents, agent teams, background tasks, and workflows.
 They set limits, switch features on, and change how child agents behave.
 Several are experimental and may change without notice.
 
-This page lists 77 variables. Switch rows take `1` or `0`.
+This page lists 79 variables. Switch rows take `1` or `0`.
 
 ## Example
 
@@ -82,10 +82,12 @@ The table is sorted by name. See [Environment Variables](index.md#how-to-read-th
 | `CLAUDE_CODE_STREAMED_BUMBLEBEE_TEXT` | <Undocumented /> <Gated note="A feature flag or server gate decides by default. This variable overrides it" /> | Overrides the wording of the subagent budget note. The token `{N}` is replaced by the budget number. | Text. An empty or blank value is ignored. A feature flag is the fallback | Subagents. Needs the budget note on |
 | `CLAUDE_CODE_SUBAGENT_CACHE_EVICT` | <Undocumented /> <Gated note="A feature flag or server gate decides by default. This variable overrides it" /> | Forces on a feature flag behavior for subagent requests. No visible effect in a print-mode probe ([Probes](../../reference/probes.md)). | On or off, off by default. Applies only on a first-party provider path. The flag is the fallback and defaults to off | Subagents. gated by a feature flag |
 | `CLAUDE_CODE_SUBAGENT_CONFIG_WARNING` | <Undocumented /> <Gated note="Works only behind a feature flag or server gate" /> | Turns the subagent config check warning on with `1` or off with `0`. The check looks at `CLAUDE.md`, skills, and agents for subagents. | On, off, or unset. When unset, a feature flag config decides | Subagents. gated by a feature flag |
+| `CLAUDE_CODE_SUBAGENT_HISTORY` | <Undocumented /> <Gated note="A feature flag or server gate decides by default. This variable overrides it" /> | Adds an "Earlier in this session" row to the background tasks dialog. It lists the subagents that the session recorded, as a tree. | On or off. Without it a feature flag decides, off by default. Since `2.1.307` | Interactive UI |
 | `CLAUDE_CODE_SUBAGENT_PROMPT_SNAPSHOT` | <Undocumented /> | Marks a subagent to start with a system prompt snapshot. The snapshot flag is set on the subagent options. | On or off. It does not apply when another local condition holds. The effect of the snapshot was not read further | Subagents |
 | `CLAUDE_CODE_TASK_LIST_ID` | <Documented /> | Sets the ID of the task list that the Task tools use, so several sessions share one list. | Text. Wins over team name and session id. When set, the carry-over of tasks to a forked session is skipped | Sessions with Task tools |
 | `CLAUDE_CODE_TEAM_TEARDOWN_PARK_TIMEOUT_MS` | <Documented /> | Sets how long a non-interactive session waits at exit for its agent team to shut down. | A number of milliseconds, `10000` by default | Non-interactive sessions with agent teams |
 | `CLAUDE_CODE_WEB_FETCH_AGENT` | <Undocumented /> <Gated note="A feature flag or server gate decides by default. This variable overrides it" /> | Turns on the WebFetch agent path. Env wins over a feature flag. | On, off, or unset, off by default. Off when `CLAUDE_CODE_SIMPLE` or `CLAUDE_CODE_DISABLE_WEB_FETCH` is set. When on, a `web-fetch` agent type exists and the main session loses its own `WebFetch` tool ([Probes](../../reference/probes.md#subagents-and-hooks)) | Default mode sessions |
+| `CLAUDE_CODE_WITTY_DEWDROP` | <Undocumented /> | Tells the model not to start subagents unless the user asks. It works only in Cowork sessions. | Any non-empty value. Off by default. Since `2.1.307` | Set by a host app. On the Pro plan the program adds the same rule without it |
 | `CLAUDE_CODE_WORKER_CHECKIN_SCHEDULE` | <Documented /> | Sets waits between reminders to check on running background subagents. Needs `CLAUDE_AUTO_BACKGROUND_TASKS=1`. Docs only. The read site was not re-checked. | A comma-separated list. Unset gives no reminders | Background subagents |
 | `CLAUDE_CODE_WORKFLOW_MAX_CONCURRENT_AGENTS` | <Documented /> | Sets how many agents one workflow run executes at once. | Plain digits 1 to 256. Logs the gate value when set | Workflows |
 | `CLAUDE_CODE_WORKFLOW_PREFIX_STAGGER_MS` | <Documented /> | Sets how long a workflow agent waits for a same-prefix sibling before its first request. | A number of milliseconds. Integer, 0 or more. Forced to 0 when `DISABLE_PROMPT_CACHING` is set | Workflows |
@@ -115,4 +117,4 @@ The Notes column says which when the code shows it.
 - [Subagents](../../extend/subagents/index.md)
 - [Undocumented Items](../../reference/undocumented.md): every item that only the program shows.
 
-Source: the program (variable names found in the `2.1.306` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
+Source: the program (variable names found in the `2.1.307` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.

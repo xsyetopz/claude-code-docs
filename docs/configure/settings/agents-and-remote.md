@@ -40,6 +40,7 @@ Where to Set It tells you which files may set the key. See [Settings Files and S
 | `remoteTools` | <Undocumented /> | object | - | Choose how this computer serves tool calls to cloud sessions. | Settings files |
 | `skipWorkflowUsageWarning` | <Undocumented /> | boolean | - | Record that you accepted the multi-agent workflow usage warning. Until set, auto mode asks before it runs a workflow. | Settings files |
 | `sshConfigs` | <Documented /> | array of object | - | Add SSH connections to the Desktop environment dropdown. | User or managed settings |
+| `sshHostCommands` | <Undocumented /> | array of object | - | SSH connections in the desktop app on macOS and Linux whose host comes from a command. Each entry has `id`, `name`, and `command`, and can have `sshIdentityFile` and `startDirectory`. The command runs with no shell and must print only the host (`host`, `user@host`, or a JSON object with `sshHost`). Claude Code itself does not use it. New in `2.1.307`. Source: the settings schema | User or managed settings |
 | `subagentStatusLine` | <Documented /> | object | - | Rewrite rows in the subagent task display with your own command. | Any settings file |
 | `teammateMode` | <Documented /> | string | - | Choose how agent team teammates display. | Any settings file |
 | `ultracode` | <Documented /> | boolean | - | Have Claude plan a workflow for each substantive task without being asked. Lasts one session. Needs workflows on and a model that supports it. | Any settings file |

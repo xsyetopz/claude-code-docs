@@ -173,10 +173,20 @@ Telemetry features read their variables once at startup, so a change to `env` in
 `DISABLE_TELEMETRY` and `DO_NOT_TRACK` also turn off feature-flag fetching, so features that depend on server flags stop working.
 The official docs list the affected features under [Features That Need Feature-Flag Fetching](https://code.claude.com/docs/en/env-vars#features-that-need-feature-flag-fetching).
 
+Since `2.1.307` Claude Code logs a `claude_code.safety_event` OpenTelemetry event for each tool call that a permission rule, auto mode, a safety check, a hook, or the sandbox stopped, prompted, or sent back ([release notes](https://github.com/anthropics/claude-code/releases/tag/v2.1.307)).
+In the program the event is `safety_event`, behind a feature flag that is on by default.
+Its attributes include `category` (such as `permission_rule`, `auto_mode_block`, `hook`, `hook_review`, `sandbox_network`, and `user_rejected`), `decision`, `decision_source`, `reason_type`, `reason_code`, `rule_source`, `tool_name`, `tool_class`, `tool_source`, `permission_mode`, `tool_use_id`, `sandbox_enabled`, and `sandbox_violation_count`.
+A `PostToolUse` hook that sends a result back gives `category` `hook_review`, `decision` `sent_back`, and `decision_source` `hook` (the program).
+
+## Exact Fields
+
+The exact fields of each OpenTelemetry metric, span, and event: `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-otel.json`. The program builds this payload in code, not with a validator, so the schema is read from that code: a field marked `x-unverified` has a type the code does not show, and `x-observed` marks a field that a probe saw.
+It lists every field of this release, so build on the fields it names and look each one up there before you rely on it.
+
 ## Related Pages
 
 - [Environment Variables](index.md): how Claude Code reads variables and which value wins.
 - [Monitoring](https://code.claude.com/docs/en/monitoring-usage) (see the official docs)
 - [Undocumented Items](../../reference/undocumented.md): every item that only the program shows.
 
-Source: the program (variable names found in the `2.1.306` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
+Source: the program (variable names found in the `2.1.307` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.

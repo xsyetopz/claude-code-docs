@@ -49,6 +49,7 @@ This file starts each session on Opus at high effort. If Opus is overloaded, Cla
 
 ```json title="~/.claude/settings.json"
 {
+  "$schema": "https://raw.githubusercontent.com/xsyetopz/claude-code-docs/refs/heads/main/schemas/claude-code-settings.json",
   "model": "opus",
   "effortLevel": "high",
   "fallbackModel": ["sonnet"],

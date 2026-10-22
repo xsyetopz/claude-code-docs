@@ -8,7 +8,7 @@ These variables help a program that runs Claude Code as a child process.
 They say which surface started it, how session events reach the host, and which binary the Agent SDK looks for.
 Most people never set them. Hosts such as the Agent SDK set them for you.
 
-This page lists 22 variables. These are for a host program that starts Claude Code. Set them in the child process environment. Project `env` cannot set most of them before trust.
+This page lists 23 variables. These are for a host program that starts Claude Code. Set them in the child process environment. Project `env` cannot set most of them before trust.
 
 ## Example
 
@@ -61,4 +61,4 @@ Other variables here switch on extra stream events or tell Claude Code that a su
 - [Remote and Cloud Sessions](remote-and-cloud-sessions.md)
 - [Undocumented Items](../../reference/undocumented.md): every item that only the program shows.
 
-Source: the program (variable names found in the `2.1.306` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
+Source: the program (variable names found in the `2.1.307` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.

@@ -112,6 +112,11 @@ A probe set `outputStyle` in user settings and added a plugin style with `force-
 The captures linked above hold the full text of each built-in style prompt. We compared them with the strings in the program: the only difference is the blank lines that the capture adds after the style header and between paragraphs.
 :::
 
+## Exact Fields
+
+The exact fields: the `output-style` definition in `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-frontmatter.json`, made from the program's frontmatter validators.
+It lists every field of this release, so build on the fields it names and look each one up there before you rely on it.
+
 ## Related Pages
 
 - [Memory and Rules](memory-and-rules.md)

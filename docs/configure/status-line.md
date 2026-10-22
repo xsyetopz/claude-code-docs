@@ -30,6 +30,7 @@ echo "$model | context ${used}%"
 
 ```json title="~/.claude/settings.json"
 {
+  "$schema": "https://raw.githubusercontent.com/xsyetopz/claude-code-docs/refs/heads/main/schemas/claude-code-settings.json",
   "statusLine": {
     "type": "command",
     "command": "~/.claude/statusline.sh",
@@ -104,7 +105,7 @@ Always read optional fields with a default, for example `jq -r '.vim.mode // emp
 | `prompt_id` | <Documented /> | UUID of the prompt in work | May be absent before the first input | Status line |
 | `transcript_path` | <Documented /> | Transcript file path | String | Status line |
 | `cwd` | <Documented /> | Working directory | Same value as `workspace.current_dir` | Status line |
-| `version` | <Documented /> | Claude Code version | `2.1.306` here | Status line |
+| `version` | <Documented /> | Claude Code version | `2.1.307` here | Status line |
 | `model.id`, `model.display_name` | <Documented /> | Model id and name | Strings | Status line |
 | `output_style.name` | <Documented /> | Active style name | `default` when none. See [Output Styles](output-styles.md) | Status line |
 | `fast_mode` | <Documented /> | Fast mode on | Boolean | Status line |
@@ -112,6 +113,8 @@ Always read optional fields with a default, for example `jq -r '.vim.mode // emp
 | `thinking.enabled` | <Documented /> | Extended thinking on | Boolean | Status line |
 | `vim.mode` | <Documented /> | `NORMAL`, `INSERT`, `VISUAL`, `VISUAL LINE` | May be absent. Present when vim mode is on | Status line |
 | `agent.name` | <Documented /> | Agent name | Present with `--agent` or agent settings | Status line |
+| `agent_type` | <Undocumented /> | Agent type of the main thread | Present with `--agent` or agent settings. The same value hooks get as `agent_type`. The built-in `statusline-setup` agent's prompt calls it `agent.type`; read it at the top level as `agent_type` | Status line, `subagentStatusLine` |
+| `scratchpad_dir` | <Gated note="tengu_scratch, or the artifact tools" /> | The session scratchpad folder | Present when the server flag `tengu_scratch` is on, or when the session may use the artifact tools | Status line, `subagentStatusLine` |
 | `remote.session_id` | <Undocumented /> | Id of a remote session | Present when the session is remote. The docs do not list `remote` | Status line |
 
 ### Workspace Fields
@@ -164,7 +167,7 @@ The object `prompt_cache` appears after the first main-conversation response (ne
 
 ### Subagent Task Fields
 
-The `subagentStatusLine` command gets the base hook fields, `columns`, and a `tasks` array.
+The `subagentStatusLine` command gets `session_id`, `transcript_path`, `cwd`, `prompt_id`, `agent_type` and `scratchpad_dir` when they are set, `columns`, and a `tasks` array.
 
 | Field | Status | What it holds | Notes | Where |
 | --- | --- | --- | --- | --- |
@@ -208,6 +211,11 @@ Checked in the interactive screen (2.1.305, local stub, fake key, clean environm
 - A test agent finished at once. The command kept its 5-second tick for 29.7 seconds after the agent started (7 runs, all with the tasks `completed`), then did not run again for the next 29 seconds. The input listed three tasks, because the stub answers every request that has no tool result yet with the same `Agent` call.
 
 :::
+
+## Exact Fields
+
+The exact fields: `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-status-line.json`. The program builds this payload in code, not with a validator, so the schema is read from that code: a field marked `x-unverified` has a type the code does not show, and `x-observed` marks a field that a probe saw.
+It lists every field of this release, so build on the fields it names and look each one up there before you rely on it.
 
 ## Related Pages
 

@@ -8,7 +8,7 @@ These variables tell Claude Code who you are.
 They carry API keys, bearer tokens, OAuth data, and the commands that fetch credentials for you.
 Put secrets in your shell or a secrets manager, not in a file you commit.
 
-This page lists 71 variables. `ANTHROPIC_API_KEY` and `ANTHROPIC_AUTH_TOKEN` are the common ones. Run `/login` for a stored login. Project settings cannot set some of them before you trust the folder.
+This page lists 72 variables. `ANTHROPIC_API_KEY` and `ANTHROPIC_AUTH_TOKEN` are the common ones. Run `/login` for a stored login. Project settings cannot set some of them before you trust the folder.
 
 ## Example
 
@@ -55,6 +55,7 @@ The table is sorted by name. See [Environment Variables](index.md#how-to-read-th
 | `CLAUDE_CODE_CUSTOM_OAUTH_URL` | <Undocumented /> | Replaces the OAuth base URL and endpoints with a custom host. Throws if the URL is not on the approved endpoint list. | Text. A trailing slash is removed. Only fedstart style hosts pass the check | All sessions, first-party auth |
 | `CLAUDE_CODE_DESIGN_OAUTH_CLIENT_ID` | <Undocumented /> | Sets the OAuth client id for Claude Design login. A build without a registered client shows an error that asks for this variable. | Text. A value starting with `00000000-` counts as unset | Claude Design login |
 | `CLAUDE_CODE_DISABLE_AUTH_REFRESH_LOCK` | <Documented /> | Makes each process run `gcpAuthRefresh` or `awsAuthRefresh` itself without the cross-process lock. | On or off. Code gates the auth refresh lock on its negation | Bedrock and Vertex with auth refresh |
+| `CLAUDE_CODE_DISABLE_LAUNCHER_SIGN_IN` | <Undocumented /> | Turns off the sign-in that a host app, such as the desktop app, hands to Claude Code. | On or off. Off by default. Since `2.1.307` | Host apps. The `env` of managed settings can set it |
 | `CLAUDE_CODE_ENABLE_PROXY_AUTH_HELPER` | <Undocumented /> | Turns on the `proxyAuthHelper` setting so a helper command can mint proxy auth headers. | On or off, off by default. Cache TTL comes from `CLAUDE_CODE_PROXY_AUTH_HELPER_TTL_MS`, default `300000` | Proxy setups |
 | `CLAUDE_CODE_ENABLE_XAA` | <Undocumented /> <Gated note="Turns XAA on when set to 1" /> | Turns on XAA for MCP OAuth and unlocks the `xaaIdp` setting. | On or off, off by default. Without it, MCP OAuth with `oauth.xaa` fails with `XAA is not enabled`. `1` turns it on. See [MCP Authentication](../../extend/mcp/auth.md#xaa) | MCP OAuth |
 | `CLAUDE_CODE_FEDERATION_CACHE_DIR` | <Undocumented /> | Sets the directory for the workload identity federation token cache. | Text. Default is a `credentials/federation` folder in the config dir | Federated auth, eval harness copies it |
@@ -110,4 +111,4 @@ Some variables on this page are set by Claude Code for remote sessions and refre
 - [Settings: Auth Keys](../settings/auth.md)
 - [Undocumented Items](../../reference/undocumented.md): every item that only the program shows.
 
-Source: the program (variable names found in the `2.1.306` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
+Source: the program (variable names found in the `2.1.307` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
