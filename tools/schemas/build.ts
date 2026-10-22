@@ -1,4 +1,12 @@
-// Turns the raw toJSONSchema output into the six published files (design D2).
+import {
+  agentsJson,
+  control,
+  hookOutput,
+  streamJson,
+  tools,
+} from "./payloads-build.ts";
+
+// Turns the raw toJSONSchema output into the published files (design D2).
 export type Json = { [key: string]: unknown };
 export type RawSchemas = Record<string, Json>;
 
@@ -29,8 +37,52 @@ export const FILES = {
     title: "Claude Code keybindings.json",
     what: "~/.claude/keybindings.json",
   },
+  "claude-code-mcp.json": {
+    title: "Claude Code .mcp.json",
+    what: ".mcp.json (project MCP servers)",
+    anchor:
+      'the schema module with the text "Command cannot be empty" and "authServerMetadataUrl must use https://" (the {mcpServers: record(string, server)} wrapper)',
+  },
+  "claude-code-hook-output.json": {
+    title: "Claude Code hook output",
+    what: "the JSON a classic command hook prints on stdout (common fields and one hookSpecificOutput variant per event)",
+    anchor:
+      'the SDK schema module, object with continue, suppressOutput, stopReason, decision, systemMessage and the description "A terminal escape sequence"',
+  },
+  "claude-code-tools.json": {
+    title: "Claude Code built-in tool payloads",
+    what: "the input and result of each built-in tool (definitions <Tool>Input and <Tool>Result)",
+    anchor:
+      "the tool factory that copies a tool definition's properties (getters included), read as inputSchema and outputSchema on each tool",
+  },
+  "claude-code-control-protocol.json": {
+    title: "Claude Code control protocol",
+    what: "the request and response of each control_request subtype in stream-json mode (definitions <subtype>Request and <subtype>Response, direction in x-direction)",
+    anchor:
+      'the SDK schema module, table of rows {request, originator, response}; the request union is described as "Control requests a client sends to drive the loop"',
+  },
+  "claude-code-stream-json.json": {
+    title: "Claude Code stream-json messages",
+    what: "each message type the CLI writes (<type>[_<subtype>]Output) and reads (<type>Input) in stream-json mode",
+    anchor:
+      'the SDK schema module, unions described as "Everything the CLI writes to its output stream" and "Everything a client may write to the CLI\'s input stream"',
+  },
+  "claude-code-agents-json.json": {
+    title: "Claude Code --agents JSON entry",
+    what: "one subagent definition of the --agents JSON (and the SDK agents option)",
+    anchor:
+      'the SDK schema module, object described as "Definition for a custom subagent that can be invoked via the Agent tool."',
+  },
 } as const;
 export const KINDS = Object.keys(FILES) as (keyof typeof FILES)[];
+/** Schemas that tools/schemas/code.ts writes from the program's code (no zod validator to export). */
+export const CODE_FILES = [
+  "claude-code-status-line.json",
+  "claude-code-transcript.json",
+  "claude-code-otel.json",
+  "claude-code-frontmatter.json",
+  "claude-code-claude-json.json",
+] as const;
 
 // The binary has no list of managed-only settings. It says so in each key's description, so the descriptions
 // are the source (same rules as the claudetto schema generator). Rules run on top-level and nested properties.
@@ -107,7 +159,7 @@ const graftPluginEntries = (marketplace: Json, entry: Json): Json => {
 };
 
 // An undefined arm in a union only means "may be absent", which JSON Schema already says. Drop it.
-const pruneUnrepresentable = (node: unknown): unknown => {
+export const pruneUnrepresentable = (node: unknown): unknown => {
   if (Array.isArray(node)) return node.map(pruneUnrepresentable);
   if (!isObject(node)) return node;
   const out: Json = {};
@@ -140,6 +192,11 @@ const noteGatedKeys = (settings: Json): Json => {
   };
 };
 
+const anchorNote = (name: keyof typeof FILES): string => {
+  const { anchor } = FILES[name] as { anchor?: string };
+  return anchor ? ` Anchor: ${anchor}.` : "";
+};
+
 const withHeader = (
   name: keyof typeof FILES,
   body: Json,
@@ -151,7 +208,7 @@ const withHeader = (
     $schema: "https://json-schema.org/draft/2020-12/schema",
     $id: `${BASE_URL}/${name}`,
     title: `${FILES[name].title} (Claude Code ${version})`,
-    $comment: `For ${FILES[name].what}. Generated from Claude Code ${version} by calling the zod v4 toJSONSchema embedded in the binary on its own validator (method A, runtime export). Do not edit by hand: run "bun run schemas".`,
+    $comment: `For ${FILES[name].what}. Generated from Claude Code ${version} by calling the zod v4 toJSONSchema embedded in the binary on its own validator (method A, runtime export).${anchorNote(name)} Do not edit by hand: run "bun run schemas".`,
     ...rest,
   };
 };
@@ -165,6 +222,8 @@ export const buildFiles = (
     if (!v) throw new Error(`missing raw schema "${k}"`);
     return pruneUnrepresentable(v) as Json;
   };
+  const payloads = pruneUnrepresentable(raw) as RawSchemas;
+  const toolDefs = tools(payloads);
   return {
     "claude-code-settings.json": withHeader(
       "claude-code-settings.json",
@@ -194,6 +253,43 @@ export const buildFiles = (
     "claude-code-keybindings.json": withHeader(
       "claude-code-keybindings.json",
       need("keybindings"),
+      version,
+    ),
+    "claude-code-mcp.json": withHeader(
+      "claude-code-mcp.json",
+      need("mcp"),
+      version,
+    ),
+    "claude-code-hook-output.json": withHeader(
+      "claude-code-hook-output.json",
+      hookOutput(payloads),
+      version,
+    ),
+    "claude-code-tools.json": withHeader(
+      "claude-code-tools.json",
+      {
+        ...(toolDefs.missing.length
+          ? {
+              description: `The program did not give these definitions: ${toolDefs.missing.join(", ")}.`,
+            }
+          : {}),
+        ...toolDefs.body,
+      },
+      version,
+    ),
+    "claude-code-control-protocol.json": withHeader(
+      "claude-code-control-protocol.json",
+      control(payloads),
+      version,
+    ),
+    "claude-code-stream-json.json": withHeader(
+      "claude-code-stream-json.json",
+      streamJson(payloads),
+      version,
+    ),
+    "claude-code-agents-json.json": withHeader(
+      "claude-code-agents-json.json",
+      agentsJson(payloads),
       version,
     ),
   };

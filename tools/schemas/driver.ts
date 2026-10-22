@@ -6,26 +6,27 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 const [root, outFile] = process.argv.slice(2) as [string, string];
-const manifest: { modules: string[]; kinds: string[] } = JSON.parse(
-  readFileSync(join(root, "manifest.json"), "utf8"),
-);
+const manifest: { modules: string[]; kinds: string[]; refKinds?: string[] } =
+  JSON.parse(readFileSync(join(root, "manifest.json"), "utf8"));
 
 for (const mod of manifest.modules) await import(join(root, "root", mod));
 
-type Registry = Record<string, () => { toJSONSchema(opts: object): unknown }>;
+type Zod = { toJSONSchema(opts: object): unknown };
+type Registry = Record<string, () => unknown>;
 const registry =
   (globalThis as unknown as { __ccSchemas?: Registry }).__ccSchemas ?? {};
 const out: Record<string, unknown> = {};
 const lossy: string[] = [];
 let current = "";
-for (const kind of manifest.kinds) {
-  const get = registry[kind];
-  if (!get) throw new Error(`schema "${kind}" was not captured`);
-  current = kind;
-  out[kind] = get().toJSONSchema({
+const isZod = (v: unknown): v is Zod =>
+  typeof v === "object" &&
+  v !== null &&
+  typeof (v as Zod).toJSONSchema === "function";
+const convert = (schema: Zod, reused: "inline" | "ref" = "inline") =>
+  schema.toJSONSchema({
     target: "draft-2020-12",
     io: "input",
-    reused: "inline",
+    reused,
     // Types JSON cannot express (undefined, transforms) become {} instead of aborting.
     unrepresentable: (ctx: { path: (string | number)[]; message: string }) => {
       lossy.push(`${current}: /${ctx.path.join("/")} ${ctx.message}`);
@@ -41,6 +42,30 @@ for (const kind of manifest.kinds) {
         delete ctx.jsonSchema["default"];
     },
   });
+// A capture may be a plain array or object that holds schemas (tool lists, tables): convert each one inside it.
+// One schema that cannot be read or converted becomes { "x-cc-error": message } so the rest still come out.
+const deep = (v: unknown, reused: "inline" | "ref"): unknown => {
+  if (isZod(v)) {
+    try {
+      return convert(v, reused);
+    } catch (e) {
+      return { "x-cc-error": String(e).slice(0, 300) };
+    }
+  }
+  if (Array.isArray(v)) return v.map((x) => deep(x, reused));
+  if (typeof v === "object" && v !== null)
+    return Object.fromEntries(
+      Object.entries(v).map(([k, x]) => [k, deep(x, reused)]),
+    );
+  return v;
+};
+for (const kind of manifest.kinds) {
+  const get = registry[kind];
+  if (!get) throw new Error(`schema "${kind}" was not captured`);
+  current = kind;
+  const value = get();
+  const reused = manifest.refKinds?.includes(kind) ? "ref" : "inline";
+  out[kind] = isZod(value) ? convert(value, reused) : deep(value, reused);
 }
 writeFileSync(outFile, JSON.stringify({ schemas: out, lossy }));
 process.exit(0);

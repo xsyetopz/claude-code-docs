@@ -1,0 +1,8 @@
+{
+  "$def": "skill",
+  "value": {
+    "name": "deploy",
+    "description": "Deploy the site",
+    "context": "fork"
+  }
+}

@@ -7,7 +7,8 @@
 //   (each {offset u32, length u32}) and 4 flag bytes.
 import { readFileSync } from "node:fs";
 
-export type BunModule = { name: string; source: string };
+/** `bytes` is the raw module (a view into the binary), for compressed assets such as `*.txt.zst`. */
+export type BunModule = { name: string; source: string; bytes: Buffer };
 
 const TRAILER = "\n---- Bun! ----\n";
 const ENTRY_SIZE = 52;
@@ -40,9 +41,11 @@ export const extractModules = (
     const name = text(buf.readUInt32LE(e), buf.readUInt32LE(e + 4));
     if (!name.startsWith("/$bunfs/"))
       throw new Error(`bad module name at entry ${i}: ${JSON.stringify(name)}`);
+    const [off, len] = [buf.readUInt32LE(e + 8), buf.readUInt32LE(e + 12)];
     modules.push({
       name,
-      source: text(buf.readUInt32LE(e + 8), buf.readUInt32LE(e + 12)),
+      source: text(off, len),
+      bytes: buf.subarray(base + off, base + off + len),
     });
   }
   return { modules, entry: modules[entryId]?.name ?? "" };

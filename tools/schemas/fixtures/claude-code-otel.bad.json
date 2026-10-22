@@ -1,0 +1,6 @@
+{
+  "$def": "event:api_error",
+  "value": {
+    "event.name": "api_request"
+  }
+}
