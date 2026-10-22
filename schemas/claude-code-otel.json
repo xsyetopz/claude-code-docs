@@ -10,13 +10,13 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Call sites read: 1. A key missing from some sites is optional.",
       "properties": {
         "user.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "event.name": {
           "const": "api_error"
@@ -28,58 +28,58 @@
           "type": "number"
         },
         "prompt.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "workspace.host_paths": {
           "type": "array"
         },
         "model": {
-          "x-unverified": true
+          "type": "string"
         },
         "error": {
-          "x-unverified": true
+          "type": "string"
         },
         "status_code": {
-          "x-unverified": true
+          "type": "number"
         },
         "duration_ms": {
-          "x-unverified": true
+          "type": "number"
         },
         "attempt": {
-          "x-unverified": true
+          "type": "number"
         },
         "request_id": {
-          "x-unverified": true
+          "type": "string"
         },
         "client_request_id": {
-          "x-unverified": true
+          "type": "string"
         },
         "speed": {
           "enum": ["fast", "normal"]
         },
         "query_source": {
-          "x-unverified": true
+          "type": "string"
         },
         "effort": {
-          "x-unverified": true
+          "enum": ["low", "medium", "high", "xhigh", "max"]
         },
         "agent.name": {
-          "x-unverified": true
+          "type": "string"
         },
         "skill.name": {
-          "x-unverified": true
+          "type": "string"
         },
         "plugin.name": {
-          "x-unverified": true
+          "type": "string"
         },
         "marketplace.name": {
-          "x-unverified": true
+          "type": "string"
         },
         "mcp_server.name": {
-          "x-unverified": true
+          "type": "string"
         },
         "mcp_tool.name": {
-          "x-unverified": true
+          "type": "string"
         }
       }
     },
@@ -89,13 +89,13 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Call sites read: 1. A key missing from some sites is optional.",
       "properties": {
         "user.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "event.name": {
           "const": "api_refusal"
@@ -107,31 +107,31 @@
           "type": "number"
         },
         "prompt.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "workspace.host_paths": {
           "type": "array"
         },
         "model": {
-          "x-unverified": true
+          "type": "string"
         },
         "request_id": {
-          "x-unverified": true
+          "type": "string"
         },
         "speed": {
           "enum": ["fast", "normal"]
         },
         "attempt": {
-          "x-unverified": true
+          "type": "number"
         },
         "server_fallback_hop": {
-          "x-unverified": true
+          "type": "boolean"
         },
         "query_source": {
-          "x-unverified": true
+          "type": "string"
         },
         "effort": {
-          "x-unverified": true
+          "enum": ["low", "medium", "high", "xhigh", "max"]
         },
         "has_category": {
           "type": "boolean"
@@ -140,25 +140,25 @@
           "type": "boolean"
         },
         "category": {
-          "x-unverified": true
+          "enum": ["cyber", "bio", "frontier_llm", "reasoning_extraction"]
         },
         "agent.name": {
-          "x-unverified": true
+          "type": "string"
         },
         "skill.name": {
-          "x-unverified": true
+          "type": "string"
         },
         "plugin.name": {
-          "x-unverified": true
+          "type": "string"
         },
         "marketplace.name": {
-          "x-unverified": true
+          "type": "string"
         },
         "mcp_server.name": {
-          "x-unverified": true
+          "type": "string"
         },
         "mcp_tool.name": {
-          "x-unverified": true
+          "type": "string"
         }
       }
     },
@@ -168,14 +168,13 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Call sites read: 1. A key missing from some sites is optional.",
       "properties": {
         "user.id": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "event.name": {
           "const": "api_request"
@@ -187,43 +186,34 @@
           "type": "number"
         },
         "prompt.id": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "workspace.host_paths": {
           "type": "array"
         },
         "model": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "input_tokens": {
-          "x-unverified": true,
-          "x-observed-type": ["number"]
+          "type": "number"
         },
         "output_tokens": {
-          "x-unverified": true,
-          "x-observed-type": ["number"]
+          "type": "number"
         },
         "cache_read_tokens": {
-          "x-unverified": true,
-          "x-observed-type": ["number"]
+          "type": "number"
         },
         "cache_creation_tokens": {
-          "x-unverified": true,
-          "x-observed-type": ["number"]
+          "type": "number"
         },
         "cache_creation_5m_tokens": {
-          "x-unverified": true,
-          "x-observed-type": ["number"]
+          "type": "number"
         },
         "cache_creation_1h_tokens": {
-          "x-unverified": true,
-          "x-observed-type": ["number"]
+          "type": "number"
         },
         "cost_usd": {
-          "x-unverified": true,
-          "x-observed-type": ["number"]
+          "type": "number"
         },
         "cost_usd_micros": {
           "type": "number"
@@ -232,45 +222,40 @@
           "type": "number"
         },
         "ttft_ms": {
-          "x-unverified": true,
-          "x-observed-type": ["number"]
+          "type": "number"
         },
         "request_id": {
-          "x-unverified": true
+          "type": "string"
         },
         "client_request_id": {
-          "x-unverified": true
+          "type": "string"
         },
         "speed": {
           "enum": ["fast", "normal"]
         },
         "query_source": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "effort": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "enum": ["low", "medium", "high", "xhigh", "max"]
         },
         "agent.name": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "skill.name": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "plugin.name": {
-          "x-unverified": true
+          "type": "string"
         },
         "marketplace.name": {
-          "x-unverified": true
+          "type": "string"
         },
         "mcp_server.name": {
-          "x-unverified": true
+          "type": "string"
         },
         "mcp_tool.name": {
-          "x-unverified": true
+          "type": "string"
         }
       }
     },
@@ -280,13 +265,13 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Call sites read: 1. A key missing from some sites is optional.",
       "properties": {
         "user.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "event.name": {
           "const": "api_retries_exhausted"
@@ -298,34 +283,34 @@
           "type": "number"
         },
         "prompt.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "workspace.host_paths": {
           "type": "array"
         },
         "model": {
-          "x-unverified": true
+          "type": "string"
         },
         "error": {
-          "x-unverified": true
+          "type": "string"
         },
         "status_code": {
-          "x-unverified": true
+          "type": "number"
         },
         "total_attempts": {
-          "x-unverified": true
+          "type": "number"
         },
         "total_retry_duration_ms": {
-          "x-unverified": true
+          "type": "number"
         },
         "speed": {
           "enum": ["fast", "normal"]
         },
         "query_source": {
-          "x-unverified": true
+          "type": "string"
         },
         "effort": {
-          "x-unverified": true
+          "enum": ["low", "medium", "high", "xhigh", "max"]
         }
       }
     },
@@ -335,14 +320,13 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Call sites read: 1. A key missing from some sites is optional.",
       "properties": {
         "user.id": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "event.name": {
           "const": "assistant_response"
@@ -354,8 +338,7 @@
           "type": "number"
         },
         "prompt.id": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "workspace.host_paths": {
           "type": "array"
@@ -364,23 +347,19 @@
           "type": "number"
         },
         "response": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "request_id": {
-          "x-unverified": true
+          "type": "string"
         },
         "message.uuid": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "model": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "query_source": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         }
       }
     },
@@ -390,13 +369,13 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Call sites read: 1. A key missing from some sites is optional.",
       "properties": {
         "user.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "event.name": {
           "const": "at_mention"
@@ -408,7 +387,7 @@
           "type": "number"
         },
         "prompt.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "workspace.host_paths": {
           "type": "array"
@@ -427,13 +406,13 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Call sites read: 1. A key missing from some sites is optional.",
       "properties": {
         "user.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "event.name": {
           "const": "auth"
@@ -445,7 +424,7 @@
           "type": "number"
         },
         "prompt.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "workspace.host_paths": {
           "type": "array"
@@ -473,13 +452,13 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Call sites read: 1. A key missing from some sites is optional.",
       "properties": {
         "user.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "event.name": {
           "const": "compaction"
@@ -491,7 +470,7 @@
           "type": "number"
         },
         "prompt.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "workspace.host_paths": {
           "type": "array"
@@ -512,7 +491,7 @@
           "type": "string"
         },
         "error": {
-          "x-unverified": true
+          "type": "string"
         },
         "precompute_reuse": {
           "type": "string"
@@ -525,13 +504,13 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Call sites read: 17. A key missing from some sites is optional.",
       "properties": {
         "user.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "event.name": {
           "const": "feedback_survey"
@@ -543,40 +522,40 @@
           "type": "number"
         },
         "prompt.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "workspace.host_paths": {
           "type": "array"
         },
         "event_type": {
-          "x-unverified": true
+          "type": "string"
         },
         "appearance_id": {
-          "x-unverified": true
+          "type": "string"
         },
         "survey_type": {
-          "x-unverified": true
+          "type": "string"
         },
         "enabled_via_override": {
-          "x-unverified": true
+          "type": "boolean"
         },
         "response": {
-          "x-unverified": true
+          "type": "string"
         },
         "trigger_type": {
-          "x-unverified": true
+          "type": "string"
         },
         "plugin_id_hash": {
-          "x-unverified": true
+          "type": "string"
         },
         "plugin.name": {
-          "x-unverified": true
+          "type": "string"
         },
         "event_origin": {
           "const": "sdk_host"
         },
         "event_origin_server": {
-          "x-unverified": true
+          "type": "string"
         }
       }
     },
@@ -586,14 +565,13 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Call sites read: 1. A key missing from some sites is optional.",
       "properties": {
         "user.id": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "event.name": {
           "const": "hook_execution_complete"
@@ -605,19 +583,16 @@
           "type": "number"
         },
         "prompt.id": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "workspace.host_paths": {
           "type": "array"
         },
         "hook_event": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "hook_name": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "num_hooks": {
           "type": "string"
@@ -672,14 +647,13 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Call sites read: 1. A key missing from some sites is optional.",
       "properties": {
         "user.id": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "event.name": {
           "const": "hook_execution_start"
@@ -691,19 +665,16 @@
           "type": "number"
         },
         "prompt.id": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "workspace.host_paths": {
           "type": "array"
         },
         "hook_event": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "hook_name": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "num_hooks": {
           "type": "string"
@@ -728,13 +699,13 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Call sites read: 1. A key missing from some sites is optional.",
       "properties": {
         "user.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "event.name": {
           "const": "hook_plugin_metrics"
@@ -746,16 +717,16 @@
           "type": "number"
         },
         "prompt.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "workspace.host_paths": {
           "type": "array"
         },
         "plugin_id": {
-          "x-unverified": true
+          "type": "string"
         },
         "hook_event": {
-          "x-unverified": true
+          "type": "string"
         }
       }
     },
@@ -765,14 +736,13 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Call sites read: 2. A key missing from some sites is optional.",
       "properties": {
         "user.id": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "event.name": {
           "const": "hook_registered"
@@ -784,34 +754,31 @@
           "type": "number"
         },
         "prompt.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "workspace.host_paths": {
           "type": "array"
         },
         "hook_event": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "hook_type": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "hook_source": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "safe_mode": {
           "type": "string"
         },
         "hook_matcher": {
-          "x-unverified": true
+          "type": "string"
         },
         "plugin.name": {
-          "x-unverified": true
+          "type": "string"
         },
         "plugin_id_hash": {
-          "x-unverified": true
+          "type": "string"
         }
       }
     },
@@ -821,13 +788,13 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Call sites read: 1. A key missing from some sites is optional.",
       "properties": {
         "user.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "event.name": {
           "const": "internal_error"
@@ -839,16 +806,16 @@
           "type": "number"
         },
         "prompt.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "workspace.host_paths": {
           "type": "array"
         },
         "error_name": {
-          "x-unverified": true
+          "type": "string"
         },
         "error_code": {
-          "x-unverified": true
+          "type": "string"
         }
       }
     },
@@ -858,14 +825,13 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Call sites read: 2. A key missing from some sites is optional.",
       "properties": {
         "user.id": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "event.name": {
           "const": "managed_settings_resolved"
@@ -877,7 +843,7 @@
           "type": "number"
         },
         "prompt.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "workspace.host_paths": {
           "type": "array"
@@ -886,40 +852,40 @@
           "type": "string"
         },
         "managed_settings.sources": {
-          "x-unverified": true,
-          "x-observed-type": ["array"]
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         },
         "managed_settings.source_behavior": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "enum": ["merge", "first-wins"]
         },
         "managed_settings.helper.state": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "managed_settings.helper.applied": {
           "type": "string"
         },
         "managed_settings.helper.entry": {
-          "x-unverified": true
+          "type": "string"
         },
         "managed_settings.helper.path": {
-          "x-unverified": true
+          "type": "string"
         },
         "managed_settings.helper.script_sha256": {
-          "x-unverified": true
+          "type": "string"
         },
         "managed_settings.resolved_sha256": {
-          "x-unverified": true
+          "type": "string"
         },
         "managed_settings.settings": {
-          "x-unverified": true
+          "type": "string"
         },
         "managed_settings.settings_truncated": {
-          "x-unverified": true
+          "type": "boolean"
         },
         "error.type": {
-          "x-unverified": true
+          "type": "string"
         }
       }
     },
@@ -929,13 +895,13 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Call sites read: 2. A key missing from some sites is optional.",
       "properties": {
         "user.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "event.name": {
           "const": "mcp_server_connection"
@@ -947,7 +913,7 @@
           "type": "number"
         },
         "prompt.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "workspace.host_paths": {
           "type": "array"
@@ -956,10 +922,10 @@
           "type": "string"
         },
         "transport_type": {
-          "x-unverified": true
+          "type": "string"
         },
         "server_scope": {
-          "x-unverified": true
+          "type": "string"
         },
         "duration_ms": {
           "type": "string"
@@ -968,19 +934,19 @@
           "type": "boolean"
         },
         "plugin_id_hash": {
-          "x-unverified": true
+          "type": "string"
         },
         "plugin.name": {
-          "x-unverified": true
+          "type": "string"
         },
         "error_code": {
           "type": "string"
         },
         "server_name": {
-          "x-unverified": true
+          "type": "string"
         },
         "error": {
-          "x-unverified": true
+          "type": "string"
         }
       }
     },
@@ -990,13 +956,13 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Call sites read: 1. A key missing from some sites is optional.",
       "properties": {
         "user.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "event.name": {
           "const": "permission_mode_changed"
@@ -1008,19 +974,19 @@
           "type": "number"
         },
         "prompt.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "workspace.host_paths": {
           "type": "array"
         },
         "from_mode": {
-          "x-unverified": true
+          "type": "string"
         },
         "to_mode": {
-          "x-unverified": true
+          "type": "string"
         },
         "trigger": {
-          "x-unverified": true
+          "type": "string"
         }
       }
     },
@@ -1030,13 +996,13 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Call sites read: 1. A key missing from some sites is optional.",
       "properties": {
         "user.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "event.name": {
           "const": "plugin_installed"
@@ -1048,25 +1014,25 @@
           "type": "number"
         },
         "prompt.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "workspace.host_paths": {
           "type": "array"
         },
         "plugin.name": {
-          "x-unverified": true
+          "type": "string"
         },
         "plugin.version": {
-          "x-unverified": true
+          "type": "string"
         },
         "marketplace.name": {
-          "x-unverified": true
+          "type": "string"
         },
         "marketplace.is_official": {
           "type": "string"
         },
         "install.trigger": {
-          "x-unverified": true
+          "type": "string"
         },
         "install.disabled_by_default": {
           "const": "true"
@@ -1079,14 +1045,13 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Call sites read: 1. A key missing from some sites is optional.",
       "properties": {
         "user.id": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "event.name": {
           "const": "plugin_loaded"
@@ -1098,21 +1063,19 @@
           "type": "number"
         },
         "prompt.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "workspace.host_paths": {
           "type": "array"
         },
         "plugin.name": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "marketplace.name": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "plugin.version": {
-          "x-unverified": true
+          "type": "string"
         },
         "plugin.scope": {
           "type": "string"
@@ -1121,8 +1084,7 @@
           "type": "string"
         },
         "plugin_id_hash": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "has_hooks": {
           "type": "boolean"
@@ -1153,13 +1115,13 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Call sites read: 1. A key missing from some sites is optional.",
       "properties": {
         "user.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "event.name": {
           "const": "retention_sweep"
@@ -1171,7 +1133,7 @@
           "type": "number"
         },
         "prompt.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "workspace.host_paths": {
           "type": "array"
@@ -1220,13 +1182,13 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Call sites read: 1. A key missing from some sites is optional.",
       "properties": {
         "user.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "event.name": {
           "const": "safety_event"
@@ -1238,55 +1200,55 @@
           "type": "number"
         },
         "prompt.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "workspace.host_paths": {
           "type": "array"
         },
         "category": {
-          "x-unverified": true
+          "type": "string"
         },
         "decision": {
-          "x-unverified": true
+          "type": "string"
         },
         "decision_source": {
-          "x-unverified": true
+          "type": "string"
         },
         "reason_type": {
-          "x-unverified": true
+          "type": "string"
         },
         "reason_code": {
-          "x-unverified": true
+          "type": "string"
         },
         "rule_source": {
-          "x-unverified": true
+          "type": "string"
         },
         "grant_scope": {
-          "x-unverified": true
+          "type": "string"
         },
         "circuit_breaker": {
-          "x-unverified": true
+          "type": "string"
         },
         "classifier_category": {
-          "x-unverified": true
+          "type": "string"
         },
         "hook_event": {
-          "x-unverified": true
+          "type": "string"
         },
         "tool_class": {
           "type": "string"
         },
         "tool_name": {
-          "x-unverified": true
+          "type": "string"
         },
         "tool_source": {
           "type": "string"
         },
         "permission_mode": {
-          "x-unverified": true
+          "type": "string"
         },
         "tool_use_id": {
-          "x-unverified": true
+          "type": "string"
         },
         "sandbox_violation_count": {
           "type": "string"
@@ -1302,14 +1264,13 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Call sites read: 1. A key missing from some sites is optional.",
       "properties": {
         "user.id": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "event.name": {
           "const": "skill_activated"
@@ -1321,31 +1282,28 @@
           "type": "number"
         },
         "prompt.id": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "workspace.host_paths": {
           "type": "array"
         },
         "skill.name": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "invocation_trigger": {
           "type": "string"
         },
         "skill.source": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "skill.kind": {
-          "x-unverified": true
+          "type": "string"
         },
         "plugin.name": {
-          "x-unverified": true
+          "type": "string"
         },
         "marketplace.name": {
-          "x-unverified": true
+          "type": "string"
         }
       }
     },
@@ -1355,14 +1313,13 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Call sites read: 1. A key missing from some sites is optional.",
       "properties": {
         "user.id": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "event.name": {
           "const": "subagent_completed"
@@ -1374,31 +1331,25 @@
           "type": "number"
         },
         "prompt.id": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "workspace.host_paths": {
           "type": "array"
         },
         "agent_type": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "agent.source": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "is_built_in": {
-          "x-unverified": true,
-          "x-observed-type": ["boolean"]
+          "type": "boolean"
         },
         "is_async": {
-          "x-unverified": true,
-          "x-observed-type": ["boolean"]
+          "type": "boolean"
         },
         "total_tokens": {
-          "x-unverified": true,
-          "x-observed-type": ["number"]
+          "type": "number"
         },
         "total_tool_uses": {
           "type": "number"
@@ -1407,21 +1358,19 @@
           "type": "number"
         },
         "model": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "final_model": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "model_swapped": {
           "type": "boolean"
         },
         "plugin_id_hash": {
-          "x-unverified": true
+          "type": "string"
         },
         "plugin.name": {
-          "x-unverified": true
+          "type": "string"
         }
       }
     },
@@ -1431,13 +1380,13 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Call sites read: 1. A key missing from some sites is optional.",
       "properties": {
         "user.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "event.name": {
           "const": "system_prompt"
@@ -1449,7 +1398,7 @@
           "type": "number"
         },
         "prompt.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "workspace.host_paths": {
           "type": "array"
@@ -1458,7 +1407,7 @@
           "type": "string"
         },
         "system_prompt": {
-          "x-unverified": true
+          "type": "string"
         },
         "system_prompt_length": {
           "type": "string"
@@ -1474,13 +1423,13 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Call sites read: 1. A key missing from some sites is optional.",
       "properties": {
         "user.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "event.name": {
           "const": "tool"
@@ -1492,19 +1441,19 @@
           "type": "number"
         },
         "prompt.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "workspace.host_paths": {
           "type": "array"
         },
         "tool_name": {
-          "x-unverified": true
+          "type": "string"
         },
         "tool_hash": {
-          "x-unverified": true
+          "type": "string"
         },
         "tool": {
-          "x-unverified": true
+          "type": "string"
         },
         "tool_truncated": {
           "const": "true"
@@ -1517,14 +1466,13 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Call sites read: 2. A key missing from some sites is optional.",
       "properties": {
         "user.id": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "event.name": {
           "const": "tool_decision"
@@ -1536,27 +1484,22 @@
           "type": "number"
         },
         "prompt.id": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "workspace.host_paths": {
           "type": "array"
         },
         "decision": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "enum": ["accept", "reject"]
         },
         "source": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "tool_name": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "tool_use_id": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "tool_source": {
           "type": "string"
@@ -1568,11 +1511,10 @@
           "type": "string"
         },
         "classifier_category": {
-          "x-unverified": true
+          "type": "string"
         },
         "permission_mode": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         }
       }
     },
@@ -1582,14 +1524,13 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Call sites read: 2. A key missing from some sites is optional.",
       "properties": {
         "user.id": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "event.name": {
           "const": "tool_result"
@@ -1601,19 +1542,16 @@
           "type": "number"
         },
         "prompt.id": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "workspace.host_paths": {
           "type": "array"
         },
         "tool_name": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "tool_use_id": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "success": {
           "enum": ["true", "false"]
@@ -1634,28 +1572,28 @@
           "type": "string"
         },
         "decision_source": {
-          "x-unverified": true
+          "type": "string"
         },
         "decision_type": {
-          "x-unverified": true
+          "type": "string"
         },
         "mcp_server_scope": {
-          "x-unverified": true
+          "type": "string"
         },
         "vcs.ref.head.revision": {
-          "x-unverified": true
+          "type": "string"
         },
         "vcs.ref.head.name": {
-          "x-unverified": true
+          "type": "string"
         },
         "vcs.ref.head.type": {
           "const": "branch"
         },
         "error_type": {
-          "x-unverified": true
+          "type": "string"
         },
         "error": {
-          "x-unverified": true
+          "type": "string"
         }
       }
     },
@@ -1665,14 +1603,13 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Call sites read: 1. A key missing from some sites is optional.",
       "properties": {
         "user.id": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "event.name": {
           "const": "user_prompt"
@@ -1684,8 +1621,7 @@
           "type": "number"
         },
         "prompt.id": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "workspace.host_paths": {
           "type": "array"
@@ -1694,12 +1630,10 @@
           "type": "string"
         },
         "prompt": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "prompt_text": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         }
       }
     },
@@ -1710,14 +1644,13 @@
       "$comment": "Unit: s. Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set. ",
       "properties": {
         "user.id": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         }
       }
     },
@@ -1728,29 +1661,25 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set. ",
       "properties": {
         "user.id": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "decision": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "enum": ["accept", "reject"]
         },
         "source": {
           "type": "string"
         },
         "tool_name": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "language": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         }
       }
     },
@@ -1761,13 +1690,13 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set. ",
       "properties": {
         "user.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         }
       }
     },
@@ -1778,18 +1707,16 @@
       "$comment": "Unit: USD. Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set. ",
       "properties": {
         "user.id": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "model": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "speed": {
           "const": "fast"
@@ -1798,28 +1725,25 @@
           "type": "string"
         },
         "effort": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "enum": ["low", "medium", "high", "xhigh", "max"]
         },
         "agent.name": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "skill.name": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "plugin.name": {
-          "x-unverified": true
+          "type": "string"
         },
         "marketplace.name": {
-          "x-unverified": true
+          "type": "string"
         },
         "mcp_server.name": {
-          "x-unverified": true
+          "type": "string"
         },
         "mcp_tool.name": {
-          "x-unverified": true
+          "type": "string"
         }
       }
     },
@@ -1830,21 +1754,19 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set. ",
       "properties": {
         "user.id": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "type": {
           "const": "added"
         },
         "model": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         }
       }
     },
@@ -1855,13 +1777,13 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set. ",
       "properties": {
         "user.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         }
       }
     },
@@ -1872,18 +1794,16 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set. ",
       "properties": {
         "user.id": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "start_type": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "enum": ["resume", "continue", "fresh", "agents_view"]
         }
       }
     },
@@ -1894,18 +1814,16 @@
       "$comment": "Unit: tokens. Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set. ",
       "properties": {
         "user.id": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "model": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "speed": {
           "const": "fast"
@@ -1914,28 +1832,25 @@
           "type": "string"
         },
         "effort": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "enum": ["low", "medium", "high", "xhigh", "max"]
         },
         "agent.name": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "skill.name": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "plugin.name": {
-          "x-unverified": true
+          "type": "string"
         },
         "marketplace.name": {
-          "x-unverified": true
+          "type": "string"
         },
         "mcp_server.name": {
-          "x-unverified": true
+          "type": "string"
         },
         "mcp_tool.name": {
-          "x-unverified": true
+          "type": "string"
         },
         "type": {
           "const": "input"
@@ -1948,16 +1863,16 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Also set on every span: gen_ai.provider.name. Attributes set after the span starts (at its end) are not listed. Creation sites read: 1. Added only when content logging is on (contentAttrs: command).",
       "properties": {
         "user.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "gen_ai.provider.name": {
-          "x-unverified": true
+          "enum": ["aws.bedrock", "gcp.vertex_ai", "anthropic"]
         },
         "shell.type": {
           "type": "string"
@@ -1966,10 +1881,10 @@
           "type": "number"
         },
         "timeout_ms": {
-          "x-unverified": true
+          "type": "number"
         },
         "command": {
-          "x-unverified": true
+          "type": "string"
         },
         "span.type": {
           "const": "bash.subprocess"
@@ -1982,16 +1897,16 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Also set on every span: gen_ai.provider.name. Attributes set after the span starts (at its end) are not listed. Creation sites read: 1.",
       "properties": {
         "user.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "gen_ai.provider.name": {
-          "x-unverified": true
+          "enum": ["aws.bedrock", "gcp.vertex_ai", "anthropic"]
         },
         "trigger": {
           "enum": ["auto", "manual"]
@@ -2010,31 +1925,31 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Also set on every span: gen_ai.provider.name. Attributes set after the span starts (at its end) are not listed. Creation sites read: 1. Added only when content logging is on (attributes literal at creation).",
       "properties": {
         "user.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "gen_ai.provider.name": {
-          "x-unverified": true
+          "enum": ["aws.bedrock", "gcp.vertex_ai", "anthropic"]
         },
         "gen_ai.conversation.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "hook_event": {
-          "x-unverified": true
+          "type": "string"
         },
         "hook_name": {
-          "x-unverified": true
+          "type": "string"
         },
         "num_hooks": {
           "type": "number"
         },
         "hook_definitions": {
-          "x-unverified": true
+          "type": "string"
         },
         "span.type": {
           "const": "hook"
@@ -2047,25 +1962,25 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Also set on every span: gen_ai.provider.name. Attributes set after the span starts (at its end) are not listed. Creation sites read: 1. Added only when content logging is on (attributes literal at creation).",
       "properties": {
         "user.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "gen_ai.provider.name": {
-          "x-unverified": true
+          "enum": ["aws.bedrock", "gcp.vertex_ai", "anthropic"]
         },
         "gen_ai.operation.name": {
           "const": "invoke_agent"
         },
         "gen_ai.conversation.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "user_prompt": {
-          "x-unverified": true
+          "type": "string"
         },
         "user_prompt_length": {
           "type": "number"
@@ -2074,10 +1989,10 @@
           "type": "number"
         },
         "parent.source": {
-          "x-unverified": true
+          "enum": ["event", "env", "none"]
         },
         "queued_sends": {
-          "x-unverified": true
+          "type": "number"
         },
         "span.type": {
           "const": "interaction"
@@ -2090,29 +2005,25 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Also set on every span: gen_ai.provider.name. Attributes set after the span starts (at its end) are not listed. Creation sites read: 1. Added only when content logging is on (attributes literal at creation).",
       "properties": {
         "user.id": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "gen_ai.provider.name": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "enum": ["aws.bedrock", "gcp.vertex_ai", "anthropic"]
         },
         "model": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "gen_ai.system": {
           "const": "anthropic"
         },
         "gen_ai.request.model": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "llm_request.context": {
           "enum": ["tool", "interaction", "standalone"]
@@ -2121,8 +2032,7 @@
           "enum": ["fast", "normal"]
         },
         "gen_ai.conversation.id": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "span.type": {
           "const": "llm_request"
@@ -2135,34 +2045,34 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Also set on every span: gen_ai.provider.name. Attributes set after the span starts (at its end) are not listed. Creation sites read: 2. Added only when content logging is on (contentAttrs: mcp_args; contentAttrs: mcp_args).",
       "properties": {
         "user.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "gen_ai.provider.name": {
-          "x-unverified": true
+          "enum": ["aws.bedrock", "gcp.vertex_ai", "anthropic"]
         },
         "rpc.system": {
           "const": "mcp"
         },
         "rpc.service": {
-          "x-unverified": true
+          "type": "string"
         },
         "rpc.method": {
           "const": "tools/call"
         },
         "mcp_tool": {
-          "x-unverified": true
+          "type": "string"
         },
         "attempt": {
           "type": "number"
         },
         "mcp_args": {
-          "x-unverified": true
+          "type": "string"
         },
         "span.type": {
           "const": "mcp.rpc"
@@ -2175,25 +2085,25 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Also set on every span: gen_ai.provider.name. Attributes set after the span starts (at its end) are not listed. Creation sites read: 1. Added only when content logging is on (attributes literal at creation).",
       "properties": {
         "user.id": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "gen_ai.provider.name": {
-          "x-unverified": true
+          "enum": ["aws.bedrock", "gcp.vertex_ai", "anthropic"]
         },
         "agent_id": {
-          "x-unverified": true
+          "type": "string"
         },
         "agent_type": {
-          "x-unverified": true
+          "type": "string"
         },
         "parent_agent_id": {
-          "x-unverified": true
+          "type": "string"
         },
         "span.type": {
           "const": "subagent.spawn"
@@ -2206,58 +2116,52 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Also set on every span: gen_ai.provider.name. Attributes set after the span starts (at its end) are not listed. Creation sites read: 1. Added only when content logging is on (attributes literal at creation).",
       "properties": {
         "user.id": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "gen_ai.provider.name": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "enum": ["aws.bedrock", "gcp.vertex_ai", "anthropic"]
         },
         "tool_name": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "tool_name_safe": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "gen_ai.operation.name": {
           "const": "execute_tool"
         },
         "gen_ai.tool.name": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "anthropic.mcp.server.name": {
-          "x-unverified": true
+          "type": "string"
         },
         "gen_ai.conversation.id": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "file_path": {
           "type": "string"
         },
         "full_command": {
-          "x-unverified": true
+          "type": "string"
         },
         "skill_name": {
-          "x-unverified": true
+          "type": "string"
         },
         "subagent_type": {
-          "x-unverified": true
+          "type": "string"
         },
         "bash_command_class": {
-          "x-unverified": true
+          "type": "string"
         },
         "bash_argv0": {
-          "x-unverified": true
+          "type": "string"
         },
         "span.type": {
           "const": "tool"
@@ -2270,22 +2174,19 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Also set on every span: gen_ai.provider.name. Attributes set after the span starts (at its end) are not listed. Creation sites read: 1. Added only when content logging is on (attributes literal at creation).",
       "properties": {
         "user.id": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "gen_ai.provider.name": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "enum": ["aws.bedrock", "gcp.vertex_ai", "anthropic"]
         },
         "gen_ai.conversation.id": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "span.type": {
           "const": "tool.blocked_on_user"
@@ -2298,22 +2199,19 @@
       "$comment": "Base attributes (keys assigned by the attribute builder, in code order); the builder also copies keys of OTEL_RESOURCE_ATTRIBUTES when OTEL_METRICS_INCLUDE_RESOURCE_ATTRIBUTES is set.  Also set on every span: gen_ai.provider.name. Attributes set after the span starts (at its end) are not listed. Creation sites read: 1. Added only when content logging is on (attributes literal at creation).",
       "properties": {
         "user.id": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "user.email": {
-          "x-unverified": true
+          "type": "string"
         },
         "user.groups": {
-          "x-unverified": true
+          "type": "string"
         },
         "gen_ai.provider.name": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "enum": ["aws.bedrock", "gcp.vertex_ai", "anthropic"]
         },
         "gen_ai.conversation.id": {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          "type": "string"
         },
         "span.type": {
           "const": "tool.execution"

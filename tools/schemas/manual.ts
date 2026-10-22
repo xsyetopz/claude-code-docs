@@ -32,6 +32,41 @@ export const readManual = (schemaFile: string): ManualFixture | undefined => {
     : undefined;
 };
 
+/** In an anchor, stands for one identifier, because the minifier renames them each release. */
+export const ID = "«»";
+
+/** A test of whether an anchor is in `program`, with each `«»` matching one identifier. */
+export const anchorIn = (program: string): ((anchor: string) => boolean) => {
+  const memo = new Map<string, boolean>();
+  return (anchor) => {
+    const parts = anchor.split(ID);
+    if (parts.length === 1) return program.includes(anchor);
+    const known = memo.get(anchor);
+    if (known !== undefined) return known;
+    const re = new RegExp(
+      parts
+        .map((p) => p.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
+        .join("[\\w$]+"),
+    );
+    // Search the longest fixed part, then test the pattern on the text around each hit
+    // (an identifier is at most 64 characters).
+    const key = parts.reduce((b, p) => (p.length > b.length ? p : b), "");
+    if (key.length < 4) return false;
+    const i = parts.indexOf(key);
+    const left = parts.slice(0, i).join("").length + 64 * i;
+    const right = anchor.length + 64 * parts.length;
+    let hit = false;
+    for (
+      let at = program.indexOf(key);
+      at !== -1 && !hit;
+      at = program.indexOf(key, at + 1)
+    )
+      hit = re.test(program.slice(Math.max(0, at - left), at + right));
+    memo.set(anchor, hit);
+    return hit;
+  };
+};
+
 /** JSON type names a schema allows, or undefined when it allows any (no type, or a $ref). */
 const allowed = (s: Json): Set<string> | undefined => {
   const out = new Set<string>();

@@ -35038,10 +35038,10 @@ var claude_code_transcript_default = {
           const: "agent-color"
         },
         agentColor: {
-          "x-unverified": true
+          type: "string"
         },
         sessionId: {
-          "x-unverified": true
+          type: "string"
         }
       },
       $comment: "Registry policy: last-wins. Code sites used: 2."
@@ -35053,10 +35053,10 @@ var claude_code_transcript_default = {
           const: "agent-name"
         },
         agentName: {
-          "x-unverified": true
+          type: "string"
         },
         sessionId: {
-          "x-unverified": true
+          type: "string"
         }
       },
       $comment: "Registry policy: last-wins. Code sites used: 2."
@@ -35068,10 +35068,10 @@ var claude_code_transcript_default = {
           const: "agent-setting"
         },
         agentSetting: {
-          "x-unverified": true
+          type: "string"
         },
         sessionId: {
-          "x-unverified": true
+          type: "string"
         }
       },
       $comment: "Registry policy: last-wins. Code sites used: 1."
@@ -35083,12 +35083,10 @@ var claude_code_transcript_default = {
           const: "ai-title"
         },
         aiTitle: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         sessionId: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          type: "string"
         }
       },
       $comment: "Registry policy: last-wins. Code sites used: 2."
@@ -35101,18 +35099,15 @@ var claude_code_transcript_default = {
           "x-observed": true
         },
         sessionId: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         agentId: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         id: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         timestamp: {
           type: "string",
@@ -35123,14 +35118,12 @@ var claude_code_transcript_default = {
           "x-observed": true
         },
         querySource: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         shapeHash: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         params: {
           type: "object",
@@ -35140,33 +35133,33 @@ var claude_code_transcript_default = {
           type: "array"
         },
         base: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         keep: {
           type: "number",
           "x-observed": true
         },
         tail: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["array"]
+          type: "array",
+          items: {
+            type: "string"
+          }
         },
         cacheControl: {
           type: "array",
           "x-observed": true
         },
         requestDigest: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         cut: {
           "x-unverified": true
         },
         cutRequestDigest: {
-          "x-unverified": true
+          type: "string"
         }
       },
       $comment: "Registry policy: boundary-cleared. Code sites used: 1."
@@ -35179,23 +35172,19 @@ var claude_code_transcript_default = {
           "x-observed": true
         },
         sessionId: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         agentId: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         hash: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         message: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["object"]
+          type: "object"
         }
       },
       $comment: "Registry policy: boundary-cleared. Code sites used: 1."
@@ -35208,33 +35197,27 @@ var claude_code_transcript_default = {
           "x-observed": true
         },
         sessionId: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         agentId: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         shapeHash: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         timestamp: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         version: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         shape: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["object"]
+          type: "object"
         }
       },
       $comment: "Registry policy: boundary-cleared. Code sites used: 1."
@@ -35246,13 +35229,20 @@ var claude_code_transcript_default = {
           const: "artifact-autoreact-ledger"
         },
         sessionId: {
-          "x-unverified": true
+          type: "string"
         },
         accountUuid: {
-          "x-unverified": true
+          anyOf: [
+            {
+              type: "string"
+            },
+            {
+              type: "null"
+            }
+          ]
         },
         artifacts: {
-          "x-unverified": true
+          type: "object"
         },
         v: {
           type: "number"
@@ -35270,10 +35260,10 @@ var claude_code_transcript_default = {
           type: "number"
         },
         sessionId: {
-          "x-unverified": true
+          type: "string"
         },
         artifacts: {
-          "x-unverified": true
+          type: "object"
         }
       },
       $comment: "Registry policy: accumulate. Code sites used: 7."
@@ -35286,167 +35276,610 @@ var claude_code_transcript_default = {
           "x-observed": true
         },
         uuid: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         timestamp: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         message: {
           properties: {
             diagnostics: {
-              "x-unverified": true,
-              "x-observed-type": ["null", "object"]
+              anyOf: [
+                {
+                  type: "object",
+                  properties: {
+                    cache_miss_reason: {
+                      anyOf: [
+                        {
+                          type: "object",
+                          properties: {
+                            type: {
+                              enum: [
+                                "model_changed",
+                                "system_changed",
+                                "tools_changed",
+                                "messages_changed",
+                                "previous_message_not_found",
+                                "unavailable"
+                              ]
+                            },
+                            cache_missed_input_tokens: {
+                              type: "integer"
+                            }
+                          }
+                        },
+                        {
+                          type: "null"
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  type: "null"
+                }
+              ]
             },
             id: {
-              "x-unverified": true,
-              "x-observed-type": ["string"]
+              type: "string"
             },
             container: {
-              "x-unverified": true
+              anyOf: [
+                {
+                  type: "object",
+                  properties: {
+                    id: {
+                      type: "string"
+                    },
+                    expires_at: {
+                      type: "string"
+                    },
+                    skills: {
+                      anyOf: [
+                        {
+                          type: "array",
+                          items: {
+                            type: "object"
+                          }
+                        },
+                        {
+                          type: "null"
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  type: "null"
+                }
+              ]
             },
             model: {
-              "x-unverified": true,
-              "x-observed-type": ["string"]
+              type: "string"
             },
             role: {
-              "x-unverified": true,
-              "x-observed-type": ["string"]
+              const: "assistant"
             },
             stop_details: {
-              "x-unverified": true
+              anyOf: [
+                {
+                  type: "object",
+                  properties: {
+                    type: {
+                      const: "refusal"
+                    },
+                    category: {
+                      anyOf: [
+                        {
+                          enum: [
+                            "cyber",
+                            "bio",
+                            "frontier_llm",
+                            "reasoning_extraction",
+                            "general_harms"
+                          ]
+                        },
+                        {
+                          type: "null"
+                        }
+                      ]
+                    },
+                    explanation: {
+                      anyOf: [
+                        {
+                          type: "string"
+                        },
+                        {
+                          type: "null"
+                        }
+                      ]
+                    },
+                    fallback_credit_token: {
+                      anyOf: [
+                        {
+                          type: "string"
+                        },
+                        {
+                          type: "null"
+                        }
+                      ]
+                    },
+                    fallback_has_prefill_claim: {
+                      anyOf: [
+                        {
+                          type: "boolean"
+                        },
+                        {
+                          type: "null"
+                        }
+                      ]
+                    },
+                    recommended_model: {
+                      anyOf: [
+                        {
+                          type: "string"
+                        },
+                        {
+                          type: "null"
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  type: "null"
+                }
+              ]
             },
             stop_reason: {
-              "x-unverified": true,
-              "x-observed-type": ["null", "string"]
+              anyOf: [
+                {
+                  enum: [
+                    "end_turn",
+                    "max_tokens",
+                    "stop_sequence",
+                    "tool_use",
+                    "pause_turn",
+                    "compaction",
+                    "refusal",
+                    "model_context_window_exceeded"
+                  ]
+                },
+                {
+                  type: "null"
+                }
+              ]
             },
             stop_sequence: {
-              "x-unverified": true,
-              "x-observed-type": ["null", "string"]
+              anyOf: [
+                {
+                  type: "string"
+                },
+                {
+                  type: "null"
+                }
+              ]
             },
             type: {
-              "x-unverified": true,
-              "x-observed-type": ["string"]
+              const: "message"
             },
             usage: {
               properties: {
                 output_tokens_details: {
                   properties: {
                     thinking_tokens: {
-                      "x-unverified": true,
-                      "x-observed-type": ["number"]
+                      type: "integer"
                     }
                   }
                 },
                 input_tokens: {
-                  "x-unverified": true,
-                  "x-observed-type": ["number"]
+                  type: "integer"
                 },
                 cache_creation_input_tokens: {
-                  "x-unverified": true,
-                  "x-observed-type": ["number"]
+                  type: "integer"
                 },
                 cache_read_input_tokens: {
-                  "x-unverified": true,
-                  "x-observed-type": ["number"]
+                  type: "integer"
                 },
                 output_tokens: {
-                  "x-unverified": true,
-                  "x-observed-type": ["number"]
+                  type: "integer"
                 },
                 server_tool_use: {
                   properties: {
                     web_search_requests: {
-                      "x-unverified": true,
-                      "x-observed-type": ["number"]
+                      type: "integer"
                     },
                     web_fetch_requests: {
-                      "x-unverified": true,
-                      "x-observed-type": ["number"]
+                      type: "integer"
                     }
                   }
                 },
                 service_tier: {
-                  "x-unverified": true,
-                  "x-observed-type": ["null", "string"]
+                  anyOf: [
+                    {
+                      enum: ["standard", "priority", "batch"]
+                    },
+                    {
+                      type: "null"
+                    }
+                  ]
                 },
                 cache_creation: {
                   properties: {
                     ephemeral_1h_input_tokens: {
-                      "x-unverified": true,
-                      "x-observed-type": ["number"]
+                      type: "integer"
                     },
                     ephemeral_5m_input_tokens: {
-                      "x-unverified": true,
-                      "x-observed-type": ["number"]
+                      type: "integer"
                     }
                   }
                 },
                 inference_geo: {
-                  "x-unverified": true,
-                  "x-observed-type": ["null", "string"]
+                  anyOf: [
+                    {
+                      type: "string"
+                    },
+                    {
+                      type: "null"
+                    }
+                  ]
                 },
                 iterations: {
-                  "x-unverified": true,
-                  "x-observed-type": ["array", "null"]
+                  anyOf: [
+                    {
+                      type: "array",
+                      items: {
+                        anyOf: [
+                          {
+                            type: "object",
+                            properties: {
+                              cache_creation: {
+                                anyOf: [
+                                  {
+                                    type: "object",
+                                    properties: {
+                                      ephemeral_1h_input_tokens: {
+                                        type: "integer"
+                                      },
+                                      ephemeral_5m_input_tokens: {
+                                        type: "integer"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    type: "null"
+                                  }
+                                ]
+                              },
+                              cache_creation_input_tokens: {
+                                type: "integer"
+                              },
+                              cache_read_input_tokens: {
+                                type: "integer"
+                              },
+                              input_tokens: {
+                                type: "integer"
+                              },
+                              output_tokens: {
+                                type: "integer"
+                              },
+                              type: {
+                                const: "message"
+                              },
+                              model: {
+                                anyOf: [
+                                  {
+                                    type: "string"
+                                  },
+                                  {
+                                    type: "null"
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          {
+                            type: "object",
+                            properties: {
+                              cache_creation: {
+                                anyOf: [
+                                  {
+                                    type: "object",
+                                    properties: {
+                                      ephemeral_1h_input_tokens: {
+                                        type: "integer"
+                                      },
+                                      ephemeral_5m_input_tokens: {
+                                        type: "integer"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    type: "null"
+                                  }
+                                ]
+                              },
+                              cache_creation_input_tokens: {
+                                type: "integer"
+                              },
+                              cache_read_input_tokens: {
+                                type: "integer"
+                              },
+                              input_tokens: {
+                                type: "integer"
+                              },
+                              output_tokens: {
+                                type: "integer"
+                              },
+                              type: {
+                                const: "compaction"
+                              }
+                            }
+                          },
+                          {
+                            type: "object",
+                            properties: {
+                              cache_creation: {
+                                anyOf: [
+                                  {
+                                    type: "object",
+                                    properties: {
+                                      ephemeral_1h_input_tokens: {
+                                        type: "integer"
+                                      },
+                                      ephemeral_5m_input_tokens: {
+                                        type: "integer"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    type: "null"
+                                  }
+                                ]
+                              },
+                              cache_creation_input_tokens: {
+                                type: "integer"
+                              },
+                              cache_read_input_tokens: {
+                                type: "integer"
+                              },
+                              input_tokens: {
+                                type: "integer"
+                              },
+                              output_tokens: {
+                                type: "integer"
+                              },
+                              type: {
+                                const: "advisor_message"
+                              },
+                              model: {
+                                type: "string"
+                              }
+                            }
+                          },
+                          {
+                            type: "object",
+                            properties: {
+                              cache_creation: {
+                                anyOf: [
+                                  {
+                                    type: "object",
+                                    properties: {
+                                      ephemeral_1h_input_tokens: {
+                                        type: "integer"
+                                      },
+                                      ephemeral_5m_input_tokens: {
+                                        type: "integer"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    type: "null"
+                                  }
+                                ]
+                              },
+                              cache_creation_input_tokens: {
+                                type: "integer"
+                              },
+                              cache_read_input_tokens: {
+                                type: "integer"
+                              },
+                              input_tokens: {
+                                type: "integer"
+                              },
+                              output_tokens: {
+                                type: "integer"
+                              },
+                              type: {
+                                const: "fallback_message"
+                              },
+                              model: {
+                                type: "string"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      type: "null"
+                    }
+                  ]
                 },
                 speed: {
-                  "x-unverified": true,
-                  "x-observed-type": ["null", "string"]
+                  anyOf: [
+                    {
+                      enum: ["standard", "fast"]
+                    },
+                    {
+                      type: "null"
+                    }
+                  ]
                 },
                 fallback_credit: {
-                  "x-unverified": true
+                  anyOf: [
+                    {
+                      type: "object",
+                      properties: {
+                        status: {
+                          type: "object",
+                          properties: {
+                            type: {
+                              enum: ["redeemed", "not_applied"]
+                            },
+                            reason: {
+                              type: "string"
+                            },
+                            remove_to_redeem: {
+                              type: "boolean"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      type: "null"
+                    }
+                  ]
                 }
               }
             },
             content: {
-              "x-unverified": true,
-              "x-observed-type": ["array"]
+              type: "array",
+              items: {
+                type: "object"
+              }
             },
             context_management: {
-              "x-unverified": true
+              anyOf: [
+                {
+                  type: "object",
+                  properties: {
+                    applied_edits: {
+                      type: "array",
+                      items: {
+                        type: "object"
+                      }
+                    }
+                  }
+                },
+                {
+                  type: "null"
+                }
+              ]
             }
           },
           "x-observed": true
         },
         requestId: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         apiError: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          enum: [
+            "max_output_tokens",
+            "dlp_request_denied",
+            "claude_code_version_too_old",
+            "safety_monitor_blocked",
+            "effort_requires_thinking",
+            "advisor_incompatible",
+            "tool_history_mismatch",
+            "autocompact_thrashing",
+            "pdf_too_large",
+            "pdf_password_protected",
+            "media_removed",
+            "no_response",
+            "tls_untrusted_ca",
+            "gateway_content_type",
+            "provider_credentials",
+            "gateway_signin_required",
+            "gateway_session_expired",
+            "api_key_auth_disabled",
+            "org_disabled_credential",
+            "invalid_credential_header",
+            "model_requires_usage_credits",
+            "long_context_credits_required",
+            "consent_unanswered",
+            "no_allowed_fallback",
+            "model_substitution_disabled",
+            "field_not_granted",
+            "usage_limit_reached",
+            "empty_completion"
+          ]
         },
         apiErrorParams: {
-          "x-unverified": true,
-          "x-observed-type": ["object"]
+          type: "object",
+          properties: {
+            effort: {
+              type: "string"
+            },
+            provider: {
+              enum: [
+                "bedrock",
+                "anthropicAws",
+                "mantle",
+                "anthropicGoogleCloud",
+                "vertex",
+                "foundry",
+                "gateway"
+              ]
+            },
+            remedy: {
+              enum: [
+                "refresh_command",
+                "refresh_credentials",
+                "adc",
+                "gateway_token",
+                "host_managed",
+                "model_access"
+              ]
+            },
+            media: {
+              enum: ["image", "document"]
+            },
+            media_reason: {
+              enum: ["unprocessable", "unsupported_by_model", "media_budget"]
+            },
+            rate_limit_info: {
+              type: "object"
+            }
+          }
         },
         apiErrorIsTransient: {
-          "x-unverified": true
+          type: "boolean"
         },
         quotaLimits: {
-          "x-unverified": true,
-          "x-observed-type": ["object"]
+          type: "object"
         },
         error: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          enum: [
+            "authentication_failed",
+            "oauth_org_not_allowed",
+            "account_on_hold",
+            "verification_required",
+            "billing_error",
+            "rate_limit",
+            "overloaded",
+            "invalid_request",
+            "model_not_found",
+            "server_error",
+            "unknown",
+            "max_output_tokens",
+            "cloud_credential_error"
+          ]
         },
         errorDetails: {
-          "x-unverified": true
+          type: "string"
         },
         truncatedAfterOutput: {
-          "x-unverified": true
+          type: "boolean"
         },
         isApiErrorMessage: {
-          "x-unverified": true,
-          "x-observed-type": ["boolean"]
+          type: "boolean"
         },
         isVirtual: {
-          "x-unverified": true
+          type: "boolean"
         },
         isMeta: {
           "x-unverified": true
@@ -35455,67 +35888,71 @@ var claude_code_transcript_default = {
           type: "boolean"
         },
         cloudMemoryToolUseIds: {
-          "x-unverified": true
+          type: "array",
+          items: {
+            type: "string"
+          }
         },
         apiErrorCode: {
-          "x-unverified": true
+          type: "string"
         },
         sessionFailureNotice: {
           type: "boolean"
         },
         advisorModel: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         attributionAgent: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         attributionSkill: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         attributionPlugin: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         attributionMcpServer: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         attributionMcpTool: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         healsDistinctCarrier: {
           "x-unverified": true
         },
         isAbortedMidStream: {
-          "x-unverified": true
+          type: "boolean"
         },
         batchToolUses: {
-          "x-unverified": true
+          type: "array",
+          items: {
+            type: "object",
+            properties: {
+              id: {
+                type: "string"
+              },
+              name: {
+                type: "string"
+              }
+            }
+          }
         },
         wireToolInputs: {
-          "x-unverified": true,
-          "x-observed-type": ["object"]
+          type: "object"
         },
         wireIngestContext: {
-          "x-unverified": true,
-          "x-observed-type": ["object"]
+          type: "object"
         },
         serverClassifierRequest: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         serverClassifierResults: {
           "x-unverified": true
         },
         apiBlockIndex: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["number"]
+          type: "integer"
         },
         requestRef: {
           "x-unverified": true,
@@ -35523,19 +35960,23 @@ var claude_code_transcript_default = {
           "x-observed-type": ["string"]
         },
         requestedModel: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         effort: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         perTurnEffort: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["null", "string"]
+          anyOf: [
+            {
+              type: "string"
+            },
+            {
+              type: "null"
+            }
+          ]
         },
         perTurnTiming: {
           "x-unverified": true
@@ -35544,79 +35985,83 @@ var claude_code_transcript_default = {
           type: "number"
         },
         thinkingDisplay: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         resumedFromIncompleteThinking: {
           type: "boolean"
         },
         apiErrorStatus: {
-          "x-unverified": true,
-          "x-observed-type": ["number"]
+          type: "integer"
         },
         remoteSourced: {
           type: "boolean"
         },
         parentUuid: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["null", "string"]
+          anyOf: [
+            {
+              type: "string"
+            },
+            {
+              type: "null"
+            }
+          ]
         },
         logicalParentUuid: {
-          "x-unverified": true
+          anyOf: [
+            {
+              type: "string"
+            },
+            {
+              type: "null"
+            }
+          ]
         },
         isSidechain: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["boolean"]
+          type: "boolean"
         },
         teamName: {
-          "x-unverified": true
+          type: "string"
         },
         agentName: {
-          "x-unverified": true
+          type: "string"
         },
         promptId: {
-          "x-unverified": true
+          type: "string"
         },
         agentId: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         sessionKind: {
-          "x-unverified": true
+          enum: ["bg", "daemon", "daemon-worker"]
         },
         userType: {
           type: "string",
           "x-observed": true
         },
         entrypoint: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         cwd: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         sessionId: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         version: {
           type: "string",
           "x-observed": true
         },
         gitBranch: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         slug: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          type: "string"
         }
       },
       $comment: "Registry policy: transcript. Code sites used: 10."
@@ -35629,14 +36074,12 @@ var claude_code_transcript_default = {
           "x-observed": true
         },
         atis: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         sessionId: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         }
       },
       $comment: "Registry policy: last-wins. Code sites used: 4."
@@ -35649,42 +36092,46 @@ var claude_code_transcript_default = {
           "x-observed": true
         },
         uuid: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         timestamp: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         attachment: {
           properties: {
             type: {
-              "x-unverified": true,
-              "x-observed-type": ["string"]
+              type: "string"
             },
             prompt: {
-              "x-unverified": true,
-              "x-observed-type": ["array", "string"]
+              anyOf: [
+                {
+                  type: "string"
+                },
+                {
+                  type: "array",
+                  items: {
+                    type: "object"
+                  }
+                }
+              ]
             },
             source_uuid: {
-              "x-unverified": true,
-              "x-observed-type": ["string"]
+              type: "string"
             },
             origin: {
               properties: {
                 kind: {
-                  "x-unverified": true,
-                  "x-observed-type": ["string"]
+                  type: "string"
                 }
               }
             },
             timestamp: {
-              "x-unverified": true
+              type: "string"
             },
             isMeta: {
-              "x-unverified": true
+              type: "boolean"
             },
             forwardedIntent: {
               properties: {
@@ -35697,16 +36144,16 @@ var claude_code_transcript_default = {
               }
             },
             reminderId: {
-              "x-unverified": true
+              type: "string"
             },
             met: {
-              "x-unverified": true
+              type: "boolean"
             },
             sentinel: {
-              "x-unverified": true
+              type: "boolean"
             },
             condition: {
-              "x-unverified": true
+              type: "string"
             },
             text: {
               "x-unverified": true,
@@ -35737,65 +36184,71 @@ var claude_code_transcript_default = {
           type: "array"
         },
         parentUuid: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["null", "string"]
+          anyOf: [
+            {
+              type: "string"
+            },
+            {
+              type: "null"
+            }
+          ]
         },
         logicalParentUuid: {
-          "x-unverified": true
+          anyOf: [
+            {
+              type: "string"
+            },
+            {
+              type: "null"
+            }
+          ]
         },
         isSidechain: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["boolean"]
+          type: "boolean"
         },
         teamName: {
-          "x-unverified": true
+          type: "string"
         },
         agentName: {
-          "x-unverified": true
+          type: "string"
         },
         promptId: {
-          "x-unverified": true
+          type: "string"
         },
         agentId: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         sessionKind: {
-          "x-unverified": true
+          enum: ["bg", "daemon", "daemon-worker"]
         },
         userType: {
           type: "string",
           "x-observed": true
         },
         entrypoint: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         cwd: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         sessionId: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         version: {
           type: "string",
           "x-observed": true
         },
         gitBranch: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         slug: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          type: "string"
         }
       },
       $comment: "Registry policy: transcript. Code sites used: 7."
@@ -35816,28 +36269,31 @@ var claude_code_transcript_default = {
           const: "bridge-session"
         },
         sessionId: {
-          "x-unverified": true
+          type: "string"
         },
         bridgeSessionId: {
-          "x-unverified": true
+          type: "string"
         },
         lastSequenceNum: {
-          "x-unverified": true
+          type: "integer"
         },
         declaredDialogKinds: {
-          "x-unverified": true
+          type: "array",
+          items: {
+            type: "string"
+          }
         },
         sessionGroupingId: {
-          "x-unverified": true
+          type: "string"
         },
         noHistoryBackfill: {
           type: "boolean"
         },
         ownerAccountUuid: {
-          "x-unverified": true
+          type: "string"
         },
         ownerOrganizationUuid: {
-          "x-unverified": true
+          type: "string"
         }
       },
       $comment: "Registry policy: last-wins. Code sites used: 3."
@@ -35849,13 +36305,27 @@ var claude_code_transcript_default = {
           const: "content-replacement"
         },
         sessionId: {
-          "x-unverified": true
+          type: "string"
         },
         agentId: {
-          "x-unverified": true
+          type: "string"
         },
         replacements: {
-          "x-unverified": true
+          type: "array",
+          items: {
+            type: "object",
+            properties: {
+              kind: {
+                enum: ["tool-result"]
+              },
+              toolUseId: {
+                type: "string"
+              },
+              replacement: {
+                type: "string"
+              }
+            }
+          }
         }
       },
       $comment: "Registry policy: accumulate. Code sites used: 3."
@@ -35870,10 +36340,10 @@ var claude_code_transcript_default = {
           type: "string"
         },
         sessionId: {
-          "x-unverified": true
+          type: "string"
         },
         continuedInSessionId: {
-          "x-unverified": true
+          type: "string"
         }
       },
       $comment: "Registry policy: boundary-cleared. Code sites used: 1."
@@ -35886,59 +36356,74 @@ var claude_code_transcript_default = {
           "x-observed": true
         },
         sessionId: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         totalCostUSD: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["number"]
+          type: "number"
         },
         totalAPIDuration: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["number"]
+          type: "number"
         },
         totalAPIDurationWithoutRetries: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["number"]
+          type: "number"
         },
         totalToolDuration: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["number"]
+          type: "number"
         },
         totalLinesAdded: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["number"]
+          type: "number"
         },
         totalLinesRemoved: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["number"]
+          type: "number"
         },
         totalDuration: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["number"]
+          type: "number"
         },
         startTime: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["number"]
+          type: "number"
         },
         modelUsage: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["object"]
+          type: "object",
+          additionalProperties: {
+            type: "object",
+            properties: {
+              inputTokens: {
+                type: "number"
+              },
+              outputTokens: {
+                type: "number"
+              },
+              thinkingTokens: {
+                type: "number"
+              },
+              cacheReadInputTokens: {
+                type: "number"
+              },
+              cacheCreationInputTokens: {
+                type: "number"
+              },
+              webSearchRequests: {
+                type: "number"
+              },
+              costUSD: {
+                type: "number"
+              }
+            }
+          }
         },
         hasUnknownModelCost: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["boolean"]
+          type: "boolean"
         }
       },
       $comment: "Registry policy: last-wins. Code sites used: 1."
@@ -35950,10 +36435,10 @@ var claude_code_transcript_default = {
           const: "custom-title"
         },
         customTitle: {
-          "x-unverified": true
+          type: "string"
         },
         sessionId: {
-          "x-unverified": true
+          type: "string"
         }
       },
       $comment: "Registry policy: last-wins. Code sites used: 4."
@@ -35965,10 +36450,10 @@ var claude_code_transcript_default = {
           const: "dev-mods"
         },
         folder: {
-          "x-unverified": true
+          type: "string"
         },
         sessionId: {
-          "x-unverified": true
+          type: "string"
         }
       },
       $comment: "Registry policy: last-wins. Code sites used: 2."
@@ -35983,7 +36468,7 @@ var claude_code_transcript_default = {
           type: "string"
         },
         sessionId: {
-          "x-unverified": true
+          type: "string"
         }
       },
       $comment: "Registry policy: last-wins. Code sites used: 1."
@@ -35995,20 +36480,35 @@ var claude_code_transcript_default = {
           const: "file-history-delta"
         },
         messageId: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         snapshotMessageId: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         trackingPath: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         backup: {
-          "x-unverified": true,
-          "x-observed-type": ["object"]
+          type: "object",
+          properties: {
+            backupFileName: {
+              anyOf: [
+                {
+                  type: "string"
+                },
+                {
+                  type: "null"
+                }
+              ]
+            },
+            version: {
+              type: "integer"
+            },
+            backupTime: {
+              type: "string",
+              format: "date-time"
+            }
+          }
         },
         timestamp: {
           type: "string"
@@ -36023,16 +36523,50 @@ var claude_code_transcript_default = {
           const: "file-history-snapshot"
         },
         messageId: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         snapshot: {
-          "x-unverified": true,
-          "x-observed-type": ["object"]
+          type: "object",
+          properties: {
+            messageId: {
+              type: "string"
+            },
+            trackedFileBackups: {
+              type: "object",
+              additionalProperties: {
+                type: "object",
+                properties: {
+                  backupFileName: {
+                    anyOf: [
+                      {
+                        type: "string"
+                      },
+                      {
+                        type: "null"
+                      }
+                    ]
+                  },
+                  version: {
+                    type: "integer"
+                  },
+                  backupTime: {
+                    type: "string",
+                    format: "date-time"
+                  }
+                }
+              }
+            },
+            timestamp: {
+              type: "string",
+              format: "date-time"
+            },
+            preCheckpoint: {
+              enum: [true]
+            }
+          }
         },
         isSnapshotUpdate: {
-          "x-unverified": true,
-          "x-observed-type": ["boolean"]
+          type: "boolean"
         }
       },
       $comment: "Registry policy: boundary-cleared. Code sites used: 1."
@@ -36044,13 +36578,13 @@ var claude_code_transcript_default = {
           const: "fork-context-ref"
         },
         agentId: {
-          "x-unverified": true
+          type: "string"
         },
         parentSessionId: {
-          "x-unverified": true
+          type: "string"
         },
         parentLastUuid: {
-          "x-unverified": true
+          type: "string"
         },
         contextLength: {
           type: "number"
@@ -36065,22 +36599,22 @@ var claude_code_transcript_default = {
           const: "frame-link"
         },
         artifactCount: {
-          "x-unverified": true
+          type: "integer"
         },
         sessionId: {
-          "x-unverified": true
+          type: "string"
         },
         timestamp: {
           type: "string"
         },
         path: {
-          "x-unverified": true
+          type: "string"
         },
         frameUrl: {
-          "x-unverified": true
+          type: "string"
         },
         title: {
-          "x-unverified": true
+          type: "string"
         }
       },
       $comment: "Registry policy: accumulate. Code sites used: 2."
@@ -36092,13 +36626,13 @@ var claude_code_transcript_default = {
           const: "history-suppression"
         },
         sessionId: {
-          "x-unverified": true
+          type: "string"
         },
         cause: {
-          "x-unverified": true
+          type: "string"
         },
         vetoedAgainstAccountUuid: {
-          "x-unverified": true
+          type: "string"
         },
         ts: {
           type: "string"
@@ -36113,10 +36647,10 @@ var claude_code_transcript_default = {
           const: "isolation-latch"
         },
         side: {
-          "x-unverified": true
+          type: "string"
         },
         sessionId: {
-          "x-unverified": true
+          type: "string"
         }
       },
       $comment: "Registry policy: last-wins. Code sites used: 2."
@@ -36129,19 +36663,23 @@ var claude_code_transcript_default = {
           "x-observed": true
         },
         lastPrompt: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         leafUuid: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          anyOf: [
+            {
+              type: "string"
+            },
+            {
+              type: "null"
+            }
+          ]
         },
         sessionId: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         explicit: {
           type: "boolean"
@@ -36159,25 +36697,38 @@ var claude_code_transcript_default = {
           const: "memory-mode"
         },
         mode: {
-          "x-unverified": true
+          enum: ["on", "off"]
         },
         afterUuid: {
-          "x-unverified": true
+          anyOf: [
+            {
+              type: "string"
+            },
+            {
+              type: "null"
+            }
+          ]
         },
         timestamp: {
-          "x-unverified": true
+          type: "string"
         },
         reason: {
-          "x-unverified": true
+          enum: [
+            "paused",
+            "account_off",
+            "account_read_only",
+            "session_shape",
+            "server_off"
+          ]
         },
         account: {
-          "x-unverified": true
+          type: "string"
         },
         accountChoice: {
-          "x-unverified": true
+          enum: ["on", "read_only", "off"]
         },
         sessionId: {
-          "x-unverified": true
+          type: "string"
         }
       },
       $comment: "Registry policy: accumulate. Code sites used: 2."
@@ -36189,12 +36740,10 @@ var claude_code_transcript_default = {
           const: "mode"
         },
         mode: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          enum: ["coordinator", "normal"]
         },
         sessionId: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          type: "string"
         }
       },
       $comment: "Registry policy: last-wins. Code sites used: 1."
@@ -36206,13 +36755,13 @@ var claude_code_transcript_default = {
           const: "observer-ref"
         },
         agentId: {
-          "x-unverified": true
+          type: "string"
         },
         observerTaskId: {
-          "x-unverified": true
+          type: "string"
         },
         observerAgentType: {
-          "x-unverified": true
+          type: "string"
         },
         timestamp: {
           type: "string"
@@ -36227,12 +36776,10 @@ var claude_code_transcript_default = {
           const: "permission-mode"
         },
         permissionMode: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         sessionId: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          type: "string"
         }
       },
       $comment: "Registry policy: last-wins. Code sites used: 1."
@@ -36244,20 +36791,16 @@ var claude_code_transcript_default = {
           const: "pr-link"
         },
         sessionId: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         prNumber: {
-          "x-unverified": true,
-          "x-observed-type": ["number"]
+          type: "integer"
         },
         prUrl: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         prRepository: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         timestamp: {
           type: "string"
@@ -36274,16 +36817,16 @@ var claude_code_transcript_default = {
         data: {
           properties: {
             type: {
-              "x-unverified": true
+              type: "string"
             },
             hookEvent: {
-              "x-unverified": true
+              type: "string"
             },
             hookName: {
-              "x-unverified": true
+              type: "string"
             },
             command: {
-              "x-unverified": true
+              type: "string"
             },
             promptText: {
               "x-unverified": true
@@ -36292,46 +36835,53 @@ var claude_code_transcript_default = {
               "x-unverified": true
             },
             toolName: {
-              "x-unverified": true
+              type: "string"
             },
             elapsedTimeSeconds: {
-              "x-unverified": true
+              type: "number"
             },
             output: {
-              "x-unverified": true
+              type: "string"
             },
             fullOutput: {
-              "x-unverified": true
+              type: "string"
             },
             totalLines: {
-              "x-unverified": true
+              type: "number"
             },
             totalBytes: {
-              "x-unverified": true
+              type: "number"
             },
             taskId: {
-              "x-unverified": true
+              type: "string"
             },
             timeoutMs: {
-              "x-unverified": true
+              type: "number"
             },
             message: {
-              "x-unverified": true
+              anyOf: [
+                {
+                  type: "string"
+                },
+                {
+                  type: "object"
+                }
+              ]
             },
             prompt: {
-              "x-unverified": true
+              type: "string"
             },
             agentId: {
-              "x-unverified": true
+              type: "string"
             },
             agentType: {
-              "x-unverified": true
+              type: "string"
             },
             isBuiltIn: {
-              "x-unverified": true
+              type: "boolean"
             },
             description: {
-              "x-unverified": true
+              type: "string"
             },
             resolvedModel: {
               "x-unverified": true
@@ -36340,79 +36890,79 @@ var claude_code_transcript_default = {
               "x-unverified": true
             },
             resolved: {
-              "x-unverified": true
+              type: "boolean"
             },
             attempt: {
-              "x-unverified": true
+              type: "number"
             },
             maxRetries: {
-              "x-unverified": true
+              type: "number"
             },
             retryDelayMs: {
-              "x-unverified": true
+              type: "number"
             },
             errorStatus: {
-              "x-unverified": true
+              type: "number"
             },
             errorCategory: {
               "x-unverified": true
             },
             resultCount: {
-              "x-unverified": true
+              type: "number"
             },
             query: {
-              "x-unverified": true
+              type: "string"
             },
             index: {
-              "x-unverified": true
+              type: "number"
             },
             title: {
-              "x-unverified": true
+              type: "string"
             },
             kind: {
-              "x-unverified": true
+              type: "string"
             },
             label: {
-              "x-unverified": true
+              type: "string"
             },
             phaseIndex: {
-              "x-unverified": true
+              type: "number"
             },
             phaseTitle: {
-              "x-unverified": true
+              type: "string"
             },
             isolation: {
-              "x-unverified": true
+              enum: ["worktree", "remote"]
             },
             model: {
               "x-unverified": true
             },
             state: {
-              "x-unverified": true
+              type: "string"
             },
             blocked: {
-              "x-unverified": true
+              type: "boolean"
             },
             error: {
-              "x-unverified": true
+              type: "string"
             },
             queuedAt: {
-              "x-unverified": true
+              type: "number"
             },
             promptPreview: {
-              "x-unverified": true
+              type: "string"
             },
             lastProgressAt: {
-              "x-unverified": true
+              type: "number"
             },
             startedAt: {
-              "x-unverified": true
+              type: "number"
             },
             cached: {
-              "x-unverified": true
+              type: "boolean"
             },
             resultPreview: {
-              "x-unverified": true
+              type: "string"
             },
             fallbackModel: {
               "x-unverified": true
@@ -36430,10 +36980,10 @@ var claude_code_transcript_default = {
               "x-unverified": true
             },
             tokens: {
-              "x-unverified": true
+              type: "number"
             },
             toolCalls: {
-              "x-unverified": true
+              type: "number"
             },
             durationMs: {
               "x-unverified": true
@@ -36442,7 +36992,7 @@ var claude_code_transcript_default = {
               "x-unverified": true
             },
             remoteSessionId: {
-              "x-unverified": true
+              type: "string"
             },
             status: {
               "x-unverified": true
@@ -36453,61 +37003,75 @@ var claude_code_transcript_default = {
           }
         },
         parentToolUseID: {
-          "x-unverified": true
+          type: "string"
         },
         toolUseID: {
-          "x-unverified": true
+          type: "string"
         },
         timestamp: {
           type: "string"
         },
         uuid: {
-          "x-unverified": true
+          type: "string"
         },
         parentUuid: {
-          "x-unverified": true
+          anyOf: [
+            {
+              type: "string"
+            },
+            {
+              type: "null"
+            }
+          ]
         },
         logicalParentUuid: {
-          "x-unverified": true
+          anyOf: [
+            {
+              type: "string"
+            },
+            {
+              type: "null"
+            }
+          ]
         },
         isSidechain: {
-          "x-unverified": true
+          type: "boolean"
         },
         teamName: {
-          "x-unverified": true
+          type: "string"
         },
         agentName: {
-          "x-unverified": true
+          type: "string"
         },
         promptId: {
-          "x-unverified": true
+          type: "string"
         },
         agentId: {
-          "x-unverified": true
+          type: "string"
         },
         sessionKind: {
-          "x-unverified": true
+          enum: ["bg", "daemon", "daemon-worker"]
         },
         userType: {
           type: "string"
         },
         entrypoint: {
-          "x-unverified": true
+          type: "string"
         },
         cwd: {
-          "x-unverified": true
+          type: "string"
         },
         sessionId: {
-          "x-unverified": true
+          type: "string"
         },
         version: {
           type: "string"
         },
         gitBranch: {
-          "x-unverified": true
+          type: "string"
         },
         slug: {
-          "x-unverified": true
+          type: "string"
         }
       },
       $comment: "Registry policy: boundary-cleared. Code sites used: 42."
@@ -36528,26 +37092,21 @@ var claude_code_transcript_default = {
           "x-observed": true
         },
         sessionId: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         content: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         reason: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         commandUuid: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         deliveryId: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          type: "string"
         }
       },
       $comment: "Registry policy: last-wins. Code sites used: 1."
@@ -36559,10 +37118,10 @@ var claude_code_transcript_default = {
           const: "relocated"
         },
         relocatedCwd: {
-          "x-unverified": true
+          type: "string"
         },
         sessionId: {
-          "x-unverified": true
+          type: "string"
         }
       },
       $comment: "Registry policy: last-wins. Code sites used: 5."
@@ -36588,26 +37147,22 @@ var claude_code_transcript_default = {
           "x-observed": true
         },
         content: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         isMeta: {
           type: "boolean"
         },
         timestamp: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         uuid: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         level: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          enum: ["info", "notice", "suggestion", "warning", "error"]
         },
         highlight: {
           "x-unverified": true
@@ -36616,31 +37171,63 @@ var claude_code_transcript_default = {
           type: "array"
         },
         direction: {
-          "x-unverified": true
+          enum: ["retry", "revert", "sticky"]
         },
         scope: {
-          "x-unverified": true
+          enum: ["session", "local"]
         },
         trigger: {
-          "x-unverified": true
+          enum: [
+            "refusal",
+            "model_not_found",
+            "permission_denied",
+            "overloaded",
+            "server_error",
+            "last_resort",
+            "model_blocked"
+          ]
         },
         originalModel: {
-          "x-unverified": true
+          type: "string"
         },
         fallbackModel: {
-          "x-unverified": true
+          type: "string"
         },
         requestId: {
-          "x-unverified": true
+          anyOf: [
+            {
+              type: "string"
+            },
+            {
+              type: "null"
+            }
+          ]
         },
         apiRefusalCategory: {
-          "x-unverified": true
+          anyOf: [
+            {
+              type: "string"
+            },
+            {
+              type: "null"
+            }
+          ]
         },
         apiRefusalExplanation: {
-          "x-unverified": true
+          anyOf: [
+            {
+              type: "string"
+            },
+            {
+              type: "null"
+            }
+          ]
         },
         commands: {
-          "x-unverified": true
+          type: "array",
+          items: {
+            type: "string"
+          }
         },
         url: {
           type: "string"
@@ -36652,13 +37239,13 @@ var claude_code_transcript_default = {
           type: "string"
         },
         taskId: {
-          "x-unverified": true
+          type: "string"
         },
         cron: {
-          "x-unverified": true
+          type: "string"
         },
         prompt: {
-          "x-unverified": true
+          type: "string"
         },
         taskKind: {
           const: "loop"
@@ -36667,10 +37254,10 @@ var claude_code_transcript_default = {
           type: "string"
         },
         noOpStreak: {
-          "x-unverified": true
+          type: "number"
         },
         streakStartedAt: {
-          "x-unverified": true
+          type: "string"
         },
         foldedUuids: {
           type: "array"
@@ -36696,18 +37283,16 @@ var claude_code_transcript_default = {
           "x-observed": true
         },
         stopReason: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         hasOutput: {
           type: "boolean",
           "x-observed": true
         },
         toolUseID: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         hookLabel: {
           "x-unverified": true
@@ -36716,42 +37301,153 @@ var claude_code_transcript_default = {
           "x-unverified": true
         },
         durationMs: {
-          "x-unverified": true,
-          "x-observed-type": ["number"]
+          type: "number"
         },
         messageCount: {
           type: "number"
         },
         pendingBackgroundAgentCount: {
-          "x-unverified": true,
-          "x-observed-type": ["number"]
+          type: "number"
         },
         pendingWorkflowCount: {
-          "x-unverified": true
+          type: "number"
         },
         writtenPaths: {
-          "x-unverified": true
+          type: "array",
+          items: {
+            type: "string"
+          }
         },
         contextUsage: {
-          "x-unverified": true,
-          "x-observed-type": ["object"]
+          type: "object",
+          properties: {
+            model: {
+              type: "string"
+            },
+            total_tokens: {
+              type: "number"
+            },
+            raw_max_tokens: {
+              type: "number"
+            },
+            percentage: {
+              type: "number"
+            },
+            over_limit: {
+              type: "object",
+              properties: {
+                tokens_over: {
+                  type: "number"
+                },
+                kind: {
+                  type: "string"
+                }
+              }
+            },
+            categories: {
+              type: "array",
+              items: {
+                type: "object",
+                properties: {
+                  name: {
+                    type: "string"
+                  },
+                  tokens: {
+                    type: "number"
+                  },
+                  kind: {
+                    type: "string"
+                  }
+                }
+              }
+            },
+            mcp_tools: {
+              type: "array",
+              items: {
+                type: "object",
+                properties: {
+                  name: {
+                    type: "string"
+                  },
+                  server_name: {
+                    type: "string"
+                  },
+                  tokens: {
+                    type: "number"
+                  }
+                }
+              }
+            },
+            memory_files: {
+              type: "array",
+              items: {
+                type: "object",
+                properties: {
+                  path: {
+                    type: "string"
+                  },
+                  type: {
+                    type: "string"
+                  },
+                  tokens: {
+                    type: "number"
+                  }
+                }
+              }
+            },
+            agents: {
+              type: "array",
+              items: {
+                type: "object",
+                properties: {
+                  agent_type: {
+                    type: "string"
+                  },
+                  source: {
+                    type: "string"
+                  },
+                  tokens: {
+                    type: "number"
+                  }
+                }
+              }
+            },
+            skills: {
+              type: "array",
+              items: {
+                type: "object",
+                properties: {
+                  name: {
+                    type: "string"
+                  },
+                  source: {
+                    type: "string"
+                  },
+                  plugin_name: {
+                    type: "string"
+                  },
+                  tokens: {
+                    type: "number"
+                  }
+                }
+              }
+            }
+          }
         },
         usageReport: {
-          "x-unverified": true
+          type: "object"
         },
         commandRun: {
           type: "object",
           properties: {
             command: {
-              "x-unverified": true,
-              "x-observed-type": ["string"]
+              type: "string"
             },
             args: {
-              "x-unverified": true,
-              "x-observed-type": ["string"]
+              type: "string"
             },
             plugin: {
-              "x-unverified": true
+              type: "string"
             }
           }
         },
@@ -36759,47 +37455,42 @@ var claude_code_transcript_default = {
           type: "object",
           properties: {
             kind: {
-              "x-unverified": true
+              type: "string"
             },
             suggestion: {
-              "x-unverified": true
+              type: "string"
             }
           }
         },
         submitUuid: {
-          "x-unverified": true
+          type: "string"
         },
         compactMetadata: {
           type: "object",
           properties: {
             trigger: {
-              "x-unverified": true,
-              "x-observed-type": ["string"]
+              enum: ["manual", "auto"]
             },
             preTokens: {
-              "x-unverified": true,
-              "x-observed-type": ["number"]
+              type: "number"
             },
             userContext: {
-              "x-unverified": true
+              type: "string"
             },
             messagesSummarized: {
-              "x-unverified": true
+              type: "number"
             },
             postTokens: {
-              "x-unverified": true,
-              "x-observed-type": ["number"]
+              type: "number"
             },
             cumulativeDroppedTokens: {
-              "x-unverified": true,
-              "x-observed-type": ["number"]
+              type: "number"
             },
             durationMs: {
-              "x-unverified": true,
-              "x-observed-type": ["number"]
+              type: "number"
             },
             precomputed: {
-              "x-unverified": true
+              type: "boolean"
             },
             preCompactDiscoveredTools: {
               type: "array"
@@ -36811,16 +37502,13 @@ var claude_code_transcript_default = {
               type: "object",
               properties: {
                 headUuid: {
-                  "x-unverified": true,
-                  "x-observed-type": ["string"]
+                  type: "string"
                 },
                 anchorUuid: {
-                  "x-unverified": true,
-                  "x-observed-type": ["string"]
+                  type: "string"
                 },
                 tailUuid: {
-                  "x-unverified": true,
-                  "x-observed-type": ["string"]
+                  type: "string"
                 }
               }
             },
@@ -36828,8 +37516,7 @@ var claude_code_transcript_default = {
               type: "object",
               properties: {
                 anchorUuid: {
-                  "x-unverified": true,
-                  "x-observed-type": ["string"]
+                  type: "string"
                 },
                 uuids: {
                   type: "array"
@@ -36842,57 +37529,63 @@ var claude_code_transcript_default = {
           }
         },
         logicalParentUuid: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          anyOf: [
+            {
+              type: "string"
+            },
+            {
+              type: "null"
+            }
+          ]
         },
         error: {
           type: "object",
           properties: {
             message: {
-              "x-unverified": true
+              type: "string"
             },
             status: {
-              "x-unverified": true
+              type: "number"
             },
             requestId: {
-              "x-unverified": true
+              type: "string"
             },
             formatted: {
-              "x-unverified": true
+              type: "string"
             },
             connection: {
               properties: {
                 code: {
-                  "x-unverified": true
+                  type: "string"
                 },
                 message: {
-                  "x-unverified": true
+                  type: "string"
                 },
                 isSSLError: {
-                  "x-unverified": true
+                  type: "boolean"
                 }
               }
             },
             isNetworkDown: {
-              "x-unverified": true
+              type: "boolean"
             },
             rateLimits: {
               properties: {
                 rateLimitType: {
-                  "x-unverified": true
+                  type: "string"
                 },
                 resetsAt: {
-                  "x-unverified": true
+                  type: "integer"
                 }
               }
             },
             noResponse: {
               properties: {
                 waitedMs: {
-                  "x-unverified": true
+                  type: "number"
                 },
                 retryWaitMs: {
-                  "x-unverified": true
+                  type: "number"
                 }
               }
             },
@@ -36905,10 +37598,10 @@ var claude_code_transcript_default = {
           type: "number"
         },
         retryAttempt: {
-          "x-unverified": true
+          type: "number"
         },
         maxRetries: {
-          "x-unverified": true
+          type: "number"
         },
         source: {
           type: "string"
@@ -36923,67 +37616,91 @@ var claude_code_transcript_default = {
           type: "boolean"
         },
         retractedMessageUuids: {
-          "x-unverified": true
+          type: "array",
+          items: {
+            type: "string"
+          }
         },
         refusedUserMessageUuid: {
-          "x-unverified": true
+          anyOf: [
+            {
+              type: "string"
+            },
+            {
+              type: "null"
+            }
+          ]
         },
         provisional: {
-          "x-unverified": true
+          type: "boolean"
         },
         choice: {
-          "x-unverified": true
+          enum: ["consent", "switch_default", "cancelled"]
         },
         originalModelName: {
-          "x-unverified": true
+          type: "string"
         },
         persistedAsDefault: {
-          "x-unverified": true
+          type: "boolean"
         },
         compact_metadata: {
           type: "object",
           properties: {
             trigger: {
-              "x-unverified": true
+              enum: ["manual", "auto"]
             },
             pre_tokens: {
-              "x-unverified": true
+              type: "number"
             },
             post_tokens: {
-              "x-unverified": true
+              type: "number"
             },
             cumulative_dropped_tokens: {
-              "x-unverified": true
+              type: "number"
             },
             duration_ms: {
-              "x-unverified": true
+              type: "number"
             },
             user_context: {
-              "x-unverified": true
+              type: "string"
             },
             messages_summarized: {
-              "x-unverified": true
+              type: "number"
             },
             precomputed: {
-              "x-unverified": true
+              type: "boolean"
             },
             pre_compact_discovered_tools: {
-              "x-unverified": true
+              type: "array",
+              items: {
+                type: "string"
+              }
             },
             pre_compact_artifact_read_versions: {
-              "x-unverified": true
+              type: "array",
+              items: {
+                type: "object",
+                properties: {
+                  slug: {
+                    type: "string"
+                  },
+                  ver: {
+                    type: "string"
+                  }
+                }
+              }
             },
             preserved_segment: {
               type: "object",
               properties: {
                 head_uuid: {
-                  "x-unverified": true
+                  type: "string"
                 },
                 anchor_uuid: {
-                  "x-unverified": true
+                  type: "string"
                 },
                 tail_uuid: {
-                  "x-unverified": true
+                  type: "string"
                 }
               }
             },
@@ -36991,41 +37708,85 @@ var claude_code_transcript_default = {
               type: "object",
               properties: {
                 anchor_uuid: {
-                  "x-unverified": true
+                  type: "string"
                 },
                 uuids: {
-                  "x-unverified": true
+                  type: "array",
+                  items: {
+                    type: "string"
+                  }
                 },
                 all_uuids: {
-                  "x-unverified": true
+                  type: "array",
+                  items: {
+                    type: "string"
+                  }
                 }
               }
             }
           }
         },
         logical_parent_uuid: {
-          "x-unverified": true
+          anyOf: [
+            {
+              type: "string"
+            },
+            {
+              type: "null"
+            }
+          ]
         },
         original_model: {
-          "x-unverified": true
+          type: "string"
         },
         fallback_model: {
-          "x-unverified": true
+          type: "string"
         },
         request_id: {
-          "x-unverified": true
+          anyOf: [
+            {
+              type: "string"
+            },
+            {
+              type: "null"
+            }
+          ]
         },
         api_refusal_category: {
-          "x-unverified": true
+          anyOf: [
+            {
+              type: "string"
+            },
+            {
+              type: "null"
+            }
+          ]
         },
         api_refusal_explanation: {
-          "x-unverified": true
+          anyOf: [
+            {
+              type: "string"
+            },
+            {
+              type: "null"
+            }
+          ]
         },
         retracted_message_uuids: {
-          "x-unverified": true
+          type: "array",
+          items: {
+            type: "string"
+          }
         },
         refused_user_message_uuid: {
-          "x-unverified": true
+          anyOf: [
+            {
+              type: "string"
+            },
+            {
+              type: "null"
+            }
+          ]
         },
         saw_cyber_refusal: {
           type: "boolean"
@@ -37034,7 +37795,7 @@ var claude_code_transcript_default = {
           type: "string"
         },
         live_turn_id: {
-          "x-unverified": true
+          type: "string"
         },
         stored_through_live_index: {
           type: "number"
@@ -37043,68 +37804,67 @@ var claude_code_transcript_default = {
           type: "boolean"
         },
         preventContinuation: {
-          "x-unverified": true
+          type: "boolean"
         },
         source_uuid: {
-          "x-unverified": true
+          type: "string"
         },
         parentUuid: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["null", "string"]
+          anyOf: [
+            {
+              type: "string"
+            },
+            {
+              type: "null"
+            }
+          ]
         },
         isSidechain: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["boolean"]
+          type: "boolean"
         },
         teamName: {
-          "x-unverified": true
+          type: "string"
         },
         agentName: {
-          "x-unverified": true
+          type: "string"
         },
         promptId: {
-          "x-unverified": true
+          type: "string"
         },
         agentId: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         sessionKind: {
-          "x-unverified": true
+          enum: ["bg", "daemon", "daemon-worker"]
         },
         userType: {
           type: "string",
           "x-observed": true
         },
         entrypoint: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         cwd: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         sessionId: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         version: {
           type: "string",
           "x-observed": true
         },
         gitBranch: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         slug: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          type: "string"
         }
       },
       $comment: "Registry policy: transcript. Code sites used: 47."
@@ -37116,10 +37876,10 @@ var claude_code_transcript_default = {
           const: "tag"
         },
         tag: {
-          "x-unverified": true
+          type: "string"
         },
         sessionId: {
-          "x-unverified": true
+          type: "string"
         }
       },
       $comment: "Registry policy: last-wins. Code sites used: 1."
@@ -37134,92 +37894,158 @@ var claude_code_transcript_default = {
         message: {
           properties: {
             role: {
-              "x-unverified": true,
-              "x-observed-type": ["string"]
+              const: "user"
             },
             content: {
-              "x-unverified": true,
-              "x-observed-type": ["array", "string"]
+              anyOf: [
+                {
+                  type: "string"
+                },
+                {
+                  type: "array",
+                  items: {
+                    type: "object"
+                  }
+                }
+              ]
             }
           },
           "x-observed": true
         },
         isMeta: {
-          "x-unverified": true,
-          "x-observed-type": ["boolean"]
+          type: "boolean"
         },
         promptShellHandOff: {
-          "x-unverified": true
+          type: "object",
+          properties: {
+            agentId: {
+              anyOf: [
+                {
+                  type: "string"
+                },
+                {
+                  type: "null"
+                }
+              ]
+            },
+            commands: {
+              type: "array"
+            }
+          }
         },
         mcpSkill: {
-          "x-unverified": true
+          type: "object",
+          properties: {
+            name: {
+              type: "string"
+            }
+          }
         },
         ephemeral: {
-          "x-unverified": true
+          type: "boolean"
         },
         turnCompanion: {
-          "x-unverified": true,
-          "x-observed-type": ["boolean"]
+          type: "boolean"
         },
         usageLimitNote: {
-          "x-unverified": true
+          enum: ["wrap_up", "release", "near_limit"]
         },
         replacesSpan: {
           "x-unverified": true
         },
         isVisibleInTranscriptOnly: {
-          "x-unverified": true,
-          "x-observed-type": ["boolean"]
+          type: "boolean"
         },
         isVirtual: {
-          "x-unverified": true
+          type: "boolean"
         },
         isCompactSummary: {
-          "x-unverified": true,
-          "x-observed-type": ["boolean"]
+          type: "boolean"
         },
         repeatsCompactSummary: {
-          "x-unverified": true
+          type: "boolean"
         },
         modelOnlyText: {
           "x-unverified": true
         },
         summarizeMetadata: {
-          "x-unverified": true
+          type: "object",
+          properties: {
+            messagesSummarized: {
+              type: "integer"
+            },
+            userContext: {
+              type: "string"
+            },
+            direction: {
+              type: "string"
+            }
+          }
         },
         uuid: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         timestamp: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         toolUseResult: {
           properties: {
             type: {
-              "x-unverified": true,
-              "x-observed-type": ["string"]
+              type: "string"
             },
             filePath: {
-              "x-unverified": true,
-              "x-observed-type": ["string"]
+              type: "string"
             },
             content: {
-              "x-unverified": true,
-              "x-observed-type": ["array", "string"]
+              anyOf: [
+                {
+                  type: "string"
+                },
+                {
+                  type: "array"
+                }
+              ]
             },
             structuredPatch: {
-              "x-unverified": true,
-              "x-observed-type": ["array"]
+              type: "array",
+              items: {
+                type: "object",
+                properties: {
+                  oldStart: {
+                    type: "integer"
+                  },
+                  oldLines: {
+                    type: "integer"
+                  },
+                  newStart: {
+                    type: "integer"
+                  },
+                  newLines: {
+                    type: "integer"
+                  },
+                  lines: {
+                    type: "array",
+                    items: {
+                      type: "string"
+                    }
+                  }
+                }
+              }
             },
             originalFile: {
-              "x-unverified": true,
-              "x-observed-type": ["null", "string"]
+              anyOf: [
+                {
+                  type: "string"
+                },
+                {
+                  type: "null"
+                }
+              ]
             }
           },
+          type: ["object", "string", "array"],
           "x-observed": true
         },
         classifierMetaLines: {
@@ -37236,14 +38062,13 @@ var claude_code_transcript_default = {
           "x-unverified": true
         },
         toolDenialKind: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         toolDenialEndsTurn: {
-          "x-unverified": true
+          type: "boolean"
         },
         toolDenialMonitorBlocked: {
-          "x-unverified": true
+          type: "boolean"
         },
         toolDenialUnanswered: {
           "x-unverified": true
@@ -37260,125 +38085,158 @@ var claude_code_transcript_default = {
           "x-observed-type": ["object"]
         },
         sandboxViolations: {
-          "x-unverified": true,
-          "x-observed-type": ["array"]
+          type: "array"
         },
         sandboxed: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["boolean"]
+          type: "boolean"
         },
         mcpMeta: {
-          "x-unverified": true,
-          "x-observed-type": ["object"]
+          type: "object",
+          properties: {
+            _meta: {
+              type: "object"
+            },
+            structuredContent: {
+              type: "object"
+            }
+          }
         },
         toolEndsTurn: {
-          "x-unverified": true,
-          "x-observed-type": ["boolean"]
+          type: "boolean"
         },
         imagePasteIds: {
-          "x-unverified": true,
-          "x-observed-type": ["array"]
+          type: "array",
+          items: {
+            type: "integer"
+          }
         },
         sourceToolAssistantUUID: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         permissionMode: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          enum: [
+            "acceptEdits",
+            "auto",
+            "bypassPermissions",
+            "default",
+            "dontAsk",
+            "plan"
+          ]
         },
         origin: {
-          "x-unverified": true,
-          "x-observed-type": ["object"]
+          type: "object",
+          properties: {
+            kind: {
+              type: "string"
+            },
+            name: {
+              type: "string"
+            },
+            asUser: {
+              type: "boolean"
+            },
+            server: {
+              type: "string"
+            },
+            subkind: {
+              type: "string"
+            },
+            plugin: {
+              type: "string"
+            }
+          }
         },
         promptSource: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          enum: ["typed", "queued", "suggestion_accepted", "sdk", "system"]
         },
         promptId: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         interruptedMessageId: {
-          "x-unverified": true
+          type: "string"
         },
         refusedMessageId: {
           "x-unverified": true
         },
         interruptedByShutdown: {
-          "x-unverified": true
+          type: "boolean"
         },
         remoteToolDenialKind: {
           "x-unverified": true
         },
         parentUuid: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["null", "string"]
+          anyOf: [
+            {
+              type: "string"
+            },
+            {
+              type: "null"
+            }
+          ]
         },
         logicalParentUuid: {
-          "x-unverified": true
+          anyOf: [
+            {
+              type: "string"
+            },
+            {
+              type: "null"
+            }
+          ]
         },
         isSidechain: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["boolean"]
+          type: "boolean"
         },
         teamName: {
-          "x-unverified": true
+          type: "string"
         },
         agentName: {
-          "x-unverified": true
+          type: "string"
         },
         agentId: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         sessionKind: {
-          "x-unverified": true
+          enum: ["bg", "daemon", "daemon-worker"]
         },
         userType: {
           type: "string",
           "x-observed": true
         },
         entrypoint: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         cwd: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         sessionId: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         version: {
           type: "string",
           "x-observed": true
         },
         gitBranch: {
-          "x-unverified": true,
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         slug: {
-          "x-unverified": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         turnOrigin: {
-          "x-unverified": true,
           $comment: "Added after the line is built, by a copy of the line or a spread into one.",
           "x-observed": true,
-          "x-observed-type": ["string"]
+          type: "string"
         },
         turnPosition: {
           type: ["object", "string"],
@@ -37397,45 +38255,45 @@ var claude_code_transcript_default = {
         worktreeSession: {
           properties: {
             originalCwd: {
-              "x-unverified": true
+              type: "string"
             },
             preEnterOriginalCwd: {
-              "x-unverified": true
+              type: "string"
             },
             worktreePath: {
-              "x-unverified": true
+              type: "string"
             },
             worktreeName: {
-              "x-unverified": true
+              type: "string"
             },
             worktreeBranch: {
-              "x-unverified": true
+              type: "string"
             },
             originalBranch: {
-              "x-unverified": true
+              type: "string"
             },
             originalHeadCommit: {
-              "x-unverified": true
+              type: "string"
             },
             sessionId: {
-              "x-unverified": true
+              type: "string"
             },
             tmuxSessionName: {
-              "x-unverified": true
+              type: "string"
             },
             hookBased: {
-              "x-unverified": true
+              type: "boolean"
             },
             enteredExisting: {
-              "x-unverified": true
+              type: "boolean"
             },
             madeElsewhere: {
-              "x-unverified": true
+              enum: ["resumedByName", "enteredByPath"]
             }
           }
         },
         sessionId: {
-          "x-unverified": true
+          type: "string"
         }
       },
       $comment: "Registry policy: last-wins. Code sites used: 2."

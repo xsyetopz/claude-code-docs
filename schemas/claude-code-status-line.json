@@ -21,14 +21,14 @@
       "x-observed": true
     },
     "scratchpad_dir": {
-      "x-unverified": true
+      "type": "string"
     },
     "prompt_id": {
       "type": "string",
       "description": "Optional: UUID of the prompt being processed (same as OTel prompt.id)"
     },
     "agent_type": {
-      "x-unverified": true
+      "type": "string"
     },
     "session_name": {
       "type": "string",
@@ -110,24 +110,19 @@
       "type": "object",
       "properties": {
         "total_cost_usd": {
-          "x-unverified": true,
-          "x-observed-type": ["number"]
+          "type": "number"
         },
         "total_duration_ms": {
-          "x-unverified": true,
-          "x-observed-type": ["number"]
+          "type": "number"
         },
         "total_api_duration_ms": {
-          "x-unverified": true,
-          "x-observed-type": ["number"]
+          "type": "number"
         },
         "total_lines_added": {
-          "x-unverified": true,
-          "x-observed-type": ["number"]
+          "type": "number"
         },
         "total_lines_removed": {
-          "x-unverified": true,
-          "x-observed-type": ["number"]
+          "type": "number"
         }
       },
       "x-observed": true
@@ -188,9 +183,8 @@
       "x-observed": true
     },
     "exceeds_200k_tokens": {
-      "x-unverified": true,
       "x-observed": true,
-      "x-observed-type": ["boolean"]
+      "type": "boolean"
     },
     "prompt_cache": {
       "type": "object",
@@ -298,9 +292,8 @@
       "description": "Optional: prompt-cache health for the main conversation; present after the first API response"
     },
     "fast_mode": {
-      "x-unverified": true,
       "x-observed": true,
-      "x-observed-type": ["boolean"]
+      "type": "boolean"
     },
     "effort": {
       "type": "object",
@@ -407,7 +400,7 @@
       "type": "object",
       "properties": {
         "session_id": {
-          "x-unverified": true
+          "type": "string"
         }
       }
     },
@@ -480,7 +473,7 @@
           "x-observed": true
         },
         "scratchpad_dir": {
-          "x-unverified": true
+          "type": "string"
         },
         "prompt_id": {
           "type": "string",
@@ -488,7 +481,7 @@
           "x-observed": true
         },
         "agent_type": {
-          "x-unverified": true
+          "type": "string"
         },
         "columns": {
           "type": "number",
@@ -500,58 +493,63 @@
             "type": "object",
             "properties": {
               "id": {
-                "x-unverified": true,
-                "x-observed-type": ["string"]
+                "type": "string"
               },
               "name": {
-                "x-unverified": true
+                "type": "string"
               },
               "type": {
-                "x-unverified": true,
-                "x-observed-type": ["string"]
+                "const": "local_agent"
               },
               "agentType": {
-                "x-unverified": true,
-                "x-observed-type": ["string"]
+                "type": "string"
               },
               "status": {
-                "x-unverified": true,
-                "x-observed-type": ["string"]
+                "enum": [
+                  "pending",
+                  "running",
+                  "completed",
+                  "failed",
+                  "killed",
+                  "paused"
+                ]
               },
               "description": {
-                "x-unverified": true,
-                "x-observed-type": ["string"]
+                "type": "string"
               },
               "label": {
-                "x-unverified": true,
-                "x-observed-type": ["string"]
+                "type": "string"
               },
               "startTime": {
-                "x-unverified": true,
-                "x-observed-type": ["number"]
+                "type": "number"
               },
               "model": {
-                "x-unverified": true,
-                "x-observed-type": ["string"]
+                "type": "string"
               },
               "effort": {
-                "x-unverified": true
+                "anyOf": [
+                  {
+                    "enum": ["low", "medium", "high", "xhigh", "max"]
+                  },
+                  {
+                    "type": "integer"
+                  }
+                ]
               },
               "contextWindowSize": {
-                "x-unverified": true,
-                "x-observed-type": ["number"]
+                "type": "number"
               },
               "tokenCount": {
-                "x-unverified": true,
-                "x-observed-type": ["number"]
+                "type": "number"
               },
               "tokenSamples": {
-                "x-unverified": true,
-                "x-observed-type": ["array"]
+                "type": "array",
+                "items": {
+                  "type": "number"
+                }
               },
               "cwd": {
-                "x-unverified": true,
-                "x-observed-type": ["string"]
+                "type": "string"
               }
             }
           },

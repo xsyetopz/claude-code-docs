@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { applyManual } from "./manual.ts";
+import { anchorIn, applyManual } from "./manual.ts";
 
 const unk = { "x-unverified": true };
 const schema = {
@@ -59,5 +59,19 @@ describe("applyManual", () => {
       "a.id": { string: 5, number: 2, null: 1 },
     });
     expect(out.missed).toEqual(["a.id: real payloads also had number"]);
+  });
+});
+
+describe("anchorIn", () => {
+  const has = anchorIn(
+    "var aPo={skill:f(()=>sPo().strict())};name:mg().optional()",
+  );
+  test("matches a renamed identifier at each «»", () => {
+    expect(has("«»={skill:«»(()=>«»().strict())}")).toBe(true);
+    expect(has("name:«»().optional()")).toBe(true);
+  });
+  test("does not match when the fixed text differs", () => {
+    expect(has("name:«»().required()")).toBe(false);
+    expect(has("«».«»")).toBe(false);
   });
 });

@@ -10,12 +10,12 @@
       "default": 0
     },
     "installMethod": {
-      "x-unverified": true,
-      "x-user-settable": true
+      "x-user-settable": true,
+      "enum": ["local", "global", "native", "unknown", "development"]
     },
     "autoUpdates": {
-      "x-unverified": true,
-      "x-user-settable": true
+      "x-user-settable": true,
+      "type": "boolean"
     },
     "theme": {
       "type": "string",
@@ -175,96 +175,99 @@
       "x-user-settable": true
     },
     "apiKeyHelper": {
-      "x-unverified": true,
-      "x-user-settable": true
+      "x-user-settable": true,
+      "type": "string"
     },
     "autoUpdatesProtectedForNative": {
-      "x-unverified": true,
-      "x-user-settable": true
+      "x-user-settable": true,
+      "type": "boolean"
     },
     "shiftEnterKeyBindingInstalled": {
-      "x-unverified": true,
-      "x-user-settable": true
+      "x-user-settable": true,
+      "type": "boolean"
     },
     "hasUsedBackslashReturn": {
-      "x-unverified": true,
-      "x-user-settable": true
+      "x-user-settable": true,
+      "type": "boolean"
     },
     "diffSidebarOpen": {
-      "x-unverified": true,
-      "x-user-settable": true
+      "x-user-settable": true,
+      "type": "boolean"
     },
     "showStatusInTerminalTab": {
-      "x-unverified": true,
-      "x-user-settable": true
+      "x-user-settable": true,
+      "type": "boolean"
     },
     "taskCompleteNotifEnabled": {
       "x-unverified": true,
       "x-user-settable": true
     },
     "inputNeededNotifEnabled": {
-      "x-unverified": true,
-      "x-user-settable": true
+      "x-user-settable": true,
+      "type": "boolean"
     },
     "agentPushNotifEnabled": {
-      "x-unverified": true,
-      "x-user-settable": true
+      "x-user-settable": true,
+      "type": "boolean"
     },
     "claudeInChromeDefaultEnabled": {
-      "x-unverified": true,
-      "x-user-settable": true
+      "x-user-settable": true,
+      "type": "boolean"
     },
     "hasCompletedClaudeInChromeOnboarding": {
-      "x-unverified": true,
-      "x-user-settable": true
+      "x-user-settable": true,
+      "type": "boolean"
     },
     "lspRecommendationDisabled": {
-      "x-unverified": true,
-      "x-user-settable": true
+      "x-user-settable": true,
+      "type": "boolean"
     },
     "lspRecommendationNeverPlugins": {
-      "x-unverified": true,
-      "x-user-settable": true
+      "x-user-settable": true,
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
     },
     "lspRecommendationIgnoredCount": {
-      "x-unverified": true,
-      "x-user-settable": true
+      "x-user-settable": true,
+      "type": "integer"
     },
     "copyOnSelect": {
-      "x-unverified": true,
-      "x-user-settable": true
+      "x-user-settable": true,
+      "type": "boolean"
     },
     "leftArrowOpensAgents": {
-      "x-unverified": true,
-      "x-user-settable": true
+      "x-user-settable": true,
+      "type": "boolean"
     },
     "defaultToAgentsView": {
-      "x-unverified": true,
-      "x-user-settable": true
+      "x-user-settable": true,
+      "type": "boolean"
     },
     "prStatusFooterEnabled": {
-      "x-unverified": true,
-      "x-user-settable": true
+      "x-user-settable": true,
+      "type": "boolean"
     },
     "remoteControlAtStartup": {
-      "x-unverified": true,
-      "x-user-settable": true
+      "x-user-settable": true,
+      "type": "boolean"
     },
     "autoUploadSessions": {
-      "x-unverified": true,
-      "x-user-settable": true
+      "x-user-settable": true,
+      "type": "boolean"
     },
     "autoAddRemoteControlDaemonWorker": {
       "x-unverified": true,
       "x-user-settable": true
     },
     "remoteDialogSeen": {
-      "x-unverified": true,
-      "x-user-settable": true
+      "x-user-settable": true,
+      "type": "boolean"
     },
     "workflowSizeGuideline": {
-      "x-unverified": true,
-      "x-user-settable": true
+      "x-user-settable": true,
+      "enum": ["unrestricted", "small", "medium", "large"]
     },
     "projects": {
       "type": "object",

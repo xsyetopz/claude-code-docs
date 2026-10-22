@@ -41,7 +41,7 @@ import {
 } from "../../inspect/mcp/src/resolve.ts";
 import { CLAUDE_CODE_VERSION } from "../../src/version.ts";
 import { splitTop } from "./jsparse.ts";
-import { applyManual } from "./manual.ts";
+import { anchorIn, applyManual } from "./manual.ts";
 import { applyObserved } from "./observed.ts";
 
 type Json = Record<string, unknown>;
@@ -594,6 +594,10 @@ const buildTranscript = (): { file: string; schema: Json } => {
       for (const [k, v] of Object.entries(props(common)))
         if (!(k in withType)) withType[k] = v;
     if (use.length === 0) noCode.push(t);
+    // toolUseResult is a tool's output data (an object, or an array or a string for some tools) or an error string.
+    const tur = withType["toolUseResult"];
+    if (t === "user" && tur && !tur["type"])
+      tur["type"] = ["object", "string", "array"];
     const seen = facts[`line.${t}`];
     if (Array.isArray(seen)) {
       // A key a probe saw that no constructor has is added by a later step: find that write.
@@ -1078,7 +1082,7 @@ const builders = [
 const check = argv.includes("--check");
 let stale = 0;
 const program = mods.map((m) => m.text).join("\n");
-const inProgram = (s: string): boolean => program.includes(s);
+const inProgram = anchorIn(program);
 for (const b of builders) {
   const { file, schema: built } = b();
   // Types read by hand from the program, from tools/schemas/manual/; these drop "x-unverified".
