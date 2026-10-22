@@ -2,7 +2,6 @@
 // baseline runs (A plain, B tool+plugin+hooks); the result is which signature keys change, minus baseline noise.
 // The name list comes from release:diff's extractor over the cached strings dump, not from a saved file.
 import { readFileSync } from "node:fs";
-import { claimsForProbe } from "../../claims/map.ts";
 import { extractEnv } from "../../diff/extract.ts";
 import { dumpStrings } from "../../diff/strings.ts";
 import { assertSafeEnv, binaryPath, childEnv, PROMPT } from "../../lib/env.ts";
@@ -66,7 +65,7 @@ const run = async (ctx: PrintCtx): Promise<CaseResult[]> => {
     exit: null,
     timedOut: false,
     facts: normalise(facts),
-    claims: claimsForProbe(ID),
+    claims: [],
     ...extra,
   });
   if (ctx.dry) return [base({})];

@@ -2,7 +2,6 @@
 // and mitm2.ts modes. The program runs with the real token behind the local proxy; everything else is forwarded.
 // No prompt is sent, but interactive startup makes a few small API requests of its own (title and similar calls). CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC is left out on purpose:
 // with it set the panel never calls the endpoint (docs/reference/probes.md).
-import { claimsForProbe } from "../../claims/map.ts";
 import { type Fault, startMitm, USAGE_PATH } from "../../lib/mitm.ts";
 import type { Fact } from "../../lib/results.ts";
 import { READY } from "../pty/harness.ts";
@@ -91,7 +90,6 @@ const usageCase = (f: (typeof FAULTS)[number]): LiveCase => ({
           prompt: "",
           exit: pty.exit,
           facts,
-          claims: claimsForProbe(`live.${f.id}`),
           notes: `Fault: ${f.what}. ${hits.length ? "" : "The usage endpoint was never called (seen on 2.1.305 with a real token), so the texts could not be checked. "}No prompt is sent (prompt is empty): /usage is a local command, but interactive startup makes its own small API requests.`,
         }),
       ];

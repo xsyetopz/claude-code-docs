@@ -8,7 +8,7 @@ import {
   readlinkSync,
   writeFileSync,
 } from "node:fs";
-import { arch, constants, homedir, platform, release } from "node:os";
+import { arch, constants, homedir, platform, release, tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { CLAUDE_CODE_VERSION } from "../../src/version.ts";
 
@@ -86,11 +86,12 @@ export const parseCtx = (args: string[]): Ctx => {
   };
 };
 
-/** Environment for helper tools such as `strings`: fixed PATH, nothing from the parent. */
+/** Environment for helper tools such as `strings`: fixed PATH, nothing from the parent but its temp dir. */
 export const toolEnv = (): Record<string, string> => ({
   PATH: "/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin:/usr/local/bin",
   HOME: homedir(),
   LC_ALL: "C",
+  TMPDIR: tmpdir(),
 });
 
 export const writeJson = (path: string, data: unknown): void => {

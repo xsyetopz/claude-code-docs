@@ -1,5 +1,5 @@
 // release:schemas and release:prompts - thin wrappers over the existing generators.
-import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { CLAUDE_CODE_VERSION } from "../../src/version.ts";
 import {
@@ -82,6 +82,20 @@ export const runSchemas = async (ctx: Ctx): Promise<number> => {
     stderr: "inherit",
   });
   if (r.exitCode !== 0) return exitCodeOf("release:schemas", r);
+  // The Mod API type file: a text diff against git HEAD, kept beside the schema diff.
+  const types = Bun.spawnSync(
+    [bunPath, "tools/schemas/types.ts", "--bin", bin],
+    { cwd: ROOT, env: clean(), stdout: "inherit", stderr: "inherit" },
+  );
+  if (types.exitCode !== 0) return exitCodeOf("release:schemas", types);
+  const typesDiff = Bun.spawnSync(
+    ["git", "diff", "--", "schemas/claude-code.d.ts"],
+    { cwd: ROOT, env: toolEnv() },
+  ).stdout.toString();
+  writeFileSync(join(versionDir(ctx.to), "types.diff"), typesDiff);
+  console.log(
+    `  claude-code.d.ts: ${typesDiff.split("\n").filter((l) => /^[+-][^+-]/.test(l)).length} changed lines (types.diff)`,
+  );
   const report: Record<string, ReturnType<typeof diffJson>> = {};
   for (const n of readdirSync(dir).filter((x) => x.endsWith(".json"))) {
     const d = diffJson(

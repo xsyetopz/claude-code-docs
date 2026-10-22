@@ -1,5 +1,5 @@
 // OAuth vs API-key request shape. One live `-p` run through the mitm "forward and log body" mode, one run against the
-// local stub with the fake key, same project files. Compares body keys, tool names, system blocks and beta flags.
+// local stub with the fake key, same project files. Compares body keys, tool names, system blocks, system text (model names and temp paths masked) and beta flags.
 // (p305-live only ever ran `var` over the live token; this case is the parity check the design names.)
 
 import { join } from "node:path";
@@ -8,7 +8,7 @@ import { assertSafeEnv, childEnv } from "../../lib/env.ts";
 import { startMitm } from "../../lib/mitm.ts";
 import { allocPort } from "../../lib/ports.ts";
 import { runChild } from "../../lib/proc.ts";
-import type { Fact } from "../../lib/results.ts";
+import { type Fact, normalise } from "../../lib/results.ts";
 import { assertShimReady } from "../../lib/shim.ts";
 import { startStub } from "../../lib/stub.ts";
 import {
@@ -29,6 +29,8 @@ type Shape = {
   bodyKeys: string[];
   tools: string[];
   systemBlocks: number;
+  /** System text lines with temp paths, model names, and the per-run billing hash masked, so two models can be compared. Never written out. */
+  systemLines: string[];
   model: string;
   betas: string[];
 };
@@ -41,6 +43,16 @@ const shapeOf = (body: unknown, betas: string): Shape => {
       .map((t) => String(obj(t)["name"]))
       .sort(),
     systemBlocks: Array.isArray(sys) ? sys.length : sys ? 1 : 0,
+    systemLines: normalise(
+      (Array.isArray(sys)
+        ? sys.map((x) => String(obj(x)["text"]))
+        : [String(sys ?? "")]
+      )
+        .join("\n")
+        .replace(/claude-(?:opus|sonnet|haiku|fable)-[\w-]+/g, "<model-id>")
+        .replace(/\b(?:Opus|Sonnet|Haiku|Fable) \d+(?:\.\d+)?/g, "<model>")
+        .replace(/\bcch=[0-9a-f]+/g, "cch=<hash>"),
+    ).split("\n"),
     model: String(b["model"] ?? ""),
     betas: betas
       .split(",")
@@ -137,6 +149,16 @@ export const oauthParity: LiveCase = {
         facts["tools.onlyKey"] = only(b.tools, a.tools);
         facts["systemBlocks.oauth"] = a.systemBlocks;
         facts["systemBlocks.key"] = b.systemBlocks;
+        facts["same.systemText"] =
+          a.systemLines.join("\n") === b.systemLines.join("\n");
+        facts["systemText.linesOnlyOauth"] = only(
+          a.systemLines,
+          b.systemLines,
+        ).length;
+        facts["systemText.linesOnlyKey"] = only(
+          b.systemLines,
+          a.systemLines,
+        ).length;
         facts["betas.onlyOauth"] = only(a.betas, b.betas);
         facts["betas.onlyKey"] = only(b.betas, a.betas);
         facts["betas.oauth"] = a.betas;

@@ -145,7 +145,8 @@ Open `captures/<to>/compare/compare.md`.
 - Claims are version-labelled sentences in `docs/`, such as "since 2.1.304". `tools/release/claims/map.json` is hand-edited. It maps each claim to a probe or to a kind.
 - Kinds: `behaviour`, `env`, `flag`, `command`, `setting`, `hook`, `gate`, `schema`, `manual`, `static`, `external`.
 - `release:claims -- --check` fails on an `unmapped` claim. Add a `map.json` entry for each new claim.
-- A probe lists the claim ids it checks in its `claims` array. `--check` warns when the probe and the map disagree.
+- A probe result lists the claim ids it checks in its `claims` array.
+  Writing the result adds every claim that `map.json` maps to the case. `--check` warns when the probe and the map disagree, so rerun the probe after you map a claim to it.
 
 ## Selftest
 

@@ -11,6 +11,7 @@ import {
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { claimsForProbe } from "./claims/map.ts";
 import { runClaimsSelftest } from "./claims/selftest.ts";
 import { assertSafeEnv, childEnv, FAKE_KEY, PROMPT } from "./lib/env.ts";
 import { runLiveSelftest } from "./lib/live-selftest.ts";
@@ -21,7 +22,7 @@ import { openRun, readRun, writeCase } from "./lib/results.ts";
 import { makeSandbox } from "./lib/sandbox.ts";
 import { assertShimReady, shimDir, writeSecurityShim } from "./lib/shim.ts";
 import { readLog, startStub } from "./lib/stub.ts";
-import { binaryPath, type Ctx } from "./util.ts";
+import { binaryPath, type Ctx, toolEnv } from "./util.ts";
 
 // Set by the program for its own children (hooks); same value as a parent running inside Claude Code by design.
 const PROGRAM_SET = new Set([
@@ -141,6 +142,17 @@ export const runSelftest = async (ctx: Ctx): Promise<number> => {
       threw = true;
     }
     step("assertSafeEnv rejects CLAUDE_CODE_OAUTH_TOKEN", threw);
+    // a generator started with toolEnv() must make its temp dirs where the parent does, not in /tmp
+    const savedTmp = process.env["TMPDIR"];
+    process.env["TMPDIR"] = out;
+    const tmp = Bun.spawnSync(
+      [process.execPath, "-e", "console.log(require('os').tmpdir())"],
+      { env: toolEnv() },
+    );
+    if (savedTmp === undefined) delete process.env["TMPDIR"];
+    else process.env["TMPDIR"] = savedTmp;
+    const childTmp = tmp.stdout.toString().trim();
+    step("toolEnv: child keeps the parent TMPDIR", childTmp === out, childTmp);
 
     runClaimsSelftest(step);
     await runPtySelftest(step);
@@ -252,6 +264,28 @@ export const runSelftest = async (ctx: Ctx): Promise<number> => {
       existsSync(path) &&
         back.length === 1 &&
         back[0]?.id === "print.selftest.smoke",
+    );
+    // a probe result lists the claims that map.json maps to its case, without each probe asking
+    const mapped = claimsForProbe("print.control.requests");
+    writeCase(openRun("0.0.1", out), {
+      schema: 1,
+      id: "print.control.requests",
+      group: "print",
+      version: ctx.to,
+      prompt: PROMPT,
+      args: [],
+      envSet: [],
+      exit: 0,
+      timedOut: false,
+      facts: {},
+      claims: ["control.own"],
+    });
+    const listed = readRun("0.0.1", out)[0]?.claims ?? [];
+    step(
+      "writeCase adds the map.json claims of the case",
+      mapped.length > 0 &&
+        [...mapped, "control.own"].every((c) => listed.includes(c)),
+      `${listed.length} listed, ${mapped.length} mapped`,
     );
     let refused = false;
     try {

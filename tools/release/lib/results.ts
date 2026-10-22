@@ -7,6 +7,7 @@ import {
   writeFileSync,
 } from "node:fs";
 import { join } from "node:path";
+import { claimsForProbe } from "../claims/map.ts";
 import { versionDir } from "../util.ts";
 import { FAKE_KEY } from "./env.ts";
 
@@ -123,7 +124,7 @@ const ID_RE = /^[A-Za-z0-9][A-Za-z0-9._-]*$/;
 const caseFile = (r: CaseResult): string =>
   `${r.id.startsWith(`${r.group}.`) ? r.id.slice(r.group.length + 1) : r.id}.json`;
 
-/** Normalises samples, then fails the write if any secret-shaped string remains. */
+/** Adds the map.json claims of the case, normalises samples, then fails the write if any secret-shaped string remains. */
 export const writeCase = (runDir: string, r: CaseResult): string => {
   if (!ID_RE.test(r.id) || r.id.includes(".."))
     throw new Error(`bad case id: ${r.id}`);
@@ -140,7 +141,8 @@ export const writeCase = (runDir: string, r: CaseResult): string => {
         ]),
       )
     : undefined;
-  const out: CaseResult = { ...r, ...(samples ? { samples } : {}) };
+  const claims = [...new Set([...r.claims, ...claimsForProbe(r.id)])];
+  const out: CaseResult = { ...r, claims, ...(samples ? { samples } : {}) };
   const hit = findSecret(out);
   if (hit)
     throw new Error(

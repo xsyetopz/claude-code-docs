@@ -84,11 +84,6 @@
     "probes": [],
     "note": "cites the official release notes"
   },
-  "docs/configure/permissions/sandbox.md#core-keys:b054c9cf": {
-    "kind": "schema",
-    "probes": [],
-    "note": "dotted key sandbox.allowNestedUserNamespaces in schemas/"
-  },
   "docs/configure/permissions/sandbox.md#other-behavior:4810bc2c": {
     "kind": "external",
     "probes": [],
@@ -232,12 +227,12 @@
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
   },
-  "docs/extend/mod-api/tool-command-config.md#engine-events:c3471c0e": {
+  "docs/extend/mod-api/tool-command-config.md#engine-events:5420e5f0": {
     "kind": "manual",
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
   },
-  "docs/extend/mod-api/turn-prompt.md#engine-events:f56dd72d": {
+  "docs/extend/mod-api/turn-prompt.md#engine-events:c2dec4d1": {
     "kind": "manual",
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
@@ -252,22 +247,22 @@
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
   },
-  "docs/extend/mod-api/types/tool-command-config.md#toolcheckresult:0d6d1197": {
+  "docs/extend/mod-api/types/tool-command-config.md#toolcheckresult:ed5cf589": {
     "kind": "manual",
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
   },
-  "docs/extend/mod-api/types/turn-prompt.md#example:c8f55818": {
+  "docs/extend/mod-api/types/turn-prompt.md#example:c79d0a53": {
     "kind": "manual",
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
   },
-  "docs/extend/mod-api/types/turn-prompt.md#promptsectioninput:c8f55818": {
+  "docs/extend/mod-api/types/turn-prompt.md#promptsectioninput:c79d0a53": {
     "kind": "manual",
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
   },
-  "docs/extend/mod-api/types/turn-prompt.md#promptsectioninput:a9e63007": {
+  "docs/extend/mod-api/types/turn-prompt.md#promptsectioninput:5fcdbdfc": {
     "kind": "manual",
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
@@ -375,7 +370,7 @@
   "docs/extend/skills-and-commands/slash-commands.md#setup-interface-and-config-commands:82e5e57f": {
     "kind": "manual",
     "probes": [],
-    "note": "texts seen only against the local stub; live.usage.429* never reach the usage endpoint"
+    "note": "texts seen only against the local stub; live.usage.429* never reach the usage endpoint; again on 2.1.307, whose text fragments match 2.1.306"
   },
   "docs/extend/skills-and-commands/slash-commands.md#account-cloud-and-other-commands:5180841c": {
     "kind": "external",
@@ -439,7 +434,7 @@
     "probes": [],
     "note": "release history: when it started; recheck only if the feature is removed"
   },
-  "docs/how-it-works/system-prompt.md#shared-sections:7836be5d": {
+  "docs/how-it-works/system-prompt.md#shared-sections:1a54cb12": {
     "kind": "manual",
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
@@ -478,24 +473,101 @@
     "probes": [],
     "note": "scope or example text, not a claim about the program"
   },
-  "docs/reference/probes.md#interactive-probes:dd254133": {
+  "docs/reference/probes.md#interactive-probes:165640f8": {
     "kind": "manual",
     "probes": [],
-    "note": "texts seen only against the local stub; live.usage.429* never reach the usage endpoint"
+    "note": "texts seen only against the local stub; live.usage.429* never reach the usage endpoint; again on 2.1.307, whose text fragments match 2.1.306"
   },
   "docs/start/what-changed.md#version-21306:dcc6649e": {
     "kind": "manual",
     "probes": [],
-    "note": "live.artifacts showed Unknown command on 2.1.306; no panel-shown capture exists"
+    "note": "live.artifacts showed Unknown command on 2.1.306 and 2.1.307; no panel-shown capture exists"
   },
   "docs/start/what-changed.md#older-releases:e2b4b69c": {
     "kind": "manual",
     "probes": [],
-    "note": "texts seen only against the local stub; live.usage.429* never reach the usage endpoint"
+    "note": "texts seen only against the local stub; live.usage.429* never reach the usage endpoint; again on 2.1.307, whose text fragments match 2.1.306"
   },
   "docs/start/what-changed.md#example:0688c778": {
     "kind": "static",
     "probes": [],
     "note": "scope or example text, not a claim about the program"
+  },
+  "docs/configure/env-vars/remote-and-cloud-sessions.md#variables:a42e211e": {
+    "kind": "flag",
+    "probes": [],
+    "note": "runner flag --checkout-hook-timeout-min, also in the release notes"
+  },
+  "docs/configure/env-vars/remote-and-cloud-sessions.md#variables:3bdc2c44": {
+    "kind": "flag",
+    "probes": [],
+    "note": "runner flag --diff-finds-nested-repository"
+  },
+  "docs/configure/env-vars/telemetry-and-debug.md#how-it-works:feff7747": {
+    "kind": "external",
+    "probes": [],
+    "note": "cites the official release notes"
+  },
+  "docs/configure/permissions/sandbox.md#core-keys:f1d7177e": {
+    "kind": "schema",
+    "probes": [],
+    "note": "dotted key sandbox.allowNestedUserNamespaces in schemas/"
+  },
+  "docs/extend/headless/control-protocol.md#example:7f6c8d23": {
+    "kind": "behaviour",
+    "probes": ["print.control.requests"]
+  },
+  "docs/extend/headless/control-protocol.md#example:c9792ab1": {
+    "kind": "external",
+    "probes": [],
+    "note": "cites the official release notes"
+  },
+  "docs/extend/skills-and-commands/bundled-skills.md#skills:43808aae": {
+    "kind": "external",
+    "probes": [],
+    "note": "cites the official release notes"
+  },
+  "docs/extend/subagents/runtime.md#built-in-agents:adb4feaf": {
+    "kind": "external",
+    "probes": [],
+    "note": "cites the official release notes"
+  },
+  "docs/how-it-works/agent-loop.md#how-a-turn-ends:8ecf02bb": {
+    "kind": "external",
+    "probes": [],
+    "note": "cites the official release notes"
+  },
+  "docs/reference/api/betas.md#registry:4fa6b792": {
+    "kind": "behaviour",
+    "probes": ["print.transcripts.lines"]
+  },
+  "docs/reference/transcript-format.md#line-types:f817762b": {
+    "kind": "behaviour",
+    "probes": ["print.transcripts.lines"]
+  },
+  "docs/extend/headless/control-protocol.md#subtypes:42d5eb73": {
+    "kind": "static",
+    "probes": [],
+    "note": "release history: when it started; recheck only if the feature is removed"
+  },
+  "docs/extend/headless/control-protocol.md#subtypes:94afba44": {
+    "kind": "static",
+    "probes": [],
+    "note": "release history: when it started; recheck only if the feature is removed"
+  },
+  "docs/extend/headless/control-protocol.md#subtypes:d5c7977f": {
+    "kind": "static",
+    "probes": [],
+    "note": "release history: when it started; recheck only if the feature is removed"
+  },
+  "docs/extend/mod-api/types/tool-command-config.md#toolcheckinput:70c06add": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour (approver set next to tool.check); no probe checks it yet"
+  },
+  "docs/reference/probes.md#managed-folder-probe:9dea0ba8": {
+    "kind": "static",
+    "probes": [],
+    "note": "record of the managed probe runs; release:probe:managed reruns them"
   }
 }
