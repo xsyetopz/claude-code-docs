@@ -71,16 +71,28 @@ const IGNORED_FACTS = new Set(["retried", "startLagS"]);
  * `facts` matches whole fact names and drops them. `items` removes those array elements from the facts that
  * `itemFacts` matches, then drops the fact when the two sides are then equal. With `values`, a `facts` match is
  * noise only when both sides are in that list, so a value outside the range seen across reruns still shows.
+ * With `unordered`, a `facts` match is noise only when the two arrays hold the same items.
  * Ignored facts are listed under "Noise (ignored)" in compare.md, never dropped silently.
  */
 type Noisy = {
   why: string;
   facts?: RegExp;
   values?: Fact[];
+  unordered?: boolean;
   itemFacts?: RegExp;
   items?: string[];
 };
+const MCP_ORDER: Noisy[] = [
+  {
+    why: "the servers start in parallel, so their order varies from run to run (seen on 2.1.306 to 2.1.308)",
+    facts: /^started$/,
+    unordered: true,
+  },
+];
+
 export const NOISY: Record<string, Noisy[]> = {
+  "managed.baseline.mcp-config-flag": MCP_ORDER,
+  "managed.main.mcp-config-flag": MCP_ORDER,
   "print.subagents.observer.on": [
     {
       why: "the background observer sends 3 or 5 requests from run to run (seen on 2.1.306 to 2.1.308)",
@@ -132,6 +144,10 @@ const noiseReason = (
   if (versionOnly(old, now, v)) return "version string only";
   for (const n of (id && NOISY[id]) || []) {
     const inRange = (f: Fact) => n.values?.some((x) => same(x, f)) ?? true;
+    const sorted = (f: Fact) =>
+      JSON.stringify(Array.isArray(f) ? [...f].sort() : f);
+    if (n.unordered && n.facts?.test(k))
+      return sorted(old) === sorted(now) ? n.why : null;
     if (n.facts?.test(k) && inRange(old) && inRange(now)) return n.why;
     if (
       n.itemFacts?.test(k) &&

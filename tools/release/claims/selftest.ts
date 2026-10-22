@@ -394,6 +394,23 @@ export const runClaimsSelftest = (
         ],
         false,
       );
+      const MCP = "managed.baseline.mcp-config-flag";
+      const order = (a: string[], b: string[]) =>
+        compareResults(
+          "1.0.0",
+          "1.0.1",
+          [kase("1.0.0", MCP, { started: a })],
+          [kase("1.0.1", MCP, { started: b })],
+          false,
+        ).counts.changed;
+      step(
+        "compare: MCP servers started in another order are noise; another set is a change",
+        order(["a", "b"], ["b", "a"]) === 0 && order(["a", "b"], ["a"]) === 1,
+        JSON.stringify([
+          order(["a", "b"], ["b", "a"]),
+          order(["a", "b"], ["a"]),
+        ]),
+      );
       const gone = compareResults(
         "1.0.0",
         "1.0.1",
