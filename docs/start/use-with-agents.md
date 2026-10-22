@@ -112,6 +112,34 @@ A base URL must use `https`. Plain `http` works only for `localhost` and `127.0.
 The server ignores any manifest entry with an odd route or a URL outside the site.
 It does not send or keep cookies.
 
+## Inspect Sessions and the Program
+
+The same marketplace has a second plugin, `cc-inspect`.
+It reads files on your machine only: your session transcripts and the installed Claude Code binary.
+It makes no network request and changes no file.
+
+```text
+/plugin install cc-inspect@claude-code-docs
+```
+
+It adds the MCP server `cc-inspect`, which runs with plain `bun`, and the skill `cc-inspect`, which tells Claude when to use it.
+
+| Tool | What it does |
+| --- | --- |
+| `list_sessions` | Lists the transcripts in `projects/` of the config folder (`CLAUDE_CONFIG_DIR`, or `~/.claude`), newest first. Pass `project` to narrow it. |
+| `read_session` | Gives the lines of one session. Pass `type` to keep one line type, and `offset` to page. A session id prefix works. |
+| `search_sessions` | Finds a text or a regular expression in one session or in all of them. |
+| `validate_session` | Checks each line against the [transcript schema](../reference/schemas.md) of its `type`, and lists the lines that do not fit. The schema is the one for Claude Code `2.1.307`. |
+| `list_installs` | Lists the versions in `~/.local/share/claude/versions`, and marks the one that `~/.local/bin/claude` runs. |
+| `list_modules` | Lists the files inside a binary. Every binary tool takes `binary`, a version or a path. |
+| `search_binary` | Finds a text or a regular expression in the code of a binary, with the module and offset of each hit. |
+| `read_module` | Gives a slice of one module. |
+| `resolve_object` | Lists the keys of the object literal around an offset or an `anchor` text, and follows spreads into the functions and modules they come from. |
+| `resolve_event` | Lists the OpenTelemetry events of a binary. With `name`, it merges the attribute keys of every place the program emits that event. |
+
+In `resolve_object` and `resolve_event`, a key that ends in `?` is optional, and a value shown as `unknown` is computed, so its type is not known.
+The binary tools read the code with the [meriyah](https://github.com/meriyah/meriyah) parser and [eslint-scope](https://github.com/eslint/js/tree/main/packages/eslint-scope), so minified names do not matter.
+
 ## Related Pages
 
 - [How to Read These Docs](how-to-read.md)

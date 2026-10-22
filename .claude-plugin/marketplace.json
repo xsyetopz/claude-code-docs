@@ -14,6 +14,12 @@
       "source": "./plugin",
       "description": "MCP server and skill for the Claude Code Docs (version 2.1.307). Search and read pages, list sections, and get the JSON Schemas (search_docs, read_page, list_pages, get_schema). Also searches and reads the Claude API and platform docs (search_platform_docs, read_platform_page, list_platform_pages). Live fetch with an offline disk cache.",
       "category": "documentation"
+    },
+    {
+      "name": "cc-inspect",
+      "source": "./inspect",
+      "description": "MCP server and skill that read your Claude Code session transcripts (list, read, search, and check them against the transcript schema) and the code inside the installed Claude Code binary (list installs and modules, search, read, and resolve object literals and OpenTelemetry events). Local and read only.",
+      "category": "development"
     }
   ]
 }

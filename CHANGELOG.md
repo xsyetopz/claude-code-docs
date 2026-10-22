@@ -11,6 +11,7 @@ The site documents Claude Code `2.1.307`, the only release it tracks. The versio
 
 ### Added
 
+- A second plugin, `cc-inspect`, with an MCP server and a skill that read your session transcripts (list, read, search, and check each line against the transcript schema) and the installed Claude Code binary (installs, modules, search, read, and the keys of an object literal or an OpenTelemetry event).
 - The exact fields of every payload, made from the program: the Mod API type file (`schemas/claude-code.d.ts`) and 11 more JSON Schemas (hook output, built-in tools, control protocol, stream-json, `--agents` JSON, `.mcp.json`, frontmatter, status line input, transcript lines, OpenTelemetry, `~/.claude.json`). The MCP server's `get_schema` serves them all, and looks up types, `$` calls, and events in the type file.
 - A rule for agents in the skill and the docs: look a field up in these files before stating it, and name only the fields found there.
 - A Context Budget page with live `/context` measurements: an empty session, the first turn, the cost of each tool, and best practices.

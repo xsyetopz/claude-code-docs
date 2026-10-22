@@ -1,6 +1,6 @@
 // Usage: bun tools/plugin/check.ts   (also: bun run plugin:check)
-// Validates the plugin manifest and the marketplace file against schemas/ with ajv, and checks
-// that .mcp.json, the skill, and the committed server bundle exist.
+// Validates each plugin manifest and the marketplace file against schemas/ with ajv, and checks
+// that each plugin's .mcp.json, skill, and committed server bundle exist, pass their tests, and are fresh.
 import {
   existsSync,
   mkdtempSync,
@@ -21,18 +21,27 @@ for (const f of ["starts_with", "ends_with"]) ajv.addFormat(f, true);
 ajv.addKeyword({ keyword: "x-managed-only", schemaType: "boolean" });
 const read = (p: string) => JSON.parse(readFileSync(join(ROOT, p), "utf8"));
 const problems: string[] = [];
+/** The plugins of the marketplace: folder and skill name. */
+const PLUGINS = [
+  { dir: "plugin", skill: "claude-code-docs" },
+  { dir: "inspect", skill: "cc-inspect" },
+];
 
 const targets: [string, string][] = [
-  ["plugin/.claude-plugin/plugin.json", "claude-code-plugin-manifest"],
+  ...PLUGINS.map((p): [string, string] => [
+    `${p.dir}/.claude-plugin/plugin.json`,
+    "claude-code-plugin-manifest",
+  ]),
   [".claude-plugin/marketplace.json", "claude-code-marketplace"],
 ];
 for (const [file, kind] of targets) {
-  const check = ajv.compile(read(`schemas/${kind}.json`));
+  const want = `https://xsyetopz.github.io/claude-code-docs/schemas/${kind}.json`;
+  const check =
+    ajv.getSchema(want) ?? ajv.compile(read(`schemas/${kind}.json`));
   const doc = read(file);
   if (!check(doc))
     for (const e of check.errors ?? [])
       problems.push(`${file}: ${e.instancePath || "/"} ${e.message}`);
-  const want = `https://xsyetopz.github.io/claude-code-docs/schemas/${kind}.json`;
   if (doc["$schema"] !== want)
     problems.push(`${file}: $schema should be ${want}`);
 }
@@ -40,7 +49,7 @@ for (const [file, kind] of targets) {
 const RESERVED =
   /^(claude-|anthropic-|anthropics-|cc-plugin-)|^(claude|anthropic|claude-code|claude-mods)$/;
 const names = [
-  read("plugin/.claude-plugin/plugin.json").name,
+  ...PLUGINS.map((p) => read(`${p.dir}/.claude-plugin/plugin.json`).name),
   ...(
     read(".claude-plugin/marketplace.json").plugins as { name: string }[]
   ).map((p) => p.name),
@@ -51,16 +60,16 @@ for (const n of names)
       `plugin name "${String(n)}" is empty, has spaces, or is reserved`,
     );
 
-for (const f of [
-  "plugin/.mcp.json",
-  "plugin/skills/claude-code-docs/SKILL.md",
-  "plugin/mcp/dist/server.js",
-])
+for (const f of PLUGINS.flatMap((p) => [
+  `${p.dir}/.mcp.json`,
+  `${p.dir}/skills/${p.skill}/SKILL.md`,
+  `${p.dir}/mcp/dist/server.js`,
+]))
   if (!existsSync(join(ROOT, f))) problems.push(`${f}: missing`);
 
 // The claude CLI validates both manifests offline when it is on PATH. No credentials are passed.
 if (Bun.which("claude")) {
-  for (const target of [".", "./plugin"]) {
+  for (const target of [".", ...PLUGINS.map((p) => `./${p.dir}`)]) {
     const r = Bun.spawnSync(["claude", "plugin", "validate", target], {
       cwd: ROOT,
     });
@@ -74,18 +83,18 @@ if (Bun.which("claude")) {
     "plugin:check: claude CLI not on PATH, skipped claude plugin validate",
   );
 
-// Server tests (stdio client against dist/server.js, with a hostile local site).
-if (existsSync(join(ROOT, "plugin/mcp/dist/server.js"))) {
-  const t = Bun.spawnSync(["bun", "test", "plugin/mcp/test"], { cwd: ROOT });
-  if (t.exitCode !== 0)
-    problems.push(
-      `bun test plugin/mcp/test failed:\n${t.stderr.toString().trim()}`,
-    );
-}
-
-// Freshness: dist/server.js must equal a fresh bundle of the sources (bun build is deterministic
-// for the same inputs and versions).
-{
+for (const { dir } of PLUGINS) {
+  const dist = `${dir}/mcp/dist/server.js`;
+  // Server tests (stdio client against dist/server.js).
+  if (existsSync(join(ROOT, dist))) {
+    const t = Bun.spawnSync(["bun", "test", `${dir}/mcp/test`], { cwd: ROOT });
+    if (t.exitCode !== 0)
+      problems.push(
+        `bun test ${dir}/mcp/test failed:\n${t.stderr.toString().trim()}`,
+      );
+  }
+  // Freshness: dist/server.js must equal a fresh bundle of the sources (bun build is deterministic
+  // for the same inputs and versions).
   const tmp = mkdtempSync(join(tmpdir(), "plugin-check-"));
   try {
     const bundle = join(tmp, "server.js");
@@ -93,26 +102,18 @@ if (existsSync(join(ROOT, "plugin/mcp/dist/server.js"))) {
       [
         "bun",
         "build",
-        "plugin/mcp/src/server.ts",
+        `${dir}/mcp/src/server.ts`,
         "--target=bun",
         `--outfile=${bundle}`,
       ],
       { cwd: ROOT },
     );
     if (b.exitCode !== 0)
-      problems.push(`bundle: ${b.stderr.toString().trim()}`);
-    else if (!existsSync(join(ROOT, "plugin/mcp/dist/server.js")))
-      problems.push(
-        'plugin/mcp/dist/server.js is missing: run "bun run plugin:build"',
-      );
-    else if (
-      !readFileSync(bundle).equals(
-        readFileSync(join(ROOT, "plugin/mcp/dist/server.js")),
-      )
-    )
-      problems.push(
-        'plugin/mcp/dist/server.js is stale: run "bun run plugin:build"',
-      );
+      problems.push(`bundle ${dir}: ${b.stderr.toString().trim()}`);
+    else if (!existsSync(join(ROOT, dist)))
+      problems.push(`${dist} is missing: run "bun run plugin:build"`);
+    else if (!readFileSync(bundle).equals(readFileSync(join(ROOT, dist))))
+      problems.push(`${dist} is stale: run "bun run plugin:build"`);
   } finally {
     rmSync(tmp, { recursive: true, force: true });
   }

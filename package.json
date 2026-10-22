@@ -23,7 +23,7 @@
     "verify:locked": "sh tools/build-locked.sh",
     "typecheck": "bun --check",
     "format:check": "biome format .",
-    "plugin:build": "bun build plugin/mcp/src/server.ts --target=bun --outfile=plugin/mcp/dist/server.js",
+    "plugin:build": "bun build plugin/mcp/src/server.ts --target=bun --outfile=plugin/mcp/dist/server.js && bun build inspect/mcp/src/server.ts --target=bun --outfile=inspect/mcp/dist/server.js",
     "plugin:check": "bun tools/plugin/check.ts",
     "plugin:smoke": "bun tools/plugin/smoke.ts",
     "release:check": "bun tools/release/cli.ts check",
