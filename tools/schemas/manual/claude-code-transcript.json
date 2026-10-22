@@ -3599,7 +3599,7 @@
       "schema": {
         "type": "object"
       },
-      "anchors": ["quotaLimits:«»(«»)"],
+      "anchors": ["{rate_limit_info:«»(«»)}},quotaLimits:«»(«»)})"],
       "note": "assistant top-level fields come from the object literals of the stream path, the error-message factory Ws/r7n and the stream-json rebuild; quotaLimits is the object returned by non(): the rate-limit status built from the 429 response headers ({status:'rejected', ...limit info}); the inner keys come from the quota-limit module and are not typed here."
     },
     "assistant.apiErrorIsTransient": {
@@ -4210,7 +4210,9 @@
       "schema": {
         "type": "string"
       },
-      "anchors": ["uuid:«»()"],
+      "anchors": [
+        "return{type:\"progress\",data:«»,toolUseID:«»,parentToolUseID:«»,uuid:«»(),timestamp:«»()}"
+      ],
       "note": "The progress line is {type:'progress', data, toolUseID, parentToolUseID, uuid}; data is a different object per progress type (hook_progress, bash_progress, powershell_progress, tool_heartbeat, agent_progress, skill_progress, agent_api_retry, search_results_received, query_update, workflow_log, workflow_phase, workflow_agent, artifact_publish_retry, ...); the key below is the union over the literals of those types. uuid is a randomUUID string."
     },
     "progress.toolUseID": {
@@ -4227,7 +4229,9 @@
       "schema": {
         "type": "string"
       },
-      "anchors": ["parentToolUseID:s"],
+      "anchors": [
+        "return{type:\"progress\",data:«»,toolUseID:«»,parentToolUseID:«»,uuid:«»(),timestamp:«»()}"
+      ],
       "note": "The progress line is {type:'progress', data, toolUseID, parentToolUseID, uuid}; data is a different object per progress type (hook_progress, bash_progress, powershell_progress, tool_heartbeat, agent_progress, skill_progress, agent_api_retry, search_results_received, query_update, workflow_log, workflow_phase, workflow_agent, artifact_publish_retry, ...); the key below is the union over the literals of those types. parentToolUseID is the tool_use id string of the parent tool call."
     },
     "progress.data.type": {
@@ -4791,7 +4795,7 @@
           "type": "string"
         }
       },
-      "anchors": ["tail:«».slice(«»)"],
+      "anchors": ["keep:«»,tail:«».slice(«»),cacheControl:«»"],
       "note": "A journal line the request journal writes (a hash-chained record of API request bodies): tail is the slice of the request's per-message hash strings after the first lt entries, an array of strings."
     },
     "api-request-blob.sessionId": {
