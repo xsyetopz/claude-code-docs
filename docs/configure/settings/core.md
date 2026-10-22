@@ -62,7 +62,7 @@ This file deletes transcripts after 7 days, keeps auto memory on, lets Claude se
 
 ```json title="~/.claude/settings.json"
 {
-  "$schema": "https://raw.githubusercontent.com/xsyetopz/claude-code-docs/refs/heads/main/schemas/claude-code-settings.json",
+  "$schema": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-settings.json",
   "cleanupPeriodDays": 7,
   "autoMemoryEnabled": true,
   "bashOutputMaxChars": 50000,

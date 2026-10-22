@@ -14,7 +14,7 @@ This page lists 100 variables. `BASH_DEFAULT_TIMEOUT_MS` and `BASH_MAX_OUTPUT_LE
 
 ```json title="~/.claude/settings.json"
 {
-  "$schema": "https://raw.githubusercontent.com/xsyetopz/claude-code-docs/refs/heads/main/schemas/claude-code-settings.json",
+  "$schema": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-settings.json",
   "env": {
     "BASH_DEFAULT_TIMEOUT_MS": "300000",
     "BASH_MAX_OUTPUT_LENGTH": "60000"

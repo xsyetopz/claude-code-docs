@@ -14,7 +14,7 @@ This page lists 93 variables. `MCP_TIMEOUT` and `MCP_TOOL_TIMEOUT` are common. S
 
 ```json title="~/.claude/settings.json"
 {
-  "$schema": "https://raw.githubusercontent.com/xsyetopz/claude-code-docs/refs/heads/main/schemas/claude-code-settings.json",
+  "$schema": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-settings.json",
   "env": {
     "MCP_TIMEOUT": "30000",
     "MCP_TOOL_TIMEOUT": "120000"

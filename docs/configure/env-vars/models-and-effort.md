@@ -14,7 +14,7 @@ This page lists 84 variables. A `--model` flag or `/model` overrides `ANTHROPIC_
 
 ```json title="~/.claude/settings.json"
 {
-  "$schema": "https://raw.githubusercontent.com/xsyetopz/claude-code-docs/refs/heads/main/schemas/claude-code-settings.json",
+  "$schema": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-settings.json",
   "env": {
     "ANTHROPIC_MODEL": "opus",
     "CLAUDE_CODE_EFFORT_LEVEL": "high"

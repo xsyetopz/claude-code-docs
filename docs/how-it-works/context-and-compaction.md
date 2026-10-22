@@ -157,7 +157,7 @@ claude --autocompact 500000
 
 ```json title="~/.claude/settings.json"
 {
-  "$schema": "https://raw.githubusercontent.com/xsyetopz/claude-code-docs/refs/heads/main/schemas/claude-code-settings.json",
+  "$schema": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-settings.json",
   "autoCompactWindow": 500000
 }
 ```

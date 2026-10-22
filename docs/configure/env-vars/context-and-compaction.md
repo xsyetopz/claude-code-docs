@@ -14,7 +14,7 @@ This page lists 49 variables. Set a new value and start a new session. Many rows
 
 ```json title="~/.claude/settings.json"
 {
-  "$schema": "https://raw.githubusercontent.com/xsyetopz/claude-code-docs/refs/heads/main/schemas/claude-code-settings.json",
+  "$schema": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-settings.json",
   "env": {
     "CLAUDE_AUTOCOMPACT_PCT_OVERRIDE": "70"
   }

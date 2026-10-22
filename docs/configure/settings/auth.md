@@ -38,7 +38,7 @@ The first key runs `~/bin/get-key.sh` to get the API key. The second limits sign
 
 ```json title="~/.claude/settings.json"
 {
-  "$schema": "https://raw.githubusercontent.com/xsyetopz/claude-code-docs/refs/heads/main/schemas/claude-code-settings.json",
+  "$schema": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-settings.json",
   "apiKeyHelper": "~/bin/get-key.sh",
   "forceLoginMethod": "console"
 }

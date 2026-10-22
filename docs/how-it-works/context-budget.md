@@ -188,7 +188,7 @@ Each switch below removes a block of the start. Use one only if you do not need 
 
 ```json title="~/.claude/settings.json"
 {
-  "$schema": "https://raw.githubusercontent.com/xsyetopz/claude-code-docs/refs/heads/main/schemas/claude-code-settings.json",
+  "$schema": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-settings.json",
   "includeGitInstructions": false,
   "env": {
     "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1",
