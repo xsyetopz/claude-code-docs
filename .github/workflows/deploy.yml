@@ -22,7 +22,7 @@ jobs:
           fetch-depth: 0
       - uses: oven-sh/setup-bun@v2.2.0
         with:
-          bun-version: 1.4.3
+          bun-version: 1.4.4
       - run: bun install --frozen-lockfile
       - name: Install plugin server dependencies
         run: |
