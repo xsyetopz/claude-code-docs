@@ -22,6 +22,8 @@ ajv.addKeyword({ keyword: "x-direction", schemaType: "string" });
 // the OpenTelemetry signal kind, and a ~/.claude.json key a person may set.
 for (const keyword of ["x-unverified", "x-observed", "x-user-settable"])
   ajv.addKeyword({ keyword, schemaType: "boolean" });
+// The JSON types that real payloads had at a field the code gives no type (annotation, not enforced).
+ajv.addKeyword({ keyword: "x-observed-type", schemaType: "array" });
 ajv.addKeyword({ keyword: "x-otel-kind", schemaType: "string" });
 const NAMES = [...Object.keys(FILES), ...CODE_FILES];
 const problems: string[] = [];

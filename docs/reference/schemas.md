@@ -43,6 +43,7 @@ Files made only of definitions have no root: pick the definition by name, such a
 
 A file made from the program's code reads the object literals and key lists that build the payload.
 In it, `x-unverified` marks a field whose type the code does not show, and `x-observed` marks a field that a probe saw.
+A field that is still `x-unverified` may carry `x-observed-type`, the JSON types that real payloads had there. It is a note and does not change what the schema accepts.
 Each file's `$comment` names the strings in the program that it was read from.
 
 The managed schema has every key of the settings schema plus the keys that only managed settings honor.

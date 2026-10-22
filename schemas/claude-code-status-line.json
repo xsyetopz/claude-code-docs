@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-status-line.json",
   "title": "Claude Code status line stdin JSON (Claude Code 2.1.308)",
-  "$comment": "For the JSON on stdin of a statusLine command. Generated from Claude Code 2.1.308 by tools/schemas/code.ts. Anchors: the telemetry key \"tengu_status_line_result\" (module with the builder whose return literal starts at \"session_name\"), the common base builder it spreads (keys session_id, transcript_path, cwd, scratchpad_dir, prompt_id, permission_mode, agent_id, agent_type, effort), the prompt_cache builder (key \"prompt_cache\" with \"warm\"), and \"The statusLine command will receive the following JSON input via stdin:\" for the types and descriptions the code does not show. Field order is the order in the code. The prompt also lists agent.type, which the code never sets, so it is left out. The code sets scratchpad_dir, agent_type, cost, exceeds_200k_tokens, fast_mode, remote, which the prompt does not list. Do not edit by hand.",
+  "$comment": "For the JSON on stdin of a statusLine command. Generated from Claude Code 2.1.308 by tools/schemas/code.ts. Anchors: the telemetry key \"tengu_status_line_result\" (module with the builder whose return literal starts at \"session_name\"), the common base builder it spreads (keys session_id, transcript_path, cwd, scratchpad_dir, prompt_id, permission_mode, agent_id, agent_type, effort), the prompt_cache builder (key \"prompt_cache\" with \"warm\"), and \"The statusLine command will receive the following JSON input via stdin:\" for the types and descriptions the code does not show. Field order is the order in the code. The prompt also lists agent.type, which the code never sets, so it is left out. The code sets scratchpad_dir, agent_type, cost, exceeds_200k_tokens, fast_mode, remote, which the prompt does not list. Do not edit by hand. A field that is still x-unverified may carry x-observed-type: the JSON types that real payloads had there, from the fixtures in tools/schemas/observed/ (stub probes and local files, no value kept). It is a note, not a check.",
   "type": "object",
   "properties": {
     "session_id": {
@@ -110,19 +110,24 @@
       "type": "object",
       "properties": {
         "total_cost_usd": {
-          "x-unverified": true
+          "x-unverified": true,
+          "x-observed-type": ["number"]
         },
         "total_duration_ms": {
-          "x-unverified": true
+          "x-unverified": true,
+          "x-observed-type": ["number"]
         },
         "total_api_duration_ms": {
-          "x-unverified": true
+          "x-unverified": true,
+          "x-observed-type": ["number"]
         },
         "total_lines_added": {
-          "x-unverified": true
+          "x-unverified": true,
+          "x-observed-type": ["number"]
         },
         "total_lines_removed": {
-          "x-unverified": true
+          "x-unverified": true,
+          "x-observed-type": ["number"]
         }
       },
       "x-observed": true
@@ -184,7 +189,8 @@
     },
     "exceeds_200k_tokens": {
       "x-unverified": true,
-      "x-observed": true
+      "x-observed": true,
+      "x-observed-type": ["boolean"]
     },
     "prompt_cache": {
       "type": "object",
@@ -293,7 +299,8 @@
     },
     "fast_mode": {
       "x-unverified": true,
-      "x-observed": true
+      "x-observed": true,
+      "x-observed-type": ["boolean"]
     },
     "effort": {
       "type": "object",
@@ -493,46 +500,58 @@
             "type": "object",
             "properties": {
               "id": {
-                "x-unverified": true
+                "x-unverified": true,
+                "x-observed-type": ["string"]
               },
               "name": {
                 "x-unverified": true
               },
               "type": {
-                "x-unverified": true
+                "x-unverified": true,
+                "x-observed-type": ["string"]
               },
               "agentType": {
-                "x-unverified": true
+                "x-unverified": true,
+                "x-observed-type": ["string"]
               },
               "status": {
-                "x-unverified": true
+                "x-unverified": true,
+                "x-observed-type": ["string"]
               },
               "description": {
-                "x-unverified": true
+                "x-unverified": true,
+                "x-observed-type": ["string"]
               },
               "label": {
-                "x-unverified": true
+                "x-unverified": true,
+                "x-observed-type": ["string"]
               },
               "startTime": {
-                "x-unverified": true
+                "x-unverified": true,
+                "x-observed-type": ["number"]
               },
               "model": {
-                "x-unverified": true
+                "x-unverified": true,
+                "x-observed-type": ["string"]
               },
               "effort": {
                 "x-unverified": true
               },
               "contextWindowSize": {
-                "x-unverified": true
+                "x-unverified": true,
+                "x-observed-type": ["number"]
               },
               "tokenCount": {
-                "x-unverified": true
+                "x-unverified": true,
+                "x-observed-type": ["number"]
               },
               "tokenSamples": {
-                "x-unverified": true
+                "x-unverified": true,
+                "x-observed-type": ["array"]
               },
               "cwd": {
-                "x-unverified": true
+                "x-unverified": true,
+                "x-observed-type": ["string"]
               }
             }
           },

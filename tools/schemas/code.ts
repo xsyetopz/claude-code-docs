@@ -11,6 +11,8 @@
 // followed through names, calls, members, and built-ins such as String() or .length). A field whose type
 // the code does not show is `{}` with "x-unverified": true.
 // A field that a probe in captures/<version>/ saw is marked "x-observed": true.
+// A field still "x-unverified" gets "x-observed-type": [...] when tools/schemas/observed/ has enough samples
+// of real payloads (see observed.ts). The type is not enforced; "x-unverified" keeps its meaning.
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { basename, join, resolve } from "node:path";
@@ -38,6 +40,7 @@ import {
 } from "../../inspect/mcp/src/resolve.ts";
 import { CLAUDE_CODE_VERSION } from "../../src/version.ts";
 import { splitTop } from "./jsparse.ts";
+import { applyObserved } from "./observed.ts";
 
 type Json = Record<string, unknown>;
 type Src = Module;
@@ -174,7 +177,7 @@ const header = (file: string, title: string, comment: string): Json => ({
   $schema: "https://json-schema.org/draft/2020-12/schema",
   $id: `${BASE_URL}/${file}`,
   title: `${title} (Claude Code ${VERSION})`,
-  $comment: comment,
+  $comment: `${comment} A field that is still x-unverified may carry x-observed-type: the JSON types that real payloads had there, from the fixtures in tools/schemas/observed/ (stub probes and local files, no value kept). It is a note, not a check.`,
 });
 
 const props = (s: Json): Record<string, Json> =>
@@ -1073,7 +1076,9 @@ const builders = [
 const check = argv.includes("--check");
 let stale = 0;
 for (const b of builders) {
-  const { file, schema } = b();
+  const { file, schema: raw } = b();
+  // Types that real payloads had, from tools/schemas/observed/; "x-unverified" stays.
+  const { schema, n: typed } = applyObserved(file, raw);
   // Match the repo formatter so regenerating leaves a clean diff.
   const fmt = Bun.spawnSync(
     [
@@ -1098,7 +1103,9 @@ for (const b of builders) {
       console.log(`stale: ${file}`);
     }
   } else writeFileSync(path, text);
-  console.log(`${file}: ${countProps(schema)} properties`);
+  console.log(
+    `${file}: ${countProps(schema)} properties, ${typed} with x-observed-type`,
+  );
 }
 const spreads = [...new Set(R.unresolved)];
 console.log(`unresolved spreads: ${spreads.length}`);

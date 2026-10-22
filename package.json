@@ -14,6 +14,7 @@
     "check:examples": "bun tools/check-examples.ts",
     "llms:check": "bun tools/llms/check.ts",
     "schemas": "bun tools/schemas/generate.ts && bun tools/schemas/types.ts && bun tools/schemas/code.ts",
+    "schemas:observe": "bun tools/schemas/observe-run.ts",
     "schemas:check": "bun tools/schemas/check.ts && bun tools/schemas/types.ts --check",
     "format": "biome format --write .",
     "lint:code": "biome check --formatter-enabled=false --error-on-warnings .",

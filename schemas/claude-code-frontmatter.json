@@ -2,18 +2,20 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-frontmatter.json",
   "title": "Claude Code frontmatter of skills, subagents, and output styles (Claude Code 2.1.308)",
-  "$comment": "For the YAML header of skill/command, subagent, and output style .md files. Generated from Claude Code 2.1.308 by tools/schemas/code.ts. Anchors: \"tengu_frontmatter_shadow_unknown_key\" and the table {skill, agent, \"output-style\"} of strict zod objects next to it; descriptions are the program's .describe() text; the loose value type of most keys (string, number, boolean, or null) is why they are x-unverified. Keys with a description that starts with \"@internal\" are internal. No probe in captures/ records frontmatter keys. Do not edit by hand.",
+  "$comment": "For the YAML header of skill/command, subagent, and output style .md files. Generated from Claude Code 2.1.308 by tools/schemas/code.ts. Anchors: \"tengu_frontmatter_shadow_unknown_key\" and the table {skill, agent, \"output-style\"} of strict zod objects next to it; descriptions are the program's .describe() text; the loose value type of most keys (string, number, boolean, or null) is why they are x-unverified. Keys with a description that starts with \"@internal\" are internal. No probe in captures/ records frontmatter keys. Do not edit by hand. A field that is still x-unverified may carry x-observed-type: the JSON types that real payloads had there, from the fixtures in tools/schemas/observed/ (stub probes and local files, no value kept). It is a note, not a check.",
   "$defs": {
     "skill": {
       "type": "object",
       "properties": {
         "name": {
           "description": "Display name. Defaults to the filename without extension.",
-          "x-unverified": true
+          "x-unverified": true,
+          "x-observed-type": ["string"]
         },
         "description": {
           "description": "One-line summary shown in listings and the Skill tool.",
-          "x-unverified": true
+          "x-unverified": true,
+          "x-observed-type": ["string"]
         },
         "model": {
           "description": "Model override (`haiku`, `sonnet`, `opus`, `fable`, or a full ID). Use `inherit` to match the parent conversation.",
@@ -21,7 +23,8 @@
         },
         "allowed-tools": {
           "description": "Tools available to the model while this file is active. Comma-separated string or YAML list.",
-          "x-unverified": true
+          "x-unverified": true,
+          "x-observed-type": ["array", "string"]
         },
         "disallowed-tools": {
           "description": "Tools removed from the model while this file is active. Comma-separated string or YAML list. Cleared when the user sends the next message.",
@@ -33,19 +36,23 @@
         },
         "argument-hint": {
           "description": "Placeholder text shown after the slash command name.",
-          "x-unverified": true
+          "x-unverified": true,
+          "x-observed-type": ["array", "string"]
         },
         "arguments": {
           "description": "@internal — typed variant of argument-hint; argument-hint is the documented form",
-          "x-unverified": true
+          "x-unverified": true,
+          "x-observed-type": ["string"]
         },
         "disable-model-invocation": {
           "description": "If true, the model cannot invoke this via the Skill tool; only users can type the slash command.",
-          "x-unverified": true
+          "x-unverified": true,
+          "x-observed-type": ["boolean"]
         },
         "user-invocable": {
           "description": "If false, hides the slash command from users; only the model can invoke it via the Skill tool.",
-          "x-unverified": true
+          "x-unverified": true,
+          "x-observed-type": ["boolean"]
         },
         "effort": {
           "description": "Thinking effort for the model: `low`, `medium`, `high`, `max`, or an integer.",
@@ -57,7 +64,8 @@
         },
         "version": {
           "description": "@internal — bookkeeping, not surfaced to users",
-          "x-unverified": true
+          "x-unverified": true,
+          "x-observed-type": ["string"]
         },
         "when_to_use": {
           "description": "Guidance for when the model should reach for this skill. Becomes part of the tool description.",
@@ -169,7 +177,8 @@
         },
         "license": {
           "description": "@internal",
-          "x-unverified": true
+          "x-unverified": true,
+          "x-observed-type": ["string"]
         },
         "keywords": {
           "description": "@internal",
@@ -183,19 +192,23 @@
       "properties": {
         "name": {
           "description": "Agent identifier. Required — this is how the Agent tool and `--agent` flag address it.",
-          "x-unverified": true
+          "x-unverified": true,
+          "x-observed-type": ["string"]
         },
         "description": {
           "description": "When to use this agent. Required — shown in the Agent tool listing.",
-          "x-unverified": true
+          "x-unverified": true,
+          "x-observed-type": ["string"]
         },
         "model": {
           "description": "Model override for this agent. Use `inherit` to match the spawning conversation.",
-          "x-unverified": true
+          "x-unverified": true,
+          "x-observed-type": ["string"]
         },
         "tools": {
           "description": "Tools available to this agent. Replaces the default set.",
-          "x-unverified": true
+          "x-unverified": true,
+          "x-observed-type": ["array", "string"]
         },
         "disallowedTools": {
           "description": "Tools removed from the default set. Ignored if `tools` is set.",
@@ -203,11 +216,13 @@
         },
         "color": {
           "description": "@internal — display color in the agents UI",
-          "x-unverified": true
+          "x-unverified": true,
+          "x-observed-type": ["string"]
         },
         "effort": {
           "description": "Thinking effort: `low`, `medium`, `high`, `max`, or an integer.",
-          "x-unverified": true
+          "x-unverified": true,
+          "x-observed-type": ["string"]
         },
         "permissionMode": {
           "description": "Permission mode the agent runs in.",
@@ -223,7 +238,8 @@
         },
         "maxTurns": {
           "description": "Maximum conversation turns before the agent stops.",
-          "x-unverified": true
+          "x-unverified": true,
+          "x-observed-type": ["number"]
         },
         "autoCompactWindow": {
           "x-unverified": true

@@ -55,7 +55,10 @@ Steps 1 to 8 are unattended and safe in a fresh session. Steps 9 and 10 need the
 2. **Hold the version.** No command. Keep `src/version.ts` at the old version until step 12.
 
 3. **Schemas.** `bun run release:schemas`, then `bun run schemas:check`.
-   - Regenerates `schemas/*.json` in the working tree. Writes `captures/<to>/schemas-diff.json` (git HEAD against the new files).
+   - Regenerates `schemas/*.json` in the working tree.
+     Writes `captures/<to>/schemas-diff.json` (git HEAD against the new files).
+   - To refresh the `x-observed-type` notes first, run `bun run schemas:observe` (add `-- --user` to also read your own `~/.claude` files, types only).
+     It rewrites `tools/schemas/observed/`.
    - User: no.
 
 4. **Diff.** `bun run release:diff`. Read `captures/<to>/diff/report.md` first. It shows which docs pages are affected.
