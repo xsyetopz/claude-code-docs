@@ -13,6 +13,7 @@
 // A field that a probe in captures/<version>/ saw is marked "x-observed": true.
 // A field still "x-unverified" gets "x-observed-type": [...] when tools/schemas/observed/ has enough samples
 // of real payloads (see observed.ts). The type is not enforced; "x-unverified" keeps its meaning.
+// A field typed by hand in tools/schemas/manual/ (see manual.ts) gets that type and loses "x-unverified".
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { basename, join, resolve } from "node:path";
@@ -40,6 +41,7 @@ import {
 } from "../../inspect/mcp/src/resolve.ts";
 import { CLAUDE_CODE_VERSION } from "../../src/version.ts";
 import { splitTop } from "./jsparse.ts";
+import { applyManual } from "./manual.ts";
 import { applyObserved } from "./observed.ts";
 
 type Json = Record<string, unknown>;
@@ -1075,10 +1077,18 @@ const builders = [
 ];
 const check = argv.includes("--check");
 let stale = 0;
+const program = mods.map((m) => m.text).join("\n");
+const inProgram = (s: string): boolean => program.includes(s);
 for (const b of builders) {
-  const { file, schema: raw } = b();
+  const { file, schema: built } = b();
+  // Types read by hand from the program, from tools/schemas/manual/; these drop "x-unverified".
+  const hand = applyManual(file, built, inProgram);
+  for (const m of [...hand.stale, ...hand.missed]) {
+    stale++;
+    console.log(`manual ${file}: ${m}`);
+  }
   // Types that real payloads had, from tools/schemas/observed/; "x-unverified" stays.
-  const { schema, n: typed } = applyObserved(file, raw);
+  const { schema, n: typed } = applyObserved(file, hand.schema);
   // Match the repo formatter so regenerating leaves a clean diff.
   const fmt = Bun.spawnSync(
     [
@@ -1104,7 +1114,7 @@ for (const b of builders) {
     }
   } else writeFileSync(path, text);
   console.log(
-    `${file}: ${countProps(schema)} properties, ${typed} with x-observed-type`,
+    `${file}: ${countProps(schema)} properties, ${hand.n} typed by hand, ${typed} with x-observed-type`,
   );
 }
 const spreads = [...new Set(R.unresolved)];
