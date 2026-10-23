@@ -35,6 +35,17 @@
     "kind": "env",
     "probes": ["print.sweep"]
   },
+  "docs/configure/env-vars/telemetry-and-debug.md#variables:42614a05": {
+    "kind": "env",
+    "probes": [
+      "print.sweep",
+      "print.perfetto.one",
+      "print.perfetto.path",
+      "print.perfetto.pathdir",
+      "pty.perfetto.interactive-one",
+      "pty.perfetto.interactive-path"
+    ]
+  },
   "docs/configure/env-vars/sdk-and-automation.md#variables:3b3ce8c4": {
     "kind": "env",
     "probes": ["print.sweep"]
@@ -55,6 +66,16 @@
     "kind": "manual",
     "probes": [],
     "note": "plugin option; the `/config` match is a label, not a command"
+  },
+  "docs/configure/memory-and-rules.md#how-it-works:af891277": {
+    "kind": "behaviour",
+    "probes": [
+      "pty.sizes.opus-116k",
+      "pty.sizes.opus-156k",
+      "pty.sizes.opus-45k",
+      "pty.sizes.sonnet-45k",
+      "pty.sizes.sonnet-4x34k"
+    ]
   },
   "docs/configure/memory-and-rules.md#auto-memory:97437ff5": {
     "kind": "static",
@@ -463,6 +484,10 @@
     "kind": "env",
     "probes": ["print.sweep"]
   },
+  "docs/reference/tools/index.md#which-built-in-tools-are-deferred:7a31190f": {
+    "kind": "behaviour",
+    "probes": ["print.hooks.posttooluse.glob", "print.hooks.posttooluse.grep"]
+  },
   "docs/reference/tools/shell-and-web.md#tools:1fb4f438": {
     "kind": "static",
     "probes": [],
@@ -478,9 +503,375 @@
     "probes": [],
     "note": "scope or example text, not a claim about the program"
   },
+  "docs/configure/status-line.md#how-it-works:fc4602b6": {
+    "kind": "behaviour",
+    "probes": [
+      "pty.statusline.debounce",
+      "pty.statusline.dialog-pause",
+      "pty.statusline.idle-no-tick",
+      "pty.statusline.refresh-interval",
+      "pty.statusline.subagent-tick"
+    ]
+  },
+  "docs/extend/hooks/events.md#notification:1b152f75": {
+    "kind": "behaviour",
+    "probes": ["pty.notifications.agent-needs-input"]
+  },
+  "docs/extend/hooks/events.md#notification:2d26f7b1": {
+    "kind": "behaviour",
+    "probes": [
+      "pty.hooks.notification.permission-prompt",
+      "pty.hooks.notification.continue-false"
+    ]
+  },
+  "docs/extend/hooks/events.md#posttooluse-tool_response-shapes:02779c22": {
+    "kind": "behaviour",
+    "probes": [
+      "print.hooks.posttooluse.agent",
+      "print.hooks.posttooluse.agent-bg",
+      "print.hooks.posttooluse.bash",
+      "print.hooks.posttooluse.croncreate",
+      "print.hooks.posttooluse.cronlist",
+      "print.hooks.posttooluse.edit",
+      "print.hooks.posttooluse.edit-after-bash",
+      "print.hooks.posttooluse.edit-after-write",
+      "print.hooks.posttooluse.edit-no-read",
+      "print.hooks.posttooluse.edit-partial-read",
+      "print.hooks.posttooluse.glob",
+      "print.hooks.posttooluse.grep",
+      "print.hooks.posttooluse.listagents",
+      "print.hooks.posttooluse.notebookedit",
+      "print.hooks.posttooluse.read",
+      "print.hooks.posttooluse.toolsearch",
+      "print.hooks.posttooluse.webfetch",
+      "print.hooks.posttooluse.websearch",
+      "print.hooks.posttooluse.write"
+    ],
+    "note": "croncreate, cronlist, glob, grep, notebookedit, webfetch, websearch: not offered in -p since 2.1.306; the CronCreate and CronList rows are from 2.1.305"
+  },
+  "docs/extend/hooks/events.md#posttooluse-tool_response-shapes:eab8eda3": {
+    "kind": "behaviour",
+    "probes": ["print.hooks.posttooluse.edit-no-read"]
+  },
+  "docs/extend/hooks/handlers.md#handler-types:d51c0b14": {
+    "kind": "behaviour",
+    "probes": [
+      "print.hooks.script.no-script",
+      "print.hooks.script.post-script",
+      "print.hooks.script.pre-script",
+      "print.hooks.script.pre-script-only"
+    ]
+  },
+  "docs/extend/hooks/handlers.md#handler-types:e0941b31": {
+    "kind": "behaviour",
+    "probes": [
+      "print.hooks.script.no-script",
+      "print.hooks.script.post-script",
+      "print.hooks.script.pre-script",
+      "print.hooks.script.pre-script-only"
+    ]
+  },
+  "docs/extend/hooks/input-and-output.md#what-continue-and-systemmessage-do-per-event:17b067b6": {
+    "kind": "behaviour",
+    "probes": [
+      "pty.hooks.notification.continue-false",
+      "pty.hooks.notification.permission-prompt",
+      "pty.hooks.permissiondenied.auto",
+      "pty.hooks.permissiondenied.retry",
+      "pty.hooks.permissionrequest.allow",
+      "pty.hooks.permissionrequest.block",
+      "pty.hooks.permissionrequest.deny",
+      "pty.hooks.permissionrequest.empty",
+      "pty.hooks.permissionrequest.exit2",
+      "pty.hooks.permissionrequest.interrupt",
+      "pty.hooks.precompact.block",
+      "pty.hooks.precompact.exit2",
+      "pty.hooks.precompact.sysmsg"
+    ]
+  },
+  "docs/extend/skills-and-commands/slash-commands.md#how-usage-and-artifacts-work:e9b314dd": {
+    "kind": "behaviour",
+    "probes": [
+      "live.usage.429",
+      "live.usage.429-retry-after",
+      "live.usage.envelope"
+    ]
+  },
+  "docs/how-it-works/context-budget.md#what-an-empty-session-holds:3b9fe4b7": {
+    "kind": "behaviour",
+    "probes": ["live.context-budget"]
+  },
+  "docs/how-it-works/context-budget.md#what-else-changes-the-budget:ec33657e": {
+    "kind": "behaviour",
+    "probes": ["print.dsc.sizes"]
+  },
+  "docs/prompts/override.md#:15eac422": {
+    "kind": "behaviour",
+    "probes": ["live.oauth-parity"]
+  },
+  "docs/prompts/skill-insights.md#where-it-comes-from:b79f0f67": {
+    "kind": "behaviour",
+    "probes": ["pty.captures.skill-insights"]
+  },
+  "docs/prompts/subagent-claude-code-guide.md#where-it-comes-from:aa19dfb2": {
+    "kind": "behaviour",
+    "probes": ["pty.captures.guide"]
+  },
+  "docs/prompts/subagent-claude-code-guide.md#where-it-comes-from:aa587d4d": {
+    "kind": "behaviour",
+    "probes": ["pty.captures.guide"]
+  },
+  "docs/reference/probes.md#how-we-probed:8b26f1c1": {
+    "kind": "behaviour",
+    "probes": [
+      "print.briefresume.brief.compare",
+      "print.briefresume.resume.same-session",
+      "print.request.baseline-a",
+      "print.request.baseline-b"
+    ]
+  },
+  "docs/reference/probes.md#auto-mode:413602d2": {
+    "kind": "behaviour",
+    "probes": [
+      "print.automode.classifier-server.default",
+      "print.automode.classifier-server.server-0",
+      "print.automode.classifier-server.server-1",
+      "print.automode.classifier-server.two-stage-1"
+    ]
+  },
+  "docs/reference/probes.md#request-details:96582cfa": {
+    "kind": "behaviour",
+    "probes": [
+      "print.cachetouch.cache-touch.no-override",
+      "print.cachetouch.cache-touch.override"
+    ]
+  },
+  "docs/reference/probes.md#request-details:60c827b5": {
+    "kind": "behaviour",
+    "probes": ["print.request.baseline-a", "print.request.baseline-b"]
+  },
+  "docs/reference/probes.md#automodeclassifyallshell:cb82b287": {
+    "kind": "behaviour",
+    "probes": [
+      "print.automode.classify-all-shell.allow-settings-flag-false",
+      "print.automode.classify-all-shell.allow-settings-flag-true",
+      "print.automode.classify-all-shell.allow-unset",
+      "print.automode.classify-all-shell.allow-user-false",
+      "print.automode.classify-all-shell.allow-user-true",
+      "print.automode.classify-all-shell.local-true",
+      "print.automode.classify-all-shell.no-allow-rule",
+      "print.automode.classify-all-shell.project-true",
+      "print.automode.classify-all-shell.user-false-flag-true",
+      "print.automode.classify-all-shell.user-true-flag-false",
+      "managed.false.classify-flag-false",
+      "managed.false.classify-flag-true",
+      "managed.false.classify-neither",
+      "managed.false.classify-user-false",
+      "managed.false.classify-user-false-and-flag-true",
+      "managed.false.classify-user-true",
+      "managed.false.classify-user-true-and-flag-false",
+      "managed.main.classify-flag-false",
+      "managed.main.classify-flag-true",
+      "managed.main.classify-neither",
+      "managed.main.classify-user-false",
+      "managed.main.classify-user-false-and-flag-true",
+      "managed.main.classify-user-true",
+      "managed.main.classify-user-true-and-flag-false",
+      "managed.true.classify-flag-false",
+      "managed.true.classify-flag-true",
+      "managed.true.classify-neither",
+      "managed.true.classify-user-false",
+      "managed.true.classify-user-false-and-flag-true",
+      "managed.true.classify-user-true",
+      "managed.true.classify-user-true-and-flag-false"
+    ]
+  },
+  "docs/reference/probes.md#subagents-and-hooks:d77527b1": {
+    "kind": "behaviour",
+    "probes": [
+      "print.subagents.append-subagent-prompt.env-append-subagent-system-prompt",
+      "print.subagents.append-subagent-prompt.env-enable-append-subagent-prompt",
+      "print.subagents.append-subagent-prompt.flag",
+      "print.subagents.frontmatter.camel-disallowedTools",
+      "print.subagents.frontmatter.capital-tools-hyphen-disallowed",
+      "print.subagents.isolation.none",
+      "print.subagents.isolation.remote",
+      "print.subagents.isolation.worktree",
+      "print.subagents.observer.off",
+      "print.subagents.observer.on",
+      "print.subagents.setup-hook.init",
+      "print.subagents.setup-hook.init-only",
+      "print.subagents.setup-hook.maintenance",
+      "print.subagents.type.claude",
+      "print.subagents.type.claude-code-guide",
+      "print.subagents.type.comment-thread-analyst",
+      "print.subagents.type.Explore",
+      "print.subagents.type.fork",
+      "print.subagents.type.general-purpose",
+      "print.subagents.type.observer",
+      "print.subagents.type.Plan",
+      "print.subagents.type.statusline-setup",
+      "print.subagents.type.workflow-subagent",
+      "print.subagents.web-fetch",
+      "print.workflow.model-order.none",
+      "print.workflow.model-order.opt-haiku",
+      "print.workflow.model-order.sub-haiku-no-opt",
+      "print.workflow.model-order.sub-haiku-opt-sonnet",
+      "print.workflow.model-order.wf-inherit-sub-haiku",
+      "print.workflow.model-order.wf-sonnet-opt-haiku",
+      "print.workflow.model-order.wf-sonnet-sub-haiku",
+      "print.workflow.model-order.wf-sonnet-sub-haiku-force"
+    ]
+  },
+  "docs/reference/probes.md#subagents-and-hooks:82ca9e81": {
+    "kind": "behaviour",
+    "probes": ["print.subagents.observer.off", "print.subagents.observer.on"]
+  },
+  "docs/reference/probes.md#configure-and-memory:cbebf627": {
+    "kind": "behaviour",
+    "probes": [
+      "print.automode.config.local",
+      "print.automode.config.project",
+      "print.automode.config.settings-flag",
+      "print.automode.config.user",
+      "print.configmem.memory-stores.empty-array",
+      "print.configmem.memory-stores.garbage",
+      "print.configmem.memory-stores.id-mount-form",
+      "print.configmem.memory-stores.mode-ro",
+      "print.configmem.memory-stores.mode-rw",
+      "print.configmem.memory-stores.object-name-path",
+      "print.configmem.memory-stores.string-array",
+      "print.configmem.memory.plain",
+      "print.configmem.memory.remote",
+      "print.configmem.memory.remote-dir",
+      "print.configmem.memory.stores-object",
+      "print.configmem.output-style.plugin-forced"
+    ]
+  },
+  "docs/reference/probes.md#configure-and-memory:316e22a7": {
+    "kind": "env",
+    "probes": [
+      "print.sweep",
+      "print.configmem.memory-stores.empty-array",
+      "print.configmem.memory-stores.garbage",
+      "print.configmem.memory-stores.id-mount-form",
+      "print.configmem.memory-stores.mode-ro",
+      "print.configmem.memory-stores.mode-rw",
+      "print.configmem.memory-stores.object-name-path",
+      "print.configmem.memory-stores.string-array",
+      "print.configmem.memory.stores-object"
+    ]
+  },
+  "docs/reference/probes.md#context-budget:26c7e510": {
+    "kind": "behaviour",
+    "probes": ["live.context-budget"]
+  },
+  "docs/reference/probes.md#context-budget:bf9bda18": {
+    "kind": "behaviour",
+    "probes": ["live.context-budget"]
+  },
+  "docs/reference/probes.md#live-login-probes:31766416": {
+    "kind": "behaviour",
+    "probes": ["live.oauth-parity", "live.artifacts"]
+  },
+  "docs/reference/probes.md#live-login-probes:dce7a0da": {
+    "kind": "behaviour",
+    "probes": ["live.oauth-parity"]
+  },
+  "docs/reference/probes.md#live-login-probes:25e2f867": {
+    "kind": "behaviour",
+    "probes": ["live.artifacts"]
+  },
+  "docs/reference/probes.md#static-and-print-probes:3c918190": {
+    "kind": "behaviour",
+    "probes": [
+      "print.configmem.cowork-memory.extra-guidelines",
+      "print.configmem.cowork-memory.guidelines",
+      "print.configmem.cowork-memory.index-content",
+      "print.configmem.cowork-memory.path-override",
+      "print.configmem.cowork-memory.plain",
+      "print.configmem.cowork-memory.post-turn",
+      "print.configmem.cowork-memory.remote-path-override",
+      "print.hooks.posttooluse.agent",
+      "print.hooks.posttooluse.agent-bg",
+      "print.hooks.posttooluse.bash",
+      "print.hooks.posttooluse.edit",
+      "print.hooks.posttooluse.edit-after-bash",
+      "print.hooks.posttooluse.edit-after-write",
+      "print.hooks.posttooluse.edit-no-read",
+      "print.hooks.posttooluse.edit-partial-read",
+      "print.hooks.posttooluse.listagents",
+      "print.hooks.posttooluse.read",
+      "print.hooks.posttooluse.toolsearch",
+      "print.hooks.posttooluse.write",
+      "print.misc.agent-mcp-servers.project",
+      "print.misc.agent-mcp-servers.user",
+      "print.misc.context-slash-command",
+      "print.misc.large-claude-md",
+      "print.misc.managed-settings-path",
+      "print.misc.plugin-validate.version-array",
+      "print.misc.plugin-validate.version-empty-string",
+      "print.misc.plugin-validate.version-empty-string-with-author",
+      "print.misc.plugin-validate.version-null",
+      "print.misc.plugin-validate.version-number",
+      "print.misc.plugin-validate.version-semver",
+      "print.misc.plugin-validate.version-string",
+      "print.misc.subprocess-env-scrub.bypass-allowedtools-scrub0",
+      "print.misc.subprocess-env-scrub.bypass-allowedtools-scrub1",
+      "print.misc.subprocess-env-scrub.bypass-scrub0",
+      "print.misc.subprocess-env-scrub.bypass-scrub1",
+      "print.misc.subprocess-env-scrub.names",
+      "print.models.matrix"
+    ]
+  },
+  "docs/reference/probes.md#interactive-probes:1f325add": {
+    "kind": "behaviour",
+    "probes": [
+      "pty.agents.fork",
+      "pty.agents.general-purpose",
+      "pty.agents.unknown-type",
+      "pty.hooks.elicitation.hook-accept",
+      "pty.hooks.notification.continue-false",
+      "pty.hooks.notification.permission-prompt",
+      "pty.hooks.permissiondenied.auto",
+      "pty.hooks.permissiondenied.retry",
+      "pty.hooks.permissionrequest.allow",
+      "pty.hooks.permissionrequest.block",
+      "pty.hooks.permissionrequest.deny",
+      "pty.hooks.permissionrequest.empty",
+      "pty.hooks.permissionrequest.exit2",
+      "pty.hooks.permissionrequest.interrupt",
+      "pty.hooks.precompact.block",
+      "pty.hooks.precompact.exit2",
+      "pty.hooks.precompact.sysmsg",
+      "pty.notifications.agent-needs-input",
+      "pty.notifications.elicitation-dialog",
+      "pty.notifications.elicitation-url",
+      "pty.notifications.idle-prompt",
+      "pty.sizes.opus-116k",
+      "pty.sizes.opus-156k",
+      "pty.sizes.opus-45k",
+      "pty.sizes.sonnet-45k",
+      "pty.sizes.sonnet-4x34k",
+      "pty.statusline.debounce",
+      "pty.statusline.dialog-pause",
+      "pty.statusline.idle-no-tick",
+      "pty.statusline.refresh-interval",
+      "pty.statusline.subagent-tick",
+      "pty.captures.guide"
+    ]
+  },
+  "docs/reference/probes.md#interactive-probes:17999660": {
+    "kind": "behaviour",
+    "probes": ["pty.captures.guide"]
+  },
   "docs/reference/probes.md#interactive-probes:9f82d851": {
-    "kind": "manual",
-    "probes": [],
+    "kind": "behaviour",
+    "probes": [
+      "live.usage.429",
+      "live.usage.429-retry-after",
+      "live.usage.envelope"
+    ],
     "note": "texts seen only against the local stub; live.usage.429* never reach the usage endpoint; again on 2.1.307 and 2.1.308, whose text fragments match 2.1.306"
   },
   "docs/start/release-archive.md#version-21306:dcc6649e": {
@@ -546,9 +937,21 @@
     "kind": "behaviour",
     "probes": ["print.transcripts.lines"]
   },
+  "docs/reference/api/betas.md#observed-request:16609b8a": {
+    "kind": "behaviour",
+    "probes": ["print.request.baseline-a", "print.request.baseline-b"]
+  },
+  "docs/reference/api/betas.md#observed-request:736e669d": {
+    "kind": "behaviour",
+    "probes": ["live.oauth-parity"]
+  },
   "docs/reference/transcript-format.md#line-types:f817762b": {
     "kind": "behaviour",
     "probes": ["print.transcripts.lines"]
+  },
+  "docs/reference/transcript-format.md#attachment-types:cb70dfea": {
+    "kind": "behaviour",
+    "probes": ["print.transcripts.attachments"]
   },
   "docs/extend/headless/control-protocol.md#subtypes:42d5eb73": {
     "kind": "static",
@@ -569,6 +972,105 @@
     "kind": "manual",
     "probes": [],
     "note": "program behaviour (approver set next to tool.check); no probe checks it yet"
+  },
+  "docs/reference/probes.md#managed-folder-probe:67ae3edd": {
+    "kind": "behaviour",
+    "probes": [
+      "managed.baseline.agent-mcp",
+      "managed.baseline.auto-mode-config",
+      "managed.baseline.claudemd-order",
+      "managed.baseline.excludes-any-claude-md-project",
+      "managed.baseline.excludes-any-claude-md-user",
+      "managed.baseline.excludes-managed-abs-project",
+      "managed.baseline.excludes-managed-abs-user",
+      "managed.baseline.excludes-managed-glob-project",
+      "managed.baseline.excludes-managed-glob-user",
+      "managed.baseline.mcp-config-flag",
+      "managed.baseline.mcp-get-managed",
+      "managed.baseline.mcp-get-user",
+      "managed.baseline.mcp-list",
+      "managed.baseline.mcp-run",
+      "managed.baseline.outputstyle",
+      "managed.baseline.skill-default",
+      "managed.baseline.skill-disabled",
+      "managed.false.classify-flag-false",
+      "managed.false.classify-flag-true",
+      "managed.false.classify-neither",
+      "managed.false.classify-user-false",
+      "managed.false.classify-user-false-and-flag-true",
+      "managed.false.classify-user-true",
+      "managed.false.classify-user-true-and-flag-false",
+      "managed.main.agent-mcp",
+      "managed.main.auto-mode-config",
+      "managed.main.classify-flag-false",
+      "managed.main.classify-flag-true",
+      "managed.main.classify-neither",
+      "managed.main.classify-user-false",
+      "managed.main.classify-user-false-and-flag-true",
+      "managed.main.classify-user-true",
+      "managed.main.classify-user-true-and-flag-false",
+      "managed.main.claudemd-order",
+      "managed.main.excludes-any-claude-md-project",
+      "managed.main.excludes-any-claude-md-user",
+      "managed.main.excludes-managed-abs-project",
+      "managed.main.excludes-managed-abs-user",
+      "managed.main.excludes-managed-glob-project",
+      "managed.main.excludes-managed-glob-user",
+      "managed.main.mcp-config-flag",
+      "managed.main.mcp-get-managed",
+      "managed.main.mcp-get-user",
+      "managed.main.mcp-list",
+      "managed.main.mcp-run",
+      "managed.main.outputstyle",
+      "managed.main.skill-default",
+      "managed.main.skill-disabled",
+      "managed.true.classify-flag-false",
+      "managed.true.classify-flag-true",
+      "managed.true.classify-neither",
+      "managed.true.classify-user-false",
+      "managed.true.classify-user-false-and-flag-true",
+      "managed.true.classify-user-true",
+      "managed.true.classify-user-true-and-flag-false"
+    ]
+  },
+  "docs/reference/probes.md#managed-folder-probe:06b8069e": {
+    "kind": "behaviour",
+    "probes": [
+      "managed.baseline.agent-mcp",
+      "managed.baseline.auto-mode-config",
+      "managed.baseline.claudemd-order",
+      "managed.baseline.excludes-any-claude-md-project",
+      "managed.baseline.excludes-any-claude-md-user",
+      "managed.baseline.excludes-managed-abs-project",
+      "managed.baseline.excludes-managed-abs-user",
+      "managed.baseline.excludes-managed-glob-project",
+      "managed.baseline.excludes-managed-glob-user",
+      "managed.baseline.mcp-config-flag",
+      "managed.baseline.mcp-get-managed",
+      "managed.baseline.mcp-get-user",
+      "managed.baseline.mcp-list",
+      "managed.baseline.mcp-run",
+      "managed.baseline.outputstyle",
+      "managed.baseline.skill-default",
+      "managed.baseline.skill-disabled",
+      "managed.main.agent-mcp",
+      "managed.main.auto-mode-config",
+      "managed.main.claudemd-order",
+      "managed.main.excludes-any-claude-md-project",
+      "managed.main.excludes-any-claude-md-user",
+      "managed.main.excludes-managed-abs-project",
+      "managed.main.excludes-managed-abs-user",
+      "managed.main.excludes-managed-glob-project",
+      "managed.main.excludes-managed-glob-user",
+      "managed.main.mcp-config-flag",
+      "managed.main.mcp-get-managed",
+      "managed.main.mcp-get-user",
+      "managed.main.mcp-list",
+      "managed.main.mcp-run",
+      "managed.main.outputstyle",
+      "managed.main.skill-default",
+      "managed.main.skill-disabled"
+    ]
   },
   "docs/reference/probes.md#managed-folder-probe:9dea0ba8": {
     "kind": "static",
