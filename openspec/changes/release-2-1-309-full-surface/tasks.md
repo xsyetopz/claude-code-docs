@@ -46,5 +46,5 @@ Items of claude.ai, Cowork, Claude Design, and artifacts are mapped like any oth
 
 ## 6. Release
 
-- [ ] 6.1 Run `bun run verify:locked`, have the diff reviewed against this plan, then commit and push (pre-approved in the owner's `CLAUDE.local.md`). Verify: review finds no unfixed issue, and the pre-push `verify:locked` passes
+- [x] 6.1 Run `bun run verify:locked`, have the diff reviewed against this plan, then commit and push (pre-approved in the owner's `CLAUDE.local.md`). Verify: review finds no unfixed issue, and the pre-push `verify:locked` passes
 - [ ] 6.2 Ask the owner to approve the registry publish of `cc-docs`, then publish it. Verify: `bunx cc-docs@<version> search hooks` prints hits from a clean temp folder
