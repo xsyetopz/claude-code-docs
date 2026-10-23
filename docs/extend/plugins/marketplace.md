@@ -140,6 +140,17 @@ sequenceDiagram
 Policy lists are checked before any download.
 If a marketplace fails to refresh, Claude Code keeps the old checkout only when `CLAUDE_CODE_PLUGIN_KEEP_MARKETPLACE_ON_FAILURE` is `1`.
 
+## Errors
+
+Each row is a family of messages. The backticked text is the start that every message in the family shares.
+
+| Start of Message | Status | What It Means | Cases |
+| --- | --- | --- | --- |
+| `Plugin source command` | <Undocumented /> | A plugin source command did not give a plugin directory. | The command could not start, timed out, was killed, or exited with an error code. It printed nothing, printed more than one line, printed too much, or printed a path that is not absolute. The path was a network location, the working directory or a parent of it, or a directory with no plugin content. |
+| `Plugin archive` | <Undocumented /> | A plugin archive was not installed. | The archive held no plugin files or no plugin content at its root. It lacked the component paths its entry declares, or declared unsafe ones. The sha256 check failed, a redirect left the allowed URLs, or the archive was too large. |
+| `Plugin directory` | <Undocumented /> | A plugin directory was not loaded or installed. | The directory does not exist, was removed or replaced while it loaded, has too many entries, or is too large. |
+| `Marketplace` | <Undocumented /> | A marketplace was refused, not found, or not refreshed. | It is blocked by enterprise policy, was registered from an untrusted source, has a corrupted `installLocation`, or has a name that is not a plain directory name. A seed-managed marketplace does not auto-update. A name that is not registered gets a list of the available marketplaces. |
+
 ## Related Pages
 
 - [Plugins](index.md)

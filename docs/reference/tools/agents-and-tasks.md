@@ -88,6 +88,16 @@ flowchart LR
 A subagent gets a smaller tool list than the main session. For example, `AskUserQuestion` and `EnterPlanMode` are removed from every subagent.
 See [Subagent Runtime](../../extend/subagents/runtime.md) for the full rules.
 
+## Errors
+
+Each row is a family of messages. The backticked text is the start that every message in the family shares.
+
+| Start of Message | Status | What It Means | Cases |
+| --- | --- | --- | --- |
+| `Cannot enter worktree` | <Undocumented /> | `EnterWorktree` with `path` refused the worktree. | The worktree belongs to another running session (locked), does not exist, is a network path, is marked prunable by git, is not a registered or linked worktree, is the current directory, or is not under the worktrees that Claude Code manages. |
+| `Orphaned worktree dir` | <Undocumented /> | Claude Code left a leftover worktree directory alone. | It will not self-heal when `git remote`, `rev-list`, or `rev-parse` fails, or when the branch has unpushed commits. |
+| `WorktreeCreate hook failed` | <Undocumented /> | A `WorktreeCreate` hook did not give a worktree. | The hook errored, was configured but did not run (workspace not trusted or matcher mismatch), or returned no worktree path. |
+
 ## Related Pages
 
 - [Tools](index.md)
