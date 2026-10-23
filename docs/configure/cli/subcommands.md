@@ -50,6 +50,7 @@ Source: the text of `claude <command> --help` in `2.1.309`.
 | `claude sandbox` | <Undocumented /> | A hidden command with three subcommands for the Windows sandbox: `install` adds the sandbox user and network filters and asks for elevation once, `status` prints the sandbox state and the Windows install state as one JSON line, and `uninstall` removes them and lists what stays behind, with `--json`. |
 | `claude edit-hook`, `edit-permission-rules`, `edit-memory-settings`, `edit-skill-overrides`, `edit-sandbox-settings`, `edit-chrome-settings`, `drop-worktree-registrations`, `design-login` | <Undocumented /> | Hidden commands that read one JSON edit from stdin with `--json`, and their text says they serve the VS Code extension. `design-login --status` reports whether design-system access is authorized and exits. |
 | `claude apply-project-settings` | <Undocumented /> | A hidden command that shows how your user and project settings differ from what you accepted for cloud sessions on this computer, and lets you accept them. It needs a terminal. |
+| `claude project` | <Undocumented /> <Deprecated note="Use claude purge" /> | A hidden command with one subcommand, `purge`. The program says that `claude project purge` is now `claude purge` and that the old name still works for now. |
 | `claude import-conversations <exportPath>` | <Undocumented /> | A hidden command that archives an export, with `--cwd` and `--dry-run`. |
 
 :::note[Hidden Commands]

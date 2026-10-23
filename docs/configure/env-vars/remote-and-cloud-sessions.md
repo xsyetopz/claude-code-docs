@@ -159,6 +159,7 @@ The table is sorted by name. See [Environment Variables](index.md#how-to-read-th
 | `CLAUDE_RUNNER_USE_GIT_PROXY` | <Documented /> | Turns on the Anthropic git proxy for the self-hosted runner. | - | - |
 | `CLAUDE_RUNNER_WORK_ORDER_FILE` | <Undocumented /> | Gives the spawn-runner hook the path of the file that holds the work order. | A path | Self-hosted runner, orchestrator mode |
 | `CLAUDE_RUNNER_WORKSPACE_PATHS` | <Undocumented /> | Gives the post-session hook the workspace paths of the session. | Text. Paths joined with `:` | Self-hosted runner post-session hook |
+| `CLAUDE_SSH_DAEMON_CHILD` | <Undocumented /> | A text variable that the program declares. With `CLAUDE_SSH_RUN_DIR` it can skip an optional prompt section. A Probes run saw no effect. | Text | - |
 | `CLAUDE_SSH_RUN_DIR` | <Undocumented /> | A presence check in system prompt assembly. With `CLAUDE_SSH_DAEMON_CHILD` it can skip an optional prompt section. A Probes run saw no effect. | A path | - |
 | `CLAUDE_STAGE_FILE_ROOT` | <Undocumented /> | Sets the root directory for staged upload files in remote sessions. | - | - |
 | `LOCAL_BRIDGE` | <Undocumented /> | Points the bridge URL to `ws://localhost:8765`, like `USE_LOCAL_OAUTH`. | - | - |

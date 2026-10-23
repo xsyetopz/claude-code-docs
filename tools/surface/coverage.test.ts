@@ -180,13 +180,28 @@ test("an exclusion needs a reason and a map entry needs a route", () => {
   );
 });
 
-test("docs names are the exact backticked names in table rows of the pages", () => {
+test("an error prefix key shorter than 8 characters is rejected in both files", () => {
+  const entry = { route: "/x" };
+  expect(
+    shape(
+      { "error:Unknown*": entry, "error:Unknown hook*": entry },
+      { "error:q*": "x", "error:${…} is r*": "x", "error:Not conn*": "x" },
+    ),
+  ).toEqual([
+    "map.json: error:Unknown* needs a prefix of 8 characters or more before the *",
+    "exclusions.json: error:q* needs a prefix of 8 characters or more before the *",
+  ]);
+  // the length counts the text after "error:" and before "*"
+  expect(shape({}, { "error:Short": "x", "env:A*": "x" })).toEqual([]);
+});
+
+test("docs names are the exact backticked names in the name cell of table rows of the pages", () => {
   const root = repo(
     {},
     {},
     {
       "docs/a/one.md":
-        "Text with `NOT_IN_TABLE`.\n| `A` | `b\\|c` | x `--f <v>` |\n",
+        "Text with `NOT_IN_TABLE`.\n| `A` | `b\\|c` | x `--f <v>` |\n| `d\\|e`, `F` | y |\n",
       "docs/a/sub/two.mdx": "| `DEEP` |\n",
       "docs/other.md": "| `ELSEWHERE` |\n",
     },
@@ -194,11 +209,34 @@ test("docs names are the exact backticked names in table rows of the pages", () 
   expect(docsNames(root, ["docs/a", "docs/missing.md"])).toEqual(
     new Map([
       ["A", join(root, "docs/a/one.md")],
-      ["b|c", join(root, "docs/a/one.md")],
-      ["--f <v>", join(root, "docs/a/one.md")],
+      ["d|e", join(root, "docs/a/one.md")],
+      ["F", join(root, "docs/a/one.md")],
       ["DEEP", join(root, "docs/a/sub/two.mdx")],
     ]),
   );
+});
+
+test("a token only in a cell other than the name cell does not document an item", () => {
+  const root = repo(
+    {},
+    {},
+    {
+      "docs/configure/cli/a.md":
+        "| Name | See |\n| --- | --- |\n| `--one` | [`project`](/x), `--two` |\n",
+    },
+  );
+  const names = docsNames(root, PAGES["flag"] as string[]);
+  expect([...names.keys()]).toEqual(["--one"]);
+  const out = check(
+    {
+      version: "1.2.3",
+      kinds: { flag: [{ name: "--one" }, { name: "--two" }] },
+    },
+    { flag: names },
+    {},
+    {},
+  );
+  expect(out.unmapped).toEqual(["flag:--two"]);
 });
 
 test("the counts add up for each kind", () => {
