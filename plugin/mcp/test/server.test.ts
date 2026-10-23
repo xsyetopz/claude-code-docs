@@ -157,6 +157,10 @@ const connect = async (env: Record<string, string> = {}) => {
       error: r.isError === true,
       text: first?.text ?? "",
       structured: r.structuredContent as Record<string, unknown> | undefined,
+      // Claude Code 2.1.309 (`ds` in chunk-gf8e163f.js) shows the model only structuredContent when set.
+      seen: r.structuredContent
+        ? JSON.stringify(r.structuredContent)
+        : (first?.text ?? ""),
     };
   };
   return { call, cache };
@@ -165,6 +169,17 @@ const connect = async (env: Record<string, string> = {}) => {
 afterAll(async () => {
   for (const c of clients) await c.close();
   for (const f of stops) f();
+});
+
+describe("what the model sees", () => {
+  test("page and schema text reach the model", async () => {
+    const { call } = await connect();
+    const page = await call("read_page", { route: "configure/hooks" });
+    expect(page.seen).toContain("PreToolUse");
+    expect(page.seen).toContain("Source:");
+    const schema = await call("get_schema", { name: "tools" });
+    expect(schema.seen).toContain("1 definitions");
+  });
 });
 
 describe("get_schema", () => {
@@ -584,7 +599,7 @@ describe("platform tools", () => {
       path: "/docs/en/build-with-claude/overview.md",
     });
     expect(r.error).toBe(false);
-    expect(r.text).toContain("Zebrafinch");
+    expect(r.seen).toContain("Zebrafinch");
     expect(r.text).toContain("<HomePage>");
     const sec = await call("read_platform_page", {
       path: "build-with-claude/overview",

@@ -22903,7 +22903,7 @@ Args:
   - section_heading (string, optional): return only the H2 section with this heading (case-insensitive, e.g. "At a Glance").
   - offset (number, default 0): character offset to continue a long page; use next_offset from the previous reply.
   - max_chars (number, default ${DEFAULT_PAGE_CHARS}, max ${MAX_PAGE_CHARS}): page size in characters.
-Returns: markdown text, headed by a line with the range and next_offset when more remains, ending with a "Source:" line (live, or cache when offline); structuredContent {source:{origin,state,fetchedAt}}.
+Returns: markdown text, headed by a line with the range and next_offset when more remains, ending with a "Source:" line (live, or cache when offline).
 Errors: unknown route lists the closest pages; unknown heading lists the page's H2 headings.`,
   inputSchema: {
     route: string2().min(1).describe("e.g. 'configure/status-line'"),
@@ -22911,7 +22911,6 @@ Errors: unknown route lists the closest pages; unknown heading lists the page's 
     offset: number2().int().min(0).default(0).describe("Character offset"),
     max_chars: number2().int().min(1000).max(MAX_PAGE_CHARS).default(DEFAULT_PAGE_CHARS).describe("Page size in characters")
   },
-  outputSchema: { source: sourceSchema },
   annotations: { title: "Read a Claude Code docs page", ...READ_ONLY }
 }, ({ route, section_heading, offset, max_chars }) => guarded(async () => {
   const entry = await content.find(route);
@@ -22943,9 +22942,7 @@ ${hs}`);
 
 ${chunk}
 
-${sourceLine(r.source)}`, {
-    source: sourceData(r.source)
-  });
+${sourceLine(r.source)}`);
 }));
 server.registerTool("list_pages", {
   title: "List Claude Code docs pages",
@@ -23034,13 +23031,12 @@ Args:
   - name (string): schema name, or "types".
   - property (string, optional): property path, or for "types" a name, member path, call, or event.
   - offset (number, default 0): character offset for long output.
-Returns: JSON text (or outline) ending with a "Source:" line; structuredContent {source:{origin,state,fetchedAt}}. Errors list valid names or properties.`,
+Returns: JSON text (or outline) ending with a "Source:" line. Errors list valid names or properties.`,
   inputSchema: {
     name: string2().min(1).describe("e.g. 'settings', 'claude-code-plugin-manifest', or 'types'"),
     property: string2().optional().describe("Dotted property path, e.g. 'permissions'; for 'types': 'ToolCheckResult', '$.tool.check', or 'tool.check'"),
     offset: number2().int().min(0).default(0).describe("Character offset")
   },
-  outputSchema: { source: sourceSchema },
   annotations: { title: "Get a Claude Code JSON Schema", ...READ_ONLY }
 }, ({ name, property, offset }) => guarded(async () => {
   if (TYPE_NAMES.includes(name)) {
@@ -23106,9 +23102,7 @@ var page = (out, offset, source) => {
 ` : "";
   return text(`${note}${chunk}
 
-${sourceLine(source)}`, {
-    source: sourceData(source)
-  });
+${sourceLine(source)}`);
 };
 var platform = new Platform;
 server.registerTool("search_platform_docs", {
@@ -23174,7 +23168,7 @@ Args:
   - section_heading (string, optional): return only the H2 section with this heading (case-insensitive).
   - offset (number, default 0): character offset to continue a long page; use next offset from the previous reply.
   - max_chars (number, default ${DEFAULT_PAGE_CHARS}, max ${MAX_PAGE_CHARS}): page size in characters.
-Returns: markdown text, headed by a line with the range, ending with a "Source:" line; structuredContent {source:{origin,state,fetchedAt}}.
+Returns: markdown text, headed by a line with the range, ending with a "Source:" line.
 Errors: invalid path is rejected; unknown page lists the closest pages.`,
   inputSchema: {
     path: string2().min(1).describe("e.g. 'build-with-claude/overview'"),
@@ -23182,7 +23176,6 @@ Errors: invalid path is rejected; unknown page lists the closest pages.`,
     offset: number2().int().min(0).default(0).describe("Character offset"),
     max_chars: number2().int().min(1000).max(MAX_PAGE_CHARS).default(DEFAULT_PAGE_CHARS).describe("Page size in characters")
   },
-  outputSchema: { source: sourceSchema },
   annotations: {
     title: "Read a Claude API and platform docs page",
     ...READ_ONLY
@@ -23222,9 +23215,7 @@ ${hs}`);
 
 ${chunk}
 
-${sourceLine(r.source)}`, {
-    source: sourceData(r.source)
-  });
+${sourceLine(r.source)}`);
 }));
 server.registerTool("list_platform_pages", {
   title: "List Claude API and platform docs pages",

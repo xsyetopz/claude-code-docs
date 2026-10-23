@@ -268,7 +268,7 @@ Args:
   - section_heading (string, optional): return only the H2 section with this heading (case-insensitive, e.g. "At a Glance").
   - offset (number, default 0): character offset to continue a long page; use next_offset from the previous reply.
   - max_chars (number, default ${DEFAULT_PAGE_CHARS}, max ${MAX_PAGE_CHARS}): page size in characters.
-Returns: markdown text, headed by a line with the range and next_offset when more remains, ending with a "Source:" line (live, or cache when offline); structuredContent {source:{origin,state,fetchedAt}}.
+Returns: markdown text, headed by a line with the range and next_offset when more remains, ending with a "Source:" line (live, or cache when offline).
 Errors: unknown route lists the closest pages; unknown heading lists the page's H2 headings.`,
     inputSchema: {
       route: z.string().min(1).describe("e.g. 'configure/status-line'"),
@@ -285,7 +285,6 @@ Errors: unknown route lists the closest pages; unknown heading lists the page's 
         .default(DEFAULT_PAGE_CHARS)
         .describe("Page size in characters"),
     },
-    outputSchema: { source: sourceSchema },
     annotations: { title: "Read a Claude Code docs page", ...READ_ONLY },
   },
   ({ route, section_heading, offset, max_chars }) =>
@@ -323,9 +322,7 @@ Errors: unknown route lists the closest pages; unknown heading lists the page's 
       const head = `${entry.title} | ${entry.url} | chars ${offset}-${end} of ${total}${
         end < total ? ` | more: call again with offset=${end}` : ""
       }`;
-      return text(`${head}\n\n${chunk}\n\n${sourceLine(r.source)}`, {
-        source: sourceData(r.source),
-      });
+      return text(`${head}\n\n${chunk}\n\n${sourceLine(r.source)}`);
     }),
 );
 
@@ -438,7 +435,7 @@ Args:
   - name (string): schema name, or "types".
   - property (string, optional): property path, or for "types" a name, member path, call, or event.
   - offset (number, default 0): character offset for long output.
-Returns: JSON text (or outline) ending with a "Source:" line; structuredContent {source:{origin,state,fetchedAt}}. Errors list valid names or properties.`,
+Returns: JSON text (or outline) ending with a "Source:" line. Errors list valid names or properties.`,
     inputSchema: {
       name: z
         .string()
@@ -452,7 +449,6 @@ Returns: JSON text (or outline) ending with a "Source:" line; structuredContent 
         ),
       offset: z.number().int().min(0).default(0).describe("Character offset"),
     },
-    outputSchema: { source: sourceSchema },
     annotations: { title: "Get a Claude Code JSON Schema", ...READ_ONLY },
   },
   ({ name, property, offset }) =>
@@ -524,9 +520,7 @@ const page = (out: string, offset: number, source: Source) => {
     end < out.length
       ? `[chars ${offset}-${end} of ${out.length}; call again with offset=${end}]\n`
       : "";
-  return text(`${note}${chunk}\n\n${sourceLine(source)}`, {
-    source: sourceData(source),
-  });
+  return text(`${note}${chunk}\n\n${sourceLine(source)}`);
 };
 
 // ---- platform.claude.com tools ----
@@ -614,7 +608,7 @@ Args:
   - section_heading (string, optional): return only the H2 section with this heading (case-insensitive).
   - offset (number, default 0): character offset to continue a long page; use next offset from the previous reply.
   - max_chars (number, default ${DEFAULT_PAGE_CHARS}, max ${MAX_PAGE_CHARS}): page size in characters.
-Returns: markdown text, headed by a line with the range, ending with a "Source:" line; structuredContent {source:{origin,state,fetchedAt}}.
+Returns: markdown text, headed by a line with the range, ending with a "Source:" line.
 Errors: invalid path is rejected; unknown page lists the closest pages.`,
     inputSchema: {
       path: z.string().min(1).describe("e.g. 'build-with-claude/overview'"),
@@ -631,7 +625,6 @@ Errors: invalid path is rejected; unknown page lists the closest pages.`,
         .default(DEFAULT_PAGE_CHARS)
         .describe("Page size in characters"),
     },
-    outputSchema: { source: sourceSchema },
     annotations: {
       title: "Read a Claude API and platform docs page",
       ...READ_ONLY,
@@ -682,9 +675,7 @@ Errors: invalid path is rejected; unknown page lists the closest pages.`,
       const head = `${title} | ${url} | chars ${offset}-${end} of ${total}${
         end < total ? ` | more: call again with offset=${end}` : ""
       }`;
-      return text(`${head}\n\n${chunk}\n\n${sourceLine(r.source)}`, {
-        source: sourceData(r.source),
-      });
+      return text(`${head}\n\n${chunk}\n\n${sourceLine(r.source)}`);
     }),
 );
 
