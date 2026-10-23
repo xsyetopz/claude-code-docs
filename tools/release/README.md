@@ -95,7 +95,7 @@ Steps 1 to 8 are unattended and safe in a fresh session. Steps 9 and 10 need the
     `docs/start/what-changed.md` holds only the `<to>` section. Move the `<from>` section to the top of `docs/start/release-archive.md`, and rename its claim ids in `tools/release/claims/map.json`. Update the version ranges in both pages.
     - User: no.
 
-12. **Release.** Bump `src/version.ts` to `<to>`. Run `bun run schemas` again, so the generator stamps the new version. Then run `bun run schemas:check` and `bun run verify:locked`. Have the change reviewed, then commit with Conventional Commits and push. The pre-push hook runs `verify:locked` again.
+12. **Release.** Bump `src/version.ts` to `<to>`. Run `bun run schemas` again, so the generator stamps the new version. Run `bun run version:bump -- cc-docs patch` (or `just bump cc-docs patch`), which also sets the Claude Code version in `.claude-plugin/marketplace.json`; bump `cc-inspect` too when `inspect/` changed. Then run `bun run schemas:check` and `bun run verify:locked`. Have the change reviewed, then commit with Conventional Commits and push. The pre-push hook runs `verify:locked` again.
     - User: no.
 
 ## Shortcut: `release:all`

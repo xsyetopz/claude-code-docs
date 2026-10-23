@@ -4,7 +4,7 @@
   "owner": {
     "name": "xsyetopz"
   },
-  "description": "The Claude Code Docs as a plugin: an MCP server and a skill that answer questions about Claude Code 2.1.307.",
+  "description": "The Claude Code Docs as a plugin: an MCP server and a skill that answer questions about Claude Code 2.1.309.",
   "metadata": {
     "version": "0.2.0"
   },
@@ -12,7 +12,7 @@
     {
       "name": "cc-docs",
       "source": "./plugin",
-      "description": "MCP server and skill for the Claude Code Docs (version 2.1.307). Search and read pages, list sections, and get the JSON Schemas (search_docs, read_page, list_pages, get_schema). Also searches and reads the Claude API and platform docs (search_platform_docs, read_platform_page, list_platform_pages). Live fetch with an offline disk cache.",
+      "description": "MCP server and skill for the Claude Code Docs (version 2.1.309). Search and read pages, list sections, and get the JSON Schemas (search_docs, read_page, list_pages, get_schema). Also searches and reads the Claude API and platform docs (search_platform_docs, read_platform_page, list_platform_pages). Live fetch with an offline disk cache.",
       "category": "documentation"
     },
     {

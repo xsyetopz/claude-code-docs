@@ -13,6 +13,7 @@ import { join } from "node:path";
 import Ajv2020 from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
 import { SCHEMA_NAMES, TYPE_FILE } from "../../plugin/mcp/src/content.ts";
+import { versionProblems } from "../version/bump.ts";
 
 const ROOT = join(import.meta.dir, "..", "..");
 const ajv = new Ajv2020({ strict: true, strictTypes: false, allErrors: true });
@@ -59,6 +60,8 @@ for (const n of names)
     problems.push(
       `plugin name "${String(n)}" is empty, has spaces, or is reserved`,
     );
+
+problems.push(...versionProblems(read));
 
 for (const f of PLUGINS.flatMap((p) => [
   `${p.dir}/.mcp.json`,
