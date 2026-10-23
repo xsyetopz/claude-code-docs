@@ -47,6 +47,21 @@ claude -p "/debug the login test fails on CI"
 | `/claude-in-chrome` | <Gated note="Needs the Chrome extension, or a check passing." /> | Browser automation through the Chrome extension. | No allowed tools. |
 | `/design-sync` `[<project hint>]` | <Gated note="Policy allow_design_sync." /> | Pushes design-system components to claude.ai/design. | `disableModelInvocation`. |
 | `/artifact-components` | <Gated note="An isEnabled check decides." /> | Reusable components in an Artifact. | |
+| `/commit` | <Undocumented /> <Gated note="An isEnabled check decides." /> | Creates a git commit. It gathers git context first. | A `prompt` command. |
+| `/pr` | <Undocumented /> <Gated note="An isEnabled check decides." /> | Creates a GitHub pull request. It gathers branch context first. | A `prompt` command. |
+| `/commit-push-pr` | <Undocumented /> | Commits, pushes, and opens a pull request. | A `prompt` command. |
+| `/dataviz` | <Undocumented /> | Guides Claude when it makes a chart, graph, plot, dashboard, or other data visualization. | A `prompt` command. |
+| `/explain-usage` | <Undocumented /> <Gated note="An isEnabled check decides." /> | Explains where the tokens of this session went, with one simple chart. | A `prompt` command. |
+| `/memory-types` | <Undocumented /> <Gated note="An isEnabled check decides." /> | A full reference for the memory types: what each captures, when to save it, and how to write the body. | A `prompt` command. |
+| `/prototype` | <Undocumented /> <Gated note="An isEnabled check decides." /> | Turns an idea into a working proof of concept and publishes it as an Artifact. | A `prompt` command. It runs a short intake first. |
+| `/workshop` | <Undocumented /> <Gated note="An isEnabled check decides." /> | Builds a design with you, one decision at a time, on an evolving plan document published as an Artifact. | A `prompt` command. |
+| `/artifact-capabilities` | <Undocumented /> <Gated note="An isEnabled check decides." /> | A guide for Artifacts. The program gives no description. | A `prompt` command. |
+| `/artifact-design` | <Undocumented /> <Gated note="An isEnabled check decides." /> | Design guidance and fundamentals for Artifacts. | A `prompt` command. |
+| `/artifact-diagramming` | <Undocumented /> <Gated note="An isEnabled check decides." /> | Diagramming guidance for Artifacts: when a picture helps, and how to draw it with inline SVG in both themes. | A `prompt` command. |
+| `/design` | <Undocumented /> <Gated note="An isEnabled check decides." /> | A design command. The program gives no description. | A `prompt` command. |
+| `/claude-code-docs` | <Undocumented /> <Gated note="An isEnabled check decides, and it reads the server flag tengu_birch_kettle." /> | A command for questions about Claude Code. The program gives no description. | A `prompt` command. |
+| `/cowork-plugin` | <Undocumented /> <Gated note="An isEnabled check decides." /> | Creates a new Cowork plugin from scratch, or customizes an installed plugin for an organization. | A `prompt` command. |
+| `/setup-claude` (alias `/setup-cowork`) | <Undocumented /> <Gated note="An isEnabled check decides." /> | A guided setup: pick a role, install a matching plugin, try a skill, and connect tools. | A `prompt` command. |
 
 ## Related Pages
 

@@ -1,1 +1,10 @@
-{}
+{
+  "flag:--runner-declares": "A runner-internal flag with no help text, and the release archive page already says this site does not list runner-internal names (the program).",
+  "slash-command:/agents": "Hidden, and its own description starts with \"(removed)\" (the program).",
+  "slash-command:/extra-usage": "Hidden, and its own description says it was renamed to /usage-credits, which Slash Commands lists (the program).",
+  "slash-command:/limit-reset": "Hidden, and the program gives no description. What it does is not known from the program, so the site does not guess.",
+  "slash-command:/loops": "Its isEnabled always returns false in 2.1.309, so no user can run it (the program).",
+  "slash-command:/pause-memory": "Its isEnabled always returns false in 2.1.309, so no user can run it (the program).",
+  "slash-command:/version": "Its isEnabled always returns false in 2.1.309, so no user can run it (the program).",
+  "slash-command:/wellbeing": "Its isEnabled always returns false in 2.1.309, so no user can run it (the program)."
+}

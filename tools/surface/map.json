@@ -1,1 +1,1066 @@
-{}
+{
+  "flag:add --callback-port": {
+    "route": "/extend/mcp/cli",
+    "anchor": "flags"
+  },
+  "flag:add --client-id": {
+    "route": "/extend/mcp/cli",
+    "anchor": "flags"
+  },
+  "flag:add --client-secret": {
+    "route": "/extend/mcp/cli",
+    "anchor": "flags"
+  },
+  "flag:add --env": {
+    "route": "/extend/mcp/cli",
+    "anchor": "flags"
+  },
+  "flag:add --header": {
+    "route": "/extend/mcp/cli",
+    "anchor": "flags"
+  },
+  "flag:add --scope": {
+    "route": "/extend/mcp/cli",
+    "anchor": "flags"
+  },
+  "flag:add --transport": {
+    "route": "/extend/mcp/cli",
+    "anchor": "flags"
+  },
+  "flag:add --xaa": {
+    "route": "/extend/mcp/cli",
+    "anchor": "flags"
+  },
+  "flag:agents --add-dir": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:agents --agent": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:agents --all": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:agents --allow-dangerously-skip-permissions": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:agents --cwd": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:agents --dangerously-skip-permissions": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:agents --effort": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:agents --inherit-permission-mode": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:agents --json": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:agents --managed-settings": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:agents --mcp-config": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:agents --model": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:agents --permission-mode": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:agents --plugin-dir": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:agents --plugin-dir-no-mcp": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:agents --restricted": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:agents --setting-sources": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:agents --settings": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:agents --strict-mcp-config": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:auth login --claudeai": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:auth login --console": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:auth login --email": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:auth login --sso": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:auth status --json": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:auth status --text": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:auto-mode critique --model": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:auto-mode defaults --label": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:auto-mode reset --yes": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:design-login --json": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:drop-worktree-registrations --json": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:edit-chrome-settings --json": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:edit-hook --json": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:edit-memory-settings --json": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:edit-permission-rules --json": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:edit-sandbox-settings --json": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:edit-skill-overrides --json": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:gateway --config": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:import --dry-run": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:import --yes": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:import-conversations --cwd": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:import-conversations --dry-run": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:install --force": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:mcp add-from-claude-desktop --scope": {
+    "route": "/extend/mcp/cli",
+    "anchor": "flags"
+  },
+  "flag:mcp add-json --client-secret": {
+    "route": "/extend/mcp/cli",
+    "anchor": "flags"
+  },
+  "flag:mcp add-json --scope": {
+    "route": "/extend/mcp/cli",
+    "anchor": "flags"
+  },
+  "flag:mcp login --no-browser": {
+    "route": "/extend/mcp/cli",
+    "anchor": "flags"
+  },
+  "flag:mcp remove --scope": {
+    "route": "/extend/mcp/cli",
+    "anchor": "flags"
+  },
+  "flag:mcp serve --debug": {
+    "route": "/extend/mcp/cli",
+    "anchor": "flags"
+  },
+  "flag:mcp serve --port": {
+    "route": "/extend/mcp/cli",
+    "anchor": "subcommands"
+  },
+  "flag:mcp serve --result-format": {
+    "route": "/extend/mcp/cli",
+    "anchor": "subcommands"
+  },
+  "flag:mcp serve --session-tunnel": {
+    "route": "/extend/mcp/cli",
+    "anchor": "subcommands"
+  },
+  "flag:mcp serve --transport": {
+    "route": "/extend/mcp/cli",
+    "anchor": "subcommands"
+  },
+  "flag:mcp serve --verbose": {
+    "route": "/extend/mcp/cli",
+    "anchor": "flags"
+  },
+  "flag:plugin configure --cowork": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin configure --json": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin configure --values-stdin": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin details --cowork": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin disable --all": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin disable --cowork": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin disable --json": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin disable --scope": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin enable --cowork": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin enable --json": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin enable --scope": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin eval --ablation": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin eval --allow-real-servers": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin eval --allow-tools": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin eval --case": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin eval --concurrency": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin eval --disallow-tools": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin eval --eval-dir": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin eval --json": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin eval --judge-model": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin eval --keep-temp": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin eval --max-cost-usd": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin eval --mocks": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin eval --model": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin eval --no-publish": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin eval --no-scaffold": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin eval --output-dir": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin eval --publish-report": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin eval --report": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin eval --runs": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin eval --scaffold": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin eval --tag": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin eval --threshold": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin eval --trust-plugin": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin eval --verbose": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin eval init --bare": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin eval init --eval-dir": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin eval init --interactive": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin eval init --interview": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin init --author": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin init --author-email": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin init --description": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin init --force": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin init --with": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin install --accept-command": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin install --config": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin install --cowork": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin install --json": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin install --marketplace": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin install --registry": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin install --replace": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin install --scope": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin install --yes": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin list --available": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin list --cowork": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin list --data-size": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin list --json": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin marketplace add --claudeai": {
+    "route": "/extend/plugins/cli",
+    "anchor": "marketplace-subcommands"
+  },
+  "flag:plugin marketplace add --cowork": {
+    "route": "/extend/plugins/cli",
+    "anchor": "marketplace-subcommands"
+  },
+  "flag:plugin marketplace add --from-link": {
+    "route": "/extend/plugins/cli",
+    "anchor": "marketplace-subcommands"
+  },
+  "flag:plugin marketplace add --json": {
+    "route": "/extend/plugins/cli",
+    "anchor": "marketplace-subcommands"
+  },
+  "flag:plugin marketplace add --resolve-only": {
+    "route": "/extend/plugins/cli",
+    "anchor": "marketplace-subcommands"
+  },
+  "flag:plugin marketplace add --scope": {
+    "route": "/extend/plugins/cli",
+    "anchor": "marketplace-subcommands"
+  },
+  "flag:plugin marketplace add --sparse": {
+    "route": "/extend/plugins/cli",
+    "anchor": "marketplace-subcommands"
+  },
+  "flag:plugin marketplace list --cowork": {
+    "route": "/extend/plugins/cli",
+    "anchor": "marketplace-subcommands"
+  },
+  "flag:plugin marketplace list --json": {
+    "route": "/extend/plugins/cli",
+    "anchor": "marketplace-subcommands"
+  },
+  "flag:plugin marketplace remove --cowork": {
+    "route": "/extend/plugins/cli",
+    "anchor": "marketplace-subcommands"
+  },
+  "flag:plugin marketplace remove --json": {
+    "route": "/extend/plugins/cli",
+    "anchor": "marketplace-subcommands"
+  },
+  "flag:plugin marketplace remove --scope": {
+    "route": "/extend/plugins/cli",
+    "anchor": "marketplace-subcommands"
+  },
+  "flag:plugin marketplace update --cowork": {
+    "route": "/extend/plugins/cli",
+    "anchor": "marketplace-subcommands"
+  },
+  "flag:plugin marketplace update --json": {
+    "route": "/extend/plugins/cli",
+    "anchor": "marketplace-subcommands"
+  },
+  "flag:plugin prune --cowork": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin prune --dry-run": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin prune --scope": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin prune --yes": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin tag --dry-run": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin tag --force": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin tag --message": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin tag --push": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin tag --remote": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin uninstall --cowork": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin uninstall --json": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin uninstall --keep-data": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin uninstall --prune": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin uninstall --scope": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin uninstall --yes": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin update --accept-command": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin update --cowork": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin update --json": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin update --scope": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin update --yes": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin validate --cowork": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin validate --json": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin validate --profile": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:plugin validate --strict": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "flag:purge --all": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:purge --dry-run": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:purge --interactive": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:purge --yes": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:sandbox uninstall --json": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:ultrareview --json": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:ultrareview --no-post": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:ultrareview --post": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:ultrareview --timeout": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:ultrareview --trust-workspace": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:xaa login --force": {
+    "route": "/extend/mcp/cli",
+    "anchor": "subcommands"
+  },
+  "flag:xaa login --id-token": {
+    "route": "/extend/mcp/cli",
+    "anchor": "subcommands"
+  },
+  "flag:xaa setup --callback-port": {
+    "route": "/extend/mcp/cli",
+    "anchor": "subcommands"
+  },
+  "flag:xaa setup --client-id": {
+    "route": "/extend/mcp/cli",
+    "anchor": "subcommands"
+  },
+  "flag:xaa setup --client-secret": {
+    "route": "/extend/mcp/cli",
+    "anchor": "subcommands"
+  },
+  "flag:xaa setup --issuer": {
+    "route": "/extend/mcp/cli",
+    "anchor": "subcommands"
+  },
+  "slash-command:/artifact-capabilities": {
+    "route": "/extend/skills-and-commands/bundled-skills",
+    "anchor": "skills"
+  },
+  "slash-command:/artifact-components": {
+    "route": "/extend/skills-and-commands/bundled-skills",
+    "anchor": "skills"
+  },
+  "slash-command:/artifact-design": {
+    "route": "/extend/skills-and-commands/bundled-skills",
+    "anchor": "skills"
+  },
+  "slash-command:/artifact-diagramming": {
+    "route": "/extend/skills-and-commands/bundled-skills",
+    "anchor": "skills"
+  },
+  "slash-command:/batch": {
+    "route": "/extend/skills-and-commands/bundled-skills",
+    "anchor": "skills"
+  },
+  "slash-command:/claude-api": {
+    "route": "/extend/skills-and-commands/bundled-skills",
+    "anchor": "skills"
+  },
+  "slash-command:/claude-code-docs": {
+    "route": "/extend/skills-and-commands/bundled-skills",
+    "anchor": "skills"
+  },
+  "slash-command:/claude-in-chrome": {
+    "route": "/extend/skills-and-commands/bundled-skills",
+    "anchor": "skills"
+  },
+  "slash-command:/code-review": {
+    "route": "/extend/skills-and-commands/bundled-skills",
+    "anchor": "skills"
+  },
+  "slash-command:/commit": {
+    "route": "/extend/skills-and-commands/bundled-skills",
+    "anchor": "skills"
+  },
+  "slash-command:/commit-push-pr": {
+    "route": "/extend/skills-and-commands/bundled-skills",
+    "anchor": "skills"
+  },
+  "slash-command:/cowork-plugin": {
+    "route": "/extend/skills-and-commands/bundled-skills",
+    "anchor": "skills"
+  },
+  "slash-command:/dataviz": {
+    "route": "/extend/skills-and-commands/bundled-skills",
+    "anchor": "skills"
+  },
+  "slash-command:/debug": {
+    "route": "/extend/skills-and-commands/bundled-skills",
+    "anchor": "skills"
+  },
+  "slash-command:/design": {
+    "route": "/extend/skills-and-commands/bundled-skills",
+    "anchor": "skills"
+  },
+  "slash-command:/explain-usage": {
+    "route": "/extend/skills-and-commands/bundled-skills",
+    "anchor": "skills"
+  },
+  "slash-command:/fewer-permission-prompts": {
+    "route": "/extend/skills-and-commands/bundled-skills",
+    "anchor": "skills"
+  },
+  "slash-command:/keybindings-help": {
+    "route": "/extend/skills-and-commands/bundled-skills",
+    "anchor": "skills"
+  },
+  "slash-command:/loop": {
+    "route": "/extend/skills-and-commands/bundled-skills",
+    "anchor": "skills"
+  },
+  "slash-command:/memory-types": {
+    "route": "/extend/skills-and-commands/bundled-skills",
+    "anchor": "skills"
+  },
+  "slash-command:/pr": {
+    "route": "/extend/skills-and-commands/bundled-skills",
+    "anchor": "skills"
+  },
+  "slash-command:/prototype": {
+    "route": "/extend/skills-and-commands/bundled-skills",
+    "anchor": "skills"
+  },
+  "slash-command:/run": {
+    "route": "/extend/skills-and-commands/bundled-skills",
+    "anchor": "skills"
+  },
+  "slash-command:/run-skill-generator": {
+    "route": "/extend/skills-and-commands/bundled-skills",
+    "anchor": "skills"
+  },
+  "slash-command:/schedule": {
+    "route": "/extend/skills-and-commands/bundled-skills",
+    "anchor": "skills"
+  },
+  "slash-command:/security-review": {
+    "route": "/extend/skills-and-commands/bundled-skills",
+    "anchor": "skills"
+  },
+  "slash-command:/setup-claude": {
+    "route": "/extend/skills-and-commands/bundled-skills",
+    "anchor": "skills"
+  },
+  "slash-command:/simplify": {
+    "route": "/extend/skills-and-commands/bundled-skills",
+    "anchor": "skills"
+  },
+  "slash-command:/update-config": {
+    "route": "/extend/skills-and-commands/bundled-skills",
+    "anchor": "skills"
+  },
+  "slash-command:/verify": {
+    "route": "/extend/skills-and-commands/bundled-skills",
+    "anchor": "skills"
+  },
+  "slash-command:/workflow-authoring": {
+    "route": "/extend/skills-and-commands/bundled-skills",
+    "anchor": "skills"
+  },
+  "slash-command:/workshop": {
+    "route": "/extend/skills-and-commands/bundled-skills",
+    "anchor": "skills"
+  },
+  "subcommand:add": {
+    "route": "/extend/mcp/cli",
+    "anchor": "subcommands"
+  },
+  "subcommand:agents": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "subcommand:apply-project-settings": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "subcommand:auth": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "subcommand:auth login": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "subcommand:auth logout": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "subcommand:auth status": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "subcommand:auto-mode": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "subcommand:auto-mode config": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "subcommand:auto-mode critique": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "subcommand:auto-mode defaults": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "subcommand:auto-mode reset": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "subcommand:doctor": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "subcommand:edit-hook": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "subcommand:gateway": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "subcommand:import": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "subcommand:import-conversations": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "subcommand:mcp": {
+    "route": "/extend/mcp/cli",
+    "anchor": "subcommands"
+  },
+  "subcommand:mcp add-from-claude-desktop": {
+    "route": "/extend/mcp/cli",
+    "anchor": "subcommands"
+  },
+  "subcommand:mcp add-json": {
+    "route": "/extend/mcp/cli",
+    "anchor": "subcommands"
+  },
+  "subcommand:mcp get": {
+    "route": "/extend/mcp/cli",
+    "anchor": "subcommands"
+  },
+  "subcommand:mcp list": {
+    "route": "/extend/mcp/cli",
+    "anchor": "subcommands"
+  },
+  "subcommand:mcp login": {
+    "route": "/extend/mcp/cli",
+    "anchor": "subcommands"
+  },
+  "subcommand:mcp logout": {
+    "route": "/extend/mcp/cli",
+    "anchor": "subcommands"
+  },
+  "subcommand:mcp remove": {
+    "route": "/extend/mcp/cli",
+    "anchor": "subcommands"
+  },
+  "subcommand:mcp reset-project-choices": {
+    "route": "/extend/mcp/cli",
+    "anchor": "subcommands"
+  },
+  "subcommand:mcp serve": {
+    "route": "/extend/mcp/cli",
+    "anchor": "subcommands"
+  },
+  "subcommand:plugin": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "subcommand:plugin configure": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "subcommand:plugin details": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "subcommand:plugin disable": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "subcommand:plugin enable": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "subcommand:plugin eval": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "subcommand:plugin eval init": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "subcommand:plugin init": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "subcommand:plugin install": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "subcommand:plugin list": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "subcommand:plugin marketplace": {
+    "route": "/extend/plugins/cli",
+    "anchor": "marketplace-subcommands"
+  },
+  "subcommand:plugin marketplace add": {
+    "route": "/extend/plugins/cli",
+    "anchor": "marketplace-subcommands"
+  },
+  "subcommand:plugin marketplace list": {
+    "route": "/extend/plugins/cli",
+    "anchor": "marketplace-subcommands"
+  },
+  "subcommand:plugin marketplace remove": {
+    "route": "/extend/plugins/cli",
+    "anchor": "marketplace-subcommands"
+  },
+  "subcommand:plugin marketplace update": {
+    "route": "/extend/plugins/cli",
+    "anchor": "marketplace-subcommands"
+  },
+  "subcommand:plugin prune": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "subcommand:plugin tag": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "subcommand:plugin test": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "subcommand:plugin uninstall": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "subcommand:plugin update": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "subcommand:plugin validate": {
+    "route": "/extend/plugins/cli",
+    "anchor": "subcommands"
+  },
+  "subcommand:purge": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "subcommand:remote-control": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "subcommand:sandbox": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "subcommand:sandbox install": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "subcommand:sandbox status": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "subcommand:sandbox uninstall": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "subcommand:setup-token": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "subcommand:ultrareview": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "subcommand:update": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "subcommand:xaa": {
+    "route": "/extend/mcp/cli",
+    "anchor": "subcommands"
+  },
+  "subcommand:xaa clear": {
+    "route": "/extend/mcp/cli",
+    "anchor": "subcommands"
+  },
+  "subcommand:xaa login": {
+    "route": "/extend/mcp/cli",
+    "anchor": "subcommands"
+  },
+  "subcommand:xaa setup": {
+    "route": "/extend/mcp/cli",
+    "anchor": "subcommands"
+  },
+  "subcommand:xaa show": {
+    "route": "/extend/mcp/cli",
+    "anchor": "subcommands"
+  }
+}

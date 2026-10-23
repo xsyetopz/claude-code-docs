@@ -25,9 +25,11 @@ Source: [Connect Claude Code to Tools via MCP](https://code.claude.com/docs/en/m
 | `claude mcp login [options] <name>` | <Documented /> | Runs OAuth for a server. | Works for `http`, `sse`, and claude.ai connectors. Without a local browser it prints the URL and asks for the redirect URL. |
 | `claude mcp logout <name>` | <Documented /> | Clears stored OAuth credentials. | Does not remove the server. |
 | `claude mcp reset-project-choices` | <Documented /> | Resets approvals. | Clears every approved and rejected `.mcp.json` server for this project. |
-| `claude mcp serve [options]` | <Documented /> | Runs Claude Code as an MCP server. | Over stdio. It prints nothing at start. It offers the Claude Code tools to the client, and the client must ask you to confirm. |
+| `claude mcp serve [options]` | <Documented /> | Runs Claude Code as an MCP server. | Over stdio, or over HTTP with `--transport http`. It prints nothing at start. It offers the Claude Code tools to the client, and the client must ask you to confirm. Options: `--transport <transport>`; `--port <port>` with `--transport http` (the default `0` lets the kernel pick, and it binds to `127.0.0.1` only); `--result-format <raw\|rendered>` (`raw` is the JSON of the tool output, `rendered` is the text the model would see); `--session-tunnel`, which with `--transport http --port 28471` dials the session tunnel that relays tool calls and reads one JSON line (session id, token, API address) from stdin. |
 | `claude mcp xaa setup` | <Gated note="CLAUDE_CODE_ENABLE_XAA" /> | Sets the IdP connection for XAA. | Options: `--issuer <url>`, `--client-id <id>`, `--client-secret`, `--callback-port <port>`. Writes `xaaIdp`. The secret comes from `MCP_XAA_IDP_CLIENT_SECRET`. |
 | `claude mcp xaa login` | <Gated note="CLAUDE_CODE_ENABLE_XAA" /> | Caches an IdP `id_token`. | Runs the OIDC browser login. Options: `--force` and `--id-token <jwt>` (stores a ready JWT). |
+| `claude mcp xaa show` | <Gated note="CLAUDE_CODE_ENABLE_XAA" /> | Shows the current IdP connection config. | Prints the issuer, the client ID, the callback port when set, whether a client secret is stored, and whether an `id_token` is cached. |
+| `claude mcp xaa clear` | <Gated note="CLAUDE_CODE_ENABLE_XAA" /> | Clears the IdP connection config and the cached `id_token`. | Removes `xaaIdp` from the user settings and the stored secret and token. |
 
 ## Flags
 
