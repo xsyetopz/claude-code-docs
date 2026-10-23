@@ -136,7 +136,7 @@ if (existsSync(join(ROOT, "build", "llms-manifest.json"))) {
   const built = existsSync(dir)
     ? readdirSync(dir)
         // surface.json is the item snapshot, not a schema that get_schema serves
-        .filter((f) => f.startsWith("claude-code-") && f.endsWith(".json"))
+        .filter((f) => f.endsWith(".json") && f !== "surface.json")
         .map((f) => f.slice(0, -5))
         .sort()
     : [];
