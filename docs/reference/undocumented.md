@@ -21,7 +21,7 @@ Items that the docs name but describe wrongly are in [Behaves Differently From t
 | [Environment Variables](#environment-variables) | 880 |
 | [CLI Flags and Subcommands](#cli-flags-and-subcommands) | 52 |
 | [Permissions](#permissions) | 121 |
-| [Hooks](#hooks) | 13 |
+| [Hooks](#hooks) | 15 |
 | [Commands](#commands) | 2 |
 | [Skills](#skills) | 7 |
 | [Subagents](#subagents) | 7 |
@@ -31,10 +31,10 @@ Items that the docs name but describe wrongly are in [Behaves Differently From t
 | [API Endpoints and Betas](#api-endpoints-and-betas) | 54 |
 | [System Prompt](#system-prompt) | 34 |
 | [Transcript and Sessions](#transcript-and-sessions) | 13 |
-| [Headless Protocol](#headless-protocol) | 155 |
+| [Headless Protocol](#headless-protocol) | 158 |
 | [Mod API](#mod-api) | 0 |
 | [Other](#other) | 97 |
-| Total | 1530 |
+| Total | 1535 |
 
 ## Settings Keys
 
@@ -99,7 +99,7 @@ Count: 880.
 
 Hidden or unlisted flags and subcommands.
 
-Count: 53.
+Count: 52.
 
 | Item | Where |
 | --- | --- |
@@ -207,7 +207,7 @@ The 85 default auto mode rules are all listed on [Auto Mode Default Rules](../co
 
 Hook settings, events, fields, and handler types.
 
-Count: 16.
+Count: 15.
 
 | Item | Where |
 | --- | --- |
@@ -274,7 +274,7 @@ Count: 7.
 
 Manifest keys, cache files, and plugin switches.
 
-Count: 10.
+Count: 9.
 
 | Item | Where |
 | --- | --- |
@@ -292,7 +292,7 @@ Count: 10.
 
 Server types, scopes, options, and variables for MCP.
 
-Count: 37.
+Count: 32.
 
 | Item | Where |
 | --- | --- |
@@ -477,7 +477,7 @@ Count: 34.
 
 Records in the transcript file and how sessions are stored.
 
-Count: 16.
+Count: 13.
 
 | Item | Where |
 | --- | --- |
@@ -499,11 +499,11 @@ Count: 16.
 
 Message types of `--output-format stream-json` and of the control protocol. Nearly every row is undocumented, so this page links to the two pages with counts.
 
-Count: 155.
+Count: 158.
 
 | Page | Undocumented Rows |
 | --- | --- |
-| [Control Protocol](../extend/headless/control-protocol.md) | 91 |
+| [Control Protocol](../extend/headless/control-protocol.md) | 94 |
 | [Stream JSON Messages](../extend/headless/stream-json.md) | 64 |
 
 ## Mod API
@@ -516,7 +516,7 @@ Count: 0.
 
 Items that fit no group above: memory, output styles, the status line, models, and how the harness works inside.
 
-Count: 110.
+Count: 97.
 
 | Item | Where |
 | --- | --- |

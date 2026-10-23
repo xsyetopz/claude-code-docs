@@ -4,9 +4,11 @@
 // 3. Headings and titles follow a simple Chicago Title Case rule.
 // 4. A `Source:` line or an "in the official docs" mention names a page only as a markdown link.
 // 5. No emoji in a heading or in link text.
+// 6. The counts on docs/reference/undocumented.md match its rows and the linked pages.
 import { readdirSync, readFileSync, statSync } from "node:fs";
-import { join, relative, sep } from "node:path";
+import { dirname, join, relative, sep } from "node:path";
 import { normalizeHost, numberUuids } from "./capture-prompts/normalize.ts";
+import { countProblems } from "./undocumented-counts.ts";
 
 const ROOT = join(import.meta.dir, "..");
 const DOC_EXT = /\.(md|mdx)$/;
@@ -159,6 +161,7 @@ const EMOJI_FILES = [
 
 // docs/prompts/ holds verbatim program text, so it is exempt.
 const CAPTURES = join(ROOT, "docs", "prompts") + sep;
+const UNDOCUMENTED = join(ROOT, "docs", "reference", "undocumented.md");
 
 for (const file of EMOJI_FILES.filter((f) => !f.startsWith(CAPTURES))) {
   readFileSync(file, "utf8")
@@ -218,6 +221,11 @@ for (const file of walk(join(ROOT, "docs")).filter((f) => DOC_EXT.test(f))) {
       );
     }
   }
+  if (file === UNDOCUMENTED)
+    for (const p of countProblems(text, (link) =>
+      readFileSync(join(dirname(file), link), "utf8"),
+    ))
+      report(file, p.line, p.message);
   const lines = text.split("\n");
   let fence: { ch: string; len: number } | null = null;
   for (let i = fm.bodyStart; i < lines.length; i++) {
