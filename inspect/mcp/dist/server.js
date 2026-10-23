@@ -38725,6 +38725,7 @@ var isNull = (m, n, depth = 0) => {
   return rets.length > 0 && rets.every((r) => !!r && isNull(f?.module, r, depth + 1));
 };
 var toolName = (R, m, n, depth = 0) => {
+  const named = (name) => name ? { name } : undefined;
   if (depth > 8)
     return;
   if (n.type === "Identifier") {
@@ -38732,16 +38733,20 @@ var toolName = (R, m, n, depth = 0) => {
     return i && toolName(R, i.m, i.n, depth + 1);
   }
   const lit = n.type === "ObjectExpression" ? n : n.type === "CallExpression" && n.arguments[0]?.type === "ObjectExpression" ? n.arguments[0] : undefined;
-  const p = lit?.properties.find((x) => x.type === "Property" && !x.computed && x.key.type === "Identifier" && x.key.name === "name");
-  if (p?.type === "Property")
-    return constString(m, p.value);
+  const prop = (key) => lit?.properties.find((x) => x.type === "Property" && !x.computed && x.key.type === "Identifier" && x.key.name === key);
+  const p = prop("name");
+  if (p) {
+    const name = constString(m, p.value);
+    const e = prop("isEnabled");
+    return name ? { name, ...e && { enabled: { m, n: e } } } : undefined;
+  }
   if (n.type === "SequenceExpression")
     return toolName(R, m, n.expressions.at(-1), depth + 1);
   const r = required2(m, n);
   if (typeof r === "string")
-    return r;
+    return { name: r };
   if (r)
-    return toolName(R, r.m, r.n, depth + 1) ?? m.src(n).split(".").pop();
+    return toolName(R, r.m, r.n, depth + 1) ?? named(m.src(n).split(".").pop());
   if (n.type === "CallExpression") {
     const f = n.arguments.length === 0 ? calleeFn(m, n) : undefined;
     for (const ret of f ? returnsOf(f.fn) : [])
@@ -38755,9 +38760,9 @@ var toolName = (R, m, n, depth = 0) => {
   const e = R.expr(m, n)?.find((x) => ("key" in x) && x.key === "name");
   if (e && "key" in e) {
     if (e.val.k === "str")
-      return e.val.v;
+      return { name: e.val.v };
     if (e.val.k === "unk" && e.val.ref)
-      return constString(e.val.ref.m, e.val.ref.n);
+      return named(constString(e.val.ref.m, e.val.ref.n));
   }
   return;
 };
@@ -38776,8 +38781,20 @@ var items = (R, m, n, when, out, depth = 0) => {
       if (el.type === "SpreadElement")
         items(R, m, el.argument, when, out, depth + 1);
       else if (!isNull(m, el)) {
-        const name = toolName(R, m, el);
-        add(name ? { name, when: [] } : { name: m.src(el), when: [], unresolved: true });
+        const t = toolName(R, m, el);
+        if (!t)
+          add({ name: m.src(el), when: [], unresolved: true });
+        else if (!t.enabled)
+          add({ name: t.name, when: [] });
+        else {
+          const src = t.enabled.m.src(t.enabled.n);
+          out.push({
+            name: t.name,
+            when: when.map((c) => c.text),
+            enabled: src.length > MAX_FN ? `${src.slice(0, MAX_FN)}\u2026` : src,
+            conds: [...when, { ...t.enabled, text: src }]
+          });
+        }
       }
     }
     return;
@@ -38835,12 +38852,13 @@ var calledFns = (m, n, out, depth = 2) => {
   while (stack.length) {
     const x = stack.pop();
     stack.push(...children(x));
-    if (x.type !== "CallExpression" || x.callee.type !== "Identifier")
+    const id = x.type === "CallExpression" ? x.callee : x.type === "Property" && x === n ? x.value : undefined;
+    if (id?.type !== "Identifier")
       continue;
-    const name = x.callee.name;
+    const name = id.name;
     if (out.has(name))
       continue;
-    const f = functionOf(m, x.callee);
+    const f = functionOf(m, id);
     if (!f)
       continue;
     const s = f.module.src(f.fn);
@@ -39196,17 +39214,17 @@ ${JSON.stringify(keys, null, 2)}`, {
 }));
 server.registerTool("list_tools", {
   title: "List the built-in tools of Claude Code",
-  description: `List the tools the program's getAllBaseTools gives, each with the code that gates it: the test of a "cond?[T]:[]" spread, or the function of a "[A,B].filter(f)". A tool's own isEnabled() and the per-session filters of getTools are not included. Minified names change between versions; "functions" holds the source of each function the gates call, two calls deep.
+  description: `List the tools the program's getAllBaseTools gives, each with the code that gates it in that list ("when": the test of a "cond?[T]:[]" spread, or the function of a "[A,B].filter(f)") and its own isEnabled ("enabled"), when its definition has one; without it, the tool builder's default applies. The per-session filters of getTools are not included, so a listed tool may still be off for a user: confirm with a probe before you call it available. Minified names change between versions; "functions" holds the source of each function the gates call, two calls deep.
 Args:
   - binary (string, optional): version or path.
-Returns: one line per tool with its gates, then the functions; structuredContent {module, tools:[{name,when,unresolved?}], functions}.`,
+Returns: one line per tool with its gates, then the functions; structuredContent {module, tools:[{name,when,enabled?,unresolved?}], functions}.`,
   inputSchema: { binary: binaryArg },
   annotations: READ_ONLY
 }, ({ binary }) => run(() => {
   const { bundle, resolver } = program(binary);
   const r = baseTools(bundle, resolver);
   return text(`${r.module}: ${r.tools.length} tools
-${r.tools.map((t) => `- ${t.name}${t.unresolved ? " (unresolved)" : ""}${t.when.length ? `  when: ${t.when.join(" && ")}` : ""}`).join(`
+${r.tools.map((t) => `- ${t.name}${t.unresolved ? " (unresolved)" : ""}${t.when.length ? `  when: ${t.when.join(" && ")}` : ""}${t.enabled ? `  own: ${t.enabled}` : ""}`).join(`
 `)}
 
 Functions:

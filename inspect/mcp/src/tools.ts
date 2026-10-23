@@ -14,7 +14,13 @@ import {
 } from "./ast.ts";
 import type { Resolver } from "./resolve.ts";
 
-export type Tool = { name: string; when: string[]; unresolved?: true };
+export type Tool = {
+  name: string;
+  when: string[];
+  /** The source of the tool's own `isEnabled`, when its definition has one. */
+  enabled?: string;
+  unresolved?: true;
+};
 type Cond = { m: Module; n: Node; text: string };
 
 const MAX_FN = 300;
@@ -78,13 +84,17 @@ const isNull = (m: Module, n: Node, depth = 0): boolean => {
   );
 };
 
-/** The `name` of the tool an expression gives, or undefined. */
+/** A tool's name, and its own `isEnabled` when its definition literal has one. */
+type Found = { name: string; enabled?: { m: Module; n: Node } };
+
+/** The tool an expression gives, or undefined. */
 const toolName = (
   R: Resolver,
   m: Module,
   n: Node,
   depth = 0,
-): string | undefined => {
+): Found | undefined => {
+  const named = (name: string | undefined) => (name ? { name } : undefined);
   if (depth > 8) return undefined;
   if (n.type === "Identifier") {
     const i = initOf(m, n);
@@ -98,19 +108,28 @@ const toolName = (
           n.arguments[0]?.type === "ObjectExpression"
         ? n.arguments[0]
         : undefined;
-  const p = lit?.properties.find(
-    (x) =>
-      x.type === "Property" &&
-      !x.computed &&
-      x.key.type === "Identifier" &&
-      x.key.name === "name",
-  );
-  if (p?.type === "Property") return constString(m, p.value as Node);
+  const prop = (key: string) =>
+    lit?.properties.find(
+      (x): x is ES.Property =>
+        x.type === "Property" &&
+        !x.computed &&
+        x.key.type === "Identifier" &&
+        x.key.name === key,
+    );
+  const p = prop("name");
+  if (p) {
+    const name = constString(m, p.value as Node);
+    const e = prop("isEnabled");
+    return name
+      ? { name, ...(e && { enabled: { m, n: e as Node } }) }
+      : undefined;
+  }
   if (n.type === "SequenceExpression")
     return toolName(R, m, n.expressions.at(-1) as Node, depth + 1);
   const r = required(m, n);
-  if (typeof r === "string") return r;
-  if (r) return toolName(R, r.m, r.n, depth + 1) ?? m.src(n).split(".").pop();
+  if (typeof r === "string") return { name: r };
+  if (r)
+    return toolName(R, r.m, r.n, depth + 1) ?? named(m.src(n).split(".").pop());
   if (n.type === "CallExpression") {
     const f = n.arguments.length === 0 ? calleeFn(m, n) : undefined;
     for (const ret of f ? returnsOf(f.fn) : [])
@@ -123,9 +142,9 @@ const toolName = (
   }
   const e = R.expr(m, n)?.find((x) => "key" in x && x.key === "name");
   if (e && "key" in e) {
-    if (e.val.k === "str") return e.val.v;
+    if (e.val.k === "str") return { name: e.val.v };
     if (e.val.k === "unk" && e.val.ref)
-      return constString(e.val.ref.m, e.val.ref.n);
+      return named(constString(e.val.ref.m, e.val.ref.n));
   }
   return undefined;
 };
@@ -152,12 +171,18 @@ const items = (
       if (el.type === "SpreadElement")
         items(R, m, el.argument as Node, when, out, depth + 1);
       else if (!isNull(m, el)) {
-        const name = toolName(R, m, el);
-        add(
-          name
-            ? { name, when: [] }
-            : { name: m.src(el), when: [], unresolved: true },
-        );
+        const t = toolName(R, m, el);
+        if (!t) add({ name: m.src(el), when: [], unresolved: true });
+        else if (!t.enabled) add({ name: t.name, when: [] });
+        else {
+          const src = t.enabled.m.src(t.enabled.n);
+          out.push({
+            name: t.name,
+            when: when.map((c) => c.text),
+            enabled: src.length > MAX_FN ? `${src.slice(0, MAX_FN)}…` : src,
+            conds: [...when, { ...t.enabled, text: src }],
+          });
+        }
       }
     }
     return;
@@ -255,10 +280,17 @@ const calledFns = (
   while (stack.length) {
     const x = stack.pop() as Node;
     stack.push(...children(x));
-    if (x.type !== "CallExpression" || x.callee.type !== "Identifier") continue;
-    const name = x.callee.name;
+    // A call `f()`, or a function named as a value: `isEnabled:f`.
+    const id =
+      x.type === "CallExpression"
+        ? x.callee
+        : x.type === "Property" && x === n
+          ? x.value
+          : undefined;
+    if (id?.type !== "Identifier") continue;
+    const name = id.name;
     if (out.has(name)) continue;
-    const f = functionOf(m, x.callee as Node);
+    const f = functionOf(m, id as Node);
     if (!f) continue;
     const s = f.module.src(f.fn);
     out.set(name, s.length > MAX_FN ? `${s.slice(0, MAX_FN)}…` : s);

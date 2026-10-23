@@ -501,10 +501,10 @@ server.registerTool(
   "list_tools",
   {
     title: "List the built-in tools of Claude Code",
-    description: `List the tools the program's getAllBaseTools gives, each with the code that gates it: the test of a "cond?[T]:[]" spread, or the function of a "[A,B].filter(f)". A tool's own isEnabled() and the per-session filters of getTools are not included. Minified names change between versions; "functions" holds the source of each function the gates call, two calls deep.
+    description: `List the tools the program's getAllBaseTools gives, each with the code that gates it in that list ("when": the test of a "cond?[T]:[]" spread, or the function of a "[A,B].filter(f)") and its own isEnabled ("enabled"), when its definition has one; without it, the tool builder's default applies. The per-session filters of getTools are not included, so a listed tool may still be off for a user: confirm with a probe before you call it available. Minified names change between versions; "functions" holds the source of each function the gates call, two calls deep.
 Args:
   - binary (string, optional): version or path.
-Returns: one line per tool with its gates, then the functions; structuredContent {module, tools:[{name,when,unresolved?}], functions}.`,
+Returns: one line per tool with its gates, then the functions; structuredContent {module, tools:[{name,when,enabled?,unresolved?}], functions}.`,
     inputSchema: { binary: binaryArg },
     annotations: READ_ONLY,
   },
@@ -516,7 +516,7 @@ Returns: one line per tool with its gates, then the functions; structuredContent
         `${r.module}: ${r.tools.length} tools\n${r.tools
           .map(
             (t) =>
-              `- ${t.name}${t.unresolved ? " (unresolved)" : ""}${t.when.length ? `  when: ${t.when.join(" && ")}` : ""}`,
+              `- ${t.name}${t.unresolved ? " (unresolved)" : ""}${t.when.length ? `  when: ${t.when.join(" && ")}` : ""}${t.enabled ? `  own: ${t.enabled}` : ""}`,
           )
           .join("\n")}\n\nFunctions:\n${Object.entries(r.functions)
           .map(([n, s]) => `- ${n}: ${s}`)

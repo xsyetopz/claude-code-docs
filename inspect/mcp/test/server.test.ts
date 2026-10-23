@@ -32,7 +32,7 @@ emit("tool_result", { tool_name: "Read", duration_ms: 5 });
 emit("api_error", { status: 500 });
 const build = (d) => ({ isEnabled: () => true, ...d });
 const Glob = build({ name: "Glob" });
-const Grep = build({ name: "Grep" });
+const Grep = build({ name: "Grep", isEnabled() { return process.env.GREP === "1"; } });
 const Shell = build({ name: "Shell" });
 const Cron = build({ name: "CronCreate" });
 const off = () => null;
@@ -199,6 +199,7 @@ describe("binary", () => {
     const tools = r.structuredContent?.["tools"] as {
       name: string;
       when: string[];
+      enabled?: string;
     }[];
     expect(tools.map((t) => [t.name, t.when.length])).toEqual([
       ["Shell", 0],
@@ -207,6 +208,13 @@ describe("binary", () => {
       ["CronCreate", 1],
     ]);
     expect(tools[1]?.when[0]).toContain(".has(");
+    expect(tools.map((t) => t.enabled !== undefined)).toEqual([
+      false,
+      false,
+      true,
+      false,
+    ]);
+    expect(tools[2]?.enabled).toContain("process.env.GREP");
     const fns = Object.values(r.structuredContent?.["functions"] as object);
     expect(fns.some((s) => String(s).includes("process.env.LEAN"))).toBe(true);
   });
