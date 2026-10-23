@@ -14,6 +14,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
+import { searchIndexJson } from "../src/search.ts";
 
 const SERVER = join(import.meta.dir, "..", "dist", "server.js");
 const SITE = join(import.meta.dir, "fixtures", "site");
@@ -23,21 +24,41 @@ const stops: (() => void)[] = [];
 /** Mock site switches. Tests flip these. `hits` records every request with its If-None-Match. */
 type SiteState = {
   llms404: boolean;
+  /** search-index.json answers 404, like a site built before the index existed. */
+  noIndex: boolean;
   /** Paths that answer 404. */
   gone: Set<string>;
   /** Paths that answer with a body over the size cap. */
   huge: Set<string>;
-  /** Send an ETag on pages and answer 304 to a matching If-None-Match. */
+  /** Send an ETag on pages and the index, and answer 304 to a matching If-None-Match. */
   etag: boolean;
   hits: { path: string; inm: string | null }[];
 };
 const newState = (): SiteState => ({
   llms404: false,
+  noIndex: false,
   gone: new Set(),
   huge: new Set(),
   etag: false,
   hits: [],
 });
+
+/** search-index.json for the fixture site (what the site build writes). */
+const fixtureIndex = (): string => {
+  const manifest = JSON.parse(
+    readFileSync(join(SITE, "manifest.json"), "utf8"),
+  ) as { route: string; title: string; description: string }[];
+  return searchIndexJson(
+    "test",
+    manifest.map((e) => ({
+      ...e,
+      text: readFileSync(
+        join(SITE, e.route === "/" ? "index.md" : `${e.route.slice(1)}.md`),
+        "utf8",
+      ),
+    })),
+  );
+};
 
 /** Mock site that serves fixtures/site/ (manifest, pages, schemas) with the manifest URLs rewritten to the mock. */
 const mockSite = (state: SiteState = newState(), port = 0) => {
@@ -60,6 +81,15 @@ const mockSite = (state: SiteState = newState(), port = 0) => {
         return state.llms404
           ? new Response("no", { status: 404 })
           : new Response("# T\n\n> Docs for Claude Code 2.1.305.\n");
+      if (path === "/search-index.json") {
+        if (state.noIndex) return new Response("no", { status: 404 });
+        const tag = '"i1"';
+        if (state.etag && inm === tag)
+          return new Response(null, { status: 304 });
+        return new Response(fixtureIndex(), {
+          headers: state.etag ? { etag: tag } : {},
+        });
+      }
       if (state.gone.has(path)) return new Response("no", { status: 404 });
       if (state.huge.has(path))
         return new Response("x".repeat(3 * 1024 * 1024));
@@ -179,6 +209,141 @@ describe("what the model sees", () => {
     expect(page.seen).toContain("Source:");
     const schema = await call("get_schema", { name: "tools" });
     expect(schema.seen).toContain("1 definitions");
+  });
+});
+
+/** `tools/list` measured on 2026-10-23 for the 7 tools of the old server (design D7). */
+const OLD_TOOLS_LIST_BYTES = 15468;
+
+describe("tool list", () => {
+  test("tools/list is at most 40% of the old size, and no tool is about platform", async () => {
+    const cache = mkdtempSync(join(tmpdir(), "ccdocs-test-"));
+    stops.push(() => rmSync(cache, { recursive: true, force: true }));
+    const c = new Client({ name: "test", version: "0" });
+    await c.connect(
+      new StdioClientTransport({
+        command: "bun",
+        args: [SERVER],
+        env: { ...process.env, CC_DOCS_CACHE_DIR: cache } as Record<
+          string,
+          string
+        >,
+      }),
+    );
+    clients.push(c);
+    const list = await c.listTools();
+    const bytes = Buffer.byteLength(JSON.stringify(list));
+    const limit = Math.floor(OLD_TOOLS_LIST_BYTES * 0.4);
+    console.log(
+      `tools/list: ${bytes} bytes (limit ${limit} = 40% of ${OLD_TOOLS_LIST_BYTES})`,
+    );
+    expect(bytes).toBeLessThanOrEqual(limit);
+    expect(list.tools.map((t) => t.name).sort()).toEqual([
+      "get_schema",
+      "list_pages",
+      "read_page",
+      "search_docs",
+    ]);
+    for (const t of list.tools) {
+      expect(t.name).not.toContain("platform");
+      expect(t.outputSchema).toBeUndefined();
+    }
+  });
+});
+
+describe("prebuilt search index", () => {
+  test("the first search makes one request for the index and none for a page", async () => {
+    const state = newState();
+    const site = mockSite(state);
+    stops.push(site.stop);
+    const { call } = await connect({ CC_DOCS_BASE_URL: site.url });
+    const s = await call("search_docs", { query: "PreToolUse" });
+    expect(s.error).toBe(false);
+    expect(s.text).toContain("configure/hooks");
+    expect(s.text).toContain("search index of 3 pages");
+    expect(
+      state.hits.filter((h) => h.path === "/search-index.json"),
+    ).toHaveLength(1);
+    expect(state.hits.filter((h) => h.path.endsWith(".md"))).toHaveLength(0);
+    // The next search makes no request for the index.
+    state.hits.length = 0;
+    await call("search_docs", { query: "debounced" });
+    expect(state.hits.some((h) => h.path === "/search-index.json")).toBe(false);
+  });
+
+  test("a 404 for the index falls back to pages and the Source line says so", async () => {
+    const state = newState();
+    state.noIndex = true;
+    const site = mockSite(state);
+    stops.push(site.stop);
+    const { call } = await connect({ CC_DOCS_BASE_URL: site.url });
+    const s = await call("search_docs", { query: "PreToolUse" });
+    expect(s.error).toBe(false);
+    expect(s.text).toContain("configure/hooks");
+    expect(s.text).toContain("index built from 3 pages");
+    expect(s.text).toContain("no search-index.json on the site");
+    expect(state.hits.filter((h) => h.path.endsWith(".md")).length).toBe(3);
+  });
+
+  test("a cached index is revalidated by its ETag in a new process", async () => {
+    const state = newState();
+    state.etag = true;
+    const site = mockSite(state);
+    stops.push(site.stop);
+    const cache = mkdtempSync(join(tmpdir(), "ccdocs-test-"));
+    stops.push(() => rmSync(cache, { recursive: true, force: true }));
+    const env = {
+      CC_DOCS_BASE_URL: site.url,
+      CC_DOCS_CACHE_DIR: cache,
+      CC_DOCS_TTL_SCALE: "0",
+    };
+    await (await connect(env)).call("search_docs", { query: "hook" });
+    state.hits.length = 0;
+    const s = await (await connect(env)).call("search_docs", { query: "hook" });
+    expect(s.text).toContain("revalidated, 304");
+    expect(state.hits.find((h) => h.path === "/search-index.json")?.inm).toBe(
+      '"i1"',
+    );
+  });
+
+  test("search with the site down and the index cached still answers", async () => {
+    const site = mockSite();
+    const cache = mkdtempSync(join(tmpdir(), "ccdocs-test-"));
+    stops.push(() => rmSync(cache, { recursive: true, force: true }));
+    const env = {
+      CC_DOCS_BASE_URL: site.url,
+      CC_DOCS_CACHE_DIR: cache,
+      CC_DOCS_TTL_SCALE: "0",
+    };
+    await (await connect(env)).call("search_docs", { query: "hook" });
+    site.stop();
+    const s = await (await connect(env)).call("search_docs", { query: "hook" });
+    expect(s.error).toBe(false);
+    expect(s.text).toContain("configure/hooks");
+  });
+});
+
+describe("offline read", () => {
+  test("a page read once is served from the cache by a new process with the site down", async () => {
+    const site = mockSite();
+    const cache = mkdtempSync(join(tmpdir(), "ccdocs-test-"));
+    stops.push(() => rmSync(cache, { recursive: true, force: true }));
+    const env = {
+      CC_DOCS_BASE_URL: site.url,
+      CC_DOCS_CACHE_DIR: cache,
+      CC_DOCS_TTL_SCALE: "0",
+    };
+    const first = await (await connect(env)).call("read_page", {
+      route: "configure/hooks",
+    });
+    expect(first.text).toMatch(/Source: 127\.0\.0\.1:\d+, live/);
+    site.stop();
+    const again = await (await connect(env)).call("read_page", {
+      route: "configure/hooks",
+    });
+    expect(again.error).toBe(false);
+    expect(again.text).toContain("PreToolUse");
+    expect(again.text).toMatch(/Source: 127\.0\.0\.1:\d+, cache \(.*offline\)/);
   });
 });
 
@@ -303,12 +468,12 @@ describe("search and offline", () => {
     expect(r.error).toBe(false);
     expect(r.text).toContain("PreToolUse");
     expect(r.text).toContain("offline");
-    // By design search keeps its in-process index (rebuilt in the background), so its
-    // Source line shows "from cache" counts and not an offline marker until the rebuild lands.
+    // By design search keeps its in-process index (refreshed in the background), so its
+    // Source line shows the index and not an offline marker until the refresh lands.
     const s = await call("search_docs", { query: "PreToolUse" });
     expect(s.error).toBe(false);
     expect(s.text).toContain("configure/hooks");
-    expect(s.text).toMatch(/Source: .*index built from 3 pages/);
+    expect(s.text).toMatch(/Source: .*search index of 3 pages/);
     const l = await call("list_pages", {});
     expect(l.error).toBe(false);
     expect(l.text).toContain("offline");
@@ -335,6 +500,7 @@ describe("search and offline", () => {
 
   test("a partial search index is rebuilt soon", async () => {
     const state = newState();
+    state.noIndex = true;
     state.gone.add("/configure/hooks.md");
     const site = mockSite(state);
     stops.push(site.stop);
@@ -534,7 +700,12 @@ describe("hostile site", () => {
       ).toBe(true);
       expect(
         hits.every((h) =>
-          ["/llms-manifest.json", "/zzfreshpage.md", "/llms.txt"].includes(h),
+          [
+            "/llms-manifest.json",
+            "/zzfreshpage.md",
+            "/llms.txt",
+            "/search-index.json",
+          ].includes(h),
         ),
       ).toBe(true);
       expect(
@@ -582,50 +753,66 @@ describe("platform tools", () => {
     const p = mockPlatform();
     stops.push(p.stop);
     const { call } = await connect({ PLATFORM_DOCS_BASE_URL: p.url });
-    const s = await call("search_platform_docs", { query: "prompt caching" });
+    const s = await call("search_docs", {
+      source: "platform",
+      query: "prompt caching",
+    });
     expect(s.error).toBe(false);
     expect(s.text).toContain("build-with-claude/prompt-caching");
     expect(s.text).toContain("Source: 127.0.0.1");
     expect(s.text).toContain("live");
-    const g = await call("search_platform_docs", {
+    const g = await call("search_docs", {
+      source: "platform",
       query: "caching",
-      group: "Getting Started",
+      section: "Getting Started",
     });
     expect(g.text).toContain("No platform pages match");
-    const none = await call("search_platform_docs", { query: "zzzqqq" });
+    const none = await call("search_docs", {
+      source: "platform",
+      query: "zzzqqq",
+    });
     expect(none.error).toBe(false);
     expect(none.text).toContain("No platform pages match");
-    const r = await call("read_platform_page", {
-      path: "/docs/en/build-with-claude/overview.md",
+    const r = await call("read_page", {
+      source: "platform",
+      route: "/docs/en/build-with-claude/overview.md",
     });
     expect(r.error).toBe(false);
     expect(r.seen).toContain("Zebrafinch");
     expect(r.text).toContain("<HomePage>");
-    const sec = await call("read_platform_page", {
-      path: "build-with-claude/overview",
+    const sec = await call("read_page", {
+      source: "platform",
+      route: "build-with-claude/overview",
       section_heading: "Tools",
     });
     expect(sec.text).toContain("Tool list here");
     expect(sec.text).not.toContain("Zebrafinch");
-    const groups = await call("list_platform_pages", {});
+    const groups = await call("list_pages", { source: "platform" });
     expect(groups.text).toContain("Getting Started: 2");
     expect(groups.text).toContain("Messages: 3");
     expect(groups.text).not.toMatch(/Erste|Deutsch|evil/);
-    // Without `group` the structured result has counts only, no page list.
+    // Without a group the structured result has counts only, no page list.
     expect(groups.structured?.["pages"]).toBeUndefined();
     expect(groups.structured?.["groups"]).toContainEqual({
       group: "Messages",
       count: 3,
     });
-    const withGroup = await call("list_platform_pages", { group: "messages" });
+    const withGroup = await call("list_pages", {
+      source: "platform",
+      section: "messages",
+    });
     expect(withGroup.structured?.["pages"]).toHaveLength(3);
-    const msgs = await call("list_platform_pages", { group: "messages" });
+    const msgs = await call("list_pages", {
+      source: "platform",
+      section: "messages",
+    });
     expect(msgs.text).toContain("`api/messages`: Create a Message. Send");
-    expect((await call("list_platform_pages", { group: "Nope" })).error).toBe(
-      true,
-    );
-    const missing = await call("read_platform_page", {
-      path: "build-with-claude/caching",
+    expect(
+      (await call("list_pages", { source: "platform", section: "Nope" })).error,
+    ).toBe(true);
+    const missing = await call("read_page", {
+      source: "platform",
+      route: "build-with-claude/caching",
     });
     expect(missing.error).toBe(true);
     expect(missing.text).toContain("Closest matches");
@@ -636,11 +823,15 @@ describe("platform tools", () => {
     const p = mockPlatform(false);
     stops.push(p.stop);
     const { call } = await connect({ PLATFORM_DOCS_BASE_URL: p.url });
-    const s = await call("search_platform_docs", { query: "prompt caching" });
+    const s = await call("search_docs", {
+      source: "platform",
+      query: "prompt caching",
+    });
     expect(s.text).toContain("build-with-claude/prompt-caching");
     expect(s.text).toContain(`${p.url}/docs/en/`);
-    const r = await call("read_platform_page", {
-      path: "build-with-claude/prompt-caching",
+    const r = await call("read_page", {
+      source: "platform",
+      route: "build-with-claude/prompt-caching",
     });
     expect(r.error).toBe(false);
     expect(r.text).toContain("cache_control");
@@ -651,7 +842,10 @@ describe("platform tools", () => {
     const p = mockPlatform();
     stops.push(p.stop);
     const { call } = await connect({ PLATFORM_DOCS_BASE_URL: p.url });
-    const s = await call("search_platform_docs", { query: "Messages" });
+    const s = await call("search_docs", {
+      source: "platform",
+      query: "Messages",
+    });
     // The page titled "Create a Message" has no phrase boost from the group name.
     expect(s.error).toBe(false);
     expect(s.text).toContain("api/messages");
@@ -661,13 +855,17 @@ describe("platform tools", () => {
     const p = mockPlatform();
     stops.push(p.stop);
     const { call } = await connect({ PLATFORM_DOCS_BASE_URL: p.url });
-    await call("read_platform_page", { path: "build-with-claude/overview" });
-    await call("search_platform_docs", { query: "streaming" });
-    const n = p.hits.length;
-    const again = await call("read_platform_page", {
-      path: "build-with-claude/overview",
+    await call("read_page", {
+      source: "platform",
+      route: "build-with-claude/overview",
     });
-    await call("search_platform_docs", { query: "streaming" });
+    await call("search_docs", { source: "platform", query: "streaming" });
+    const n = p.hits.length;
+    const again = await call("read_page", {
+      source: "platform",
+      route: "build-with-claude/overview",
+    });
+    await call("search_docs", { source: "platform", query: "streaming" });
     expect(p.hits.length).toBe(n);
     expect(again.text).toContain("cache (fetched");
   });
@@ -679,12 +877,21 @@ describe("platform tools", () => {
       PLATFORM_DOCS_BASE_URL: p.url,
       CC_DOCS_TTL_SCALE: "0",
     });
-    await call("search_platform_docs", { query: "streaming" });
-    await call("read_platform_page", { path: "build-with-claude/overview" });
+    await call("search_docs", { source: "platform", query: "streaming" });
+    await call("read_page", {
+      source: "platform",
+      route: "build-with-claude/overview",
+    });
     p.hits.length = 0;
-    const s = await call("search_platform_docs", { query: "streaming" });
+    const s = await call("search_docs", {
+      source: "platform",
+      query: "streaming",
+    });
     expect(s.text).toContain("revalidated, 304");
-    await call("read_platform_page", { path: "build-with-claude/overview" });
+    await call("read_page", {
+      source: "platform",
+      route: "build-with-claude/overview",
+    });
     const page = p.hits.filter((h) => h.path.endsWith("overview.md"));
     expect(page.length).toBe(1);
     expect(page[0]?.ims).toBeNull();
@@ -705,7 +912,7 @@ describe("platform tools", () => {
       "Home Page",
       "docs/home",
     ]) {
-      const r = await call("read_platform_page", { path });
+      const r = await call("read_page", { source: "platform", route: path });
       expect(r.error).toBe(true);
       expect(r.text).toContain("Invalid path");
     }
@@ -713,8 +920,9 @@ describe("platform tools", () => {
     // The configured host and the bare path forms are accepted.
     expect(
       (
-        await call("read_platform_page", {
-          path: `${p.url}/docs/en/build-with-claude/overview`,
+        await call("read_page", {
+          source: "platform",
+          route: `${p.url}/docs/en/build-with-claude/overview`,
         })
       ).error,
     ).toBe(false);
@@ -726,20 +934,25 @@ describe("platform tools", () => {
       PLATFORM_DOCS_BASE_URL: p.url,
       CC_DOCS_TTL_SCALE: "0",
     });
-    await call("read_platform_page", { path: "build-with-claude/overview" });
-    await call("list_platform_pages", {});
+    await call("read_page", {
+      source: "platform",
+      route: "build-with-claude/overview",
+    });
+    await call("list_pages", { source: "platform" });
     p.stop();
-    const r = await call("read_platform_page", {
-      path: "build-with-claude/overview",
+    const r = await call("read_page", {
+      source: "platform",
+      route: "build-with-claude/overview",
     });
     expect(r.error).toBe(false);
     expect(r.text).toContain("Zebrafinch");
     expect(r.text).toContain("offline");
-    const l = await call("list_platform_pages", {});
+    const l = await call("list_pages", { source: "platform" });
     expect(l.error).toBe(false);
     expect(l.text).toContain("offline");
-    const other = await call("read_platform_page", {
-      path: "build-with-claude/prompt-caching",
+    const other = await call("read_page", {
+      source: "platform",
+      route: "build-with-claude/prompt-caching",
     });
     expect(other.error).toBe(true);
     expect(other.text).toContain("could not reach");
@@ -750,8 +963,8 @@ describe("platform tools", () => {
     p.stop();
     const { call } = await connect({ PLATFORM_DOCS_BASE_URL: p.url });
     for (const [name, args] of [
-      ["search_platform_docs", { query: "caching" }],
-      ["list_platform_pages", {}],
+      ["search_docs", { source: "platform", query: "caching" }],
+      ["list_pages", { source: "platform" }],
     ] as const) {
       const r = await call(name, args);
       expect(r.error).toBe(true);

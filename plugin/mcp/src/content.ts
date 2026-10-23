@@ -7,6 +7,7 @@ import {
   type Source,
   ttl,
 } from "./fetcher.ts";
+import { type IndexPage, SEARCH_INDEX_MAX } from "./search.ts";
 
 export const SITE = "https://xsyetopz.github.io/claude-code-docs";
 // Override for mirrors and tests: CC_DOCS_BASE_URL (https; http only for localhost and 127.0.0.1).
@@ -14,6 +15,7 @@ export const siteBase = (): string => baseUrl("CC_DOCS_BASE_URL", SITE);
 
 const MANIFEST_TTL_MS = 10 * 60 * 1000;
 const PAGE_TTL_MS = 60 * 60 * 1000;
+const INDEX_TTL_MS = 60 * 60 * 1000;
 const MANIFEST_MAX = 1 * MB;
 const PAGE_MAX = 2 * MB;
 const SCHEMA_MAX = 1 * MB;
@@ -106,6 +108,43 @@ const parseManifest = (text: string): Entry[] => {
   }
 };
 
+/** The prebuilt search-index.json (design D6). Undefined when the text is not an index. Pages with a missing field are dropped. */
+export const parseSearchIndex = (
+  text: string,
+): { hash: string; pages: IndexPage[] } | undefined => {
+  try {
+    const j: unknown = JSON.parse(text);
+    if (typeof j !== "object" || j === null) return undefined;
+    const { hash, pages } = j as Record<string, unknown>;
+    if (typeof hash !== "string" || !Array.isArray(pages)) return undefined;
+    const out: IndexPage[] = [];
+    for (const p of pages as Record<string, unknown>[]) {
+      if (!p || typeof p !== "object") continue;
+      const { route, title, description, headings, extra, body } = p;
+      if (
+        typeof route !== "string" ||
+        typeof title !== "string" ||
+        typeof description !== "string" ||
+        !Array.isArray(headings) ||
+        typeof extra !== "string" ||
+        typeof body !== "string"
+      )
+        continue;
+      out.push({
+        route: normalizeRoute(route),
+        title,
+        description,
+        headings: headings.filter((h): h is string => typeof h === "string"),
+        extra,
+        body,
+      });
+    }
+    return out.length > 0 ? { hash, pages: out } : undefined;
+  } catch {
+    return undefined;
+  }
+};
+
 /** Thrown when the site cannot be reached and nothing is cached. The message is safe to show. */
 export class ContentError extends Error {}
 
@@ -187,6 +226,18 @@ export class Content {
   async find(input: string): Promise<Entry | undefined> {
     await this.manifest();
     return this.mem?.byRoute.get(normalizeRoute(input));
+  }
+
+  /** search-index.json: every page in one file. A 404 means the site has none, and the caller reads pages instead. */
+  searchIndex(): Promise<Resource> {
+    return getResource({
+      url: `${siteBase()}/search-index.json`,
+      rel: "site/search-index.json",
+      deleteOn404: true,
+      ttlMs: ttl(INDEX_TTL_MS),
+      maxBytes: SEARCH_INDEX_MAX,
+      validate: (b) => parseSearchIndex(b) !== undefined,
+    });
   }
 
   /** Page text (with front matter) for an entry from the manifest. */
