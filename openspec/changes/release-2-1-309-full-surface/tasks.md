@@ -35,7 +35,7 @@ Checks: `bun run verify:locked` is the full check (`CLAUDE.md`). cc-inspect test
 Each task adds rows to the existing section of its kinds, with badges and "the program" as the source, maps or excludes every item, and ends with `bun run surface:check -- --kind <kinds>` passing, plus `bun run lint` and `bun run check:docs`.
 Items of claude.ai, Cowork, Claude Design, and artifacts are mapped like any other.
 
-- [ ] 5.1 `env`: `docs/configure/env-vars/`. Verify: `surface:check -- --kind env` passes
+- [x] 5.1 `env`: `docs/configure/env-vars/`. Verify: `surface:check -- --kind env` passes
 - [x] 5.2 `flag`, `subcommand`, `slash-command`: `docs/configure/cli/`, `docs/extend/skills-and-commands/slash-commands.md`. Verify: `surface:check` passes for these kinds
 - [x] 5.3 `setting`, `permission-rule`: `docs/configure/settings/`, `docs/configure/permissions/`. Verify: `surface:check` passes for these kinds
 - [x] 5.4 `hook-event`, `mod-api`, `tool`, `otel-event`: `docs/extend/hooks/`, `docs/extend/mod-api/`, `docs/reference/tools/`, and a new `docs/reference/opentelemetry.md` (no page lists the events today; the env vars stay in `docs/configure/env-vars/telemetry-and-debug.md`). Payload fields only from `schemas/`. Verify: `surface:check` passes for these kinds
