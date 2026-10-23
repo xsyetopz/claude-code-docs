@@ -12,7 +12,7 @@ The engine alone draws the permission dialog. A mod adds context to it with `$.u
 
 Return the engine's tree (call `next(e)`) to leave a site as it is. JSX needs a `.tsx` or `.jsx` file.
 
-Official pages: [Draw in the Interface](https://code.claude.com/docs/en/plugins/mods/interface), [Mods Overview](https://code.claude.com/docs/en/plugins/mods/overview), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the Mod API type file of the 2.1.308 program (`schemas/claude-code.d.ts`).
+Official pages: [Draw in the Interface](https://code.claude.com/docs/en/plugins/mods/interface), [Mods Overview](https://code.claude.com/docs/en/plugins/mods/overview), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the Mod API type file of the 2.1.309 program (`schemas/claude-code.d.ts`).
 
 ## Example
 

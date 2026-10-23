@@ -18,7 +18,7 @@ Items that the docs name but describe wrongly are in [Behaves Differently From t
 | Group | Count |
 | --- | --- |
 | [Settings Keys](#settings-keys) | 25 |
-| [Environment Variables](#environment-variables) | 868 |
+| [Environment Variables](#environment-variables) | 880 |
 | [CLI Flags and Subcommands](#cli-flags-and-subcommands) | 52 |
 | [Permissions](#permissions) | 121 |
 | [Hooks](#hooks) | 13 |
@@ -34,7 +34,7 @@ Items that the docs name but describe wrongly are in [Behaves Differently From t
 | [Headless Protocol](#headless-protocol) | 155 |
 | [Mod API](#mod-api) | 0 |
 | [Other](#other) | 97 |
-| Total | 1518 |
+| Total | 1530 |
 
 ## Settings Keys
 
@@ -74,25 +74,25 @@ Count: 25.
 
 There are too many to list one by one. Each page below holds a table, and every undocumented variable in it has the Undocumented badge. The pages sort variables by what they do.
 
-Count: 868.
+Count: 880.
 
 | Page | Undocumented Rows |
 | --- | --- |
-| [Agents and Teams](../configure/env-vars/agents-and-teams.md) | 48 |
-| [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) | 42 |
+| [Agents and Teams](../configure/env-vars/agents-and-teams.md) | 50 |
+| [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) | 43 |
 | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) | 121 |
 | [Cloud Providers](../configure/env-vars/cloud-providers.md) | 30 |
 | [Context and Compaction](../configure/env-vars/context-and-compaction.md) | 30 |
-| [Features and Toggles](../configure/env-vars/features-and-toggles.md) | 54 |
+| [Features and Toggles](../configure/env-vars/features-and-toggles.md) | 55 |
 | [Models and Effort](../configure/env-vars/models-and-effort.md) | 31 |
 | [Network and Proxy](../configure/env-vars/network-and-proxy.md) | 22 |
-| [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) | 45 |
-| [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) | 98 |
-| [SDK and Automation](../configure/env-vars/sdk-and-automation.md) | 21 |
+| [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) | 47 |
+| [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) | 105 |
+| [SDK and Automation](../configure/env-vars/sdk-and-automation.md) | 22 |
 | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) | 48 |
 | [System and Third-Party](../configure/env-vars/system-and-third-party.md) | 104 |
 | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) | 77 |
-| [Tools and Bash](../configure/env-vars/tools-and-bash.md) | 53 |
+| [Tools and Bash](../configure/env-vars/tools-and-bash.md) | 51 |
 | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) | 44 |
 
 ## CLI Flags and Subcommands

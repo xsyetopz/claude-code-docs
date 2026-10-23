@@ -129,7 +129,7 @@ It adds the MCP server `cc-inspect`, which runs with plain `bun`, and the skill 
 | `list_sessions` | Lists the transcripts in `projects/` of the config folder (`CLAUDE_CONFIG_DIR`, or `~/.claude`), newest first. Pass `project` to narrow it. |
 | `read_session` | Gives the lines of one session. Pass `type` to keep one line type, and `offset` to page. A session id prefix works. |
 | `search_sessions` | Finds a text or a regular expression in one session or in all of them. |
-| `validate_session` | Checks each line against the [transcript schema](../reference/schemas.md) of its `type`, and lists the lines that do not fit. The schema is the one for Claude Code `2.1.308`. |
+| `validate_session` | Checks each line against the [transcript schema](../reference/schemas.md) of its `type`, and lists the lines that do not fit. The schema is the one for Claude Code `2.1.309`. |
 | `list_installs` | Lists the versions in `~/.local/share/claude/versions`, and marks the one that `~/.local/bin/claude` runs. |
 | `list_modules` | Lists the files inside a binary. Every binary tool takes `binary`, a version or a path. |
 | `search_binary` | Finds a text or a regular expression in the code of a binary, with the module and offset of each hit. |

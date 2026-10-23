@@ -1,6 +1,6 @@
 ---
 title: Subcommands
-description: Every claude subcommand in 2.1.308, including background sessions, auth, plugins, and the hidden commands.
+description: Every claude subcommand in 2.1.309, including background sessions, auth, plugins, and the hidden commands.
 sidebar_position: 3
 ---
 
@@ -21,7 +21,7 @@ claude stop <id>                        # stop it, keep the conversation
 
 ## Commands
 
-Source: the text of `claude <command> --help` in `2.1.308`.
+Source: the text of `claude <command> --help` in `2.1.309`.
 
 | Command | Status | What it does |
 | --- | --- | --- |
@@ -45,7 +45,7 @@ Source: the text of `claude <command> --help` in `2.1.308`.
 | `claude plugin test [dir]` | <Documented /> | Runs the tests of a mod. |
 | `claude purge [path]` | <Documented /> <Caution note="Deletes the state of a project" /> | Deletes the state of a project, with `--all`, `--dry-run`, `-i`, and `-y`. |
 | `claude remote-control` (alias `rc`) | <Documented /> | Lets you control local sessions from `claude.ai` or the mobile app. |
-| `claude ultrareview [target]` | <Documented /> | Starts a cloud review with many agents, with `--json`, `--post`, and `--timeout`. |
+| `claude ultrareview [target]` | <Documented /> | Starts a cloud review with many agents, with `--json`, `--post`, `--timeout`, and `--trust-workspace`. Since `2.1.309` it needs a trusted folder. It asks on a terminal. Without a terminal it may refuse, so scripts pass `--trust-workspace` after the target, or set `CLAUDE_CODE_DISABLE_ULTRAREVIEW_TRUST_CHECK=1`. |
 | `claude self-hosted-runner` | <Documented /> | Runs cloud sessions on your machine, and the root help does not list it. |
 | `claude sandbox` | <Undocumented /> | A hidden command, and the docs have no help for it. |
 | `claude edit-hook`, `edit-permission-rules`, `edit-memory-settings`, `edit-skill-overrides`, `edit-sandbox-settings`, `edit-chrome-settings`, `drop-worktree-registrations`, `design-login` | <Undocumented /> | Hidden commands that read one JSON edit from stdin with `--json`, and their text says they serve the VS Code extension. |

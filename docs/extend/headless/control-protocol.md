@@ -15,7 +15,7 @@ The protocol is on whenever you start `claude -p --input-format stream-json --ou
 
 The schema does not mark the direction of each request.
 Only the Agent SDK pages describe most of them, and no other docs page does, so every row is marked <Undocumented />.
-Source: the program (the bundled schema of `2.1.308`).
+Source: the program (the bundled schema of `2.1.309`).
 
 | `subtype` | Status | What It Does |
 | --- | --- | --- |
@@ -27,7 +27,7 @@ Source: the program (the bundled schema of `2.1.308`).
 | `set_max_thinking_tokens` | <Undocumented /> | No description in the program schema. |
 | `rename_session` | <Undocumented /> | Sets the title of the session. |
 | `set_color` | <Undocumented /> | No description in the program schema. |
-| `mcp_status` | <Undocumented /> | Asks for the state of all MCP server connections. |
+| `mcp_status` | <Undocumented /> | Asks for the state of all MCP server connections. Since `2.1.309`, `liveReply: true` sends a success reply only to the clients attached at that moment, when the CLI writes through a cloud session or Remote Control worker. The reply is not stored, and a reply sent while the stream is down is lost. |
 | `file_suggestions` | <Undocumented /> | Asks for `@` file suggestions for a partial path. |
 | `get_context_usage` | <Undocumented /> | Asks for the use of the context window by category. |
 | `get_session_cost` | <Undocumented /> | Asks for the cost summary that `/usage` prints in print mode. |
@@ -134,7 +134,7 @@ An alias comes back as the full model ID.
 An error reply has `subtype: "error"`, the `request_id`, an `error` text, and sometimes an `error_code`.
 Source: the program (strings of the request and response builders). The fields of the other subtypes are not listed here.
 
-We ran both examples on `2.1.308` with `claude -p --input-format stream-json --output-format stream-json --verbose` (see [Probes](../../reference/probes.md#static-and-print-probes)). The reply matches.
+We ran both examples on `2.1.309` with `claude -p --input-format stream-json --output-format stream-json --verbose` (see [Probes](../../reference/probes.md#static-and-print-probes)). The reply matches.
 The `request_id` is any text you pick, and the reply repeats it.
 `set_model` takes an alias such as `sonnet` or a full model ID. It replies `success` even for a name the API does not know, and `response.model` repeats that name, so the error shows up on the next request.
 The Agent SDK's `setModel()` waits up to 15 seconds for this reply (5 seconds before `2.1.307`). Source: the [release notes](https://github.com/anthropics/claude-code/releases/tag/v2.1.307).

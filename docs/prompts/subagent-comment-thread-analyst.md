@@ -5,7 +5,7 @@ sidebar_position: 63
 generated: false
 ---
 
-This is the verbatim text that Claude Code 2.1.308 uses for the built-in comment thread analyst subagent.
+This is the verbatim text that Claude Code 2.1.309 uses for the built-in comment thread analyst subagent.
 
 ## Where It Comes From
 

@@ -5,7 +5,7 @@ sidebar_position: 83
 generated: false
 ---
 
-This is the verbatim text that Claude Code 2.1.308 uses for coordinator mode.
+This is the verbatim text that Claude Code 2.1.309 uses for coordinator mode.
 
 ## Where It Comes From
 
@@ -34,7 +34,7 @@ ${p}${u}${""}- **subscribe_pr_activity / unsubscribe_pr_activity** (if available
 When calling ${ht}:
 - Do not use one worker to check on another. Workers will notify you when they are done.
 - Do not use workers to trivially report file contents or run commands. Give them higher-level tasks.
-- Continue workers whose work is complete via ${Rn} to take advantage of their loaded context
+- Continue workers whose work is complete via ${In} to take advantage of their loaded context
 - When the user has approved a specific action, quote their exact words in the worker's prompt. The worker's auto-mode check sees only the worker's own transcript — your approval is invisible unless you pass it through.
 - After launching agents, ${b} and end your response. Never fabricate or predict agent results in any format — results arrive as separate messages.
 ### ${ht} Results

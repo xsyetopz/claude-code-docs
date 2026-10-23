@@ -252,10 +252,10 @@
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
   },
-  "docs/extend/mod-api/types/tool-command-config.md#toolcheckresult:c2417643": {
+  "docs/extend/mod-api/types/tool-command-config.md#toolcheckresult:06a4112b": {
     "kind": "manual",
     "probes": [],
-    "note": "program behaviour; no probe checks it yet; the decider code reads the same in 2.1.307 and 2.1.308"
+    "note": "program behaviour; no probe checks it yet; the decider code reads the same in 2.1.307, 2.1.308, and 2.1.309"
   },
   "docs/extend/mod-api/types/turn-prompt.md#example:c79d0a53": {
     "kind": "manual",
@@ -473,7 +473,7 @@
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
   },
-  "docs/start/what-changed.md#older-releases:0d10f2a9": {
+  "docs/start/release-archive.md#older-releases:0d10f2a9": {
     "kind": "static",
     "probes": [],
     "note": "scope or example text, not a claim about the program"
@@ -483,17 +483,17 @@
     "probes": [],
     "note": "texts seen only against the local stub; live.usage.429* never reach the usage endpoint; again on 2.1.307 and 2.1.308, whose text fragments match 2.1.306"
   },
-  "docs/start/what-changed.md#version-21306:dcc6649e": {
+  "docs/start/release-archive.md#version-21306:dcc6649e": {
     "kind": "manual",
     "probes": [],
     "note": "live.artifacts showed Unknown command on 2.1.306, 2.1.307, and 2.1.308; no panel-shown capture exists"
   },
-  "docs/start/what-changed.md#older-releases:e2b4b69c": {
+  "docs/start/release-archive.md#older-releases:e2b4b69c": {
     "kind": "manual",
     "probes": [],
     "note": "texts seen only against the local stub; live.usage.429* never reach the usage endpoint; again on 2.1.307 and 2.1.308, whose text fragments match 2.1.306"
   },
-  "docs/start/what-changed.md#example:0688c778": {
+  "docs/start/release-archive.md#example:0688c778": {
     "kind": "static",
     "probes": [],
     "note": "scope or example text, not a claim about the program"
@@ -604,5 +604,40 @@
     "kind": "manual",
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
+  },
+  "docs/configure/cli/subcommands.md#commands:6af24a9d": {
+    "kind": "command",
+    "probes": [],
+    "note": "claude ultrareview --help in 2.1.309 lists --trust-workspace; trust check read in the program"
+  },
+  "docs/configure/memory-and-rules.md#how-it-works:0e4f9078": {
+    "kind": "external",
+    "probes": [],
+    "note": "cites the v2.1.309 release notes"
+  },
+  "docs/configure/permissions/modes.md#safety-checks:172f7afa": {
+    "kind": "external",
+    "probes": [],
+    "note": "cites the v2.1.309 release notes"
+  },
+  "docs/configure/permissions/sandbox.md#core-keys:876ddeba": {
+    "kind": "external",
+    "probes": [],
+    "note": "cites the v2.1.309 release notes"
+  },
+  "docs/extend/headless/control-protocol.md#subtypes:d309356f": {
+    "kind": "schema",
+    "probes": [],
+    "note": "mcp_status liveReply in schemas/claude-code-control-protocol.json"
+  },
+  "docs/extend/mod-api/types/turn-prompt.md#promptfillargs:2847c0a4": {
+    "kind": "schema",
+    "probes": [],
+    "note": "PromptFillArgs cursor in schemas/claude-code.d.ts"
+  },
+  "docs/extend/mod-api/types/turn-prompt.md#promptfillinput:fbddf98e": {
+    "kind": "schema",
+    "probes": [],
+    "note": "PromptFillInput cursor in schemas/claude-code.d.ts"
   }
 }

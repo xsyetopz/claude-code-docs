@@ -33,7 +33,7 @@ The text below is every part of the request that Claude Code builds before your 
 
 ````text
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.308.<build>; cc_entrypoint=sdk-cli;
+x-anthropic-billing-header: cc_version=2.1.309.<build>; cc_entrypoint=sdk-cli;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -117,11 +117,11 @@ Help the user debug an issue they're encountering in this current Claude Code se
 
 Debug logging was OFF for this session until now. Nothing prior to this /debug invocation was captured.
 
-Tell the user that debug logging is now active at `<config-dir>/debug/78066310-25f6-4f66-b8e7-6de409660351.txt`, ask them to reproduce the issue, then re-read the log. If they can't reproduce, they can also restart with `claude --debug` to capture logs from startup.
+Tell the user that debug logging is now active at `<config-dir>/debug/6807205a-191b-4d69-bc88-80dee0f3ff84.txt`, ask them to reproduce the issue, then re-read the log. If they can't reproduce, they can also restart with `claude --debug` to capture logs from startup.
 
 ## Session Debug Log
 
-The debug log for the current session is at: `<config-dir>/debug/78066310-25f6-4f66-b8e7-6de409660351.txt`
+The debug log for the current session is at: `<config-dir>/debug/6807205a-191b-4d69-bc88-80dee0f3ff84.txt`
 
 No log file exists yet.
 
@@ -230,11 +230,11 @@ Lines added: 44. Lines removed: 3. Size change: +1,703 characters.
 +
 +Debug logging was OFF for this session until now. Nothing prior to this /debug invocation was captured.
 +
-+Tell the user that debug logging is now active at `<config-dir>/debug/78066310-25f6-4f66-b8e7-6de409660351.txt`, ask them to reproduce the issue, then re-read the log. If they can't reproduce, they can also restart with `claude --debug` to capture logs from startup.
++Tell the user that debug logging is now active at `<config-dir>/debug/6807205a-191b-4d69-bc88-80dee0f3ff84.txt`, ask them to reproduce the issue, then re-read the log. If they can't reproduce, they can also restart with `claude --debug` to capture logs from startup.
 +
 +## Session Debug Log
 +
-+The debug log for the current session is at: `<config-dir>/debug/78066310-25f6-4f66-b8e7-6de409660351.txt`
++The debug log for the current session is at: `<config-dir>/debug/6807205a-191b-4d69-bc88-80dee0f3ff84.txt`
 +
 +No log file exists yet.
 +

@@ -49,6 +49,7 @@ The table is sorted by name. The Gated badge tells you a flag or gate is involve
 | `CLAUDE_CODE_ARTIFACT_PREVIEW_EMULATOR` | <Undocumented /> <Gated note="Works only behind a feature flag or server gate" /> | Pins the artifact preview emulator off or on. | On, off, or unset. `false` pins it off. `true` pins it on if the emulator skill files pass a check | Cloud sessions, gated by a feature flag |
 | `CLAUDE_CODE_ARTIFACT_PUBLISH_EDITS` | <Documented /> | Lets the artifact publish tool apply small edits to a file in the same call. Set to `0` to turn that off. | On, off, or unset, `true` by default | Artifacts |
 | `CLAUDE_CODE_ARTIFACT_SHARE` | <Undocumented /> | Turns on artifact sharing when set to `true` in a cloud or desktop session. | On, off, or unset. Sharing needs `true` and a cloud or desktop surface. Presence of any value also marks the host contract | Cloud and desktop sessions |
+| `CLAUDE_CODE_ARTIFACT_SHARE_PROBE_REUSE_MS` | <Undocumented /> | Sets how long the result of an artifact share check can be reused, in ms. | A number of milliseconds, `1000` by default. A larger value is capped at `1000`, so it can only shorten the time. Since `2.1.309` | Artifact sharing |
 | `CLAUDE_CODE_ARTIFACT_START_KIT` | <Undocumented /> <Gated note="A feature flag or server gate decides by default. This variable overrides it" /> | Forces the artifact start kit gate on or off. No visible effect in a print-mode probe ([Probes](../../reference/probes.md)). | On, off, or unset, off by default | Artifacts, gated by a feature flag |
 | `CLAUDE_CODE_ARTIFACT_TOOLSET` | <Undocumented /> <Gated note="Works only behind a feature flag or server gate" /> | Picks the artifact tool set. When on, Claude loads the artifact tool through tool search. | On, off, or unset, off by default | Artifacts, gated by a feature flag |
 | `CLAUDE_CODE_ARTIFACT_TYPE_CATALOG` | <Undocumented /> <Gated note="A feature flag or server gate decides by default. This variable overrides it" /> | Forces the artifact type catalog gate on or off. | On, off, or unset, off by default | Artifacts, gated by a feature flag |
@@ -104,4 +105,4 @@ Turning telemetry off also stops flag fetching, which turns off the features tha
 - [Telemetry and Debug](telemetry-and-debug.md)
 - [Undocumented Items](../../reference/undocumented.md): every item that only the program shows.
 
-Source: the program (variable names found in the `2.1.308` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
+Source: the program (variable names found in the `2.1.309` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.

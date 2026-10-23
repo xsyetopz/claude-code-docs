@@ -94,7 +94,7 @@ A `PermissionUpdate` changes rules or the mode. Hooks and SDK hosts send and rec
 | `destination` | `userSettings`, `projectSettings`, `localSettings`, `session`, `cliArg` |
 | rule value | An object with `toolName` and `ruleContent`. |
 
-Source: `PermissionUpdate` in the Mod API type file of the 2.1.308 program (`schemas/claude-code.d.ts`).
+Source: `PermissionUpdate` in the Mod API type file of the 2.1.309 program (`schemas/claude-code.d.ts`).
 
 ## How It Works
 

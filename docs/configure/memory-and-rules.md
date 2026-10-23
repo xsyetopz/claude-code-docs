@@ -144,6 +144,7 @@ Source: the program (read), and a probe of the interactive screen (2.1.305, loca
 - The total limit is the larger of 120,000 characters and the one-file limit. Only files under the one-file limit add to the total.
 - `User`, `Project`, `Local`, and `Managed` instruction files count, including the files they import. `MEMORY.md` does not count.
 - The messages are `Large <file> will impact performance (<n> chars > <limit>)` for one file, and `Instruction files will impact performance: <n> files, <total> chars in total > <limit>` for the total.
+- Since `2.1.309`, a nested `CLAUDE.md` over the size limit loads only its start, so reading files under it no longer makes the session compact again and again ([v2.1.309 release notes](https://github.com/anthropics/claude-code/releases/tag/v2.1.309)). Which limit applies is unconfirmed.
 
 :::
 

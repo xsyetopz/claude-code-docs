@@ -335,6 +335,7 @@ What a `prompt.edit` hook returns and what `next(e)` resolves to: the box after 
 | `text` | <Documented /> | What the box is to take (PromptFillInput `text`). | Type: `string`. |
 | `mode` | <Documented /> | Where it goes (PromptFillMode), `replace` when left out. | Type: `PromptFillMode`. Optional. |
 | `decorations` | <Documented /> | Runs to paint over `text` (PromptDecoration), offsets into `text` as given, the engine moves them to where it lands. None when absent. | Type: `PromptDecoration[]`. Optional. Replaced by the next `prompt.edit` answer. Gone at the draft's next change. |
+| `cursor` | <Documented /> | Where the caret stands after the write: an offset into the whole draft the box then holds. Left out: past the text for `insert`, else at the end. | Type: `number`. Optional. Clamped to the draft and moved to the start of a character it falls inside. A value that is not an integer is refused. Since `2.1.309`. |
 
 ### `PromptFilled`
 
@@ -345,7 +346,7 @@ What `$.prompt.fill` resolves to: whether the box took the text, and the box aft
 | `isFilled` | <Documented /> | True once the box holds the text, false where no box could take it or a hook kept it out (PromptFillResult). | Type: `boolean`. |
 | `refusal` | <Documented /> | Why the engine refused the text: `no_composer` (no box) or `dialog` (a dialog holds the keys). A hook's refusal carries no cause. | Type: `'no_composer' \| 'dialog'`. Optional. |
 | `text` | <Documented /> | The draft after the fill, unchanged when `isFilled` is false, `''` where no box is drawn or the caller may not read it (see above). | Type: `string`. |
-| `cursor` | <Documented /> | Where the person types next: an offset into `text`, past the fill's text for `insert`, at the end for `replace` and `append`. | Type: `number`. |
+| `cursor` | <Documented /> | Where the person types next: an offset into `text`, where the call's `cursor` put it, else past the fill's text for `insert`, at the end for `replace` and `append`. | Type: `number`. |
 
 ### `PromptFillInput`
 
@@ -357,6 +358,7 @@ The input of `prompt.fill` (prompt-fill/): a text about to be put in the prompt 
 | `mode` | <Documented /> | Where the text goes (PromptFillMode): over the draft, after it, or in at the cursor. `next({ ...e, mode })` moves it, left out of a rewrite, kept. | Type: `PromptFillMode`. |
 | `origin` | <Documented /> | Who writes (PromptFillOrigin), set by the engine where the write starts. Pinned: `next(e)` passes it on as received. | Type: `PromptFillOrigin`. |
 | `decorations` | <Documented /> | Runs to paint over `text` once it lands (PromptDecoration), offsets into `text`, absent when the call named none. | Type: `PromptDecoration[]`. Optional. What the chain passes down is what paints: a hook strips them so. Example: `next({ ...e, decorations: [] }))`. |
+| `cursor` | <Documented /> | Where the caret stands after the write (PromptFillArgs `cursor`), an offset into the whole draft. Absent when the call named none. | Type: `number`. Optional. What the chain passes down moves the caret. Left out of a rewrite, the box places it by `mode`. Example: `next({ ...e, cursor: 0 })`. Since `2.1.309`. |
 
 ### `PromptFillOrigin`
 
@@ -680,7 +682,7 @@ The input of `turn.step`: one model request inside a turn, at the moment the eng
 | --- | --- | --- | --- |
 | `turnId` | <Documented /> | The turn this step belongs to: its `turn.start`'s id, which its `turn.complete` will carry too. Pinned. | Type: `string`. |
 | `index` | <Documented /> | The step's position in the turn, from 0. Pinned. | Type: `number`. |
-| `model` | <Documented /> | Which model the request names, as the engine resolved it for this step (the session's, a fallback's). `next({ ...e, model })` names another. | Type: `string`. |
+| `model` | <Documented /> | Which model the request names, as the engine resolved it for this step (the session's, a fallback's). `next({ ...e, model })` names another, by an alias (`haiku`) or a full ID. | Type: `string`. Since `2.1.309` an alias resolves to its model. Before, it failed the request with a model error ([v2.1.309 release notes](https://github.com/anthropics/claude-code/releases/tag/v2.1.309)). |
 | `effort` | <Documented /> | How hard the request asks the model to think: the session's setting or the model's default, absent for a model without effort, rewritable. | Type: `'low' \| 'medium' \| 'high' \| 'xhigh' \| 'max' \| number`. Optional. |
 | `messageCount` | <Documented /> | How many messages the request carries (the conversation so far, the turn's tool results included). Pinned: the messages are the engine's. | Type: `number`. |
 | `agentId` | <Documented /> | The loop the request is made in: a subagent's id, the `id` `$.agent.list()` gives it and its `tool.call`s carry, absent on main. | Type: `string`. Optional. Pinned: a different value is refused. A subagent that a hook spawned steps past that hook. |

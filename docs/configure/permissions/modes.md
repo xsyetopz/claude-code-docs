@@ -78,7 +78,7 @@ A `safetyCheck` reason carries a `circuitBreaker` name. Three flags describe the
 
 | Check | Status | What it covers | Behavior | Seen In |
 | --- | --- | --- | --- | --- |
-| `dangerousRemoval` | <Undocumented /> | Critical-path `rm` prompts | Bypass-immune, classifier-routed. A time limit applies unless `CLAUDE_CODE_DISABLE_DANGEROUS_RM_TIMEOUT=1` | `Bash` |
+| `dangerousRemoval` | <Undocumented /> | Critical-path `rm` prompts | Bypass-immune, classifier-routed. A time limit applies unless `CLAUDE_CODE_DISABLE_DANGEROUS_RM_TIMEOUT=1`. Since `2.1.309`, in `bypassPermissions` mode in the desktop app and VS Code, a dangerous `rm` or `rmdir` is denied at once with a hint to rewrite it, so unattended sessions keep going ([v2.1.309 release notes](https://github.com/anthropics/claude-code/releases/tag/v2.1.309)) | `Bash` |
 | `backgroundOperator` | <Undocumented /> | Background operator calls | Classifier-routed | Background sessions |
 | `suspiciousWindowsPath` | <Undocumented /> | Odd Windows paths | Classifier-routed | Windows |
 | `isolatePeerMachines` | <Documented /> | Peer machine isolation | Bypass-immune. Setting `isolatePeerMachines` | Managed |

@@ -110,7 +110,7 @@ A fork keeps its tool output out of your context. If you are the fork, execute d
 
 ### `Bash`
 
-Sent in full by default: ✅ Yes. Description: 1,406 characters. Schema: 1,720 characters.
+Sent in full by default: ✅ Yes. Description: 1,688 characters. Schema: 1,720 characters.
 
 ```text
 Executes a bash command and returns its output.
@@ -124,6 +124,7 @@ Executes a bash command and returns its output.
 # Git
 - Interactive flags (`-i`, e.g. `git rebase -i`, `git add -i`) are not supported in this environment.
 - Use the `gh` CLI for GitHub operations (PRs, issues, API).
+- GitHub notifies the owner of any `@name` written in a PR, issue, or comment. Write a bare `@name` only for a real login you mean to notify. Put roles, placeholders, and code (`@human`, `@reviewer`, `@types/node`) in backticks or drop the `@`, even when copied from project files.
 - Commit or push only when the user asks. If on the default branch, branch first.
 - End git commit messages and PR bodies with the attribution lines given in the conversation's system-reminder, when one is present.
 ```

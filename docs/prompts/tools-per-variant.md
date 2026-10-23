@@ -13,7 +13,7 @@ The default list has 12 tools on Opus 5.5. The columns show the length of the de
 | Tool | Description | Schema |
 | --- | --- | --- |
 | [`Agent`](./tools.md#agent) | 3,227 | 1,942 |
-| [`Bash`](./tools.md#bash) | 1,406 | 1,720 |
+| [`Bash`](./tools.md#bash) | 1,688 | 1,720 |
 | [`Edit`](./tools.md#edit) | 360 | 552 |
 | [`ListAgents`](./tools.md#listagents) | 777 | 316 |
 | [`Read`](./tools.md#read) | 790 | 1,071 |

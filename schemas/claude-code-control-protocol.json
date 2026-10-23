@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-control-protocol.json",
-  "title": "Claude Code control protocol (Claude Code 2.1.308)",
-  "$comment": "For the request and response of each control_request subtype in stream-json mode (definitions <subtype>Request and <subtype>Response, direction in x-direction). Generated from Claude Code 2.1.308 by calling the zod v4 toJSONSchema embedded in the binary on its own validator (method A, runtime export). Anchor: the SDK schema module, table of rows {request, originator, response}; the request union is described as \"Control requests a client sends to drive the loop\". Do not edit by hand: run \"bun run schemas\".",
+  "title": "Claude Code control protocol (Claude Code 2.1.309)",
+  "$comment": "For the request and response of each control_request subtype in stream-json mode (definitions <subtype>Request and <subtype>Response, direction in x-direction). Generated from Claude Code 2.1.309 by calling the zod v4 toJSONSchema embedded in the binary on its own validator (method A, runtime export). Anchor: the SDK schema module, table of rows {request, originator, response}; the request union is described as \"Control requests a client sends to drive the loop\". Do not edit by hand: run \"bun run schemas\".",
   "$defs": {
     "apply_flag_settingsRequest": {
       "type": "object",
@@ -393,7 +393,7 @@
         },
         "requires_user_interaction": {
           "type": "boolean",
-          "description": "True when one-tap Approve/Deny must not be offered: the tool's approval card IS the user-interaction surface (Tool.requiresUserInteraction(): the user responds on the card itself), OR the pending ask is localDisplayOnly (its consent disclosure cannot ride this wire and only the local dialog renders it), OR the auto-mode classifier blocked the call and it was handed to a person (decision_reason_type 'classifier' on a person-only ask), which no stored grant or automatic approval may answer, OR the SDK host worded the ask (title and description are its consent copy, which a push cannot carry whole). In each case the user has to open the session to answer."
+          "description": "True when one-tap Approve/Deny must not be offered: the tool's approval card IS the user-interaction surface (Tool.requiresUserInteraction(): the user responds on the card itself), OR the pending ask is localDisplayOnly (its consent disclosure cannot ride this wire and only the local dialog renders it), OR the auto-mode classifier blocked the call and it was handed to a person (decision_reason_type 'classifier' on a person-only ask), which no stored grant or automatic approval may answer, OR the MCP server's name spells a claude.ai connector's key and the server came from neither claude.ai nor whoever launched the session, so a grant keyed on the tool name must not answer it, OR the SDK host worded the ask (title and description are its consent copy, which a push cannot carry whole). In each case the user has to open the session to answer."
         },
         "server_prompt": {
           "type": "string",
@@ -6990,6 +6990,21 @@
           ],
           "description": "@internal Present only when the feedback-survey surface is enabled for this host (GrowthBook gate, privacy level, and org policy all allow it). Absent means the host must not show the survey."
         },
+        "survey_followup_box": {
+          "type": "object",
+          "properties": {
+            "transcript_allowed": {
+              "type": "boolean",
+              "description": "Whether the box may send this sign-in's session transcript, and so may open: true for Pro and Max only. Read at session start."
+            },
+            "every_rating": {
+              "type": "boolean",
+              "description": "Whether VS Code opens this box in place of its own, which follows Bad only and is sent with submit_feedback. Never true unless transcript_allowed is. VS Code keeps its own box where reports are saved on the user's computer rather than sent."
+            }
+          },
+          "required": ["transcript_allowed", "every_rating"],
+          "description": "@internal Sent to each session a VS Code or desktop host starts itself (not a nested child session), even when feedback_survey_config is absent. Absent on CLIs without submit_survey_feedback."
+        },
         "feedback_mode": {
           "type": "object",
           "properties": {
@@ -8152,6 +8167,10 @@
         "subtype": {
           "type": "string",
           "const": "mcp_status"
+        },
+        "liveReply": {
+          "type": "boolean",
+          "description": "When true and the CLI writes to the session through CCR (a cloud session's worker, or a Remote Control worker), the success reply is published only to the clients attached at that moment, as a control_response marked live_only: true on the session's unsequenced event stream, and is not stored with the session's events; on a cloud session's worker its rows embed each server's configuration (URLs, headers, OAuth settings). Set it only if your client reads control_response frames from that stream; a reply sent while its stream is down is lost and the request must be sent again, and a reply over the live size limit comes back as a live error instead. Error replies other than that size-limit error, and every reply from hosts that do not send live replies (stdio hosts, and CLIs older than this field), are ordinary stored replies, so a client that sets it must accept either."
         }
       },
       "required": ["subtype"],
@@ -8468,6 +8487,18 @@
                   }
                 ],
                 "description": "Server configuration (includes URL for HTTP/SSE servers)"
+              },
+              "transport": {
+                "type": "string",
+                "description": "@internal The server's transport as configured (stdio, sse, http, ws, sdk, claudeai-proxy …), reported even where `config` is withheld. Absent on CLIs that predate the field."
+              },
+              "sessionProxied": {
+                "type": "boolean",
+                "description": "@internal True when the server is reached through the cloud session's own MCP proxy, or is a claude.ai connector the session mounted: its sign-in is held there, never in this process, so a client offers no OAuth sign-in for it. Absent when false and on CLIs that predate the field."
+              },
+              "urlHost": {
+                "type": "string",
+                "description": "@internal Host and port of an http or sse server's URL as its settings file wrote it, for display where `config` is withheld. Absent for other transports, for a server with no settings file (dynamic, plugin, sdk, agent, claudeai), for a server the session proxies (its host would be the session's own), when the file's host holds an environment-variable placeholder or the file can't be re-read, and on CLIs that predate the field."
               },
               "scope": {
                 "type": "string",
@@ -9573,6 +9604,18 @@
                   }
                 ],
                 "description": "Server configuration (includes URL for HTTP/SSE servers)"
+              },
+              "transport": {
+                "type": "string",
+                "description": "@internal The server's transport as configured (stdio, sse, http, ws, sdk, claudeai-proxy …), reported even where `config` is withheld. Absent on CLIs that predate the field."
+              },
+              "sessionProxied": {
+                "type": "boolean",
+                "description": "@internal True when the server is reached through the cloud session's own MCP proxy, or is a claude.ai connector the session mounted: its sign-in is held there, never in this process, so a client offers no OAuth sign-in for it. Absent when false and on CLIs that predate the field."
+              },
+              "urlHost": {
+                "type": "string",
+                "description": "@internal Host and port of an http or sse server's URL as its settings file wrote it, for display where `config` is withheld. Absent for other transports, for a server with no settings file (dynamic, plugin, sdk, agent, claudeai), for a server the session proxies (its host would be the session's own), when the file's host holds an environment-variable placeholder or the file can't be re-read, and on CLIs that predate the field."
               },
               "scope": {
                 "type": "string",
@@ -10725,7 +10768,7 @@
         }
       },
       "required": ["subtype", "description"],
-      "description": "@internal Submits a /feedback report (description + current session transcript + sanitized error log) to api.anthropic.com/api/claude_cli_feedback using the CLI's auth and redaction. Runs the same getFeedbackUnavailableReason() policy checks as the terminal /feedback command — when feedback is disabled (org policy, env kill-switch) or cannot be sent (3P provider, no Anthropic credentials) the response carries unavailable_reason instead of an error. A request carrying save_locally gets the terminal's local save instead: the report is written to a redacted zip on this machine and the response carries bundle_path, nothing sent — except where feedback is disabled, which still refuses.",
+      "description": "@internal Submits a /feedback report (description + current session transcript + sanitized error log) to api.anthropic.com/api/claude_cli_feedback using the CLI's auth and redaction. Runs the same getFeedbackUnavailableReason() policy checks as the terminal /feedback command — when feedback is disabled (org policy, env kill-switch) or cannot be sent (3P provider, no Anthropic credentials) the response carries unavailable_reason instead of an error. When the server refuses the submission for the organization or the report's content, the response carries both unavailable_reason and failure_reason. A request carrying save_locally gets the terminal's local save instead: the report is written to a redacted zip on this machine and the response carries bundle_path, nothing sent — except where feedback is disabled, which still refuses.",
       "x-direction": "client"
     },
     "submit_feedbackResponse": {
@@ -10736,7 +10779,7 @@
         },
         "unavailable_reason": {
           "type": "string",
-          "description": "Human-readable reason /feedback is disabled in this session (3P provider, org policy, env var). When set, no submission was attempted."
+          "description": "Human-readable reason feedback cannot be sent. Set when /feedback is unavailable in this session (no submission was attempted), or when the server refused the submission for the organization or the report's content (failure_reason is also set)."
         },
         "is_zdr_org": {
           "type": "boolean"
@@ -10759,7 +10802,81 @@
         }
       },
       "required": ["feedback_id"],
-      "description": "@internal Result of a submit_feedback request. feedback_id is set on success (a sent report, or a bundle written to bundle_path); otherwise one of unavailable_reason / failure_reason explains why.",
+      "description": "@internal Result of a submit_feedback request. feedback_id is set on success (a sent report, or a bundle written to bundle_path); otherwise unavailable_reason, failure_reason or both explain why.",
+      "x-direction": "client"
+    },
+    "submit_survey_feedbackRequest": {
+      "type": "object",
+      "properties": {
+        "subtype": {
+          "type": "string",
+          "const": "submit_survey_feedback"
+        },
+        "description": {
+          "type": "string",
+          "description": "The note the person typed in the follow-up box after rating the session. May be empty: the person pressed Send without typing."
+        },
+        "appearance_id": {
+          "type": "string",
+          "description": "The survey appearance's id, the appearance_id of its tengu_feedback_survey_event rows, so the report joins back to the rating."
+        },
+        "survey_response": {
+          "type": "string",
+          "enum": ["bad", "fine", "good"]
+        },
+        "survey_type": {
+          "type": "string",
+          "enum": ["session", "post_compact", "memory", "long_context"],
+          "description": "The survey's type; the session survey is 'session'."
+        },
+        "surface": {
+          "type": "string",
+          "enum": ["cli", "ccd", "ccr", "ide", "sdk", "cowork"],
+          "description": "Where the survey was shown. Defaults to 'sdk'."
+        }
+      },
+      "required": [
+        "subtype",
+        "description",
+        "appearance_id",
+        "survey_response",
+        "survey_type"
+      ],
+      "description": "@internal Sends the session survey's follow-up box: the report submit_feedback sends (note, session transcript, error log), joined to the survey appearance. Answered like submit_feedback, after its availability checks and the CLI's own plan check: a sign-in that survey_followup_box.transcript_allowed would be false for gets unavailable_reason and nothing is sent. An older CLI answers that the subtype is unsupported.",
+      "x-direction": "client"
+    },
+    "submit_survey_feedbackResponse": {
+      "type": "object",
+      "properties": {
+        "feedback_id": {
+          "type": ["string", "null"]
+        },
+        "unavailable_reason": {
+          "type": "string",
+          "description": "Human-readable reason feedback cannot be sent. Set when /feedback is unavailable in this session (no submission was attempted), or when the server refused the submission for the organization or the report's content (failure_reason is also set)."
+        },
+        "is_zdr_org": {
+          "type": "boolean"
+        },
+        "failure_reason": {
+          "type": "string"
+        },
+        "status_code": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "ccshare_url": {
+          "type": "string",
+          "description": "Internal share URL for the conversation. Only set in internal builds, when the upload succeeded or was handed to the host machine to finish (the page then appears once the person confirms the upload there); absent otherwise."
+        },
+        "bundle_path": {
+          "type": "string",
+          "description": "In 'bundle' feedback mode (SDKFeedbackMode): the absolute path of the redacted zip the report was written to on this machine, instead of being sent; feedback_id is then the bundle id. Absent in every other mode."
+        }
+      },
+      "required": ["feedback_id"],
+      "description": "@internal Result of a submit_feedback request. feedback_id is set on success (a sent report, or a bundle written to bundle_path); otherwise unavailable_reason, failure_reason or both explain why.",
       "x-direction": "client"
     },
     "turn_handoffRequest": {
@@ -12880,7 +12997,7 @@
         "mode": {
           "type": "string",
           "enum": ["replace", "append", "insert"],
-          "description": "@internal Where it goes: `replace` the whole draft, `append` after it, `insert` at the caret. The caret ends after the placed text."
+          "description": "@internal Where it goes: `replace` the whole draft, `append` after it, `insert` at the caret. The caret ends after the placed text unless `cursor` names where."
         },
         "decorations": {
           "type": "array",
@@ -12933,6 +13050,12 @@
             "description": "@internal One painted run over the text a ui_prompt_fill carries, normalized by the engine: clamped to the text, grapheme-aligned, never empty."
           },
           "description": "@internal Runs to paint over `text`, disjoint and ascending by `start`; the app paints them as given, with no range logic of its own. Omitted when there are none, never empty."
+        },
+        "cursor": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991,
+          "description": "@internal Where the caret stands after the write instead of after the placed text: a UTF-16 offset into the whole draft the composer then holds, whatever `mode` placed the text. The app clamps it to the end of its draft, and moves one inside a character to the start of that character. Omitted when the fill names none."
         },
         "answers_press": {
           "type": "string",

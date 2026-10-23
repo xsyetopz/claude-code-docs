@@ -10,7 +10,7 @@ The events follow a turn from start to end, and they cover the system prompt, th
 
 Return `{ drop }`, `{ deny }`, or `{ text: null }` from the right hook to stop or remove something.
 
-Official pages: [React to Events](https://code.claude.com/docs/en/plugins/mods/events), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the Mod API type file of the 2.1.308 program (`schemas/claude-code.d.ts`).
+Official pages: [React to Events](https://code.claude.com/docs/en/plugins/mods/events), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the Mod API type file of the 2.1.309 program (`schemas/claude-code.d.ts`).
 In a "Where it can be used" cell, "Run time" means in a hook, in a closure that a hook drew, or in a timer callback. It does not mean inside `register`.
 
 ## Example
@@ -29,7 +29,7 @@ on("prompt.submit", async ($, e, next) => next({ ...e, text: e.text.trim() }));
 | `$.prompt.submit` | <Documented /> | Submits a prompt. It is the event `prompt.submit`, the same call the engine makes for a typed prompt. It is a turn of its own, once the session is idle. | `(input: PromptSubmitArgs) => Promise<PromptSubmitResult>`. The model reads it as a user turn. Every hook but the calling one sees it. | Run time. |
 | `$.prompt.read` | <Documented /> | Returns the prompt box as it stands: the draft typed so far and the cursor offset. | `() => Promise<PromptBox>`. Never rejects. Gives `{ text: '', cursor: 0 }` where no box is drawn, such as a `-p` run. | Run time. |
 | `$.prompt.media` | <Documented /> | Returns one image or document of the prompt being submitted, by the `id` that `e.attachments` lists. Gives its bytes as base64, 4 MiB a call. | `(args: PromptMediaArgs) => Promise<PromptMedia>`. Works only in a `prompt.submit` hook of a mod that managed settings install. Otherwise `{ deny }`. | The `prompt.submit` hook of a mod that managed settings install. |
-| `$.prompt.fill` | <Documented /> | Puts `input.text` in the prompt box as the draft, by `mode`: `replace` (default), `append`, or `insert` at the cursor. | `(input: PromptFillArgs) => Promise<PromptFilled>`. Gives `isFilled: false` under a dialog or when headless. | Run time. |
+| `$.prompt.fill` | <Documented /> | Puts `input.text` in the prompt box as the draft, by `mode`: `replace` (default), `append`, or `insert` at the cursor. An optional `cursor` places the caret afterwards. | `(input: PromptFillArgs) => Promise<PromptFilled>`. Gives `isFilled: false` under a dialog or when headless. | Run time. |
 | `$.prompt.suggest` | <Documented /> | Proposes `input.text` as the dim suggestion of the prompt box. Tab takes it. | `(input: PromptSuggestArgs) => Promise<PromptSuggestResult>`. Gives `{ isShown: false }` while the box has text or a turn runs. | Run time. |
 | `$.prompt.compose` | <Documented /> | Returns the sections of the system prompt. It is the event `prompt.compose`, the call the engine makes for every prompt it sends. | `(input?: PromptComposeArgs) => Promise<PromptComposeResult>`. Builds the sections without sending them. Example: `(await $.prompt.compose()).sections.map(s => s.id)`. | Run time. |
 

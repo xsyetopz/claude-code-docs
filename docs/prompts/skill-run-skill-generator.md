@@ -5,7 +5,7 @@ sidebar_position: 77
 generated: false
 ---
 
-This is the verbatim text that Claude Code 2.1.308 uses for the built-in `/run-skill-generator` skill.
+This is the verbatim text that Claude Code 2.1.309 uses for the built-in `/run-skill-generator` skill.
 
 ## Where It Comes From
 

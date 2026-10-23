@@ -1,4 +1,4 @@
-// The Claude Code 2.1.308 Mod API type file, as the program embeds it.
+// The Claude Code 2.1.309 Mod API type file, as the program embeds it.
 // Extracted by tools/schemas/types.ts. Do not edit: run "bun run schemas".
 // biome-ignore-all format: verbatim from the program
 // biome-ignore-all lint: verbatim from the program
@@ -8957,6 +8957,18 @@ declare module 'claude-code' {
        *   decorations: [{ start: 1, end: 5, italic: true }] })
        */
       decorations?: PromptDecoration[];
+      /**
+       * Where the caret stands after the write, counted as PromptFilled `cursor`
+       * is: an offset into the whole draft the box then holds.
+       *
+       * In every `mode`, hidden code points gone, accents counted as NFC; clamped
+       * to the draft, moved to the start of a character or chip it falls inside;
+       * not an integer is refused. Left out: past an `insert`, else at the end.
+       *
+       * @example const box = await $.prompt.read()
+       *   await $.prompt.fill({ text: box.text.toUpperCase(), cursor: box.cursor })
+       */
+      cursor?: number;
   };
 
   /**
@@ -8986,8 +8998,9 @@ declare module 'claude-code' {
        */
       text: string;
       /**
-       * Where the person types next: an offset into `text`, past the fill's text
-       * for `insert`, at the end for `replace` and `append`.
+       * Where the person types next: an offset into `text`, where the call's
+       * `cursor` stood it, else past the fill's text for `insert`, at the end
+       * for `replace` and `append`.
        */
       cursor: number;
   };
@@ -9025,6 +9038,16 @@ declare module 'claude-code' {
        *   next({ ...e, decorations: [] }))
        */
       decorations?: PromptDecoration[];
+      /**
+       * Where the caret stands after the write (PromptFillArgs `cursor`), an
+       * offset into the whole draft; absent when the call named none.
+       *
+       * What the chain passes down is what moves it: left out of a rewrite, the
+       * box stands the caret by `mode`.
+       *
+       * @example on('prompt.fill', ($, e, next) => next({ ...e, cursor: 0 }))
+       */
+      cursor?: number;
   };
 
   /**
@@ -14356,7 +14379,8 @@ declare module 'claude-code' {
       index: number;
       /**
        * Which model the request names, as the engine resolved it for this step
-       * (the session's, a fallback's). `next({ ...e, model })` names another.
+       * (the session's, a fallback's). `next({ ...e, model })` names another, by
+       * an alias (`haiku`) or a full id.
        */
       model: string;
       /**

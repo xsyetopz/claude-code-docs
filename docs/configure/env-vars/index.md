@@ -5,8 +5,8 @@ sidebar_position: 1
 ---
 
 An environment variable is a named setting that a program reads when it starts.
-Claude Code `2.1.308` reads well over a thousand of them.
-This section lists 1412 that you can use, split into groups so you can find them.
+Claude Code `2.1.309` reads well over a thousand of them.
+This section lists 1419 that you can use, split into groups so you can find them.
 A few are in the official docs. Most are found only in the program.
 
 ## At a Glance
@@ -142,7 +142,7 @@ Every group page has the same columns.
 
 :::warning
 Treat <Undocumented /> and <Gated /> rows with care.
-They work in `2.1.308`, but nothing promises they will work in the next release.
+They work in `2.1.309`, but nothing promises they will work in the next release.
 :::
 
 Some rows mention a probe. That means a run of the real binary against a local stub showed what the variable changed in the request. No model call leaves the machine in a probe. A run with no visible effect does not prove that a variable does nothing.
