@@ -92,7 +92,8 @@ The kinds overview is one line for each kind with its count.
 
 ### D6. Prebuilt search index
 
-`src/plugins/llms-txt/index.ts` also writes `search-index.json`: `{ version, hash, pages: [{ route, title, description, headings, extra, body }] }`, which holds the fields that `search.ts` indexes.
+`src/plugins/llms-txt/index.ts` also writes `llms-search-index.json`: `{ version, hash, pages: [{ route, title, description, headings, extra, body }] }`, which holds the fields that `search.ts` indexes.
+Not `search-index.json`: the site search plugin (`@easyops-cn/docusaurus-search-local`) writes that name at the site root. Corrected 2026-10-23 after the two collided in the build.
 The core builds BM25 from it in process.
 This file is about the size of `llms-full.txt` (4,072,705 bytes), so it gets its own cap (proposed: 8 MB), and the cache stores it like a page.
 The ETag or the `hash` decides reuse.
@@ -132,6 +133,6 @@ Task 4.4 checks this with a probe.
 - [The `error` kind is too large to document] -> D3 filters it and allows rows that cover a family. The coverage page shows the count, so the size is visible.
 - [Minified names change between versions, so anchors break on the next release] -> Extractors anchor on string literals and object shapes, never on minified names, as the cc-inspect skill already advises. The snapshot test runs on the installed versions.
 - [Breaking tool rename strands users] -> Major bump of `cc-docs`, a changelog entry that maps old names to new, and the skill updated in the same release.
-- [`search-index.json` grows past the cap] -> A build check fails above the cap, so the cap is raised on purpose, not by accident.
+- [`llms-search-index.json` grows past the cap] -> A build check fails above the cap, so the cap is raised on purpose, not by accident.
 - [Registry publish is outside the standing approval] -> Publish is its own task, run only after the owner approves it in that session.
 - [The surface mapping is large: 1,535 items listed today, before the new kinds] -> Tasks split the docs work by kind. Each kind's task ends with the coverage check passing for that kind, so the work can stop between kinds.

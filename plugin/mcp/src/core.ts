@@ -78,11 +78,11 @@ type Built = {
   idx: SearchIndex;
   source: Source;
   pages: number;
-  /** Hash of search-index.json. Set only when the index came from that file. */
+  /** Hash of llms-search-index.json. Set only when the index came from that file. */
   hash?: string;
   /** Set only when the index was built from pages. */
   load?: PagesLoad;
-  /** Why pages were read instead of search-index.json. */
+  /** Why pages were read instead of llms-search-index.json. */
   fallback?: string;
 };
 let index: Built | undefined;
@@ -131,8 +131,8 @@ const buildIndex = (): Promise<Built> => {
       load,
       fallback:
         got.status === "notfound"
-          ? "no search-index.json on the site"
-          : "search-index.json not available",
+          ? "no llms-search-index.json on the site"
+          : "llms-search-index.json not available",
     };
     return index;
   })().finally(() => {

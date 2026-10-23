@@ -7,7 +7,11 @@ import {
   type Source,
   ttl,
 } from "./fetcher.ts";
-import { type IndexPage, SEARCH_INDEX_MAX } from "./search.ts";
+import {
+  type IndexPage,
+  SEARCH_INDEX_FILE,
+  SEARCH_INDEX_MAX,
+} from "./search.ts";
 
 export const SITE = "https://xsyetopz.github.io/claude-code-docs";
 // Override for mirrors and tests: CC_DOCS_BASE_URL (https; http only for localhost and 127.0.0.1).
@@ -108,7 +112,7 @@ const parseManifest = (text: string): Entry[] => {
   }
 };
 
-/** The prebuilt search-index.json (design D6). Undefined when the text is not an index. Pages with a missing field are dropped. */
+/** The prebuilt llms-search-index.json (design D6). Undefined when the text is not an index. Pages with a missing field are dropped. */
 export const parseSearchIndex = (
   text: string,
 ): { hash: string; pages: IndexPage[] } | undefined => {
@@ -228,11 +232,11 @@ export class Content {
     return this.mem?.byRoute.get(normalizeRoute(input));
   }
 
-  /** search-index.json: every page in one file. A 404 means the site has none, and the caller reads pages instead. */
+  /** llms-search-index.json: every page in one file. A 404 means the site has none, and the caller reads pages instead. */
   searchIndex(): Promise<Resource> {
     return getResource({
-      url: `${siteBase()}/search-index.json`,
-      rel: "site/search-index.json",
+      url: `${siteBase()}/${SEARCH_INDEX_FILE}`,
+      rel: `site/${SEARCH_INDEX_FILE}`,
       deleteOn404: true,
       ttlMs: ttl(INDEX_TTL_MS),
       maxBytes: SEARCH_INDEX_MAX,

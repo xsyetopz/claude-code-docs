@@ -24,7 +24,7 @@ const stops: (() => void)[] = [];
 /** Mock site switches. Tests flip these. `hits` records every request with its If-None-Match. */
 type SiteState = {
   llms404: boolean;
-  /** search-index.json answers 404, like a site built before the index existed. */
+  /** llms-search-index.json answers 404, like a site built before the index existed. */
   noIndex: boolean;
   /** Paths that answer 404. */
   gone: Set<string>;
@@ -43,7 +43,7 @@ const newState = (): SiteState => ({
   hits: [],
 });
 
-/** search-index.json for the fixture site (what the site build writes). */
+/** llms-search-index.json for the fixture site (what the site build writes). */
 const fixtureIndex = (): string => {
   const manifest = JSON.parse(
     readFileSync(join(SITE, "manifest.json"), "utf8"),
@@ -81,7 +81,7 @@ const mockSite = (state: SiteState = newState(), port = 0) => {
         return state.llms404
           ? new Response("no", { status: 404 })
           : new Response("# T\n\n> Docs for Claude Code 2.1.305.\n");
-      if (path === "/search-index.json") {
+      if (path === "/llms-search-index.json") {
         if (state.noIndex) return new Response("no", { status: 404 });
         const tag = '"i1"';
         if (state.etag && inm === tag)
@@ -262,13 +262,15 @@ describe("prebuilt search index", () => {
     expect(s.text).toContain("configure/hooks");
     expect(s.text).toContain("search index of 3 pages");
     expect(
-      state.hits.filter((h) => h.path === "/search-index.json"),
+      state.hits.filter((h) => h.path === "/llms-search-index.json"),
     ).toHaveLength(1);
     expect(state.hits.filter((h) => h.path.endsWith(".md"))).toHaveLength(0);
     // The next search makes no request for the index.
     state.hits.length = 0;
     await call("search_docs", { query: "debounced" });
-    expect(state.hits.some((h) => h.path === "/search-index.json")).toBe(false);
+    expect(state.hits.some((h) => h.path === "/llms-search-index.json")).toBe(
+      false,
+    );
   });
 
   test("a 404 for the index falls back to pages and the Source line says so", async () => {
@@ -281,7 +283,7 @@ describe("prebuilt search index", () => {
     expect(s.error).toBe(false);
     expect(s.text).toContain("configure/hooks");
     expect(s.text).toContain("index built from 3 pages");
-    expect(s.text).toContain("no search-index.json on the site");
+    expect(s.text).toContain("no llms-search-index.json on the site");
     expect(state.hits.filter((h) => h.path.endsWith(".md")).length).toBe(3);
   });
 
@@ -301,9 +303,9 @@ describe("prebuilt search index", () => {
     state.hits.length = 0;
     const s = await (await connect(env)).call("search_docs", { query: "hook" });
     expect(s.text).toContain("revalidated, 304");
-    expect(state.hits.find((h) => h.path === "/search-index.json")?.inm).toBe(
-      '"i1"',
-    );
+    expect(
+      state.hits.find((h) => h.path === "/llms-search-index.json")?.inm,
+    ).toBe('"i1"');
   });
 
   test("search with the site down and the index cached still answers", async () => {
@@ -704,7 +706,7 @@ describe("hostile site", () => {
             "/llms-manifest.json",
             "/zzfreshpage.md",
             "/llms.txt",
-            "/search-index.json",
+            "/llms-search-index.json",
           ].includes(h),
         ),
       ).toBe(true);

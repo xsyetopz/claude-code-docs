@@ -31,7 +31,7 @@ const tmp = (): string => {
 
 type Manifest = { route: string; title: string; description: string }[];
 
-/** Mock docs site: the fixture manifest (URLs rewritten), pages, schemas, and a search-index.json. */
+/** Mock docs site: the fixture manifest (URLs rewritten), pages, schemas, and a llms-search-index.json. */
 const mockSite = () => {
   const srv = Bun.serve({
     port: 0,
@@ -49,7 +49,7 @@ const mockSite = () => {
         );
       if (path === "/llms.txt")
         return new Response("# T\n\n> Docs for Claude Code 2.1.305.\n");
-      if (path === "/search-index.json")
+      if (path === "/llms-search-index.json")
         return new Response(
           searchIndexJson(
             "test",

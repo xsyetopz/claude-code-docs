@@ -14,7 +14,7 @@ This change maps every functional surface into its docs section, gives agents on
 - Add the missing items of `2.1.309` as rows in their existing docs sections, with status badges, plus one generated coverage page under `docs/reference/`.
   This includes the surfaces of claude.ai, Cowork, Claude Design, and artifacts that the binary holds.
   `docs/reference/undocumented.md` takes its counts from the snapshot.
-- The site build emits `search-index.json`, a prebuilt search index. The docs search core loads it in place of fetching every page on the first search.
+- The site build emits `llms-search-index.json`, a prebuilt search index. The docs search core loads it in place of fetching every page on the first search.
 - Split the `cc-docs` MCP code into a shared search core and a thin MCP front end.
 - **BREAKING**: merge the 7 `cc-docs` MCP tools into fewer tools, with a `source` argument for the platform docs, and cut the descriptions. Tool names change, so `cc-docs` gets a major version bump.
   The skill `plugin/skills/claude-code-docs/SKILL.md` and `plugin/mcp/evaluation.xml` change in step.

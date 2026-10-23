@@ -623,6 +623,7 @@ var snippetOf = (body, terms) => {
   const line = best.line.length > 240 ? `${best.line.slice(0, 237)}...` : best.line;
   return best.heading ? `[${best.heading}] ${line}` : line;
 };
+var SEARCH_INDEX_FILE = "llms-search-index.json";
 var SEARCH_INDEX_MAX = 8 * 1024 * 1024;
 
 // plugin/mcp/src/content.ts
@@ -780,8 +781,8 @@ class Content {
   }
   searchIndex() {
     return getResource({
-      url: `${siteBase()}/search-index.json`,
-      rel: "site/search-index.json",
+      url: `${siteBase()}/${SEARCH_INDEX_FILE}`,
+      rel: `site/${SEARCH_INDEX_FILE}`,
       deleteOn404: true,
       ttlMs: ttl(INDEX_TTL_MS),
       maxBytes: SEARCH_INDEX_MAX,
@@ -1260,7 +1261,7 @@ var buildIndex = () => {
       source,
       pages: load.texts.size,
       load,
-      fallback: got.status === "notfound" ? "no search-index.json on the site" : "search-index.json not available"
+      fallback: got.status === "notfound" ? "no llms-search-index.json on the site" : "llms-search-index.json not available"
     };
     return index;
   })().finally(() => {

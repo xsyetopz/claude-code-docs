@@ -1,5 +1,9 @@
 import { expect, test } from "bun:test";
-import { SEARCH_INDEX_MAX, searchIndexJson } from "../src/search.ts";
+import {
+  SEARCH_INDEX_FILE,
+  SEARCH_INDEX_MAX,
+  searchIndexJson,
+} from "../src/search.ts";
 
 const page = (route: string, body: string) => ({
   route,
@@ -40,6 +44,15 @@ test("the hash changes with the pages and not with the order of the calls", () =
 test("an index above the cap fails the build", () => {
   const big = "word ".repeat(SEARCH_INDEX_MAX / 5 + 10);
   expect(() => searchIndexJson("1", [page("/big", big)])).toThrow(
-    /search-index.json is .* bytes, above the cap of 8388608/,
+    /llms-search-index.json is .* bytes, above the cap of 8388608/,
   );
+});
+
+test("the index file name differs from the site search plugin's index", async () => {
+  const src = await Bun.file(
+    `${import.meta.dir}/../../../node_modules/@easyops-cn/docusaurus-search-local/dist/server/server/utils/generate.js`,
+  ).text();
+  const theirs = src.match(/searchIndexFilename = "([^"]+)"/)?.[1];
+  expect(theirs).toBeDefined();
+  expect(SEARCH_INDEX_FILE).not.toBe(theirs?.replace("{dir}", ""));
 });

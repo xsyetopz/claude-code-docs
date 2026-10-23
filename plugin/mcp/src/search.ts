@@ -147,7 +147,10 @@ const snippetOf = (body: string, terms: string[]): string => {
   return best.heading ? `[${best.heading}] ${line}` : line;
 };
 
-/** The cap of the prebuilt search-index.json (design D6): the build fails above it, and the client reads no more. */
+/** The cap of the prebuilt llms-search-index.json (design D6): the build fails above it, and the client reads no more. */
+/** Not search-index.json: the site search plugin writes that name at the site root. */
+export const SEARCH_INDEX_FILE = "llms-search-index.json";
+
 export const SEARCH_INDEX_MAX = 8 * 1024 * 1024;
 
 export type IndexPage = {
@@ -159,7 +162,7 @@ export type IndexPage = {
   body: string;
 };
 
-/** search-index.json (design D6) from each page's route, title, description, and markdown with front matter. */
+/** llms-search-index.json (design D6) from each page's route, title, description, and markdown with front matter. */
 export const searchIndexJson = (
   version: string,
   pages: { route: string; title: string; description: string; text: string }[],
@@ -180,7 +183,7 @@ export const searchIndexJson = (
   const bytes = Buffer.byteLength(json);
   if (bytes > SEARCH_INDEX_MAX)
     throw new Error(
-      `search-index.json is ${bytes} bytes, above the cap of ${SEARCH_INDEX_MAX} (SEARCH_INDEX_MAX in plugin/mcp/src/search.ts)`,
+      `${SEARCH_INDEX_FILE} is ${bytes} bytes, above the cap of ${SEARCH_INDEX_MAX} (SEARCH_INDEX_MAX in plugin/mcp/src/search.ts)`,
     );
   return json;
 };

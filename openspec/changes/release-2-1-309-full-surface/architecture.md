@@ -24,7 +24,7 @@ The why is in `prd.md`. This file is the whole-system view. Per-capability detai
    New rows go into the existing section of each kind (for example `docs/configure/env-vars/`, `docs/extend/hooks/events.md`, `docs/reference/api/endpoints.md`).
    No new top-level section. A kind with no page today gets a new page inside its section (`docs/reference/opentelemetry.md`, `docs/configure/keybindings.md`).
 6. **Docs search core** (`plugin/mcp/src/`, split into a library shared by two front ends).
-   The site build emits a prebuilt search index (`search-index.json`) beside `llms-manifest.json` (`src/plugins/llms-txt/index.ts`).
+   The site build emits a prebuilt search index (`llms-search-index.json`) beside `llms-manifest.json` (`src/plugins/llms-txt/index.ts`).
    The core loads that one file instead of fetching about 220 pages on the first search, and keeps the disk cache and offline fallback of `cache.ts`.
 7. **cc-docs MCP server** (`plugin/`): a thin front end on the core with fewer, merged tools and short descriptions.
 8. **cc-docs CLI** (new): a second thin front end on the same core, with `ctx7`-style subcommands (search, read, list, schema).
@@ -38,7 +38,7 @@ The why is in `prd.md`. This file is the whole-system view. Per-capability detai
   Optional fields hold only what the AST shows; a computed value is `unknown`, as in `resolve_object` today.
 - **`surface.json`**: `{ version, generatedAt, kinds: { <kind>: SurfaceItem[] } }`. The committed copy drops `module` and `offset`, which change on every build.
 - **Coverage map**: item key `<kind>:<name>` to a page route and an anchor, or to an exclusion reason.
-- **`search-index.json`**: a serialized BM25 index of the site pages (fields as in `search.ts`: title, description, headings, extra, body), with the site version and a content hash.
+- **`llms-search-index.json`**: a serialized BM25 index of the site pages (fields as in `search.ts`: title, description, headings, extra, body), with the site version and a content hash.
 - **Core API** (TypeScript, used by both front ends): `search(query, { source: "docs" | "platform", limit })`, `read(route, { section })`, `list(prefix?)`, `schema(name, property?)`.
   Each result carries a `Source:` line (live or offline cache), as the MCP replies do today.
 - **CLI**: `cc-docs <search|read|list|schema> ...`, plain text by default and `--json` on request, exit code 1 on no result.
@@ -52,7 +52,7 @@ The why is in `prd.md`. This file is the whole-system view. Per-capability detai
 - claude.ai and Cowork do not install a plugin that has a `bin/` folder (`docs/extend/plugins/manifest.md:101`). So `cc-docs` gets no `bin/` and stays installable there, and the light plugin's description says it works only in Claude Code.
 - Surfaces of claude.ai, Cowork, Claude Design, and artifacts that the binary holds are in scope for the map (user, 2026-10-23).
 - Plugin names may not start with `claude-` (`tools/plugin/check.ts:51`).
-- The site stays static on GitHub Pages. `search-index.json` must stay within the 1 MB to 2 MB fetch caps of `content.ts`, or the caps change with it.
+- The site stays static on GitHub Pages. `llms-search-index.json` must stay within the 1 MB to 2 MB fetch caps of `content.ts`, or the caps change with it.
 - `.markdownlint.jsonc`, `biome.json`, and `commitlint.config.mjs` stay unchanged (`CLAUDE.md`).
 - A new way to probe the program goes into cc-inspect as an addition, with a test (owner's `CLAUDE.local.md`).
 
