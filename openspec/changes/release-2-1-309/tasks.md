@@ -20,4 +20,4 @@
 
 - [x] 3.1 Bump `src/version.ts` to `2.1.309`, run `bun run schemas`, then `bun run schemas:check` and `bun run verify:locked`. Verify: both exit 0
 - [x] 3.2 Have the diff reviewed against this plan, then commit and push (pre-approved in the owner's `CLAUDE.local.md`). Verify: review finds no unfixed issue, and the pre-push `verify:locked` passes
-- [ ] 3.3 Run the live probes with `--yes` (pre-approved), and ask the user to run the managed probes (`sudo`). Fix any doc they contradict, then commit and push. Verify: `compare.md` has no changed case left unexplained
+- [x] 3.3 Run the live probes with `--yes` (pre-approved), and ask the user to run the managed probes (`sudo`). Fix any doc they contradict, then commit and push. Verify: `compare.md` has no changed case left unexplained

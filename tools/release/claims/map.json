@@ -478,7 +478,7 @@
     "probes": [],
     "note": "scope or example text, not a claim about the program"
   },
-  "docs/reference/probes.md#interactive-probes:663ecd72": {
+  "docs/reference/probes.md#interactive-probes:9f82d851": {
     "kind": "manual",
     "probes": [],
     "note": "texts seen only against the local stub; live.usage.429* never reach the usage endpoint; again on 2.1.307 and 2.1.308, whose text fragments match 2.1.306"

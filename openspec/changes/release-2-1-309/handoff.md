@@ -1,18 +1,21 @@
 openspec change: `openspec/changes/release-2-1-309/`.
-Next open task: `2.4` in `tasks.md`.
-Done tasks, checked in `tasks.md`: `1.1`, `1.2`, `1.3`, `2.1`, `2.2`, `2.3`.
+Next open task: `3.3` in `tasks.md`.
+Done tasks, checked in `tasks.md`: `1.1`, `1.2`, `1.3`, `2.1`, `2.2`, `2.3`, `2.4`, `2.5`, `2.6`, `3.1`, `3.2`.
 Passed checks: none.
 Only a checked task or a passed check is done.
 Each checked task is done and verified, so run its check again only when the user asks.
 
-- Task (user's words):
+- Task (user's words, plus a mid-task request and a side-agent note):
   > Dig into 2.1.309 binary/changelogs via cc-inspect, then update website and its data to be for 2.1.309+
   > you're allowed to do both. make that a rule.
-- plan `openspec/changes/release-2-1-309/` (proposal and tasks, `minispec validate` passed). The first name failed with `The change name 'release-2.1.309' is not kebab-case. Use lowercase letters and digits, with single hyphens between words.` The no-ask rule (live tests, commit, push; no force push, no `--no-verify`) moved to the git-ignored `CLAUDE.local.md` after the user chose `Only me (Recommended)`. Shared `CLAUDE.md` and `tools/release/README.md` were restored.
-- 1.1: `release:all` exited 0 on every step (`35 case(s), 0 invalid probe(s)`; `159 cases in both (5 changed, 0 invalid)`). 1.2: the baseline and insights changes are date noise (a 2.1.308 rerun gave the same hashes; 2.1.308 results restored). Real change: `print.dsc.sizes` 45388 → 45671, because the Bash description went 1,406 → 1,688 characters (new GitHub `@name` bullet). 1.3: findings are in `captures/2.1.309/notes.md`.
-- 2.1: rendered with `CAPTURE_OUT=captures/2.1.309/prompts bun tools/capture-prompts/render.ts`. UUID churn in 4 prompt pages was there before this task. 2.2: pages edited: 7 env rows, env index `1419`, ultrareview row, Bedrock streaming row, Mod API `cursor` and alias, `liveReply`, memory, skills, modes, sandbox, context-budget. In `undocumented.md` the env counts were set to `Count: 880.` and the total to `1530` (other summary drift is there from before and not fixed). Lint `0 issues`, `check-docs: ok (251 files scanned)`. Group 1 `verify:locked` gave `exit 0`.
-- 2.3: 7 entries added to `tools/release/claims/map.json`, and `claims check ok` (`mapped 94, static 57`).
-- Earlier errors: `head: invalid option -- d`, `(eval):1: no matches found: plugins*`, `(eval):1: no matches found: --include=*.ts`, `(eval):1: === not found`, and `rg: error parsing glob ... nested alternate groups are not allowed`.
-- RAN, result after this handoff: Bash `ls -la captures/2.1.308/strings.txt captures/2.1.309/strings.txt` plus `/tmp/rel309/pagecheck.py`, which checks pages against the strings of both versions.
-- Next, 2.4: change the current-behavior `2.1.308` labels to `2.1.309` after a check of each, using the `f96908f` pattern. The "verbatim text that Claude Code 2.1.308 uses" headers are on prompt pages like `docs/prompts/skill-verify.md`, and no tool writes them. Keep change notes and dated probe records. Then do 2.5 (`what-changed.md`, `CHANGELOG.md`, plugin, `README.md`), then 3.1 (bump `src/version.ts`, `bun run schemas`, `verify:locked`), 3.2 (review, commit, push), and 3.3 (live probes with `--yes`; managed probes need the user for `sudo`).
-- Report to the user separately: the UUID churn in prompt pages and the drift in the `undocumented.md` summary counts. Remove `/tmp/rel309` at the end.
+  > you could use docs to archive older release version changelogs in website, and only keep latest.
+  > Consider skimming the `tools/schemas/manual/` diff before it's committed.
+- 1.1–3.1 and 2.6 (archive page `docs/start/release-archive.md`, plus a runbook step) in `openspec/changes/release-2-1-309/tasks.md`. Checks: `claims check ok`, `schemas exit 0`, `verify:locked exit 0`, and `39 tests` with `0 fail` in `inspect/mcp`.
+- fixes: a `bun patch` of `meriyah@7.4.0` (pinned), because `error: [3420:7364-3420:7366]: Unexpected token: 'as'`. Also 49 anchors in `tools/schemas/manual/` moved to the `«»` wildcard, with the same hit count in 2.1.308 and 2.1.309. Before that fix: `213` hits of `anchor not in the program`.
+- 3.2: the reviewer found no blocker, and its fixes are applied. Commits are `fa7e34c`, `0db3c5d`, and `3029fb1`, and push gave `c3f335b..3029fb1  main -> main`.
+- live probes: `6 case(s), 0 invalid probe(s)`. `live.context-budget` System tools went `8374 -> 8480`, and the others are `same`. 2.1.309 was added to `probes.md` (lines 172, 176, 181, 235), `override.md:21`, and `context-budget.md:53`. Claim id `interactive-probes:663ecd72` was renamed to `9f82d851`. Lint and `claims check ok` pass. These edits are NOT committed yet.
+- Earlier errors: `body's lines must not be longer than 100 characters [body-max-line-length]`, `FileNotFoundError: [Errno 2] No such file or directory: 'rg'`, and `error: Unexpected escaped backtick '`'`.
+- Managed probes run in the background (task `b2av4tr72`, log `/tmp/rel309/managed.log`). The baseline phase gave 17 `ok`, and the tool is waiting for `sudo /bin/bash '/private/var/folders/cl/89dcg0fs7_n4j1vbwn_cf4bm0000gn/T/ccrel-managed-Zy5QVU/install.sh'`.
+- RAN, result after this handoff: Read of `install.sh`.
+- Next: wait for the user to run that sudo command. Then check `managed exit` and compare against 2.1.308, update `probes.md:203`, mark 3.3, commit (bodies ≤100 characters) and push, then remove `/tmp/rel309`.
+- Open for the user: whether to open an upstream `meriyah` issue. Report separately: UUID churn in 4 prompt pages and the old drift in `undocumented.md` counts.
