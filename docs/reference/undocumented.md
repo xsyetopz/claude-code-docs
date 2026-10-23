@@ -671,26 +671,26 @@ These items exist in the official docs, but the program works in another way. Co
 
 The program of `2.1.309` holds 8893 items in 17 kinds, counted from `schemas/surface.json`.
 
-| Kind | Items | Not on a Page Yet |
-| --- | --- | --- |
-| Betas | 50 | 1 |
-| API Endpoints | 431 | 406 |
-| Environment Variables | 1846 | 524 |
-| Error Texts | 4022 | 4019 |
-| Files | 78 | 76 |
-| CLI Flags | 303 | 254 |
-| Gates | 1101 | 1094 |
-| Hook Events | 33 | 0 |
-| Keybindings | 204 | 204 |
-| Mod API | 229 | 0 |
-| Models | 66 | 15 |
-| OpenTelemetry Events | 28 | 28 |
-| Permission Rules | 6 | 0 |
-| Settings | 194 | 2 |
-| Slash Commands | 142 | 42 |
-| Subcommands | 71 | 63 |
-| Tools | 89 | 13 |
-| Total | 8893 | 6741 |
+| Kind | Items |
+| --- | --- |
+| Betas | 50 |
+| API Endpoints | 431 |
+| Environment Variables | 1846 |
+| Error Texts | 4022 |
+| Files | 78 |
+| CLI Flags | 303 |
+| Gates | 1101 |
+| Hook Events | 33 |
+| Keybindings | 204 |
+| Mod API | 229 |
+| Models | 66 |
+| OpenTelemetry Events | 28 |
+| Permission Rules | 6 |
+| Settings | 194 |
+| Slash Commands | 142 |
+| Subcommands | 71 |
+| Tools | 89 |
+| All kinds | 8893 |
 
 ## Related Pages
 

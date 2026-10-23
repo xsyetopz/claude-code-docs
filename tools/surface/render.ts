@@ -143,6 +143,8 @@ export const render = (
     ...sections,
     "",
   ].join("\n");
+  // the gap column waits for the coverage page to go live
+  const gap = (cell: string | number) => (DRAFT ? "" : ` ${cell} |`);
   const block = [
     SECTION,
     "",
@@ -153,13 +155,13 @@ export const render = (
           "[Surface Coverage](surface-coverage.md) lists each item with its page.",
         ]),
     "",
-    "| Kind | Items | Not on a Page Yet |",
-    "| --- | --- | --- |",
+    `| Kind | Items |${gap("Not on a Page Yet")}`,
+    `| --- | --- |${gap("---")}`,
     ...rows.map(
       (r) =>
-        `| ${DRAFT ? title(r.kind) : `[${title(r.kind)}](surface-coverage.md#${slug(r.kind)})`} | ${r.items} | ${r.unmapped} |`,
+        `| ${DRAFT ? title(r.kind) : `[${title(r.kind)}](surface-coverage.md#${slug(r.kind)})`} | ${r.items} |${gap(r.unmapped)}`,
     ),
-    `| Total | ${items} | ${total((r) => r.unmapped)} |`,
+    `| All kinds | ${items} |${gap(total((r) => r.unmapped))}`,
     "",
     "",
   ].join("\n");
