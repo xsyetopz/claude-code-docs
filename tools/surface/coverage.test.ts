@@ -153,7 +153,12 @@ test("docs names are the exact backticked names in table rows of the pages", () 
     },
   );
   expect(docsNames(root, ["docs/a", "docs/missing.md"])).toEqual(
-    new Set(["A", "b|c", "--f <v>", "DEEP"]),
+    new Map([
+      ["A", join(root, "docs/a/one.md")],
+      ["b|c", join(root, "docs/a/one.md")],
+      ["--f <v>", join(root, "docs/a/one.md")],
+      ["DEEP", join(root, "docs/a/sub/two.mdx")],
+    ]),
   );
 });
 

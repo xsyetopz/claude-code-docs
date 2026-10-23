@@ -55,25 +55,63 @@ const markdown = (path: string): string[] => {
     .flatMap((f) => markdown(join(path, f)));
 };
 
-/** The exact backticked names in the table rows of the pages. A missing page names nothing. */
-export const docsNames = (root: string, pages: string[]): Set<string> => {
-  const names = new Set<string>();
+/** The page that render.ts writes from the snapshot: it names every item, so it covers none. */
+export const GENERATED = "docs/reference/surface-coverage.md";
+
+/** The exact backticked names in the table rows of the pages, each with its first file. A missing page names nothing. */
+export const docsNames = (
+  root: string,
+  pages: string[],
+): Map<string, string> => {
+  const names = new Map<string, string>();
   for (const page of pages)
     for (const file of markdown(join(root, page)))
-      for (const line of readFileSync(file, "utf8").split("\n")) {
-        if (!line.trimStart().startsWith("|")) continue;
-        for (const m of line.matchAll(/`([^`\n]+)`/g))
-          names.add((m[1] as string).replaceAll("\\|", "|"));
-      }
+      if (file !== join(root, GENERATED))
+        for (const line of readFileSync(file, "utf8").split("\n")) {
+          if (!line.trimStart().startsWith("|")) continue;
+          for (const m of line.matchAll(/`([^`\n]+)`/g)) {
+            const name = (m[1] as string).replaceAll("\\|", "|");
+            if (!names.has(name)) names.set(name, file);
+          }
+        }
   return names;
 };
 
 const kindOf = (key: string) => key.slice(0, Math.max(key.indexOf(":"), 0));
 
+export type Names = Record<string, { has: (name: string) => boolean }>;
+export type Status = "docs" | "mapped" | "excluded" | "unmapped";
+
+/** How one item is covered, in the order of design D4. An exclusion key ending in `*` is a prefix. */
+export const status = (
+  kind: string,
+  name: string,
+  docs: Names,
+  map: Record<string, MapEntry>,
+  exclusions: Record<string, string>,
+): Status => {
+  const key = `${kind}:${name}`;
+  if (docs[kind]?.has(name)) return "docs";
+  if (key in map) return "mapped";
+  if (exclusionOf(key, exclusions)) return "excluded";
+  return "unmapped";
+};
+
+/** The exclusion key that covers an item key: the key itself or a matching prefix. */
+export const exclusionOf = (
+  key: string,
+  exclusions: Record<string, string>,
+): string | undefined =>
+  key in exclusions
+    ? key
+    : Object.keys(exclusions).find(
+        (p) => p.endsWith("*") && key.startsWith(p.slice(0, -1)),
+      );
+
 /** Check the snapshot against the docs names, the map, and the exclusions. `only` limits the kinds. */
 export const check = (
   snapshot: Committed,
-  docs: Record<string, Set<string>>,
+  docs: Names,
   map: Record<string, MapEntry>,
   exclusions: Record<string, string>,
   only?: string[],
@@ -82,7 +120,6 @@ export const check = (
   const keys = new Set<string>();
   const rows: Row[] = [];
   const unmapped: string[] = [];
-  const prefixes = Object.keys(exclusions).filter((k) => k.endsWith("*"));
   for (const kind of kinds) {
     const row: Row = {
       kind,
@@ -96,14 +133,9 @@ export const check = (
       const key = `${kind}:${name}`;
       keys.add(key);
       row.items++;
-      const prefix = prefixes.find((p) => key.startsWith(p.slice(0, -1)));
-      if (docs[kind]?.has(name)) row.docs++;
-      else if (key in map) row.mapped++;
-      else if (key in exclusions || prefix) row.excluded++;
-      else {
-        row.unmapped++;
-        unmapped.push(key);
-      }
+      const s = status(kind, name, docs, map, exclusions);
+      row[s]++;
+      if (s === "unmapped") unmapped.push(key);
     }
     rows.push(row);
   }
@@ -201,7 +233,7 @@ if (import.meta.main) {
   const dir = join(root, "tools", "surface");
   const map = read<Record<string, MapEntry>>(join(dir, "map.json"));
   const exclusions = read<Record<string, string>>(join(dir, "exclusions.json"));
-  const docs: Record<string, Set<string>> = {};
+  const docs: Names = {};
   for (const kind of only ?? Object.keys(snapshot.kinds))
     docs[kind] = docsNames(root, PAGES[kind] ?? []);
   const { rows, unmapped, stale } = check(

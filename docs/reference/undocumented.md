@@ -667,6 +667,32 @@ These items exist in the official docs, but the program works in another way. Co
 | hook `type: "script"` | [Probes](probes.md#effects-and-differences) (Effects and Differences) |
 | `max_results` | [Tools](tools/index.md#toolsearch) (ToolSearch) |
 
+## In the Program
+
+The program of `2.1.309` holds 8893 items in 17 kinds, counted from `schemas/surface.json`.
+[Surface Coverage](surface-coverage.md) lists each item with its page.
+
+| Kind | Items | Not on a Page Yet |
+| --- | --- | --- |
+| [Betas](surface-coverage.md#betas) | 50 | 1 |
+| [API Endpoints](surface-coverage.md#api-endpoints) | 431 | 406 |
+| [Environment Variables](surface-coverage.md#environment-variables) | 1846 | 524 |
+| [Error Texts](surface-coverage.md#error-texts) | 4022 | 4019 |
+| [Files](surface-coverage.md#files) | 78 | 76 |
+| [CLI Flags](surface-coverage.md#cli-flags) | 303 | 254 |
+| [Gates](surface-coverage.md#gates) | 1101 | 1094 |
+| [Hook Events](surface-coverage.md#hook-events) | 33 | 0 |
+| [Keybindings](surface-coverage.md#keybindings) | 204 | 204 |
+| [Mod API](surface-coverage.md#mod-api) | 229 | 0 |
+| [Models](surface-coverage.md#models) | 66 | 15 |
+| [OpenTelemetry Events](surface-coverage.md#opentelemetry-events) | 28 | 28 |
+| [Permission Rules](surface-coverage.md#permission-rules) | 6 | 0 |
+| [Settings](surface-coverage.md#settings) | 194 | 2 |
+| [Slash Commands](surface-coverage.md#slash-commands) | 142 | 42 |
+| [Subcommands](surface-coverage.md#subcommands) | 71 | 63 |
+| [Tools](surface-coverage.md#tools) | 89 | 13 |
+| Total | 8893 | 6741 |
+
 ## Related Pages
 
 - [How to Read This Site](../start/how-to-read.md)
