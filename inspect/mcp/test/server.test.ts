@@ -47,6 +47,13 @@ globalThis.api = { getAllBaseTools: allTools };
 globalThis.envs = [process.env.CLAUDE_CODE_USE_BEDROCK, process.env.ANTHROPIC_BEDROCK_BASE_URL, process.env.FIXTURE_OTHER];
 `;
 
+/** 400 env reads with 150-character names: one page of them is over the reply cap. */
+const LONG_ENV = Array.from(
+  { length: 400 },
+  (_, i) =>
+    `process.env.FIXTURE_LONG_${String(i).padStart(3, "0")}_${"X".repeat(130)}`,
+).join(",");
+
 const LINES = [
   { type: "custom-title", customTitle: "Fixture", sessionId: SESSION },
   { type: "last-prompt", explicit: "yes", sessionId: SESSION },
@@ -61,7 +68,10 @@ beforeAll(async () => {
     `${LINES.map((l) => JSON.stringify(l)).join("\n")}\nnot json\n`,
   );
   mkdirSync(versions);
-  writeFileSync(join(tmp, "app.mjs"), APP);
+  writeFileSync(
+    join(tmp, "app.mjs"),
+    `${APP}\nglobalThis.longs = [${LONG_ENV}];\n`,
+  );
   const b = Bun.spawnSync([
     "bun",
     "build",
@@ -254,6 +264,28 @@ describe("surface", () => {
     const r = await call("list_surface", { kind: "env", limit: 1 });
     expect(r.content[0]?.text).toMatch(/^env: items 1-1 of \d+, next_offset 1/);
     expect(lines(r)).toHaveLength(1);
+  });
+
+  test("list_surface cuts a long reply at a line and gives the offset to continue", async () => {
+    const r = await call("list_surface", {
+      kind: "env",
+      name: "FIXTURE_LONG",
+      limit: 400,
+    });
+    const t = r.content[0]?.text ?? "";
+    expect(t.length).toBeLessThanOrEqual(40000);
+    const next = t.match(/next_offset (\d+)/);
+    expect(next).not.toBeNull();
+    const shown = lines(r).filter((l) => l.startsWith("- "));
+    expect(Number(next?.[1])).toBe(shown.length);
+    expect(shown.every((l) => /\S+\.js:\d+$/.test(l))).toBe(true);
+    const rest = await call("list_surface", {
+      kind: "env",
+      name: "FIXTURE_LONG",
+      limit: 400,
+      offset: Number(next?.[1]),
+    });
+    expect(rest.content[0]?.text).toContain(`items ${Number(next?.[1]) + 1}-`);
   });
 
   test("list_surface without kind gives each kind with its count", async () => {

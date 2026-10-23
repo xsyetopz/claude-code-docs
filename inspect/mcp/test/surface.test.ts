@@ -57,6 +57,19 @@ describe("common helpers", () => {
     expect(out[1]?.detail).toBe("d");
   });
 
+  test("a repeated name keeps its first module and its last offset in it", () => {
+    const a = "var x=process.env.AAA_ONE;var y=process.env.AAA_ONE;";
+    const b = new Bundle([
+      { name: "/$bunfs/root/a.js", text: a },
+      { name: "/$bunfs/root/b.js", text: a },
+    ]);
+    const hit = surface(b, "env").find((i) => i.name === "AAA_ONE");
+    expect([hit?.module, hit?.offset]).toEqual([
+      "a.js",
+      a.lastIndexOf("process"),
+    ]);
+  });
+
   test("short blanks placeholders and cuts long text", () => {
     expect(short("a $" + "{x}  b")).toBe("a $" + "{…} b");
     expect(short("x".repeat(10), 4)).toBe("xxxx…");

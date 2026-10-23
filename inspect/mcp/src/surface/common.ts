@@ -118,7 +118,11 @@ export const literal = (m: Module, n: Node | null | undefined): string => {
   return "unknown";
 };
 
-/** Keep the first item of each name (lowest module and offset); sort by name. */
+/**
+ * Keep the first item of each name, and fill its missing fields from later ones; sort by name.
+ * `scan` visits modules in bundle order but the nodes of one module last-first, so a repeated name
+ * keeps its first module and the last place in that module.
+ */
 export const unique = (items: SurfaceItem[]): SurfaceItem[] => {
   const by = new Map<string, SurfaceItem>();
   for (const i of items) {

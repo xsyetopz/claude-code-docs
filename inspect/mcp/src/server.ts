@@ -525,8 +525,11 @@ Returns: one line per tool with its gates, then the functions; structuredContent
 // ---- surface ----
 
 const SURFACE_LIMIT = 200;
+const SURFACE_NAME_CHARS = 120;
+/** Room kept in the reply for the header line (it names the filter and the next offset). */
+const SURFACE_HEADER_CHARS = 300;
 const surfaceLine = (i: SurfaceItem) =>
-  `- ${i.name}${i.default !== undefined ? `  default ${i.default}` : ""}${i.values ? `  values ${i.values.join("|")}` : ""}${i.gate ? `  gate ${clip(i.gate, 120)}` : ""}${i.detail ? `  (${clip(i.detail, 120)})` : ""}  ${i.module ?? "-"}:${i.offset ?? "-"}`;
+  `- ${clip(i.name, SURFACE_NAME_CHARS)}${i.default !== undefined ? `  default ${i.default}` : ""}${i.values ? `  values ${i.values.join("|")}` : ""}${i.gate ? `  gate ${clip(i.gate, 120)}` : ""}${i.detail ? `  (${clip(i.detail, 120)})` : ""}  ${i.module ?? "-"}:${i.offset ?? "-"}`;
 
 server.registerTool(
   "list_surface",
@@ -536,9 +539,9 @@ server.registerTool(
 Args:
   - kind (string, optional): without it, lists each kind with its item count.
   - name (string, optional): keep items whose name contains this (any case).
-  - offset (number, default 0), limit (number 1-400, default ${SURFACE_LIMIT}).
+  - offset (number, default 0), limit (number 1-400, default ${SURFACE_LIMIT}). A name over ${SURFACE_NAME_CHARS} characters is clipped. The reply stops at ${MAX_CHARS} characters, at a line end.
   - binary (string, optional): version or path.
-Returns: one line per item: the name, then the default, values, gate, and detail when the code shows them ("unknown" when the code computes it), then module:offset ("-" when the source gives no place), with "next_offset" when more remain.`,
+Returns: one line per item: the name, then the default, values, gate, and detail when the code shows them ("unknown" when the code computes it), then module:offset ("-" when the source gives no place), with "next_offset" when more remain, also when the character cap cut the page.`,
     inputSchema: {
       kind: z.string().optional(),
       name: z.string().optional(),
@@ -567,10 +570,21 @@ Returns: one line per item: the name, then the default, values, gate, and detail
       const all = surface(bundle, kind, modules).filter(
         (i) => !q || i.name.toLowerCase().includes(q),
       );
-      const page = all.slice(offset, offset + limit);
-      const more = offset + page.length < all.length;
+      const budget = MAX_CHARS - SURFACE_HEADER_CHARS;
+      let used = 0;
+      const lines: string[] = [];
+      for (const i of all.slice(offset, offset + limit)) {
+        const l = surfaceLine(i);
+        if (used + l.length + 1 > budget) {
+          if (!lines.length) lines.push(l.slice(0, budget));
+          break;
+        }
+        lines.push(l);
+        used += l.length + 1;
+      }
+      const more = offset + lines.length < all.length;
       return text(
-        `${kind}: items ${offset + 1}-${offset + page.length} of ${all.length}${name ? ` matching "${name}"` : ""}${more ? `, next_offset ${offset + page.length}` : ""}\n${page.map(surfaceLine).join("\n")}`,
+        `${kind}: items ${offset + 1}-${offset + lines.length} of ${all.length}${name ? ` matching "${clip(name, 100)}"` : ""}${more ? `, next_offset ${offset + lines.length}` : ""}\n${lines.join("\n")}`,
       );
     }),
 );
