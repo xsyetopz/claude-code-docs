@@ -22,7 +22,7 @@
     "lint:code": "biome check --formatter-enabled=false --error-on-warnings .",
     "commitlint": "commitlint",
     "prepare": "sh tools/install-hooks.sh",
-    "verify": "bun run typecheck && bun run format:check && bun run lint:code && bun run lint && bun run check:docs && bun run check:examples && bun run schemas:check && bun run build && bun run llms:check && bun run plugin:check",
+    "verify": "bun run typecheck && bun run format:check && bun run lint:code && bun run lint && bun run check:docs && bun run check:examples && bun run schemas:check && bun run surface:check && bun run build && bun run llms:check && bun run plugin:check",
     "verify:locked": "sh tools/build-locked.sh",
     "typecheck": "bun --check",
     "format:check": "biome format .",
