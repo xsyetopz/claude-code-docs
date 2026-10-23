@@ -140,6 +140,9 @@ Each line is a separate command. The text after the name is the argument.
 | `/stickers` | <Documented /> | Orders stickers. | Text command. |
 | `/radio` | <Documented /> | Plays a lo-fi radio station. | Text command. |
 | `/team-onboarding` | <Gated note="Policy allow_team_onboarding, and needs a workspace." /> | Builds a guide that helps teammates learn Claude Code from your usage. | A prompt command. |
+| `/claim-credit` | <Undocumented /> <Gated note="Hidden. An isEnabled check decides." /> | Opens the page of the offer shown at start-up. | Hidden text command. |
+| `/low-priority` | <Undocumented /> <Gated note="Hidden. An isEnabled check decides." /> | Continues now at lower priority after you reach your session limit. Run it again to stop. | Hidden text command. |
+| `/workflow-launch-exec` | <Undocumented /> <Gated note="Hidden." /> | Runs a workflow handoff that the server launched. | Hidden text command. Only for sessions that a `workflow_launch` event starts. |
 | `/heapdump` | <Gated note="Policy allow_heap_dump." /> | Writes the JavaScript heap to your Desktop (home folder on Linux without a Desktop). | Hidden text command. |
 | `/mcp__<server>__<prompt>` `prompt arguments` | <Documented /> | MCP prompts become commands. Missing required arguments give "Missing required argument". | Made on the fly with `source:"mcp"`. The alias form is `<server>:<prompt> (MCP)`. |
 

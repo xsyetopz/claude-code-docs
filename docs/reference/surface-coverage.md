@@ -18,7 +18,7 @@ Each row below names the page that covers an item, or the reason the item is lef
 | [Environment Variables](#environment-variables) | 1846 | 1322 | 0 | 0 | 524 |
 | [Error Texts](#error-texts) | 4022 | 3 | 0 | 0 | 4019 |
 | [Files](#files) | 78 | 2 | 0 | 0 | 76 |
-| [CLI Flags](#cli-flags) | 303 | 49 | 0 | 0 | 254 |
+| [CLI Flags](#cli-flags) | 303 | 130 | 172 | 1 | 0 |
 | [Gates](#gates) | 1101 | 7 | 0 | 0 | 1094 |
 | [Hook Events](#hook-events) | 33 | 33 | 0 | 0 | 0 |
 | [Keybindings](#keybindings) | 204 | 0 | 0 | 0 | 204 |
@@ -27,10 +27,10 @@ Each row below names the page that covers an item, or the reason the item is lef
 | [OpenTelemetry Events](#opentelemetry-events) | 28 | 28 | 0 | 0 | 0 |
 | [Permission Rules](#permission-rules) | 6 | 6 | 0 | 0 | 0 |
 | [Settings](#settings) | 194 | 192 | 0 | 2 | 0 |
-| [Slash Commands](#slash-commands) | 142 | 100 | 0 | 0 | 42 |
-| [Subcommands](#subcommands) | 71 | 8 | 0 | 0 | 63 |
+| [Slash Commands](#slash-commands) | 142 | 103 | 32 | 7 | 0 |
+| [Subcommands](#subcommands) | 71 | 9 | 62 | 0 | 0 |
 | [Tools](#tools) | 89 | 83 | 0 | 6 | 0 |
-| Total | 8893 | 2187 | 0 | 8 | 6698 |
+| Total | 8893 | 2272 | 266 | 16 | 6339 |
 
 ## Betas
 
@@ -6500,309 +6500,309 @@ Items: 303.
 
 | Item | Where |
 | --- | --- |
-| `--add-dir` | Not on a page yet |
-| `--advisor` | Not on a page yet |
-| `--agent` | Not on a page yet |
-| `--agent-color` | Not on a page yet |
-| `--agent-id` | Not on a page yet |
-| `--agent-name` | Not on a page yet |
-| `--agent-type` | Not on a page yet |
-| `--agents` | Not on a page yet |
+| `--add-dir` | [All Flags](../configure/cli/flags.md) |
+| `--advisor` | [All Flags](../configure/cli/flags.md) |
+| `--agent` | [All Flags](../configure/cli/flags.md) |
+| `--agent-color` | [All Flags](../configure/cli/flags.md) |
+| `--agent-id` | [All Flags](../configure/cli/flags.md) |
+| `--agent-name` | [All Flags](../configure/cli/flags.md) |
+| `--agent-type` | [All Flags](../configure/cli/flags.md) |
+| `--agents` | [All Flags](../configure/cli/flags.md) |
 | `--all` | [Subcommands](../configure/cli/subcommands.md) |
 | `--allow-dangerously-skip-permissions` | [All Flags](../configure/cli/flags.md) |
 | `--allow-other-models` | [All Flags](../configure/cli/flags.md) |
-| `--allowedTools` | Not on a page yet |
-| `--append-subagent-system-prompt` | Not on a page yet |
-| `--append-subagent-system-prompt-file` | Not on a page yet |
-| `--append-system-prompt` | Not on a page yet |
-| `--append-system-prompt-file` | Not on a page yet |
-| `--attach-serve` | Not on a page yet |
-| `--autocompact` | Not on a page yet |
+| `--allowedTools` | [All Flags](../configure/cli/flags.md) |
+| `--append-subagent-system-prompt` | [All Flags](../configure/cli/flags.md) |
+| `--append-subagent-system-prompt-file` | [All Flags](../configure/cli/flags.md) |
+| `--append-system-prompt` | [All Flags](../configure/cli/flags.md) |
+| `--append-system-prompt-file` | [All Flags](../configure/cli/flags.md) |
+| `--attach-serve` | [All Flags](../configure/cli/flags.md) |
+| `--autocompact` | [All Flags](../configure/cli/flags.md) |
 | `--await-claim` | [All Flags](../configure/cli/flags.md) |
 | `--await-initialize` | [All Flags](../configure/cli/flags.md) |
 | `--ax-screen-reader` | [All Flags](../configure/cli/flags.md) |
 | `--bare` | [All Flags](../configure/cli/flags.md) |
-| `--betas` | Not on a page yet |
-| `--bg` | Not on a page yet |
+| `--betas` | [All Flags](../configure/cli/flags.md) |
+| `--bg` | [All Flags](../configure/cli/flags.md) |
 | `--brief` | [All Flags](../configure/cli/flags.md) |
-| `--channels` | Not on a page yet |
+| `--channels` | [All Flags](../configure/cli/flags.md) |
 | `--chrome` | [All Flags](../configure/cli/flags.md) |
 | `--client-data-url` | [All Flags](../configure/cli/flags.md) |
 | `--cloud` | [All Flags](../configure/cli/flags.md) |
 | `--continue` | [All Flags](../configure/cli/flags.md) |
-| `--correlation-id` | Not on a page yet |
-| `--dangerously-load-development-channels` | Not on a page yet |
+| `--correlation-id` | [All Flags](../configure/cli/flags.md) |
+| `--dangerously-load-development-channels` | [All Flags](../configure/cli/flags.md) |
 | `--dangerously-skip-permissions` | [All Flags](../configure/cli/flags.md) |
-| `--debug` | Not on a page yet |
-| `--debug-file` | Not on a page yet |
-| `--debug-to-stderr` | Not on a page yet |
-| `--deep-link-cwd-b64` | Not on a page yet |
-| `--deep-link-last-fetch` | Not on a page yet |
+| `--debug` | [All Flags](../configure/cli/flags.md) |
+| `--debug-file` | [All Flags](../configure/cli/flags.md) |
+| `--debug-to-stderr` | [All Flags](../configure/cli/flags.md) |
+| `--deep-link-cwd-b64` | [All Flags](../configure/cli/flags.md) |
+| `--deep-link-last-fetch` | [All Flags](../configure/cli/flags.md) |
 | `--deep-link-origin` | [All Flags](../configure/cli/flags.md) |
-| `--deep-link-repo` | Not on a page yet |
+| `--deep-link-repo` | [All Flags](../configure/cli/flags.md) |
 | `--desktop` | [All Flags](../configure/cli/flags.md) |
 | `--disable-slash-commands` | [All Flags](../configure/cli/flags.md) |
-| `--disallowedTools` | Not on a page yet |
-| `--effort` | Not on a page yet |
+| `--disallowedTools` | [All Flags](../configure/cli/flags.md) |
+| `--effort` | [All Flags](../configure/cli/flags.md) |
 | `--enable-auth-status` | [All Flags](../configure/cli/flags.md) |
-| `--enable-auto-mode` | Not on a page yet |
+| `--enable-auto-mode` | [All Flags](../configure/cli/flags.md) |
 | `--environment` | [All Flags](../configure/cli/flags.md) |
 | `--exclude-dynamic-system-prompt-sections` | [All Flags](../configure/cli/flags.md) |
-| `--fallback-model` | Not on a page yet |
-| `--fast-mode` | Not on a page yet |
-| `--file` | Not on a page yet |
+| `--fallback-model` | [All Flags](../configure/cli/flags.md) |
+| `--fast-mode` | [All Flags](../configure/cli/flags.md) |
+| `--file` | [All Flags](../configure/cli/flags.md) |
 | `--fork-session` | [All Flags](../configure/cli/flags.md) |
-| `--forward-home-settings` | Not on a page yet |
+| `--forward-home-settings` | [All Flags](../configure/cli/flags.md) |
 | `--forward-subagent-text` | [All Flags](../configure/cli/flags.md) |
-| `--from-pr` | Not on a page yet |
+| `--from-pr` | [All Flags](../configure/cli/flags.md) |
 | `--host-auth-is-org-sign-in` | [All Flags](../configure/cli/flags.md) |
 | `--ide` | [All Flags](../configure/cli/flags.md) |
 | `--include-hook-events` | [All Flags](../configure/cli/flags.md) |
 | `--include-partial-messages` | [All Flags](../configure/cli/flags.md) |
 | `--include-unsupported-models` | [All Flags](../configure/cli/flags.md) |
-| `--inherit-permission-mode` | Not on a page yet |
+| `--inherit-permission-mode` | [All Flags](../configure/cli/flags.md) |
 | `--init` | [All Flags](../configure/cli/flags.md) |
 | `--init-only` | [All Flags](../configure/cli/flags.md) |
-| `--input-format` | Not on a page yet |
-| `--json-schema` | Not on a page yet |
+| `--input-format` | [All Flags](../configure/cli/flags.md) |
+| `--json-schema` | [All Flags](../configure/cli/flags.md) |
 | `--maintenance` | [All Flags](../configure/cli/flags.md) |
-| `--managed-settings` | Not on a page yet |
-| `--max-budget-usd` | Not on a page yet |
-| `--max-thinking-tokens` | Not on a page yet |
-| `--max-turns` | Not on a page yet |
+| `--managed-settings` | [All Flags](../configure/cli/flags.md) |
+| `--max-budget-usd` | [All Flags](../configure/cli/flags.md) |
+| `--max-thinking-tokens` | [All Flags](../configure/cli/flags.md) |
+| `--max-turns` | [All Flags](../configure/cli/flags.md) |
 | `--mcp-config` | [All Flags](../configure/cli/flags.md) |
-| `--messaging-socket-path` | Not on a page yet |
-| `--model` | Not on a page yet |
-| `--name` | Not on a page yet |
+| `--messaging-socket-path` | [All Flags](../configure/cli/flags.md) |
+| `--model` | [All Flags](../configure/cli/flags.md) |
+| `--name` | [All Flags](../configure/cli/flags.md) |
 | `--no-chrome` | [All Flags](../configure/cli/flags.md) |
 | `--no-session-persistence` | [All Flags](../configure/cli/flags.md) |
-| `--on-branch` | Not on a page yet |
-| `--output-format` | Not on a page yet |
-| `--parent-session-id` | Not on a page yet |
-| `--permission-mode` | Not on a page yet |
+| `--on-branch` | [All Flags](../configure/cli/flags.md) |
+| `--output-format` | [All Flags](../configure/cli/flags.md) |
+| `--parent-session-id` | [All Flags](../configure/cli/flags.md) |
+| `--permission-mode` | [All Flags](../configure/cli/flags.md) |
 | `--permission-prompt-tool` | [All Flags](../configure/cli/flags.md) |
-| `--permission-prompts` | Not on a page yet |
-| `--plan-mode-instructions` | Not on a page yet |
+| `--permission-prompts` | [All Flags](../configure/cli/flags.md) |
+| `--plan-mode-instructions` | [All Flags](../configure/cli/flags.md) |
 | `--plan-mode-required` | [All Flags](../configure/cli/flags.md) |
 | `--plugin-dir` | [All Flags](../configure/cli/flags.md) |
-| `--plugin-dir-no-mcp` | Not on a page yet |
-| `--plugin-url` | Not on a page yet |
-| `--pool` | Not on a page yet |
-| `--prefill` | Not on a page yet |
-| `--prefill-b64` | Not on a page yet |
+| `--plugin-dir-no-mcp` | [All Flags](../configure/cli/flags.md) |
+| `--plugin-url` | [All Flags](../configure/cli/flags.md) |
+| `--pool` | [All Flags](../configure/cli/flags.md) |
+| `--prefill` | [All Flags](../configure/cli/flags.md) |
+| `--prefill-b64` | [All Flags](../configure/cli/flags.md) |
 | `--print` | [All Flags](../configure/cli/flags.md) |
-| `--proactivity` | Not on a page yet |
-| `--project-config-root` | Not on a page yet |
-| `--prompt-suggestions` | Not on a page yet |
-| `--rc` | Not on a page yet |
-| `--ref` | Not on a page yet |
-| `--remote` | Not on a page yet |
+| `--proactivity` | [All Flags](../configure/cli/flags.md) |
+| `--project-config-root` | [All Flags](../configure/cli/flags.md) |
+| `--prompt-suggestions` | [All Flags](../configure/cli/flags.md) |
+| `--rc` | [All Flags](../configure/cli/flags.md) |
+| `--ref` | [All Flags](../configure/cli/flags.md) |
+| `--remote` | [All Flags](../configure/cli/flags.md) |
 | `--remote-control` | [All Flags](../configure/cli/flags.md) |
-| `--remote-control-session-name-prefix` | Not on a page yet |
+| `--remote-control-session-name-prefix` | [All Flags](../configure/cli/flags.md) |
 | `--replay-user-messages` | [All Flags](../configure/cli/flags.md) |
 | `--reply-on-resume` | [All Flags](../configure/cli/flags.md) |
 | `--restricted` | [All Flags](../configure/cli/flags.md) |
 | `--resume` | [All Flags](../configure/cli/flags.md) |
-| `--resume-drops-turn` | Not on a page yet |
-| `--resume-session-at` | Not on a page yet |
-| `--rewind-files` | Not on a page yet |
-| `--runner-declares` | Not on a page yet |
+| `--resume-drops-turn` | [All Flags](../configure/cli/flags.md) |
+| `--resume-session-at` | [All Flags](../configure/cli/flags.md) |
+| `--rewind-files` | [All Flags](../configure/cli/flags.md) |
+| `--runner-declares` | Excluded: A runner-internal flag with no help text, and the release archive page already says this site does not list runner-internal names (the program). |
 | `--safe-mode` | [All Flags](../configure/cli/flags.md) |
-| `--sdk-url` | Not on a page yet |
-| `--session-id` | Not on a page yet |
+| `--sdk-url` | [All Flags](../configure/cli/flags.md) |
+| `--session-id` | [All Flags](../configure/cli/flags.md) |
 | `--session-mirror` | [All Flags](../configure/cli/flags.md) |
-| `--setting-sources` | Not on a page yet |
-| `--settings` | Not on a page yet |
+| `--setting-sources` | [All Flags](../configure/cli/flags.md) |
+| `--settings` | [All Flags](../configure/cli/flags.md) |
 | `--strict-mcp-config` | [All Flags](../configure/cli/flags.md) |
-| `--system-prompt` | Not on a page yet |
-| `--system-prompt-file` | Not on a page yet |
-| `--system-prompt-snapshot` | Not on a page yet |
-| `--task-budget` | Not on a page yet |
-| `--team-name` | Not on a page yet |
-| `--teammate-mode` | Not on a page yet |
+| `--system-prompt` | [All Flags](../configure/cli/flags.md) |
+| `--system-prompt-file` | [All Flags](../configure/cli/flags.md) |
+| `--system-prompt-snapshot` | [All Flags](../configure/cli/flags.md) |
+| `--task-budget` | [All Flags](../configure/cli/flags.md) |
+| `--team-name` | [All Flags](../configure/cli/flags.md) |
+| `--teammate-mode` | [All Flags](../configure/cli/flags.md) |
 | `--teleport` | [CLI Overview](../configure/cli/index.md) |
 | `--thinking` | [All Flags](../configure/cli/flags.md) |
-| `--thinking-display` | Not on a page yet |
+| `--thinking-display` | [All Flags](../configure/cli/flags.md) |
 | `--tmux` | [All Flags](../configure/cli/flags.md) |
-| `--tools` | Not on a page yet |
+| `--tools` | [All Flags](../configure/cli/flags.md) |
 | `--verbose` | [All Flags](../configure/cli/flags.md) |
-| `--watch-artifact` | Not on a page yet |
-| `--watch-artifact-no-autoreact` | Not on a page yet |
-| `--workload` | Not on a page yet |
+| `--watch-artifact` | [All Flags](../configure/cli/flags.md) |
+| `--watch-artifact-no-autoreact` | [All Flags](../configure/cli/flags.md) |
+| `--workload` | [All Flags](../configure/cli/flags.md) |
 | `--worktree` | [All Flags](../configure/cli/flags.md) |
-| `add --callback-port` | Not on a page yet |
-| `add --client-id` | Not on a page yet |
-| `add --client-secret` | Not on a page yet |
-| `add --env` | Not on a page yet |
-| `add --header` | Not on a page yet |
-| `add --scope` | Not on a page yet |
-| `add --transport` | Not on a page yet |
-| `add --xaa` | Not on a page yet |
-| `agents --add-dir` | Not on a page yet |
-| `agents --agent` | Not on a page yet |
-| `agents --all` | Not on a page yet |
-| `agents --allow-dangerously-skip-permissions` | Not on a page yet |
-| `agents --cwd` | Not on a page yet |
-| `agents --dangerously-skip-permissions` | Not on a page yet |
-| `agents --effort` | Not on a page yet |
-| `agents --inherit-permission-mode` | Not on a page yet |
-| `agents --json` | Not on a page yet |
-| `agents --managed-settings` | Not on a page yet |
-| `agents --mcp-config` | Not on a page yet |
-| `agents --model` | Not on a page yet |
-| `agents --permission-mode` | Not on a page yet |
-| `agents --plugin-dir` | Not on a page yet |
-| `agents --plugin-dir-no-mcp` | Not on a page yet |
-| `agents --restricted` | Not on a page yet |
-| `agents --setting-sources` | Not on a page yet |
-| `agents --settings` | Not on a page yet |
-| `agents --strict-mcp-config` | Not on a page yet |
-| `auth login --claudeai` | Not on a page yet |
-| `auth login --console` | Not on a page yet |
-| `auth login --email` | Not on a page yet |
-| `auth login --sso` | Not on a page yet |
-| `auth status --json` | Not on a page yet |
-| `auth status --text` | Not on a page yet |
-| `auto-mode critique --model` | Not on a page yet |
-| `auto-mode defaults --label` | Not on a page yet |
-| `auto-mode reset --yes` | Not on a page yet |
-| `design-login --json` | Not on a page yet |
-| `design-login --status` | Not on a page yet |
-| `drop-worktree-registrations --json` | Not on a page yet |
-| `edit-chrome-settings --json` | Not on a page yet |
-| `edit-hook --json` | Not on a page yet |
-| `edit-memory-settings --json` | Not on a page yet |
-| `edit-permission-rules --json` | Not on a page yet |
-| `edit-sandbox-settings --json` | Not on a page yet |
-| `edit-skill-overrides --json` | Not on a page yet |
-| `gateway --config` | Not on a page yet |
-| `import --dry-run` | Not on a page yet |
-| `import --yes` | Not on a page yet |
-| `import-conversations --cwd` | Not on a page yet |
-| `import-conversations --dry-run` | Not on a page yet |
-| `install --force` | Not on a page yet |
-| `mcp add-from-claude-desktop --scope` | Not on a page yet |
-| `mcp add-json --client-secret` | Not on a page yet |
-| `mcp add-json --scope` | Not on a page yet |
-| `mcp login --no-browser` | Not on a page yet |
-| `mcp remove --scope` | Not on a page yet |
-| `mcp serve --debug` | Not on a page yet |
-| `mcp serve --port` | Not on a page yet |
-| `mcp serve --result-format` | Not on a page yet |
-| `mcp serve --session-tunnel` | Not on a page yet |
-| `mcp serve --transport` | Not on a page yet |
-| `mcp serve --verbose` | Not on a page yet |
-| `plugin configure --cowork` | Not on a page yet |
-| `plugin configure --json` | Not on a page yet |
-| `plugin configure --values-stdin` | Not on a page yet |
-| `plugin details --cowork` | Not on a page yet |
-| `plugin disable --all` | Not on a page yet |
-| `plugin disable --cowork` | Not on a page yet |
-| `plugin disable --json` | Not on a page yet |
-| `plugin disable --scope` | Not on a page yet |
-| `plugin enable --cowork` | Not on a page yet |
-| `plugin enable --json` | Not on a page yet |
-| `plugin enable --scope` | Not on a page yet |
-| `plugin eval --ablation` | Not on a page yet |
-| `plugin eval --allow-real-servers` | Not on a page yet |
-| `plugin eval --allow-tools` | Not on a page yet |
-| `plugin eval --case` | Not on a page yet |
-| `plugin eval --concurrency` | Not on a page yet |
-| `plugin eval --disallow-tools` | Not on a page yet |
-| `plugin eval --eval-dir` | Not on a page yet |
-| `plugin eval --json` | Not on a page yet |
-| `plugin eval --judge-model` | Not on a page yet |
-| `plugin eval --keep-temp` | Not on a page yet |
-| `plugin eval --max-cost-usd` | Not on a page yet |
-| `plugin eval --mocks` | Not on a page yet |
-| `plugin eval --model` | Not on a page yet |
-| `plugin eval --no-publish` | Not on a page yet |
-| `plugin eval --no-scaffold` | Not on a page yet |
-| `plugin eval --output-dir` | Not on a page yet |
-| `plugin eval --publish-report` | Not on a page yet |
-| `plugin eval --report` | Not on a page yet |
-| `plugin eval --runs` | Not on a page yet |
-| `plugin eval --scaffold` | Not on a page yet |
-| `plugin eval --tag` | Not on a page yet |
-| `plugin eval --threshold` | Not on a page yet |
-| `plugin eval --trust-plugin` | Not on a page yet |
-| `plugin eval --verbose` | Not on a page yet |
-| `plugin eval init --bare` | Not on a page yet |
-| `plugin eval init --eval-dir` | Not on a page yet |
-| `plugin eval init --interactive` | Not on a page yet |
-| `plugin eval init --interview` | Not on a page yet |
-| `plugin init --author` | Not on a page yet |
-| `plugin init --author-email` | Not on a page yet |
-| `plugin init --description` | Not on a page yet |
-| `plugin init --force` | Not on a page yet |
-| `plugin init --with` | Not on a page yet |
-| `plugin install --accept-command` | Not on a page yet |
-| `plugin install --config` | Not on a page yet |
-| `plugin install --cowork` | Not on a page yet |
-| `plugin install --json` | Not on a page yet |
-| `plugin install --marketplace` | Not on a page yet |
-| `plugin install --registry` | Not on a page yet |
-| `plugin install --replace` | Not on a page yet |
-| `plugin install --scope` | Not on a page yet |
-| `plugin install --yes` | Not on a page yet |
-| `plugin list --available` | Not on a page yet |
-| `plugin list --cowork` | Not on a page yet |
-| `plugin list --data-size` | Not on a page yet |
-| `plugin list --json` | Not on a page yet |
-| `plugin marketplace add --claudeai` | Not on a page yet |
-| `plugin marketplace add --cowork` | Not on a page yet |
-| `plugin marketplace add --from-link` | Not on a page yet |
-| `plugin marketplace add --json` | Not on a page yet |
-| `plugin marketplace add --resolve-only` | Not on a page yet |
-| `plugin marketplace add --scope` | Not on a page yet |
-| `plugin marketplace add --sparse` | Not on a page yet |
-| `plugin marketplace list --cowork` | Not on a page yet |
-| `plugin marketplace list --json` | Not on a page yet |
-| `plugin marketplace remove --cowork` | Not on a page yet |
-| `plugin marketplace remove --json` | Not on a page yet |
-| `plugin marketplace remove --scope` | Not on a page yet |
-| `plugin marketplace update --cowork` | Not on a page yet |
-| `plugin marketplace update --json` | Not on a page yet |
-| `plugin prune --cowork` | Not on a page yet |
-| `plugin prune --dry-run` | Not on a page yet |
-| `plugin prune --scope` | Not on a page yet |
-| `plugin prune --yes` | Not on a page yet |
-| `plugin tag --dry-run` | Not on a page yet |
-| `plugin tag --force` | Not on a page yet |
-| `plugin tag --message` | Not on a page yet |
-| `plugin tag --push` | Not on a page yet |
-| `plugin tag --remote` | Not on a page yet |
-| `plugin uninstall --cowork` | Not on a page yet |
-| `plugin uninstall --json` | Not on a page yet |
-| `plugin uninstall --keep-data` | Not on a page yet |
-| `plugin uninstall --prune` | Not on a page yet |
-| `plugin uninstall --scope` | Not on a page yet |
-| `plugin uninstall --yes` | Not on a page yet |
-| `plugin update --accept-command` | Not on a page yet |
-| `plugin update --cowork` | Not on a page yet |
-| `plugin update --json` | Not on a page yet |
-| `plugin update --scope` | Not on a page yet |
-| `plugin update --yes` | Not on a page yet |
-| `plugin validate --cowork` | Not on a page yet |
-| `plugin validate --json` | Not on a page yet |
-| `plugin validate --profile` | Not on a page yet |
-| `plugin validate --strict` | Not on a page yet |
-| `purge --all` | Not on a page yet |
-| `purge --dry-run` | Not on a page yet |
-| `purge --interactive` | Not on a page yet |
-| `purge --yes` | Not on a page yet |
-| `sandbox uninstall --json` | Not on a page yet |
-| `ultrareview --json` | Not on a page yet |
-| `ultrareview --no-post` | Not on a page yet |
-| `ultrareview --post` | Not on a page yet |
-| `ultrareview --timeout` | Not on a page yet |
-| `ultrareview --trust-workspace` | Not on a page yet |
-| `xaa login --force` | Not on a page yet |
-| `xaa login --id-token` | Not on a page yet |
-| `xaa setup --callback-port` | Not on a page yet |
-| `xaa setup --client-id` | Not on a page yet |
-| `xaa setup --client-secret` | Not on a page yet |
-| `xaa setup --issuer` | Not on a page yet |
+| `add --callback-port` | [/extend/mcp/cli#flags](/extend/mcp/cli#flags) |
+| `add --client-id` | [/extend/mcp/cli#flags](/extend/mcp/cli#flags) |
+| `add --client-secret` | [/extend/mcp/cli#flags](/extend/mcp/cli#flags) |
+| `add --env` | [/extend/mcp/cli#flags](/extend/mcp/cli#flags) |
+| `add --header` | [/extend/mcp/cli#flags](/extend/mcp/cli#flags) |
+| `add --scope` | [/extend/mcp/cli#flags](/extend/mcp/cli#flags) |
+| `add --transport` | [/extend/mcp/cli#flags](/extend/mcp/cli#flags) |
+| `add --xaa` | [/extend/mcp/cli#flags](/extend/mcp/cli#flags) |
+| `agents --add-dir` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `agents --agent` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `agents --all` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `agents --allow-dangerously-skip-permissions` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `agents --cwd` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `agents --dangerously-skip-permissions` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `agents --effort` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `agents --inherit-permission-mode` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `agents --json` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `agents --managed-settings` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `agents --mcp-config` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `agents --model` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `agents --permission-mode` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `agents --plugin-dir` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `agents --plugin-dir-no-mcp` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `agents --restricted` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `agents --setting-sources` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `agents --settings` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `agents --strict-mcp-config` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `auth login --claudeai` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `auth login --console` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `auth login --email` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `auth login --sso` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `auth status --json` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `auth status --text` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `auto-mode critique --model` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `auto-mode defaults --label` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `auto-mode reset --yes` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `design-login --json` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `design-login --status` | [Subcommands](../configure/cli/subcommands.md) |
+| `drop-worktree-registrations --json` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `edit-chrome-settings --json` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `edit-hook --json` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `edit-memory-settings --json` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `edit-permission-rules --json` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `edit-sandbox-settings --json` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `edit-skill-overrides --json` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `gateway --config` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `import --dry-run` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `import --yes` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `import-conversations --cwd` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `import-conversations --dry-run` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `install --force` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `mcp add-from-claude-desktop --scope` | [/extend/mcp/cli#flags](/extend/mcp/cli#flags) |
+| `mcp add-json --client-secret` | [/extend/mcp/cli#flags](/extend/mcp/cli#flags) |
+| `mcp add-json --scope` | [/extend/mcp/cli#flags](/extend/mcp/cli#flags) |
+| `mcp login --no-browser` | [/extend/mcp/cli#flags](/extend/mcp/cli#flags) |
+| `mcp remove --scope` | [/extend/mcp/cli#flags](/extend/mcp/cli#flags) |
+| `mcp serve --debug` | [/extend/mcp/cli#flags](/extend/mcp/cli#flags) |
+| `mcp serve --port` | [/extend/mcp/cli#subcommands](/extend/mcp/cli#subcommands) |
+| `mcp serve --result-format` | [/extend/mcp/cli#subcommands](/extend/mcp/cli#subcommands) |
+| `mcp serve --session-tunnel` | [/extend/mcp/cli#subcommands](/extend/mcp/cli#subcommands) |
+| `mcp serve --transport` | [/extend/mcp/cli#subcommands](/extend/mcp/cli#subcommands) |
+| `mcp serve --verbose` | [/extend/mcp/cli#flags](/extend/mcp/cli#flags) |
+| `plugin configure --cowork` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin configure --json` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin configure --values-stdin` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin details --cowork` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin disable --all` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin disable --cowork` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin disable --json` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin disable --scope` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin enable --cowork` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin enable --json` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin enable --scope` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin eval --ablation` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin eval --allow-real-servers` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin eval --allow-tools` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin eval --case` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin eval --concurrency` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin eval --disallow-tools` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin eval --eval-dir` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin eval --json` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin eval --judge-model` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin eval --keep-temp` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin eval --max-cost-usd` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin eval --mocks` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin eval --model` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin eval --no-publish` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin eval --no-scaffold` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin eval --output-dir` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin eval --publish-report` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin eval --report` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin eval --runs` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin eval --scaffold` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin eval --tag` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin eval --threshold` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin eval --trust-plugin` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin eval --verbose` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin eval init --bare` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin eval init --eval-dir` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin eval init --interactive` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin eval init --interview` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin init --author` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin init --author-email` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin init --description` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin init --force` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin init --with` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin install --accept-command` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin install --config` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin install --cowork` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin install --json` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin install --marketplace` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin install --registry` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin install --replace` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin install --scope` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin install --yes` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin list --available` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin list --cowork` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin list --data-size` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin list --json` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin marketplace add --claudeai` | [/extend/plugins/cli#marketplace-subcommands](/extend/plugins/cli#marketplace-subcommands) |
+| `plugin marketplace add --cowork` | [/extend/plugins/cli#marketplace-subcommands](/extend/plugins/cli#marketplace-subcommands) |
+| `plugin marketplace add --from-link` | [/extend/plugins/cli#marketplace-subcommands](/extend/plugins/cli#marketplace-subcommands) |
+| `plugin marketplace add --json` | [/extend/plugins/cli#marketplace-subcommands](/extend/plugins/cli#marketplace-subcommands) |
+| `plugin marketplace add --resolve-only` | [/extend/plugins/cli#marketplace-subcommands](/extend/plugins/cli#marketplace-subcommands) |
+| `plugin marketplace add --scope` | [/extend/plugins/cli#marketplace-subcommands](/extend/plugins/cli#marketplace-subcommands) |
+| `plugin marketplace add --sparse` | [/extend/plugins/cli#marketplace-subcommands](/extend/plugins/cli#marketplace-subcommands) |
+| `plugin marketplace list --cowork` | [/extend/plugins/cli#marketplace-subcommands](/extend/plugins/cli#marketplace-subcommands) |
+| `plugin marketplace list --json` | [/extend/plugins/cli#marketplace-subcommands](/extend/plugins/cli#marketplace-subcommands) |
+| `plugin marketplace remove --cowork` | [/extend/plugins/cli#marketplace-subcommands](/extend/plugins/cli#marketplace-subcommands) |
+| `plugin marketplace remove --json` | [/extend/plugins/cli#marketplace-subcommands](/extend/plugins/cli#marketplace-subcommands) |
+| `plugin marketplace remove --scope` | [/extend/plugins/cli#marketplace-subcommands](/extend/plugins/cli#marketplace-subcommands) |
+| `plugin marketplace update --cowork` | [/extend/plugins/cli#marketplace-subcommands](/extend/plugins/cli#marketplace-subcommands) |
+| `plugin marketplace update --json` | [/extend/plugins/cli#marketplace-subcommands](/extend/plugins/cli#marketplace-subcommands) |
+| `plugin prune --cowork` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin prune --dry-run` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin prune --scope` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin prune --yes` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin tag --dry-run` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin tag --force` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin tag --message` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin tag --push` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin tag --remote` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin uninstall --cowork` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin uninstall --json` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin uninstall --keep-data` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin uninstall --prune` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin uninstall --scope` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin uninstall --yes` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin update --accept-command` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin update --cowork` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin update --json` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin update --scope` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin update --yes` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin validate --cowork` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin validate --json` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin validate --profile` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin validate --strict` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `purge --all` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `purge --dry-run` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `purge --interactive` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `purge --yes` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `sandbox uninstall --json` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `ultrareview --json` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `ultrareview --no-post` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `ultrareview --post` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `ultrareview --timeout` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `ultrareview --trust-workspace` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `xaa login --force` | [/extend/mcp/cli#subcommands](/extend/mcp/cli#subcommands) |
+| `xaa login --id-token` | [/extend/mcp/cli#subcommands](/extend/mcp/cli#subcommands) |
+| `xaa setup --callback-port` | [/extend/mcp/cli#subcommands](/extend/mcp/cli#subcommands) |
+| `xaa setup --client-id` | [/extend/mcp/cli#subcommands](/extend/mcp/cli#subcommands) |
+| `xaa setup --client-secret` | [/extend/mcp/cli#subcommands](/extend/mcp/cli#subcommands) |
+| `xaa setup --issuer` | [/extend/mcp/cli#subcommands](/extend/mcp/cli#subcommands) |
 
 ## Gates
 
@@ -8729,42 +8729,42 @@ Items: 142.
 | --- | --- |
 | `/add-dir` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/advisor` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
-| `/agents` | Not on a page yet |
-| `/artifact-capabilities` | Not on a page yet |
-| `/artifact-components` | Not on a page yet |
-| `/artifact-design` | Not on a page yet |
-| `/artifact-diagramming` | Not on a page yet |
+| `/agents` | Excluded: Hidden, and its own description starts with "(removed)" (the program). |
+| `/artifact-capabilities` | [/extend/skills-and-commands/bundled-skills#skills](/extend/skills-and-commands/bundled-skills#skills) |
+| `/artifact-components` | [/extend/skills-and-commands/bundled-skills#skills](/extend/skills-and-commands/bundled-skills#skills) |
+| `/artifact-design` | [/extend/skills-and-commands/bundled-skills#skills](/extend/skills-and-commands/bundled-skills#skills) |
+| `/artifact-diagramming` | [/extend/skills-and-commands/bundled-skills#skills](/extend/skills-and-commands/bundled-skills#skills) |
 | `/artifacts` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/auto-mode-setup` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/autocompact` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/autofix-pr` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/background` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
-| `/batch` | Not on a page yet |
+| `/batch` | [/extend/skills-and-commands/bundled-skills#skills](/extend/skills-and-commands/bundled-skills#skills) |
 | `/branch` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/brief` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/btw` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/bug` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/cd` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/chrome` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
-| `/claim-credit` | Not on a page yet |
-| `/claude-api` | Not on a page yet |
-| `/claude-code-docs` | Not on a page yet |
-| `/claude-in-chrome` | Not on a page yet |
+| `/claim-credit` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
+| `/claude-api` | [/extend/skills-and-commands/bundled-skills#skills](/extend/skills-and-commands/bundled-skills#skills) |
+| `/claude-code-docs` | [/extend/skills-and-commands/bundled-skills#skills](/extend/skills-and-commands/bundled-skills#skills) |
+| `/claude-in-chrome` | [/extend/skills-and-commands/bundled-skills#skills](/extend/skills-and-commands/bundled-skills#skills) |
 | `/clear` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/cloud-plugins` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
-| `/code-review` | Not on a page yet |
+| `/code-review` | [/extend/skills-and-commands/bundled-skills#skills](/extend/skills-and-commands/bundled-skills#skills) |
 | `/color` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
-| `/commit` | Not on a page yet |
-| `/commit-push-pr` | Not on a page yet |
+| `/commit` | [/extend/skills-and-commands/bundled-skills#skills](/extend/skills-and-commands/bundled-skills#skills) |
+| `/commit-push-pr` | [/extend/skills-and-commands/bundled-skills#skills](/extend/skills-and-commands/bundled-skills#skills) |
 | `/compact` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/config` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/context` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/copy` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
-| `/cowork-plugin` | Not on a page yet |
+| `/cowork-plugin` | [/extend/skills-and-commands/bundled-skills#skills](/extend/skills-and-commands/bundled-skills#skills) |
 | `/daemon` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
-| `/dataviz` | Not on a page yet |
-| `/debug` | Not on a page yet |
-| `/design` | Not on a page yet |
+| `/dataviz` | [/extend/skills-and-commands/bundled-skills#skills](/extend/skills-and-commands/bundled-skills#skills) |
+| `/debug` | [/extend/skills-and-commands/bundled-skills#skills](/extend/skills-and-commands/bundled-skills#skills) |
+| `/design` | [/extend/skills-and-commands/bundled-skills#skills](/extend/skills-and-commands/bundled-skills#skills) |
 | `/design-consent` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/design-login` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/design-revoke` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
@@ -8774,12 +8774,12 @@ Items: 142.
 | `/doctor` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/effort` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/exit` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
-| `/explain-usage` | Not on a page yet |
+| `/explain-usage` | [/extend/skills-and-commands/bundled-skills#skills](/extend/skills-and-commands/bundled-skills#skills) |
 | `/export` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
-| `/extra-usage` | Not on a page yet |
+| `/extra-usage` | Excluded: Hidden, and its own description says it was renamed to /usage-credits, which Slash Commands lists (the program). |
 | `/fast` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/feedback` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
-| `/fewer-permission-prompts` | Not on a page yet |
+| `/fewer-permission-prompts` | [/extend/skills-and-commands/bundled-skills#skills](/extend/skills-and-commands/bundled-skills#skills) |
 | `/focus` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/fork` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/goal` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
@@ -8794,30 +8794,30 @@ Items: 142.
 | `/install-github-app` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/install-slack-app` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/keybindings` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
-| `/keybindings-help` | Not on a page yet |
-| `/limit-reset` | Not on a page yet |
+| `/keybindings-help` | [/extend/skills-and-commands/bundled-skills#skills](/extend/skills-and-commands/bundled-skills#skills) |
+| `/limit-reset` | Excluded: Hidden, and the program gives no description. What it does is not known from the program, so the site does not guess. |
 | `/list-agents` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/login` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/logout` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
-| `/loop` | Not on a page yet |
-| `/loops` | Not on a page yet |
-| `/low-priority` | Not on a page yet |
+| `/loop` | [/extend/skills-and-commands/bundled-skills#skills](/extend/skills-and-commands/bundled-skills#skills) |
+| `/loops` | Excluded: Its isEnabled always returns false in 2.1.309, so no user can run it (the program). |
+| `/low-priority` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/mcp` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/memory` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
-| `/memory-types` | Not on a page yet |
+| `/memory-types` | [/extend/skills-and-commands/bundled-skills#skills](/extend/skills-and-commands/bundled-skills#skills) |
 | `/mobile` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/model` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/output-style` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/passes` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
-| `/pause-memory` | Not on a page yet |
+| `/pause-memory` | Excluded: Its isEnabled always returns false in 2.1.309, so no user can run it (the program). |
 | `/permissions` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/plan` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/plugin` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/powerup` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
-| `/pr` | Not on a page yet |
+| `/pr` | [/extend/skills-and-commands/bundled-skills#skills](/extend/skills-and-commands/bundled-skills#skills) |
 | `/privacy-settings` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/pro-trial-expired` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
-| `/prototype` | Not on a page yet |
+| `/prototype` | [/extend/skills-and-commands/bundled-skills#skills](/extend/skills-and-commands/bundled-skills#skills) |
 | `/radio` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/rate-limit-options` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/recap` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
@@ -8830,17 +8830,17 @@ Items: 142.
 | `/restart` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/resume` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/rewind` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
-| `/run` | Not on a page yet |
-| `/run-skill-generator` | Not on a page yet |
+| `/run` | [/extend/skills-and-commands/bundled-skills#skills](/extend/skills-and-commands/bundled-skills#skills) |
+| `/run-skill-generator` | [/extend/skills-and-commands/bundled-skills#skills](/extend/skills-and-commands/bundled-skills#skills) |
 | `/sandbox` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
-| `/schedule` | Not on a page yet |
+| `/schedule` | [/extend/skills-and-commands/bundled-skills#skills](/extend/skills-and-commands/bundled-skills#skills) |
 | `/scroll-speed` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
-| `/security-review` | Not on a page yet |
+| `/security-review` | [/extend/skills-and-commands/bundled-skills#skills](/extend/skills-and-commands/bundled-skills#skills) |
 | `/session` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/setup-bedrock` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
-| `/setup-claude` | Not on a page yet |
+| `/setup-claude` | [/extend/skills-and-commands/bundled-skills#skills](/extend/skills-and-commands/bundled-skills#skills) |
 | `/setup-vertex` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
-| `/simplify` | Not on a page yet |
+| `/simplify` | [/extend/skills-and-commands/bundled-skills#skills](/extend/skills-and-commands/bundled-skills#skills) |
 | `/skill-doctor` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/skills` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/status` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
@@ -8856,19 +8856,19 @@ Items: 142.
 | `/tui` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/ultraplan` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/ultrareview` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
-| `/update-config` | Not on a page yet |
+| `/update-config` | [/extend/skills-and-commands/bundled-skills#skills](/extend/skills-and-commands/bundled-skills#skills) |
 | `/upgrade` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/usage` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/usage-credits` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
-| `/verify` | Not on a page yet |
-| `/version` | Not on a page yet |
+| `/verify` | [/extend/skills-and-commands/bundled-skills#skills](/extend/skills-and-commands/bundled-skills#skills) |
+| `/version` | Excluded: Its isEnabled always returns false in 2.1.309, so no user can run it (the program). |
 | `/voice` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/web-setup` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
-| `/wellbeing` | Not on a page yet |
-| `/workflow-authoring` | Not on a page yet |
-| `/workflow-launch-exec` | Not on a page yet |
+| `/wellbeing` | Excluded: Its isEnabled always returns false in 2.1.309, so no user can run it (the program). |
+| `/workflow-authoring` | [/extend/skills-and-commands/bundled-skills#skills](/extend/skills-and-commands/bundled-skills#skills) |
+| `/workflow-launch-exec` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/workflows` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
-| `/workshop` | Not on a page yet |
+| `/workshop` | [/extend/skills-and-commands/bundled-skills#skills](/extend/skills-and-commands/bundled-skills#skills) |
 
 ## Subcommands
 
@@ -8876,77 +8876,77 @@ Items: 71.
 
 | Item | Where |
 | --- | --- |
-| `add` | Not on a page yet |
-| `agents` | Not on a page yet |
-| `apply-project-settings` | Not on a page yet |
-| `auth` | Not on a page yet |
-| `auth login` | Not on a page yet |
-| `auth logout` | Not on a page yet |
-| `auth status` | Not on a page yet |
-| `auto-mode` | Not on a page yet |
-| `auto-mode config` | Not on a page yet |
-| `auto-mode critique` | Not on a page yet |
-| `auto-mode defaults` | Not on a page yet |
-| `auto-mode reset` | Not on a page yet |
+| `add` | [/extend/mcp/cli#subcommands](/extend/mcp/cli#subcommands) |
+| `agents` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `apply-project-settings` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `auth` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `auth login` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `auth logout` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `auth status` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `auto-mode` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `auto-mode config` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `auto-mode critique` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `auto-mode defaults` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `auto-mode reset` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
 | `design-login` | [Subcommands](../configure/cli/subcommands.md) |
-| `doctor` | Not on a page yet |
+| `doctor` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
 | `drop-worktree-registrations` | [Subcommands](../configure/cli/subcommands.md) |
 | `edit-chrome-settings` | [Subcommands](../configure/cli/subcommands.md) |
-| `edit-hook` | Not on a page yet |
+| `edit-hook` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
 | `edit-memory-settings` | [Subcommands](../configure/cli/subcommands.md) |
 | `edit-permission-rules` | [Subcommands](../configure/cli/subcommands.md) |
 | `edit-sandbox-settings` | [Subcommands](../configure/cli/subcommands.md) |
 | `edit-skill-overrides` | [Subcommands](../configure/cli/subcommands.md) |
-| `gateway` | Not on a page yet |
-| `import` | Not on a page yet |
-| `import-conversations` | Not on a page yet |
-| `install` | Not on a page yet |
-| `mcp` | Not on a page yet |
-| `mcp add-from-claude-desktop` | Not on a page yet |
-| `mcp add-json` | Not on a page yet |
-| `mcp get` | Not on a page yet |
-| `mcp list` | Not on a page yet |
-| `mcp login` | Not on a page yet |
-| `mcp logout` | Not on a page yet |
-| `mcp remove` | Not on a page yet |
-| `mcp reset-project-choices` | Not on a page yet |
-| `mcp serve` | Not on a page yet |
-| `plugin` | Not on a page yet |
-| `plugin configure` | Not on a page yet |
-| `plugin details` | Not on a page yet |
-| `plugin disable` | Not on a page yet |
-| `plugin enable` | Not on a page yet |
-| `plugin eval` | Not on a page yet |
-| `plugin eval init` | Not on a page yet |
-| `plugin init` | Not on a page yet |
-| `plugin install` | Not on a page yet |
-| `plugin list` | Not on a page yet |
-| `plugin marketplace` | Not on a page yet |
-| `plugin marketplace add` | Not on a page yet |
-| `plugin marketplace list` | Not on a page yet |
-| `plugin marketplace remove` | Not on a page yet |
-| `plugin marketplace update` | Not on a page yet |
-| `plugin prune` | Not on a page yet |
-| `plugin tag` | Not on a page yet |
-| `plugin test` | Not on a page yet |
-| `plugin uninstall` | Not on a page yet |
-| `plugin update` | Not on a page yet |
-| `plugin validate` | Not on a page yet |
+| `gateway` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `import` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `import-conversations` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `install` | [Subcommands](../configure/cli/subcommands.md) |
+| `mcp` | [/extend/mcp/cli#subcommands](/extend/mcp/cli#subcommands) |
+| `mcp add-from-claude-desktop` | [/extend/mcp/cli#subcommands](/extend/mcp/cli#subcommands) |
+| `mcp add-json` | [/extend/mcp/cli#subcommands](/extend/mcp/cli#subcommands) |
+| `mcp get` | [/extend/mcp/cli#subcommands](/extend/mcp/cli#subcommands) |
+| `mcp list` | [/extend/mcp/cli#subcommands](/extend/mcp/cli#subcommands) |
+| `mcp login` | [/extend/mcp/cli#subcommands](/extend/mcp/cli#subcommands) |
+| `mcp logout` | [/extend/mcp/cli#subcommands](/extend/mcp/cli#subcommands) |
+| `mcp remove` | [/extend/mcp/cli#subcommands](/extend/mcp/cli#subcommands) |
+| `mcp reset-project-choices` | [/extend/mcp/cli#subcommands](/extend/mcp/cli#subcommands) |
+| `mcp serve` | [/extend/mcp/cli#subcommands](/extend/mcp/cli#subcommands) |
+| `plugin` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin configure` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin details` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin disable` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin enable` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin eval` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin eval init` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin init` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin install` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin list` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin marketplace` | [/extend/plugins/cli#marketplace-subcommands](/extend/plugins/cli#marketplace-subcommands) |
+| `plugin marketplace add` | [/extend/plugins/cli#marketplace-subcommands](/extend/plugins/cli#marketplace-subcommands) |
+| `plugin marketplace list` | [/extend/plugins/cli#marketplace-subcommands](/extend/plugins/cli#marketplace-subcommands) |
+| `plugin marketplace remove` | [/extend/plugins/cli#marketplace-subcommands](/extend/plugins/cli#marketplace-subcommands) |
+| `plugin marketplace update` | [/extend/plugins/cli#marketplace-subcommands](/extend/plugins/cli#marketplace-subcommands) |
+| `plugin prune` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin tag` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin test` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin uninstall` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin update` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
+| `plugin validate` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
 | `project` | [All Flags](../configure/cli/flags.md) |
-| `purge` | Not on a page yet |
-| `remote-control` | Not on a page yet |
-| `sandbox` | Not on a page yet |
-| `sandbox install` | Not on a page yet |
-| `sandbox status` | Not on a page yet |
-| `sandbox uninstall` | Not on a page yet |
-| `setup-token` | Not on a page yet |
-| `ultrareview` | Not on a page yet |
-| `update` | Not on a page yet |
-| `xaa` | Not on a page yet |
-| `xaa clear` | Not on a page yet |
-| `xaa login` | Not on a page yet |
-| `xaa setup` | Not on a page yet |
-| `xaa show` | Not on a page yet |
+| `purge` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `remote-control` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `sandbox` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `sandbox install` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `sandbox status` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `sandbox uninstall` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `setup-token` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `ultrareview` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `update` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `xaa` | [/extend/mcp/cli#subcommands](/extend/mcp/cli#subcommands) |
+| `xaa clear` | [/extend/mcp/cli#subcommands](/extend/mcp/cli#subcommands) |
+| `xaa login` | [/extend/mcp/cli#subcommands](/extend/mcp/cli#subcommands) |
+| `xaa setup` | [/extend/mcp/cli#subcommands](/extend/mcp/cli#subcommands) |
+| `xaa show` | [/extend/mcp/cli#subcommands](/extend/mcp/cli#subcommands) |
 
 ## Tools
 
