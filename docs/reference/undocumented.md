@@ -28,13 +28,13 @@ Items that the docs name but describe wrongly are in [Behaves Differently From t
 | [Plugins](#plugins) | 9 |
 | [MCP](#mcp) | 32 |
 | [Tools](#tools) | 30 |
-| [API Endpoints and Betas](#api-endpoints-and-betas) | 54 |
+| [API Endpoints and Betas](#api-endpoints-and-betas) | 97 |
 | [System Prompt](#system-prompt) | 34 |
 | [Transcript and Sessions](#transcript-and-sessions) | 13 |
 | [Headless Protocol](#headless-protocol) | 158 |
 | [Mod API](#mod-api) | 0 |
-| [Other](#other) | 98 |
-| Total | 1537 |
+| [Other](#other) | 106 |
+| Total | 1588 |
 
 ## Settings Keys
 
@@ -372,7 +372,7 @@ Count: 30.
 
 Endpoints that Claude Code calls and the beta headers it sends.
 
-Count: 54.
+Count: 97.
 
 | Item | Where |
 | --- | --- |
@@ -412,6 +412,7 @@ Count: 54.
 | `thinking-display-updates-2026-08-18` | [Betas](api/betas.md#registry) (Registry) |
 | `thinking-binding-controls-2026-08-01` | [Betas](api/betas.md#registry) (Registry) |
 | `message-threads-2026-08-12` | [Betas](api/betas.md#registry) (Registry) |
+| `mid-conversation-system-2026-04-07` | [Betas](api/betas.md#registry) (Registry) |
 | `mid-conversation-system-clear-at-2026-08-21` | [Betas](api/betas.md#registry) (Registry) |
 | `/v1/messages/cache_touch` | [Endpoints and Headers](api/endpoints.md#model-endpoints) (Model Endpoints) |
 | `/v1/oauth/token`, `/api/oauth/profile`, `/api/oauth/usage`, `/api/oauth/account/settings` | [Endpoints and Headers](api/endpoints.md#account-and-service-endpoints) (Account and Service Endpoints) |
@@ -424,6 +425,48 @@ Count: 54.
 | `/api/model_selector/{id}`, `/api/organization/claude_code_first_token_date` | [Endpoints and Headers](api/endpoints.md#account-and-service-endpoints) (Account and Service Endpoints) |
 | `/api/ws/speech_to_text/voice_stream` | [Endpoints and Headers](api/endpoints.md#account-and-service-endpoints) (Account and Service Endpoints) |
 | `/api/frame/*`, `/v1/design/*` | [Endpoints and Headers](api/endpoints.md#account-and-service-endpoints) (Account and Service Endpoints) |
+| `/api/claude_cli/bootstrap` | [Endpoints and Headers](api/endpoints.md#sign-in-and-account-paths) (Sign-In and Account Paths) |
+| `/api/claude_code/settings` | [Endpoints and Headers](api/endpoints.md#sign-in-and-account-paths) (Sign-In and Account Paths) |
+| `/api/claude_code/metrics` | [Endpoints and Headers](api/endpoints.md#sign-in-and-account-paths) (Sign-In and Account Paths) |
+| `/api/claude_cli_profile` | [Endpoints and Headers](api/endpoints.md#sign-in-and-account-paths) (Sign-In and Account Paths) |
+| `/api/claude_code_grove`, `/api/oauth/account/grove_notice_viewed` | [Endpoints and Headers](api/endpoints.md#sign-in-and-account-paths) (Sign-In and Account Paths) |
+| `/api/claude_code_penguin_mode` | [Endpoints and Headers](api/endpoints.md#sign-in-and-account-paths) (Sign-In and Account Paths) |
+| `/api/auth/trusted_devices` | [Endpoints and Headers](api/endpoints.md#sign-in-and-account-paths) (Sign-In and Account Paths) |
+| `/api/oauth/validate` | [Endpoints and Headers](api/endpoints.md#sign-in-and-account-paths) (Sign-In and Account Paths) |
+| `/api/oauth/claude_cli/create_api_key`, `/api/oauth/claude_cli/roles`, `https://api.anthropic.com/api/oauth/claude_cli/create_api_key`, and 1 more | [Endpoints and Headers](api/endpoints.md#sign-in-and-account-paths) (Sign-In and Account Paths) |
+| `/api/oauth/organizations/${…}`, `/api/oauth/organizations/${…}/code/repos/${…}/${…}`, `/api/oauth/organizations/${…}/code/repos/resync`, and 1 more | [Endpoints and Headers](api/endpoints.md#sign-in-and-account-paths) (Sign-In and Account Paths) |
+| `/api/organizations/${…}/reset_rate_limits` | [Endpoints and Headers](api/endpoints.md#sign-in-and-account-paths) (Sign-In and Account Paths) |
+| `/api/oauth/file_upload`, `/api/oauth/files/${…}/content` | [Endpoints and Headers](api/endpoints.md#sign-in-and-account-paths) (Sign-In and Account Paths) |
+| `/api/oauth/cri`, `https://api.anthropic.com/api/oauth/cri` | [Endpoints and Headers](api/endpoints.md#sign-in-and-account-paths) (Sign-In and Account Paths) |
+| `/api/oauth/local_pairing` | [Endpoints and Headers](api/endpoints.md#sign-in-and-account-paths) (Sign-In and Account Paths) |
+| `/v1/oauth/hello` | [Endpoints and Headers](api/endpoints.md#sign-in-and-account-paths) (Sign-In and Account Paths) |
+| `https://platform.claude.com/oauth/authorize` | [Endpoints and Headers](api/endpoints.md#oauth-urls-and-hosts) (OAuth URLs and Hosts) |
+| `https://claude.com/cai/oauth/authorize` | [Endpoints and Headers](api/endpoints.md#oauth-urls-and-hosts) (OAuth URLs and Hosts) |
+| `https://platform.claude.com/v1/oauth/token` | [Endpoints and Headers](api/endpoints.md#oauth-urls-and-hosts) (OAuth URLs and Hosts) |
+| `https://platform.claude.com/oauth/code/callback` | [Endpoints and Headers](api/endpoints.md#oauth-urls-and-hosts) (OAuth URLs and Hosts) |
+| `https://platform.claude.com/oauth/code/success?app=claude-code`, `https://platform.claude.com/buy_credits?returnUrl=/oauth/code/success%3Fapp%3Dclaude-code` | [Endpoints and Headers](api/endpoints.md#oauth-urls-and-hosts) (OAuth URLs and Hosts) |
+| `https://claude.ai/oauth/claude-code-client-metadata` | [Endpoints and Headers](api/endpoints.md#oauth-urls-and-hosts) (OAuth URLs and Hosts) |
+| `https://api.anthropic.com`, `https://claude.ai`, `https://mcp-proxy.anthropic.com` | [Endpoints and Headers](api/endpoints.md#oauth-urls-and-hosts) (OAuth URLs and Hosts) |
+| `/v1/mcp_servers?limit=1000` | [Endpoints and Headers](api/endpoints.md#mcp-paths) (MCP Paths) |
+| `/v1/mcp/{server_id}`, `/v1/toolbox/shttp/mcp/{server_id}` | [Endpoints and Headers](api/endpoints.md#mcp-paths) (MCP Paths) |
+| `/api/organizations/${…}/mcp/start-auth/${…}?product_surface=${…}` | [Endpoints and Headers](api/endpoints.md#mcp-paths) (MCP Paths) |
+| `/api/directory/servers?${…}`, `/api/directory/plugins` | [Endpoints and Headers](api/endpoints.md#mcp-paths) (MCP Paths) |
+| `/v1/pages/mcp`, `/api/artifacts/mcp`, `/v1/code/mcp/ccr-artifacts`, and 2 more | [Endpoints and Headers](api/endpoints.md#mcp-paths) (MCP Paths) |
+| `https://microsoft365.mcp.claude.com/mcp` | [Endpoints and Headers](api/endpoints.md#mcp-paths) (MCP Paths) |
+| `/api/features/${…}`, `/api/eval/${…}`, `/api/eval-authed/${…}`, and 1 more | [Endpoints and Headers](api/endpoints.md#flags-environments-and-files) (Flags, Environments, and Files) |
+| `/v1/environments/bridge`, `/v1/environments/bridge/${…}`, `/v1/environments/bridge/${…}/offline`, and 1 more | [Endpoints and Headers](api/endpoints.md#flags-environments-and-files) (Flags, Environments, and Files) |
+| `/v1/environments/${…}/work/poll`, `/v1/environments/${…}/work/${…}/ack`, `/v1/environments/${…}/work/${…}/heartbeat`, and 1 more | [Endpoints and Headers](api/endpoints.md#flags-environments-and-files) (Flags, Environments, and Files) |
+| `/v1/environment_providers`, `/v1/environment_providers/cloud/create` | [Endpoints and Headers](api/endpoints.md#flags-environments-and-files) (Flags, Environments, and Files) |
+| `/v1/sessions`, `/v1/sessions/${…}`, `/v1/sessions/${…}${…}`, and 2 more | [Endpoints and Headers](api/endpoints.md#flags-environments-and-files) (Flags, Environments, and Files) |
+| `/v1/files`, `/v1/files/${…}`, `/v1/files/${…}/content` | [Endpoints and Headers](api/endpoints.md#flags-environments-and-files) (Flags, Environments, and Files) |
+| `/v1/filestore/fs/listDirectory`, `/v1/filestore/fs/readFile` | [Endpoints and Headers](api/endpoints.md#flags-environments-and-files) (Flags, Environments, and Files) |
+| `/v1/code/local/memory/mounts`, `/v1/code/local/memory/credential` | [Endpoints and Headers](api/endpoints.md#flags-environments-and-files) (Flags, Environments, and Files) |
+| `https://downloads.claude.ai/claude-code-releases` | [Endpoints and Headers](api/endpoints.md#hosts-and-downloads) (Hosts and Downloads) |
+| `https://downloads.claude.ai/claude-code-releases/plugins/claude-plugins-official` | [Endpoints and Headers](api/endpoints.md#hosts-and-downloads) (Hosts and Downloads) |
+| `https://downloads.claude.ai/model-catalog/v1/catalog.json`, `https://downloads.claude.ai/model-catalog/v1/schema.json` | [Endpoints and Headers](api/endpoints.md#hosts-and-downloads) (Hosts and Downloads) |
+| `https://anthropic.com/claude-code/plugin.schema.json` | [Endpoints and Headers](api/endpoints.md#hosts-and-downloads) (Hosts and Downloads) |
+| `https://code.claude.com/docs/en/claude_code_docs_map.md`, `https://platform.claude.com/llms.txt`, `https://claude.com/docs/llms.txt`, and 1 more | [Endpoints and Headers](api/endpoints.md#hosts-and-downloads) (Hosts and Downloads) |
+| `https://status.claude.com` | [Endpoints and Headers](api/endpoints.md#hosts-and-downloads) (Hosts and Downloads) |
 | `x-app`, `anthropic-client-platform`, `X-Stainless-*`, and 2 more | [Endpoints and Headers](api/endpoints.md#request-headers) (Request Headers) |
 | `cc_version` | [Endpoints and Headers](api/endpoints.md#attribution-block) (Attribution Block) |
 | `cc_entrypoint` | [Endpoints and Headers](api/endpoints.md#attribution-block) (Attribution Block) |
@@ -517,7 +560,7 @@ Count: 0.
 
 Items that fit no group above: memory, output styles, the status line, models, and how the harness works inside.
 
-Count: 98.
+Count: 106.
 
 | Item | Where |
 | --- | --- |
@@ -531,6 +574,14 @@ Count: 98.
 | `claude-sonnet-4-0` | [Models and Providers](../configure/models-and-providers.md#catalog) (Catalog); [Models and Providers](../configure/models-and-providers.md#provider-names) (Provider Names) |
 | `claude-opus-4-0` | [Models and Providers](../configure/models-and-providers.md#catalog) (Catalog); [Models and Providers](../configure/models-and-providers.md#provider-names) (Provider Names) |
 | `claude-mythos-5-1` | [Models and Providers](../configure/models-and-providers.md#catalog) (Catalog); [Models and Providers](../configure/models-and-providers.md#provider-names) (Provider Names) |
+| `claude-3-opus`, `claude-3-sonnet`, `claude-3-haiku` | [Models and Providers](../configure/models-and-providers.md#other-model-ids-in-the-program) (Other Model IDs in the Program) |
+| `claude-haiku-3-5`, `claude-sonnet-3-7` | [Models and Providers](../configure/models-and-providers.md#other-model-ids-in-the-program) (Other Model IDs in the Program) |
+| `claude-mythos-preview` | [Models and Providers](../configure/models-and-providers.md#other-model-ids-in-the-program) (Other Model IDs in the Program) |
+| `claude-sonnet-4-5-20250929[1m]` | [Models and Providers](../configure/models-and-providers.md#other-model-ids-in-the-program) (Other Model IDs in the Program) |
+| `claude-fable-5[1m]` | [Models and Providers](../configure/models-and-providers.md#other-model-ids-in-the-program) (Other Model IDs in the Program) |
+| `claude-sonnet-4-6[1m]`, `claude-opus-4-6[1m]` | [Models and Providers](../configure/models-and-providers.md#other-model-ids-in-the-program) (Other Model IDs in the Program) |
+| `claude-opus-5[1m]`, `claude-opus-5-5[1m]`, `claude-sonnet-5-5[1m]` | [Models and Providers](../configure/models-and-providers.md#other-model-ids-in-the-program) (Other Model IDs in the Program) |
+| `claude-sonnet-5[1m]`, `claude-opus-4-8[1m]` | [Models and Providers](../configure/models-and-providers.md#other-model-ids-in-the-program) (Other Model IDs in the Program) |
 | `--thinking <enabled\|adaptive\|disabled>` | [Models and Providers](../configure/models-and-providers.md#thinking) (Thinking) |
 | `--thinking-display <summarized\|omitted\|highlights>` | [Models and Providers](../configure/models-and-providers.md#thinking) (Thinking) |
 | `--max-thinking-tokens` | [Models and Providers](../configure/models-and-providers.md#thinking) (Thinking) |

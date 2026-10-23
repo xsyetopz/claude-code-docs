@@ -127,6 +127,21 @@ Notes:
 - A model can name a model to use instead on a third-party provider. For example, `claude-opus-5-5` falls back to `claude-opus-5`, and `claude-fable-5-1` falls back to `claude-fable-5`.
 - The Mythos models have a name on the Anthropic API only, and none on the cloud providers.
 
+## Other Model IDs in the Program
+
+These IDs are not catalog rows. The program names them for one task each. All rows are <Undocumented />.
+
+| `id` | Status | Where the program uses it |
+| --- | --- | --- |
+| `claude-3-opus`, `claude-3-sonnet`, `claude-3-haiku` | <Undocumented /> | The `Read` tool refuses a whole-PDF read on these models. Use the `pages` parameter instead. |
+| `claude-haiku-3-5`, `claude-sonnet-3-7` | <Undocumented /> | Short names in a table that shortens a model name for the commit and pull request attribution line. A name that contains `haiku-3-5` or `sonnet-3-7` maps to the ID. |
+| `claude-mythos-preview` | <Undocumented /> | The model-name check accepts it as a known name, next to the aliases. It has no catalog row. |
+| `claude-sonnet-4-5-20250929[1m]` | <Undocumented /> | On the Anthropic API, a startup migration changes a user-settings `model` of this value to `sonnet[1m]`. |
+| `claude-fable-5[1m]` | <Undocumented /> | A startup migration changes a user-settings `model` of this value to `fable[1m]`. |
+| `claude-sonnet-4-6[1m]`, `claude-opus-4-6[1m]` | <Undocumented /> | The value of the "1M context" entries in the `/model` picker on the Anthropic API. |
+| `claude-opus-5[1m]`, `claude-opus-5-5[1m]`, `claude-sonnet-5-5[1m]` | <Undocumented /> | The refusal fallback table treats each like the ID without `[1m]`. |
+| `claude-sonnet-5[1m]`, `claude-opus-4-8[1m]` | <Undocumented /> | Keys of a built-in per-model threshold table (`severityByModel`), next to the same IDs without `[1m]`. |
+
 ## Pricing
 
 Prices are in US dollars for each million tokens. A search request costs `0.01` in every group.

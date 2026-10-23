@@ -89,6 +89,7 @@ The Registry Name column is the internal name of the value in the program.
 | `thinking-display-updates-2026-08-18` | <Undocumented /> | `thinking_display_updates` | The program lists it, and no source states when it is sent. |
 | `thinking-binding-controls-2026-08-01` | <Undocumented /> | `thinking_binding_controls` | The program lists it, and no source states when it is sent. |
 | `message-threads-2026-08-12` | <Undocumented /> | `message_threads` | The program lists it, and no source states when it is sent. |
+| `mid-conversation-system-2026-04-07` | <Undocumented /> | - | The program holds it as a plain constant, with no registry name. `ANTHROPIC_BETAS` skips it, because that feature is generally available. |
 | `mid-conversation-system-clear-at-2026-08-21` | <Undocumented /> | `mid_conversation_system_clear_at` | For the wire shape that keeps reminders. |
 
 The registry also holds two internal switches, `x-cc-internal-mid-conv-cache-promotion` and `x-cc-internal-mid-conv-cache-promotion-ok`.
