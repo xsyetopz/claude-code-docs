@@ -16,7 +16,7 @@
     },
   },
   "patchedDependencies": {
-    "meriyah@7.4.0": "patches/meriyah@7.4.0.patch",
+    "meriyah@7.4.0": "../../patches/meriyah@7.4.0.patch",
   },
   "packages": {
     "@hono/node-server": ["@hono/node-server@2.1.5", "", { "peerDependencies": { "hono": "^4 || ^5.0.0-0" } }, "sha512-MgP/I06GdvsilDspMk/qmRzpk8LOUStP6jFAbSRi40W09DhoyUn+Mj7eyKICPqeYKybOjVFLVIAQzvu1bfIa7Q=="],
