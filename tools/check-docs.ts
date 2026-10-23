@@ -255,7 +255,10 @@ for (const file of walk(join(ROOT, "docs")).filter((f) => DOC_EXT.test(f))) {
       !/\]\(https?:/.test(line)
     ) {
       report(file, i + 1, '"the official docs say/list/..." needs a link');
-    } else if (/\bRFC \d+/.test(line) && !/\]\(https?:/.test(line)) {
+    } else if (
+      /\bRFC \d+/.test(line.replace(/`[^`]*`/g, "")) &&
+      !/\]\(https?:/.test(line)
+    ) {
       report(file, i + 1, "RFC mention needs a link");
     } else if (
       /\bchangelog\b/i.test(line.replace(/`[^`]*`/g, "")) &&
