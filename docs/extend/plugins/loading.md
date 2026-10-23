@@ -38,6 +38,7 @@ Source: [Plugin Manifest Reference](https://code.claude.com/docs/en/plugins/mani
 | `CLAUDE_PLUGIN_OPTION_<KEY>` | <Documented /> | The same value as an env var, with the key in upper case. | Hooks |
 
 These variables are not in the env of commands the Bash tool runs for Claude.
+As of `2.1.309`, that includes a program in a plugin's `bin/` folder, which the Bash tool finds on its `PATH` (probe `print.plugindata.bash-bin`).
 In a skill, write the reference as Markdown text instead.
 
 Claude Code saves non-sensitive values in `pluginConfigs` of user settings.

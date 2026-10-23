@@ -484,6 +484,10 @@
     "kind": "env",
     "probes": ["print.sweep"]
   },
+  "docs/extend/plugins/loading.md#variables:a80e94bf": {
+    "kind": "behaviour",
+    "probes": ["print.plugindata.bash-bin"]
+  },
   "docs/reference/tools/index.md#which-built-in-tools-are-deferred:7a31190f": {
     "kind": "behaviour",
     "probes": ["print.hooks.posttooluse.glob", "print.hooks.posttooluse.grep"]
