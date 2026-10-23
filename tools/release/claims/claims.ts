@@ -271,13 +271,15 @@ export const knownCases = (base = CAPTURES): Known => {
     fromDisk: false,
   };
   if (!existsSync(base)) return k;
-  for (const v of readdirSync(base).filter((n) => /^\d+\.\d+\.\d+$/.test(n)))
+  // oldest first, so a case's newest capture sets its claims; older ones hold ids since renamed
+  const versions = readdirSync(base)
+    .filter((n) => /^\d+\.\d+\.\d+$/.test(n))
+    .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+  for (const v of versions)
     for (const r of readRun(v, base)) {
       k.fromDisk = true;
       k.ids.add(r.id);
-      const set = k.claims.get(r.id) ?? new Set<string>();
-      for (const c of r.claims) set.add(c);
-      k.claims.set(r.id, set);
+      k.claims.set(r.id, new Set(r.claims));
     }
   return k;
 };
