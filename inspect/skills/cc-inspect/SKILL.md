@@ -25,5 +25,6 @@ Transcripts can hold secrets and private text. Quote only what the user asks for
 3. `read_module` with the module and offset of a hit to read the code around it.
 4. `resolve_object` with the module and an `anchor` (or `offset`) to get the keys of an object literal, with spreads followed across functions and modules.
 5. `resolve_event` lists the OpenTelemetry events, and with `name` gives the attributes of one event.
+6. `list_tools` lists the built-in tools of a version, with the code that gates each one and the source of the functions that code calls. A tool's own `isEnabled()` and the per-session filters are not in it.
 
 When you report what the program does, call the source "the program" and name the version. A key ending in `?` is optional. A value shown as `unknown` is computed, so its type is unconfirmed.

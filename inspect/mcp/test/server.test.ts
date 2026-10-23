@@ -30,6 +30,19 @@ const extra = (x) => ({ "tool.kind": x ? "a" : "b" });
 emit("tool_result", { tool_name: "Bash", success: "true", ...extra(globalThis.x) });
 emit("tool_result", { tool_name: "Read", duration_ms: 5 });
 emit("api_error", { status: 500 });
+const build = (d) => ({ isEnabled: () => true, ...d });
+const Glob = build({ name: "Glob" });
+const Grep = build({ name: "Grep" });
+const Shell = build({ name: "Shell" });
+const Cron = build({ name: "CronCreate" });
+const off = () => null;
+function lean() { return process.env.LEAN === "1"; }
+function hidden() { return lean() ? new Set(["Glob"]) : new Set(); }
+function allTools() {
+  const o = off();
+  return [Shell, ...[Glob, Grep].filter((t) => !hidden().has(t.name)), ...(lean() ? [Cron] : []), ...(o ? [o] : [])];
+}
+globalThis.api = { getAllBaseTools: allTools };
 `;
 
 const LINES = [
@@ -179,5 +192,22 @@ describe("binary", () => {
     expect(Object.keys(r.structuredContent?.["keys"] as object).sort()).toEqual(
       ["duration_ms?", "success?", "tool.kind?", "tool_name"],
     );
+  });
+
+  test("list_tools gives each base tool with its gate and the gate's functions", async () => {
+    const r = await call("list_tools");
+    const tools = r.structuredContent?.["tools"] as {
+      name: string;
+      when: string[];
+    }[];
+    expect(tools.map((t) => [t.name, t.when.length])).toEqual([
+      ["Shell", 0],
+      ["Glob", 1],
+      ["Grep", 1],
+      ["CronCreate", 1],
+    ]);
+    expect(tools[1]?.when[0]).toContain(".has(");
+    const fns = Object.values(r.structuredContent?.["functions"] as object);
+    expect(fns.some((s) => String(s).includes("process.env.LEAN"))).toBe(true);
   });
 });

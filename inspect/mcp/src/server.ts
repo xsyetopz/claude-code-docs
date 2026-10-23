@@ -17,6 +17,7 @@ import {
   SCHEMA_VERSION,
   sessionPath,
 } from "./sessions.ts";
+import { baseTools } from "./tools.ts";
 
 const READ_ONLY = {
   readOnlyHint: true,
@@ -492,6 +493,35 @@ Returns: the keys as JSON, or the list of events with their call site counts.`,
           sites: lists.length,
           keys,
         },
+      );
+    }),
+);
+
+server.registerTool(
+  "list_tools",
+  {
+    title: "List the built-in tools of Claude Code",
+    description: `List the tools the program's getAllBaseTools gives, each with the code that gates it: the test of a "cond?[T]:[]" spread, or the function of a "[A,B].filter(f)". A tool's own isEnabled() and the per-session filters of getTools are not included. Minified names change between versions; "functions" holds the source of each function the gates call, two calls deep.
+Args:
+  - binary (string, optional): version or path.
+Returns: one line per tool with its gates, then the functions; structuredContent {module, tools:[{name,when,unresolved?}], functions}.`,
+    inputSchema: { binary: binaryArg },
+    annotations: READ_ONLY,
+  },
+  ({ binary }) =>
+    run(() => {
+      const { bundle, resolver } = program(binary);
+      const r = baseTools(bundle, resolver);
+      return text(
+        `${r.module}: ${r.tools.length} tools\n${r.tools
+          .map(
+            (t) =>
+              `- ${t.name}${t.unresolved ? " (unresolved)" : ""}${t.when.length ? `  when: ${t.when.join(" && ")}` : ""}`,
+          )
+          .join("\n")}\n\nFunctions:\n${Object.entries(r.functions)
+          .map(([n, s]) => `- ${n}: ${s}`)
+          .join("\n")}`,
+        r,
       );
     }),
 );

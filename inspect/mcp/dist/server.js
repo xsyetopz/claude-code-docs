@@ -38680,6 +38680,198 @@ var checkLine = (line) => {
   return r.success ? [] : r.error.issues.map((i) => `${i.path.join(".") || "(root)"}: ${i.message}`);
 };
 
+// inspect/mcp/src/tools.ts
+var MAX_FN = 300;
+var initOf = (m, id) => {
+  const v0 = m.variable(id);
+  const o = v0 && (m.bundle?.origin(m, v0) ?? { module: m, variable: v0 });
+  const def = o?.variable.defs[0];
+  if (!o || def?.type !== "Variable" || !def.node.init)
+    return;
+  if (o.variable.references.some((r) => r.isWrite() && !r.init))
+    return;
+  return { m: o.module, n: def.node.init };
+};
+var required2 = (m, n) => {
+  if (n.type !== "MemberExpression" || n.property.type !== "Identifier")
+    return;
+  const c = n.object;
+  if (c.type !== "CallExpression" || !m.src(c.callee).startsWith("import.meta.require"))
+    return;
+  const name = n.property.name;
+  const from = m.bundle?.get(String(constString(m, c.arguments[0])));
+  const local = from?.exports.get(name);
+  const v = local ? from?.topLevel(local) : undefined;
+  const o = from && v && m.bundle?.origin(from, v);
+  const def = o?.variable.defs[0];
+  return o && def?.type === "Variable" && def.node.init ? { m: o.module, n: def.node.init } : name;
+};
+var calleeFn = (m, call) => isFn(call.callee) ? { module: m, fn: call.callee } : functionOf(m, call.callee);
+var isNull = (m, n, depth = 0) => {
+  if (depth > 6)
+    return false;
+  if (n.type === "Literal")
+    return n.value === null;
+  if (n.type === "Identifier") {
+    const i = initOf(m, n);
+    return !!i && isNull(i.m, i.n, depth + 1);
+  }
+  if (n.type !== "CallExpression")
+    return false;
+  if (isNull(m, n.callee, depth + 1))
+    return true;
+  const f = calleeFn(m, n);
+  const rets = f ? returnsOf(f.fn) : [];
+  return rets.length > 0 && rets.every((r) => !!r && isNull(f?.module, r, depth + 1));
+};
+var toolName = (R, m, n, depth = 0) => {
+  if (depth > 8)
+    return;
+  if (n.type === "Identifier") {
+    const i = initOf(m, n);
+    return i && toolName(R, i.m, i.n, depth + 1);
+  }
+  const lit = n.type === "ObjectExpression" ? n : n.type === "CallExpression" && n.arguments[0]?.type === "ObjectExpression" ? n.arguments[0] : undefined;
+  const p = lit?.properties.find((x) => x.type === "Property" && !x.computed && x.key.type === "Identifier" && x.key.name === "name");
+  if (p?.type === "Property")
+    return constString(m, p.value);
+  if (n.type === "SequenceExpression")
+    return toolName(R, m, n.expressions.at(-1), depth + 1);
+  const r = required2(m, n);
+  if (typeof r === "string")
+    return r;
+  if (r)
+    return toolName(R, r.m, r.n, depth + 1) ?? m.src(n).split(".").pop();
+  if (n.type === "CallExpression") {
+    const f = n.arguments.length === 0 ? calleeFn(m, n) : undefined;
+    for (const ret of f ? returnsOf(f.fn) : [])
+      if (ret && !isNull(f?.module, ret))
+        return toolName(R, f?.module, ret, depth + 1);
+    const a = n.arguments[0];
+    const got = a && toolName(R, m, a, depth + 1);
+    if (got)
+      return got;
+  }
+  const e = R.expr(m, n)?.find((x) => ("key" in x) && x.key === "name");
+  if (e && "key" in e) {
+    if (e.val.k === "str")
+      return e.val.v;
+    if (e.val.k === "unk" && e.val.ref)
+      return constString(e.val.ref.m, e.val.ref.n);
+  }
+  return;
+};
+var items = (R, m, n, when, out, depth = 0) => {
+  const add = (t) => {
+    out.push({ ...t, when: when.map((c) => c.text), conds: when });
+  };
+  if (depth > 8) {
+    add({ name: `...${m.src(n)}`, when: [], unresolved: true });
+    return;
+  }
+  if (n.type === "ArrayExpression") {
+    for (const el of n.elements) {
+      if (!el)
+        continue;
+      if (el.type === "SpreadElement")
+        items(R, m, el.argument, when, out, depth + 1);
+      else if (!isNull(m, el)) {
+        const name = toolName(R, m, el);
+        add(name ? { name, when: [] } : { name: m.src(el), when: [], unresolved: true });
+      }
+    }
+    return;
+  }
+  if (n.type === "ConditionalExpression") {
+    const t = n.test;
+    if (isNull(m, t)) {
+      items(R, m, n.alternate, when, out, depth + 1);
+      return;
+    }
+    const i = t.type === "Identifier" ? initOf(m, t) : undefined;
+    const text = i ? `${m.src(t)} (=${i.m.src(i.n)})` : m.src(t);
+    const at = i ?? { m, n: t };
+    items(R, m, n.consequent, [...when, { ...at, text }], out, depth + 1);
+    items(R, m, n.alternate, [...when, { ...at, text: `!(${text})` }], out, depth + 1);
+    return;
+  }
+  if (n.type === "CallExpression") {
+    const c = n.callee;
+    if (c.type === "MemberExpression" && c.property.type === "Identifier" && c.property.name === "filter" && n.arguments[0]) {
+      const f = n.arguments[0];
+      items(R, m, c.object, [...when, { m, n: f, text: m.src(f) }], out, depth + 1);
+      return;
+    }
+    if (n.optional && isNull(m, c))
+      return;
+    const f = calleeFn(m, n);
+    if (f) {
+      for (const ret of returnsOf(f.fn))
+        if (ret && !isNull(f.module, ret))
+          items(R, f.module, ret, when, out, depth + 1);
+      return;
+    }
+  }
+  if (n.type === "Identifier" && isNull(m, n))
+    return;
+  const r = required2(m, n);
+  const i = n.type === "Identifier" ? initOf(m, n) : undefined;
+  const next = n.type === "ChainExpression" ? [{ m, n: n.expression }] : n.type === "LogicalExpression" ? [
+    { m, n: n.left },
+    { m, n: n.right }
+  ] : i ? [i] : r && typeof r !== "string" ? [r] : [];
+  for (const x of next)
+    items(R, x.m, x.n, when, out, depth + 1);
+  if (next.length)
+    return;
+  add({
+    name: `...${typeof r === "string" ? r : m.src(n)}`,
+    when: [],
+    unresolved: true
+  });
+};
+var calledFns = (m, n, out, depth = 2) => {
+  const stack = [n];
+  while (stack.length) {
+    const x = stack.pop();
+    stack.push(...children(x));
+    if (x.type !== "CallExpression" || x.callee.type !== "Identifier")
+      continue;
+    const name = x.callee.name;
+    if (out.has(name))
+      continue;
+    const f = functionOf(m, x.callee);
+    if (!f)
+      continue;
+    const s = f.module.src(f.fn);
+    out.set(name, s.length > MAX_FN ? `${s.slice(0, MAX_FN)}\u2026` : s);
+    if (depth > 1)
+      calledFns(f.module, f.fn.body, out, depth - 1);
+  }
+};
+var baseTools = (bundle, R) => {
+  const key = "getAllBaseTools:";
+  const f = bundle.withText(key).map((m) => {
+    const at = new RegExp(`${key}[\\w$]`).exec(m.text);
+    return at && functionOf(m, m.nodeAt(at.index + key.length));
+  }).find((x) => x);
+  if (!f)
+    throw new Error("no getAllBaseTools function found");
+  const out = [];
+  for (const ret of returnsOf(f.fn))
+    if (ret)
+      items(R, f.module, ret, [], out);
+  const fns = new Map;
+  for (const t of out)
+    for (const c of t.conds)
+      calledFns(c.m, c.n, fns);
+  return {
+    module: f.module.name,
+    tools: out.map(({ conds: _, ...t }) => t),
+    functions: Object.fromEntries(fns)
+  };
+};
+
 // inspect/mcp/src/server.ts
 var READ_ONLY = {
   readOnlyHint: true,
@@ -39001,5 +39193,24 @@ ${JSON.stringify(keys, null, 2)}`, {
     sites: lists.length,
     keys
   });
+}));
+server.registerTool("list_tools", {
+  title: "List the built-in tools of Claude Code",
+  description: `List the tools the program's getAllBaseTools gives, each with the code that gates it: the test of a "cond?[T]:[]" spread, or the function of a "[A,B].filter(f)". A tool's own isEnabled() and the per-session filters of getTools are not included. Minified names change between versions; "functions" holds the source of each function the gates call, two calls deep.
+Args:
+  - binary (string, optional): version or path.
+Returns: one line per tool with its gates, then the functions; structuredContent {module, tools:[{name,when,unresolved?}], functions}.`,
+  inputSchema: { binary: binaryArg },
+  annotations: READ_ONLY
+}, ({ binary }) => run(() => {
+  const { bundle, resolver } = program(binary);
+  const r = baseTools(bundle, resolver);
+  return text(`${r.module}: ${r.tools.length} tools
+${r.tools.map((t) => `- ${t.name}${t.unresolved ? " (unresolved)" : ""}${t.when.length ? `  when: ${t.when.join(" && ")}` : ""}`).join(`
+`)}
+
+Functions:
+${Object.entries(r.functions).map(([n, s]) => `- ${n}: ${s}`).join(`
+`)}`, r);
 }));
 await server.connect(new StdioServerTransport);

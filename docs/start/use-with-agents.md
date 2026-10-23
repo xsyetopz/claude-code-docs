@@ -136,6 +136,7 @@ It adds the MCP server `cc-inspect`, which runs with plain `bun`, and the skill 
 | `read_module` | Gives a slice of one module. |
 | `resolve_object` | Lists the keys of the object literal around an offset or an `anchor` text, and follows spreads into the functions and modules they come from. |
 | `resolve_event` | Lists the OpenTelemetry events of a binary. With `name`, it merges the attribute keys of every place the program emits that event. |
+| `list_tools` | Lists the built-in tools of a binary, each with the code that turns it on or off, and the source of the functions that code calls. A tool's own `isEnabled()` check and the filters of each session are not included. |
 
 In `resolve_object` and `resolve_event`, a key that ends in `?` is optional, and a value shown as `unknown` is computed, so its type is not known.
 The binary tools read the code with the [meriyah](https://github.com/meriyah/meriyah) parser and [eslint-scope](https://github.com/eslint/js/tree/main/packages/eslint-scope), so minified names do not matter.
