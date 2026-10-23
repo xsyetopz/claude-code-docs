@@ -1,4 +1,4 @@
-// Usage: bun tools/version/bump.ts <site|cc-docs|cc-inspect|all> <patch|minor|major>
+// Usage: bun tools/version/bump.ts <site|cc-docs|cc-docs-cli|cc-inspect|all> <patch|minor|major>
 //        (also: bun run version:bump -- <target> <level>, or: just bump <target> <level>)
 // Bumps the version in every file of a target, and sets the Claude Code version that the marketplace
 // texts name to CLAUDE_CODE_VERSION. plugin:check runs versionProblems, so a missed file fails verify.
@@ -18,6 +18,10 @@ export const TARGETS: Record<string, Slot[]> = {
     { file: "plugin/.claude-plugin/plugin.json", path: ["version"] },
     { file: "plugin/mcp/package.json", path: ["version"] },
     { file: MARKETPLACE, path: ["metadata", "version"] },
+  ],
+  "cc-docs-cli": [
+    { file: "cli/.claude-plugin/plugin.json", path: ["version"] },
+    { file: "cli/package.json", path: ["version"] },
   ],
   "cc-inspect": [
     { file: "inspect/.claude-plugin/plugin.json", path: ["version"] },

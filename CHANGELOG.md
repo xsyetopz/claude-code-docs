@@ -26,8 +26,16 @@ The site documents Claude Code `2.1.309`, the only release it tracks. The versio
 - Provenance badges (Documented, Undocumented, Differs, and Gated) that mark each item.
 - A style guide for contributors in `docs/contributing/`.
 - Capture and check tools in `tools/`, and a GitHub Pages deploy workflow.
+- A third plugin, `cc-docs-cli` 1.0.0: a `cc-docs` command (`search`, `read`, `list`, `schema`, with `--source`, `--section`, `--limit`, and `--json`) that the Bash tool runs, plus a skill. It has no MCP server, so it adds no tool list to the context. It shares its code with the `cc-docs` server.
+- The site build writes `llms-search-index.json`, a prebuilt search index of every page. `cc-docs` and `cc-docs-cli` load it in one request in place of fetching each page.
 
 ### Changed
+
+- **Breaking:** `cc-docs` 1.0.0 has four tools in place of seven, and its tool list is 2,773 bytes in place of 14,110. The platform tools are now options of the others:
+  - `search_platform_docs` is `search_docs` with `source: "platform"`, and its `group` argument is now `section`.
+  - `read_platform_page` is `read_page` with `source: "platform"`, and its `path` argument is now `route`.
+  - `list_platform_pages` is `list_pages` with `source: "platform"`, and its `group` argument is now `section`.
+  - `search_docs`, `read_page`, `list_pages`, and `get_schema` keep their names. No tool has an output schema, and a page or schema read returns text only.
 
 - Diagrams render after the fonts load, scroll sideways on small screens instead of shrinking, and keep lines out of labels.
 - Merged duplicated rows into one home per item, with links from other pages.

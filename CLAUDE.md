@@ -11,7 +11,7 @@ Not made by or tied to Anthropic. Hosted at <https://xsyetopz.github.io/claude-c
 - `bun install` installs lefthook hooks: pre-commit runs the gates on staged files, commit-msg runs commitlint, pre-push runs `verify:locked`.
 - `bun run schemas`: regenerate `schemas/` (the JSON Schemas and the Mod API type file `schemas/claude-code.d.ts`) from the installed Claude Code binary.
 - New Claude Code version: follow the runbook in `tools/release/README.md`.
-- `bun run version:bump -- <site|cc-docs|cc-inspect|all> <patch|minor|major>` (or `just bump ...`): bump every file of a version, and sync the Claude Code version in the marketplace texts. Bump a plugin in the change that alters it; `plugin:check` fails when a plugin's files disagree.
+- `bun run version:bump -- <site|cc-docs|cc-docs-cli|cc-inspect|all> <patch|minor|major>` (or `just bump ...`): bump every file of a version, and sync the Claude Code version in the marketplace texts. Bump a plugin in the change that alters it; `plugin:check` fails when a plugin's files disagree.
 
 ## Layout
 

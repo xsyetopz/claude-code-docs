@@ -21,6 +21,19 @@ bun run serve     # serve the build
 bun run verify    # typecheck + format + lint + checks + build, run this before a pull request
 ```
 
+## Plugins
+
+The repo is also a Claude Code plugin marketplace, `claude-code-docs`, with three plugins:
+
+- `cc-docs`: an MCP server with four tools (`search_docs`, `read_page`, `list_pages`, `get_schema`) and a skill. Pass `source: "platform"` to search, read, or list the Claude API and platform docs.
+- `cc-docs-cli`: the same lookups as a `cc-docs` command that the Bash tool runs, plus a skill. It has no MCP server, so it adds no tool list to the context. It works only in Claude Code and needs Bun.
+- `cc-inspect`: an MCP server and a skill that read your session transcripts and the installed Claude Code program.
+
+```sh
+claude plugin marketplace add xsyetopz/claude-code-docs
+claude plugin install cc-docs@claude-code-docs   # or cc-docs-cli, or cc-inspect
+```
+
 ## Contribute
 
 Read [CONTRIBUTING.md](CONTRIBUTING.md) and the Style Guide page at `docs/contributing/style-guide.md`.

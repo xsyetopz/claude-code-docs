@@ -22,10 +22,32 @@ for (const f of ["starts_with", "ends_with"]) ajv.addFormat(f, true);
 ajv.addKeyword({ keyword: "x-managed-only", schemaType: "boolean" });
 const read = (p: string) => JSON.parse(readFileSync(join(ROOT, p), "utf8"));
 const problems: string[] = [];
-/** The plugins of the marketplace: folder and skill name. */
+/** The plugins of the marketplace: folder, skill, bundle source and output, tests, and whether it has an MCP server. */
 const PLUGINS = [
-  { dir: "plugin", skill: "claude-code-docs" },
-  { dir: "inspect", skill: "cc-inspect" },
+  {
+    dir: "plugin",
+    skill: "claude-code-docs",
+    src: "plugin/mcp/src/server.ts",
+    out: "plugin/mcp/dist/server.js",
+    test: "plugin/mcp/test",
+    mcp: true,
+  },
+  {
+    dir: "inspect",
+    skill: "cc-inspect",
+    src: "inspect/mcp/src/server.ts",
+    out: "inspect/mcp/dist/server.js",
+    test: "inspect/mcp/test",
+    mcp: true,
+  },
+  {
+    dir: "cli",
+    skill: "cc-docs-cli",
+    src: "cli/src/cli.ts",
+    out: "cli/bin/cc-docs",
+    test: "cli/test",
+    mcp: false,
+  },
 ];
 
 const targets: [string, string][] = [
@@ -63,12 +85,18 @@ for (const n of names)
 
 problems.push(...versionProblems(read));
 
-for (const f of PLUGINS.flatMap((p) => [
-  `${p.dir}/.mcp.json`,
-  `${p.dir}/skills/${p.skill}/SKILL.md`,
-  `${p.dir}/mcp/dist/server.js`,
-]))
-  if (!existsSync(join(ROOT, f))) problems.push(`${f}: missing`);
+for (const p of PLUGINS) {
+  for (const f of [`${p.dir}/skills/${p.skill}/SKILL.md`, p.out])
+    if (!existsSync(join(ROOT, f))) problems.push(`${f}: missing`);
+  // The CLI plugin adds no tool list, so it has no .mcp.json.
+  if (existsSync(join(ROOT, p.dir, ".mcp.json")) !== p.mcp)
+    problems.push(
+      `${p.dir}/.mcp.json: ${p.mcp ? "missing" : "must not exist (no MCP server)"}`,
+    );
+}
+// The command ships only in cli/, so the MCP plugin puts nothing on the Bash PATH.
+if (existsSync(join(ROOT, "plugin", "bin")))
+  problems.push("plugin/bin: must not exist (the command is in cli/)");
 
 // The claude CLI validates both manifests offline when it is on PATH. No credentials are passed.
 if (Bun.which("claude")) {
@@ -86,29 +114,20 @@ if (Bun.which("claude")) {
     "plugin:check: claude CLI not on PATH, skipped claude plugin validate",
   );
 
-for (const { dir } of PLUGINS) {
-  const dist = `${dir}/mcp/dist/server.js`;
-  // Server tests (stdio client against dist/server.js).
+for (const { dir, src, out: dist, test } of PLUGINS) {
+  // Tests run against the committed bundle.
   if (existsSync(join(ROOT, dist))) {
-    const t = Bun.spawnSync(["bun", "test", `${dir}/mcp/test`], { cwd: ROOT });
+    const t = Bun.spawnSync(["bun", "test", test], { cwd: ROOT });
     if (t.exitCode !== 0)
-      problems.push(
-        `bun test ${dir}/mcp/test failed:\n${t.stderr.toString().trim()}`,
-      );
+      problems.push(`bun test ${test} failed:\n${t.stderr.toString().trim()}`);
   }
-  // Freshness: dist/server.js must equal a fresh bundle of the sources (bun build is deterministic
+  // Freshness: the bundle must equal a fresh bundle of the sources (bun build is deterministic
   // for the same inputs and versions).
   const tmp = mkdtempSync(join(tmpdir(), "plugin-check-"));
   try {
-    const bundle = join(tmp, "server.js");
+    const bundle = join(tmp, "bundle.js");
     const b = Bun.spawnSync(
-      [
-        "bun",
-        "build",
-        `${dir}/mcp/src/server.ts`,
-        "--target=bun",
-        `--outfile=${bundle}`,
-      ],
+      ["bun", "build", src, "--target=bun", `--outfile=${bundle}`],
       { cwd: ROOT },
     );
     if (b.exitCode !== 0)

@@ -1,6 +1,6 @@
 // Usage: bun tools/plugin/smoke.ts   (also: bun run plugin:smoke)
 // Opt-in, needs network. Runs plugin/mcp/dist/server.js against the real sites with a temp cache:
-// one search_docs, one read_page, one search_platform_docs. Exits non-zero on any failure.
+// one search_docs, one read_page, one platform search_docs, and one cc-docs search. Exits non-zero on any failure.
 // Not part of verify. Run it after a deploy.
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -59,11 +59,22 @@ try {
     /Source:/,
   );
   await step(
-    "search_platform_docs",
-    "search_platform_docs",
-    { query: "messages api" },
+    "search_docs platform",
+    "search_docs",
+    { query: "messages api", source: "platform" },
     /Source:/,
   );
+  const t0 = Date.now();
+  const cli = Bun.spawnSync(
+    ["bun", join(MCP, "..", "..", "cli", "bin", "cc-docs"), "search", "hooks"],
+    { env },
+  );
+  const ok = cli.exitCode === 0 && /Source:/.test(cli.stdout.toString());
+  console.log(`${ok ? "ok  " : "FAIL"} cc-docs search (${Date.now() - t0} ms)`);
+  if (!ok)
+    failures.push(
+      `cc-docs search: ${(cli.stdout.toString() + cli.stderr.toString()).slice(0, 300)}`,
+    );
 } catch (e) {
   failures.push(`connect: ${String(e)}`);
 } finally {
