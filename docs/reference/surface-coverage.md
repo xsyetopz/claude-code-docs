@@ -17,11 +17,11 @@ Each row below names the page that covers an item, or the reason the item is lef
 | [API Endpoints](#api-endpoints) | 431 | 25 | 0 | 0 | 406 |
 | [Environment Variables](#environment-variables) | 1846 | 1322 | 0 | 0 | 524 |
 | [Error Texts](#error-texts) | 4022 | 3 | 0 | 0 | 4019 |
-| [Files](#files) | 78 | 2 | 0 | 0 | 76 |
+| [Files](#files) | 78 | 49 | 0 | 29 | 0 |
 | [CLI Flags](#cli-flags) | 303 | 130 | 172 | 1 | 0 |
 | [Gates](#gates) | 1101 | 7 | 0 | 0 | 1094 |
 | [Hook Events](#hook-events) | 33 | 33 | 0 | 0 | 0 |
-| [Keybindings](#keybindings) | 204 | 0 | 0 | 0 | 204 |
+| [Keybindings](#keybindings) | 204 | 204 | 0 | 0 | 0 |
 | [Mod API](#mod-api) | 229 | 229 | 0 | 0 | 0 |
 | [Models](#models) | 66 | 51 | 0 | 0 | 15 |
 | [OpenTelemetry Events](#opentelemetry-events) | 28 | 28 | 0 | 0 | 0 |
@@ -30,7 +30,7 @@ Each row below names the page that covers an item, or the reason the item is lef
 | [Slash Commands](#slash-commands) | 142 | 103 | 32 | 7 | 0 |
 | [Subcommands](#subcommands) | 71 | 9 | 62 | 0 | 0 |
 | [Tools](#tools) | 89 | 83 | 0 | 6 | 0 |
-| Total | 8893 | 2272 | 266 | 16 | 6339 |
+| Total | 8893 | 2523 | 266 | 45 | 6059 |
 
 ## Betas
 
@@ -6415,84 +6415,84 @@ Items: 78.
 
 | Item | Where |
 | --- | --- |
-| `.cc-writes` | Not on a page yet |
-| `.config.json` | Not on a page yet |
-| `.deep-link-register-failed` | Not on a page yet |
-| `.last-cleanup` | Not on a page yet |
-| `.last-update-result.json` | Not on a page yet |
-| `.update.lock` | Not on a page yet |
+| `.cc-writes` | Excluded: A name in the program's list of config-folder entries. No use that a user can act on was confirmed. |
+| `.config.json` | [Files on Disk](../start/files-on-disk.md) |
+| `.deep-link-register-failed` | [Files on Disk](../start/files-on-disk.md) |
+| `.last-cleanup` | [Files on Disk](../start/files-on-disk.md) |
+| `.last-update-result.json` | [Files on Disk](../start/files-on-disk.md) |
+| `.update.lock` | [Files on Disk](../start/files-on-disk.md) |
 | `CLAUDE.md` | [Files on Disk](../start/files-on-disk.md) |
-| `active-time.json` | Not on a page yet |
-| `agent-memory` | Not on a page yet |
-| `asset-cache` | Not on a page yet |
-| `backups` | Not on a page yet |
-| `ca-bundle.crt` | Not on a page yet |
-| `cache` | Not on a page yet |
-| `changelog.md` | Not on a page yet |
-| `chrome` | Not on a page yet |
-| `commands` | Not on a page yet |
-| `computer-use.lock` | Not on a page yet |
-| `cowork_plugins` | Not on a page yet |
-| `daemon` | Not on a page yet |
-| `daemon.json` | Not on a page yet |
-| `daemon.lock` | Not on a page yet |
-| `daemon.log` | Not on a page yet |
-| `daemon.scheduled.status.json` | Not on a page yet |
-| `daemon.status.json` | Not on a page yet |
-| `debug` | Not on a page yet |
-| `dev-mods` | Not on a page yet |
-| `device-unbound-creates.json` | Not on a page yet |
-| `drafts` | Not on a page yet |
-| `dump-prompts` | Not on a page yet |
-| `feedback-bundles` | Not on a page yet |
-| `file-transfers` | Not on a page yet |
-| `fork-seeds` | Not on a page yet |
-| `gh-pr-status-cache.json` | Not on a page yet |
-| `hfi-auth.json` | Not on a page yet |
+| `active-time.json` | [Files on Disk](../start/files-on-disk.md) |
+| `agent-memory` | [Files on Disk](../start/files-on-disk.md) |
+| `asset-cache` | [Files on Disk](../start/files-on-disk.md) |
+| `backups` | [Files on Disk](../start/files-on-disk.md) |
+| `ca-bundle.crt` | Excluded: Belongs to the agent proxy of remote sessions (under `ccr/` in the config folder or `~/.ccr/`). Not a file that a user edits. |
+| `cache` | [Files on Disk](../start/files-on-disk.md) |
+| `changelog.md` | [Files on Disk](../start/files-on-disk.md) |
+| `chrome` | Excluded: Only a name in the program's lists of config-folder entries. Its content was not confirmed. |
+| `commands` | [Files on Disk](../start/files-on-disk.md) |
+| `computer-use.lock` | Excluded: A lock file of the computer-use feature. Not a file that a user edits. |
+| `cowork_plugins` | [Files on Disk](../start/files-on-disk.md) |
+| `daemon` | [Files on Disk](../start/files-on-disk.md) |
+| `daemon.json` | Excluded: Only a name in the program's lists of config-folder entries and its cleanup code. Its content was not confirmed. |
+| `daemon.lock` | [Files on Disk](../start/files-on-disk.md) |
+| `daemon.log` | [Files on Disk](../start/files-on-disk.md) |
+| `daemon.scheduled.status.json` | [Files on Disk](../start/files-on-disk.md) |
+| `daemon.status.json` | [Files on Disk](../start/files-on-disk.md) |
+| `debug` | [Files on Disk](../start/files-on-disk.md) |
+| `dev-mods` | [Files on Disk](../start/files-on-disk.md) |
+| `device-unbound-creates.json` | Excluded: An internal state file (`state/`) that the cleanup code removes. Not a file that a user edits. |
+| `drafts` | [Files on Disk](../start/files-on-disk.md) |
+| `dump-prompts` | Excluded: The program has a writer for `dump-prompts/<id>.jsonl`, but what turns it on was not confirmed. |
+| `feedback-bundles` | [Files on Disk](../start/files-on-disk.md) |
+| `file-transfers` | Excluded: Only a name in the program's lists of config-folder entries. Its content was not confirmed. |
+| `fork-seeds` | Excluded: An internal folder (`remote-control/fork-seeds/`) of `.json` files that the cleanup code removes. Not a file that a user edits. |
+| `gh-pr-status-cache.json` | [Files on Disk](../start/files-on-disk.md) |
+| `hfi-auth.json` | Excluded: An internal auth file that the cleanup code removes. Not a file that a user edits. |
 | `history.jsonl` | [Files on Disk](../start/files-on-disk.md) |
-| `image-cache` | Not on a page yet |
-| `jobs` | Not on a page yet |
-| `keybindings.json` | Not on a page yet |
-| `local` | Not on a page yet |
-| `loop.md` | Not on a page yet |
-| `mcp-discover-verdicts.json` | Not on a page yet |
-| `mcp-discovery-cache` | Not on a page yet |
-| `mcp-needs-auth-cache.json` | Not on a page yet |
-| `mcp-skill-archives` | Not on a page yet |
-| `model-access.json` | Not on a page yet |
-| `model-catalog` | Not on a page yet |
-| `my-closed-issues.json` | Not on a page yet |
-| `org-memory-discovery.json` | Not on a page yet |
-| `output-styles` | Not on a page yet |
-| `paste-cache` | Not on a page yet |
-| `personal` | Not on a page yet |
-| `plans` | Not on a page yet |
-| `plugins` | Not on a page yet |
-| `policy-limits.json` | Not on a page yet |
-| `projects` | Not on a page yet |
-| `provider-probe-verdicts.json` | Not on a page yet |
-| `remote-settings-consent.json` | Not on a page yet |
-| `remote-settings-helper-consent` | Not on a page yet |
-| `remote-settings.json` | Not on a page yet |
-| `rules` | Not on a page yet |
-| `seed-admin` | Not on a page yet |
-| `sessions` | Not on a page yet |
-| `settings.json` | Not on a page yet |
-| `shares` | Not on a page yet |
-| `shell-snapshots` | Not on a page yet |
-| `skills` | Not on a page yet |
-| `startup-perf` | Not on a page yet |
-| `state` | Not on a page yet |
-| `stats-cache.json` | Not on a page yet |
-| `tasks` | Not on a page yet |
-| `team-discovery.json` | Not on a page yet |
-| `teams` | Not on a page yet |
-| `telemetry` | Not on a page yet |
-| `themes` | Not on a page yet |
-| `traces` | Not on a page yet |
-| `uploads` | Not on a page yet |
-| `usage-data` | Not on a page yet |
-| `workflows` | Not on a page yet |
+| `image-cache` | Excluded: Only a name in the program's lists of config-folder entries and its cleanup code. Its content was not confirmed. |
+| `jobs` | [Files on Disk](../start/files-on-disk.md) |
+| `keybindings.json` | [Files on Disk](../start/files-on-disk.md) |
+| `local` | Excluded: Only a name in the program's lists of config-folder entries. Its content was not confirmed. |
+| `loop.md` | Excluded: Only a name in the program's lists of paths (the config folder and `.claude/`). What reads it was not confirmed. |
+| `mcp-discover-verdicts.json` | Excluded: An internal state file (`state/`) that the cleanup code removes. Not a file that a user edits. |
+| `mcp-discovery-cache` | Excluded: Only a name in the program's lists of config-folder entries. Its content was not confirmed. |
+| `mcp-needs-auth-cache.json` | [Files on Disk](../start/files-on-disk.md) |
+| `mcp-skill-archives` | Excluded: Only a name in the program's lists of config-folder entries. Its content was not confirmed. |
+| `model-access.json` | Excluded: An internal cache file (`cache/`). Not a file that a user edits. |
+| `model-catalog` | [Files on Disk](../start/files-on-disk.md) |
+| `my-closed-issues.json` | [Files on Disk](../start/files-on-disk.md) |
+| `org-memory-discovery.json` | Excluded: An internal cache file for the organization memory lookup. Not a file that a user edits. |
+| `output-styles` | [Files on Disk](../start/files-on-disk.md) |
+| `paste-cache` | [Files on Disk](../start/files-on-disk.md) |
+| `personal` | Excluded: The name of the personal memory store folder (`memory/personal`). Its use was not confirmed. |
+| `plans` | [Files on Disk](../start/files-on-disk.md) |
+| `plugins` | [Files on Disk](../start/files-on-disk.md) |
+| `policy-limits.json` | [Files on Disk](../start/files-on-disk.md) |
+| `projects` | [Files on Disk](../start/files-on-disk.md) |
+| `provider-probe-verdicts.json` | Excluded: An internal cache file (`cache/`). Not a file that a user edits. |
+| `remote-settings-consent.json` | Excluded: An internal consent record for remote settings. Not a file that a user edits. |
+| `remote-settings-helper-consent` | Excluded: An internal consent record for remote settings. Not a file that a user edits. |
+| `remote-settings.json` | [Files on Disk](../start/files-on-disk.md) |
+| `rules` | [Files on Disk](../start/files-on-disk.md) |
+| `seed-admin` | [Files on Disk](../start/files-on-disk.md) |
+| `sessions` | [Files on Disk](../start/files-on-disk.md) |
+| `settings.json` | [Files on Disk](../start/files-on-disk.md) |
+| `shares` | Excluded: Only a name in the program's lists of config-folder entries. Its content was not confirmed. |
+| `shell-snapshots` | [Files on Disk](../start/files-on-disk.md) |
+| `skills` | [Files on Disk](../start/files-on-disk.md) |
+| `startup-perf` | [Files on Disk](../start/files-on-disk.md) |
+| `state` | [Files on Disk](../start/files-on-disk.md) |
+| `stats-cache.json` | [Files on Disk](../start/files-on-disk.md) |
+| `tasks` | [Files on Disk](../start/files-on-disk.md) |
+| `team-discovery.json` | Excluded: An internal cache file (`cache/`) that the cleanup code removes. Not a file that a user edits. |
+| `teams` | Excluded: Only a name in the program's lists of config-folder entries. Its content was not confirmed. |
+| `telemetry` | Excluded: An internal folder (`telemetry/`) of the telemetry code. Not a file that a user edits. |
+| `themes` | Excluded: A folder name that plugins use. A user folder of this name in the config folder was not confirmed. |
+| `traces` | Excluded: Only a name in the program's lists of config-folder entries. Its content was not confirmed. |
+| `uploads` | [Files on Disk](../start/files-on-disk.md) |
+| `usage-data` | [Files on Disk](../start/files-on-disk.md) |
+| `workflows` | Excluded: A folder name that plugins use. A user folder of this name in the config folder was not confirmed. |
 
 ## CLI Flags
 
@@ -7958,210 +7958,210 @@ Items: 204.
 
 | Item | Where |
 | --- | --- |
-| `AbovePrompt` | Not on a page yet |
-| `AbovePromptInput` | Not on a page yet |
-| `AbovePromptSelect` | Not on a page yet |
-| `Agents` | Not on a page yet |
-| `Attachments` | Not on a page yet |
-| `Autocomplete` | Not on a page yet |
-| `Chat` | Not on a page yet |
-| `Confirmation` | Not on a page yet |
-| `DiffDialog` | Not on a page yet |
-| `DiffPanel` | Not on a page yet |
-| `EffortSlider` | Not on a page yet |
-| `FeedbackSurvey` | Not on a page yet |
-| `Footer` | Not on a page yet |
-| `Global` | Not on a page yet |
-| `Help` | Not on a page yet |
-| `HistorySearch` | Not on a page yet |
-| `MessageSelector` | Not on a page yet |
-| `ModelPicker` | Not on a page yet |
-| `Pane` | Not on a page yet |
-| `PaneField` | Not on a page yet |
-| `Plugin` | Not on a page yet |
-| `ProactivityMenu` | Not on a page yet |
-| `Scroll` | Not on a page yet |
-| `Select` | Not on a page yet |
-| `Settings` | Not on a page yet |
-| `Tabs` | Not on a page yet |
-| `Task` | Not on a page yet |
-| `ThemePicker` | Not on a page yet |
-| `Transcript` | Not on a page yet |
-| `abovePrompt:focus` | Not on a page yet |
-| `abovePrompt:highlightNext` | Not on a page yet |
-| `abovePrompt:highlightPrevious` | Not on a page yet |
-| `abovePrompt:leave` | Not on a page yet |
-| `abovePrompt:next` | Not on a page yet |
-| `abovePrompt:press` | Not on a page yet |
-| `abovePrompt:previous` | Not on a page yet |
-| `abovePrompt:toggle` | Not on a page yet |
-| `agents:find` | Not on a page yet |
-| `agents:nextGroup` | Not on a page yet |
-| `agents:previousGroup` | Not on a page yet |
-| `agents:rename` | Not on a page yet |
-| `agents:setGroup` | Not on a page yet |
-| `agents:switchView` | Not on a page yet |
-| `agents:togglePin` | Not on a page yet |
-| `app:cycleDiffBase` | Not on a page yet |
-| `app:diffFileListDown` | Not on a page yet |
-| `app:diffFileListUp` | Not on a page yet |
-| `app:exit` | Not on a page yet |
-| `app:interrupt` | Not on a page yet |
-| `app:openArtifact` | Not on a page yet |
-| `app:redraw` | Not on a page yet |
-| `app:toggleBrief` | Not on a page yet |
-| `app:toggleDiffNoiseFilter` | Not on a page yet |
-| `app:toggleDiffPreSession` | Not on a page yet |
-| `app:toggleReplTab` | Not on a page yet |
-| `app:toggleTerminal` | Not on a page yet |
-| `app:toggleTodos` | Not on a page yet |
-| `app:toggleTranscript` | Not on a page yet |
-| `attachments:exit` | Not on a page yet |
-| `attachments:next` | Not on a page yet |
-| `attachments:previous` | Not on a page yet |
-| `attachments:remove` | Not on a page yet |
-| `autocomplete:accept` | Not on a page yet |
-| `autocomplete:dismiss` | Not on a page yet |
-| `autocomplete:next` | Not on a page yet |
-| `autocomplete:previous` | Not on a page yet |
-| `chat:attentionDown` | Not on a page yet |
-| `chat:attentionUp` | Not on a page yet |
-| `chat:cancel` | Not on a page yet |
-| `chat:clearInput` | Not on a page yet |
-| `chat:clearScreen` | Not on a page yet |
-| `chat:cycleMode` | Not on a page yet |
-| `chat:cycleProactivity` | Not on a page yet |
-| `chat:decreaseEffort` | Not on a page yet |
-| `chat:defaultToNewerModel` | Not on a page yet |
-| `chat:externalEditor` | Not on a page yet |
-| `chat:fastMode` | Not on a page yet |
-| `chat:imagePaste` | Not on a page yet |
-| `chat:increaseEffort` | Not on a page yet |
-| `chat:killAgents` | Not on a page yet |
-| `chat:modelPicker` | Not on a page yet |
-| `chat:newline` | Not on a page yet |
-| `chat:queueSubmit` | Not on a page yet |
-| `chat:sendNow` | Not on a page yet |
-| `chat:stash` | Not on a page yet |
-| `chat:submit` | Not on a page yet |
-| `chat:thinkingToggle` | Not on a page yet |
-| `chat:undo` | Not on a page yet |
-| `chat:workflowKeywordToggle` | Not on a page yet |
-| `confirm:cycleMode` | Not on a page yet |
-| `confirm:next` | Not on a page yet |
-| `confirm:nextField` | Not on a page yet |
-| `confirm:no` | Not on a page yet |
-| `confirm:previous` | Not on a page yet |
-| `confirm:previousField` | Not on a page yet |
-| `confirm:toggle` | Not on a page yet |
-| `confirm:yes` | Not on a page yet |
-| `diff:back` | Not on a page yet |
-| `diff:dismiss` | Not on a page yet |
-| `diff:nextFile` | Not on a page yet |
-| `diff:nextSource` | Not on a page yet |
-| `diff:previousFile` | Not on a page yet |
-| `diff:previousSource` | Not on a page yet |
-| `effortSlider:decreaseEffort` | Not on a page yet |
-| `effortSlider:increaseEffort` | Not on a page yet |
-| `effortSlider:thisSessionOnly` | Not on a page yet |
-| `effortSlider:toggleUltracode` | Not on a page yet |
-| `feedbackSurvey:bad` | Not on a page yet |
-| `feedbackSurvey:fine` | Not on a page yet |
-| `feedbackSurvey:good` | Not on a page yet |
-| `footer:clearSelection` | Not on a page yet |
-| `footer:close` | Not on a page yet |
-| `footer:dismiss` | Not on a page yet |
-| `footer:down` | Not on a page yet |
-| `footer:next` | Not on a page yet |
-| `footer:openSelected` | Not on a page yet |
-| `footer:previous` | Not on a page yet |
-| `footer:up` | Not on a page yet |
-| `help:dismiss` | Not on a page yet |
-| `history:next` | Not on a page yet |
-| `history:previous` | Not on a page yet |
-| `history:search` | Not on a page yet |
-| `historySearch:accept` | Not on a page yet |
-| `historySearch:cancel` | Not on a page yet |
-| `historySearch:cycleScope` | Not on a page yet |
-| `historySearch:execute` | Not on a page yet |
-| `historySearch:next` | Not on a page yet |
-| `modelPicker:decreaseEffort` | Not on a page yet |
-| `modelPicker:increaseEffort` | Not on a page yet |
-| `modelPicker:thisSessionOnly` | Not on a page yet |
-| `pane:bottom` | Not on a page yet |
-| `pane:close` | Not on a page yet |
-| `pane:grow` | Not on a page yet |
-| `pane:next` | Not on a page yet |
-| `pane:pageDown` | Not on a page yet |
-| `pane:pageUp` | Not on a page yet |
-| `pane:previous` | Not on a page yet |
-| `pane:scrollDown` | Not on a page yet |
-| `pane:scrollUp` | Not on a page yet |
-| `pane:shrink` | Not on a page yet |
-| `pane:top` | Not on a page yet |
-| `permission:toggleDebug` | Not on a page yet |
-| `plugin:cycleMarketplace` | Not on a page yet |
-| `plugin:favorite` | Not on a page yet |
-| `plugin:install` | Not on a page yet |
-| `plugin:toggle` | Not on a page yet |
-| `proactivityMenu:nextMode` | Not on a page yet |
-| `proactivityMenu:previousMode` | Not on a page yet |
-| `scroll:bottom` | Not on a page yet |
-| `scroll:fullPageDown` | Not on a page yet |
-| `scroll:fullPageUp` | Not on a page yet |
-| `scroll:halfPageDown` | Not on a page yet |
-| `scroll:halfPageUp` | Not on a page yet |
-| `scroll:lineDown` | Not on a page yet |
-| `scroll:lineUp` | Not on a page yet |
-| `scroll:pageDown` | Not on a page yet |
-| `scroll:pageUp` | Not on a page yet |
-| `scroll:top` | Not on a page yet |
-| `select:accept` | Not on a page yet |
-| `select:cancel` | Not on a page yet |
-| `select:first` | Not on a page yet |
-| `select:last` | Not on a page yet |
-| `select:next` | Not on a page yet |
-| `select:pageDown` | Not on a page yet |
-| `select:pageUp` | Not on a page yet |
-| `select:previous` | Not on a page yet |
-| `selection:clear` | Not on a page yet |
-| `selection:copy` | Not on a page yet |
-| `selection:extendDown` | Not on a page yet |
-| `selection:extendLeft` | Not on a page yet |
-| `selection:extendLineEnd` | Not on a page yet |
-| `selection:extendLineStart` | Not on a page yet |
-| `selection:extendRight` | Not on a page yet |
-| `selection:extendUp` | Not on a page yet |
-| `settings:fixUsage` | Not on a page yet |
-| `settings:periodDay` | Not on a page yet |
-| `settings:periodWeek` | Not on a page yet |
-| `settings:retry` | Not on a page yet |
-| `settings:search` | Not on a page yet |
-| `settings:sortByTokens` | Not on a page yet |
-| `strip:jump1` | Not on a page yet |
-| `strip:jump2` | Not on a page yet |
-| `strip:jump3` | Not on a page yet |
-| `strip:jump4` | Not on a page yet |
-| `strip:jump5` | Not on a page yet |
-| `strip:jump6` | Not on a page yet |
-| `strip:jump7` | Not on a page yet |
-| `strip:jump8` | Not on a page yet |
-| `strip:jump9` | Not on a page yet |
-| `strip:new` | Not on a page yet |
-| `strip:next` | Not on a page yet |
-| `strip:previous` | Not on a page yet |
-| `strip:tabNext` | Not on a page yet |
-| `strip:tabPrevious` | Not on a page yet |
-| `strip:toggle` | Not on a page yet |
-| `strip:viewAll` | Not on a page yet |
-| `tabs:next` | Not on a page yet |
-| `tabs:previous` | Not on a page yet |
-| `task:background` | Not on a page yet |
-| `theme:editCustom` | Not on a page yet |
-| `theme:toggleSyntaxHighlighting` | Not on a page yet |
-| `transcript:exit` | Not on a page yet |
-| `transcript:toggleShowAll` | Not on a page yet |
-| `voice:pushToTalk` | Not on a page yet |
+| `AbovePrompt` | [Keybindings](../configure/keybindings.md) |
+| `AbovePromptInput` | [Keybindings](../configure/keybindings.md) |
+| `AbovePromptSelect` | [Keybindings](../configure/keybindings.md) |
+| `Agents` | [Keybindings](../configure/keybindings.md) |
+| `Attachments` | [Keybindings](../configure/keybindings.md) |
+| `Autocomplete` | [Keybindings](../configure/keybindings.md) |
+| `Chat` | [Keybindings](../configure/keybindings.md) |
+| `Confirmation` | [Keybindings](../configure/keybindings.md) |
+| `DiffDialog` | [Keybindings](../configure/keybindings.md) |
+| `DiffPanel` | [Keybindings](../configure/keybindings.md) |
+| `EffortSlider` | [Keybindings](../configure/keybindings.md) |
+| `FeedbackSurvey` | [Keybindings](../configure/keybindings.md) |
+| `Footer` | [Keybindings](../configure/keybindings.md) |
+| `Global` | [Keybindings](../configure/keybindings.md) |
+| `Help` | [Keybindings](../configure/keybindings.md) |
+| `HistorySearch` | [Keybindings](../configure/keybindings.md) |
+| `MessageSelector` | [Keybindings](../configure/keybindings.md) |
+| `ModelPicker` | [Keybindings](../configure/keybindings.md) |
+| `Pane` | [Keybindings](../configure/keybindings.md) |
+| `PaneField` | [Keybindings](../configure/keybindings.md) |
+| `Plugin` | [Keybindings](../configure/keybindings.md) |
+| `ProactivityMenu` | [Keybindings](../configure/keybindings.md) |
+| `Scroll` | [Keybindings](../configure/keybindings.md) |
+| `Select` | [Keybindings](../configure/keybindings.md) |
+| `Settings` | [Keybindings](../configure/keybindings.md) |
+| `Tabs` | [Keybindings](../configure/keybindings.md) |
+| `Task` | [Keybindings](../configure/keybindings.md) |
+| `ThemePicker` | [Keybindings](../configure/keybindings.md) |
+| `Transcript` | [Keybindings](../configure/keybindings.md) |
+| `abovePrompt:focus` | [Keybindings](../configure/keybindings.md) |
+| `abovePrompt:highlightNext` | [Keybindings](../configure/keybindings.md) |
+| `abovePrompt:highlightPrevious` | [Keybindings](../configure/keybindings.md) |
+| `abovePrompt:leave` | [Keybindings](../configure/keybindings.md) |
+| `abovePrompt:next` | [Keybindings](../configure/keybindings.md) |
+| `abovePrompt:press` | [Keybindings](../configure/keybindings.md) |
+| `abovePrompt:previous` | [Keybindings](../configure/keybindings.md) |
+| `abovePrompt:toggle` | [Keybindings](../configure/keybindings.md) |
+| `agents:find` | [Keybindings](../configure/keybindings.md) |
+| `agents:nextGroup` | [Keybindings](../configure/keybindings.md) |
+| `agents:previousGroup` | [Keybindings](../configure/keybindings.md) |
+| `agents:rename` | [Keybindings](../configure/keybindings.md) |
+| `agents:setGroup` | [Keybindings](../configure/keybindings.md) |
+| `agents:switchView` | [Keybindings](../configure/keybindings.md) |
+| `agents:togglePin` | [Keybindings](../configure/keybindings.md) |
+| `app:cycleDiffBase` | [Keybindings](../configure/keybindings.md) |
+| `app:diffFileListDown` | [Keybindings](../configure/keybindings.md) |
+| `app:diffFileListUp` | [Keybindings](../configure/keybindings.md) |
+| `app:exit` | [Keybindings](../configure/keybindings.md) |
+| `app:interrupt` | [Keybindings](../configure/keybindings.md) |
+| `app:openArtifact` | [Keybindings](../configure/keybindings.md) |
+| `app:redraw` | [Keybindings](../configure/keybindings.md) |
+| `app:toggleBrief` | [Keybindings](../configure/keybindings.md) |
+| `app:toggleDiffNoiseFilter` | [Keybindings](../configure/keybindings.md) |
+| `app:toggleDiffPreSession` | [Keybindings](../configure/keybindings.md) |
+| `app:toggleReplTab` | [Keybindings](../configure/keybindings.md) |
+| `app:toggleTerminal` | [Keybindings](../configure/keybindings.md) |
+| `app:toggleTodos` | [Keybindings](../configure/keybindings.md) |
+| `app:toggleTranscript` | [Keybindings](../configure/keybindings.md) |
+| `attachments:exit` | [Keybindings](../configure/keybindings.md) |
+| `attachments:next` | [Keybindings](../configure/keybindings.md) |
+| `attachments:previous` | [Keybindings](../configure/keybindings.md) |
+| `attachments:remove` | [Keybindings](../configure/keybindings.md) |
+| `autocomplete:accept` | [Keybindings](../configure/keybindings.md) |
+| `autocomplete:dismiss` | [Keybindings](../configure/keybindings.md) |
+| `autocomplete:next` | [Keybindings](../configure/keybindings.md) |
+| `autocomplete:previous` | [Keybindings](../configure/keybindings.md) |
+| `chat:attentionDown` | [Keybindings](../configure/keybindings.md) |
+| `chat:attentionUp` | [Keybindings](../configure/keybindings.md) |
+| `chat:cancel` | [Keybindings](../configure/keybindings.md) |
+| `chat:clearInput` | [Keybindings](../configure/keybindings.md) |
+| `chat:clearScreen` | [Keybindings](../configure/keybindings.md) |
+| `chat:cycleMode` | [Keybindings](../configure/keybindings.md) |
+| `chat:cycleProactivity` | [Keybindings](../configure/keybindings.md) |
+| `chat:decreaseEffort` | [Keybindings](../configure/keybindings.md) |
+| `chat:defaultToNewerModel` | [Keybindings](../configure/keybindings.md) |
+| `chat:externalEditor` | [Keybindings](../configure/keybindings.md) |
+| `chat:fastMode` | [Keybindings](../configure/keybindings.md) |
+| `chat:imagePaste` | [Keybindings](../configure/keybindings.md) |
+| `chat:increaseEffort` | [Keybindings](../configure/keybindings.md) |
+| `chat:killAgents` | [Keybindings](../configure/keybindings.md) |
+| `chat:modelPicker` | [Keybindings](../configure/keybindings.md) |
+| `chat:newline` | [Keybindings](../configure/keybindings.md) |
+| `chat:queueSubmit` | [Keybindings](../configure/keybindings.md) |
+| `chat:sendNow` | [Keybindings](../configure/keybindings.md) |
+| `chat:stash` | [Keybindings](../configure/keybindings.md) |
+| `chat:submit` | [Keybindings](../configure/keybindings.md) |
+| `chat:thinkingToggle` | [Keybindings](../configure/keybindings.md) |
+| `chat:undo` | [Keybindings](../configure/keybindings.md) |
+| `chat:workflowKeywordToggle` | [Keybindings](../configure/keybindings.md) |
+| `confirm:cycleMode` | [Keybindings](../configure/keybindings.md) |
+| `confirm:next` | [Keybindings](../configure/keybindings.md) |
+| `confirm:nextField` | [Keybindings](../configure/keybindings.md) |
+| `confirm:no` | [Keybindings](../configure/keybindings.md) |
+| `confirm:previous` | [Keybindings](../configure/keybindings.md) |
+| `confirm:previousField` | [Keybindings](../configure/keybindings.md) |
+| `confirm:toggle` | [Keybindings](../configure/keybindings.md) |
+| `confirm:yes` | [Keybindings](../configure/keybindings.md) |
+| `diff:back` | [Keybindings](../configure/keybindings.md) |
+| `diff:dismiss` | [Keybindings](../configure/keybindings.md) |
+| `diff:nextFile` | [Keybindings](../configure/keybindings.md) |
+| `diff:nextSource` | [Keybindings](../configure/keybindings.md) |
+| `diff:previousFile` | [Keybindings](../configure/keybindings.md) |
+| `diff:previousSource` | [Keybindings](../configure/keybindings.md) |
+| `effortSlider:decreaseEffort` | [Keybindings](../configure/keybindings.md) |
+| `effortSlider:increaseEffort` | [Keybindings](../configure/keybindings.md) |
+| `effortSlider:thisSessionOnly` | [Keybindings](../configure/keybindings.md) |
+| `effortSlider:toggleUltracode` | [Keybindings](../configure/keybindings.md) |
+| `feedbackSurvey:bad` | [Keybindings](../configure/keybindings.md) |
+| `feedbackSurvey:fine` | [Keybindings](../configure/keybindings.md) |
+| `feedbackSurvey:good` | [Keybindings](../configure/keybindings.md) |
+| `footer:clearSelection` | [Keybindings](../configure/keybindings.md) |
+| `footer:close` | [Keybindings](../configure/keybindings.md) |
+| `footer:dismiss` | [Keybindings](../configure/keybindings.md) |
+| `footer:down` | [Keybindings](../configure/keybindings.md) |
+| `footer:next` | [Keybindings](../configure/keybindings.md) |
+| `footer:openSelected` | [Keybindings](../configure/keybindings.md) |
+| `footer:previous` | [Keybindings](../configure/keybindings.md) |
+| `footer:up` | [Keybindings](../configure/keybindings.md) |
+| `help:dismiss` | [Keybindings](../configure/keybindings.md) |
+| `history:next` | [Keybindings](../configure/keybindings.md) |
+| `history:previous` | [Keybindings](../configure/keybindings.md) |
+| `history:search` | [Keybindings](../configure/keybindings.md) |
+| `historySearch:accept` | [Keybindings](../configure/keybindings.md) |
+| `historySearch:cancel` | [Keybindings](../configure/keybindings.md) |
+| `historySearch:cycleScope` | [Keybindings](../configure/keybindings.md) |
+| `historySearch:execute` | [Keybindings](../configure/keybindings.md) |
+| `historySearch:next` | [Keybindings](../configure/keybindings.md) |
+| `modelPicker:decreaseEffort` | [Keybindings](../configure/keybindings.md) |
+| `modelPicker:increaseEffort` | [Keybindings](../configure/keybindings.md) |
+| `modelPicker:thisSessionOnly` | [Keybindings](../configure/keybindings.md) |
+| `pane:bottom` | [Keybindings](../configure/keybindings.md) |
+| `pane:close` | [Keybindings](../configure/keybindings.md) |
+| `pane:grow` | [Keybindings](../configure/keybindings.md) |
+| `pane:next` | [Keybindings](../configure/keybindings.md) |
+| `pane:pageDown` | [Keybindings](../configure/keybindings.md) |
+| `pane:pageUp` | [Keybindings](../configure/keybindings.md) |
+| `pane:previous` | [Keybindings](../configure/keybindings.md) |
+| `pane:scrollDown` | [Keybindings](../configure/keybindings.md) |
+| `pane:scrollUp` | [Keybindings](../configure/keybindings.md) |
+| `pane:shrink` | [Keybindings](../configure/keybindings.md) |
+| `pane:top` | [Keybindings](../configure/keybindings.md) |
+| `permission:toggleDebug` | [Keybindings](../configure/keybindings.md) |
+| `plugin:cycleMarketplace` | [Keybindings](../configure/keybindings.md) |
+| `plugin:favorite` | [Keybindings](../configure/keybindings.md) |
+| `plugin:install` | [Keybindings](../configure/keybindings.md) |
+| `plugin:toggle` | [Keybindings](../configure/keybindings.md) |
+| `proactivityMenu:nextMode` | [Keybindings](../configure/keybindings.md) |
+| `proactivityMenu:previousMode` | [Keybindings](../configure/keybindings.md) |
+| `scroll:bottom` | [Keybindings](../configure/keybindings.md) |
+| `scroll:fullPageDown` | [Keybindings](../configure/keybindings.md) |
+| `scroll:fullPageUp` | [Keybindings](../configure/keybindings.md) |
+| `scroll:halfPageDown` | [Keybindings](../configure/keybindings.md) |
+| `scroll:halfPageUp` | [Keybindings](../configure/keybindings.md) |
+| `scroll:lineDown` | [Keybindings](../configure/keybindings.md) |
+| `scroll:lineUp` | [Keybindings](../configure/keybindings.md) |
+| `scroll:pageDown` | [Keybindings](../configure/keybindings.md) |
+| `scroll:pageUp` | [Keybindings](../configure/keybindings.md) |
+| `scroll:top` | [Keybindings](../configure/keybindings.md) |
+| `select:accept` | [Keybindings](../configure/keybindings.md) |
+| `select:cancel` | [Keybindings](../configure/keybindings.md) |
+| `select:first` | [Keybindings](../configure/keybindings.md) |
+| `select:last` | [Keybindings](../configure/keybindings.md) |
+| `select:next` | [Keybindings](../configure/keybindings.md) |
+| `select:pageDown` | [Keybindings](../configure/keybindings.md) |
+| `select:pageUp` | [Keybindings](../configure/keybindings.md) |
+| `select:previous` | [Keybindings](../configure/keybindings.md) |
+| `selection:clear` | [Keybindings](../configure/keybindings.md) |
+| `selection:copy` | [Keybindings](../configure/keybindings.md) |
+| `selection:extendDown` | [Keybindings](../configure/keybindings.md) |
+| `selection:extendLeft` | [Keybindings](../configure/keybindings.md) |
+| `selection:extendLineEnd` | [Keybindings](../configure/keybindings.md) |
+| `selection:extendLineStart` | [Keybindings](../configure/keybindings.md) |
+| `selection:extendRight` | [Keybindings](../configure/keybindings.md) |
+| `selection:extendUp` | [Keybindings](../configure/keybindings.md) |
+| `settings:fixUsage` | [Keybindings](../configure/keybindings.md) |
+| `settings:periodDay` | [Keybindings](../configure/keybindings.md) |
+| `settings:periodWeek` | [Keybindings](../configure/keybindings.md) |
+| `settings:retry` | [Keybindings](../configure/keybindings.md) |
+| `settings:search` | [Keybindings](../configure/keybindings.md) |
+| `settings:sortByTokens` | [Keybindings](../configure/keybindings.md) |
+| `strip:jump1` | [Keybindings](../configure/keybindings.md) |
+| `strip:jump2` | [Keybindings](../configure/keybindings.md) |
+| `strip:jump3` | [Keybindings](../configure/keybindings.md) |
+| `strip:jump4` | [Keybindings](../configure/keybindings.md) |
+| `strip:jump5` | [Keybindings](../configure/keybindings.md) |
+| `strip:jump6` | [Keybindings](../configure/keybindings.md) |
+| `strip:jump7` | [Keybindings](../configure/keybindings.md) |
+| `strip:jump8` | [Keybindings](../configure/keybindings.md) |
+| `strip:jump9` | [Keybindings](../configure/keybindings.md) |
+| `strip:new` | [Keybindings](../configure/keybindings.md) |
+| `strip:next` | [Keybindings](../configure/keybindings.md) |
+| `strip:previous` | [Keybindings](../configure/keybindings.md) |
+| `strip:tabNext` | [Keybindings](../configure/keybindings.md) |
+| `strip:tabPrevious` | [Keybindings](../configure/keybindings.md) |
+| `strip:toggle` | [Keybindings](../configure/keybindings.md) |
+| `strip:viewAll` | [Keybindings](../configure/keybindings.md) |
+| `tabs:next` | [Keybindings](../configure/keybindings.md) |
+| `tabs:previous` | [Keybindings](../configure/keybindings.md) |
+| `task:background` | [Keybindings](../configure/keybindings.md) |
+| `theme:editCustom` | [Keybindings](../configure/keybindings.md) |
+| `theme:toggleSyntaxHighlighting` | [Keybindings](../configure/keybindings.md) |
+| `transcript:exit` | [Keybindings](../configure/keybindings.md) |
+| `transcript:toggleShowAll` | [Keybindings](../configure/keybindings.md) |
+| `voice:pushToTalk` | [Keybindings](../configure/keybindings.md) |
 
 ## Mod API
 
