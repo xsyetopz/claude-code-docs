@@ -88,6 +88,21 @@ flowchart LR
 A subagent gets a smaller tool list than the main session. For example, `AskUserQuestion` and `EnterPlanMode` are removed from every subagent.
 See [Subagent Runtime](../../extend/subagents/runtime.md) for the full rules.
 
+## Errors
+
+Each row is a family of messages. The backticked text is the start that every message in the family shares. A row marked `Various` gathers the messages of one feature that do not share one start.
+
+| Start of Message | Status | What It Means | Cases |
+| --- | --- | --- | --- |
+| `Cannot enter worktree` | <Undocumented /> | `EnterWorktree` with `path` refused the worktree. | The worktree belongs to another running session (locked), does not exist, is a network path, is marked prunable by git, is not a registered or linked worktree, is the current directory, or is not under the worktrees that Claude Code manages. |
+| `Orphaned worktree dir` | <Undocumented /> | Claude Code left a leftover worktree directory alone. | It will not self-heal when `git remote`, `rev-list`, or `rev-parse` fails, or when the branch has unpushed commits. |
+| `WorktreeCreate hook failed` | <Undocumented /> | A `WorktreeCreate` hook did not give a worktree. | The hook errored, was configured but did not run (workspace not trusted or matcher mismatch), or returned no worktree path. |
+| Various | <Undocumented /> | **ProposeGoal.** `ProposeGoal` refused a goal proposal. | It cannot be used in agent contexts, the goal condition is empty or too long once canonicalized for display, it cannot clear a goal (use `/goal clear`), no interactive session can render the prompt, or a proposal already awaits the user's decision. |
+| Various | <Undocumented /> | **Workflow.** A `Workflow` run or workflow script was refused. | A script uses syntax that workflow scripts do not support (`with`, `import()`, `await using`, a reserved identifier, a `meta` statement with spread or computed keys). A `workflow()`, `agent()`, `parallel()`, or `pipeline()` call got wrong arguments, a named workflow does not exist, or `agentType` is denied by a permission rule. A run was killed, was restored from the journal, or hides its script and cannot be resumed. |
+| Various | <Undocumented /> | **Task tools.** A task, notification, or worktree tool call was refused. | `ReadNotifications` was called by a subagent, a task is not running or is owned by another agent, a task type or parameter is missing or not supported, `EnterWorktree` needs `path` or would give no write access, or the session is already in a worktree. |
+| Various | <Undocumented /> | **Plan mode.** `ExitPlanMode` or `EnterPlanMode` was refused. | The approval arrived without the plan, no plan file was found, the request to the lead could not be written, or `EnterPlanMode` was used in an agent context. |
+| Various | <Undocumented /> | **Worktree creation.** A worktree could not be created or reused. | A leftover worktree folder points to another location, a branch is already checked out elsewhere or already exists, the worktree already exists and cannot be reused, workspace trust was not accepted yet (run `claude` once in the directory), or a `WorktreeCreate` hook emitted a path that cannot be verified. |
+
 ## Related Pages
 
 - [Tools](index.md)

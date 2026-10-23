@@ -148,6 +148,14 @@ Source: the program (read), and a probe of the interactive screen (2.1.305, loca
 
 :::
 
+## Errors
+
+Each row is a family of messages. The backticked text is the start that every message in the family shares. A row marked `Various` gathers the messages of one feature that do not share one start.
+
+| Start of Message | Status | What It Means | Cases |
+| --- | --- | --- | --- |
+| Various | <Undocumented /> | **Memory stores.** A memory store key, mount, or sync was refused. | A key escapes the memory directory (a null byte, backslash, absolute path, traversal, or symlink), is reserved, or targets an excluded subtree; a mount name cannot be derived; `CLAUDE_MEMORY_STORES` is not valid JSON; or a store listing returned an error. |
+
 ## Related Pages
 
 - [Environment Variables](env-vars/index.md) for the memory variables.

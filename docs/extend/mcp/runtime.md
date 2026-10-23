@@ -125,6 +125,18 @@ stateDiagram-v2
   Failed --> Connecting: <code>/mcp</code> reconnect
 ```
 
+## Errors
+
+Rows with a start of a message are families. The backticked text is the start that every message in the family shares.
+
+| Start of Message | Status | What It Means | Cases |
+| --- | --- | --- | --- |
+| `.mcp.json is malformed (not valid JSON, or mcpServers is not an object)` | <Undocumented /> | Claude Code could not read the project `.mcp.json`. | The file is not valid JSON, or `mcpServers` is not an object. |
+| `MCP server "` | <Undocumented /> | A tool call or command named a server that cannot be used. | The server is blocked by managed policy, is disabled (re-enable it with `/mcp`), or was not found. |
+| `Server "` | <Undocumented /> | A server operation failed. | The server does not support resources, is not connected, or was not found. The last case lists the available servers. |
+| `No MCP server named` | <Undocumented /> | A server name is not in the scope that the command looked in. | The scope is `.mcp.json`, local, or user. |
+| `StdioClientTransport already started`, `MCP tool call to server`, `Missing required ${…}: ${…}. Usage: /mcp__`, `The tool call was interrupted`, `Unsupported server type`, `claude.ai MCP proxy is not available`, `No claude.ai OAuth token`, `The "${…}" connector`, `"${…}" was disabled while reconnecting`, `Connection failed`, `Server status:`, `The result of MCP tool` | <Undocumented /> | An MCP server or tool call failed. | The server or client does not support a capability that the call needs (roots, sampling, elicitation, tasks, resources), the tool call was interrupted or aborted because the account changed, a required argument is missing, or the server type is not supported. |
+
 ## Related Pages
 
 - [MCP](index.md)

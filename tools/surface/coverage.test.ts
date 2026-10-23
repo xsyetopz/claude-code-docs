@@ -104,6 +104,45 @@ test("a prefix exclusion covers every item with the prefix and is stale with non
   expect(stale.stale).toEqual(["exclusions.json: flag:--zzz*"]);
 });
 
+test("an error map key ending in * maps a family by prefix, and other kinds do not", () => {
+  const snap = {
+    version: "1.2.3",
+    kinds: {
+      error: [
+        { name: "Unknown hook type: a" },
+        { name: "Unknown hook type: b" },
+      ],
+      flag: [{ name: "--one" }],
+    },
+  };
+  const entry = { route: "/extend/hooks", anchor: "errors" };
+  const none = { error: new Set<string>(), flag: new Set<string>() };
+  const ok = check(
+    snap,
+    none,
+    { "error:Unknown hook type*": entry },
+    {
+      "flag:--one": "x",
+    },
+  );
+  expect(ok.unmapped).toEqual([]);
+  expect(ok.stale).toEqual([]);
+  expect(ok.rows.find((r) => r.kind === "error")?.mapped).toBe(2);
+  const stale = check(
+    snap,
+    none,
+    { "error:Nothing*": entry },
+    {
+      "error:Unknown*": "x",
+      "flag:--one": "x",
+    },
+  );
+  expect(stale.stale).toEqual(["map.json: error:Nothing*"]);
+  expect(shape({ "flag:--*": entry }, {})).toEqual([
+    'map.json: flag:--* ends in "*", a prefix key only for the error kind',
+  ]);
+});
+
 test("an entry of an unknown kind is stale", () => {
   const out = check(snapshot, docs, {}, { "nope:a": "x" });
   expect(out.stale).toEqual(["exclusions.json: nope:a"]);

@@ -231,6 +231,16 @@ Flags for cloud sessions and Remote Control.
 | `--forward-home-settings` `<true\|false>` | <Undocumented /> | ❌ | Sets whether this machine sends its settings to the cloud session. |
 | `--attach-serve` `<session_id>` | <Undocumented /> | ❌ | Attaches a helper to a cloud session, and the desktop app starts it. |
 
+## Errors
+
+Each row is a family of messages. The backticked text is the start that every message in the family shares. A row marked `Various` gathers the messages of one feature that do not share one start.
+
+| Start of Message | Status | What It Means | Cases |
+| --- | --- | --- | --- |
+| Various | <Undocumented /> | **Deep links.** A deep link was refused. | The `cwd` is not an absolute path or holds `..`, control characters, or a network path; the plugin or marketplace value is not valid; the scheme or action is unknown; or the launch command cannot be quoted safely. |
+| Various | <Undocumented /> | **Flag values.** A command-line flag value or combination was refused. | A flag needs another flag (`--resume-session-at` needs `--resume`), cannot be combined with a prompt, needs a value in a range, or the socket path of `--messaging-socket-path` is not a private local socket. |
+| Various | <Undocumented /> | **Claude in Chrome.** The Claude in Chrome connection failed. | The bridge is not connected, no extension connected, the browser is not paired, the socket directory or socket has the wrong owner or permissions, or the browser helper could not be found. |
+
 ## Related Pages
 
 - [CLI Overview](index.md)

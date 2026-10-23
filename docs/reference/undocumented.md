@@ -723,27 +723,28 @@ These items exist in the official docs, but the program works in another way. Co
 ## In the Program
 
 The program of `2.1.309` holds 8893 items in 17 kinds, counted from `schemas/surface.json`.
+[Surface Coverage](surface-coverage.md) lists each item with its page.
 
-| Kind | Items |
-| --- | --- |
-| Betas | 50 |
-| API Endpoints | 431 |
-| Environment Variables | 1846 |
-| Error Texts | 4022 |
-| Files | 78 |
-| CLI Flags | 303 |
-| Gates | 1101 |
-| Hook Events | 33 |
-| Keybindings | 204 |
-| Mod API | 229 |
-| Models | 66 |
-| OpenTelemetry Events | 28 |
-| Permission Rules | 6 |
-| Settings | 194 |
-| Slash Commands | 142 |
-| Subcommands | 71 |
-| Tools | 89 |
-| All kinds | 8893 |
+| Kind | Items | Not on a Page Yet |
+| --- | --- | --- |
+| [Betas](surface-coverage.md#betas) | 50 | 0 |
+| [API Endpoints](surface-coverage.md#api-endpoints) | 431 | 0 |
+| [Environment Variables](surface-coverage.md#environment-variables) | 1846 | 0 |
+| [Error Texts](surface-coverage.md#error-texts) | 4022 | 0 |
+| [Files](surface-coverage.md#files) | 78 | 0 |
+| [CLI Flags](surface-coverage.md#cli-flags) | 303 | 0 |
+| [Gates](surface-coverage.md#gates) | 1101 | 0 |
+| [Hook Events](surface-coverage.md#hook-events) | 33 | 0 |
+| [Keybindings](surface-coverage.md#keybindings) | 204 | 0 |
+| [Mod API](surface-coverage.md#mod-api) | 229 | 0 |
+| [Models](surface-coverage.md#models) | 66 | 0 |
+| [OpenTelemetry Events](surface-coverage.md#opentelemetry-events) | 28 | 0 |
+| [Permission Rules](surface-coverage.md#permission-rules) | 6 | 0 |
+| [Settings](surface-coverage.md#settings) | 194 | 0 |
+| [Slash Commands](surface-coverage.md#slash-commands) | 142 | 0 |
+| [Subcommands](surface-coverage.md#subcommands) | 71 | 0 |
+| [Tools](surface-coverage.md#tools) | 89 | 0 |
+| All kinds | 8893 | 0 |
 
 ## Related Pages
 

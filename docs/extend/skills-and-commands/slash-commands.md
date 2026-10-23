@@ -211,6 +211,14 @@ Not seen live, so these come from the program: the `(could not refresh)` ending,
 
 Source: the program. The delete prompt, the footer keys, and `Artifact deleted` were also seen in a live run. The `Resets` lines and the rate-limit texts above were seen against a local stub with fake subscriber credentials.
 
+## Errors
+
+Each row is a family of messages. The backticked text is the start that every message in the family shares. A row marked `Various` gathers the messages of one feature that do not share one start.
+
+| Start of Message | Status | What It Means | Cases |
+| --- | --- | --- | --- |
+| Various | <Undocumented /> | **Terminal setup.** `/terminal-setup` could not change a terminal's settings. | A backup of the Terminal.app preferences could not be made, a profile could not be read, Option as Meta or the audio bell could not be set, or no config path was found for Alacritty. The text says whether the settings were restored. |
+
 ## Related Pages
 
 - [Skills and Commands](index.md): skills, which also give you slash commands.

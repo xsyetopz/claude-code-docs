@@ -102,6 +102,18 @@ A gated tool is built only when its gate passes. Gates are a login type, a polic
 A tool with a server-side flag appears for some accounts and not for others, so the same version can show different tools.
 Most of these tools are deferred, so Claude finds them with `ToolSearch` and not in the first tool list.
 
+## Errors
+
+Each row is a family of messages. The backticked text is the start that every message in the family shares. A row marked `Various` gathers the messages of one feature that do not share one start.
+
+| Start of Message | Status | What It Means | Cases |
+| --- | --- | --- | --- |
+| Various | <Undocumented /> | **Artifact.** The `Artifact` tool refused or could not finish a call. | An input no longer matches what was approved (`action`, `url`, `type_url`, `out_dir`, or a file), so nothing was done and the call must be retried. An action is not available in this session or build. A required argument is missing or wrong (`url`, `thread_id`, `cursor`, `db_op`, `collection`, `doc_id`, `file_path`, `asset_id`). A Read or Edit permission rule blocks the file. The page, the preview, or a database write could not be completed. |
+| Various | <Undocumented /> | **Claude Design.** `DesignSync` or `ClaudeDesign` refused a call or could not reach Claude Design. | No plan token or an old one: run `finalize_plan` first. A path is reserved (`CLAUDE.md` and `.claude/`) or outside the finalized plan. A write needs a one-time approval or a project write grant that is not active. A request to Claude Design failed with an HTTP status, or the OAuth base URL is not on the first-party allowlist. |
+| Various | <Undocumented /> | **Projects.** The `Projects` tool refused a read or write. | The session has no project attached, a write would put the project over its maximum size, `if_version` no longer matches the doc, the uploaded bytes do not match, or the path is a file upload (`project_delete` removes text docs only). |
+| Various | <Undocumented /> | **Computer use.** A computer-use action was refused. | The platform is not supported, a key chord has too many components, the clipboard write did not round-trip, the session has no disk for the lock, or a session context is missing. |
+| Various | <Undocumented /> | **Trigger tools.** A trigger call was missing a required argument. | An action such as `get`, `update`, `list_runs`, `run`, or `get_run_log` was called without `trigger_id` or `session_id`, or `create`, `update`, and `create_webhook_trigger` without `body`. |
+
 ## Related Pages
 
 - [Tools](index.md)

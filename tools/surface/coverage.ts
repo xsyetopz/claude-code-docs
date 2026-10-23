@@ -2,6 +2,7 @@
 // Every item of schemas/surface.json must be covered (design D4) by one of:
 //   1. a docs table row that names it in backticks, exactly, on a page of its kind (PAGES below);
 //   2. an entry of tools/surface/map.json: { "<kind>:<name>": { "route": "/path", "anchor": "id" } };
+//      for the `error` kind only, a key ending in `*` maps a family by its stable prefix (design D3);
 //   3. an entry of tools/surface/exclusions.json: { "<kind>:<name>" or "<kind>:<prefix>*": "reason" }.
 // It prints the counts by kind, then fails on unmapped items (as `<kind>:<name>`, 20 for each kind unless --all)
 // and on stale entries: a map or exclusion key that matches no item. --kind limits the check to some kinds.
@@ -92,9 +93,23 @@ export const status = (
 ): Status => {
   const key = `${kind}:${name}`;
   if (docs[kind]?.has(name)) return "docs";
-  if (key in map) return "mapped";
+  if (mapOf(key, map)) return "mapped";
   if (exclusionOf(key, exclusions)) return "excluded";
   return "unmapped";
+};
+
+/** The map entry of an item key: the key itself, or for an `error` item the longest matching prefix key. */
+export const mapOf = (
+  key: string,
+  map: Record<string, MapEntry>,
+): MapEntry | undefined => {
+  if (key in map) return map[key];
+  if (!key.startsWith("error:")) return undefined;
+  const prefix = Object.keys(map)
+    .filter((p) => p.startsWith("error:") && p.endsWith("*"))
+    .filter((p) => key.startsWith(p.slice(0, -1)))
+    .sort((a, b) => b.length - a.length)[0];
+  return prefix ? map[prefix] : undefined;
 };
 
 /** The exclusion key that covers an item key: the key itself or a matching prefix. */
@@ -168,6 +183,11 @@ export const shape = (
   for (const [k, v] of Object.entries(map))
     if (!v || typeof v.route !== "string" || !v.route.startsWith("/"))
       bad.push(`map.json: ${k} needs a route that starts with "/"`);
+  for (const k of Object.keys(map))
+    if (k.endsWith("*") && !k.startsWith("error:"))
+      bad.push(
+        `map.json: ${k} ends in "*", a prefix key only for the error kind`,
+      );
   for (const [k, v] of Object.entries(exclusions))
     if (typeof v !== "string" || !v.trim())
       bad.push(`exclusions.json: ${k} needs a non-empty reason`);

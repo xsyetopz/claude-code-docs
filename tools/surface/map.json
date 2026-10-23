@@ -119,6 +119,4538 @@
     "route": "/configure/env-vars/cloud-providers",
     "anchor": "variables"
   },
+  "error:\"${…}\" i*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:\"${…}\" is a*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:\"${…}\" is not a v*": {
+    "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
+  "error:\"${…}\" w*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:\"${…}\" was d*": {
+    "route": "/extend/mcp/runtime",
+    "anchor": "errors"
+  },
+  "error:\"m*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:$.$*": {
+    "route": "/extend/mod-api/testing",
+    "anchor": "errors"
+  },
+  "error:$.${…}:*": {
+    "route": "/extend/mod-api",
+    "anchor": "errors"
+  },
+  "error:$.*": {
+    "route": "/extend/mod-api",
+    "anchor": "errors"
+  },
+  "error:$.c*": {
+    "route": "/extend/mod-api/testing",
+    "anchor": "errors"
+  },
+  "error:$.u*": {
+    "route": "/extend/mod-api/testing",
+    "anchor": "errors"
+  },
+  "error:${…} $*": {
+    "route": "/extend/mod-api/testing",
+    "anchor": "errors"
+  },
+  "error:${…} ${…} h*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:${…} ${…};*": {
+    "route": "/configure/cli/flags",
+    "anchor": "errors"
+  },
+  "error:${…} (*": {
+    "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
+  "error:${…} (t*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:${…} I*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:${…} N*": {
+    "route": "/extend/skills-and-commands/slash-commands",
+    "anchor": "errors"
+  },
+  "error:${…} Not*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:${…} R*": {
+    "route": "/extend/skills-and-commands/slash-commands",
+    "anchor": "errors"
+  },
+  "error:${…} T*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:${…} Thi*": {
+    "route": "/extend/plugins/loading",
+    "anchor": "errors"
+  },
+  "error:${…} Y*": {
+    "route": "/extend/skills-and-commands/slash-commands",
+    "anchor": "errors"
+  },
+  "error:${…} a*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:${…} ad*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:${…} af*": {
+    "route": "/configure/memory-and-rules",
+    "anchor": "errors"
+  },
+  "error:${…} after r*": {
+    "route": "/extend/mod-api",
+    "anchor": "errors"
+  },
+  "error:${…} be*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:${…} cal*": {
+    "route": "/extend/mod-api",
+    "anchor": "errors"
+  },
+  "error:${…} cannot be c*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:${…} cas*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:${…} ch*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:${…} cou*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:${…} could not be e*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:${…} could not be o*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:${…} di*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:${…} did*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:${…} f*": {
+    "route": "/configure/memory-and-rules",
+    "anchor": "errors"
+  },
+  "error:${…} h*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:${…} inv*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:${…} is $*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:${…} is a f*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:${…} is a*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:${…} is b*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:${…} is h*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:${…} is ins*": {
+    "route": "/extend/plugins/loading",
+    "anchor": "errors"
+  },
+  "error:${…} is no *": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:${…} is not a d*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:${…} is not a p*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:${…} is not a r*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:${…} is not a regu*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:${…} is not an*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:${…} is not s*": {
+    "route": "/configure/cli/flags",
+    "anchor": "errors"
+  },
+  "error:${…} is not y*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:${…} is o*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:${…} is on t*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:${…} is one*": {
+    "route": "/extend/mcp/cli",
+    "anchor": "errors"
+  },
+  "error:${…} ma*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:${…} must be a n*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:${…} must be an*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:${…} must be o*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:${…} no l*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:${…} p*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:${…} requires \"*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:${…} requires a*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:${…} s*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:${…} ser*": {
+    "route": "/configure/cli/flags",
+    "anchor": "errors"
+  },
+  "error:${…} t*": {
+    "route": "/extend/mod-api",
+    "anchor": "errors"
+  },
+  "error:${…} van*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:${…} w*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:${…} was not r*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:${…} wi*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:${…} — R*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:${…} — t*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:${…} —*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:${…}'s m*": {
+    "route": "/extend/plugins/loading",
+    "anchor": "errors"
+  },
+  "error:${…}. *": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:${…}. N*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:${…}.*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:${…}/*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:${…}: \"*": {
+    "route": "/extend/mod-api/testing",
+    "anchor": "errors"
+  },
+  "error:${…}: $.*": {
+    "route": "/extend/mod-api",
+    "anchor": "errors"
+  },
+  "error:${…}: ${…} is a*": {
+    "route": "/extend/mod-api/testing",
+    "anchor": "errors"
+  },
+  "error:${…}: ${…} is not a *": {
+    "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
+  "error:${…}: ${…} l*": {
+    "route": "/extend/mod-api/testing",
+    "anchor": "errors"
+  },
+  "error:${…}: ${…} p*": {
+    "route": "/extend/mod-api/testing",
+    "anchor": "errors"
+  },
+  "error:${…}: ${…} —*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:${…}: ${…}. T*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:${…}: ${…}.*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:${…}: ${…}:*": {
+    "route": "/extend/mod-api",
+    "anchor": "errors"
+  },
+  "error:${…}: A*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:${…}: `*": {
+    "route": "/extend/mod-api/testing",
+    "anchor": "errors"
+  },
+  "error:${…}: a b*": {
+    "route": "/extend/mod-api/testing",
+    "anchor": "errors"
+  },
+  "error:${…}: a f*": {
+    "route": "/extend/mod-api/testing",
+    "anchor": "errors"
+  },
+  "error:${…}: a g*": {
+    "route": "/extend/mod-api/testing",
+    "anchor": "errors"
+  },
+  "error:${…}: a hop*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:${…}: a p*": {
+    "route": "/extend/mod-api/testing",
+    "anchor": "errors"
+  },
+  "error:${…}: a t*": {
+    "route": "/extend/plugins/loading",
+    "anchor": "errors"
+  },
+  "error:${…}: a v*": {
+    "route": "/extend/mod-api/testing",
+    "anchor": "errors"
+  },
+  "error:${…}: an a*": {
+    "route": "/extend/mod-api/testing",
+    "anchor": "errors"
+  },
+  "error:${…}: ca*": {
+    "route": "/extend/mod-api/testing",
+    "anchor": "errors"
+  },
+  "error:${…}: cannot r*": {
+    "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
+  "error:${…}: co*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:${…}: d*": {
+    "route": "/extend/mod-api/testing",
+    "anchor": "errors"
+  },
+  "error:${…}: e*": {
+    "route": "/extend/mod-api",
+    "anchor": "errors"
+  },
+  "error:${…}: ex*": {
+    "route": "/extend/mod-api/testing",
+    "anchor": "errors"
+  },
+  "error:${…}: f*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:${…}: fi*": {
+    "route": "/extend/mod-api/testing",
+    "anchor": "errors"
+  },
+  "error:${…}: h*": {
+    "route": "/extend/mod-api",
+    "anchor": "errors"
+  },
+  "error:${…}: in*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:${…}: m*": {
+    "route": "/extend/mod-api",
+    "anchor": "errors"
+  },
+  "error:${…}: nex*": {
+    "route": "/extend/mod-api",
+    "anchor": "errors"
+  },
+  "error:${…}: not v*": {
+    "route": "/extend/mod-api/testing",
+    "anchor": "errors"
+  },
+  "error:${…}: on*": {
+    "route": "/extend/mod-api",
+    "anchor": "errors"
+  },
+  "error:${…}: p*": {
+    "route": "/extend/mod-api/testing",
+    "anchor": "errors"
+  },
+  "error:${…}: r*": {
+    "route": "/extend/mod-api",
+    "anchor": "errors"
+  },
+  "error:${…}: rea*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:${…}: se*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:${…}: ses*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:${…}: st*": {
+    "route": "/extend/mod-api",
+    "anchor": "errors"
+  },
+  "error:${…}: sti*": {
+    "route": "/extend/mod-api/testing",
+    "anchor": "errors"
+  },
+  "error:${…}: still r*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:${…}: the c*": {
+    "route": "/extend/mod-api/testing",
+    "anchor": "errors"
+  },
+  "error:${…}: the e*": {
+    "route": "/extend/mod-api/testing",
+    "anchor": "errors"
+  },
+  "error:${…}: the r*": {
+    "route": "/extend/mod-api/testing",
+    "anchor": "errors"
+  },
+  "error:${…}: to*": {
+    "route": "/extend/mod-api/testing",
+    "anchor": "errors"
+  },
+  "error:${…}: unk*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:${…}: unt*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:${…}: y*": {
+    "route": "/extend/plugins/loading",
+    "anchor": "errors"
+  },
+  "error:${…}C*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:${…}d*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:'a*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:'w*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:-*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:--c*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:--ca*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:--ch*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:--configu*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:--confin*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:--exe*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:--j*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:--m*": {
+    "route": "/configure/cli/flags",
+    "anchor": "errors"
+  },
+  "error:--mi*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:.mc*": {
+    "route": "/extend/mcp/cli",
+    "anchor": "errors"
+  },
+  "error:<$*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:@an*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:A D*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:A W*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:A file *": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:A g*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:A l*": {
+    "route": "/extend/plugins/loading",
+    "anchor": "errors"
+  },
+  "error:A m*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:A rea*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:A sh*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:A t*": {
+    "route": "/extend/plugins/loading",
+    "anchor": "errors"
+  },
+  "error:A wo*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:AN*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:AP*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:Abo*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:Absolute p*": {
+    "route": "/configure/memory-and-rules",
+    "anchor": "errors"
+  },
+  "error:Ac*": {
+    "route": "/configure/memory-and-rules",
+    "anchor": "errors"
+  },
+  "error:Ag*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:Already i*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:An *": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:Appl*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:Ar*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:Atta*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:Auth *": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:Authe*": {
+    "route": "/configure/memory-and-rules",
+    "anchor": "errors"
+  },
+  "error:Auto*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Az*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:Background *": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:Backs*": {
+    "route": "/configure/memory-and-rules",
+    "anchor": "errors"
+  },
+  "error:Br*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:Bu*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:Bui*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:CC*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:CL*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:CLAUDE_CODE_M*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:CLAUDE_M*": {
+    "route": "/configure/memory-and-rules",
+    "anchor": "errors"
+  },
+  "error:CLAUDE_S*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:Can't r*": {
+    "route": "/extend/mcp/cli",
+    "anchor": "errors"
+  },
+  "error:Can't res*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:Can't use t*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Cannot add M*": {
+    "route": "/extend/mcp/cli",
+    "anchor": "errors"
+  },
+  "error:Cannot add m*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Cannot del*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:Cannot delete pe*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:Cannot ed*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:Cannot ent*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:Cannot fetch m*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Cannot fetch t*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Cannot find W*": {
+    "route": "/configure/cli/flags",
+    "anchor": "errors"
+  },
+  "error:Cannot i*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Cannot loc*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:Cannot read t*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:Cannot register p*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:Cannot rem*": {
+    "route": "/extend/mcp/cli",
+    "anchor": "errors"
+  },
+  "error:Cannot ru*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:Cannot saf*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:Cannot sea*": {
+    "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
+  "error:Cannot sel*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:Cannot transi*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:Cannot unr*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:Cannot use b*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:Cannot v*": {
+    "route": "/configure/memory-and-rules",
+    "anchor": "errors"
+  },
+  "error:Cannot write pa*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:Cannot write r*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:Cannot write t*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:Cel*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:Che*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:Chr*": {
+    "route": "/configure/cli/flags",
+    "anchor": "errors"
+  },
+  "error:Clau*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:Claude C*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:Claude Code i*": {
+    "route": "/extend/mcp/cli",
+    "anchor": "errors"
+  },
+  "error:Claude Code'*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:Claude Code's w*": {
+    "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
+  "error:Claude Design u*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:Claude i*": {
+    "route": "/configure/cli/flags",
+    "anchor": "errors"
+  },
+  "error:Clip*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:Clo*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:Cloud g*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:Compacti*": {
+    "route": "/how-it-works/context-and-compaction",
+    "anchor": "errors"
+  },
+  "error:Compu*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:Configure*": {
+    "route": "/extend/mcp/auth",
+    "anchor": "errors"
+  },
+  "error:Conn*": {
+    "route": "/extend/mcp/runtime",
+    "anchor": "errors"
+  },
+  "error:Conv*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:Cop*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:Could not $*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Could not a*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Could not c*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Could not con*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:Could not conn*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Could not d*": {
+    "route": "/extend/skills-and-commands/slash-commands",
+    "anchor": "errors"
+  },
+  "error:Could not determine r*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Could not e*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Could not find C*": {
+    "route": "/extend/mcp/cli",
+    "anchor": "errors"
+  },
+  "error:Could not i*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:Could not install d*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Could not l*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Could not pr*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Could not pu*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Could not re-*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Could not rea*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Could not resolve g*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:Could not resolve t*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:Could not v*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:Could not vo*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Couldn't rec*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:Couldn't rev*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:Couldn't s*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:Couldn*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:Da*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:Dangl*": {
+    "route": "/configure/memory-and-rules",
+    "anchor": "errors"
+  },
+  "error:Dee*": {
+    "route": "/configure/cli/flags",
+    "anchor": "errors"
+  },
+  "error:Des*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:ECO*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:Ed*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:Ent*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:Enter *": {
+    "route": "/extend/mcp/auth",
+    "anchor": "errors"
+  },
+  "error:Error: ${…} *": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:Error: -*": {
+    "route": "/configure/cli/flags",
+    "anchor": "errors"
+  },
+  "error:Error: --cons*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:Error: --r*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:Error: --rep*": {
+    "route": "/configure/cli/flags",
+    "anchor": "errors"
+  },
+  "error:Error: --ru*": {
+    "route": "/configure/cli/flags",
+    "anchor": "errors"
+  },
+  "error:Error: A*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:Error: C*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:Error: F*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:Error: I*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:Error: N*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:Error: U*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:Error: W*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:Error: Y*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:Error: s*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:Error: t*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:Ever*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:Exit*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:Expected a `*": {
+    "route": "/configure/cli/flags",
+    "anchor": "errors"
+  },
+  "error:Extr*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:FO*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:Failed to ch*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:Failed to cl*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Failed to cop*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Failed to cr*": {
+    "route": "/extend/skills-and-commands/slash-commands",
+    "anchor": "errors"
+  },
+  "error:Failed to create br*": {
+    "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
+  "error:Failed to create w*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:Failed to di*": {
+    "route": "/extend/skills-and-commands/slash-commands",
+    "anchor": "errors"
+  },
+  "error:Failed to do*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Failed to e*": {
+    "route": "/extend/skills-and-commands/slash-commands",
+    "anchor": "errors"
+  },
+  "error:Failed to f*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:Failed to fetch G*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:Failed to fi*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Failed to get G*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:Failed to get m*": {
+    "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
+  "error:Failed to l*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Failed to list e*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:Failed to m*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:Failed to parse s*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:Failed to parse ses*": {
+    "route": "/extend/skills-and-commands/slash-commands",
+    "anchor": "errors"
+  },
+  "error:Failed to pers*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:Failed to read ca*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Failed to read d*": {
+    "route": "/extend/skills-and-commands/slash-commands",
+    "anchor": "errors"
+  },
+  "error:Failed to read e*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:Failed to read ex*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:Failed to read s*": {
+    "route": "/extend/skills-and-commands/slash-commands",
+    "anchor": "errors"
+  },
+  "error:Failed to rel*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:Failed to sa*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Failed to save s*": {
+    "route": "/extend/plugins/loading",
+    "anchor": "errors"
+  },
+  "error:Failed to sen*": {
+    "route": "/extend/skills-and-commands/slash-commands",
+    "anchor": "errors"
+  },
+  "error:Failed to set*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:Failed to sp*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:Failed to st*": {
+    "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
+  "error:Failed to u*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:Failed to w*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Failed to write t*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:Fal*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:Fe*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:File *": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:File n*": {
+    "route": "/configure/memory-and-rules",
+    "anchor": "errors"
+  },
+  "error:File not found: ${…}.*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:File u*": {
+    "route": "/configure/memory-and-rules",
+    "anchor": "errors"
+  },
+  "error:Files*": {
+    "route": "/configure/memory-and-rules",
+    "anchor": "errors"
+  },
+  "error:Fork*": {
+    "route": "/extend/hooks/configuration",
+    "anchor": "errors"
+  },
+  "error:GC*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:GI*": {
+    "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
+  "error:Ga*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:Goa*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:Goo*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:Gr*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:HTTP ${…} e*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:HTTP ${…} f*": {
+    "route": "/extend/mcp/auth",
+    "anchor": "errors"
+  },
+  "error:Ho*": {
+    "route": "/extend/hooks/configuration",
+    "anchor": "errors"
+  },
+  "error:Hooks*": {
+    "route": "/extend/plugins/loading",
+    "anchor": "errors"
+  },
+  "error:IT*": {
+    "route": "/extend/skills-and-commands/slash-commands",
+    "anchor": "errors"
+  },
+  "error:Id*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:Ide*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:If t*": {
+    "route": "/extend/mcp/cli",
+    "anchor": "errors"
+  },
+  "error:Im*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:Ins*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:Internal e*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:Interr*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:Invalid ${…} h*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:Invalid ${…}:*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:Invalid AP*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:Invalid Au*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:Invalid G*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Invalid JSON in m*": {
+    "route": "/extend/plugins/loading",
+    "anchor": "errors"
+  },
+  "error:Invalid JSON in t*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:Invalid UR*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:Invalid X*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:Invalid au*": {
+    "route": "/extend/mcp/auth",
+    "anchor": "errors"
+  },
+  "error:Invalid br*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:Invalid ca*": {
+    "route": "/extend/mcp/auth",
+    "anchor": "errors"
+  },
+  "error:Invalid ch*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:Invalid co*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:Invalid cw*": {
+    "route": "/configure/cli/flags",
+    "anchor": "errors"
+  },
+  "error:Invalid de*": {
+    "route": "/configure/cli/flags",
+    "anchor": "errors"
+  },
+  "error:Invalid en*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:Invalid ev*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:Invalid g*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Invalid hea*": {
+    "route": "/extend/mcp/cli",
+    "anchor": "errors"
+  },
+  "error:Invalid ma*": {
+    "route": "/configure/cli/flags",
+    "anchor": "errors"
+  },
+  "error:Invalid man*": {
+    "route": "/extend/plugins/loading",
+    "anchor": "errors"
+  },
+  "error:Invalid marketplace c*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Invalid pl*": {
+    "route": "/configure/cli/flags",
+    "anchor": "errors"
+  },
+  "error:Invalid pluginD*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:Invalid ref*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Invalid rep*": {
+    "route": "/configure/cli/flags",
+    "anchor": "errors"
+  },
+  "error:Invalid response fo*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Invalid sco*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Invalid scope:*": {
+    "route": "/extend/mcp/cli",
+    "anchor": "errors"
+  },
+  "error:Invalid ses*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:Invalid sh*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Invalid sk*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:Invalid ss*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Invalid target b*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Invalid tr*": {
+    "route": "/extend/mcp/cli",
+    "anchor": "errors"
+  },
+  "error:Invalid value f*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:Invalid version *": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:Invalid w*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:Is*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:Key e*": {
+    "route": "/configure/memory-and-rules",
+    "anchor": "errors"
+  },
+  "error:Key i*": {
+    "route": "/configure/memory-and-rules",
+    "anchor": "errors"
+  },
+  "error:Key p*": {
+    "route": "/configure/memory-and-rules",
+    "anchor": "errors"
+  },
+  "error:Key res*": {
+    "route": "/configure/memory-and-rules",
+    "anchor": "errors"
+  },
+  "error:Key t*": {
+    "route": "/configure/memory-and-rules",
+    "anchor": "errors"
+  },
+  "error:Line $*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:Linu*": {
+    "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
+  "error:Listi*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:Log*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:Los*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:MCP O*": {
+    "route": "/extend/mcp/auth",
+    "anchor": "errors"
+  },
+  "error:MCP c*": {
+    "route": "/extend/mcp/cli",
+    "anchor": "errors"
+  },
+  "error:MCP e*": {
+    "route": "/extend/mcp/cli",
+    "anchor": "errors"
+  },
+  "error:MCP se*": {
+    "route": "/extend/mcp/runtime",
+    "anchor": "errors"
+  },
+  "error:MCP tool c*": {
+    "route": "/extend/mcp/runtime",
+    "anchor": "errors"
+  },
+  "error:Managed *": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:Managed settings o*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:Mani*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:Mar*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Missing required $*": {
+    "route": "/extend/mcp/runtime",
+    "anchor": "errors"
+  },
+  "error:Missing required parameter: t*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:Mo*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:Mon*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:NP*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Na*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:No A*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:No M*": {
+    "route": "/extend/mcp/runtime",
+    "anchor": "errors"
+  },
+  "error:No O*": {
+    "route": "/extend/mcp/auth",
+    "anchor": "errors"
+  },
+  "error:No T*": {
+    "route": "/extend/mcp/auth",
+    "anchor": "errors"
+  },
+  "error:No TTY available —*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:No access token a*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:No access token for*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:No ag*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:No as*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:No auth a*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:No av*": {
+    "route": "/extend/mcp/auth",
+    "anchor": "errors"
+  },
+  "error:No b*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:No cl*": {
+    "route": "/extend/mcp/runtime",
+    "anchor": "errors"
+  },
+  "error:No conv*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:No en*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:No fil*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:No h*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:No me*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:No messages to c*": {
+    "route": "/how-it-works/context-and-compaction",
+    "anchor": "errors"
+  },
+  "error:No pl*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:No project *": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:No result rec*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:No se*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:No ses*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:No valid c*": {
+    "route": "/extend/skills-and-commands/slash-commands",
+    "anchor": "errors"
+  },
+  "error:No valid conv*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:No w*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:Not available in this b*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:Not e*": {
+    "route": "/how-it-works/context-and-compaction",
+    "anchor": "errors"
+  },
+  "error:Not in*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:Not s*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:Note*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:Note:*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:Noth*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:Nothing t*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:Nu*": {
+    "route": "/configure/memory-and-rules",
+    "anchor": "errors"
+  },
+  "error:OAuth f*": {
+    "route": "/extend/mcp/auth",
+    "anchor": "errors"
+  },
+  "error:OI*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:Obs*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:Onb*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:Only a*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:Only m*": {
+    "route": "/configure/cli/flags",
+    "anchor": "errors"
+  },
+  "error:Only t*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:Op*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:Or *": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:Or*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:Ori*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:Ou*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:Outp*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:PD*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:Path t*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Per-*": {
+    "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
+  "error:Perm*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:Pla*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:Please w*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:Plugin \"*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Plugin $*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Plugin ${…}:*": {
+    "route": "/extend/plugins/loading",
+    "anchor": "errors"
+  },
+  "error:Plugin a*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Plugin d*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Plugin o*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:Plugin p*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Plugin s*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Plugin t*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:PollW*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:Pos*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:Pow*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:Proc*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:ProgramD*": {
+    "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
+  "error:Proj*": {
+    "route": "/extend/mcp/cli",
+    "anchor": "errors"
+  },
+  "error:Propo*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:Pu*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:Publishing r*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:Publishing rep*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:Read *": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:ReadC*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:ReadN*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:Reco*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:Refr*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:Refu*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:Refuse*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:Refusing g*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Refusing to c*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Refusing to e*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Refusing to s*": {
+    "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
+  "error:Refusing to sen*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:Refusing to st*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:Regis*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:Remot*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:Ren*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:Request t*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Run*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:SDK M*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:SDK d*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:SDKS*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:SE*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:SH*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Sa*": {
+    "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
+  "error:Sandboxe*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:Scr*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:Sen*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:Server \"*": {
+    "route": "/extend/mcp/runtime",
+    "anchor": "errors"
+  },
+  "error:Server $*": {
+    "route": "/extend/plugins/loading",
+    "anchor": "errors"
+  },
+  "error:Server a*": {
+    "route": "/extend/mcp/cli",
+    "anchor": "errors"
+  },
+  "error:Server n*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:Server st*": {
+    "route": "/extend/mcp/runtime",
+    "anchor": "errors"
+  },
+  "error:Server t*": {
+    "route": "/extend/mcp/auth",
+    "anchor": "errors"
+  },
+  "error:Service i*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:Service n*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:Session $*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:Session ${…} /*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:Session e*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:Session m*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:SessionE*": {
+    "route": "/extend/hooks/configuration",
+    "anchor": "errors"
+  },
+  "error:Set*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:Settings*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:She*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:Shell '*": {
+    "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
+  "error:Si*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:Sig*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Sk*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:Skill ${…} r*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:Skill n*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:Skip*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:Soc*": {
+    "route": "/configure/cli/flags",
+    "anchor": "errors"
+  },
+  "error:Som*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:Source '*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:Source f*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:Source p*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Sp*": {
+    "route": "/extend/mcp/cli",
+    "anchor": "errors"
+  },
+  "error:Starti*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:StdioC*": {
+    "route": "/extend/mcp/runtime",
+    "anchor": "errors"
+  },
+  "error:String n*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:Subd*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Syml*": {
+    "route": "/configure/memory-and-rules",
+    "anchor": "errors"
+  },
+  "error:TO*": {
+    "route": "/extend/mod-api/testing",
+    "anchor": "errors"
+  },
+  "error:Tak*": {
+    "route": "/extend/hooks/configuration",
+    "anchor": "errors"
+  },
+  "error:Task $*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:Task output f*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:Team n*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:Tem*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:Ter*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:Tha*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:That t*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:The \"$*": {
+    "route": "/extend/mcp/runtime",
+    "anchor": "errors"
+  },
+  "error:The \"${…}\" d*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:The C*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:The acco*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:The ap*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:The b*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:The choi*": {
+    "route": "/extend/hooks/configuration",
+    "anchor": "errors"
+  },
+  "error:The com*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:The file t*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:The fo*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:The folder f*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:The go*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:The ins*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:The lat*": {
+    "route": "/extend/hooks/configuration",
+    "anchor": "errors"
+  },
+  "error:The li*": {
+    "route": "/extend/plugins/loading",
+    "anchor": "errors"
+  },
+  "error:The lis*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:The listi*": {
+    "route": "/extend/hooks/configuration",
+    "anchor": "errors"
+  },
+  "error:The n*": {
+    "route": "/extend/hooks/configuration",
+    "anchor": "errors"
+  },
+  "error:The pe*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:The pl*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:The rep*": {
+    "route": "/extend/hooks/configuration",
+    "anchor": "errors"
+  },
+  "error:The res*": {
+    "route": "/extend/mcp/runtime",
+    "anchor": "errors"
+  },
+  "error:The sk*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:The te*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:The to*": {
+    "route": "/extend/mcp/runtime",
+    "anchor": "errors"
+  },
+  "error:This a*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:This c*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:This e*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:This h*": {
+    "route": "/extend/hooks/configuration",
+    "anchor": "errors"
+  },
+  "error:This l*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:This ma*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:This o*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:This p*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:This plugin h*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:This pr*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:This session r*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:This session u*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:This session'*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:This sk*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:This t*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:This w*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:Tm*": {
+    "route": "/extend/skills-and-commands/slash-commands",
+    "anchor": "errors"
+  },
+  "error:To r*": {
+    "route": "/extend/mcp/cli",
+    "anchor": "errors"
+  },
+  "error:Token r*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:Tool u*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:Transc*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:Try*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:URL-*": {
+    "route": "/configure/memory-and-rules",
+    "anchor": "errors"
+  },
+  "error:Unable to b*": {
+    "route": "/extend/mcp/auth",
+    "anchor": "errors"
+  },
+  "error:Unable to com*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:Unable to cr*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:Unable to f*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:Unable to g*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:Unable to rea*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:Unable to resi*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:Unexpected $*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:Unexpected a*": {
+    "route": "/extend/mcp/auth",
+    "anchor": "errors"
+  },
+  "error:Unhandled o*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Unhandled r*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:Unicode-*": {
+    "route": "/configure/memory-and-rules",
+    "anchor": "errors"
+  },
+  "error:Unknown b*": {
+    "route": "/configure/cli/flags",
+    "anchor": "errors"
+  },
+  "error:Unknown c*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:Unknown de*": {
+    "route": "/configure/cli/flags",
+    "anchor": "errors"
+  },
+  "error:Unknown ex*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:Unknown h*": {
+    "route": "/extend/hooks/configuration",
+    "anchor": "errors"
+  },
+  "error:Unknown pr*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:Unknown sk*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:Unsupported cont*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:Unsupported g*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Unsupported m*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:Unsupported pl*": {
+    "route": "/extend/mcp/cli",
+    "anchor": "errors"
+  },
+  "error:Unsupported platform: d*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:Unsupported plu*": {
+    "route": "/extend/plugins/loading",
+    "anchor": "errors"
+  },
+  "error:Unsupported se*": {
+    "route": "/extend/mcp/runtime",
+    "anchor": "errors"
+  },
+  "error:Unsupported ta*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:Up*": {
+    "route": "/configure/memory-and-rules",
+    "anchor": "errors"
+  },
+  "error:Usa*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:Version $*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:Wak*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:Warning: ${…} *": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:Warning: -*": {
+    "route": "/extend/mcp/cli",
+    "anchor": "errors"
+  },
+  "error:Warning: T*": {
+    "route": "/extend/mcp/cli",
+    "anchor": "errors"
+  },
+  "error:Web *": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:WebF*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:Wi*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:Wo*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:Workf*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:Workflow:*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:Workl*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:Worktree *": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:Wri*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:Write t*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:Write v*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:Write:*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:XA*": {
+    "route": "/extend/mcp/auth",
+    "anchor": "errors"
+  },
+  "error:YA*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:You must r*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:Your Co*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:Your c*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:Your s*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:Your*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:[$*": {
+    "route": "/configure/cli/flags",
+    "anchor": "errors"
+  },
+  "error:[C*": {
+    "route": "/configure/cli/flags",
+    "anchor": "errors"
+  },
+  "error:[D*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:[R*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:[T*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:[b*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:[c*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:[g*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:[pr*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:[r*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:[u*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:`ac*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:`au*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:`ca*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:`d*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:`de*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:`dev*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:`file*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:`i*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:`n*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:`o*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:`p*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:`t*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:`u*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:`v*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:`w*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:a P*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:a ba*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:a built-in p*": {
+    "route": "/extend/hooks/configuration",
+    "anchor": "errors"
+  },
+  "error:a c*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:a di*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:a fa*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:a lo*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:a ne*": {
+    "route": "/how-it-works/context-and-compaction",
+    "anchor": "errors"
+  },
+  "error:a pa*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:a pe*": {
+    "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
+  "error:a pr*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:a pu*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:a r*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:a te*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:a tu*": {
+    "route": "/how-it-works/context-and-compaction",
+    "anchor": "errors"
+  },
+  "error:act*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:addSes*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:add_*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:adv*": {
+    "route": "/extend/mod-api/testing",
+    "anchor": "errors"
+  },
+  "error:af*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:agent(*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:agent-*": {
+    "route": "/extend/hooks/configuration",
+    "anchor": "errors"
+  },
+  "error:agent_*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:ali*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:am*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:an Art*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:an e*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:ance*": {
+    "route": "/configure/cli/flags",
+    "anchor": "errors"
+  },
+  "error:append *": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:art*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:as_*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:asser*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:asset_*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:at*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:auth s*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:authS*": {
+    "route": "/extend/mcp/auth",
+    "anchor": "errors"
+  },
+  "error:authe*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:auto*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:auto_*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:awsC*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:bac*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:be*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:bg m*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:bil*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:binS*": {
+    "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
+  "error:bindS*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:bran*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:bri*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:buildR*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:bundle h*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:canU*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:cannot c*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:cannot der*": {
+    "route": "/configure/memory-and-rules",
+    "anchor": "errors"
+  },
+  "error:cannot f*": {
+    "route": "/extend/hooks/configuration",
+    "anchor": "errors"
+  },
+  "error:cas*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:cd*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:checko*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:claude *": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:claude p*": {
+    "route": "/extend/mod-api/testing",
+    "anchor": "errors"
+  },
+  "error:claude plugin e*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:claude-c*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:claude.*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:claude.ai M*": {
+    "route": "/extend/mcp/runtime",
+    "anchor": "errors"
+  },
+  "error:claudeA*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:claudeO*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:claude_*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:cle*": {
+    "route": "/configure/cli/flags",
+    "anchor": "errors"
+  },
+  "error:client *": {
+    "route": "/extend/hooks/configuration",
+    "anchor": "errors"
+  },
+  "error:client ev*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:clientM*": {
+    "route": "/extend/mcp/auth",
+    "anchor": "errors"
+  },
+  "error:cloud *": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:cod*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:col*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:comm*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:comme*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:compo*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:compu*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:config f*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:config v*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:confir*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:cop*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:could not c*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:could not o*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:could not read $*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:could not t*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:could not w*": {
+    "route": "/extend/mod-api/testing",
+    "anchor": "errors"
+  },
+  "error:couldn't r*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:couldn*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:create *": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:create_*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:creati*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:crede*": {
+    "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
+  "error:cri*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:cur*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:dae*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:data a*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:db*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:dec*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:deli*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:den*": {
+    "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
+  "error:der*": {
+    "route": "/configure/memory-and-rules",
+    "anchor": "errors"
+  },
+  "error:des*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:deviceB*": {
+    "route": "/configure/cli/flags",
+    "anchor": "errors"
+  },
+  "error:deviceR*": {
+    "route": "/extend/hooks/configuration",
+    "anchor": "errors"
+  },
+  "error:did*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:dir*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:directory m*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:discon*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:doc_*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:duplicate -*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:ea*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:ema*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:empty a*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:ena*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:enc*": {
+    "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
+  "error:ensureP*": {
+    "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
+  "error:environment s*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:ev*": {
+    "route": "/extend/mod-api/testing",
+    "anchor": "errors"
+  },
+  "error:expected a*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:expected m*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:export c*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:export f*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:extrac*": {
+    "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
+  "error:fa*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:failed to c*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:fee*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:fetchO*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:field \"*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:file_*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:files*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:fill*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:foc*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:for-*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:fork *": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:fork_*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:fou*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:frameT*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:ga*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:gateway d*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:gateway t*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:generate_*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:get *": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:getCont*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:getG*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:getH*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:getO*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:get_*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:get_r*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:gh*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:git $*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:git ${…}.*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:git c*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:git f*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:git s*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:git w*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:git*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:git-*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:git-s*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:gitI*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:gitd*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:gith*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:go*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:gov*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:header \"*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:headl*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:home d*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:home/*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:hoo*": {
+    "route": "/extend/plugins/loading",
+    "anchor": "errors"
+  },
+  "error:hook *": {
+    "route": "/extend/hooks/configuration",
+    "anchor": "errors"
+  },
+  "error:hos*": {
+    "route": "/extend/hooks/configuration",
+    "anchor": "errors"
+  },
+  "error:host *": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:hostM*": {
+    "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
+  "error:iT*": {
+    "route": "/extend/skills-and-commands/slash-commands",
+    "anchor": "errors"
+  },
+  "error:id_*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:impor*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:import-*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:intern*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:interr*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:invalid conf*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:invalid fe*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:invalid h*": {
+    "route": "/extend/hooks/configuration",
+    "anchor": "errors"
+  },
+  "error:invalid k*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:invalid r*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:it a*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:it p*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:it w*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:its f*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:its*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:j*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:ker*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:ki*": {
+    "route": "/extend/skills-and-commands/slash-commands",
+    "anchor": "errors"
+  },
+  "error:late*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:lis*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:list *": {
+    "route": "/configure/memory-and-rules",
+    "anchor": "errors"
+  },
+  "error:liste*": {
+    "route": "/configure/cli/flags",
+    "anchor": "errors"
+  },
+  "error:liv*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:load_*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:mac*": {
+    "route": "/configure/cli/flags",
+    "anchor": "errors"
+  },
+  "error:malformed b*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:mana*": {
+    "route": "/extend/mcp/cli",
+    "anchor": "errors"
+  },
+  "error:manifest m*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:mant*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:map*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:mat*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:mcpA*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:mcpC*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:mcpS*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:mcp_*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:met*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:meth*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:missing s*": {
+    "route": "/extend/mod-api/testing",
+    "anchor": "errors"
+  },
+  "error:moc*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:mod*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:na*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:nested p*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:network *": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:network-spelled or*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:network.*": {
+    "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
+  "error:no a*": {
+    "route": "/extend/hooks/configuration",
+    "anchor": "errors"
+  },
+  "error:no d*": {
+    "route": "/extend/hooks/configuration",
+    "anchor": "errors"
+  },
+  "error:no e*": {
+    "route": "/extend/hooks/configuration",
+    "anchor": "errors"
+  },
+  "error:no file a*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:no hos*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:no k*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:no memor*": {
+    "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
+  "error:no pa*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:no pro*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:no r*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:no se*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:no u*": {
+    "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
+  "error:no v*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:non-l*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:not a c*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:not a d*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:not a h*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:not a p*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:not a v*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:not an*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:note*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:nothing c*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:oi*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:one*": {
+    "route": "/extend/hooks/configuration",
+    "anchor": "errors"
+  },
+  "error:only a*": {
+    "route": "/extend/hooks/configuration",
+    "anchor": "errors"
+  },
+  "error:only n*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:only p*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:only pr*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:ope*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:or*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:ot*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:out_*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:output b*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:output l*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:output s*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:overa*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:pai*": {
+    "route": "/configure/cli/flags",
+    "anchor": "errors"
+  },
+  "error:para*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:parent-*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:pass *": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:path cou*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:path escaped*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:path t*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:paym*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:pb*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:perm*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:permission_*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:pip*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:plac*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:plugin e*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:policy *": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:poll s*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:prep*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:prev*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:prob*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:prof*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:prog*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:project_*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:prom*": {
+    "route": "/extend/hooks/configuration",
+    "anchor": "errors"
+  },
+  "error:prox*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:query *": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:query.*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:qui*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:read *": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:readM*": {
+    "route": "/extend/mcp/cli",
+    "anchor": "errors"
+  },
+  "error:readP*": {
+    "route": "/configure/memory-and-rules",
+    "anchor": "errors"
+  },
+  "error:read_*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:readi*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:recon*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:recordi*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:ref*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:refr*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:refuse*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:refusing a*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:refusing to $*": {
+    "route": "/extend/mod-api/testing",
+    "anchor": "errors"
+  },
+  "error:refusing to d*": {
+    "route": "/configure/cli/flags",
+    "anchor": "errors"
+  },
+  "error:refusing to e*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:refusing to r*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:regio*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:registerC*": {
+    "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
+  "error:registerW*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:register_*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:rel*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:reloc*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:remot*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:rena*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:repo*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:resc*": {
+    "route": "/extend/mcp/cli",
+    "anchor": "errors"
+  },
+  "error:rese*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:resu*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:retr*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:returned o*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:ri*": {
+    "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
+  "error:room*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:root:*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:roster u*": {
+    "route": "/extend/mcp/cli",
+    "anchor": "errors"
+  },
+  "error:row*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:ru*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:run *": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:san*": {
+    "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
+  "error:sandbox w*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:scm*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:scr*": {
+    "route": "/extend/hooks/configuration",
+    "anchor": "errors"
+  },
+  "error:sealS*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:sec*": {
+    "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
+  "error:send-*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:session *": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:sessionSt*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:session_*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:set *": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:setMc*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:set_*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:setu*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:sha*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:sig*": {
+    "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
+  "error:sim*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:sn*": {
+    "route": "/extend/mcp/cli",
+    "anchor": "errors"
+  },
+  "error:sp*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:spar*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:spe*": {
+    "route": "/extend/mod-api/testing",
+    "anchor": "errors"
+  },
+  "error:spr*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:ste*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:sto*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:stop*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:stopp*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:stre*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:sub-*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:subm*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:sup*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:surrou*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:sus*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:sync *": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:te*": {
+    "route": "/extend/mod-api/testing",
+    "anchor": "errors"
+  },
+  "error:tem*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:template p*": {
+    "route": "/extend/hooks/configuration",
+    "anchor": "errors"
+  },
+  "error:tex*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:the $*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:the A*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:the R*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:the W*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:the `*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:the answer ha*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:the built*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:the c*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:the ca*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:the cas*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:the de*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:the directory m*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:the end*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:the file is on*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:the file is t*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:the file w*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:the files m*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:the ha*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:the hom*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:the i*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:the ke*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:the kit'*": {
+    "route": "/extend/mod-api/testing",
+    "anchor": "errors"
+  },
+  "error:the me*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:the n*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:the o*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:the op*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:the or*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:the p*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:the pac*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:the pl*": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:the plugin d*": {
+    "route": "/extend/hooks/configuration",
+    "anchor": "errors"
+  },
+  "error:the pro*": {
+    "route": "/configure/memory-and-rules",
+    "anchor": "errors"
+  },
+  "error:the r*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:the re*": {
+    "route": "/extend/mcp/cli",
+    "anchor": "errors"
+  },
+  "error:the rem*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:the rep*": {
+    "route": "/extend/hooks/configuration",
+    "anchor": "errors"
+  },
+  "error:the sea*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:the ses*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:the session i*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:the stagi*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:the sto*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:the stu*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:the su*": {
+    "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
+  "error:the up*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:this a*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:this b*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:this i*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:this m*": {
+    "route": "/extend/hooks/configuration",
+    "anchor": "errors"
+  },
+  "error:this r*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:this ru*": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:this se*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:this w*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:thr*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:timeo*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:tit*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:tl*": {
+    "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
+  "error:tog*": {
+    "route": "/extend/headless",
+    "anchor": "errors"
+  },
+  "error:too *": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:top*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:trailing s*": {
+    "route": "/reference/tools/files",
+    "anchor": "errors"
+  },
+  "error:und*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:unexpected ar*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:unio*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:unknown *": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:unknown f*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:unknown fo*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:unknown p*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:unknown w*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:unrecogniz*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:unsa*": {
+    "route": "/extend/hooks/configuration",
+    "anchor": "errors"
+  },
+  "error:unsupported U*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:unsupported a*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:unsupported k*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:unsupported m*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:update *": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:ups*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:ur*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:usa*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:user*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:v(*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:value n*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:verifi*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:verify *": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:version *": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:wa*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:warning: --j*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:warning: e*": {
+    "route": "/extend/plugins/cli",
+    "anchor": "errors"
+  },
+  "error:work *": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:worke*": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:workfl*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:workt*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:world f*": {
+    "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:wra*": {
+    "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
+  "error:writeRu*": {
+    "route": "/extend/mod-api/testing",
+    "anchor": "errors"
+  },
+  "error:write_*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:writes*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:{*": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
+  "error:•*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:┌*": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:⚠*": {
+    "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
+  "error:❌*": {
+    "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
   "flag:add --callback-port": {
     "route": "/extend/mcp/cli",
     "anchor": "flags"

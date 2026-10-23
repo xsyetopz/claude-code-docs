@@ -156,6 +156,16 @@ claude --resume my-feature --fork-session
 claude purge --dry-run
 ```
 
+## Errors
+
+Each row is a family of messages. The backticked text is the start that every message in the family shares. A row marked `Various` gathers the messages of one feature that do not share one start.
+
+| Start of Message | Status | What It Means | Cases |
+| --- | --- | --- | --- |
+| Various | <Undocumented /> | **Self-hosted runner and orchestrator.** A self-hosted runner or orchestrator flag, environment value, or hook was refused. | A flag or `SELF_HOSTED_RUNNER_*` variable is out of range or not one of the listed values, a flag was renamed, `--configure-git` could not prepare its artifacts, a hook is missing or not executable, a proxy authorization source is empty, too long, or unreadable, or the environment secret is missing. |
+| Various | <Undocumented /> | **Remote Control and cloud sessions.** Remote Control, a cloud session, or `--teleport` failed or was refused. | The user is not signed in with claude.ai, the policy `disableRemoteControl` is set, the base URL uses HTTP, a cloud session timed out, waits for input that nothing here can give, or lost its connection, or `claude --teleport` was run from the wrong checkout. |
+| Various | <Undocumented /> | **Transcripts and storage.** A transcript, session record, or storage backend could not be read or written. | A transcript file is too large, is not valid JSON, or holds no messages; a diskless session has no file to write to; a storage read, write, stat, or delete failed. |
+
 ## Related Pages
 
 - [Transcript Format](../reference/transcript-format.md)
