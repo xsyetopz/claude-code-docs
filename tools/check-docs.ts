@@ -6,7 +6,7 @@
 // 5. No emoji in a heading or in link text.
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative, sep } from "node:path";
-import { normalizeHost } from "./capture-prompts/normalize.ts";
+import { normalizeHost, numberUuids } from "./capture-prompts/normalize.ts";
 
 const ROOT = join(import.meta.dir, "..");
 const DOC_EXT = /\.(md|mdx)$/;
@@ -206,7 +206,7 @@ for (const file of walk(join(ROOT, "docs")).filter((f) => DOC_EXT.test(f))) {
       report(file, 1, `title not in Title Case: ${bad.join(", ")}`);
   }
   if (file.startsWith(CAPTURES) && fm.data["generated"] === "false") {
-    const n = normalizeHost(text);
+    const n = numberUuids()(normalizeHost(text));
     if (n !== text) {
       const a = text.split("\n");
       const b = n.split("\n");
@@ -214,7 +214,7 @@ for (const file of walk(join(ROOT, "docs")).filter((f) => DOC_EXT.test(f))) {
       report(
         file,
         at + 1,
-        "hand-written prompt page has host data (platform, OS version, build suffix, or temp path); use the placeholders from tools/capture-prompts/normalize.ts",
+        "hand-written prompt page has host data (platform, OS version, build suffix, temp path, or random id); use the placeholders from tools/capture-prompts/normalize.ts",
       );
     }
   }

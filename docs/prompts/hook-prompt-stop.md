@@ -17,9 +17,9 @@ A prompt hook on the `Stop` event gets a different system text from a tool hook.
 | `messages[0].content[1]` | 16 |
 | `messages[1].content[0]` | 8,850 |
 | `messages[2].content[0]` | 2 |
-| `messages[3].content[0]` | 593 |
+| `messages[3].content[0]` | 509 |
 | System blocks only | 2,060 |
-| Everything shown here | 12,500 |
+| Everything shown here | 12,416 |
 | Tools sent | 0 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -128,7 +128,7 @@ Based on the conversation transcript above, has the following stopping condition
 
 Condition: PROBE-HOOK-STOP: is the work done?
 
-ARGUMENTS: {"session_id":"541dde55-ba90-49f6-812c-86e3a6a77f96","transcript_path":"<config-dir>/projects/<project-slug>/541dde55-ba90-49f6-812c-86e3a6a77f96.jsonl","cwd":"<cwd>","prompt_id":"52b1ff68-839a-4c34-b82a-75dd1b023629","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"Stop","stop_hook_active":false,"last_assistant_message":"OK","background_tasks":[],"session_crons":[]}
+ARGUMENTS: {"session_id":"<uuid-1>","transcript_path":"<config-dir>/projects/<project-slug>/<uuid-1>.jsonl","cwd":"<cwd>","prompt_id":"<uuid-2>","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"Stop","stop_hook_active":false,"last_assistant_message":"OK","background_tasks":[],"session_crons":[]}
 ```
 
 ## Compared to the Default
@@ -162,7 +162,7 @@ Lines added: 82. Lines removed: 5. Size change: +10,938 characters.
 +Only use {"ok": false, "impossible": true} when the condition is genuinely unachievable in this session — for example: the condition is self-contradictory, it depends on a resource or capability that is unavailable, or the assistant has explicitly tried, exhausted reasonable approaches, and stated it cannot be done. Apply your own judgment when deciding this — the assistant claiming the goal is impossible is evidence, not proof; independently confirm the condition is genuinely unachievable rather than deferring to the assistant's self-assessment. Do not use it just because the goal has not been reached yet or because progress is slow. When in doubt, return {"ok": false} without "impossible".
 +
  === messages[0].content[0] (role: user) ===
--PROBE-HOOK-PROMPT: check this call. {"session_id":"4ebbc133-9946-4e3f-8a6b-63a01640e962","transcript_path":"<config-dir>/projects/<project-slug>/4ebbc133-9946-4e3f-8a6b-63a01640e962.jsonl","cwd":"<cwd>","prompt_id":"26608b04-e572-4dca-850b-07e9887bd2dc","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"PreToolUse","tool_name":"Bash","tool_input":{"command":"echo probe"},"tool_use_id":"toolu_probe1"}
+-PROBE-HOOK-PROMPT: check this call. {"session_id":"<uuid-1>","transcript_path":"<config-dir>/projects/<project-slug>/<uuid-1>.jsonl","cwd":"<cwd>","prompt_id":"<uuid-2>","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"PreToolUse","tool_name":"Bash","tool_input":{"command":"echo probe"},"tool_use_id":"toolu_probe1"}
 +<system-reminder>
 +Attribution for git commits and pull requests you create from here on (this replaces Claude Code's own earlier attribution guidance, such as a previous copy of this reminder; the user's own instructions about these lines, such as a CLAUDE.md or memory rule, take precedence over this reminder, but do not add attribution lines this reminder leaves out):
 +- End git commit messages with:
@@ -237,7 +237,7 @@ Lines added: 82. Lines removed: 5. Size change: +10,938 characters.
 +
 +Condition: PROBE-HOOK-STOP: is the work done?
 +
-+ARGUMENTS: {"session_id":"541dde55-ba90-49f6-812c-86e3a6a77f96","transcript_path":"<config-dir>/projects/<project-slug>/541dde55-ba90-49f6-812c-86e3a6a77f96.jsonl","cwd":"<cwd>","prompt_id":"52b1ff68-839a-4c34-b82a-75dd1b023629","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"Stop","stop_hook_active":false,"last_assistant_message":"OK","background_tasks":[],"session_crons":[]}
++ARGUMENTS: {"session_id":"<uuid-1>","transcript_path":"<config-dir>/projects/<project-slug>/<uuid-1>.jsonl","cwd":"<cwd>","prompt_id":"<uuid-2>","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"Stop","stop_hook_active":false,"last_assistant_message":"OK","background_tasks":[],"session_crons":[]}
 ```
 
 The tool list is the same as the baseline.

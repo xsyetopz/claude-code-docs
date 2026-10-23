@@ -28,7 +28,7 @@ Temp folder paths were replaced with `<temp-dir>` or `<bundled-skill-dir>`, and 
 
 Base directory for this skill: <bundled-skill-dir>/plugin-authoring
 
-WHERE TO WRITE IT. Write each mod in its own child folder, `<config-dir>/dev-mods/cbd6a28f-7afc-4a53-800f-bf53f7fc0032/<mod-name>/`, three files written directly:
+WHERE TO WRITE IT. Write each mod in its own child folder, `<config-dir>/dev-mods/<uuid-1>/<mod-name>/`, three files written directly:
 
 - `.claude-plugin/plugin.json`: `{ "name": "<mod-name>", "version": "0.1.0", "description": "<one line>" }`
 - `hooks/hooks.json`: `{ "modules": ["./register.tsx"] }`, one path, relative to that file

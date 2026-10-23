@@ -214,11 +214,11 @@ Size is the number of characters in everything shown on the variant page, after 
 | [Command, /init](./command-init.md) | `/init` | 17,160 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
 | [Command, /security-review](./command-security-review.md) | `/security-review` | 16,040 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
 | [Skill, /simplify](./command-simplify.md) | `/simplify` | 18,392 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
-| [Skill, /debug](./command-debug.md) | `/debug` | 17,218 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Skill, /debug](./command-debug.md) | `/debug` | 17,162 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
 | [Override /init with a Command File](./override-command-init.md) | `/init` | 15,624 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
 | [Override /simplify with a Skill File](./override-skill-simplify.md) | `/simplify` | 15,577 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
-| [Prompt Hook Request](./hook-prompt.md) | Hook `type: prompt` | 1,562 | 0 | none |
-| [Agent Hook Request](./hook-agent.md) | Hook `type: agent` | 2,474 | 10 | none |
+| [Prompt Hook Request](./hook-prompt.md) | Hook `type: prompt` | 1,478 | 0 | none |
+| [Agent Hook Request](./hook-agent.md) | Hook `type: agent` | 2,362 | 10 | none |
 | [Auto Mode Classifier](./auto-classifier.md) | `--permission-mode auto` | 140,718 | 0 | none |
 | [Auto Mode Classifier, Custom Rules](./auto-classifier-custom.md) | `autoMode` setting | 76,028 | 0 | none |
 | [Compaction Prompt, Custom Instructions](./compact-custom.md) | `/compact <text>`, CLAUDE.md, or `PreCompact` hook | 22,485 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
@@ -227,7 +227,7 @@ Size is the number of characters in everything shown on the variant page, after 
 | [Auto Memory Turned Off](./memory-off.md) | `CLAUDE_CODE_DISABLE_AUTO_MEMORY=1` | 13,452 | 12 | `Harness`, `Session-specific guidance`, `Environment`, `Context management` |
 | [Custom Output Style with a Built-in Name](./style-override-builtin.md) | Style file with a built-in name | 15,730 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
 | [Subagent with --system-prompt and --append-system-prompt](./subagent-with-prompt-flags.md) | Prompt flags plus a subagent | 11,491 | 5 | none |
-| [Prompt Hook on Stop](./hook-prompt-stop.md) | Hook `type: prompt` on `Stop` | 12,500 | 0 | none |
+| [Prompt Hook on Stop](./hook-prompt-stop.md) | Hook `type: prompt` on `Stop` | 12,416 | 0 | none |
 | [All Tools Sent Upfront](./tools-upfront.md) | `ENABLE_TOOL_SEARCH=false` | 15,154 | 20 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
 
 See also [Tools per Variant](./tools-per-variant.md).
@@ -245,6 +245,7 @@ See also [Tools per Variant](./tools-per-variant.md).
 | `<platform>`, `<shell>`, `<os-version>` | Your operating system, shell, and OS version. |
 | `<build>` | The build suffix of `cc_version` in the billing header. |
 | `<sha>` | A git commit hash. |
+| `<uuid-1>`, `<uuid-2>`, ... | A random id, such as a session id, numbered by first use in each capture. The same number is the same id. |
 | `<robot-emoji>` | A robot emoji in the pull request line of the attribution reminder. The site shows no emojis. |
 | `<plan-name>` | The random plan file name in plan mode. |
 

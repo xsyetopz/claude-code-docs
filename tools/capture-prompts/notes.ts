@@ -305,6 +305,7 @@ export const INDEX_FACTS = {
     "| `<platform>`, `<shell>`, `<os-version>` | Your operating system, shell, and OS version. |",
     "| `<build>` | The build suffix of `cc_version` in the billing header. |",
     "| `<sha>` | A git commit hash. |",
+    "| `<uuid-1>`, `<uuid-2>`, ... | A random id, such as a session id, numbered by first use in each capture. The same number is the same id. |",
     "| `<robot-emoji>` | A robot emoji in the pull request line of the attribution reminder. The site shows no emojis. |",
     "| `<plan-name>` | The random plan file name in plan mode. |",
     "",

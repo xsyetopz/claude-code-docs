@@ -5,7 +5,7 @@ x-anthropic-billing-header: cc_version=2.1.309.<build>; cc_entrypoint=sdk-cli;
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
 
 === system[2] (cache marker: {"type":"ephemeral"}) ===
-You are evaluating a PreToolUse hook in Claude Code. Your task is to evaluate the condition described in the user message. The conversation transcript is available at: <config-dir>/projects/<project-slug>/28967e8b-dc79-4104-afa5-24a941f899b8.jsonl
+You are evaluating a PreToolUse hook in Claude Code. Your task is to evaluate the condition described in the user message. The conversation transcript is available at: <config-dir>/projects/<project-slug>/<uuid-1>.jsonl
 You can read this file to analyze the conversation history if needed.
 
 Use the available tools to inspect the codebase and verify the condition.
@@ -25,7 +25,7 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
 </system-reminder>
 
 === messages[0].content[1] (role: user) ===
-PROBE-HOOK-AGENT: check this call. {"session_id":"28967e8b-dc79-4104-afa5-24a941f899b8","transcript_path":"<config-dir>/projects/<project-slug>/28967e8b-dc79-4104-afa5-24a941f899b8.jsonl","cwd":"<cwd>","prompt_id":"a4220010-7c3b-4cc7-a4e8-dc0d544ec7f6","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"PreToolUse","tool_name":"Bash","tool_input":{"command":"echo probe"},"tool_use_id":"toolu_probe1"}
+PROBE-HOOK-AGENT: check this call. {"session_id":"<uuid-1>","transcript_path":"<config-dir>/projects/<project-slug>/<uuid-1>.jsonl","cwd":"<cwd>","prompt_id":"<uuid-2>","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"PreToolUse","tool_name":"Bash","tool_input":{"command":"echo probe"},"tool_use_id":"toolu_probe1"}
 
 === messages[1].content[0] (role: system) ===
 Today's date is <date>.

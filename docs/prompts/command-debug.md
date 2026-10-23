@@ -15,10 +15,10 @@ The text that `/debug` sends to the model. Type `/debug` in a session.
 | `system[2]` | 5,627 |
 | `messages[0].content[0]` | 592 |
 | `messages[0].content[1]` | 77 |
-| `messages[0].content[2]` | 1,649 |
+| `messages[0].content[2]` | 1,593 |
 | `messages[1].content[0]` | 8,799 |
 | System blocks only | 5,767 |
-| Everything shown here | 17,218 |
+| Everything shown here | 17,162 |
 | Tools sent | 12 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -117,11 +117,11 @@ Help the user debug an issue they're encountering in this current Claude Code se
 
 Debug logging was OFF for this session until now. Nothing prior to this /debug invocation was captured.
 
-Tell the user that debug logging is now active at `<config-dir>/debug/6807205a-191b-4d69-bc88-80dee0f3ff84.txt`, ask them to reproduce the issue, then re-read the log. If they can't reproduce, they can also restart with `claude --debug` to capture logs from startup.
+Tell the user that debug logging is now active at `<config-dir>/debug/<uuid-1>.txt`, ask them to reproduce the issue, then re-read the log. If they can't reproduce, they can also restart with `claude --debug` to capture logs from startup.
 
 ## Session Debug Log
 
-The debug log for the current session is at: `<config-dir>/debug/6807205a-191b-4d69-bc88-80dee0f3ff84.txt`
+The debug log for the current session is at: `<config-dir>/debug/<uuid-1>.txt`
 
 No log file exists yet.
 
@@ -208,7 +208,7 @@ Today's date is <date>.
 
 The diff below starts from [Default, Lean Prompt](./default-lean.md). Lines that start with `-` are only in the baseline. Lines that start with `+` are only here.
 
-Lines added: 44. Lines removed: 3. Size change: +1,703 characters.
+Lines added: 44. Lines removed: 3. Size change: +1,647 characters.
 
 ```diff
 --- default-lean
@@ -230,11 +230,11 @@ Lines added: 44. Lines removed: 3. Size change: +1,703 characters.
 +
 +Debug logging was OFF for this session until now. Nothing prior to this /debug invocation was captured.
 +
-+Tell the user that debug logging is now active at `<config-dir>/debug/6807205a-191b-4d69-bc88-80dee0f3ff84.txt`, ask them to reproduce the issue, then re-read the log. If they can't reproduce, they can also restart with `claude --debug` to capture logs from startup.
++Tell the user that debug logging is now active at `<config-dir>/debug/<uuid-1>.txt`, ask them to reproduce the issue, then re-read the log. If they can't reproduce, they can also restart with `claude --debug` to capture logs from startup.
 +
 +## Session Debug Log
 +
-+The debug log for the current session is at: `<config-dir>/debug/6807205a-191b-4d69-bc88-80dee0f3ff84.txt`
++The debug log for the current session is at: `<config-dir>/debug/<uuid-1>.txt`
 +
 +No log file exists yet.
 +

@@ -12,7 +12,7 @@ import {
 } from "node:fs";
 import { join } from "node:path";
 import { CLAUDE_CODE_VERSION } from "../../src/version.ts";
-import { normalizeHost } from "./normalize.ts";
+import { normalizeHost, numberUuids } from "./normalize.ts";
 import { BADGE_NOTES, INDEX_FACTS, NOTES } from "./notes.ts";
 import { SUB_MARK, VARIANTS, type Variant } from "./variants.ts";
 
@@ -70,10 +70,11 @@ const normalizer = (meta: { cwd: string; cfg: string; home: string }) => {
     for (const q of [p, p.replace(/^\/private/, "")])
       pairs.push([new RegExp(esc(q), "g"), ph]);
   }
+  const ids = numberUuids();
   return (s: string) => {
     let t = s;
     for (const [re, r] of pairs) t = t.replace(re, r);
-    return normalizeHost(t)
+    return ids(normalizeHost(t))
       .replace(/\d{4}-\d\d-\d\d/g, "<date>")
       .replace(/\b[0-9a-f]{7,40}\b(?= initial)/g, "<sha>")
       .replace(/\u{1F916}/gu, "<robot-emoji>")

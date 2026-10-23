@@ -93,4 +93,4 @@ Based on the conversation transcript above, has the following stopping condition
 
 Condition: PROBE-HOOK-STOP: is the work done?
 
-ARGUMENTS: {"session_id":"541dde55-ba90-49f6-812c-86e3a6a77f96","transcript_path":"<config-dir>/projects/<project-slug>/541dde55-ba90-49f6-812c-86e3a6a77f96.jsonl","cwd":"<cwd>","prompt_id":"52b1ff68-839a-4c34-b82a-75dd1b023629","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"Stop","stop_hook_active":false,"last_assistant_message":"OK","background_tasks":[],"session_crons":[]}
+ARGUMENTS: {"session_id":"<uuid-1>","transcript_path":"<config-dir>/projects/<project-slug>/<uuid-1>.jsonl","cwd":"<cwd>","prompt_id":"<uuid-2>","permission_mode":"default","effort":{"level":"medium"},"hook_event_name":"Stop","stop_hook_active":false,"last_assistant_message":"OK","background_tasks":[],"session_crons":[]}
