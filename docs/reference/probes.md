@@ -117,6 +117,7 @@ With `--permission-mode auto` and a `Bash` call, the stub got classifier request
 There were five requests of each stage, because the stub's `OK` reply makes the program retry.
 The debug log says `server_no_result` and falls back to billed local classifier requests.
 `CLAUDE_CODE_TWO_STAGE_CLASSIFIER=1` and `CLAUDE_CODE_AUTO_MODE_SERVER=1` changed nothing. `CLAUDE_CODE_AUTO_MODE_SERVER=0` removed the `server_no_result` line from the debug log, and the stub still got the same ten requests.
+These four runs gave the same results on `2.1.306`, `2.1.307`, `2.1.308`, and `2.1.309`.
 
 ### `autoMode.classifyAllShell`
 

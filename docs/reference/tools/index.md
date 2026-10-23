@@ -120,6 +120,7 @@ Source: [Connect Claude Code to Tools via MCP](https://code.claude.com/docs/en/m
 - A runtime check decides: `SuggestPluginInstall`, `SuggestSkills`, `SendUserFile`.
 - Not deferred: `Read`, `Write`, `Edit`, `Glob`, `Grep`, `Bash`, `PowerShell`, `Agent`, `Skill`, `AskUserQuestion`, `ListAgents`, `Workflow`, `ReportFindings`, `ToolSearch`, `StructuredOutput`, `SubagentHandback`, `ScheduleWakeup`, `memory_*`, and the rest of the gated tools.
 - The old capture of `2.1.296` lacked `Glob` and `Grep`. In `2.1.305` they are not deferred.
+- From `2.1.306` to `2.1.309`, our `-p` stub runs offered neither `Glob` nor `Grep`, not even behind `ToolSearch`. In this build, the `Bash` tool runs `find` and `grep` as the embedded `bfs` and `ugrep`, and the prompts point Claude to them (the program).
 - In the `2.1.305` capture, the main prompt lists 12 tools (the site's captures use a local stub as `ANTHROPIC_BASE_URL`, and tool search is on behind a custom base URL, so it is not 20 as before). `CronCreate`, `CronDelete`, `CronList`, `EnterWorktree`, `ExitWorktree`, `NotebookEdit`, `SendMessage`, `TaskStop`, `WebFetch`, and `WebSearch` sit behind `ToolSearch`. See [Tools per Variant](../../prompts/tools-per-variant.md).
 
 ## Example
