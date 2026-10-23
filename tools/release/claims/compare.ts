@@ -12,7 +12,25 @@ import { join } from "node:path";
 import { type CaseResult, type Fact, readRun } from "../lib/results.ts";
 import { CAPTURES, type Ctx, ROOT, writeJson } from "../util.ts";
 
-export type FactChange = { old: Fact; new: Fact };
+/** `added`/`removed`: parts of the full sample text, when the fact is a hash of it */
+export type FactChange = {
+  old: Fact;
+  new: Fact;
+  added?: string[];
+  removed?: string[];
+};
+
+const PARTS_CAP = 10;
+const parts = (s: string) => s.split(/[,|\s]+/).filter(Boolean);
+const minus = (a: string[], b: string[]) => {
+  const left = new Map<string, number>();
+  for (const x of b) left.set(x, (left.get(x) ?? 0) + 1);
+  return a.filter((x) => {
+    const n = left.get(x) ?? 0;
+    if (n) left.set(x, n - 1);
+    return !n;
+  });
+};
 export type CaseDiff = {
   added: Record<string, Fact>;
   removed: Record<string, Fact>;
@@ -198,7 +216,15 @@ export const diffCase = (
     else if (!same(a.facts[k] as Fact, v)) {
       const why = noiseReason(opts.id, k, a.facts[k] as Fact, v, opts.versions);
       if (why !== null && opts.ignored) opts.ignored[k] = why;
-      if (why === null) d.changed[k] = { old: a.facts[k] as Fact, new: v };
+      if (why !== null) continue;
+      d.changed[k] = { old: a.facts[k] as Fact, new: v };
+      const so = a.samples?.[k];
+      const sn = b.samples?.[k];
+      if (so !== undefined && sn !== undefined) {
+        const [po, pn] = [parts(so), parts(sn)];
+        d.changed[k].added = minus(pn, po).slice(0, PARTS_CAP);
+        d.changed[k].removed = minus(po, pn).slice(0, PARTS_CAP);
+      }
     }
   }
   for (const [k, v] of Object.entries(a.facts))
@@ -470,8 +496,15 @@ export const renderCompare = (c: Compare): string => {
     L.push(`### \`${id}\` (invalid run)`, "", `- ${why}`, "");
   for (const [id, d] of Object.entries(c.cases)) {
     L.push(`### \`${id}\``, "");
-    for (const [k, v] of Object.entries(d.changed))
-      L.push(`- changed \`${k}\`: ${fmt(v.old)} -> ${fmt(v.new)}`);
+    for (const [k, v] of Object.entries(d.changed)) {
+      const p = [
+        ...(v.added ?? []).map((x) => `+${x}`),
+        ...(v.removed ?? []).map((x) => `-${x}`),
+      ].map((x) => `\`${x.slice(0, 60)}\``);
+      L.push(
+        `- changed \`${k}\`: ${fmt(v.old)} -> ${fmt(v.new)}${p.length ? ` (${p.join(" ")})` : ""}`,
+      );
+    }
     for (const [k, v] of Object.entries(d.added))
       L.push(`- added \`${k}\`: ${fmt(v)}`);
     for (const [k, v] of Object.entries(d.removed))
