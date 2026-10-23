@@ -25213,11 +25213,14 @@ var package_default = {
   dependencies: {
     "@modelcontextprotocol/sdk": "^1.32.1",
     "eslint-scope": "^9.1.2",
-    meriyah: "^7.4.0",
+    meriyah: "7.4.0",
     zod: "^4.6.7"
   },
   devDependencies: {
     "@types/estree": "^1.0.9"
+  },
+  patchedDependencies: {
+    "meriyah@7.4.0": "patches/meriyah@7.4.0.patch"
   }
 };
 
@@ -30097,7 +30100,7 @@ function nextTokenIsUsingOnSameLine(parser) {
   return following === undefined || following !== 92 && !isIdentifierPart(following);
 }
 function isResourceBindingStart(token) {
-  return (token & 143360) === 143360 && (token & 20480) !== 20480;
+  return token === 77932 || (token & 143360) === 143360 && (token & 20480) !== 20480;
 }
 function parseUsingDeclarationOrExpressionStatement(parser, context, scope, privateScope, labels, origin) {
   const { tokenStart, tokenValue, currentLocation } = parser;
@@ -34905,8 +34908,8 @@ import { basename as basename2, join as join2 } from "path";
 var claude_code_transcript_default = {
   $schema: "https://json-schema.org/draft/2020-12/schema",
   $id: "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-transcript.json",
-  title: "Claude Code transcript JSONL entry (Claude Code 2.1.308)",
-  $comment: `For one line of a session transcript (.jsonl). Generated from Claude Code 2.1.308 by tools/schemas/code.ts. Anchors: the entry type registry (an object literal whose first keys are user, assistant, system, attachment, mapped to "transcript"); the literal built in the writer's insertMessageChain (key logicalParentUuid) and its two spreads for the common fields of message lines; every object literal with a top-level type:"<entry type>" (non-message types need a sessionId key), with its spreads resolved in the module that declares each function (imports followed); and, for a key a probe saw that no such literal has, the later write: a copy of the line ({...line, key}), a function spread into one, or last a property assignment. Keys are the union over all write sites; a string value that differs between sites is an enum, and one that is a literal at one site and computed at another is x-unverified. Probe print/transcripts.lines.json marks the observed keys. Do not edit by hand. A field that is still x-unverified may carry x-observed-type: the JSON types that real payloads had there, from the fixtures in tools/schemas/observed/ (stub probes and local files, no value kept). It is a note, not a check.`,
+  title: "Claude Code transcript JSONL entry (Claude Code 2.1.309)",
+  $comment: `For one line of a session transcript (.jsonl). Generated from Claude Code 2.1.309 by tools/schemas/code.ts. Anchors: the entry type registry (an object literal whose first keys are user, assistant, system, attachment, mapped to "transcript"); the literal built in the writer's insertMessageChain (key logicalParentUuid) and its two spreads for the common fields of message lines; every object literal with a top-level type:"<entry type>" (non-message types need a sessionId key), with its spreads resolved in the module that declares each function (imports followed); and, for a key a probe saw that no such literal has, the later write: a copy of the line ({...line, key}), a function spread into one, or last a property assignment. Keys are the union over all write sites; a string value that differs between sites is an enum, and one that is a literal at one site and computed at another is x-unverified. Probe print/transcripts.lines.json marks the observed keys. Do not edit by hand. A field that is still x-unverified may carry x-observed-type: the JSON types that real payloads had there, from the fixtures in tools/schemas/observed/ (stub probes and local files, no value kept). It is a note, not a check.`,
   type: "object",
   oneOf: [
     {
@@ -37692,14 +37695,14 @@ var claude_code_transcript_default = {
         launchedAgentId: {
           type: "string"
         },
+        source_uuid: {
+          type: "string"
+        },
         fromRemoteErrorResult: {
           type: "boolean"
         },
         preventContinuation: {
           type: "boolean"
-        },
-        source_uuid: {
-          type: "string"
         },
         parentUuid: {
           "x-observed": true,

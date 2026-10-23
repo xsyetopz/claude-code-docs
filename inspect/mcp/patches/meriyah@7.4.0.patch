@@ -1,0 +1,26 @@
+diff --git a/dist/meriyah.cjs b/dist/meriyah.cjs
+index b0faec9db8b6a4e1c22d6bd2950085784830d740..5717e1fc19b99ac0171a254e3b3d04ec1f84f9f6 100644
+--- a/dist/meriyah.cjs
++++ b/dist/meriyah.cjs
+@@ -3717,7 +3717,7 @@ function nextTokenIsUsingOnSameLine(parser) {
+     return following === undefined || (following !== 0x5c && !isIdentifierPart(following));
+ }
+ function isResourceBindingStart(token) {
+-    return (token & 143360) === 143360 && (token & 20480) !== 20480;
++    return token === 77932 || ((token & 143360) === 143360 && (token & 20480) !== 20480);
+ }
+ function parseUsingDeclarationOrExpressionStatement(parser, context, scope, privateScope, labels, origin) {
+     const { tokenStart, tokenValue, currentLocation } = parser;
+diff --git a/dist/meriyah.mjs b/dist/meriyah.mjs
+index 438c335dfe79959c52b3f93006501ebdcf8aad2b..be7f659c62958013004c514297b4b89fd0bfa112 100644
+--- a/dist/meriyah.mjs
++++ b/dist/meriyah.mjs
+@@ -3715,7 +3715,7 @@ function nextTokenIsUsingOnSameLine(parser) {
+     return following === undefined || (following !== 0x5c && !isIdentifierPart(following));
+ }
+ function isResourceBindingStart(token) {
+-    return (token & 143360) === 143360 && (token & 20480) !== 20480;
++    return token === 77932 || ((token & 143360) === 143360 && (token & 20480) !== 20480);
+ }
+ function parseUsingDeclarationOrExpressionStatement(parser, context, scope, privateScope, labels, origin) {
+     const { tokenStart, tokenValue, currentLocation } = parser;
