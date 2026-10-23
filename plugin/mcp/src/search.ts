@@ -147,10 +147,10 @@ const snippetOf = (body: string, terms: string[]): string => {
   return best.heading ? `[${best.heading}] ${line}` : line;
 };
 
-/** The cap of the prebuilt llms-search-index.json (design D6): the build fails above it, and the client reads no more. */
 /** Not search-index.json: the site search plugin writes that name at the site root. */
 export const SEARCH_INDEX_FILE = "llms-search-index.json";
 
+/** The cap of the prebuilt llms-search-index.json (design D6): the build fails above it, and the client reads no more. */
 export const SEARCH_INDEX_MAX = 8 * 1024 * 1024;
 
 export type IndexPage = {

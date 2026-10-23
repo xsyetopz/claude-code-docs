@@ -19,7 +19,7 @@ export const siteBase = (): string => baseUrl("CC_DOCS_BASE_URL", SITE);
 
 const MANIFEST_TTL_MS = 10 * 60 * 1000;
 const PAGE_TTL_MS = 60 * 60 * 1000;
-const INDEX_TTL_MS = 60 * 60 * 1000;
+export const INDEX_TTL_MS = 60 * 60 * 1000;
 const MANIFEST_MAX = 1 * MB;
 const PAGE_MAX = 2 * MB;
 const SCHEMA_MAX = 1 * MB;

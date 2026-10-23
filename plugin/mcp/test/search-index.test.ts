@@ -34,7 +34,7 @@ test("the index holds each page's route, title, headings, and body without front
   ]);
 });
 
-test("the hash changes with the pages and not with the order of the calls", () => {
+test("the hash changes with the pages and stays the same for the same pages", () => {
   const a = JSON.parse(searchIndexJson("1", [page("/a", "x")])).hash;
   const b = JSON.parse(searchIndexJson("1", [page("/a", "y")])).hash;
   expect(a).not.toBe(b);

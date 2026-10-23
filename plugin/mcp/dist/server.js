@@ -22772,7 +22772,6 @@ var DEFAULT_PAGE_CHARS = 20000;
 var MAX_PAGE_CHARS = 40000;
 var content = new Content;
 var platform = new Platform;
-var INDEX_TTL_MS3 = 60 * 60 * 1000;
 var PARTIAL_INDEX_TTL_MS = 60 * 1000;
 var ok = (text, data, source, complete = false) => ({ ok: true, text, data, source, complete });
 var fail = (text, source) => ({
@@ -22852,7 +22851,7 @@ var searchIndex = async () => {
   if (!index || index.builtFor !== content.version)
     return await buildIndex();
   const partial = index.load !== undefined && index.pages < index.load.total;
-  if (Date.now() - index.at > ttl(partial ? PARTIAL_INDEX_TTL_MS : INDEX_TTL_MS3))
+  if (Date.now() - index.at > ttl(partial ? PARTIAL_INDEX_TTL_MS : INDEX_TTL_MS))
     buildIndex().catch(() => {});
   return index;
 };

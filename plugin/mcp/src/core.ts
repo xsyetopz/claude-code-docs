@@ -5,6 +5,7 @@ import {
   Content,
   ContentError,
   type Entry,
+  INDEX_TTL_MS,
   normalizeRoute,
   type PagesLoad,
   parseSearchIndex,
@@ -39,7 +40,6 @@ export type Result = {
 
 const content = new Content();
 const platform = new Platform();
-const INDEX_TTL_MS = 60 * 60 * 1000;
 const PARTIAL_INDEX_TTL_MS = 60 * 1000;
 
 const ok = (

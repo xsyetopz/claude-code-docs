@@ -37,25 +37,22 @@ The plugin adds two things.
 
 | Part | What it does |
 | --- | --- |
-| The MCP server `claude-code-docs` | Gives Claude seven read-only tools. It runs with plain `bun`. You need no `bun install`. |
+| The MCP server `claude-code-docs` | Gives Claude four read-only tools. It runs with plain `bun`. You need no `bun install`. |
 | The skill `claude-code-docs` | Tells Claude to look up settings, environment variables, hooks, and other Claude Code details here instead of from memory. It names the version and the badge meaning in each answer. |
 
 The skill uses the MCP tools when they exist. If they do not, it fetches `llms.txt` and the page `.md` files.
 
 ## MCP Tools
 
-All seven tools only read. None changes a file or your settings.
-The first four read this site. The last three read the Claude API and platform docs at [platform.claude.com/docs](https://platform.claude.com/docs/en/home), which are separate from Claude Code.
+All four tools only read. None changes a file or your settings.
+The first three take `source`. It is `"docs"` (this site) by default. With `"platform"`, they read the Claude API and platform docs at [platform.claude.com/docs](https://platform.claude.com/docs/en/home), which are separate from Claude Code.
 
 | Tool | What it does |
 | --- | --- |
-| `search_docs` | Ranks pages for a query. Gives the route, title, URL, and a snippet for each hit. It takes `query`, `limit`, and `section`. The first search fetches every page once. |
-| `read_page` | Gives a page as Markdown, or one H2 section of it. A long page comes in parts: pass `offset` to read the next part. |
-| `list_pages` | Lists the pages in sidebar order. Pass `section` to see descriptions. |
+| `search_docs` | Ranks pages for a query. Gives the route, title, URL, and a snippet for each hit. It takes `query`, `source`, `limit`, and `section`. The first search loads `llms-search-index.json` from the site in one request. If the site has no such file, it fetches every page once. With `source: "platform"`, it ranks platform pages by title, summary, path, and group from the platform `llms.txt`, and does not search page text. Then `section` is a platform group. |
+| `read_page` | Gives a page as Markdown, or one H2 section of it. It takes `route`, `source`, `section_heading`, `offset`, and `max_chars`. A long page comes in parts: pass `offset` to read the next part. With `source: "platform"`, `route` is a path under `/docs/en/`, and only English pages are read. |
+| `list_pages` | Lists the pages in sidebar order. Pass `section` to see descriptions. With `source: "platform"`, it lists the platform groups with their page counts, and `section` lists the pages of one group. |
 | `get_schema` | Gives one JSON Schema, or with `name: "types"` the Mod API type file. A schema is large, so you get an outline first. Pass `property` for one key, such as `hooks.PreToolUse`, a definition such as `BashInput`, or a type such as `ToolCheckResult`. For a name it does not have, it returns the closest names it has. |
-| `search_platform_docs` | Ranks platform pages by title, summary, path, and group, using the platform `llms.txt`. It does not search page text. It takes `query`, `limit`, and `group`. |
-| `read_platform_page` | Gives one English platform page as Markdown, or one H2 section of it. It takes `path`, `section_heading`, `offset`, and `max_chars`. Only English pages under `/docs/en/` are read. |
-| `list_platform_pages` | Lists the platform groups with their page counts. Pass `group` to list the pages of one group. |
 
 Every result ends with a `Source:` line. It names the host and says whether the text is live, from the cache, or from the cache while offline.
 
