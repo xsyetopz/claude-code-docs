@@ -4,7 +4,7 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
-import { extractModules } from "../../inspect/mcp/src/bunfs.ts";
+import { extractModules, typeFile } from "../../inspect/mcp/src/bunfs.ts";
 import { CLAUDE_CODE_VERSION } from "../../src/version.ts";
 
 const ROOT = join(import.meta.dir, "..", "..");
@@ -37,15 +37,7 @@ const bin =
   at >= 0 && args[at + 1]
     ? (args[at + 1] as string)
     : join(homedir(), ".local/share/claude/versions", CLAUDE_CODE_VERSION);
-const { modules } = extractModules(bin);
-const [found, ...more] = modules.filter((m) =>
-  /\/claude-code\.d\.ts-[^/]*\.zst$/.test(m.name),
-);
-if (!found || more.length)
-  throw new Error(
-    `expected one embedded type file, found ${more.length + (found ? 1 : 0)}`,
-  );
-const text = Bun.zstdDecompressSync(found.bytes).toString("utf8");
+const { text } = typeFile(extractModules(bin).modules);
 // Stamps src/version.ts, as generate.ts does for the JSON Schemas.
 writeFileSync(OUT, HEADER(CLAUDE_CODE_VERSION) + text);
 console.log(

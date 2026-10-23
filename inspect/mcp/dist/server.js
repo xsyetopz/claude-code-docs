@@ -25202,7 +25202,7 @@ class StdioServerTransport {
 // inspect/mcp/package.json
 var package_default = {
   name: "cc-inspect-mcp",
-  version: "0.2.0",
+  version: "0.3.0",
   private: true,
   license: "MIT",
   type: "module",
@@ -33957,7 +33957,10 @@ class Module {
     return m?.set.get(name);
   }
   get exports() {
+    if (this.#exports)
+      return this.#exports;
     const out = new Map;
+    this.#exports = out;
     for (const s of this.ast.body) {
       if (s.type !== "ExportNamedDeclaration")
         continue;
@@ -33974,6 +33977,19 @@ class Module {
       }
     }
     return out;
+  }
+  #exports;
+  #imports;
+  importsFrom(source) {
+    if (!this.#imports) {
+      this.#imports = new Map;
+      for (const s of this.ast.body)
+        if (s.type === "ImportDeclaration") {
+          const k = String(s.source.value);
+          this.#imports.set(k, [...this.#imports.get(k) ?? [], s]);
+        }
+    }
+    return this.#imports.get(source) ?? [];
   }
 }
 var ROOT = "/$bunfs/root/";
@@ -34004,18 +34020,26 @@ class Bundle {
     const target = local ? from?.topLevel(local) : undefined;
     return from && target ? this.origin(from, target, seen + 1) : undefined;
   }
+  #importers;
+  importersOf(name) {
+    if (!this.#importers) {
+      this.#importers = new Map;
+      const re = /"\/\$bunfs\/root\/([^"]+)"/g;
+      for (const m of this.modules.values())
+        for (const n of new Set(Array.from(m.text.matchAll(re), (x) => x[1])))
+          this.#importers.set(n, [...this.#importers.get(n) ?? [], m]);
+    }
+    return this.#importers.get(name) ?? [];
+  }
   importers(m, v) {
     const names = [...m.exports].filter(([, l]) => l === v.name).map(([e]) => e);
     if (names.length === 0)
       return [];
     const out = [];
-    const path = `"${ROOT}${m.name}"`;
-    for (const other of this.withText(path)) {
+    for (const other of this.importersOf(m.name)) {
       if (other === m)
         continue;
-      for (const s of other.ast.body) {
-        if (s.type !== "ImportDeclaration" || s.source.value !== ROOT + m.name)
-          continue;
+      for (const s of other.importsFrom(ROOT + m.name)) {
         for (const sp of s.specifiers) {
           if (sp.type !== "ImportSpecifier")
             continue;
@@ -34128,6 +34152,15 @@ var returnsOf = (fn) => {
 
 // inspect/mcp/src/bunfs.ts
 import { readFileSync } from "fs";
+var typeFile = (modules) => {
+  const [found, ...more] = modules.filter((m) => /\/claude-code\.d\.ts-[^/]*\.zst$/.test(m.name));
+  if (!found || more.length)
+    throw new Error(`expected one embedded type file, found ${more.length + (found ? 1 : 0)}`);
+  return {
+    name: found.name.split("/").pop(),
+    text: Bun.zstdDecompressSync(found.bytes).toString("utf8")
+  };
+};
 var TRAILER = `
 ---- Bun! ----
 `;
@@ -38680,9 +38713,1155 @@ var checkLine = (line) => {
   return r.success ? [] : r.error.issues.map((i) => `${i.path.join(".") || "(root)"}: ${i.message}`);
 };
 
+// inspect/mcp/src/surface/common.ts
+var scan = (bundle, needles, visit) => {
+  for (const m of bundle.modules.values()) {
+    if (!needles.some((s) => m.text.includes(s)))
+      continue;
+    let ast;
+    try {
+      ast = m.ast;
+    } catch {
+      continue;
+    }
+    const stack = [ast];
+    while (stack.length) {
+      const n = stack.pop();
+      visit(m, n);
+      stack.push(...children(n));
+    }
+  }
+};
+var keyOf = (p) => {
+  if (p.type !== "Property" || p.computed)
+    return;
+  if (p.key.type === "Identifier")
+    return p.key.name;
+  if (p.key.type === "Literal" && typeof p.key.value === "string")
+    return p.key.value;
+  return;
+};
+var prop = (o, key) => o.properties.find((p) => keyOf(p) === key);
+var strings = (m, n) => {
+  if (n?.type !== "ArrayExpression")
+    return;
+  const out = [];
+  for (const el of n.elements) {
+    const s = constString(m, el);
+    if (s === undefined)
+      return;
+    out.push(s);
+  }
+  return out;
+};
+var literal3 = (m, n) => {
+  if (!n)
+    return "unknown";
+  if (n.type === "Literal")
+    return JSON.stringify(n.value);
+  if (n.type === "UnaryExpression" && n.operator === "!" && n.argument.type === "Literal")
+    return String(!n.argument.value);
+  if (n.type === "UnaryExpression" && n.operator === "-" && n.argument.type === "Literal")
+    return `-${n.argument.value}`;
+  if (n.type === "Identifier" && n.name === "undefined")
+    return "undefined";
+  if (n.type === "UnaryExpression" && n.operator === "void")
+    return "undefined";
+  const s = constString(m, n);
+  if (s !== undefined)
+    return JSON.stringify(s);
+  if (n.type === "ArrayExpression" || n.type === "ObjectExpression") {
+    const t = m.src(n);
+    return t.length <= 80 ? t : "unknown";
+  }
+  return "unknown";
+};
+var unique = (items) => {
+  const by = new Map;
+  for (const i of items) {
+    const prev = by.get(i.name);
+    if (!prev)
+      by.set(i.name, i);
+    else
+      for (const k of ["default", "values", "gate", "detail"])
+        if (prev[k] === undefined && i[k] !== undefined)
+          prev[k] = i[k];
+  }
+  return [...by.values()].sort((a, b) => a.name < b.name ? -1 : a.name > b.name ? 1 : 0);
+};
+var short = (s, n = 200) => {
+  const t = s.replace(/\$\{[^}]*\}/g, `\${\u2026}`).replace(/\s+/g, " ").trim();
+  return t.length > n ? `${t.slice(0, n)}\u2026` : t;
+};
+
+// inspect/mcp/src/surface/beta.ts
+var BETA = /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*-\d{4}-\d\d-\d\d$/;
+var COMPACT = /^[a-z]+(?:-[a-z]+)*-\d{8}$/;
+var VERSION = /^(?:bedrock|vertex)-/;
+var extractBetas = (bundle) => {
+  const out = [];
+  scan(bundle, ["-20"], (m, n) => {
+    if (n.type !== "Literal" || typeof n.value !== "string")
+      return;
+    const dated = BETA.test(n.value) && !VERSION.test(n.value);
+    const compact = COMPACT.test(n.value);
+    if (!dated && !compact)
+      return;
+    const p = m.parent(n);
+    const group = p?.type === "CallExpression" && p.arguments[1] === n ? constString(m, p.arguments[0]) : undefined;
+    if (!dated && !group)
+      return;
+    out.push({
+      kind: "beta",
+      name: n.value,
+      module: m.name,
+      offset: n.start,
+      ...group && { detail: group }
+    });
+  });
+  return unique(out);
+};
+
+// inspect/mcp/src/surface/commander.ts
+var SPEC = /^(?:-[\w-]+, ?)?--?[a-zA-Z][\w-]*/;
+var method = (n) => n?.type === "CallExpression" && n.callee.type === "MemberExpression" && n.callee.property.type === "Identifier" ? n.callee.property.name : undefined;
+var chainCommands = (m, n, seen = new Set) => {
+  const out = [];
+  let cur = n;
+  while (cur) {
+    if (cur.type === "CallExpression" && cur.callee.type === "MemberExpression") {
+      if (method(cur) === "command") {
+        const s = constString(m, cur.arguments[0]);
+        if (s)
+          out.unshift(s.split(/\s/)[0]);
+      }
+      cur = cur.callee.object;
+    } else if (cur.type === "Identifier" && !seen.has(cur.name)) {
+      seen.add(cur.name);
+      const def = m.variable(cur)?.defs[0];
+      const init = def?.type === "Variable" ? def.node.init : null;
+      return init ? [...chainCommands(m, init, seen), ...out] : out;
+    } else
+      return out;
+  }
+  return out;
+};
+var chainedAfter = (m, call) => {
+  const out = [];
+  let cur = call;
+  for (;; ) {
+    const mem = m.parent(cur);
+    const next = mem?.type === "MemberExpression" ? m.parent(mem) : undefined;
+    const name = next && method(next);
+    if (!next || !name)
+      return out;
+    out.push(name);
+    cur = next;
+  }
+};
+var hides = (m, n, skip) => {
+  if (n.type === "Identifier")
+    return !!m.variable(n)?.references.some((r) => {
+      const id = r.identifier;
+      if (skip && id.start >= skip.start && id.end <= skip.end)
+        return false;
+      const p = m.parent(id);
+      return p?.type === "MemberExpression" && method(m.parent(p)) === "hideHelp";
+    });
+  for (let cur = n;cur.type === "CallExpression" && cur.callee.type === "MemberExpression"; cur = cur.callee.object)
+    if (method(cur) === "hideHelp")
+      return true;
+  return false;
+};
+var optionOf = (m, n, seen = new Set) => {
+  if (seen.has(n))
+    return;
+  seen.add(n);
+  if (n.type === "NewExpression")
+    return { m, n };
+  if (n.type === "ConditionalExpression")
+    return optionOf(m, n.consequent, seen);
+  if (n.type === "CallExpression" && n.callee.type === "MemberExpression")
+    return optionOf(m, n.callee.object, seen);
+  if (n.type === "CallExpression") {
+    const f = functionOf(m, n.callee);
+    const r = f && returnsOf(f.fn)[0];
+    return r ? optionOf(f.module, r, seen) : undefined;
+  }
+  if (n.type === "Identifier") {
+    const def = m.variable(n)?.defs[0];
+    const init = def?.type === "Variable" ? def.node.init : null;
+    return init ? optionOf(m, init, seen) : undefined;
+  }
+  return;
+};
+var extractSubcommands = (bundle) => {
+  const out = [];
+  scan(bundle, [".command("], (m, n) => {
+    if (method(n) !== "command")
+      return;
+    const spec = constString(m, n.arguments[0]);
+    if (!spec || !/^[a-z][\w-]*/.test(spec))
+      return;
+    const path = chainCommands(m, n).join(" ");
+    const args = spec.slice(spec.split(/\s/)[0]?.length).trim();
+    const opts = n.arguments[1];
+    const hidden = opts?.type === "ObjectExpression" && /\bhidden:(!0|true)/.test(m.src(opts));
+    out.push({
+      kind: "subcommand",
+      name: path,
+      module: m.name,
+      offset: n.start,
+      ...args && { detail: args },
+      ...hidden && { gate: "hidden" }
+    });
+  });
+  return unique(out);
+};
+var extractFlags = (bundle) => {
+  const out = [];
+  const add = (m, at, owner, args, gate, om = m) => {
+    const spec = constString(m, args[0]);
+    if (!spec || !SPEC.test(spec))
+      return;
+    const name = spec.match(/--[a-zA-Z][\w-]*/)?.[0] ?? spec.match(/-[\w-]+/)?.[0];
+    if (!name)
+      return;
+    const desc = constString(m, args[1]);
+    const cmd = chainCommands(om, owner).join(" ");
+    out.push({
+      kind: "flag",
+      name: cmd ? `${cmd} ${name}` : name,
+      module: m.name,
+      offset: at.start,
+      detail: short(`${spec}${desc ? ` | ${desc}` : ""}`),
+      ...gate && { gate }
+    });
+  };
+  scan(bundle, [".option(", ".requiredOption(", ".addOption("], (m, n) => {
+    const name = method(n);
+    if (!name)
+      return;
+    const c = n;
+    const owner = c.callee.object;
+    if (name === "option" || name === "requiredOption")
+      add(m, n, owner, c.arguments);
+    else if (name === "addOption" && c.arguments[0]) {
+      const arg = c.arguments[0];
+      const o = optionOf(m, arg);
+      if (!o)
+        return;
+      const gate = arg.type === "ConditionalExpression" && hides(m, arg.alternate) && !hides(m, arg.consequent, arg) ? `hidden unless ${m.src(arg.test)}` : hides(m, arg) || chainedAfter(o.m, o.n).includes("hideHelp") ? "hidden" : undefined;
+      add(o.m, o.n, owner, o.n.arguments, gate, m);
+    }
+  });
+  return unique(out);
+};
+
+// inspect/mcp/src/surface/endpoint.ts
+var HOST = /(?:^|\.)(?:anthropic\.com|claude\.(?:ai|com)|clau\.de|ant\.dev|claude\.fedstart\.com)$/;
+var hostOf = (s) => {
+  try {
+    return new URL(s).hostname;
+  } catch {
+    return;
+  }
+};
+var PATH = /^\/(?:api|v1|model)\/[\w./{}?=*%-]*$/;
+var extractEndpoints = (bundle) => {
+  const out = [];
+  const add = (name, offset, m, detail) => out.push({ kind: "endpoint", name, module: m, offset, detail });
+  scan(bundle, ["https://", "BASE_API_URL", '"/api/', '"/v1/', "`/"], (m, n) => {
+    if (n.type === "Literal" && typeof n.value === "string") {
+      const s = n.value;
+      if (PATH.test(s))
+        add(s, n.start, m.name, "path");
+      if (!s.startsWith("https://") || !HOST.test(hostOf(s) ?? ""))
+        return;
+      add(s, n.start, m.name, "url");
+      const p = new URL(s).pathname;
+      if (PATH.test(p))
+        add(p, n.start, m.name, "path");
+    } else if (n.type === "TemplateLiteral") {
+      const t = n.quasis.map((q) => q.value.cooked ?? q.value.raw);
+      const e = n.expressions[0];
+      const base = e?.type === "MemberExpression" && !e.computed && e.property.type === "Identifier" && e.property.name === "BASE_API_URL";
+      const rest = t[0] === "" && e ? t.slice(1) : t;
+      const path = short(rest.join(`\${}`));
+      if (base ? path.startsWith("/") : PATH.test(rest[0] ?? "x"))
+        add(path, n.start, m.name, "path");
+    }
+  });
+  return unique(out);
+};
+
+// inspect/mcp/src/surface/env.ts
+var NAME = /^[A-Za-z_][A-Za-z0-9_]*$/;
+var UPPER = /^[A-Z_][A-Z0-9_]*$/;
+var LISTED = /^[A-Z][A-Z0-9]*_[A-Z0-9_]+$/;
+var TYPES = new Set([
+  "bool",
+  "triBool",
+  "int",
+  "num",
+  "float",
+  "str",
+  "enum",
+  "list",
+  "json",
+  "url",
+  "path"
+]);
+var isName = (n, name) => n.type === "Identifier" && n.name === name || n.type === "MemberExpression" && !n.computed && n.property.type === "Identifier" && n.property.name === name && n.object.type === "Identifier" && n.object.name === "globalThis";
+var isProcessEnv = (n) => n.type === "MemberExpression" && !n.computed && isName(n.object, "process") && n.property.type === "Identifier" && n.property.name === "env";
+var registryType = (m, getter) => {
+  if (getter.type !== "ArrowFunctionExpression" || getter.body.type !== "Identifier")
+    return;
+  const v = m.variable(getter.body);
+  const def = v?.defs[0];
+  const init = def?.type === "Variable" ? def.node.init : null;
+  if (init?.type !== "CallExpression")
+    return;
+  const c = init.callee;
+  if (c.type !== "MemberExpression" || c.property.type !== "Identifier")
+    return;
+  const values = strings(m, init.arguments[0]);
+  const opts = init.arguments[0]?.type === "ObjectExpression" ? m.src(init.arguments[0]) : "";
+  return {
+    method: c.property.name,
+    detail: `${c.property.name}${opts}`,
+    ...values && { values }
+  };
+};
+var initOf = (v) => {
+  const def = v.defs[0];
+  if (def?.type !== "Variable" || !def.node.init)
+    return;
+  return v.references.every((r) => !r.isWrite() || r.init) ? def.node.init : undefined;
+};
+
+class EnvObjects {
+  registries = new Set;
+  factories = new Set;
+  #known = new WeakMap;
+  findFactories(regs) {
+    const queue = [...regs];
+    while (queue.length) {
+      const { m, v } = queue.pop();
+      if (this.registries.has(v))
+        continue;
+      this.registries.add(v);
+      for (const r of v.references) {
+        const id = r.identifier;
+        const p = m.parent(id);
+        if (p?.type === "SpreadElement") {
+          const decl = m.parent(m.parent(p));
+          if (decl?.type === "VariableDeclarator" && decl.id.type === "Identifier") {
+            const w = m.variable(decl.id);
+            if (w)
+              queue.push({ m, v: w });
+          }
+        } else if (p?.type === "CallExpression" && p.arguments.includes(id)) {
+          const f = functionOf(m, p.callee);
+          if (f)
+            this.factories.add(f.fn);
+        }
+      }
+    }
+  }
+  is(m, n, seen = new Set) {
+    if (isProcessEnv(n))
+      return true;
+    switch (n.type) {
+      case "ObjectExpression":
+        return n.properties.some((p) => p.type === "SpreadElement" && this.is(m, p.argument, seen));
+      case "LogicalExpression":
+        return this.is(m, n.left, seen) || this.is(m, n.right, seen);
+      case "ConditionalExpression":
+        return this.is(m, n.consequent, seen) || this.is(m, n.alternate, seen);
+      case "CallExpression": {
+        const f = functionOf(m, n.callee);
+        if (!f || seen.has(f.fn))
+          return false;
+        if (this.factories.has(f.fn))
+          return true;
+        seen.add(f.fn);
+        const rets = returnsOf(f.fn);
+        return rets.length > 0 && rets.every((r) => r && this.is(f.module, r, seen));
+      }
+      case "Identifier":
+        break;
+      default:
+        return false;
+    }
+    const v = m.variable(n);
+    const def = v?.defs[0];
+    if (!v || !def || seen.has(v))
+      return false;
+    const known = this.#known.get(v);
+    if (known !== undefined)
+      return known;
+    seen.add(v);
+    const r = this.#binding(m, n, v, seen);
+    this.#known.set(v, r);
+    return r;
+  }
+  #binding(m, n, v, seen) {
+    const def = v.defs[0];
+    if (def?.type === "ImportBinding") {
+      const o = m.bundle?.origin(m, v);
+      const id = o?.variable.identifiers[0];
+      return !!o && !!id && o.variable !== v && this.is(o.module, id, seen);
+    }
+    if (def?.type === "Variable") {
+      const init = initOf(v);
+      return !!init && this.is(m, init, seen);
+    }
+    if (def?.type !== "Parameter" || !isFn(def.node))
+      return false;
+    const fn = def.node;
+    const index = fn.params.findIndex((p) => {
+      const id = p.type === "AssignmentPattern" ? p.left : p;
+      return id.type === "Identifier" && id.name === n.name;
+    });
+    const p = fn.params[index];
+    if (p?.type === "AssignmentPattern")
+      return isProcessEnv(p.right);
+    const calls = callsOf(m, fn);
+    return index >= 0 && calls.length > 0 && calls.every((c) => c?.call.arguments[index] && this.is(c.module, c.call.arguments[index], seen));
+  }
+}
+var paramOf = (m, id) => {
+  if (id.type !== "Identifier")
+    return;
+  const def = m.variable(id)?.defs[0];
+  if (def?.type !== "Parameter" || !isFn(def.node))
+    return;
+  const fn = def.node;
+  const index = fn.params.findIndex((p) => p.type === "Identifier" && p.name === id.name);
+  return index < 0 ? undefined : { fn, index };
+};
+var extractEnv = (bundle) => {
+  const out = [];
+  const add = (m, n, name, extra = {}) => {
+    if (NAME.test(name))
+      out.push({
+        kind: "env",
+        name,
+        module: m.name,
+        offset: n.start,
+        ...extra
+      });
+  };
+  const env = new EnvObjects;
+  const regs = [];
+  scan(bundle, [":()=>"], (m, n) => {
+    if (n.type !== "CallExpression" || n.arguments.length !== 2 || n.arguments[1]?.type !== "ObjectExpression")
+      return;
+    const o = n.arguments[1];
+    const keys = o.properties.map(keyOf);
+    if (keys.length < 3 || !keys.every((k) => k && NAME.test(k)))
+      return;
+    const types = o.properties.map((p) => registryType(m, p.value));
+    if (types.filter((t) => t && TYPES.has(t.method)).length * 2 < types.length)
+      return;
+    o.properties.forEach((p, i) => {
+      const t = types[i];
+      add(m, p, keyOf(p), t ? { detail: t.detail, ...t.values && { values: t.values } } : {});
+    });
+    const ns = n.arguments[0];
+    const v = ns.type === "Identifier" ? m.variable(ns) : undefined;
+    if (v)
+      regs.push({ m, v });
+  });
+  env.findFactories(regs);
+  const helpers = [];
+  const lists = [];
+  scan(bundle, [""], (m, n) => {
+    if (n.type === "MemberExpression" && !isProcessEnv(n) && env.is(m, n.object)) {
+      const direct = isProcessEnv(n.object);
+      if (!n.computed && n.property.type === "Identifier") {
+        if (direct || UPPER.test(n.property.name))
+          add(m, n, n.property.name);
+      } else if (n.computed) {
+        const s = constString(m, n.property);
+        if (s !== undefined)
+          add(m, n, s);
+        else {
+          const p = paramOf(m, n.property);
+          if (p)
+            helpers.push({ m, ...p });
+        }
+      }
+      return;
+    }
+    if (n.type === "BinaryExpression" && n.operator === "in" && env.is(m, n.right)) {
+      const s = constString(m, n.left);
+      if (s !== undefined)
+        add(m, n, s);
+      return;
+    }
+    if (n.type === "VariableDeclarator" && n.init && n.id.type === "ObjectPattern" && env.is(m, n.init))
+      for (const p of n.id.properties) {
+        const k = p.type === "Property" ? keyOf(p) : undefined;
+        if (k)
+          add(m, p, k);
+      }
+    if (n.type === "ObjectExpression") {
+      const parent = m.parent(n);
+      const option = parent?.type === "Property" && keyOf(parent) === "env" && parent.value === n;
+      if (option || env.is(m, n)) {
+        const stack = [n];
+        while (stack.length) {
+          const o = stack.pop();
+          if (o.type === "LogicalExpression")
+            stack.push(o.right);
+          else if (o.type === "ConditionalExpression")
+            stack.push(o.consequent, o.alternate);
+          else if (o.type === "ObjectExpression")
+            for (const p of o.properties) {
+              if (p.type === "SpreadElement")
+                stack.push(p.argument);
+              const k = p.type !== "Property" ? undefined : p.computed ? constString(m, p.key) : keyOf(p);
+              if (k && UPPER.test(k))
+                add(m, p, k, {
+                  detail: "set for a child process"
+                });
+            }
+        }
+      }
+      if (n.properties.length >= 2) {
+        const s = n.properties.map((p) => p.type === "Property" ? keyOf(p) : undefined);
+        if (s.every((x) => x && UPPER.test(x)))
+          lists.push({ m, n, names: s });
+      }
+    }
+    if (n.type === "CallExpression" && n.callee.type === "MemberExpression" && n.callee.property.type === "Identifier" && /^get\w*FromEnv$/.test(n.callee.property.name)) {
+      const s = constString(m, n.arguments[0]);
+      const p = s === undefined && n.arguments[0] ? paramOf(m, n.arguments[0]) : undefined;
+      if (s !== undefined)
+        add(m, n, s);
+      else if (p)
+        helpers.push({ m, ...p });
+    }
+    const args = n.type === "CallExpression" ? n.arguments : n.type === "ArrayExpression" ? n.elements : [];
+    args.forEach((a, i) => {
+      const k = a && constString(m, a) === "--setenv" ? constString(m, args[i + 1]) : undefined;
+      if (k && UPPER.test(k))
+        add(m, a, k, { detail: "set for a child process" });
+    });
+    if (n.type === "ArrayExpression") {
+      const s = n.elements.flatMap((e) => constString(m, e) ?? []);
+      if (s.length >= 2 && s.every((x) => UPPER.test(x)))
+        lists.push({ m, n, names: s });
+    }
+  });
+  const done = new Set;
+  for (const h of helpers) {
+    if (done.has(h.fn))
+      continue;
+    done.add(h.fn);
+    for (const c of callsOf(h.m, h.fn)) {
+      const s = c && constString(c.module, c.call.arguments[h.index]);
+      if (c && s !== undefined)
+        add(c.module, c.call, s);
+    }
+  }
+  const found = new Set(out.map((i) => i.name));
+  for (let grew = true;grew; ) {
+    grew = false;
+    for (const l of lists) {
+      if (l.names.filter((x) => found.has(x)).length * 3 < l.names.length)
+        continue;
+      for (const x of l.names)
+        if (!found.has(x) && LISTED.test(x)) {
+          add(l.m, l.n, x, { detail: "listed" });
+          found.add(x);
+          grew = true;
+        }
+    }
+  }
+  return unique(out);
+};
+
+// inspect/mcp/src/surface/error.ts
+var BLANK = `\${}`;
+var BASE = new Set(["Error", "TypeError", "RangeError", "SyntaxError"]);
+var errorClass = (m, id, depth = 0) => {
+  if (id.type !== "Identifier" || depth > 8)
+    return;
+  const v0 = m.variable(id);
+  if (!v0 || v0.defs.length === 0)
+    return BASE.has(id.name) ? id.name : undefined;
+  const o = m.bundle ? m.bundle.origin(m, v0) : { module: m, variable: v0 };
+  if (!o)
+    return;
+  const def = o.variable.defs[0];
+  const writes = o.variable.references.filter((r) => r.isWrite() && !r.init);
+  const cls = def?.type === "ClassName" ? def.node : def?.type === "Variable" && def.node.init ? def.node.init : writes[0]?.writeExpr;
+  if (cls?.type !== "ClassDeclaration" && cls?.type !== "ClassExpression" || !cls.superClass)
+    return;
+  return errorClass(o.module, cls.superClass, depth + 1);
+};
+var text = (m, n) => {
+  if (!n)
+    return;
+  const s = constString(m, n);
+  if (s !== undefined)
+    return s;
+  if (n.type === "TemplateLiteral") {
+    return n.quasis.map((q, i) => (q.value.cooked ?? q.value.raw) + (i < n.expressions.length ? BLANK : "")).join("");
+  }
+  if (n.type === "BinaryExpression" && n.operator === "+") {
+    const l = text(m, n.left);
+    const r = text(m, n.right);
+    if (l === undefined && r === undefined)
+      return;
+    return (l ?? BLANK) + (r ?? BLANK);
+  }
+  return;
+};
+var keep = (s) => s.length >= 10 && s.includes(" ") && /[A-Za-z]/.test(s);
+var extractErrors = (bundle) => {
+  const out = [];
+  scan(bundle, ["throw", "stderr"], (m, n) => {
+    let call;
+    let detail = "stderr";
+    if (n.type === "ThrowStatement") {
+      const a = n.argument;
+      if (a.type !== "NewExpression" && a.type !== "CallExpression")
+        return;
+      const base = errorClass(m, a.callee);
+      if (!base)
+        return;
+      call = a;
+      detail = `throw ${base}`;
+    } else if (n.type === "CallExpression" && n.callee.type === "MemberExpression" && !n.callee.computed && n.callee.property.type === "Identifier" && n.callee.property.name === "write" && m.src(n.callee.object) === "process.stderr")
+      call = n;
+    if (!call)
+      return;
+    const t = text(m, call.arguments[0]);
+    if (t === undefined)
+      return;
+    const name = short(t);
+    if (keep(name))
+      out.push({
+        kind: "error",
+        name,
+        module: m.name,
+        offset: call.start,
+        detail
+      });
+  });
+  return unique(out);
+};
+
+// inspect/mcp/src/surface/file.ts
+var ANCHORS = ["history.jsonl", "keybindings.json"];
+var extractFiles = (bundle) => {
+  const byBase = new Map;
+  const anchored = new Map;
+  scan(bundle, ['"'], (m, n) => {
+    if (n.type !== "CallExpression" || n.arguments.length < 2)
+      return;
+    const a0 = n.arguments[0];
+    if (a0.type !== "CallExpression" || a0.arguments.length > 0 || a0.callee.type !== "Identifier")
+      return;
+    const name = constString(m, n.arguments.at(-1));
+    const v = m.variable(a0.callee);
+    const base = v && (bundle.origin(m, v)?.variable ?? v);
+    if (!name || !base)
+      return;
+    const items = byBase.get(base) ?? [];
+    items.push({ kind: "file", name, module: m.name, offset: n.start });
+    byBase.set(base, items);
+    if (ANCHORS.includes(name)) {
+      const s = anchored.get(base) ?? new Set;
+      s.add(name);
+      anchored.set(base, s);
+    }
+  });
+  const out = [];
+  for (const [base, items] of byBase)
+    if (ANCHORS.every((a) => anchored.get(base)?.has(a)))
+      out.push(...items);
+  return unique(out);
+};
+
+// inspect/mcp/src/surface/gate.ts
+var payload = (n) => n?.type === "ObjectExpression" && n.properties.some((p) => keyOf(p) !== "safe");
+var extractGates = (bundle) => {
+  const groups = new Map;
+  scan(bundle, ['"tengu_'], (m, n) => {
+    if (n.type !== "CallExpression")
+      return;
+    const name = constString(m, n.arguments[0]);
+    if (!name || !/^tengu_[a-z0-9_]*[a-z0-9]$/.test(name))
+      return;
+    const c = n.callee;
+    const key = functionOf(m, c)?.fn ?? (c.type === "MemberExpression" && c.property.type !== "PrivateIdentifier" ? `.${m.src(c.property)}` : m.src(c));
+    const g = groups.get(key) ?? [];
+    g.push({ m, n, name });
+    groups.set(key, g);
+  });
+  const loggers = new Set([...groups].filter(([, s]) => s.filter((x) => payload(x.n.arguments[1])).length * 2 > s.length).map(([k]) => k));
+  for (let grew = true;grew; ) {
+    grew = false;
+    for (const [k, sites] of groups) {
+      if (loggers.has(k) || typeof k === "string")
+        continue;
+      const fn = k;
+      const p = fn.params[0];
+      const m = sites[0]?.m;
+      const fm = m && functionOf(m, sites[0]?.n.callee)?.module;
+      if (p?.type !== "Identifier" || !fm)
+        continue;
+      const stack = [fn.body];
+      while (stack.length) {
+        const n = stack.pop();
+        const a0 = n.type === "CallExpression" ? n.arguments[0] : undefined;
+        if (a0?.type === "Identifier" && a0.name === p.name && loggers.has(functionOf(fm, n.callee)?.fn)) {
+          loggers.add(k);
+          grew = true;
+          break;
+        }
+        stack.push(...children(n));
+      }
+    }
+  }
+  const out = [];
+  for (const [k, sites] of groups) {
+    if (loggers.has(k))
+      continue;
+    for (const { m, n, name } of sites) {
+      const d = n.arguments[1];
+      const def = !d ? undefined : d.type === "ObjectExpression" ? undefined : literal3(m, d);
+      out.push({
+        kind: "gate",
+        name,
+        module: m.name,
+        offset: n.start,
+        ...def && { default: def }
+      });
+    }
+  }
+  return unique(out);
+};
+
+// inspect/mcp/src/surface/hook-event.ts
+var PASCAL = /^[A-Z][A-Za-z]+$/;
+var extractHookEvents = (bundle) => {
+  let best;
+  scan(bundle, ['"PreToolUse"'], (m, n) => {
+    if (n.type !== "ArrayExpression")
+      return;
+    const s = strings(m, n);
+    if (!s?.includes("PreToolUse") || !s.includes("PostToolUse") || !s.every((x) => PASCAL.test(x)))
+      return;
+    if (!best || s.length > best.names.length)
+      best = { m: m.name, n, names: s };
+  });
+  if (!best)
+    return [];
+  const { m, n, names } = best;
+  return unique(names.map((name) => ({
+    kind: "hook-event",
+    name,
+    module: m,
+    offset: n.start
+  })));
+};
+
+// inspect/mcp/src/surface/keybinding.ts
+var extractKeybindings = (bundle) => {
+  let actions;
+  let contexts;
+  scan(bundle, ['"chat:cancel"', '"Global"'], (m, n) => {
+    if (n.type !== "ArrayExpression")
+      return;
+    const s = strings(m, n);
+    if (!s)
+      return;
+    if (s.includes("chat:cancel") && (!actions || s.length > actions.names.length))
+      actions = { m: m.name, n, names: s };
+    if (s.includes("Global") && s.includes("Chat") && (!contexts || s.length > contexts.names.length))
+      contexts = { m: m.name, n, names: s };
+  });
+  const out = [];
+  for (const [best, detail] of [
+    [actions, "action"],
+    [contexts, "context"]
+  ])
+    for (const name of best?.names ?? [])
+      out.push({
+        kind: "keybinding",
+        name,
+        module: best?.m ?? null,
+        offset: best?.n.start ?? null,
+        detail
+      });
+  return unique(out);
+};
+
+// plugin/mcp/src/types.ts
+var HEAD = /^(\s*)(?:export )?(?:declare )?(?:type|interface|function|const|class|namespace) ([\w$]+)/;
+var MODULE = /^declare module '([^']+)' \{/;
+var code = (line, inDoc) => {
+  let out = "";
+  let i = 0;
+  let doc = inDoc;
+  while (i < line.length) {
+    if (doc) {
+      const close = line.indexOf("*/", i);
+      if (close < 0)
+        return { text: out, inDoc: true };
+      i = close + 2;
+      doc = false;
+    } else if (line.startsWith("/*", i)) {
+      doc = true;
+      i += 2;
+    } else if (line.startsWith("//", i))
+      break;
+    else if (line[i] === "'" || line[i] === '"' || line[i] === "`") {
+      const q = line[i];
+      i++;
+      while (i < line.length && line[i] !== q)
+        i += line[i] === "\\" ? 2 : 1;
+      i++;
+      out += "''";
+    } else
+      out += line[i++];
+  }
+  return { text: out, inDoc: doc };
+};
+var blockEnd = (lines, start) => {
+  let depth = 0;
+  let inDoc = false;
+  for (let i = start;i < lines.length; i++) {
+    const c = code(lines[i] ?? "", inDoc);
+    inDoc = c.inDoc;
+    for (const ch of c.text) {
+      if ("{[(".includes(ch))
+        depth++;
+      else if ("}])".includes(ch))
+        depth--;
+    }
+    const t = c.text.trim();
+    if (depth <= 0 && !inDoc && /[;},]$/.test(t))
+      return i;
+    if (depth < 0)
+      return i;
+  }
+  return lines.length - 1;
+};
+var docStart = (lines, line) => {
+  let i = line - 1;
+  if (!(lines[i] ?? "").trim().endsWith("*/"))
+    return line;
+  while (i >= 0 && !(lines[i] ?? "").trim().startsWith("/**"))
+    i--;
+  return i >= 0 ? i : line;
+};
+var declarations = (lines) => {
+  const out = [];
+  let module = "";
+  let inDoc = false;
+  for (let i = 0;i < lines.length; i++) {
+    const line = lines[i] ?? "";
+    const m = MODULE.exec(line);
+    if (m) {
+      module = m[1] ?? "";
+      continue;
+    }
+    const wasDoc = inDoc;
+    inDoc = code(line, inDoc).inDoc;
+    if (wasDoc)
+      continue;
+    const h = HEAD.exec(line);
+    if (!h || (h[1] ?? "").length !== 2)
+      continue;
+    const end = blockEnd(lines, i);
+    out.push({ name: h[2] ?? "", module, start: docStart(lines, i), end });
+    i = end;
+  }
+  return out;
+};
+
+// inspect/mcp/src/surface/mod-api.ts
+var KEY = /^(\s*)(?:readonly )?(['"]?)([\w$.]+)\2\??\s*([:(<])/;
+var members2 = (lines, head, end) => {
+  const out = [];
+  let indent = -1;
+  let inDoc = false;
+  for (let i = head + 1;i < end; i++) {
+    const line = lines[i] ?? "";
+    const t = line.trim();
+    if (inDoc || t.startsWith("/*")) {
+      inDoc = !t.endsWith("*/");
+      continue;
+    }
+    const k = KEY.exec(line);
+    if (!k)
+      continue;
+    const ind = (k[1] ?? "").length;
+    if (indent < 0)
+      indent = ind;
+    if (ind !== indent)
+      continue;
+    const e = blockEnd(lines, i);
+    const rest = line.slice(k[0].length);
+    out.push({
+      name: k[3] ?? "",
+      line: i,
+      end: /^\s*\{$/.test(rest) ? e : i,
+      call: k[4] !== ":" || /^\s*[(<]/.test(rest)
+    });
+    i = e;
+  }
+  return out;
+};
+var extractModApi = (_bundle, files) => {
+  if (!files)
+    throw new Error("mod-api needs the embedded files of the binary");
+  const { name: module, text } = typeFile(files);
+  const lines = text.split(`
+`);
+  const at = [0];
+  for (const l of lines)
+    at.push(at.at(-1) + l.length + 1);
+  const out = [];
+  const item = (name, line, detail) => out.push({
+    kind: "mod-api",
+    name,
+    module,
+    offset: at[line] ?? null,
+    detail
+  });
+  const decls = declarations(lines);
+  const head = (name) => {
+    const d = decls.find((x) => x.name === name);
+    if (!d)
+      throw new Error(`type file: no declaration ${name}`);
+    const re = new RegExp(`\\b(?:type|interface) ${name}\\b`);
+    let i = d.start;
+    while (i < d.end && !re.test(lines[i] ?? ""))
+      i++;
+    return { line: i, end: d.end };
+  };
+  const walk = (path, from, to) => {
+    for (const m of members2(lines, from, to))
+      if (m.end > m.line)
+        walk(`${path}.${m.name}`, m.line, m.end);
+      else
+        item(`${path}.${m.name}`, m.line, m.call ? "call" : "property");
+  };
+  const core = head("CoreEngineInterface");
+  walk("$", core.line, core.end);
+  for (const map of ["EngineEventOf", "OpEventOf"]) {
+    const h = head(map);
+    for (const m of members2(lines, h.line, h.end))
+      item(m.name, m.line, "event");
+  }
+  for (const hit of text.matchAll(/hook_event_name: '(\w+)'/g))
+    out.push({
+      kind: "mod-api",
+      name: `classic.${hit[1]}`,
+      module,
+      offset: hit.index,
+      detail: "event"
+    });
+  return unique(out);
+};
+
+// inspect/mcp/src/surface/model.ts
+var ID = /^claude-(?:\d[\d-]*-)?(?:opus|sonnet|haiku|fable|mythos)(?:-[a-z0-9]+)*(?:@\d+)?(?:\[1m\])?$/;
+var extractModels = (bundle) => {
+  const out = [];
+  let aliases;
+  scan(bundle, ['"claude-', '"opusplan"'], (m, n) => {
+    if (n.type === "Literal" && typeof n.value === "string" && ID.test(n.value))
+      out.push({
+        kind: "model",
+        name: n.value,
+        module: m.name,
+        offset: n.start,
+        detail: "id"
+      });
+    if (n.type !== "ArrayExpression")
+      return;
+    const s = strings(m, n);
+    if (s?.includes("opusplan") && s.includes("sonnet") && (!aliases || s.length > aliases.names.length))
+      aliases = { m: m.name, start: n.start, names: s };
+  });
+  for (const name of aliases?.names ?? [])
+    out.push({
+      kind: "model",
+      name,
+      module: aliases?.m ?? null,
+      offset: aliases?.start ?? null,
+      detail: "alias"
+    });
+  return unique(out);
+};
+
+// inspect/mcp/src/surface/otel-event.ts
+var extractOtelEvents = (bundle) => {
+  const module = bundle.withText('"event.sequence"')[0]?.name ?? null;
+  return unique([...eventSites(bundle, new Resolver)].map(([name, sites]) => ({
+    kind: "otel-event",
+    name,
+    module,
+    offset: null,
+    detail: `${sites.length} call sites`
+  })));
+};
+
+// inspect/mcp/src/surface/permission-rule.ts
+var DESCRIPTION = "Permission mode for controlling how tool executions are handled";
+var extractPermissionRules = (bundle) => {
+  const out = [];
+  scan(bundle, [DESCRIPTION], (m, n) => {
+    if (n.type !== "CallExpression" || n.callee.type !== "MemberExpression" || n.callee.property.type !== "Identifier" || n.callee.property.name !== "describe" || !constString(m, n.arguments[0])?.startsWith(DESCRIPTION))
+      return;
+    const stack = [n.callee.object];
+    while (stack.length) {
+      const x = stack.pop();
+      const modes = strings(m, x);
+      for (const name of modes ?? [])
+        out.push({
+          kind: "permission-rule",
+          name,
+          module: m.name,
+          offset: x.start,
+          detail: "mode"
+        });
+      stack.push(...children(x));
+    }
+  });
+  return unique(out);
+};
+
+// inspect/mcp/src/surface/setting.ts
+var ANCHOR = "JSON Schema reference for Claude Code settings";
+var describe3 = (m, n) => {
+  let cur = n?.type === "ArrowFunctionExpression" ? n.body : n;
+  while (cur?.type === "CallExpression" && cur.callee.type === "MemberExpression") {
+    const p = cur.callee.property;
+    if (p.type === "Identifier" && p.name === "describe")
+      return constString(m, cur.arguments[0]);
+    cur = cur.callee.object;
+  }
+  return;
+};
+var extractSettings = (bundle) => {
+  const out = [];
+  const keys = (m, o, gate) => {
+    for (const p of o.properties) {
+      const a = p.type === "SpreadElement" ? p.argument : undefined;
+      const [cond, obj] = a?.type === "LogicalExpression" && a.operator === "&&" ? [a.left, a.right] : a?.type === "ConditionalExpression" ? [a.test, a.consequent] : [];
+      if (cond && obj?.type === "ObjectExpression")
+        keys(m, obj, short(m.src(cond), 120));
+      const k = keyOf(p);
+      if (!k || p.type !== "Property")
+        continue;
+      const d = describe3(m, p.value);
+      out.push({
+        kind: "setting",
+        name: k,
+        module: m.name,
+        offset: p.start,
+        ...d && { detail: short(d) },
+        ...gate && { gate }
+      });
+    }
+  };
+  scan(bundle, [ANCHOR, "buildGate:"], (m, n) => {
+    if (n.type !== "ObjectExpression")
+      return;
+    const o = n;
+    if (describe3(m, prop(o, "$schema")?.value) === ANCHOR)
+      return keys(m, o);
+    const gate = prop(o, "buildGate")?.value;
+    const shape = prop(o, "shape")?.value;
+    const body = shape?.type === "ArrowFunctionExpression" ? shape.body : undefined;
+    if (gate && body?.type === "ObjectExpression")
+      keys(m, body, `buildGate ${short(m.src(gate), 120)}`);
+  });
+  return unique(out);
+};
+
+// inspect/mcp/src/surface/slash-command.ts
+var TYPES2 = new Set(["local", "local-jsx", "prompt"]);
+var NAME2 = /^[a-z][\w:-]*$/;
+var builderType = (m, call) => {
+  if (call.type !== "CallExpression")
+    return;
+  const f = functionOf(m, call.callee);
+  const p = f?.fn.params[0];
+  if (!f || !p)
+    return;
+  const known = builders.get(f.fn);
+  if (known !== undefined)
+    return known || undefined;
+  const nameSrc = p.type === "Identifier" ? `${p.name}.name` : p.type === "ObjectPattern" ? (() => {
+    const v = p.properties.find((x) => x.type === "Property" && keyOf(x) === "name")?.value;
+    return v?.type === "Identifier" ? v.name : undefined;
+  })() : undefined;
+  let found = "";
+  const stack = [f.fn.body];
+  while (stack.length && !found && nameSrc) {
+    const n = stack.pop();
+    if (n.type === "ObjectExpression") {
+      const t = constString(f.module, prop(n, "type")?.value);
+      const v = prop(n, "name")?.value;
+      if (t && TYPES2.has(t) && v && f.module.src(v) === nameSrc)
+        found = t;
+    }
+    stack.push(...children(n));
+  }
+  builders.set(f.fn, found);
+  return found || undefined;
+};
+var builders = new WeakMap;
+var extractSlashCommands = (bundle) => {
+  const out = [];
+  scan(bundle, ["name:"], (m, n) => {
+    if (n.type !== "ObjectExpression")
+      return;
+    const o = n;
+    const name = constString(m, prop(o, "name")?.value);
+    if (!name || !NAME2.test(name))
+      return;
+    const parent = m.parent(n);
+    const type = constString(m, prop(o, "type")?.value) ?? (parent?.type === "CallExpression" && parent.arguments[0] === n ? builderType(m, parent) : undefined);
+    if (!type || !TYPES2.has(type))
+      return;
+    const desc = constString(m, prop(o, "description")?.value);
+    const aliases = strings(m, prop(o, "aliases")?.value);
+    const gates = [];
+    if (/^(!0|true)$/.test(m.src(prop(o, "isHidden")?.value ?? n).trim()))
+      gates.push("hidden");
+    const avail = strings(m, prop(o, "availability")?.value);
+    if (avail)
+      gates.push(`availability ${avail.join(", ")}`);
+    const enabled = prop(o, "isEnabled")?.value;
+    if (enabled)
+      gates.push(`isEnabled ${short(m.src(enabled), 120)}`);
+    out.push({
+      kind: "slash-command",
+      name: `/${name}`,
+      module: m.name,
+      offset: n.start,
+      detail: short(`${type}${aliases?.length ? ` (aliases ${aliases.join(", ")})` : ""}${desc ? ` | ${desc}` : ""}`),
+      ...gates.length && { gate: gates.join("; ") }
+    });
+  });
+  return unique(out);
+};
+
 // inspect/mcp/src/tools.ts
 var MAX_FN = 300;
-var initOf = (m, id) => {
+var initOf2 = (m, id) => {
   const v0 = m.variable(id);
   const o = v0 && (m.bundle?.origin(m, v0) ?? { module: m, variable: v0 });
   const def = o?.variable.defs[0];
@@ -38713,7 +39892,7 @@ var isNull = (m, n, depth = 0) => {
   if (n.type === "Literal")
     return n.value === null;
   if (n.type === "Identifier") {
-    const i = initOf(m, n);
+    const i = initOf2(m, n);
     return !!i && isNull(i.m, i.n, depth + 1);
   }
   if (n.type !== "CallExpression")
@@ -38729,7 +39908,7 @@ var toolName = (R, m, n, depth = 0) => {
   if (depth > 8)
     return;
   if (n.type === "Identifier") {
-    const i = initOf(m, n);
+    const i = initOf2(m, n);
     return i && toolName(R, i.m, i.n, depth + 1);
   }
   const lit = n.type === "ObjectExpression" ? n : n.type === "CallExpression" && n.arguments[0]?.type === "ObjectExpression" ? n.arguments[0] : undefined;
@@ -38805,7 +39984,7 @@ var items = (R, m, n, when, out, depth = 0) => {
       items(R, m, n.alternate, when, out, depth + 1);
       return;
     }
-    const i = t.type === "Identifier" ? initOf(m, t) : undefined;
+    const i = t.type === "Identifier" ? initOf2(m, t) : undefined;
     const text = i ? `${m.src(t)} (=${i.m.src(i.n)})` : m.src(t);
     const at = i ?? { m, n: t };
     items(R, m, n.consequent, [...when, { ...at, text }], out, depth + 1);
@@ -38832,7 +40011,7 @@ var items = (R, m, n, when, out, depth = 0) => {
   if (n.type === "Identifier" && isNull(m, n))
     return;
   const r = required2(m, n);
-  const i = n.type === "Identifier" ? initOf(m, n) : undefined;
+  const i = n.type === "Identifier" ? initOf2(m, n) : undefined;
   const next = n.type === "ChainExpression" ? [{ m, n: n.expression }] : n.type === "LogicalExpression" ? [
     { m, n: n.left },
     { m, n: n.right }
@@ -38890,6 +40069,52 @@ var baseTools = (bundle, R) => {
   };
 };
 
+// inspect/mcp/src/surface/tool.ts
+var extractTools = (bundle) => {
+  const r = baseTools(bundle, new Resolver);
+  return unique(r.tools.map((t) => ({
+    kind: "tool",
+    name: t.name,
+    module: r.module,
+    offset: null,
+    ...t.when.length > 0 && { gate: t.when.join(" && ") },
+    ...t.enabled && { detail: short(t.enabled) }
+  })));
+};
+
+// inspect/mcp/src/surface/index.ts
+var KINDS = {
+  env: extractEnv,
+  "hook-event": extractHookEvents,
+  flag: extractFlags,
+  subcommand: extractSubcommands,
+  "slash-command": extractSlashCommands,
+  setting: extractSettings,
+  gate: extractGates,
+  tool: extractTools,
+  "otel-event": extractOtelEvents,
+  "mod-api": extractModApi,
+  keybinding: extractKeybindings,
+  model: extractModels,
+  beta: extractBetas,
+  endpoint: extractEndpoints,
+  file: extractFiles,
+  "permission-rule": extractPermissionRules,
+  error: extractErrors
+};
+var cache = new WeakMap;
+var surface = (bundle, kind, files) => {
+  const f = KINDS[kind];
+  if (!f)
+    throw new Error(`unknown kind "${kind}"; kinds: ${Object.keys(KINDS).join(", ")}`);
+  const byKind = cache.get(bundle) ?? new Map;
+  cache.set(bundle, byKind);
+  const items = byKind.get(kind) ?? f(bundle, files);
+  byKind.set(kind, items);
+  return items;
+};
+if (false) {}
+
 // inspect/mcp/src/server.ts
 var READ_ONLY = {
   readOnlyHint: true,
@@ -38898,7 +40123,7 @@ var READ_ONLY = {
   openWorldHint: false
 };
 var MAX_CHARS = 40000;
-var text = (t, data) => ({
+var text2 = (t, data) => ({
   content: [{ type: "text", text: t }],
   ...data && { structuredContent: data }
 });
@@ -38933,7 +40158,7 @@ Returns: one line per session: id, project, size, modified time; structuredConte
 }, ({ project, limit }) => run(() => {
   const all = listSessions(project);
   const sessions = all.slice(0, limit);
-  return text(sessions.length ? `${all.length} sessions under ${configDir()}/projects${all.length > limit ? `, showing ${limit}` : ""}:
+  return text2(sessions.length ? `${all.length} sessions under ${configDir()}/projects${all.length > limit ? `, showing ${limit}` : ""}:
 ${sessions.map((s) => `- ${s.id}  ${s.project}  ${Math.round(s.bytes / 1024)} KB  ${s.modified}`).join(`
 `)}` : `No sessions under ${configDir()}/projects${project ? ` for "${project}"` : ""}.`, { sessions });
 }));
@@ -38960,13 +40185,9 @@ Returns: the lines as JSON text, with "next_offset" when more remain.`,
   const lines = readLines(path).filter((l) => !type || l.json?.type === type);
   const page = lines.slice(offset, offset + limit);
   const more = offset + page.length < lines.length;
-  return text(`${path}: lines ${offset + 1}-${offset + page.length} of ${lines.length}${type ? ` with type "${type}"` : ""}${more ? `, next_offset ${offset + page.length}` : ""}
+  return text2(`${path}: lines ${offset + 1}-${offset + page.length} of ${lines.length}${type ? ` with type "${type}"` : ""}${more ? `, next_offset ${offset + page.length}` : ""}
 ${page.map((l) => `${l.n}: ${clip(l.text, max_line_chars)}`).join(`
-`)}`, {
-    path,
-    total: lines.length,
-    ...more && { next_offset: offset + page.length }
-  });
+`)}`);
 }));
 server.registerTool("search_sessions", {
   title: "Search Claude Code session transcripts",
@@ -39008,7 +40229,7 @@ Returns: one hit per line: session id, line number, type, and a snippet around t
     if (hits.length >= limit)
       break;
   }
-  return text(hits.length ? hits.map((h) => `- ${h.session}:${h.line} [${h.type}] \u2026${h.snippet}\u2026`).join(`
+  return text2(hits.length ? hits.map((h) => `- ${h.session}:${h.line} [${h.type}] \u2026${h.snippet}\u2026`).join(`
 `) : `No match for ${re} in ${files.length} sessions.`, { hits });
 }));
 server.registerTool("validate_session", {
@@ -39040,7 +40261,7 @@ Returns: counts of lines and failures by type, then each failing line with its p
     failures.push({ line: l.n, type: l.json?.type, problems });
   }
   const shown = failures.slice(0, limit);
-  return text(`${path}: ${lines.length} lines, ${failures.length} fail the ${SCHEMA_VERSION} schema.
+  return text2(`${path}: ${lines.length} lines, ${failures.length} fail the ${SCHEMA_VERSION} schema.
 ${Object.entries(byType).map(([t, c]) => `- ${t}: ${c.lines} lines, ${c.failed} fail`).join(`
 `)}${shown.length ? `
 
@@ -39061,7 +40282,7 @@ Returns: one line per version with its path; structuredContent {installs:[{versi
   annotations: READ_ONLY
 }, () => run(() => {
   const installs = listInstalls();
-  return text(installs.length ? installs.map((i) => `- ${i.version}${i.current ? " (current)" : ""}  ${i.path}`).join(`
+  return text2(installs.length ? installs.map((i) => `- ${i.version}${i.current ? " (current)" : ""}  ${i.path}`).join(`
 `) : "No Claude Code install found.", { installs });
 }));
 server.registerTool("list_modules", {
@@ -39076,7 +40297,7 @@ Returns: one line per module with its size; structuredContent {path, modules:[{n
 }, ({ binary, filter }) => run(() => {
   const p = program(binary);
   const modules = p.modules.filter((m) => !filter || m.name.includes(filter)).map((m) => ({ name: m.name, bytes: m.bytes.length }));
-  return text(`${p.path}: ${modules.length} modules
+  return text2(`${p.path}: ${modules.length} modules
 ${modules.map((m) => `- ${m.name}  ${m.bytes} bytes`).join(`
 `)}`, { path: p.path, modules });
 }));
@@ -39118,7 +40339,7 @@ Returns: one hit per match: module, offset, and the code around it. Use read_mod
     if (hits.length >= limit)
       break;
   }
-  return text(hits.length ? hits.map((h) => `- ${h.module}@${h.offset}: ${h.snippet}`).join(`
+  return text2(hits.length ? hits.map((h) => `- ${h.module}@${h.offset}: ${h.snippet}`).join(`
 
 `) : `No match for ${re}.`, { hits });
 }));
@@ -39144,7 +40365,7 @@ Returns: the code, headed by its range and the module length.`,
   if (!m)
     throw new Error(`no module "${module}" in ${p.path}`);
   const end = Math.min(m.source.length, offset + length);
-  return text(`${m.name} [${offset}, ${end}) of ${m.source.length}
+  return text2(`${m.name} [${offset}, ${end}) of ${m.source.length}
 ${m.source.slice(offset, end)}`);
 }));
 server.registerTool("resolve_object", {
@@ -39179,7 +40400,7 @@ Returns: the keys as JSON, and the spreads that could not be followed.`,
   const before = R.unresolved.length;
   const keys = entriesJson(R.pin(R.entries(m, obj)));
   const unresolved = [...new Set(R.unresolved.slice(before))];
-  return text(`${JSON.stringify(keys, null, 2)}${unresolved.length ? `
+  return text2(`${JSON.stringify(keys, null, 2)}${unresolved.length ? `
 
 Spreads not followed:
 ${unresolved.map((u) => `- ${u}`).join(`
@@ -39198,7 +40419,7 @@ Returns: the keys as JSON, or the list of events with their call site counts.`,
   const { bundle, resolver } = program(binary);
   const events = eventSites(bundle, resolver);
   if (!name)
-    return text([...events].sort(([a], [b]) => a.localeCompare(b)).map(([n, l]) => `- ${n}: ${l.length} call sites`).join(`
+    return text2([...events].sort(([a], [b]) => a.localeCompare(b)).map(([n, l]) => `- ${n}: ${l.length} call sites`).join(`
 `), {
       events: Object.fromEntries([...events].map(([n, l]) => [n, l.length]))
     });
@@ -39206,7 +40427,7 @@ Returns: the keys as JSON, or the list of events with their call site counts.`,
   if (!lists)
     throw new Error(`no event "${name}"; events: ${[...events.keys()].join(", ")}`);
   const keys = entriesJson(mergeEntries(lists));
-  return text(`${lists.length} call sites
+  return text2(`${lists.length} call sites
 ${JSON.stringify(keys, null, 2)}`, {
     sites: lists.length,
     keys
@@ -39223,12 +40444,50 @@ Returns: one line per tool with its gates, then the functions; structuredContent
 }, ({ binary }) => run(() => {
   const { bundle, resolver } = program(binary);
   const r = baseTools(bundle, resolver);
-  return text(`${r.module}: ${r.tools.length} tools
+  return text2(`${r.module}: ${r.tools.length} tools
 ${r.tools.map((t) => `- ${t.name}${t.unresolved ? " (unresolved)" : ""}${t.when.length ? `  when: ${t.when.join(" && ")}` : ""}${t.enabled ? `  own: ${t.enabled}` : ""}`).join(`
 `)}
 
 Functions:
 ${Object.entries(r.functions).map(([n, s]) => `- ${n}: ${s}`).join(`
 `)}`, r);
+}));
+var SURFACE_LIMIT = 200;
+var surfaceLine = (i) => `- ${i.name}${i.default !== undefined ? `  default ${i.default}` : ""}${i.values ? `  values ${i.values.join("|")}` : ""}${i.gate ? `  gate ${clip(i.gate, 120)}` : ""}${i.detail ? `  (${clip(i.detail, 120)})` : ""}  ${i.module ?? "-"}:${i.offset ?? "-"}`;
+server.registerTool("list_surface", {
+  title: "List the functional surface of Claude Code by kind",
+  description: `List the items of one kind of surface in a Claude Code binary, found by the same extractors as the docs surface snapshot. Kinds: ${Object.keys(KINDS).join(", ")}.
+Args:
+  - kind (string, optional): without it, lists each kind with its item count.
+  - name (string, optional): keep items whose name contains this (any case).
+  - offset (number, default 0), limit (number 1-400, default ${SURFACE_LIMIT}).
+  - binary (string, optional): version or path.
+Returns: one line per item: the name, then the default, values, gate, and detail when the code shows them ("unknown" when the code computes it), then module:offset ("-" when the source gives no place), with "next_offset" when more remain.`,
+  inputSchema: {
+    kind: string2().optional(),
+    name: string2().optional(),
+    offset: number2().int().min(0).default(0),
+    limit: number2().int().min(1).max(400).default(SURFACE_LIMIT),
+    binary: binaryArg
+  },
+  annotations: READ_ONLY
+}, ({ kind, name, offset, limit, binary }) => run(() => {
+  const { bundle, modules } = program(binary);
+  if (!kind)
+    return text2(Object.keys(KINDS).map((k) => {
+      try {
+        return `- ${k}: ${surface(bundle, k, modules).length}`;
+      } catch (e) {
+        return `- ${k}: error: ${e.message}`;
+      }
+    }).join(`
+`));
+  const q = name?.toLowerCase();
+  const all = surface(bundle, kind, modules).filter((i) => !q || i.name.toLowerCase().includes(q));
+  const page = all.slice(offset, offset + limit);
+  const more = offset + page.length < all.length;
+  return text2(`${kind}: items ${offset + 1}-${offset + page.length} of ${all.length}${name ? ` matching "${name}"` : ""}${more ? `, next_offset ${offset + page.length}` : ""}
+${page.map(surfaceLine).join(`
+`)}`);
 }));
 await server.connect(new StdioServerTransport);

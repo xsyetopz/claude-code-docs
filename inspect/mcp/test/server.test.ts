@@ -5,6 +5,7 @@ import {
   mkdirSync,
   mkdtempSync,
   rmSync,
+  statSync,
   symlinkSync,
   writeFileSync,
 } from "node:fs";
@@ -43,6 +44,7 @@ function allTools() {
   return [Shell, ...[Glob, Grep].filter((t) => !hidden().has(t.name)), ...(lean() ? [Cron] : []), ...(o ? [o] : [])];
 }
 globalThis.api = { getAllBaseTools: allTools };
+globalThis.envs = [process.env.CLAUDE_CODE_USE_BEDROCK, process.env.ANTHROPIC_BEDROCK_BASE_URL, process.env.FIXTURE_OTHER];
 `;
 
 const LINES = [
@@ -111,13 +113,20 @@ describe("sessions", () => {
   });
 
   test("read_session pages and filters by type", async () => {
+    // Claude Code 2.1.309 (`ds` in chunk-gf8e163f.js) shows the model only structuredContent when set.
+    const seen = (r: Result) =>
+      r.structuredContent
+        ? JSON.stringify(r.structuredContent)
+        : (r.content[0]?.text ?? "");
     const r = await call("read_session", { session: "1111", limit: 1 });
-    expect(r.structuredContent).toMatchObject({ total: 4, next_offset: 1 });
+    expect(seen(r)).toContain("lines 1-1 of 4, next_offset 1\n1: {");
     const t = await call("read_session", {
       session: SESSION,
       type: "last-prompt",
     });
-    expect(t.structuredContent?.["total"]).toBe(1);
+    expect(seen(t)).toMatch(
+      /of 1 with type "last-prompt"\n\d+: \{.*last-prompt/,
+    );
   });
 
   test("search_sessions returns the line of a match", async () => {
@@ -217,5 +226,66 @@ describe("binary", () => {
     expect(tools[2]?.enabled).toContain("process.env.GREP");
     const fns = Object.values(r.structuredContent?.["functions"] as object);
     expect(fns.some((s) => String(s).includes("process.env.LEAN"))).toBe(true);
+  });
+});
+
+describe("surface", () => {
+  const lines = (r: Result) => (r.content[0]?.text ?? "").split("\n").slice(1);
+
+  test("list_surface lists one kind with module and offset", async () => {
+    const r = await call("list_surface", { kind: "env", binary: "9.9.9" });
+    expect(r.isError).toBeUndefined();
+    expect(r.structuredContent).toBeUndefined();
+    expect(lines(r)).toContainEqual(
+      expect.stringMatching(/^- CLAUDE_CODE_USE_BEDROCK .*\S+\.js:\d+$/),
+    );
+  });
+
+  test("list_surface filters by name", async () => {
+    const r = await call("list_surface", { kind: "env", name: "BEDROCK" });
+    const names = lines(r).map((l) => l.split(" ")[1]);
+    expect(names.sort()).toEqual([
+      "ANTHROPIC_BEDROCK_BASE_URL",
+      "CLAUDE_CODE_USE_BEDROCK",
+    ]);
+  });
+
+  test("list_surface pages with limit and offset", async () => {
+    const r = await call("list_surface", { kind: "env", limit: 1 });
+    expect(r.content[0]?.text).toMatch(/^env: items 1-1 of \d+, next_offset 1/);
+    expect(lines(r)).toHaveLength(1);
+  });
+
+  test("list_surface without kind gives each kind with its count", async () => {
+    const r = await call("list_surface");
+    const t = r.content[0]?.text ?? "";
+    for (const k of ["env", "flag", "gate", "tool", "mod-api"])
+      expect(t).toMatch(new RegExp(`^- ${k}: (\\d+|error: .+)$`, "m"));
+    expect(t).toMatch(/^- tool: 4$/m);
+  });
+
+  test("list_surface errors name the kinds and the installs", async () => {
+    const k = await call("list_surface", { kind: "nope" });
+    expect(k.isError).toBe(true);
+    expect(k.content[0]?.text).toMatch(/unknown kind "nope"; kinds: .*env/);
+    const b = await call("list_surface", { kind: "env", binary: "0.0.1" });
+    expect(b.isError).toBe(true);
+    expect(b.content[0]?.text).toContain("9.9.9");
+  });
+
+  test("list_surface writes no file", async () => {
+    const state = () =>
+      [tmp]
+        .flatMap((d) =>
+          [...new Bun.Glob("**/*").scanSync({ cwd: d, dot: true })].map((f) => {
+            const s = statSync(join(d, f));
+            return `${f}:${s.size}:${s.mtimeMs}`;
+          }),
+        )
+        .sort();
+    const before = state();
+    await call("list_surface");
+    await call("list_surface", { kind: "env" });
+    expect(state()).toEqual(before);
   });
 });

@@ -1,0 +1,41 @@
+// Kind `beta`: `anthropic-beta` header values.
+// Anchor (checked on 2.1.309, task 1.1): string literals of the form `<name>-YYYY-MM-DD`: mostly the
+// registry calls `v("long_context","context-1m-2025-08-07")`, plus loose constants sent as
+// "anthropic-beta" (`"ccr-byoc-2025-07-29"`, `"oauth-2025-04-20"`). Not only near the header name,
+// because the registry is apart from it. When the literal is the second argument of a call whose first
+// argument is a constant string, that string is the `detail` (`long_context`).
+// The one registry value with a compact date, `v("claude_code","claude-code-20250219")`, counts only in
+// that call shape, with word-only segments (`-YYYYMMDD`), so dated model ids do not match.
+// Left out: `bedrock-2023-05-31` and `vertex-2023-10-16`, which have the same form but are values of
+// `anthropic_version`, not betas.
+// The old `strings` heuristic has no beta list, so there is nothing to compare.
+import { constString, type Node } from "../ast.ts";
+import { type Extractor, type SurfaceItem, scan, unique } from "./common.ts";
+
+const BETA = /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*-\d{4}-\d\d-\d\d$/;
+const COMPACT = /^[a-z]+(?:-[a-z]+)*-\d{8}$/;
+const VERSION = /^(?:bedrock|vertex)-/;
+
+export const extractBetas: Extractor = (bundle) => {
+  const out: SurfaceItem[] = [];
+  scan(bundle, ["-20"], (m, n) => {
+    if (n.type !== "Literal" || typeof n.value !== "string") return;
+    const dated = BETA.test(n.value) && !VERSION.test(n.value);
+    const compact = COMPACT.test(n.value);
+    if (!dated && !compact) return;
+    const p = m.parent(n);
+    const group =
+      p?.type === "CallExpression" && p.arguments[1] === n
+        ? constString(m, p.arguments[0] as Node)
+        : undefined;
+    if (!dated && !group) return;
+    out.push({
+      kind: "beta",
+      name: n.value,
+      module: m.name,
+      offset: n.start,
+      ...(group && { detail: group }),
+    });
+  });
+  return unique(out);
+};

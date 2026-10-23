@@ -10,6 +10,23 @@ import { readFileSync } from "node:fs";
 /** `bytes` is the raw module (a view into the binary), for compressed assets such as `*.txt.zst`. */
 export type BunModule = { name: string; source: string; bytes: Buffer };
 
+/** The Mod API type file the program embeds (`claude-code.d.ts-<hash>.zst`), as text. */
+export const typeFile = (
+  modules: Pick<BunModule, "name" | "bytes">[],
+): { name: string; text: string } => {
+  const [found, ...more] = modules.filter((m) =>
+    /\/claude-code\.d\.ts-[^/]*\.zst$/.test(m.name),
+  );
+  if (!found || more.length)
+    throw new Error(
+      `expected one embedded type file, found ${more.length + (found ? 1 : 0)}`,
+    );
+  return {
+    name: found.name.split("/").pop() as string,
+    text: Bun.zstdDecompressSync(found.bytes).toString("utf8"),
+  };
+};
+
 const TRAILER = "\n---- Bun! ----\n";
 const ENTRY_SIZE = 52;
 

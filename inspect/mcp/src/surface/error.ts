@@ -1,0 +1,112 @@
+// Kind `error`: error and warning text a user can see.
+// Anchor (checked on 2.1.309, task 1.1): the message (first argument) of `throw Error(…)` and
+// `throw new X(…)`, where `X` is Error, TypeError, RangeError, SyntaxError (the global, not a local
+// binding), or a class that extends one (the class is found through its binding, followed across imports,
+// and through its `extends` chain); and the argument of `process.stderr.write(…)`. A message is a literal,
+// a name bound once to a literal, a template, or a `+` concatenation with at least one literal part; `${…}`
+// parts and other operands are blanked (short). Factory throws such as `throw dyn("Cloud gateway")` are
+// left out, because their argument is not the message. `console.error` is left out, because only bundled
+// libraries use it. `detail` is "throw <Class>" or "stderr".
+// Filter (design D3): drop texts shorter than 10 characters, with no space, or with no letters.
+// The old `strings` heuristic has no error list, so there is nothing to compare.
+import type * as ES from "estree";
+import { constString, type Module, type Node } from "../ast.ts";
+import {
+  type Extractor,
+  type SurfaceItem,
+  scan,
+  short,
+  unique,
+} from "./common.ts";
+
+/** Stands for a part that the code computes (short blanks it again). */
+const BLANK = `\${}`;
+
+const BASE = new Set(["Error", "TypeError", "RangeError", "SyntaxError"]);
+
+/** The builtin error that the class `id` names is or extends (`TypeError`), or undefined. */
+const errorClass = (m: Module, id: Node, depth = 0): string | undefined => {
+  if (id.type !== "Identifier" || depth > 8) return undefined;
+  const v0 = m.variable(id);
+  if (!v0 || v0.defs.length === 0)
+    return BASE.has(id.name) ? id.name : undefined;
+  const o = m.bundle ? m.bundle.origin(m, v0) : { module: m, variable: v0 };
+  if (!o) return undefined;
+  const def = o.variable.defs[0];
+  const writes = o.variable.references.filter((r) => r.isWrite() && !r.init);
+  const cls: Node | null | undefined =
+    def?.type === "ClassName"
+      ? (def.node as Node)
+      : def?.type === "Variable" && def.node.init
+        ? (def.node.init as Node)
+        : (writes[0]?.writeExpr as Node | undefined);
+  if (
+    (cls?.type !== "ClassDeclaration" && cls?.type !== "ClassExpression") ||
+    !cls.superClass
+  )
+    return undefined;
+  return errorClass(o.module, cls.superClass as Node, depth + 1);
+};
+
+/** The text of a message expression, with unknown parts blanked, or undefined when it holds no literal. */
+const text = (m: Module, n: Node | undefined): string | undefined => {
+  if (!n) return undefined;
+  const s = constString(m, n);
+  if (s !== undefined) return s;
+  if (n.type === "TemplateLiteral") {
+    return n.quasis
+      .map(
+        (q, i) =>
+          (q.value.cooked ?? q.value.raw) +
+          (i < n.expressions.length ? BLANK : ""),
+      )
+      .join("");
+  }
+  if (n.type === "BinaryExpression" && n.operator === "+") {
+    const l = text(m, n.left as Node);
+    const r = text(m, n.right as Node);
+    if (l === undefined && r === undefined) return undefined;
+    return (l ?? BLANK) + (r ?? BLANK);
+  }
+  return undefined;
+};
+
+const keep = (s: string): boolean =>
+  s.length >= 10 && s.includes(" ") && /[A-Za-z]/.test(s);
+
+export const extractErrors: Extractor = (bundle) => {
+  const out: SurfaceItem[] = [];
+  scan(bundle, ["throw", "stderr"], (m, n) => {
+    let call: (ES.NewExpression | ES.CallExpression) | undefined;
+    let detail = "stderr";
+    if (n.type === "ThrowStatement") {
+      const a = n.argument as ES.Expression;
+      if (a.type !== "NewExpression" && a.type !== "CallExpression") return;
+      const base = errorClass(m, a.callee as Node);
+      if (!base) return;
+      call = a;
+      detail = `throw ${base}`;
+    } else if (
+      n.type === "CallExpression" &&
+      n.callee.type === "MemberExpression" &&
+      !n.callee.computed &&
+      n.callee.property.type === "Identifier" &&
+      n.callee.property.name === "write" &&
+      m.src(n.callee.object as Node) === "process.stderr"
+    )
+      call = n;
+    if (!call) return;
+    const t = text(m, call.arguments[0] as Node | undefined);
+    if (t === undefined) return;
+    const name = short(t);
+    if (keep(name))
+      out.push({
+        kind: "error",
+        name,
+        module: m.name,
+        offset: (call as Node).start,
+        detail,
+      });
+  });
+  return unique(out);
+};

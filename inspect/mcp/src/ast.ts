@@ -163,7 +163,9 @@ export class Module {
 
   /** Exported name to local name, from `export{a as b}` and `export function`/`export const`. */
   get exports(): Map<string, string> {
+    if (this.#exports) return this.#exports;
     const out = new Map<string, string>();
+    this.#exports = out;
     for (const s of (this.ast as ES.Program).body) {
       if (s.type !== "ExportNamedDeclaration") continue;
       for (const sp of s.specifiers)
@@ -177,6 +179,22 @@ export class Module {
           if (x.id.type === "Identifier") out.set(x.id.name, x.id.name);
     }
     return out;
+  }
+
+  #exports?: Map<string, string>;
+  #imports?: Map<string, ES.ImportDeclaration[]>;
+
+  /** The import declarations of this module from the module path `source`. */
+  importsFrom(source: string): ES.ImportDeclaration[] {
+    if (!this.#imports) {
+      this.#imports = new Map();
+      for (const s of (this.ast as ES.Program).body)
+        if (s.type === "ImportDeclaration") {
+          const k = String(s.source.value);
+          this.#imports.set(k, [...(this.#imports.get(k) ?? []), s]);
+        }
+    }
+    return this.#imports.get(source) ?? [];
   }
 }
 
@@ -226,6 +244,22 @@ export class Bundle {
     return from && target ? this.origin(from, target, seen + 1) : undefined;
   }
 
+  #importers?: Map<string, Module[]>;
+
+  /** The modules whose text names the chunk `name` as `"/$bunfs/root/<name>"`, indexed on first use. */
+  importersOf(name: string): Module[] {
+    if (!this.#importers) {
+      this.#importers = new Map();
+      const re = /"\/\$bunfs\/root\/([^"]+)"/g;
+      for (const m of this.modules.values())
+        for (const n of new Set(
+          Array.from(m.text.matchAll(re), (x) => x[1] as string),
+        ))
+          this.#importers.set(n, [...(this.#importers.get(n) ?? []), m]);
+    }
+    return this.#importers.get(name) ?? [];
+  }
+
   /** The local variables in other modules that import the top-level `v` of `m`. */
   importers(m: Module, v: Variable): { module: Module; variable: Variable }[] {
     const names = [...m.exports]
@@ -233,12 +267,9 @@ export class Bundle {
       .map(([e]) => e);
     if (names.length === 0) return [];
     const out: { module: Module; variable: Variable }[] = [];
-    const path = `"${ROOT}${m.name}"`;
-    for (const other of this.withText(path)) {
+    for (const other of this.importersOf(m.name)) {
       if (other === m) continue;
-      for (const s of (other.ast as ES.Program).body) {
-        if (s.type !== "ImportDeclaration" || s.source.value !== ROOT + m.name)
-          continue;
+      for (const s of other.importsFrom(ROOT + m.name)) {
         for (const sp of s.specifiers) {
           if (sp.type !== "ImportSpecifier") continue;
           const imported =

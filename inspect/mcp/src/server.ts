@@ -17,6 +17,7 @@ import {
   SCHEMA_VERSION,
   sessionPath,
 } from "./sessions.ts";
+import { KINDS, type SurfaceItem, surface } from "./surface/index.ts";
 import { baseTools } from "./tools.ts";
 
 const READ_ONLY = {
@@ -151,11 +152,6 @@ Returns: the lines as JSON text, with "next_offset" when more remain.`,
         `${path}: lines ${offset + 1}-${offset + page.length} of ${lines.length}${type ? ` with type "${type}"` : ""}${more ? `, next_offset ${offset + page.length}` : ""}\n${page
           .map((l) => `${l.n}: ${clip(l.text, max_line_chars)}`)
           .join("\n")}`,
-        {
-          path,
-          total: lines.length,
-          ...(more && { next_offset: offset + page.length }),
-        },
       );
     }),
 );
@@ -522,6 +518,59 @@ Returns: one line per tool with its gates, then the functions; structuredContent
           .map(([n, s]) => `- ${n}: ${s}`)
           .join("\n")}`,
         r,
+      );
+    }),
+);
+
+// ---- surface ----
+
+const SURFACE_LIMIT = 200;
+const surfaceLine = (i: SurfaceItem) =>
+  `- ${i.name}${i.default !== undefined ? `  default ${i.default}` : ""}${i.values ? `  values ${i.values.join("|")}` : ""}${i.gate ? `  gate ${clip(i.gate, 120)}` : ""}${i.detail ? `  (${clip(i.detail, 120)})` : ""}  ${i.module ?? "-"}:${i.offset ?? "-"}`;
+
+server.registerTool(
+  "list_surface",
+  {
+    title: "List the functional surface of Claude Code by kind",
+    description: `List the items of one kind of surface in a Claude Code binary, found by the same extractors as the docs surface snapshot. Kinds: ${Object.keys(KINDS).join(", ")}.
+Args:
+  - kind (string, optional): without it, lists each kind with its item count.
+  - name (string, optional): keep items whose name contains this (any case).
+  - offset (number, default 0), limit (number 1-400, default ${SURFACE_LIMIT}).
+  - binary (string, optional): version or path.
+Returns: one line per item: the name, then the default, values, gate, and detail when the code shows them ("unknown" when the code computes it), then module:offset ("-" when the source gives no place), with "next_offset" when more remain.`,
+    inputSchema: {
+      kind: z.string().optional(),
+      name: z.string().optional(),
+      offset: z.number().int().min(0).default(0),
+      limit: z.number().int().min(1).max(400).default(SURFACE_LIMIT),
+      binary: binaryArg,
+    },
+    annotations: READ_ONLY,
+  },
+  ({ kind, name, offset, limit, binary }) =>
+    run(() => {
+      const { bundle, modules } = program(binary);
+      if (!kind)
+        return text(
+          Object.keys(KINDS)
+            .map((k) => {
+              try {
+                return `- ${k}: ${surface(bundle, k, modules).length}`;
+              } catch (e) {
+                return `- ${k}: error: ${(e as Error).message}`;
+              }
+            })
+            .join("\n"),
+        );
+      const q = name?.toLowerCase();
+      const all = surface(bundle, kind, modules).filter(
+        (i) => !q || i.name.toLowerCase().includes(q),
+      );
+      const page = all.slice(offset, offset + limit);
+      const more = offset + page.length < all.length;
+      return text(
+        `${kind}: items ${offset + 1}-${offset + page.length} of ${all.length}${name ? ` matching "${name}"` : ""}${more ? `, next_offset ${offset + page.length}` : ""}\n${page.map(surfaceLine).join("\n")}`,
       );
     }),
 );

@@ -12,6 +12,7 @@ The site documents Claude Code `2.1.309`, the only release it tracks. The versio
 ### Added
 
 - A second plugin, `cc-inspect`, with an MCP server and a skill that read your session transcripts (list, read, search, and check each line against the transcript schema) and the installed Claude Code binary (installs, modules, search, read, and the keys of an object literal or an OpenTelemetry event).
+- `cc-inspect` 0.3.0: a `list_surface` tool that lists the items of one kind in the installed binary (environment variables, flags, subcommands, slash commands, settings, hook events, gates, tools, OpenTelemetry events, Mod API calls and events, keybindings, models, betas, endpoints, files, permission modes, and error texts), with a name filter and paging. Without a kind, it gives the count of each kind.
 - The exact fields of every payload, made from the program: the Mod API type file (`schemas/claude-code.d.ts`) and 11 more JSON Schemas (hook output, built-in tools, control protocol, stream-json, `--agents` JSON, `.mcp.json`, frontmatter, status line input, transcript lines, OpenTelemetry, `~/.claude.json`). The MCP server's `get_schema` serves them all, and looks up types, `$` calls, and events in the type file.
 - A rule for agents in the skill and the docs: look a field up in these files before stating it, and name only the fields found there.
 - A Context Budget page with live `/context` measurements: an empty session, the first turn, the cost of each tool, and best practices.
@@ -39,6 +40,7 @@ The site documents Claude Code `2.1.309`, the only release it tracks. The versio
 
 ### Fixed
 
+- `read_page`, `read_platform_page`, `get_schema` (`cc-docs`), and `read_session` (`cc-inspect`) return their text again. Claude Code `2.1.309` shows the model only `structuredContent` when a reply has it, so these tools no longer send it.
 - `cc-inspect` and the schema generator parse Claude Code `2.1.309`, which names a `using` variable `as` (a patch of the `meriyah` parser).
 - Schema anchors match a renamed minified name, so `bun run schemas` passes on `2.1.309`.
 - Settled most "Not Verified" items with live probes (print mode, interactive, and the program), and corrected the wrong ones.
