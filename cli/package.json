@@ -1,0 +1,15 @@
+{
+  "name": "cc-docs",
+  "version": "1.0.0",
+  "license": "MIT",
+  "type": "module",
+  "description": "The Claude Code Docs from a shell: search, read, list, and schema. Runs on Bun with no install step.",
+  "homepage": "https://xsyetopz.github.io/claude-code-docs/",
+  "repository": "https://github.com/xsyetopz/claude-code-docs",
+  "bin": {
+    "cc-docs": "bin/cc-docs"
+  },
+  "files": [
+    "bin/"
+  ]
+}

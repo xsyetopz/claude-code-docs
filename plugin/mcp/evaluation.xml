@@ -40,27 +40,27 @@
     <answer>170</answer>
   </qa_pair>
   <qa_pair>
-    <question>Use the platform docs tools (not the Claude Code docs). The Claude API Versions page says every API request must send a header with which value for the current version? Give the header value only.</question>
+    <question>Use the tools with source "platform" (the Claude API docs, not the Claude Code docs). The Claude API Versions page says every API request must send a header with which value for the current version? Give the header value only.</question>
     <answer>2023-06-01</answer>
   </qa_pair>
   <qa_pair>
-    <question>Use the platform docs tools. On the Claude API Errors page, which HTTP status code goes with the error type request_too_large?</question>
+    <question>Use the tools with source "platform". On the Claude API Errors page, which HTTP status code goes with the error type request_too_large?</question>
     <answer>413</answer>
   </qa_pair>
   <qa_pair>
-    <question>Use the platform docs tools. On the Claude API Errors page, which error type goes with HTTP status 529?</question>
+    <question>Use the tools with source "platform". On the Claude API Errors page, which error type goes with HTTP status 529?</question>
     <answer>overloaded_error</answer>
   </qa_pair>
   <qa_pair>
-    <question>Use the platform docs tools. On the prompt caching page, up to how many cache breakpoints can you define in one request?</question>
+    <question>Use the tools with source "platform". On the prompt caching page, up to how many cache breakpoints can you define in one request?</question>
     <answer>4</answer>
   </qa_pair>
   <qa_pair>
-    <question>Use the platform docs tools. On the prompt caching page, how many blocks does the lookback window cover when the system checks for a matching cache entry?</question>
+    <question>Use the tools with source "platform". On the prompt caching page, how many blocks does the lookback window cover when the system checks for a matching cache entry?</question>
     <answer>20</answer>
   </qa_pair>
   <qa_pair>
-    <question>Use the platform docs tools: first search the platform docs for the Claude API rate limits page, then read it. Which algorithm does the API use for rate limiting?</question>
+    <question>Use the tools with source "platform": first search_docs the platform docs for the Claude API rate limits page, then read_page it. Which algorithm does the API use for rate limiting?</question>
     <answer>token bucket</answer>
   </qa_pair>
 </evaluation>

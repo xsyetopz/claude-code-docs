@@ -10,12 +10,12 @@ The Claude Code Docs describe what Claude Code 2.1.309 does, checked against the
 ## Find the answer
 
 1. If the tools `search_docs`, `read_page`, `list_pages`, and `get_schema` are available (the `claude-code-docs` MCP server), use them:
-   - `search_docs` with an exact identifier or short keywords (`PreToolUse timeout`, `CLAUDE_CODE_USE_BEDROCK`), then `read_page` on the best route.
-   - `read_page` with `section_heading` (for example `At a Glance`) when a page is long.
-   - `get_schema` for the exact fields of a config file or a payload: `settings`, `managed-settings`, `plugin-manifest`, `plugin-hooks`, `marketplace`, `keybindings`, `mcp`, `agents-json`, `hook-output`, `tools`, `control-protocol`, `stream-json`, `frontmatter`, `status-line`, `transcript`, `otel`, or `claude-json`. Pass `property` to get one key or one definition, such as `BashInput`.
+   - `search_docs` with an exact identifier or short keywords (`PreToolUse timeout`, `CLAUDE_CODE_USE_BEDROCK`), not a whole question. Then `read_page` on the best route. `limit` (1 to 25, default 8) caps the hits, and `section` limits them to a top-level section such as `configure`.
+   - `read_page` with `section_heading` (for example `At a Glance`) when a page is long. For a long page, call again with `offset` set to the `offset` in the "more" note.
+   - `list_pages` to browse the sections and find routes.
+   - `get_schema` for the exact fields of a config file or a payload: `settings`, `managed-settings`, `plugin-manifest`, `plugin-hooks`, `marketplace`, `keybindings`, `mcp`, `agents-json`, `hook-output`, `tools`, `control-protocol`, `stream-json`, `frontmatter`, `status-line`, `transcript`, `otel`, or `claude-json`. Without `property` it gives an outline. Pass `property` to get one key or one definition, such as `BashInput`.
    - `get_schema` with `name: "types"` for the Mod API type file: pass `property` as a type (`ToolCheckResult`), a member (`ToolCheckResult.plugin`), a call (`$.tool.check`), or an event (`tool.check`).
-   - `list_pages` to browse the sections.
-   - For the Claude API, SDKs, models, or prompt caching (not Claude Code itself), use `search_platform_docs`, `read_platform_page`, and `list_platform_pages`. They read platform.claude.com/docs, which is not covered by the badges.
+   - For the Claude API, SDKs, models, or prompt caching (not Claude Code itself), pass `source: "platform"` to `search_docs`, `read_page`, or `list_pages`. They then read platform.claude.com/docs, which is not covered by the badges. For `list_pages`, `section` is a group name such as `Messages`.
    - Each result ends with a `Source:` line. If it says offline, the text comes from the disk cache and may be old: say so.
 2. If the tools are not available, fetch plain text from the site:
    - `https://xsyetopz.github.io/claude-code-docs/llms.txt` is the index with one line per page.
