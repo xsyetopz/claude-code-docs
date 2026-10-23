@@ -25202,7 +25202,7 @@ class StdioServerTransport {
 // inspect/mcp/package.json
 var package_default = {
   name: "cc-inspect-mcp",
-  version: "0.1.0",
+  version: "0.2.0",
   private: true,
   license: "MIT",
   type: "module",

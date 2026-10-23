@@ -21583,7 +21583,7 @@ class StdioServerTransport {
 // plugin/mcp/package.json
 var package_default = {
   name: "claude-code-docs-mcp",
-  version: "0.2.0",
+  version: "0.3.0",
   private: true,
   license: "MIT",
   type: "module",
