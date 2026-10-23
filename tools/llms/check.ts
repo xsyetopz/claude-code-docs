@@ -86,7 +86,10 @@ for (const entry of manifest) {
 
 for (const path of walk(join(ROOT, "docs"))) {
   const rel = relative(ROOT, path).split("\\").join("/");
-  if (!sources.has(rel)) fail(`${rel} has no page in the llms output`);
+  // Docusaurus leaves draft pages out of production builds
+  const draft = /^---\n[\s\S]*?^draft: true$/m.test(readFileSync(path, "utf8"));
+  if (!sources.has(rel) && !draft)
+    fail(`${rel} has no page in the llms output`);
 }
 
 if (problems.length > 0) {
