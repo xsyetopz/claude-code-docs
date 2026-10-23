@@ -89,6 +89,14 @@ Block reads of secret files and all edits to lock files.
 - `Read`, `Glob`, `Grep`, `Write`, and `Edit` carry `remoteExecution` metadata in the program. It marks them as runnable on a remote host.
 - `Read` has no result size cap, so use `offset` and `limit` for large files.
 
+## Errors
+
+Each row is a family of messages. The backticked text is the start that every message in the family shares. A row marked `Various` gathers the messages of one feature that do not share one start.
+
+| Start of Message | Status | What It Means | Cases |
+| --- | --- | --- | --- |
+| Various | <Undocumented /> | **File tools.** `Read`, `Edit`, `Write`, or `NotebookEdit` refused a call. | The file is covered by a Read deny rule, has not been read yet, changed since it was last read, is too large, is a pipe or device, is a symbolic link, is not a valid image, PDF page, or notebook, or the edit does not match (string not found, no change). A write failed after the file was truncated. |
+
 ## Related Pages
 
 - [Tools](index.md)

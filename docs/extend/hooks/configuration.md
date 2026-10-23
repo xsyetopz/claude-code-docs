@@ -146,6 +146,15 @@ A failure means the hook could not start, timed out, exited with a code other th
 
 The keys `disableAllHooks` and `allowManagedHooksOnly` turn hooks off or limit them to managed ones. Their rows are on [Hooks, Plugins, and Skills Settings](../../configure/settings/hooks-and-plugins.md#keys).
 
+## Errors
+
+Each row is a family of messages. The backticked text is the start that every message in the family shares. A row marked `Various` gathers the messages of one feature that do not share one start.
+
+| Start of Message | Status | What It Means | Cases |
+| --- | --- | --- | --- |
+| `Unknown hook decision type`, `Unknown hook permissionDecision type`, `Hook returned incorrect event name`, `Hook from ${…}`, `Hook "${…}"`, `Hook input is over the size limit`, `prompt-type hooks are not supported`, `agent-type hooks are not supported`, `SessionEnd hook [`, `This hook's matcher cannot be tested`, `The name that this hook's matcher`, `invalid hook matcher`, `hook '${…}' does not exist`, `script hook:`, `script hooks are not available`, `Forked dispatch requires` | <Undocumented /> | A hook was refused or returned a value that is not valid. | The decision type is not one of approve, block (or allow, deny, ask, defer for `permissionDecision`), the output names another event, a prompt-type or agent-type hook is used for an event with no conversation context, the hook needs bash or PowerShell and the shell was not found, or the command in shell form would be re-parsed by the shell. |
+| Various | <Undocumented /> | **Hooks on this machine.** A request to list, run, or judge a hook on this machine was refused. | The machine keeps hooks off through its settings or policy, has not settled its plugins yet, could not read a settings file for now, has no such hook for that event, or runs only command hooks. A device hook template directory is unsafe or no `python3` was found. |
+
 ## Related Pages
 
 - [Hooks](index.md): the overview.

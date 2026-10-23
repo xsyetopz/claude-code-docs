@@ -73,6 +73,16 @@ Turn on the PowerShell tool and turn off web fetching for one project.
 - `CLAUDE_CODE_DISABLE_BACKGROUND_TASKS=1` also disables auto-backgrounding and the `Ctrl+B` key ([Environment Variables](https://code.claude.com/docs/en/env-vars)).
 - A true value for `CLAUDE_AUTO_BACKGROUND_TASKS` gives the `Agent` tool a 120000 ms auto-background time. Source: the program (the env name). It is not in the saved docs, so it is <Undocumented />.
 
+## Errors
+
+Each row is a family of messages. The backticked text is the start that every message in the family shares. A row marked `Various` gathers the messages of one feature that do not share one start.
+
+| Start of Message | Status | What It Means | Cases |
+| --- | --- | --- | --- |
+| Various | <Undocumented /> | **Monitor.** `RunMonitorCommand` or a plugin monitor did not run a command. | A permission request or `monitor_input` does not match, the call sent no progress token, another call changed the working directory, the environment already runs as many monitors as it allows, or the same call was started before. A plugin monitor command references a value that a shell would parse. |
+| Various | <Undocumented /> | **Shell and web tools.** A shell, search, or web tool call was refused. | A sed command is dangerous or has no arguments, a shell permission check failed or was interrupted for a pattern, a command contains an invisible character, Git Bash or PowerShell is not available, `WebFetch` cannot fetch localhost or a name with no dot, or `ripgrep` was refused or failed. |
+| Various | <Undocumented /> | **Built-in `gh api`.** The built-in `gh api` refused a call. | The endpoint, method, header, or field is not valid, `{owner}`, `{repo}`, or `{branch}` cannot be filled in, `--paginate` is used with a non-GET request, `--jq` needs `jq`, the session's GitHub proxy cannot set a header, or nonessential network traffic is disabled. |
+
 ## Related Pages
 
 - [Tools](index.md)

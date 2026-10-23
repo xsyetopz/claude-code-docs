@@ -44,6 +44,17 @@ The first key runs `~/bin/get-key.sh` to get the API key. The second limits sign
 }
 ```
 
+## Errors
+
+Each row is a family of messages. The backticked text is the start that every message in the family shares. A row marked `Various` gathers the messages of one feature that do not share one start.
+
+| Start of Message | Status | What It Means | Cases |
+| --- | --- | --- | --- |
+| Various | <Undocumented /> | **Login and accounts.** A sign-in, sign-out, token, or profile step was refused. | `--console` and `--claudeai` were both given, the policy does not permit `setup-token`, an API key or provider setting takes precedence over a profile, a workload identity federation machine signs in on its own, a profile name or config file is not valid, the code is not valid, or an account call such as the org UUID or an API key creation failed. |
+| Various | <Undocumented /> | **Grove settings.** A Grove setting or notice could not be read or changed. | The request failed or the answer has no `grove_enabled` value. |
+| Various | <Undocumented /> | **Billing and usage requests.** A billing, usage, or metrics request failed. | The text names the request (for example `prepaid/credits`, `payment_method`, `auto_reload_settings`, `metrics_enabled`) and says it is unavailable, with the reason. |
+| Various | <Undocumented /> | **Provider and model setup.** A provider or model setting is not valid. | A project or region value has characters that the request path does not allow, a Foundry resource name is not valid, a model catalog entry or alias is not valid, or a fallback model cannot be used. |
+
 ## Related Pages
 
 - [Settings Files and Scopes](index.md) explains the scopes, precedence, and managed settings.

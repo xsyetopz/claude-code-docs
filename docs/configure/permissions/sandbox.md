@@ -129,6 +129,14 @@ flowchart TD
 With `sandbox.autoAllowBashIfSandboxed` on, a sandboxed command skips the prompt.
 See [Permission Flow](../../how-it-works/permission-flow.md).
 
+## Errors
+
+Each row is a family of messages. The backticked text is the start that every message in the family shares. A row marked `Various` gathers the messages of one feature that do not share one start.
+
+| Start of Message | Status | What It Means | Cases |
+| --- | --- | --- | --- |
+| Various | <Undocumented /> | **Sandbox.** The sandbox could not start or run a command. | A dependency is not available, a bridge process did not start or died, the platform does not support the configuration, Windows needs a provisioned sandbox user (`npx sandbox-runtime windows-install`), a path is not allowed, or a command-specific network list is invalid. |
+
 ## Related Pages
 
 - [Permission Rules](rules.md)

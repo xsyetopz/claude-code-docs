@@ -74,6 +74,15 @@ Permission prompts have no screen to appear on, so a host program (or `--permiss
 | [Stream JSON Messages](stream-json.md) | Every message type that print mode writes |
 | [Control Protocol](control-protocol.md) | Every control request a host can send on the same stream |
 
+## Errors
+
+Each row is a family of messages. The backticked text is the start that every message in the family shares. A row marked `Various` gathers the messages of one feature that do not share one start.
+
+| Start of Message | Status | What It Means | Cases |
+| --- | --- | --- | --- |
+| Various | <Undocumented /> | **Agent SDK.** The Agent SDK or the control protocol refused an option or a request. | A skill name is not valid, `sessionStore` is used with an option it cannot work with, a callback such as `canUseTool` or `getOAuthToken` was not provided, a control request subtype is not supported, a value has the wrong type, or the native CLI binary was not found. |
+| Various | <Undocumented /> | **Exporter variables.** An OpenTelemetry exporter setting is not known. | The protocol or exporter type set in an `OTEL_*` variable is not known, or the Cloud gateway session that named the collector ended. |
+
 ## Related Pages
 
 - [CLI Flags](../../configure/cli/flags.md)

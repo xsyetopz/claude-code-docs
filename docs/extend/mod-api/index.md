@@ -138,6 +138,31 @@ The [type pages](types/index.md) hold the detailed shapes of inputs and results:
 - The value `re-entry` of `next.error.kind` is in the docs and in a program debug string, and not in the type file.
 - Many doc comments in the type file name code items without backticks. The tables keep the wording of the type file where it matters.
 
+## Errors
+
+Each row is a family of messages. The backticked text is the start that every message in the family shares.
+
+| Start of Message | Status | What It Means | Cases |
+| --- | --- | --- | --- |
+| `$.audio.`, `${…}: $.audio.` | <Undocumented /> | A `$.audio.play` or `$.audio.speak` call was refused. | The clip is not `{ asset }`, `{ url }` or `{ base64, mime }`, has no source or more than one, has an empty field, or is over a byte limit. `asset` is not a path inside the plugin directory, the plugin has no directory or id, an option such as `shouldLoop` or `gain` has the wrong type, or too many plays are going at once. |
+| `${…}: $.tool.` | <Undocumented /> | A `$.tool.call`, `$.tool.register`, or `$.tool.check` call was refused. | `consent` is not a string or is not accepted in this session. The call produced no result. The name is a reserved MCP server name or the session already has an MCP server of that name. No tool has the name. The session has no built-in tools (`--tools ""`) or runs with `--bare`. |
+| `${…}: $.model.` | <Undocumented /> | A `$.model.complete` or `$.model.classify` call was refused or failed. | `maxTokens`, `timeoutMs`, or `effort` is out of range (`effort` is one of low, medium, high, xhigh, max). The model is not in the organization allowlist, or `maxTokens` is past what the model can produce. `classify` got fewer than two labels, or the model answered with no text. |
+| `${…}: $.ui.` | <Undocumented /> | A `$.ui` call was refused or failed. | `$.ui.ask` got options that are not a list, more options than the limit, no question, or got no answer. `$.ui.notify` could not write to the channel. |
+| `$.session.`, `${…}: $.session.` | <Undocumented /> | A `$.session.append` or `$.session.compact` call was refused. | The process keeps no conversation to append to. Compaction is switched off in this session (`DISABLE_COMPACT`), or a turn is running, so call it from `turn.complete` or later. |
+| `${…}: $.store.`, `${…}: store file` | <Undocumented /> | A `$.store` call failed, or a store file could not be used. | A key is over the length limit, the store would be over the size limit, or the store file is unreadable or malformed (for example the JSON is not an object). |
+| `${…}: $.config.` | <Undocumented /> | A `$.config.set` call named a key that `/config` has no row for. | The text says that `$.config.list` names the keys. |
+| `${…}: $.` | <Undocumented /> | A call on `$` from a plugin was refused or failed. | The text names the call and the reason, for example a value that is not JSON data or is over a character limit, a `$.clock` delay that is not a non-negative number of milliseconds, a `$.state` reference that is not `{ plugin, key }`, `$.agent.spawn` without a prompt, `$.mcp.call` refused, or `$.prompt.compose` in a process that composes no system prompt. |
+| `$.` | <Undocumented /> | A `$` call failed in the engine. | A `$.telemetry` call names no origin, `$.skill.prompt` was called with a bad value, the environment was made without the host's streaming ops, or there is no core at the bottom of the chain. |
+| `${…}: next` | <Undocumented /> | A hook's `next()` or `next.to()` call was refused. | `next()` passed an argument that the event does not allow. `next.to()` names no tier, or a tier that a dispatch does not continue at (append, builtin, core), or is not available to this plugin. |
+| `${…}: on(` | <Undocumented /> | An `on()` registration was refused. | The pattern or matcher is wrong, the hook is not a function, the same hook was registered twice, or `on()` was called after `register()` returned. |
+| `${…}: registered` | <Undocumented /> | A hook registration does not match what the engine has. | The event is not an event, no loaded plugin provides the call, the call is not an event, or the scan of the hooks module did not see it. |
+| `${…}: engine.create` | <Undocumented /> | An `engine.create` hook returned a wrong value. | It must return `$` with nouns, and it must not change the identity of the plugin. |
+| `${…}: hooks module not loaded` | <Undocumented /> | A hooks module was not loaded. | `next.to` is available to managed plugins only, or a policy or scan reason follows. |
+| `${…}: matcher` | <Undocumented /> | A hook matcher was refused. | A RegExp has a flag that keeps state or a nested quantifier, a key is not kept or is reserved, a string is too long, or the matcher is not a plain object. |
+| `${…}: returned` | <Undocumented /> | A render hook returned a drawing that is not allowed. | It holds a Proxy, a function where plain data goes, an object that is not plain data, or a Client or element that it did not draw. |
+| `${…} after register() returned`, `${…} called twice`, `${…} takes a function` | <Undocumented /> | A `.catch` call on a registration was misused. | `.catch()` is for `register()`, a registration takes one `.catch`, and the argument is a function `($, e, next)`. |
+| `${…}: ${…}:` | <Undocumented /> | A call from a plugin was refused or failed. | The text names the call and the reason. A `socketPath` is not absolute, has a NUL byte, or is a network location. A URL is not valid, is not http or https, or has credentials. A request body is over the limit, an auth handle is unknown, there were too many redirects, or no complete answer came in time. |
+
 ## Related Pages
 
 - [Plugins](../plugins/index.md)

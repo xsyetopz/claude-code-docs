@@ -56,6 +56,18 @@ The `edit-*` commands, `drop-worktree-registrations`, and `design-login` read on
 Their own text says they serve the VS Code extension. Do not build scripts on them.
 :::
 
+## Errors
+
+Each row is a family of messages. The backticked text is the start that every message in the family shares. A row marked `Various` gathers the messages of one feature that do not share one start.
+
+| Start of Message | Status | What It Means | Cases |
+| --- | --- | --- | --- |
+| Various | <Undocumented /> | **Update and install.** `claude update` or `claude install` failed. | The latest version could not be fetched from the npm registry, the channel or version is not valid, a checksum does not match, the executable is in use or another instance is updating, permissions are missing, or the executable could not be restored after a failed update. |
+| Various | <Undocumented /> | **Background sessions and daemon.** A background session, `claude attach`, `claude respawn`, or daemon step failed or printed a notice. | The service is not installed or did not come up, `--bg` ignores `--session-id`, a session cannot start, wake, or attach, the terminal host died, a daemon lock or roster could not be read or written, or the background manager failed to start. |
+| Various | <Undocumented /> | **`claude gateway` server configuration.** `claude gateway` refused its configuration or a sign-in request. | A `cri.` or `oidc.` setting is not valid, a loopback URL is used without `CLAUDE_GATEWAY_ALLOW_LOOPBACK`, an ID token is missing a claim, the email domain or group is not allowed, an upstream credential or role could not be used, or the store (`store.postgres_url`) is not readable. |
+| Various | <Undocumented /> | **`decode-token`.** `decode-token` could not read or check a token. | A flag is unknown or has no value, the token is not a JWT with three base64url segments, has no `exp` claim, is expired or not yet valid, uses an `alg` other than ES256 or RS256, the JWKS could not be fetched or has no key with that `kid`, or the signature check failed. |
+| Various | <Undocumented /> | **Conversation import.** A conversation import or export file was refused. | The file is over the size limit, is not valid JSON, or the manifest does not match after the import. |
+
 ## Related Pages
 
 - [CLI Overview](index.md)

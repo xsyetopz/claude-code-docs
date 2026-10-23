@@ -96,6 +96,15 @@ flowchart TD
   E --> F[Register skills, hooks, MCP, LSP, monitors]
 ```
 
+## Errors
+
+Each row is a family of messages. The backticked text is the start that every message in the family shares.
+
+| Start of Message | Status | What It Means | Cases |
+| --- | --- | --- | --- |
+| `Hooks file`, `hooks.json declares`, `hooks: must be`, `hooks: the array form`, `Server ${…} missing required`, `Unsupported plugin type`, `Invalid manifest`, `Invalid JSON in manifest.json`, `Failed to save sensitive config`, `Plugin ${…}:` | <Undocumented /> | A plugin file could not be loaded. | A hooks file cannot be read or is missing, `hooks.json` declares keys outside the `hooks` object, the manifest is not valid, or an LSP server entry misses `command` or `extensionToLanguage`. |
+| `claude plugin install`, `${…} This install runs that command`, `${…}'s marketplace changed`, `${…}'s marketplace entry`, `${…} is installed by running a command`, `A top-level entry of the plugin directory`, `The link farm`, `A link in the staged farm`, `The link-farm marker`, `A tool server doesn't run`, `${…}: a tool server doesn't run`, `${…}: your organization's managed settings disable marketplace-declared` | <Undocumented /> | A plugin install that runs a command was not run. | The command has not been reviewed yet, the marketplace changed the command after it was accepted, a tool server never runs it, managed settings disable marketplace-declared commands (`disableCommandPluginSources`), or the plugin directory that it produced points to a network location or through a link. |
+
 ## Related Pages
 
 - [Plugins](index.md)

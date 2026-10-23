@@ -115,6 +115,14 @@ sequenceDiagram
   C->>S: Refresh token and retry once
 ```
 
+## Errors
+
+Each row is a family of messages. The backticked text is the start that every message in the family shares.
+
+| Start of Message | Status | What It Means | Cases |
+| --- | --- | --- | --- |
+| `XAA`, `authServerMetadataUrl must`, `Configured auth server metadata`, `HTTP ${…} fetching configured auth server`, `Unexpected auth result`, `Invalid authorization URL`, `No TTY available to prompt for client secret`, `Enter OAuth client secret`, `Unable to build claude.ai connector auth URL`, `Server type "${…}" does not support OAuth`, `No OAuth flow in progress`, `Invalid callback URL`, `MCP OAuth failed`, `OAuth flow completed without`, `No available ports for OAuth redirect`, `clientMetadataUrl must` | <Undocumented /> | An MCP OAuth or XAA (cross-app access) sign-in step failed. | Discovery of protected resource metadata or authorization server metadata failed or did not match, the token endpoint is not HTTPS, the token exchange or jwt-bearer grant failed or returned an unexpected shape, XAA is not enabled (`CLAUDE_CODE_ENABLE_XAA=1`), no IdP connection is configured, or the callback URL does not belong to this sign-in. |
+
 ## Related Pages
 
 - [MCP](index.md)

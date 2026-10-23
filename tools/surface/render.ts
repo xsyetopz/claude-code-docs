@@ -11,6 +11,7 @@ import {
   exclusionOf,
   GENERATED,
   type MapEntry,
+  mapOf,
   PAGES,
   type Row,
   status,
@@ -19,8 +20,7 @@ import type { Committed } from "./snapshot.ts";
 
 const UNDOCUMENTED = "docs/reference/undocumented.md";
 const SECTION = "## In the Program";
-// User choice (2026-10-23): keep the page out of the live site until the mapping tasks (5.x) shrink its gaps.
-const DRAFT = true;
+const DRAFT = false;
 
 const TITLES: Record<string, string> = {
   beta: "Betas",
@@ -91,7 +91,7 @@ export const render = (
         return `[${titles.get(file)}](${relative(dir, file)})`;
       }
       case "mapped": {
-        const m = map[key] as MapEntry;
+        const m = mapOf(key, map) as MapEntry;
         const to = m.anchor ? `${m.route}#${m.anchor}` : m.route;
         return `[${to}](${to})`;
       }

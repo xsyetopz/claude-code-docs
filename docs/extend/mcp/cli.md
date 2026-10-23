@@ -76,6 +76,16 @@ flowchart TD
   E --> F
 ```
 
+## Errors
+
+Each row is a family of messages. The backticked text is the start that every message in the family shares. A row marked `Various` gathers the messages of one feature that do not share one start.
+
+| Start of Message | Status | What It Means | Cases |
+| --- | --- | --- | --- |
+| `Cannot add MCP server`, `Cannot remove MCP server`, `Project-scope MCP server changes`, `Invalid scope:`, `Invalid transport type`, `Invalid header`, `Server added, but the client secret`, `Warning: --client-id`, `Warning: The command`, `If this is an HTTP server`, `If this is an SSE server`, `If this is a remote server`, `To remove from a specific scope`, `Specify a scope with -s`, `Can't read .mcp.json` | <Undocumented /> | `claude mcp add` or `claude mcp remove` was refused, or printed a warning. | Enterprise or managed settings control the MCP servers, the type is registered by the host application, the scope is not allowed, the transport type or header format is wrong, `.mcp.json` is not a regular file or is too large, or an OAuth option was given for a server that is not HTTP or SSE. |
+| Various | <Undocumented /> | **Claude Desktop import.** The Claude Desktop integration is not supported or has no config. | It works on macOS and WSL only, or the config file could not be found in Windows. |
+| Various | <Undocumented /> | **MCP server controls.** An MCP server control or config file was refused. | A server name is not in the listing, a request needs a name and an id, a `.mcp.json` or `managed-mcp.json` file could not be read, the terminal is still starting up, MCP error text or a config is too long or too deeply encoded, a server process is not started because Claude Code is shutting down, or a tool runs on another machine and cannot run here. |
+
 ## Related Pages
 
 - [MCP](index.md)

@@ -162,6 +162,14 @@ claude --autocompact 500000
 }
 ```
 
+## Errors
+
+Each row is a family of messages. The backticked text is the start that every message in the family shares. A row marked `Various` gathers the messages of one feature that do not share one start.
+
+| Start of Message | Status | What It Means | Cases |
+| --- | --- | --- | --- |
+| Various | <Undocumented /> | **Compaction.** A compaction did not run or failed. | There are no or not enough messages to compact, compaction was canceled, the conversation could not be reduced below the limit, attached media exceeds size limits, or the model policy blocks the swap. |
+
 ## Related Pages
 
 - [Sessions and Storage](sessions-and-storage.md)

@@ -84,10 +84,12 @@ test("the undocumented section goes before Related Pages, and a second run keeps
   expect(text.indexOf("## In the Program")).toBeLessThan(
     text.indexOf("## Related Pages"),
   );
-  expect(text).toContain("| Error Texts | 2 |\n");
-  expect(text).not.toContain("Not on a Page Yet");
+  expect(text).toContain(
+    "| [Error Texts](surface-coverage.md#error-texts) | 2 | 1 |\n",
+  );
+  expect(text).toContain("Not on a Page Yet");
   // "| Total | n |" is the summary row that check:docs recounts
-  expect(text).toContain("| All kinds | 4 |\n");
+  expect(text).toContain("| All kinds | 4 | 1 |\n");
   expect(text.startsWith(UNDOCUMENTED.split("## Related")[0] as string)).toBe(
     true,
   );
