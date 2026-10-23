@@ -72,5 +72,6 @@ This file hides spinner tips, reduces animation, starts every session in focus v
 - [Settings Files and Scopes](index.md) explains the scopes, precedence, and managed settings.
 - [Settings Reference](https://code.claude.com/docs/en/settings-reference) is the official page for each key.
 - [Customize Keyboard Shortcuts](https://code.claude.com/docs/en/keybindings) covers key bindings.
+- [Keybindings](../keybindings.md) lists every context and action with its default key.
 - [Status Line](../status-line.md) and [Output Styles](../output-styles.md) cover two related features.
 - [UI and Terminal Variables](../env-vars/ui-and-terminal.md) lists the matching environment variables.

@@ -150,6 +150,62 @@ The line format of a transcript is on [Transcript Format](../reference/transcrip
 | `~/.claude/daemon/roster.json`, `~/.claude/jobs/<id>/state.json`, `~/.claude/jobs/<id>/tmp/` | <Documented /> | The list of running background sessions, the state of each session, and its scratch folder. Keep them. The official "Agent View" page describes them. | [Sessions and Storage](../how-it-works/sessions-and-storage.md) |
 | `state/`, `mods/`, `bridge-spawn/`, `seed-admin/`, `downloads/`, `cache/model-catalog/` | <Undocumented /> | Present on a `2.1.305` machine (after `2.1.305` was installed, only `cache/model-catalog/` and a type file under `mods/handoff/` were written; `bridge-spawn/`, `seed-admin/`, and `downloads/` are empty and `state/` was last written before the install) or named in the program. No docs page describes them. The program describes `state/`, `seed-admin/`, `bridge-spawn/`, and `cache/model-catalog/`; see the link. | [Sessions and Storage](../how-it-works/sessions-and-storage.md) |
 
+## Names in the Config Folder
+
+The tables above show full paths. This table lists each name on its own, so you can look one up.
+The paths are under `~/.claude/` unless the Where column says otherwise.
+The program holds more names than this table lists. They are internal files or names whose use this page could not confirm.
+
+| Name | Status | Where | What it is |
+| --- | --- | --- | --- |
+| `settings.json` | <Documented /> | `~/.claude/`, `.claude/` | Your user or project settings. |
+| `keybindings.json` | <Documented /> | `~/.claude/` | Your keyboard shortcuts. The contexts and actions are on [Keybindings](../configure/keybindings.md). |
+| `commands` | <Documented /> | `~/.claude/`, `.claude/` | Slash commands. |
+| `skills` | <Documented /> | `~/.claude/`, `.claude/` | Skills. |
+| `rules` | <Documented /> | `~/.claude/`, `.claude/` | Rules. |
+| `output-styles` | <Documented /> | `~/.claude/`, `.claude/` | Output styles. |
+| `plugins` | <Documented /> | `~/.claude/` | The plugin root. |
+| `agent-memory` | <Documented /> | `~/.claude/`, `.claude/` | Memory of subagents. |
+| `projects` | <Documented /> | `~/.claude/` | Transcripts and auto memory, one folder for each project. |
+| `sessions` | <Documented /> | `~/.claude/` | One small file for each running session. |
+| `tasks` | <Documented /> | `~/.claude/` | Task lists. |
+| `plans` | <Documented /> | `~/.claude/` | Plan files from plan mode. |
+| `debug` | <Documented /> | `~/.claude/` | Debug logs. |
+| `paste-cache` | <Documented /> | `~/.claude/` | Large pastes. |
+| `uploads` | <Documented /> | `~/.claude/` | Files attached from the web or mobile app. |
+| `dev-mods` | <Documented /> | `~/.claude/` | Mods that Claude wrote during a session. |
+| `shell-snapshots` | <Documented /> | `~/.claude/` | Shell setup. |
+| `backups` | <Documented /> | `~/.claude/` | Copies of `~/.claude.json`. The five newest stay. |
+| `usage-data` | <Documented /> | `~/.claude/` | Reports from `/insights` and their cached data. |
+| `jobs` | <Documented /> | `~/.claude/` | The state of background sessions. |
+| `daemon` | <Documented /> | `~/.claude/` | The list of running background sessions. |
+| `cache` | <Documented /> | `~/.claude/` | Caches, such as `changelog.md`. |
+| `changelog.md` | <Documented /> | `~/.claude/cache/` | A cached copy of the [changelog](https://code.claude.com/docs/en/changelog) for `/release-notes`. |
+| `stats-cache.json` | <Documented /> | `~/.claude/` | Totals shown by `/usage`. |
+| `remote-settings.json` | <Documented /> | `~/.claude/` | Cached server-managed settings. |
+| `policy-limits.json` | <Documented /> | `~/.claude/` | Cached organization limits. |
+| `feedback-bundles` | <Documented /> | `~/.claude/` | Feedback archives. |
+| `drafts` | <Documented /> | `~/.claude/feedback/` | Feedback drafts that you have not sent. |
+| `state` | <Undocumented /> | `~/.claude/` | Staged settings changes and consent records. See [Sessions and Storage](../how-it-works/sessions-and-storage.md). |
+| `seed-admin` | <Undocumented /> | `~/.claude/` | The root for temp folders of cloud-session uploads. See [Sessions and Storage](../how-it-works/sessions-and-storage.md). |
+| `model-catalog` | <Undocumented /> | `~/.claude/cache/` | Cached model catalog files and `masked-ids.json`. See [Sessions and Storage](../how-it-works/sessions-and-storage.md). |
+| `.config.json` | <Undocumented /> | `~/.claude/` | The old place of the global config. The program uses it when it is a non-empty file, and `~/.claude.json` otherwise. |
+| `.last-cleanup` | <Undocumented /> | `~/.claude/` | Holds an ISO time. The program reads the age of the file to skip a new cleanup run. |
+| `.deep-link-register-failed` | <Undocumented /> | `~/.claude/` | A marker that the deep-link registration failed. The program reads the age of the file and does not try again for a while. |
+| `.last-update-result.json` | <Undocumented /> | `~/.claude/` | The result of the last update, with the fields `outcome` (`success` or `failed`), `status`, `version_from`, `version_to`, and `error_code`. |
+| `.update.lock` | <Undocumented /> | `~/.claude/` | The update lock. The program treats a lock younger than 5 minutes as held. |
+| `active-time.json` | <Undocumented /> | `~/.claude/` | A ledger of active time, with `version` `1` and a `windows` list. |
+| `asset-cache` | <Undocumented /> | `~/.claude/plugins/` | The cache of plugin binary assets. |
+| `cowork_plugins` | <Undocumented /> | `~/.claude/` | The plugin root in place of `plugins` when `CLAUDE_CODE_USE_COWORK_PLUGINS` is on. |
+| `daemon.lock` | <Undocumented /> | `~/.claude/` | The lock file of the daemon. |
+| `daemon.log` | <Undocumented /> | `~/.claude/` | The log of the daemon. The older copy is `daemon.log.1`. |
+| `daemon.status.json` | <Undocumented /> | `~/.claude/` | Status that the daemon supervisor writes. It holds the supervisor process id. |
+| `daemon.scheduled.status.json` | <Undocumented /> | `~/.claude/` | Status that the scheduled-task worker writes. It holds the worker process id. |
+| `gh-pr-status-cache.json` | <Undocumented /> | `~/.claude/` | A cache of pull request statuses from GitHub. |
+| `mcp-needs-auth-cache.json` | <Undocumented /> | `~/.claude/` | The MCP needs-auth cache. |
+| `my-closed-issues.json` | <Undocumented /> | `~/.claude/cache/` | A cached list of closed issues. Each entry has `number`, `title`, and `closedAt`. |
+| `startup-perf` | <Undocumented /> | `~/.claude/` | A `.json` and a `.txt` file that `CLAUDE_CODE_PROFILE_STARTUP=1` writes. See [Probes](../reference/probes.md). |
+
 ## Managed Files
 
 An administrator puts these on the machine. A user cannot override them.
