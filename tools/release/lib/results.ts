@@ -100,6 +100,7 @@ export const normalise = <T>(obj: T): T =>
       // clock times the screen prints ("done 5:02 AM")
       .replace(/\b\d{1,2}:\d{2}\s?[AP]M\b/g, "<time>")
       .replace(/\b\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z?/g, "<ts>")
+      .replace(/\b\d{4}-\d{2}-\d{2}\b/g, "<date>")
       .replace(/\b(?:req|msg|toolu)_[A-Za-z0-9]{6,}/g, "<id>")
       .replace(/(127\.0\.0\.1|localhost):\d+/g, "$1:<port>")
       .replace(/(cc_version=\d+\.\d+\.\d+)\.[0-9a-f]+/g, "$1.<build>"),
