@@ -7,10 +7,13 @@
 // parts and other operands are blanked (short). Factory throws such as `throw dyn("Cloud gateway")` are
 // left out, because their argument is not the message. `console.error` is left out, because only bundled
 // libraries use it. `detail` is "throw <Class>" or "stderr".
-// Filter (design D3): drop texts shorter than 10 characters, with no space, or with no letters.
+// Filter (design D3): drop texts shorter than 10 characters, with no space, or with no letters, and texts
+// inside a bundled CommonJS module (`x((e,n)=>{…n.exports=…})`), which is library code. On 2.1.309 that
+// drops 507 of 4529 texts, leaving 4022 (OpenTelemetry protobuf, crypto, XML, CSS selector, JWT). Bundled ES modules have no such wrapper, and no
+// module or function marker tells them from app code without losing app texts, so the rest stay.
 // The old `strings` heuristic has no error list, so there is nothing to compare.
 import type * as ES from "estree";
-import { constString, type Module, type Node } from "../ast.ts";
+import { constString, isFn, type Module, type Node } from "../ast.ts";
 import {
   type Extractor,
   type SurfaceItem,
@@ -74,6 +77,32 @@ const text = (m: Module, n: Node | undefined): string | undefined => {
 const keep = (s: string): boolean =>
   s.length >= 10 && s.includes(" ") && /[A-Za-z]/.test(s);
 
+const cjs = new WeakMap<Node, boolean>();
+/** Inside a bundled CommonJS module: `x((e,n)=>{…n.exports=…})`, a function that is a call's only argument. */
+const inLibrary = (m: Module, at: Node): boolean => {
+  for (let n = m.parent(at); n; n = m.parent(n)) {
+    if (!isFn(n)) continue;
+    let hit = cjs.get(n);
+    if (hit === undefined) {
+      const p = m.parent(n);
+      const names = n.params.flatMap((x) =>
+        x.type === "Identifier" ? [x.name] : [],
+      );
+      hit =
+        p?.type === "CallExpression" &&
+        p.arguments.length === 1 &&
+        p.arguments[0] === n &&
+        names.length === n.params.length &&
+        names.length >= 1 &&
+        names.length <= 2 &&
+        names.some((x) => m.src(n).includes(`${x}.exports`));
+      cjs.set(n, hit);
+    }
+    if (hit) return true;
+  }
+  return false;
+};
+
 export const extractErrors: Extractor = (bundle) => {
   const out: SurfaceItem[] = [];
   scan(bundle, ["throw", "stderr"], (m, n) => {
@@ -99,7 +128,7 @@ export const extractErrors: Extractor = (bundle) => {
     const t = text(m, call.arguments[0] as Node | undefined);
     if (t === undefined) return;
     const name = short(t);
-    if (keep(name))
+    if (keep(name) && !inLibrary(m, call as Node))
       out.push({
         kind: "error",
         name,

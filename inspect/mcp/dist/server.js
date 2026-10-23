@@ -39322,6 +39322,23 @@ var text = (m, n) => {
   return;
 };
 var keep = (s) => s.length >= 10 && s.includes(" ") && /[A-Za-z]/.test(s);
+var cjs = new WeakMap;
+var inLibrary = (m, at) => {
+  for (let n = m.parent(at);n; n = m.parent(n)) {
+    if (!isFn(n))
+      continue;
+    let hit = cjs.get(n);
+    if (hit === undefined) {
+      const p = m.parent(n);
+      const names = n.params.flatMap((x) => x.type === "Identifier" ? [x.name] : []);
+      hit = p?.type === "CallExpression" && p.arguments.length === 1 && p.arguments[0] === n && names.length === n.params.length && names.length >= 1 && names.length <= 2 && names.some((x) => m.src(n).includes(`${x}.exports`));
+      cjs.set(n, hit);
+    }
+    if (hit)
+      return true;
+  }
+  return false;
+};
 var extractErrors = (bundle) => {
   const out = [];
   scan(bundle, ["throw", "stderr"], (m, n) => {
@@ -39344,7 +39361,7 @@ var extractErrors = (bundle) => {
     if (t === undefined)
       return;
     const name = short(t);
-    if (keep(name))
+    if (keep(name) && !inLibrary(m, call))
       out.push({
         kind: "error",
         name,

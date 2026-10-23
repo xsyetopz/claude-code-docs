@@ -590,6 +590,18 @@ var o=["other","list"];
 });
 
 describe("error", () => {
+  test("a throw inside a CommonJS library wrapper is left out", () => {
+    const src = `
+var L=x((e,n)=>{function f(){throw Error("library text inside")}n.exports=f});
+var M=x((e,n)=>{function g(){throw Error("wrapper with no exports")}g()});
+function h(){throw Error("app text outside")}
+`;
+    expect(names("error", src)).toEqual([
+      "app text outside",
+      "wrapper with no exports",
+    ]);
+  });
+
   test("throws of Error types and subclasses, and stderr writes", () => {
     const src = `
 class A extends Error{}
