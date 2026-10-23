@@ -36,9 +36,9 @@ Each task adds rows to the existing section of its kinds, with badges and "the p
 Items of claude.ai, Cowork, Claude Design, and artifacts are mapped like any other.
 
 - [ ] 5.1 `env`: `docs/configure/env-vars/`. Verify: `surface:check -- --kind env` passes
-- [ ] 5.2 `flag`, `subcommand`, `slash-command`: `docs/configure/cli/`, `docs/extend/skills-and-commands/slash-commands.md`. Verify: `surface:check` passes for these kinds
-- [ ] 5.3 `setting`, `permission-rule`: `docs/configure/settings/`, `docs/configure/permissions/`. Verify: `surface:check` passes for these kinds
-- [ ] 5.4 `hook-event`, `mod-api`, `tool`, `otel-event`: `docs/extend/hooks/`, `docs/extend/mod-api/`, `docs/reference/tools/`, and a new `docs/reference/opentelemetry.md` (no page lists the events today; the env vars stay in `docs/configure/env-vars/telemetry-and-debug.md`). Payload fields only from `schemas/`. Verify: `surface:check` passes for these kinds
+- [x] 5.2 `flag`, `subcommand`, `slash-command`: `docs/configure/cli/`, `docs/extend/skills-and-commands/slash-commands.md`. Verify: `surface:check` passes for these kinds
+- [x] 5.3 `setting`, `permission-rule`: `docs/configure/settings/`, `docs/configure/permissions/`. Verify: `surface:check` passes for these kinds
+- [x] 5.4 `hook-event`, `mod-api`, `tool`, `otel-event`: `docs/extend/hooks/`, `docs/extend/mod-api/`, `docs/reference/tools/`, and a new `docs/reference/opentelemetry.md` (no page lists the events today; the env vars stay in `docs/configure/env-vars/telemetry-and-debug.md`). Payload fields only from `schemas/`. Verify: `surface:check` passes for these kinds
 - [ ] 5.5 `gate`, `model`, `beta`, `endpoint`: the gated tables, `docs/configure/models-and-providers.md`, `docs/reference/api/betas.md`, `docs/reference/api/endpoints.md`. Verify: `surface:check` passes for these kinds
 - [ ] 5.6 `keybinding`, `file`: a new `docs/configure/keybindings.md` (no page lists the actions today; link it from `docs/configure/settings/ui.md`), and `docs/start/files-on-disk.md`. Verify: `surface:check` passes for these kinds
 - [ ] 5.7 `error`: rows by family (D3) on the page of the feature that raises each family. Exclude the ES-module library errors that the module filter keeps (protobuf, XML, HTTP clients, and others) by group in `exclusions.json`, with a reason for each group (user choice, 2026-10-23). Then set `DRAFT` in `tools/surface/render.ts` to false, so the Surface Coverage page goes live (user choice, 2026-10-23). Verify: `surface:check -- --kind error` passes
