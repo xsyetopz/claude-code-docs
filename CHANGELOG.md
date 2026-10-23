@@ -33,6 +33,7 @@ The site documents Claude Code `2.1.309`, the only release it tracks. The versio
 - Merged duplicated rows into one home per item, with links from other pages.
 - Code examples follow `biome.json`, including arrow functions.
 - Updated to Claude Code `2.1.309`.
+- `release:diff` compares the surface snapshots of both versions for all 17 kinds, in place of `strings` heuristics, and names the target page of each added item.
 - What Changed lists only the current release. Earlier sections moved to a new Release Archive page.
 - The schema generator follows a value through its variables, calls, and returns to find its type, so fewer generated fields carry `x-unverified`.
 - Refreshed the design with IBM Plex Mono for code, a capped prose width, and quieter tables that scroll on mobile.

@@ -84,9 +84,7 @@ test("the undocumented section goes before Related Pages, and a second run keeps
   expect(text.indexOf("## In the Program")).toBeLessThan(
     text.indexOf("## Related Pages"),
   );
-  expect(text).toContain(
-    "| [Error Texts](surface-coverage.md#error-texts) | 2 | 1 |",
-  );
+  expect(text).toContain("| Error Texts | 2 | 1 |");
   expect(text.startsWith(UNDOCUMENTED.split("## Related")[0] as string)).toBe(
     true,
   );

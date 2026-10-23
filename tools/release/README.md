@@ -7,7 +7,7 @@ The toolkit runs the program only against a local stub with a fake key. Results 
 
 ## Read First
 
-- Run `bun run release:schemas` before `bun run release:diff`, and before you commit any schema. The settings diff compares `schemas/` at git HEAD with the regenerated files. Without the schema run, it falls back to the strings dump.
+- Run `bun run release:schemas` before you commit any schema. `release:diff` reads both binaries, so both versions must be installed.
 - Bump `src/version.ts` only in step 12. `--from` defaults to that value, so an early bump makes the old side wrong.
 - `release:prompts` renders `docs/prompts/` unless you pass `--no-render`. With `--only`, it never renders. Review `git diff docs/prompts/` after a full run.
 - `bun run release:claims -- --check` prints `probe print.sweep does not list claim ...` until `release:probe:print` runs again with the new claim lists. These are warnings, and the exit code stays 0.
@@ -25,7 +25,7 @@ The toolkit runs the program only against a local stub with a fake key. Results 
 - Bun `1.4.4`, `python3` 3.8 or newer, and `strings`. `openssl` is needed only for the live fault tests.
 - The new binary is installed at `~/.local/share/claude/versions/<to>`. The user installs it. `release:check` fails without it.
 - The OLD binary is installed at `~/.local/share/claude/versions/<from>`. `release:diff` needs it. `release:check` only warns when it is missing.
-- For `compare`: toolkit results for `<from>` in `captures/<from>/` (`print/` and `pty/` from an earlier toolkit run). `release:diff` creates `captures/<from>/strings.txt`, so the folder exists even with no results. Then every probed claim shows as `changed` (new case, no result for the old version). `compare` warns on stderr and at the top of `compare.md` when it finds none. If they are missing, run `bun run release:probe:print -- --to <from>` and `bun run release:probe:pty -- --to <from>` first, with the old binary still installed.
+- For `compare`: toolkit results for `<from>` in `captures/<from>/` (`print/` and `pty/` from an earlier toolkit run). `release:diff` creates `captures/<from>/surface.json`, so the folder exists even with no results. Then every probed claim shows as `changed` (new case, no result for the old version). `compare` warns on stderr and at the top of `compare.md` when it finds none. If they are missing, run `bun run release:probe:print -- --to <from>` and `bun run release:probe:pty -- --to <from>` first, with the old binary still installed.
 
 ## Flags
 
@@ -62,7 +62,8 @@ Steps 1 to 8 are unattended and safe in a fresh session. Steps 9 and 10 need the
    - User: no.
 
 4. **Diff.** `bun run release:diff`. Read `captures/<to>/diff/report.md` first. It shows which docs pages are affected.
-   - Writes `captures/<to>/diff/*.json` and `report.md`. Caches the `strings -a` dumps as `captures/<version>/strings.txt`.
+   - Takes a surface snapshot of each binary (`captures/<version>/surface.json`) and compares the items of each kind. Each added or changed item names the page that takes it, from `tools/surface/map.json`, `tools/surface/exclusions.json`, and the docs tables.
+   - Writes `captures/<to>/diff/*.json` and `report.md`. The files `strings-env.json`, `flags.json`, `commands.json`, `settings.json`, `hooks.json`, and `gates.json` keep their names for `release:claims` and `release:compare`.
    - User: no.
 
 5. **Prompts.** `bun run release:prompts`. Add `-- --no-render` to skip the render.
@@ -95,7 +96,7 @@ Steps 1 to 8 are unattended and safe in a fresh session. Steps 9 and 10 need the
     `docs/start/what-changed.md` holds only the `<to>` section. Move the `<from>` section to the top of `docs/start/release-archive.md`, and rename its claim ids in `tools/release/claims/map.json`. Update the version ranges in both pages.
     - User: no.
 
-12. **Release.** Bump `src/version.ts` to `<to>`. Run `bun run schemas` again, so the generator stamps the new version. Run `bun run version:bump -- cc-docs patch` (or `just bump cc-docs patch`), which also sets the Claude Code version in `.claude-plugin/marketplace.json`; bump `cc-inspect` too when `inspect/` changed. Then run `bun run schemas:check` and `bun run verify:locked`. Have the change reviewed, then commit with Conventional Commits and push. The pre-push hook runs `verify:locked` again.
+12. **Release.** Bump `src/version.ts` to `<to>`. Run `bun run schemas` again, so the generator stamps the new version. Run `bun run surface` to commit the snapshot `schemas/surface.json` and render the Surface Coverage page, then `bun run surface:check`. Run `bun run version:bump -- cc-docs patch` (or `just bump cc-docs patch`), which also sets the Claude Code version in `.claude-plugin/marketplace.json`; bump `cc-inspect` too when `inspect/` changed. Then run `bun run schemas:check` and `bun run verify:locked`. Have the change reviewed, then commit with Conventional Commits and push. The pre-push hook runs `verify:locked` again.
     - User: no.
 
 ## Shortcut: `release:all`
@@ -109,7 +110,6 @@ Steps 1 to 8 are unattended and safe in a fresh session. Steps 9 and 10 need the
 - It stops at the first failed check, schemas, diff or prompts step and prints the commands you still need to run by hand, with the same `--from`, `--to` and `--dry`.
 - If probe:print, probe:pty or `claims --check` exits non-zero, it still runs the later steps (so a flaky pty case still gives a worklist). It then exits non-zero and names the failed steps.
 - It never runs steps 9 and 10. It prints them under "Needs you".
-- It runs schemas before diff, so the settings diff uses the regenerated schemas.
 
 ## Where Results Go
 
@@ -128,7 +128,8 @@ captures/<to>/
   live/                 <case>.json
   claims.json
   compare/              <from>..<to>.json and compare.md
-captures/<version>/strings.txt    cached strings dump (tens of MB)
+captures/<version>/strings.txt    cached strings dump (tens of MB), from the print sweep
+captures/<version>/surface.json   surface snapshot, from release:diff and surface
 ```
 
 `release:check` prints the size of each version folder. Delete old versions by hand.

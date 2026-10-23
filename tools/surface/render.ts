@@ -19,6 +19,8 @@ import type { Committed } from "./snapshot.ts";
 
 const UNDOCUMENTED = "docs/reference/undocumented.md";
 const SECTION = "## In the Program";
+// User choice (2026-10-23): keep the page out of the live site until the mapping tasks (5.x) shrink its gaps.
+const DRAFT = true;
 
 const TITLES: Record<string, string> = {
   beta: "Betas",
@@ -128,6 +130,7 @@ export const render = (
     "title: Surface Coverage",
     `description: Every item that the Claude Code ${snapshot.version} program holds, by kind, with the page that covers it.`,
     "sidebar_position: 11",
+    ...(DRAFT ? ["draft: true"] : []),
     "---",
     "",
     `The program of Claude Code \`${snapshot.version}\` holds ${items} items in ${kinds} kinds.`,
@@ -144,13 +147,17 @@ export const render = (
     SECTION,
     "",
     `The program of \`${snapshot.version}\` holds ${items} items in ${kinds} kinds, counted from \`schemas/surface.json\`.`,
-    "[Surface Coverage](surface-coverage.md) lists each item with its page.",
+    ...(DRAFT
+      ? []
+      : [
+          "[Surface Coverage](surface-coverage.md) lists each item with its page.",
+        ]),
     "",
     "| Kind | Items | Not on a Page Yet |",
     "| --- | --- | --- |",
     ...rows.map(
       (r) =>
-        `| [${title(r.kind)}](surface-coverage.md#${slug(r.kind)}) | ${r.items} | ${r.unmapped} |`,
+        `| ${DRAFT ? title(r.kind) : `[${title(r.kind)}](surface-coverage.md#${slug(r.kind)})`} | ${r.items} | ${r.unmapped} |`,
     ),
     `| Total | ${items} | ${total((r) => r.unmapped)} |`,
     "",

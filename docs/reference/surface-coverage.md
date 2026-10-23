@@ -2,6 +2,7 @@
 title: Surface Coverage
 description: Every item that the Claude Code 2.1.309 program holds, by kind, with the page that covers it.
 sidebar_position: 11
+draft: true
 ---
 
 The program of Claude Code `2.1.309` holds 8893 items in 17 kinds.

@@ -1,39 +1,122 @@
-// release:diff - strings dumps of the old and new binary, then env, flag, command, setting, hook and gate diffs.
-// Writes captures/<to>/diff/{strings-env,flags,commands,settings,hooks,gates}.json and diff/report.md.
+// release:diff - surface snapshots (design D4) of the old and new binary, diffed by kind.
+// Writes captures/<v>/surface.json for both versions, captures/<to>/diff/<group>.json, and diff/report.md.
+// The six files that claims and compare read keep their names (strings-env.json, flags.json, ...).
 import {
-  existsSync,
+  mkdirSync,
   readdirSync,
   readFileSync,
   statSync,
   writeFileSync,
 } from "node:fs";
-import { join } from "node:path";
+import { join, relative } from "node:path";
+import type { SurfaceItem } from "../../../inspect/mcp/src/surface/index.ts";
+import {
+  docsNames,
+  exclusionOf,
+  type MapEntry,
+  PAGES,
+  status,
+} from "../../surface/coverage.ts";
+import { title } from "../../surface/render.ts";
+import { serializeCapture, snapshot } from "../../surface/snapshot.ts";
 import { type Ctx, ROOT, versionDir, writeJson } from "../util.ts";
-import { diffJson, gitHead } from "../wrap.ts";
-import { type Extracted, extractAll, type Items } from "./extract.ts";
-import { dumpStrings } from "./strings.ts";
 
-type Kind = keyof Extracted;
-const FILE: Record<Kind, string> = {
-  env: "strings-env.json",
-  flags: "flags.json",
-  commands: "commands.json",
-  settings: "settings.json",
-  hooks: "hooks.json",
-  gates: "gates.json",
+/** name -> detail ("" when the item has no default, values, gate, or detail). */
+export type Items = Map<string, string>;
+type ByKind = Record<string, SurfaceItem[]>;
+
+/** An output file: the surface kinds it holds, each with the prefix its names get. */
+type Group = {
+  key: string;
+  file: string;
+  title: string;
+  kinds: [string, string][];
 };
-const TITLE: Record<Kind, string> = {
-  env: "Environment variables",
-  flags: "CLI flags",
-  commands: "Commands (cli:name = subcommand, /name = slash command)",
-  settings: "Settings and schema fields",
-  hooks: "Hook events",
-  gates: "Gates (tengu_ names with a literal default)",
+const LEGACY: Group[] = [
+  {
+    key: "env",
+    file: "strings-env.json",
+    title: "Environment variables",
+    kinds: [["env", ""]],
+  },
+  {
+    key: "flags",
+    file: "flags.json",
+    title: "CLI flags",
+    kinds: [["flag", ""]],
+  },
+  {
+    key: "commands",
+    file: "commands.json",
+    title: "Commands (cli:name = subcommand, /name = slash command)",
+    kinds: [
+      ["subcommand", "cli:"],
+      ["slash-command", ""],
+    ],
+  },
+  {
+    key: "settings",
+    file: "settings.json",
+    title: "Settings",
+    kinds: [["setting", ""]],
+  },
+  {
+    key: "hooks",
+    file: "hooks.json",
+    title: "Hook events",
+    kinds: [["hook-event", ""]],
+  },
+  {
+    key: "gates",
+    file: "gates.json",
+    title: "Gates",
+    kinds: [["gate", ""]],
+  },
+];
+
+/** The legacy groups, then one group for each other kind of either snapshot. */
+export const groups = (kinds: string[]): Group[] => {
+  const held = new Set(LEGACY.flatMap((g) => g.kinds.map(([k]) => k)));
+  return [
+    ...LEGACY,
+    ...kinds
+      .filter((k) => !held.has(k))
+      .sort()
+      .map((k) => ({
+        key: k,
+        file: `${k}.json`,
+        title: title(k),
+        kinds: [[k, ""]] as [string, string][],
+      })),
+  ];
 };
+
+const FIELDS = ["default", "values", "gate", "detail"] as const;
+const detailOf = (i: SurfaceItem) =>
+  FIELDS.filter((f) => i[f] !== undefined)
+    .map(
+      (f) =>
+        `${f}: ${Array.isArray(i[f]) ? (i[f] as string[]).join(", ") : i[f]}`,
+    )
+    .join("; ");
+
+/** The items of a group by prefixed name. Items that share a name join their sorted details. */
+export const itemsOf = (g: Group, byKind: ByKind): Items => {
+  const all = new Map<string, string[]>();
+  for (const [kind, prefix] of g.kinds)
+    for (const i of byKind[kind] ?? []) {
+      const name = `${prefix}${i.name}`;
+      all.set(name, [...(all.get(name) ?? []), detailOf(i)]);
+    }
+  return new Map(
+    [...all].map(([n, ds]) => [n, [...new Set(ds)].sort().join(" | ")]),
+  );
+};
+
 const LIMIT = 80; // lines per list in report.md; the JSON has everything
 
 export type KindDiff = {
-  kind: Kind;
+  kind: string;
   from: string;
   to: string;
   fromCount: number;
@@ -41,12 +124,12 @@ export type KindDiff = {
   added: string[];
   removed: string[];
   changed: { name: string; old: string; new: string }[];
-  /** where the names came from; the settings kind prefers the generated schema */
-  source?: string;
   /** added names that no docs page mentions */
   undocumentedAdded: string[];
   /** removed or changed names that docs pages still mention: name -> files */
   inDocs: Record<string, string[]>;
+  /** added and changed names -> the page that takes them, from the coverage map */
+  pages: Record<string, string>;
 };
 
 const walk = (dir: string, out: string[] = []): string[] => {
@@ -59,10 +142,8 @@ const walk = (dir: string, out: string[] = []): string[] => {
 };
 
 /** Search needle used to look a name up in docs text. */
-const needle = (kind: Kind, name: string): string => {
-  if (kind !== "commands") return name;
-  return name.startsWith("cli:") ? `claude ${name.slice(4)}` : name;
-};
+const needle = (name: string): string =>
+  name.startsWith("cli:") ? `claude ${name.slice(4)}` : name;
 
 const loadDocs = (): { file: string; text: string }[] =>
   walk(join(ROOT, "docs")).map((p) => ({
@@ -70,22 +151,29 @@ const loadDocs = (): { file: string; text: string }[] =>
     text: readFileSync(p, "utf8"),
   }));
 
+/** A detail with the parts that change on every build blanked: chunk hashes and short minified names. */
+const stable = (s = "") =>
+  s
+    .replace(/chunk-[a-z0-9]{8}/g, "chunk-_")
+    .replace(/(?<![\w$])[A-Za-z_$][\w$]{0,2}(?=\(|\.|\)|&|;|\}| \(=|$)/g, "_");
+
 export const diffKind = (
-  kind: Kind,
+  kind: string,
   from: string,
   to: string,
   a: Items,
   b: Items,
   docs: { file: string; text: string }[],
+  page: (name: string) => string = () => "",
 ): KindDiff => {
   const added = [...b.keys()].filter((k) => !a.has(k));
   const removed = [...a.keys()].filter((k) => !b.has(k));
   const changed = [...b]
-    .filter(([k, v]) => a.has(k) && a.get(k) !== v)
+    .filter(([k, v]) => a.has(k) && stable(a.get(k)) !== stable(v))
     .map(([name, v]) => ({ name, old: a.get(name) ?? "", new: v }));
   const files = (name: string) => {
     const re = new RegExp(
-      `(?<![\\w-])${needle(kind, name).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?![\\w-])`,
+      `(?<![\\w-])${needle(name).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?![\\w-])`,
     );
     return docs.filter((d) => re.test(d.text)).map((d) => d.file);
   };
@@ -94,6 +182,11 @@ export const diffKind = (
   for (const n of [...removed, ...changed.map((c) => c.name)]) {
     const f = files(n);
     if (f.length) inDocs[n] = f;
+  }
+  const pages: Record<string, string> = {};
+  for (const n of [...added, ...changed.map((c) => c.name)]) {
+    const p = page(n);
+    if (p) pages[n] = p;
   }
   return {
     kind,
@@ -106,7 +199,33 @@ export const diffKind = (
     changed,
     undocumentedAdded,
     inDocs,
+    pages,
   };
+};
+
+/** The page of an item of the new version: its docs table, its map route, its exclusion, or the page of its kind. */
+export const pageOf = (
+  kind: string,
+  name: string,
+  docs: Map<string, string>,
+  map: Record<string, MapEntry>,
+  exclusions: Record<string, string>,
+): string => {
+  const key = `${kind}:${name}`;
+  switch (status(kind, name, { [kind]: docs }, map, exclusions)) {
+    case "docs":
+      return relative(ROOT, docs.get(name) as string);
+    case "mapped": {
+      const m = map[key] as MapEntry;
+      return m.anchor ? `${m.route}#${m.anchor}` : m.route;
+    }
+    case "excluded":
+      return `excluded: ${exclusions[exclusionOf(key, exclusions) as string]}`;
+    default: {
+      const p = PAGES[kind]?.[0];
+      return p && p !== "docs" ? `${p} (no row yet)` : "no page yet";
+    }
+  }
 };
 
 const list = (items: string[], fmt: (s: string) => string): string[] => [
@@ -116,11 +235,16 @@ const list = (items: string[], fmt: (s: string) => string): string[] => [
     : []),
 ];
 
-export const renderReport = (from: string, to: string, ds: KindDiff[]) => {
+export const renderReport = (
+  from: string,
+  to: string,
+  ds: KindDiff[],
+  titles: Record<string, string> = {},
+) => {
   const L: string[] = [
     `# Release Diff ${from} -> ${to}`,
     "",
-    "Made by `release:diff` from `strings -a` of both binaries. Names come from text patterns, so a miss or an extra is possible.",
+    "Made by `release:diff` from the surface snapshots of both binaries (`captures/<version>/surface.json`).",
     "",
     "| Kind | " +
       from +
@@ -140,9 +264,10 @@ export const renderReport = (from: string, to: string, ds: KindDiff[]) => {
       ? ` (docs: ${f.slice(0, 4).join(", ")}${f.length > 4 ? ", ..." : ""})`
       : "";
   };
+  const pageOfName = (d: KindDiff, n: string) =>
+    d.pages[n] ? ` -> ${d.pages[n]}` : "";
   for (const d of ds) {
-    L.push(`## ${TITLE[d.kind]}`, "");
-    if (d.source) L.push(`Source: ${d.source}.`, "");
+    L.push(`## ${titles[d.kind] ?? d.kind}`, "");
     if (!d.added.length && !d.removed.length && !d.changed.length) {
       L.push("No change.", "");
       continue;
@@ -150,9 +275,12 @@ export const renderReport = (from: string, to: string, ds: KindDiff[]) => {
     const undoc = new Set(d.undocumentedAdded);
     if (d.added.length)
       L.push(
-        `### Added (${d.added.length}; "new" = no docs page mentions it)`,
+        `### Added (${d.added.length}; "new" = no docs page mentions it; -> the page that takes it)`,
         "",
-        ...list(d.added, (n) => `- \`${n}\`${undoc.has(n) ? " new" : ""}`),
+        ...list(
+          d.added,
+          (n) => `- \`${n}\`${undoc.has(n) ? " new" : ""}${pageOfName(d, n)}`,
+        ),
         "",
       );
     if (d.removed.length)
@@ -169,7 +297,7 @@ export const renderReport = (from: string, to: string, ds: KindDiff[]) => {
         ...d.changed
           .slice(0, LIMIT)
           .flatMap((c) => [
-            `- \`${c.name}\`${docsOf(d, c.name)}`,
+            `- \`${c.name}\`${docsOf(d, c.name)}${pageOfName(d, c.name)}`,
             `  - old: ${c.old || "(empty)"}`,
             `  - new: ${c.new || "(empty)"}`,
           ]),
@@ -189,96 +317,60 @@ export const renderReport = (from: string, to: string, ds: KindDiff[]) => {
   return L.join("\n");
 };
 
-const SETTINGS_SCHEMA = "schemas/claude-code-settings.json";
-
-/**
- * Settings keys from the generated schema: git HEAD (old) against the working tree (new, after release:schemas).
- * Only used when release:schemas has run for this --to; otherwise the strings fallback is used.
- */
-const settingsFromSchema = (to: string): { a: Items; b: Items } | null => {
-  const marker = join(versionDir(to), "schemas-diff.json");
-  if (!existsSync(marker)) return null;
-  if (JSON.parse(readFileSync(marker, "utf8")).to !== to) return null;
-  const oldText = gitHead(SETTINGS_SCHEMA);
-  const path = join(ROOT, SETTINGS_SCHEMA);
-  if (!oldText || !existsSync(path)) return null;
-  const props = (text: string): Items =>
-    new Map(
-      Object.entries(JSON.parse(text).properties ?? {}).map(([k, v]) => [
-        k,
-        JSON.stringify(v),
-      ]),
-    );
-  return { a: props(oldText), b: props(readFileSync(path, "utf8")) };
-};
-
-/** Replace the full-schema blobs of changed settings with the leaf paths that differ. */
-const summariseChanged = (d: KindDiff): void => {
-  d.changed = d.changed.map((c) => {
-    const x = diffJson(c.old, c.new);
-    const parts = [
-      ...x.changed.map((y) => `${y.path}: ${y.old} -> ${y.new}`),
-      ...x.added.map((p) => `+${p}`),
-      ...x.removed.map((p) => `-${p}`),
-    ];
-    return {
-      name: c.name,
-      old: "(schema)",
-      new: parts.slice(0, 4).join("; ") + (parts.length > 4 ? "; ..." : ""),
-    };
-  });
-};
-
 export const runDiff = async (ctx: Ctx): Promise<number> => {
   const { from, to } = ctx;
   if (!to) throw new Error("no --to given and no installed binary found");
   console.log(`release:diff ${from} -> ${to}`);
   if (ctx.dry) {
     console.log(
-      `plan: strings -a for ${from} and ${to} (cached in captures/<v>/strings.txt)`,
+      `plan: surface snapshots of ${from} and ${to} (written to captures/<v>/surface.json)`,
     );
-    console.log(
-      `plan: write captures/${to}/diff/{${Object.values(FILE).join(",")},report.md}`,
-    );
+    console.log(`plan: write captures/${to}/diff/{<kind>.json,report.md}`);
     return 0;
   }
-  const load = (v: string): Extracted => {
+  const load = (v: string): ByKind => {
     const t0 = Date.now();
-    const path = dumpStrings(v);
-    // latin1 keeps one char per byte, so regexes never trip on invalid UTF-8
-    const e = extractAll(readFileSync(path, "latin1"));
-    console.log(`  ${v}: ${path} (${Date.now() - t0} ms)`);
-    return e;
+    const { byKind } = snapshot(v);
+    const file = join(versionDir(v), "surface.json");
+    mkdirSync(versionDir(v), { recursive: true });
+    writeFileSync(file, serializeCapture(v, byKind));
+    console.log(`  ${v}: ${file} (${Date.now() - t0} ms)`);
+    return byKind;
   };
   const a = load(from);
   const b = from === to ? a : load(to);
   const docs = loadDocs();
+  const read = (f: string) =>
+    JSON.parse(readFileSync(join(ROOT, "tools", "surface", f), "utf8"));
+  const map: Record<string, MapEntry> = read("map.json");
+  const exclusions: Record<string, string> = read("exclusions.json");
   const dir = join(versionDir(to), "diff");
   const ds: KindDiff[] = [];
-  for (const kind of Object.keys(FILE) as Kind[]) {
-    const schema = kind === "settings" ? settingsFromSchema(to) : null;
-    // settings: the schema is the source of truth; with `from` === `to` there is nothing to compare
-    const d = schema
-      ? diffKind(kind, from, to, schema.a, schema.b, docs)
-      : diffKind(kind, from, to, a[kind], b[kind], docs);
-    if (kind === "settings") {
-      d.source = schema
-        ? "generated schema (git HEAD vs working tree)"
-        : "strings fallback (run release:schemas first for the schema source)";
-      if (schema) summariseChanged(d);
-    }
+  const titles: Record<string, string> = {};
+  for (const g of groups([
+    ...new Set([...Object.keys(a), ...Object.keys(b)]),
+  ])) {
+    const names = Object.fromEntries(
+      g.kinds.map(([k]) => [k, docsNames(ROOT, PAGES[k] ?? [])]),
+    );
+    // a prefixed name maps back to its kind by the prefix
+    const page = (n: string) => {
+      const [kind, prefix] =
+        g.kinds.find(([, p]) => p && n.startsWith(p)) ??
+        (g.kinds.find(([, p]) => !p) as [string, string]);
+      const docsOfKind = names[kind] as Map<string, string>;
+      return pageOf(kind, n.slice(prefix.length), docsOfKind, map, exclusions);
+    };
+    const items = itemsOf(g, b);
+    const d = diffKind(g.key, from, to, itemsOf(g, a), items, docs, page);
+    titles[g.key] = g.title;
     ds.push(d);
-    writeJson(join(dir, FILE[kind]), {
-      ...d,
-      items: Object.fromEntries(
-        schema ? [...schema.b.keys()].map((k) => [k, ""]) : b[kind],
-      ),
-    });
+    writeJson(join(dir, g.file), { ...d, items: Object.fromEntries(items) });
     console.log(
-      `  ${kind}: ${d.fromCount} -> ${d.toCount} (+${d.added.length} -${d.removed.length} ~${d.changed.length})`,
+      `  ${g.key}: ${d.fromCount} -> ${d.toCount} (+${d.added.length} -${d.removed.length} ~${d.changed.length})`,
     );
   }
-  writeFileSync(join(dir, "report.md"), renderReport(from, to, ds));
+  writeFileSync(join(dir, "report.md"), renderReport(from, to, ds, titles));
   console.log(`  report: ${join(dir, "report.md")}`);
   return 0;
 };
