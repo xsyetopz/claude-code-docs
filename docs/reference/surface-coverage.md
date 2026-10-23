@@ -15,7 +15,7 @@ Each row below names the page that covers an item, or the reason the item is lef
 | --- | --- | --- | --- | --- | --- |
 | [Betas](#betas) | 50 | 50 | 0 | 0 | 0 |
 | [API Endpoints](#api-endpoints) | 431 | 108 | 9 | 314 | 0 |
-| [Environment Variables](#environment-variables) | 1846 | 1322 | 0 | 0 | 524 |
+| [Environment Variables](#environment-variables) | 1846 | 1361 | 20 | 465 | 0 |
 | [Error Texts](#error-texts) | 4022 | 3 | 0 | 0 | 4019 |
 | [Files](#files) | 78 | 49 | 0 | 29 | 0 |
 | [CLI Flags](#cli-flags) | 303 | 130 | 172 | 1 | 0 |
@@ -30,7 +30,7 @@ Each row below names the page that covers an item, or the reason the item is lef
 | [Slash Commands](#slash-commands) | 142 | 103 | 32 | 7 | 0 |
 | [Subcommands](#subcommands) | 71 | 9 | 62 | 0 | 0 |
 | [Tools](#tools) | 89 | 83 | 0 | 6 | 0 |
-| Total | 8893 | 2622 | 275 | 1453 | 4543 |
+| Total | 8893 | 2661 | 295 | 1918 | 4019 |
 
 ## Betas
 
@@ -533,25 +533,25 @@ Items: 1846.
 
 | Item | Where |
 | --- | --- |
-| `ACTIONS_ID_TOKEN_REQUEST_TOKEN` | Not on a page yet |
-| `ACTIONS_ID_TOKEN_REQUEST_URL` | Not on a page yet |
-| `ACTIONS_RUNTIME_TOKEN` | Not on a page yet |
-| `ACTIONS_RUNTIME_URL` | Not on a page yet |
-| `AGENT_PROXY_AUTH_TOKEN` | Not on a page yet |
-| `AGENT_PROXY_URL` | Not on a page yet |
+| `ACTIONS_ID_TOKEN_REQUEST_TOKEN` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `ACTIONS_ID_TOKEN_REQUEST_URL` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `ACTIONS_RUNTIME_TOKEN` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `ACTIONS_RUNTIME_URL` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `AGENT_PROXY_AUTH_TOKEN` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `AGENT_PROXY_URL` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `AI_AGENT` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `ALACRITTY_LOG` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `ALACRITTY_WINDOW_ID` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `ALLOW_ANT_COMPUTER_USE_MCP` | Not on a page yet |
+| `ALLOW_ANT_COMPUTER_USE_MCP` | Excluded: Internal variable for Anthropic staff or Anthropic-run services. The program reads it, but it is not meant for users. |
 | `ALLUSERSPROFILE` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `ALL_INPUTS` | Not on a page yet |
+| `ALL_INPUTS` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `ALL_PROXY` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
-| `ANACONDA_API_TOKEN` | Not on a page yet |
+| `ANACONDA_API_TOKEN` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `ANDROID_HOME` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `ANDROID_SDK_ROOT` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `ANSIBLE_CONFIG` | Not on a page yet |
-| `ANSIBLE_VAULT_IDENTITY_LIST` | Not on a page yet |
-| `ANSIBLE_VAULT_PASSWORD_FILE` | Not on a page yet |
+| `ANSIBLE_CONFIG` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `ANSIBLE_VAULT_IDENTITY_LIST` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `ANSIBLE_VAULT_PASSWORD_FILE` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `ANTHROPIC_API_KEY` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `ANTHROPIC_AUTH_TOKEN` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `ANTHROPIC_AWS_API_KEY` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
@@ -615,35 +615,35 @@ Items: 1846.
 | `ANTHROPIC_WORKSPACE_ID` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `ANTHROPIC_WORK_ID` | [SDK and Automation](../configure/env-vars/sdk-and-automation.md) |
 | `ANTHROPIC_WORK_SECRET` | [SDK and Automation](../configure/env-vars/sdk-and-automation.md) |
-| `ANT_ARGS` | Not on a page yet |
-| `ANT_CLAUDE_CODE_METRICS_ENDPOINT` | Not on a page yet |
-| `ANT_OPTS` | Not on a page yet |
-| `ANT_OTEL_EXPORTER_OTLP_ENDPOINT` | Not on a page yet |
-| `ANT_OTEL_EXPORTER_OTLP_HEADERS` | Not on a page yet |
-| `ANT_OTEL_EXPORTER_OTLP_PROTOCOL` | Not on a page yet |
-| `ANT_OTEL_LOGS_EXPORTER` | Not on a page yet |
-| `ANT_OTEL_METRICS_EXPORTER` | Not on a page yet |
-| `ANT_OTEL_RESOURCE_ATTRIBUTES` | Not on a page yet |
-| `ANT_OTEL_TRACES_EXPORTER` | Not on a page yet |
+| `ANT_ARGS` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
+| `ANT_CLAUDE_CODE_METRICS_ENDPOINT` | Excluded: Internal variable for Anthropic staff or Anthropic-run services. The program reads it, but it is not meant for users. |
+| `ANT_OPTS` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
+| `ANT_OTEL_EXPORTER_OTLP_ENDPOINT` | Excluded: Internal variable for Anthropic staff or Anthropic-run services. The program reads it, but it is not meant for users. |
+| `ANT_OTEL_EXPORTER_OTLP_HEADERS` | Excluded: Internal variable for Anthropic staff or Anthropic-run services. The program reads it, but it is not meant for users. |
+| `ANT_OTEL_EXPORTER_OTLP_PROTOCOL` | Excluded: Internal variable for Anthropic staff or Anthropic-run services. The program reads it, but it is not meant for users. |
+| `ANT_OTEL_LOGS_EXPORTER` | Excluded: Internal variable for Anthropic staff or Anthropic-run services. The program reads it, but it is not meant for users. |
+| `ANT_OTEL_METRICS_EXPORTER` | Excluded: Internal variable for Anthropic staff or Anthropic-run services. The program reads it, but it is not meant for users. |
+| `ANT_OTEL_RESOURCE_ATTRIBUTES` | Excluded: Internal variable for Anthropic staff or Anthropic-run services. The program reads it, but it is not meant for users. |
+| `ANT_OTEL_TRACES_EXPORTER` | Excluded: Internal variable for Anthropic staff or Anthropic-run services. The program reads it, but it is not meant for users. |
 | `API_FORCE_IDLE_TIMEOUT` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
 | `API_TIMEOUT_MS` | [Environment Variables](../configure/env-vars/index.md) |
 | `APPDATA` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `APP_URL` | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) |
-| `ARGV0` | Not on a page yet |
-| `ARTIFACTS_CREDENTIALPROVIDER_ACCESSTOKEN` | Not on a page yet |
-| `ARTIFACTS_CREDENTIALPROVIDER_EXTERNAL_FEED_ENDPOINTS` | Not on a page yet |
+| `ARGV0` | Excluded: Set or read by Claude Code for its own helper programs, sandbox, or built-in services. The code does not show an effect that a user can use or change, so it is left out. |
+| `ARTIFACTS_CREDENTIALPROVIDER_ACCESSTOKEN` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `ARTIFACTS_CREDENTIALPROVIDER_EXTERNAL_FEED_ENDPOINTS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `AUTOMODE_DECISION_LOG` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `AWS_ACCESS_KEY_ID` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
 | `AWS_ACCOUNT_ID` | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) |
 | `AWS_BEARER_TOKEN_BEDROCK` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
-| `AWS_CA_BUNDLE` | Not on a page yet |
+| `AWS_CA_BUNDLE` | Excluded: Read only by a library bundled in the program (the Azure identity library, the AWS SDK, gRPC, or a TLS or cloud detector). Claude Code has no setting for it. |
 | `AWS_CONFIG_FILE` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
 | `AWS_CONTAINER_AUTHORIZATION_TOKEN` | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) |
 | `AWS_CONTAINER_AUTHORIZATION_TOKEN_FILE` | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) |
 | `AWS_CONTAINER_CREDENTIALS_FULL_URI` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
 | `AWS_CONTAINER_CREDENTIALS_RELATIVE_URI` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
 | `AWS_CREDENTIAL_EXPIRATION` | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) |
-| `AWS_CREDENTIAL_SCOPE` | Not on a page yet |
+| `AWS_CREDENTIAL_SCOPE` | Excluded: Read only by a library bundled in the program (the Azure identity library, the AWS SDK, gRPC, or a TLS or cloud detector). Claude Code has no setting for it. |
 | `AWS_DEFAULT_REGION` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
 | `AWS_EC2_METADATA_DISABLED` | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) |
 | `AWS_EC2_METADATA_SERVICE_ENDPOINT` | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) |
@@ -655,10 +655,10 @@ Items: 1846.
 | `AWS_ENDPOINT_URL_SSO_OIDC` | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) |
 | `AWS_ENDPOINT_URL_STS` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
 | `AWS_EXECUTION_ENV` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `AWS_LAMBDA_BENCHMARK_MODE` | Not on a page yet |
+| `AWS_LAMBDA_BENCHMARK_MODE` | Excluded: Read only by a library bundled in the program (the Azure identity library, the AWS SDK, gRPC, or a TLS or cloud detector). Claude Code has no setting for it. |
 | `AWS_LAMBDA_FUNCTION_NAME` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `AWS_LAMBDA_MAX_CONCURRENCY` | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) |
-| `AWS_LAMBDA_NODEJS_NO_GLOBAL_AWSLAMBDA` | Not on a page yet |
+| `AWS_LAMBDA_NODEJS_NO_GLOBAL_AWSLAMBDA` | Excluded: Read only by a library bundled in the program (the Azure identity library, the AWS SDK, gRPC, or a TLS or cloud detector). Claude Code has no setting for it. |
 | `AWS_LOGIN_CACHE_DIRECTORY` | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) |
 | `AWS_PROFILE` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
 | `AWS_REGION` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
@@ -687,38 +687,38 @@ Items: 1846.
 | `AZURE_TENANT_ID` | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) |
 | `AZURE_TOKEN_CREDENTIALS` | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) |
 | `AZURE_USERNAME` | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) |
-| `BASH_ALIASES` | Not on a page yet |
-| `BASH_CMDS` | Not on a page yet |
+| `BASH_ALIASES` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `BASH_CMDS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `BASH_DEFAULT_TIMEOUT_MS` | [Environment Variables](../configure/env-vars/index.md) |
 | `BASH_ENV` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `BASH_MAX_OUTPUT_LENGTH` | [Environment Variables](../configure/env-vars/index.md) |
 | `BASH_MAX_TIMEOUT_MS` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
-| `BASH_VERSION` | Not on a page yet |
-| `BAT_THEME` | Not on a page yet |
+| `BASH_VERSION` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `BAT_THEME` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `BETA_TRACING_ENDPOINT` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
-| `BINSTAR_API_TOKEN` | Not on a page yet |
-| `BLOCK_SIZE` | Not on a page yet |
-| `BOTO_CONFIG` | Not on a page yet |
-| `BOTO_PATH` | Not on a page yet |
+| `BINSTAR_API_TOKEN` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `BLOCK_SIZE` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `BOTO_CONFIG` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `BOTO_PATH` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `BROWSER` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `BUF_BIGINT_DISABLE` | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) |
-| `BUGHUNTER_DEV_BUNDLE_B64` | Not on a page yet |
-| `BUGHUNTER_FLEET_SIZE` | Not on a page yet |
+| `BUGHUNTER_DEV_BUNDLE_B64` | Excluded: Internal variable for Anthropic staff or Anthropic-run services. The program reads it, but it is not meant for users. |
+| `BUGHUNTER_FLEET_SIZE` | Excluded: Internal variable for Anthropic staff or Anthropic-run services. The program reads it, but it is not meant for users. |
 | `BUILDKITE` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `BUNDLE_APP_CONFIG` | Not on a page yet |
-| `BUNDLE_CONFIG` | Not on a page yet |
-| `BUNDLE_USER_CONFIG` | Not on a page yet |
-| `BUNDLE_USER_HOME` | Not on a page yet |
+| `BUNDLE_APP_CONFIG` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `BUNDLE_CONFIG` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `BUNDLE_USER_CONFIG` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `BUNDLE_USER_HOME` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `BUN_CHROME_PATH` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
-| `BUN_CONFIG_FILE` | Not on a page yet |
+| `BUN_CONFIG_FILE` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `BUN_INSTALL` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
-| `BUN_INSTALL_CACHE_DIR` | Not on a page yet |
-| `BUN_OPTIONS` | Not on a page yet |
+| `BUN_INSTALL_CACHE_DIR` | Excluded: Set or read by Claude Code for its own helper programs, sandbox, or built-in services. The code does not show an effect that a user can use or change, so it is left out. |
+| `BUN_OPTIONS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `C9_PID` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `C9_USER` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `CARGO_HOME` | Not on a page yet |
+| `CARGO_HOME` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `CARGO_HTTP_CAINFO` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
-| `CARGO_REGISTRY_TOKEN` | Not on a page yet |
+| `CARGO_REGISTRY_TOKEN` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `CCR_AGENT_PROXY_CA_CERT_B64` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CCR_AGENT_PROXY_CA_WATCH_ENABLED` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CCR_AGENT_PROXY_ENABLED` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
@@ -731,7 +731,7 @@ Items: 1846.
 | `CCR_AGENT_PROXY_TOKEN_FILE_DESCRIPTOR` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CCR_AGENT_PROXY_UPLOAD_GATE_DISABLED` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CCR_DELTA_RESET` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
-| `CCR_EGRESS_GATEWAY_ENABLED` | Not on a page yet |
+| `CCR_EGRESS_GATEWAY_ENABLED` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CCR_ENABLE_BUNDLE` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CCR_FORCE_BUNDLE` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CCR_ON_BRANCH_DEFAULT_GUARD` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
@@ -739,28 +739,28 @@ Items: 1846.
 | `CCR_PREWARM_STAT` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CCR_PREWARM_VDA` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CCR_RUNNER_STARTUP_TIMING` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
-| `CCR_SESSION_ACCOUNT_EMAIL` | Not on a page yet |
+| `CCR_SESSION_ACCOUNT_EMAIL` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CCR_SESSION_PROFILE` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CCR_SHR_SSE_HINTS` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CCR_SPAWN_TIMESTAMP_MS` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
-| `CCR_UPSTREAM_PROXY_ENABLED` | Not on a page yet |
+| `CCR_UPSTREAM_PROXY_ENABLED` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CDPATH` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `CF_PAGES` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `CGO_ENABLED` | Not on a page yet |
+| `CGO_ENABLED` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `CHOKIDAR_INTERVAL` | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) |
 | `CHOKIDAR_USEPOLLING` | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) |
-| `CHROME_DEVEL_SANDBOX` | Not on a page yet |
+| `CHROME_DEVEL_SANDBOX` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `CI` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `CIRCLECI` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `CI_DEPLOY_USER` | Not on a page yet |
-| `CI_REGISTRY_USER` | Not on a page yet |
-| `CLAUBBIT` | Not on a page yet |
+| `CI_DEPLOY_USER` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `CI_REGISTRY_USER` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `CLAUBBIT` | Excluded: Internal variable for Anthropic staff or Anthropic-run services. The program reads it, but it is not meant for users. |
 | `CLAUDECODE` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_AFK_COUNTDOWN_MS` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
 | `CLAUDE_AFK_TIMEOUT_MS` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
 | `CLAUDE_AFTER_LAST_COMPACT` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `CLAUDE_AGENTS_AUTO_RELAUNCHED_AT` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
-| `CLAUDE_AGENTS_SELECT` | Not on a page yet |
+| `CLAUDE_AGENTS_SELECT` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_AGENT_SDK_CLIENT_APP` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
 | `CLAUDE_AGENT_SDK_DISABLE_BUILTIN_AGENTS` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_AGENT_SDK_DISABLE_MCP_MANIFESTS` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
@@ -777,7 +777,7 @@ Items: 1846.
 | `CLAUDE_AX_STARTUP_QUIET_MS` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
 | `CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_BG_AUTH_SNAPSHOT_PATH` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
-| `CLAUDE_BG_AUTO_MEMORY_OFF` | Not on a page yet |
+| `CLAUDE_BG_AUTO_MEMORY_OFF` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_BG_BACKEND` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_BG_CARRIED_PROMPTS_SHA256` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_BG_CLAIM_AUTH` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
@@ -796,16 +796,16 @@ Items: 1846.
 | `CLAUDE_BG_STARTUP_WEDGE_MS` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_BG_TCC_DISCLAIMED` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `CLAUDE_BG_WORKSPACE_TRUSTED` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
-| `CLAUDE_BRIDGE_BASE_URL` | Not on a page yet |
-| `CLAUDE_BRIDGE_OAUTH_TOKEN` | Not on a page yet |
-| `CLAUDE_BRIDGE_REATTACH_GROUPING` | Not on a page yet |
+| `CLAUDE_BRIDGE_BASE_URL` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
+| `CLAUDE_BRIDGE_OAUTH_TOKEN` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
+| `CLAUDE_BRIDGE_REATTACH_GROUPING` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_BRIDGE_REATTACH_NO_BACKFILL` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_BRIDGE_REATTACH_OUTBOUND_ONLY` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_BRIDGE_REATTACH_OWNER_ACCT` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_BRIDGE_REATTACH_OWNER_ORG` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_BRIDGE_REATTACH_SEQ` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_BRIDGE_REATTACH_SESSION` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
-| `CLAUDE_BRIDGE_SESSION_INGRESS_URL` | Not on a page yet |
+| `CLAUDE_BRIDGE_SESSION_INGRESS_URL` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `CLAUDE_BYTE_STREAM_IDLE_TIMEOUT_MS` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
 | `CLAUDE_CHROME_CLASSIFIER_FLOOR` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CHROME_PAIRED_DEVICE_ID` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
@@ -839,17 +839,17 @@ Items: 1846.
 | `CLAUDE_CODE_API_KEY_FILE_DESCRIPTOR` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `CLAUDE_CODE_API_KEY_HELPER_TTL_MS` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `CLAUDE_CODE_APPEND_PROMPT_HEAD` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
-| `CLAUDE_CODE_ARG_KEY_SHAPE` | Not on a page yet |
+| `CLAUDE_CODE_ARG_KEY_SHAPE` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_ARTIFACT` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
-| `CLAUDE_CODE_ARTIFACTS_API_BASE_URL` | Not on a page yet |
+| `CLAUDE_CODE_ARTIFACTS_API_BASE_URL` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `CLAUDE_CODE_ARTIFACTS_API_TOKEN` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `CLAUDE_CODE_ARTIFACT_ASSETS` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
-| `CLAUDE_CODE_ARTIFACT_ASSET_BASE_URL` | Not on a page yet |
+| `CLAUDE_CODE_ARTIFACT_ASSET_BASE_URL` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `CLAUDE_CODE_ARTIFACT_AUTO_OPEN` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
 | `CLAUDE_CODE_ARTIFACT_COMMENTS` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `CLAUDE_CODE_ARTIFACT_COMMENTS_AUTOREACT` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `CLAUDE_CODE_ARTIFACT_COMMENT_FAST_ACK` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
-| `CLAUDE_CODE_ARTIFACT_COMMENT_FAST_ACK_FIXED` | Not on a page yet |
+| `CLAUDE_CODE_ARTIFACT_COMMENT_FAST_ACK_FIXED` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_ARTIFACT_COMMENT_RESPONDER` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `CLAUDE_CODE_ARTIFACT_DB` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `CLAUDE_CODE_ARTIFACT_DB_STR_REPLACE` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
@@ -857,8 +857,8 @@ Items: 1846.
 | `CLAUDE_CODE_ARTIFACT_FRESH_READ` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `CLAUDE_CODE_ARTIFACT_HOT` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `CLAUDE_CODE_ARTIFACT_INHERITED_TYPE_GRANT` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
-| `CLAUDE_CODE_ARTIFACT_LIVE_BASE_URL` | Not on a page yet |
-| `CLAUDE_CODE_ARTIFACT_MCP` | Not on a page yet |
+| `CLAUDE_CODE_ARTIFACT_LIVE_BASE_URL` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
+| `CLAUDE_CODE_ARTIFACT_MCP` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_ARTIFACT_MULTI_FILE` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `CLAUDE_CODE_ARTIFACT_OPENING_PREFETCH` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `CLAUDE_CODE_ARTIFACT_OPEN_ACTION` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
@@ -868,54 +868,54 @@ Items: 1846.
 | `CLAUDE_CODE_ARTIFACT_PREVIEW` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `CLAUDE_CODE_ARTIFACT_PREVIEW_EMULATOR` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `CLAUDE_CODE_ARTIFACT_PUBLISH_EDITS` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
-| `CLAUDE_CODE_ARTIFACT_QUICKSTART` | Not on a page yet |
-| `CLAUDE_CODE_ARTIFACT_REPL` | Not on a page yet |
-| `CLAUDE_CODE_ARTIFACT_ROOM` | Not on a page yet |
+| `CLAUDE_CODE_ARTIFACT_QUICKSTART` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
+| `CLAUDE_CODE_ARTIFACT_REPL` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
+| `CLAUDE_CODE_ARTIFACT_ROOM` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `CLAUDE_CODE_ARTIFACT_SHARE` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `CLAUDE_CODE_ARTIFACT_SHARE_PROBE_REUSE_MS` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `CLAUDE_CODE_ARTIFACT_START_KIT` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
-| `CLAUDE_CODE_ARTIFACT_SYNC_BASE_URL` | Not on a page yet |
+| `CLAUDE_CODE_ARTIFACT_SYNC_BASE_URL` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `CLAUDE_CODE_ARTIFACT_TOOLSET` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `CLAUDE_CODE_ARTIFACT_TYPES` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `CLAUDE_CODE_ARTIFACT_TYPE_CATALOG` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `CLAUDE_CODE_ARTIFACT_TYPE_CLOUD_CREATE` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `CLAUDE_CODE_ARTIFACT_VERIFY` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
-| `CLAUDE_CODE_ARTIFACT_VERSIONS` | Not on a page yet |
-| `CLAUDE_CODE_ARTIFACT_VIEWER_BASE_URL` | Not on a page yet |
+| `CLAUDE_CODE_ARTIFACT_VERSIONS` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
+| `CLAUDE_CODE_ARTIFACT_VIEWER_BASE_URL` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `CLAUDE_CODE_ATTACHMENTS_BY_PATH` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `CLAUDE_CODE_ATTACHMENTS_IN_USER_DATA` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_ATTRIBUTION_ANNOUNCEMENT` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `CLAUDE_CODE_ATTRIBUTION_HEADER` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
-| `CLAUDE_CODE_ATTRIBUTION_PROJECT` | Not on a page yet |
-| `CLAUDE_CODE_ATTRIBUTION_STATUS_TIMEOUT_MS` | Not on a page yet |
+| `CLAUDE_CODE_ATTRIBUTION_PROJECT` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
+| `CLAUDE_CODE_ATTRIBUTION_STATUS_TIMEOUT_MS` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `CLAUDE_CODE_AUTH_FAIL_EXIT_MS` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `CLAUDE_CODE_AUTOUPDATER_DISABLED_BY_HOST` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `CLAUDE_CODE_AUTO_BACKGROUND_TIMEOUT_MS` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_AUTO_COMPACT_WINDOW` | [Context and Compaction](../configure/env-vars/context-and-compaction.md) |
 | `CLAUDE_CODE_AUTO_CONNECT_IDE` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
 | `CLAUDE_CODE_AUTO_MODE_ARTIFACT_CONSENT_RULE` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
-| `CLAUDE_CODE_AUTO_MODE_CLASSIFIER_OVERLAP` | Not on a page yet |
+| `CLAUDE_CODE_AUTO_MODE_CLASSIFIER_OVERLAP` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_AUTO_MODE_CLASSIFY_ASK_USER_QUESTION` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_AUTO_MODE_CLASSIFY_EDITS` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_AUTO_MODE_COMPACT_THREAD_RULE` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_AUTO_MODE_EDIT_REMOVAL` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_AUTO_MODE_EDIT_REMOVAL_CAP` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
-| `CLAUDE_CODE_AUTO_MODE_EMAIL_SENDER_REPLY_TURN` | Not on a page yet |
-| `CLAUDE_CODE_AUTO_MODE_EMAIL_SENDER_TURN` | Not on a page yet |
-| `CLAUDE_CODE_AUTO_MODE_EXTERNAL_PERMISSIONS` | Not on a page yet |
-| `CLAUDE_CODE_AUTO_MODE_GIT_STATUS` | Not on a page yet |
+| `CLAUDE_CODE_AUTO_MODE_EMAIL_SENDER_REPLY_TURN` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
+| `CLAUDE_CODE_AUTO_MODE_EMAIL_SENDER_TURN` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
+| `CLAUDE_CODE_AUTO_MODE_EXTERNAL_PERMISSIONS` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
+| `CLAUDE_CODE_AUTO_MODE_GIT_STATUS` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_AUTO_MODE_GIT_STATUS_LIMIT` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
-| `CLAUDE_CODE_AUTO_MODE_GIT_STATUS_UPLOADS` | Not on a page yet |
+| `CLAUDE_CODE_AUTO_MODE_GIT_STATUS_UPLOADS` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_AUTO_MODE_HEARTH_MEMBER_RELAY_ROWS` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_AUTO_MODE_MODEL` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
 | `CLAUDE_CODE_AUTO_MODE_OUTCOME_CODES` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_AUTO_MODE_PRIOR_ASSISTANT_CONTEXT` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
-| `CLAUDE_CODE_AUTO_MODE_REMOTE_BROWSER` | Not on a page yet |
+| `CLAUDE_CODE_AUTO_MODE_REMOTE_BROWSER` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_AUTO_MODE_REPO_VISIBILITY` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_AUTO_MODE_SEGMENTED_TRANSCRIPT` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_AUTO_MODE_SERVER` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_AUTO_MODE_TEMPERATURE` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
-| `CLAUDE_CODE_AUTO_MODE_THREAD_ASK_HELD` | Not on a page yet |
+| `CLAUDE_CODE_AUTO_MODE_THREAD_ASK_HELD` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_AUTO_MODE_TIER` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_AWS_CHAIN_RESOLVE_TIMEOUT_MS` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
 | `CLAUDE_CODE_BASALT_COVE` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
@@ -925,7 +925,7 @@ Items: 1846.
 | `CLAUDE_CODE_BASH_OUTPUT_AUDIENCE_NOTE` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_BASH_SANDBOX_SHOW_INDICATOR` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_BENCH_LIVE_COUNTS` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
-| `CLAUDE_CODE_BG_CLASSIFIER_MODEL` | Not on a page yet |
+| `CLAUDE_CODE_BG_CLASSIFIER_MODEL` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `CLAUDE_CODE_BG_TASKS_REPORT_RUNNING` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_CODE_BISON_CAIRN` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
 | `CLAUDE_CODE_BLOCKING_LIMIT_OVERRIDE` | [Context and Compaction](../configure/env-vars/context-and-compaction.md) |
@@ -933,7 +933,7 @@ Items: 1846.
 | `CLAUDE_CODE_BRIDGE_CHILD_ARTIFACT` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_BRIDGE_CHILD_AUTO_DEFAULT` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_BRIDGE_CHILD_MACHINE_SETTINGS` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
-| `CLAUDE_CODE_BRIDGE_CHILD_PROJECTS_ENTRYPOINT` | Not on a page yet |
+| `CLAUDE_CODE_BRIDGE_CHILD_PROJECTS_ENTRYPOINT` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_BRIDGE_MCP_CARRIER` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_BRIDGE_OWNER_ACCOUNT_UUID` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_BRIDGE_OWNER_ORG_UUID` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
@@ -950,8 +950,8 @@ Items: 1846.
 | `CLAUDE_CODE_CCR_EARLY_PLUGINS_SYNC` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_CCR_EARLY_REMOTE_CONNECT` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_CCR_EARLY_SKILLS_SYNC` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
-| `CLAUDE_CODE_CCR_EARLY_SYNC_AFTER_SETTINGS_REFUSAL` | Not on a page yet |
-| `CLAUDE_CODE_CCR_EVENT_FLUSH_POLICY` | Not on a page yet |
+| `CLAUDE_CODE_CCR_EARLY_SYNC_AFTER_SETTINGS_REFUSAL` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
+| `CLAUDE_CODE_CCR_EVENT_FLUSH_POLICY` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_CCR_FOLD_FIRST_TURN_RESCAN` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_CCR_OWN_CONNECTION_POOL` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_CCR_SKIP_FRESH_MIGRATIONS` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
@@ -966,24 +966,24 @@ Items: 1846.
 | `CLAUDE_CODE_CLIENT_KEY` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
 | `CLAUDE_CODE_CLIENT_KEY_PASSPHRASE` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
 | `CLAUDE_CODE_CLOUD_SESSION_ID` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
-| `CLAUDE_CODE_COLD_COMPACT` | Not on a page yet |
+| `CLAUDE_CODE_COLD_COMPACT` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_COMPILED_ACORN` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_CODE_CONFIG_PROBE` | [SDK and Automation](../configure/env-vars/sdk-and-automation.md) |
 | `CLAUDE_CODE_CONFIG_WATCH_EVENTS` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
-| `CLAUDE_CODE_CONNECT_TIMEOUT_MS` | Not on a page yet |
-| `CLAUDE_CODE_CONSENT_POINTERLESS` | Not on a page yet |
+| `CLAUDE_CODE_CONNECT_TIMEOUT_MS` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
+| `CLAUDE_CODE_CONSENT_POINTERLESS` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_CONTAINER_ID` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_COORDINATOR_EXTRA_TOOLS` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_CODE_COORDINATOR_FORCE_WORKER_INHERIT_MODEL` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_CODE_COORDINATOR_MODE` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_CODE_COORDINATOR_PROPAGATE_NESTED_MEMORY` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
-| `CLAUDE_CODE_COORDINATOR_SKILL_GUIDANCE` | Not on a page yet |
-| `CLAUDE_CODE_COWORK_FRAME_ARTIFACTS` | Not on a page yet |
+| `CLAUDE_CODE_COORDINATOR_SKILL_GUIDANCE` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
+| `CLAUDE_CODE_COWORK_FRAME_ARTIFACTS` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_COZY_TEAPOT` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
-| `CLAUDE_CODE_CURRIED_TRINKET` | Not on a page yet |
+| `CLAUDE_CODE_CURRIED_TRINKET` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_CUSTOM_OAUTH_URL` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `CLAUDE_CODE_DAEMON_COLD_START` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
-| `CLAUDE_CODE_DAPPER_CUPCAKE` | Not on a page yet |
+| `CLAUDE_CODE_DAPPER_CUPCAKE` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_DATADOG_FLUSH_INTERVAL_MS` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
 | `CLAUDE_CODE_DD_ERROR_TRACKING_FLUSH_INTERVAL_MS` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
 | `CLAUDE_CODE_DEBUG_LOGS_DIR` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
@@ -993,10 +993,10 @@ Items: 1846.
 | `CLAUDE_CODE_DESIGN_OAUTH_CLIENT_ID` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `CLAUDE_CODE_DESKTOP_APP_VERSION` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_DESKTOP_SKILLS_PLUGIN_DIR` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
-| `CLAUDE_CODE_DESKTOP_SKILL_SWITCHES` | Not on a page yet |
-| `CLAUDE_CODE_DEV_RAW_CHANGELOG_URL` | Not on a page yet |
+| `CLAUDE_CODE_DESKTOP_SKILL_SWITCHES` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
+| `CLAUDE_CODE_DEV_RAW_CHANGELOG_URL` | Excluded: Internal variable for Anthropic staff or Anthropic-run services. The program reads it, but it is not meant for users. |
 | `CLAUDE_CODE_DIAGNOSTICS_FILE` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
-| `CLAUDE_CODE_DIFF_COPY_ROOT` | Not on a page yet |
+| `CLAUDE_CODE_DIFF_COPY_ROOT` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_DISABLE_1M_CONTEXT` | [Context and Compaction](../configure/env-vars/context-and-compaction.md) |
 | `CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
 | `CLAUDE_CODE_DISABLE_ADMIN_ENV_UNION` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
@@ -1005,8 +1005,8 @@ Items: 1846.
 | `CLAUDE_CODE_DISABLE_ALTERNATE_SCREEN` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
 | `CLAUDE_CODE_DISABLE_ARTIFACT` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `CLAUDE_CODE_DISABLE_ATTACHMENTS` | [Context and Compaction](../configure/env-vars/context-and-compaction.md) |
-| `CLAUDE_CODE_DISABLE_ATTRIBUTION_BASELINE_REUSE` | Not on a page yet |
-| `CLAUDE_CODE_DISABLE_ATTRIBUTION_CROSS_REPO` | Not on a page yet |
+| `CLAUDE_CODE_DISABLE_ATTRIBUTION_BASELINE_REUSE` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
+| `CLAUDE_CODE_DISABLE_ATTRIBUTION_CROSS_REPO` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `CLAUDE_CODE_DISABLE_AUTH_REFRESH_LOCK` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `CLAUDE_CODE_DISABLE_AUTO_MEMORY` | [Context and Compaction](../configure/env-vars/context-and-compaction.md) |
 | `CLAUDE_CODE_DISABLE_AWAITING_USER_IDLE` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
@@ -1034,9 +1034,9 @@ Items: 1846.
 | `CLAUDE_CODE_DISABLE_HOOK_FORWARDING` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_DISABLE_INLINE_SHELL_RM_PROMPT` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_DISABLE_LAUNCHER_SIGN_IN` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
-| `CLAUDE_CODE_DISABLE_LAUNCH_COMPOSER` | Not on a page yet |
+| `CLAUDE_CODE_DISABLE_LAUNCH_COMPOSER` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `CLAUDE_CODE_DISABLE_LEGACY_MODEL_REMAP` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
-| `CLAUDE_CODE_DISABLE_MCP_TASK_BACKGROUND` | Not on a page yet |
+| `CLAUDE_CODE_DISABLE_MCP_TASK_BACKGROUND` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_DISABLE_MEMORY_BULK_INFLATE` | [Context and Compaction](../configure/env-vars/context-and-compaction.md) |
 | `CLAUDE_CODE_DISABLE_MEMORY_MASS_DELETE_HOLD` | [Context and Compaction](../configure/env-vars/context-and-compaction.md) |
 | `CLAUDE_CODE_DISABLE_MEMORY_PERIODIC_RESYNC` | [Context and Compaction](../configure/env-vars/context-and-compaction.md) |
@@ -1058,7 +1058,7 @@ Items: 1846.
 | `CLAUDE_CODE_DISABLE_PLUGIN_FORWARDING` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_DISABLE_POLICY_SKILLS` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_DISABLE_POWERSHELL_CMD_RM_DENY` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
-| `CLAUDE_CODE_DISABLE_PRECOMPACT_SKIP` | Not on a page yet |
+| `CLAUDE_CODE_DISABLE_PRECOMPACT_SKIP` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_DISABLE_PROACTIVITY` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `CLAUDE_CODE_DISABLE_REFUSAL_FALLBACK` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
 | `CLAUDE_CODE_DISABLE_REFUSAL_RETRY` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
@@ -1076,31 +1076,31 @@ Items: 1846.
 | `CLAUDE_CODE_DISABLE_WINDOWS_SHELL_LAUNCHER` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_DISABLE_WORKFLOWS` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_DISABLE_WORKING_SYNC` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
-| `CLAUDE_CODE_DISPATCH_V2D` | Not on a page yet |
-| `CLAUDE_CODE_DISPATCH_V2S` | Not on a page yet |
+| `CLAUDE_CODE_DISPATCH_V2D` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
+| `CLAUDE_CODE_DISPATCH_V2S` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_DONT_INHERIT_ENV` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_DOWNLOAD_DEADLINE_MS_FOR_TESTING` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `CLAUDE_CODE_EAGER_FLUSH` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `CLAUDE_CODE_EDITOR_CODELIVERY` | [SDK and Automation](../configure/env-vars/sdk-and-automation.md) |
 | `CLAUDE_CODE_EFFORT_LEVEL` | [Environment Variables](../configure/env-vars/index.md) |
-| `CLAUDE_CODE_ELEGANT_MEADOW` | Not on a page yet |
+| `CLAUDE_CODE_ELEGANT_MEADOW` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_EMIT_SESSION_STATE_EVENTS` | [SDK and Automation](../configure/env-vars/sdk-and-automation.md) |
 | `CLAUDE_CODE_EMIT_STARTUP_TIMING` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
 | `CLAUDE_CODE_EMIT_TOOL_USE_SUMMARIES` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_ENABLE_APPEND_SUBAGENT_PROMPT` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
-| `CLAUDE_CODE_ENABLE_AUTO_MODE` | Not on a page yet |
+| `CLAUDE_CODE_ENABLE_AUTO_MODE` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `CLAUDE_CODE_ENABLE_AWAY_SUMMARY` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
 | `CLAUDE_CODE_ENABLE_BACKGROUND_PLUGIN_REFRESH` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_ENABLE_CFC` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
-| `CLAUDE_CODE_ENABLE_DESIGN_SYNC` | Not on a page yet |
+| `CLAUDE_CODE_ENABLE_DESIGN_SYNC` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `CLAUDE_CODE_ENABLE_EXPERIMENTAL_ADVISOR_TOOL` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
 | `CLAUDE_CODE_ENABLE_FEEDBACK_SURVEY_FOR_OTEL` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
 | `CLAUDE_CODE_ENABLE_FINE_GRAINED_TOOL_STREAMING` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
-| `CLAUDE_CODE_ENABLE_FUNCTION_HOOKS` | Not on a page yet |
+| `CLAUDE_CODE_ENABLE_FUNCTION_HOOKS` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
-| `CLAUDE_CODE_ENABLE_LAUNCH_COMPOSER` | Not on a page yet |
+| `CLAUDE_CODE_ENABLE_LAUNCH_COMPOSER` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `CLAUDE_CODE_ENABLE_MENU_KIND_LANES` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
-| `CLAUDE_CODE_ENABLE_OPUS_4_7_FAST_MODE` | Not on a page yet |
+| `CLAUDE_CODE_ENABLE_OPUS_4_7_FAST_MODE` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
 | `CLAUDE_CODE_ENABLE_PROXY_AUTH_HELPER` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `CLAUDE_CODE_ENABLE_REFRESH_MCP_TOOLS` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
@@ -1117,11 +1117,11 @@ Items: 1846.
 | `CLAUDE_CODE_ENTRYPOINT_ON_REQUESTS` | [SDK and Automation](../configure/env-vars/sdk-and-automation.md) |
 | `CLAUDE_CODE_ENVIRONMENT_KIND` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
 | `CLAUDE_CODE_ENVIRONMENT_RUNNER_VERSION` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
-| `CLAUDE_CODE_EVAL_ALLOW_ARTIFACT_PUBLISH` | Not on a page yet |
-| `CLAUDE_CODE_EVAL_ALLOW_FLAG_OVERRIDES` | Not on a page yet |
-| `CLAUDE_CODE_EVAL_ARTIFACT_STUB_DIR` | Not on a page yet |
-| `CLAUDE_CODE_EVAL_CONFINED` | Not on a page yet |
-| `CLAUDE_CODE_EVAL_INTERVIEW_SESSION` | Not on a page yet |
+| `CLAUDE_CODE_EVAL_ALLOW_ARTIFACT_PUBLISH` | Excluded: Test or evaluation harness variable. It is not meant for normal use. |
+| `CLAUDE_CODE_EVAL_ALLOW_FLAG_OVERRIDES` | Excluded: Test or evaluation harness variable. It is not meant for normal use. |
+| `CLAUDE_CODE_EVAL_ARTIFACT_STUB_DIR` | Excluded: Test or evaluation harness variable. It is not meant for normal use. |
+| `CLAUDE_CODE_EVAL_CONFINED` | Excluded: Test or evaluation harness variable. It is not meant for normal use. |
+| `CLAUDE_CODE_EVAL_INTERVIEW_SESSION` | Excluded: Test or evaluation harness variable. It is not meant for normal use. |
 | `CLAUDE_CODE_EXECPATH` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_EXIT_AFTER_FIRST_RENDER` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
 | `CLAUDE_CODE_EXIT_AFTER_STOP_DELAY` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
@@ -1137,11 +1137,11 @@ Items: 1846.
 | `CLAUDE_CODE_FLEETVIEW_SIMPLE` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_CODE_FLEET_PAST_SESSIONS` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_CODE_FOOTER_INDICATOR` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
-| `CLAUDE_CODE_FORCE_BRIDGE` | Not on a page yet |
-| `CLAUDE_CODE_FORCE_EVALUATE_MEMORY` | Not on a page yet |
-| `CLAUDE_CODE_FORCE_FIRST_LAUNCH` | Not on a page yet |
+| `CLAUDE_CODE_FORCE_BRIDGE` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
+| `CLAUDE_CODE_FORCE_EVALUATE_MEMORY` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
+| `CLAUDE_CODE_FORCE_FIRST_LAUNCH` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_FORCE_FULLSCREEN_UPSELL` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
-| `CLAUDE_CODE_FORCE_MEMORY_SURVEY` | Not on a page yet |
+| `CLAUDE_CODE_FORCE_MEMORY_SURVEY` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `CLAUDE_CODE_FORCE_MID_CONVERSATION_SYSTEM` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
 | `CLAUDE_CODE_FORCE_RC_LONG_TURN_NUDGE` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_FORCE_SESSION_PERSISTENCE` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
@@ -1152,24 +1152,24 @@ Items: 1846.
 | `CLAUDE_CODE_FORCE_WINDOWS_CREDMAN` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `CLAUDE_CODE_FORK_SUBAGENT` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_CODE_FORWARD_SUBAGENT_TEXT` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
-| `CLAUDE_CODE_FORWARD_USER_INTENT` | Not on a page yet |
-| `CLAUDE_CODE_FOUND_REPOSITORY_GIT` | Not on a page yet |
+| `CLAUDE_CODE_FORWARD_USER_INTENT` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
+| `CLAUDE_CODE_FOUND_REPOSITORY_GIT` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_FRAME_TIMING_LOG` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
 | `CLAUDE_CODE_FRAME_TIMING_SAMPLE_EVERY` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
 | `CLAUDE_CODE_GATEWAY_HINT_HEADERS` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
 | `CLAUDE_CODE_GATEWAY_MODEL_DISCOVERY_TIMEOUT_MS` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
-| `CLAUDE_CODE_GATEWAY_TOKEN` | Not on a page yet |
+| `CLAUDE_CODE_GATEWAY_TOKEN` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `CLAUDE_CODE_GATEWAY_TOKEN_FILE_DESCRIPTOR` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
-| `CLAUDE_CODE_GB_BASE_URL` | Not on a page yet |
+| `CLAUDE_CODE_GB_BASE_URL` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `CLAUDE_CODE_GB_DISK_CACHE_WHEN_TELEMETRY_OFF` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
-| `CLAUDE_CODE_GB_REFRESH_INTERVAL_MS` | Not on a page yet |
+| `CLAUDE_CODE_GB_REFRESH_INTERVAL_MS` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `CLAUDE_CODE_GENTLE_PARASOL` | [SDK and Automation](../configure/env-vars/sdk-and-automation.md) |
 | `CLAUDE_CODE_GIT_BASH_PATH` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_GLOB_HIDDEN` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_GLOB_NO_IGNORE` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_GLOB_TIMEOUT_SECONDS` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_GOAL_CHECKIN_MINUTES` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
-| `CLAUDE_CODE_GORSE_PLOVER` | Not on a page yet |
+| `CLAUDE_CODE_GORSE_PLOVER` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_GROWTHBOOK_KICK_FROM_INIT` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `CLAUDE_CODE_GROWTHBOOK_KICK_ON_WARM_CACHE` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `CLAUDE_CODE_GZIP_CCR_REQUEST_BODIES` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
@@ -1177,12 +1177,12 @@ Items: 1846.
 | `CLAUDE_CODE_GZIP_REQUEST_BODIES` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
 | `CLAUDE_CODE_GZIP_REQUEST_BODY_BLOCKS` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
 | `CLAUDE_CODE_GZIP_REQUEST_BODY_LEVEL` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
-| `CLAUDE_CODE_HANDBACK_PROVENANCE` | Not on a page yet |
+| `CLAUDE_CODE_HANDBACK_PROVENANCE` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_HARBOR_KITE` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_CODE_HARBOR_KITE_CLOUD` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_HARBOR_KITE_PACING_OFF` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `CLAUDE_CODE_HARMONIC_RIDDLE` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
-| `CLAUDE_CODE_HFI_BEARER_TOKEN` | Not on a page yet |
+| `CLAUDE_CODE_HFI_BEARER_TOKEN` | Excluded: Internal variable for Anthropic staff or Anthropic-run services. The program reads it, but it is not meant for users. |
 | `CLAUDE_CODE_HIDE_CWD` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
 | `CLAUDE_CODE_HIDE_REPLY_SERVER_NAME` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_HIDE_SETTINGS_HINT` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
@@ -1190,18 +1190,18 @@ Items: 1846.
 | `CLAUDE_CODE_HOME_SEED_HOLD_TIMEOUT_MS` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `CLAUDE_CODE_HOME_SEED_VERDICT_TIMEOUT_MS` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `CLAUDE_CODE_HOOKS_SAME_THREAD` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
-| `CLAUDE_CODE_HOSTED_DESKTOP` | Not on a page yet |
+| `CLAUDE_CODE_HOSTED_DESKTOP` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `CLAUDE_CODE_HOST_AUTH_ENV_VAR` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `CLAUDE_CODE_HOST_AUTH_REFRESH_TIMEOUT_MS` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `CLAUDE_CODE_HOST_CREDS_FILE` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `CLAUDE_CODE_HOST_GATEWAY_LINEAGE` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
-| `CLAUDE_CODE_HOST_HTTP_PROXY_PORT` | Not on a page yet |
+| `CLAUDE_CODE_HOST_HTTP_PROXY_PORT` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `CLAUDE_CODE_HOST_PLATFORM` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
-| `CLAUDE_CODE_HOST_PROMPT_SUPERSEDES_RECORD` | Not on a page yet |
+| `CLAUDE_CODE_HOST_PROMPT_SUPERSEDES_RECORD` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_HOST_SCHEDULED_RUN` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_CODE_HOST_SESSION_ID` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `CLAUDE_CODE_HOST_SKILL_CATALOG` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
-| `CLAUDE_CODE_HOST_SOCKS_PROXY_PORT` | Not on a page yet |
+| `CLAUDE_CODE_HOST_SOCKS_PROXY_PORT` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `CLAUDE_CODE_HOST_WORKTREE` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `CLAUDE_CODE_HOST_WORKTREE_FENCE` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `CLAUDE_CODE_HOVER_REST` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
@@ -1217,29 +1217,29 @@ Items: 1846.
 | `CLAUDE_CODE_IGNORE_PERSISTED_TRUST` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_INCLUDE_PARTIAL_MESSAGES` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `CLAUDE_CODE_INLINE_TOOLS` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
-| `CLAUDE_CODE_INSTALLED_VIA_NPM_WRAPPER` | Not on a page yet |
-| `CLAUDE_CODE_INVOKED_SKILLS` | Not on a page yet |
+| `CLAUDE_CODE_INSTALLED_VIA_NPM_WRAPPER` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
+| `CLAUDE_CODE_INVOKED_SKILLS` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_IS_COWORK` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_JIT_POLICY_AFTER_STARTUP` | [SDK and Automation](../configure/env-vars/sdk-and-automation.md) |
 | `CLAUDE_CODE_JUNIPER_SUNDIAL` | [Context and Compaction](../configure/env-vars/context-and-compaction.md) |
-| `CLAUDE_CODE_KB_COHESION_FIXES` | Not on a page yet |
+| `CLAUDE_CODE_KB_COHESION_FIXES` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_LANTERN_PRISM` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_LARCH_CISTERN` | [SDK and Automation](../configure/env-vars/sdk-and-automation.md) |
-| `CLAUDE_CODE_LAZY_ENV_GETTERS` | Not on a page yet |
+| `CLAUDE_CODE_LAZY_ENV_GETTERS` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_LEGACY_BUNDLE` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_LOOP_KEEPALIVE` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_CODE_LOOP_PERSISTENT` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_CODE_MANAGED_CONFIG_PREFETCH` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `CLAUDE_CODE_MANAGED_SETTINGS_PATH` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
-| `CLAUDE_CODE_MARKETPLACE_NAME` | Not on a page yet |
-| `CLAUDE_CODE_MARKETPLACE_URL` | Not on a page yet |
+| `CLAUDE_CODE_MARKETPLACE_NAME` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
+| `CLAUDE_CODE_MARKETPLACE_URL` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_CODE_MAX_CONTEXT_TOKENS` | [Context and Compaction](../configure/env-vars/context-and-compaction.md) |
-| `CLAUDE_CODE_MAX_EFFORT_REMINDER` | Not on a page yet |
+| `CLAUDE_CODE_MAX_EFFORT_REMINDER` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_MAX_MCP_DESCRIPTION_LENGTH` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_MAX_OUTPUT_TOKENS` | [Environment Variables](../configure/env-vars/index.md) |
 | `CLAUDE_CODE_MAX_RETRIES` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
-| `CLAUDE_CODE_MAX_SUBAGENTS_PER_SESSION` | Not on a page yet |
+| `CLAUDE_CODE_MAX_SUBAGENTS_PER_SESSION` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_CODE_MAX_TOOL_USE_CONCURRENCY` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_MAX_TURNS` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
@@ -1255,22 +1255,22 @@ Items: 1846.
 | `CLAUDE_CODE_MCP_SERVER_NAME` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_MCP_SERVER_URL` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_MCP_SERVE_AUTH_TOKEN` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
-| `CLAUDE_CODE_MCP_SERVE_ENABLED_PLUGINS` | Not on a page yet |
+| `CLAUDE_CODE_MCP_SERVE_ENABLED_PLUGINS` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_MCP_SERVE_INTERFACE_MIN_VERSION` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_MCP_SERVE_SETTINGS` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_MCP_SERVE_TOOL_OUTPUT` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_MCP_SERVE_WORKSPACE_ROOT` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_MCP_STARTUP_WAIT_MS` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_MCP_TOOL_IDLE_TIMEOUT` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
-| `CLAUDE_CODE_MEMORY_API_BASE_URL` | Not on a page yet |
-| `CLAUDE_CODE_MEMORY_API_TOKEN` | Not on a page yet |
+| `CLAUDE_CODE_MEMORY_API_BASE_URL` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
+| `CLAUDE_CODE_MEMORY_API_TOKEN` | Excluded: Set or read by Claude Code for its own helper programs, sandbox, or built-in services. The code does not show an effect that a user can use or change, so it is left out. |
 | `CLAUDE_CODE_MEMORY_PUSH_DELETE_MODE` | [Context and Compaction](../configure/env-vars/context-and-compaction.md) |
 | `CLAUDE_CODE_MEMORY_SUBAGENT_APPEND` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_CODE_MESSAGES_PROMPT_CACHE_TTL` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
 | `CLAUDE_CODE_MESSAGING_SOCKET` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `CLAUDE_CODE_MESSAGING_TOKEN` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
-| `CLAUDE_CODE_MOCK_REMOTE_SETTINGS` | Not on a page yet |
-| `CLAUDE_CODE_MOCK_TRIAL` | Not on a page yet |
+| `CLAUDE_CODE_MOCK_REMOTE_SETTINGS` | Excluded: Test or evaluation harness variable. It is not meant for normal use. |
+| `CLAUDE_CODE_MOCK_TRIAL` | Excluded: Test or evaluation harness variable. It is not meant for normal use. |
 | `CLAUDE_CODE_MODEL_CAPABILITIES` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
 | `CLAUDE_CODE_MODEL_CATALOG` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
 | `CLAUDE_CODE_MODEL_CATALOG_URL` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
@@ -1281,13 +1281,13 @@ Items: 1846.
 | `CLAUDE_CODE_NONSTREAMING_TIMEOUT_RETRIES` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
 | `CLAUDE_CODE_NO_FLICKER` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
 | `CLAUDE_CODE_NO_MODEL_FALLBACK` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
-| `CLAUDE_CODE_OAUTH_401_WAIT_MS` | Not on a page yet |
+| `CLAUDE_CODE_OAUTH_401_WAIT_MS` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `CLAUDE_CODE_OAUTH_CLIENT_ID` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `CLAUDE_CODE_OAUTH_REFRESH_TOKEN` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `CLAUDE_CODE_OAUTH_SCOPES` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `CLAUDE_CODE_OAUTH_TOKEN` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `CLAUDE_CODE_OAUTH_TOKEN_FILE_DESCRIPTOR` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
-| `CLAUDE_CODE_OPUS_4_6_FAST_MODE_OVERRIDE` | Not on a page yet |
+| `CLAUDE_CODE_OPUS_4_6_FAST_MODE_OVERRIDE` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `CLAUDE_CODE_ORGANIZATION_UUID` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `CLAUDE_CODE_OTEL_CONTENT_MAX_LENGTH` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
 | `CLAUDE_CODE_OTEL_DIAG_STDERR` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
@@ -1296,23 +1296,23 @@ Items: 1846.
 | `CLAUDE_CODE_OTEL_SHUTDOWN_TIMEOUT_MS` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
 | `CLAUDE_CODE_OVERLOADED_RETRY_BASE_DELAY_MS` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
 | `CLAUDE_CODE_OVERLOADED_RETRY_MAX_DELAY_MS` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
-| `CLAUDE_CODE_OVERRIDE_DATE` | Not on a page yet |
+| `CLAUDE_CODE_OVERRIDE_DATE` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `CLAUDE_CODE_PACKAGE_MANAGER_AUTO_UPDATE` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `CLAUDE_CODE_PARKED_PERMISSION_WAIT_MS` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_PARKED_RUN_BEFORE_CLEAR` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_PARKED_STOP_RETIRES` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_PARSED_WILLOW` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `CLAUDE_CODE_PERFETTO_TRACE` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
-| `CLAUDE_CODE_PERFETTO_WRITE_INTERVAL_S` | Not on a page yet |
+| `CLAUDE_CODE_PERFETTO_WRITE_INTERVAL_S` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `CLAUDE_CODE_PERFORCE_MODE` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
-| `CLAUDE_CODE_PERSONAL_CONFIG_FIX` | Not on a page yet |
+| `CLAUDE_CODE_PERSONAL_CONFIG_FIX` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_PER_TURN_TIMING` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `CLAUDE_CODE_PEWTER_OWL` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `CLAUDE_CODE_PEWTER_OWL_TOOL` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `CLAUDE_CODE_PLAN_MODE_REQUIRED` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_CODE_PLAN_V2_AGENT_COUNT` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_CODE_PLAN_V2_EXPLORE_AGENT_COUNT` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
-| `CLAUDE_CODE_PLUGIN_ARCHIVE_URL` | Not on a page yet |
+| `CLAUDE_CODE_PLUGIN_ARCHIVE_URL` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_PLUGIN_ATTRIBUTION` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_PLUGIN_BINARY_ASSETS` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_PLUGIN_CACHE_DIR` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
@@ -1320,7 +1320,7 @@ Items: 1846.
 | `CLAUDE_CODE_PLUGIN_DIR_WATCH` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_PLUGIN_GIT_TIMEOUT_MS` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_PLUGIN_KEEP_MARKETPLACE_ON_FAILURE` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
-| `CLAUDE_CODE_PLUGIN_NAME` | Not on a page yet |
+| `CLAUDE_CODE_PLUGIN_NAME` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_PLUGIN_PREFER_HTTPS` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_PLUGIN_SEED_DIR` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_PLUGIN_USE_ZIP_CACHE` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
@@ -1328,7 +1328,7 @@ Items: 1846.
 | `CLAUDE_CODE_POLICY_HELPER_PSMODULEPATH` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_POLISHED_DEWDROP` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `CLAUDE_CODE_POLL_EVENTS` | [SDK and Automation](../configure/env-vars/sdk-and-automation.md) |
-| `CLAUDE_CODE_POLL_EVENT_DECLARATIONS` | Not on a page yet |
+| `CLAUDE_CODE_POLL_EVENT_DECLARATIONS` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `CLAUDE_CODE_POST_TURN_MEMORY` | [Context and Compaction](../configure/env-vars/context-and-compaction.md) |
 | `CLAUDE_CODE_POST_TURN_MEMORY_CONFIG` | [Context and Compaction](../configure/env-vars/context-and-compaction.md) |
 | `CLAUDE_CODE_POST_TURN_MEMORY_SYNC` | [Context and Compaction](../configure/env-vars/context-and-compaction.md) |
@@ -1344,11 +1344,11 @@ Items: 1846.
 | `CLAUDE_CODE_PROMPT_CACHE_TTL` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
 | `CLAUDE_CODE_PROPAGATE_TRACEPARENT` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
 | `CLAUDE_CODE_PROVIDER_MANAGED_BY_HOST` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
-| `CLAUDE_CODE_PROXY_AUTHENTICATE` | Not on a page yet |
+| `CLAUDE_CODE_PROXY_AUTHENTICATE` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `CLAUDE_CODE_PROXY_AUTH_HELPER_TTL_MS` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
-| `CLAUDE_CODE_PROXY_HOST` | Not on a page yet |
+| `CLAUDE_CODE_PROXY_HOST` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `CLAUDE_CODE_PROXY_RESOLVES_HOSTS` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
-| `CLAUDE_CODE_PROXY_URL` | Not on a page yet |
+| `CLAUDE_CODE_PROXY_URL` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `CLAUDE_CODE_PWSH_PARSE_TIMEOUT_MS` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_QUESTION_EXTENDED` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_QUESTION_OPTIONAL_DESCRIPTIONS` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
@@ -1367,17 +1367,17 @@ Items: 1846.
 | `CLAUDE_CODE_REMOTE_HERMETIC_MODE` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_REMOTE_MCP_CONFIG` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_REMOTE_MEMORY_DIR` | [Context and Compaction](../configure/env-vars/context-and-compaction.md) |
-| `CLAUDE_CODE_REMOTE_RAW_EVENTS_FILE` | Not on a page yet |
+| `CLAUDE_CODE_REMOTE_RAW_EVENTS_FILE` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `CLAUDE_CODE_REMOTE_SDK_URL` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_REMOTE_SEND_KEEPALIVES` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
-| `CLAUDE_CODE_REMOTE_SESSION_ID` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
+| `CLAUDE_CODE_REMOTE_SESSION_ID` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `CLAUDE_CODE_REMOTE_SESSION_ORIGIN` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_REMOTE_SESSION_UUID` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_REMOTE_SETTINGS_PATH` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
-| `CLAUDE_CODE_REMOTE_SETTINGS_POLL_MS` | Not on a page yet |
-| `CLAUDE_CODE_REMOTE_TOOLS_ADOPT_MCP` | Not on a page yet |
-| `CLAUDE_CODE_REMOTE_TOOLS_ASK_SEATS` | Not on a page yet |
-| `CLAUDE_CODE_REMOTE_TOOLS_CALLER_SESSIONS_MAX` | Not on a page yet |
+| `CLAUDE_CODE_REMOTE_SETTINGS_POLL_MS` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
+| `CLAUDE_CODE_REMOTE_TOOLS_ADOPT_MCP` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
+| `CLAUDE_CODE_REMOTE_TOOLS_ASK_SEATS` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
+| `CLAUDE_CODE_REMOTE_TOOLS_CALLER_SESSIONS_MAX` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_REMOTE_TOOLS_FORWARD` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_REMOTE_TOOLS_HOST_ALLOWS_UNATTENDED` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_REMOTE_TOOLS_JUMP_QUEUE` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
@@ -1385,9 +1385,9 @@ Items: 1846.
 | `CLAUDE_CODE_REMOTE_TOOLS_POLICY` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_REMOTE_TOOLS_SERVE` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_REMOTE_TOOLS_SESSION_CHANNEL` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
-| `CLAUDE_CODE_REMOTE_TOOLS_SPECULATIVE_CLASSIFIER` | Not on a page yet |
+| `CLAUDE_CODE_REMOTE_TOOLS_SPECULATIVE_CLASSIFIER` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_REMOVE_PROMPT_STRINGS` | [SDK and Automation](../configure/env-vars/sdk-and-automation.md) |
-| `CLAUDE_CODE_REPL` | Not on a page yet |
+| `CLAUDE_CODE_REPL` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `CLAUDE_CODE_REPORT_FINDINGS` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_REPO_CHECKOUTS` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_RESTRICTED` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
@@ -1451,29 +1451,29 @@ Items: 1846.
 | `CLAUDE_CODE_SKIP_FAST_MODE_NETWORK_ERRORS` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
 | `CLAUDE_CODE_SKIP_FAST_MODE_ORG_CHECK` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
 | `CLAUDE_CODE_SKIP_FOUNDRY_AUTH` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
-| `CLAUDE_CODE_SKIP_HFI_VERSION_CHECK` | Not on a page yet |
+| `CLAUDE_CODE_SKIP_HFI_VERSION_CHECK` | Excluded: Internal variable for Anthropic staff or Anthropic-run services. The program reads it, but it is not meant for users. |
 | `CLAUDE_CODE_SKIP_MANTLE_AUTH` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
 | `CLAUDE_CODE_SKIP_MODEL_ACCESS_MEMORY` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
 | `CLAUDE_CODE_SKIP_PLUGIN_LOCAL_MCP_SERVERS` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_SKIP_PLUGIN_MCP_BUNDLES` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_SKIP_PLUGIN_MCP_SERVERS` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_SKIP_PLUGIN_MCP_SERVERS_EXCEPT` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
-| `CLAUDE_CODE_SKIP_PROJECT_BACKFILL` | Not on a page yet |
+| `CLAUDE_CODE_SKIP_PROJECT_BACKFILL` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `CLAUDE_CODE_SKIP_PROMPT_HISTORY` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
-| `CLAUDE_CODE_SKIP_REPO_UPLOAD` | Not on a page yet |
+| `CLAUDE_CODE_SKIP_REPO_UPLOAD` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `CLAUDE_CODE_SKIP_VERTEX_AUTH` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
-| `CLAUDE_CODE_SLACK_TAG_TOKEN` | Not on a page yet |
+| `CLAUDE_CODE_SLACK_TAG_TOKEN` | Excluded: Set or read by Claude Code for its own helper programs, sandbox, or built-in services. The code does not show an effect that a user can use or change, so it is left out. |
 | `CLAUDE_CODE_SLEEPY_SNOWFLAKE` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `CLAUDE_CODE_SLEEP_COMPACT` | [Context and Compaction](../configure/env-vars/context-and-compaction.md) |
 | `CLAUDE_CODE_SLEEP_COMPACT_AFTER_MS` | [Context and Compaction](../configure/env-vars/context-and-compaction.md) |
 | `CLAUDE_CODE_SLOW_OPERATION_THRESHOLD_MS` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
 | `CLAUDE_CODE_SNAPPY_PELICAN` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
-| `CLAUDE_CODE_SPAWNED_BY_SERVER` | Not on a page yet |
+| `CLAUDE_CODE_SPAWNED_BY_SERVER` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_SPAWN_TIMESTAMP_MS` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
 | `CLAUDE_CODE_SSE_PORT` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
 | `CLAUDE_CODE_STALL_TIMEOUT_MS_FOR_TESTING` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `CLAUDE_CODE_STARTUP_FAILURE_RESULTS` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
-| `CLAUDE_CODE_STELLAR_DRIFT` | Not on a page yet |
+| `CLAUDE_CODE_STELLAR_DRIFT` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_STREAMED_BUMBLEBEE` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_CODE_STREAMED_BUMBLEBEE_TEXT` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
@@ -1505,24 +1505,24 @@ Items: 1846.
 | `CLAUDE_CODE_SYNTAX_HIGHLIGHT` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
 | `CLAUDE_CODE_SYSTEM_PROMPT_GB_FEATURE` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_TAGS` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
-| `CLAUDE_CODE_TAG_ISMETA_MESSAGES` | Not on a page yet |
+| `CLAUDE_CODE_TAG_ISMETA_MESSAGES` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `CLAUDE_CODE_TASK_LIST_ID` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
-| `CLAUDE_CODE_TEAMMATE_COMMAND` | Not on a page yet |
+| `CLAUDE_CODE_TEAMMATE_COMMAND` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_TEAM_TEARDOWN_PARK_TIMEOUT_MS` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_CODE_TEE_SDK_STDOUT` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_TERMINAL_MCP_TOOLS` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
-| `CLAUDE_CODE_TERMINAL_RECORDING` | Not on a page yet |
-| `CLAUDE_CODE_TEST_ALLOW_REAL_NETWORK` | Not on a page yet |
-| `CLAUDE_CODE_TEST_FIXTURES_ROOT` | Not on a page yet |
-| `CLAUDE_CODE_TEST_FORCE_DENY` | Not on a page yet |
-| `CLAUDE_CODE_TEST_NO_GIT_BASH` | Not on a page yet |
-| `CLAUDE_CODE_TEST_NO_PWSH` | Not on a page yet |
+| `CLAUDE_CODE_TERMINAL_RECORDING` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
+| `CLAUDE_CODE_TEST_ALLOW_REAL_NETWORK` | Excluded: Test or evaluation harness variable. It is not meant for normal use. |
+| `CLAUDE_CODE_TEST_FIXTURES_ROOT` | Excluded: Test or evaluation harness variable. It is not meant for normal use. |
+| `CLAUDE_CODE_TEST_FORCE_DENY` | Excluded: Test or evaluation harness variable. It is not meant for normal use. |
+| `CLAUDE_CODE_TEST_NO_GIT_BASH` | Excluded: Test or evaluation harness variable. It is not meant for normal use. |
+| `CLAUDE_CODE_TEST_NO_PWSH` | Excluded: Test or evaluation harness variable. It is not meant for normal use. |
 | `CLAUDE_CODE_TETHER_LIVE` | [SDK and Automation](../configure/env-vars/sdk-and-automation.md) |
 | `CLAUDE_CODE_THINKING_DISPLAY_UPDATES` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
 | `CLAUDE_CODE_THISTLE_GREBE` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
-| `CLAUDE_CODE_THRIFTY_SONIC` | Not on a page yet |
-| `CLAUDE_CODE_TICKLISH_WHISPER` | Not on a page yet |
-| `CLAUDE_CODE_TICKLISH_WHISPER_TIMEOUT_MS` | Not on a page yet |
+| `CLAUDE_CODE_THRIFTY_SONIC` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
+| `CLAUDE_CODE_TICKLISH_WHISPER` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
+| `CLAUDE_CODE_TICKLISH_WHISPER_TIMEOUT_MS` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_TMPDIR` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `CLAUDE_CODE_TMUX_PREFIX` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
 | `CLAUDE_CODE_TMUX_PREFIX_CONFLICTS` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
@@ -1532,7 +1532,7 @@ Items: 1846.
 | `CLAUDE_CODE_TODO_REMINDER_MODE` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `CLAUDE_CODE_TOOL_MEMORY_CGROUP_EXCLUDE` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_TOOL_MEMORY_LIMIT` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
-| `CLAUDE_CODE_TOOL_USE_ID` | Not on a page yet |
+| `CLAUDE_CODE_TOOL_USE_ID` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `CLAUDE_CODE_TOTAL_TOKENS_REMINDER` | [Context and Compaction](../configure/env-vars/context-and-compaction.md) |
 | `CLAUDE_CODE_TOTAL_TOKENS_REMINDER_AFTER_USER_TURN` | [Context and Compaction](../configure/env-vars/context-and-compaction.md) |
 | `CLAUDE_CODE_TOTAL_TOKENS_REMINDER_BUDGET` | [Context and Compaction](../configure/env-vars/context-and-compaction.md) |
@@ -1542,9 +1542,9 @@ Items: 1846.
 | `CLAUDE_CODE_TUI_JUST_SWITCHED` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
 | `CLAUDE_CODE_TUI_TRIAL` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
 | `CLAUDE_CODE_TURN_UPDATES` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
-| `CLAUDE_CODE_TWO_STAGE_CLASSIFIER` | Not on a page yet |
-| `CLAUDE_CODE_ULTRAREVIEW_PREFLIGHT_FIXTURE` | Not on a page yet |
-| `CLAUDE_CODE_ULTRAREVIEW_QUOTA_FIXTURE` | Not on a page yet |
+| `CLAUDE_CODE_TWO_STAGE_CLASSIFIER` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
+| `CLAUDE_CODE_ULTRAREVIEW_PREFLIGHT_FIXTURE` | Excluded: Test or evaluation harness variable. It is not meant for normal use. |
+| `CLAUDE_CODE_ULTRAREVIEW_QUOTA_FIXTURE` | Excluded: Test or evaluation harness variable. It is not meant for normal use. |
 | `CLAUDE_CODE_USER_DIALOG_TIMEOUT_MS` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
 | `CLAUDE_CODE_USER_EMAIL` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `CLAUDE_CODE_USE_ANTHROPIC_AWS` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
@@ -1558,8 +1558,8 @@ Items: 1846.
 | `CLAUDE_CODE_USE_NATIVE_FILE_SEARCH` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_USE_POWERSHELL_TOOL` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_USE_VERTEX` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
-| `CLAUDE_CODE_VERSION` | Not on a page yet |
-| `CLAUDE_CODE_VOICE_FORWARD_INTERIMS_TYPED` | Not on a page yet |
+| `CLAUDE_CODE_VERSION` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
+| `CLAUDE_CODE_VOICE_FORWARD_INTERIMS_TYPED` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_WARN_DISK_FREE_GIB` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_WARN_MEMORY_FREE_GIB` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_WEBFETCH_CACHE_TTL_MS` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
@@ -1571,14 +1571,14 @@ Items: 1846.
 | `CLAUDE_CODE_WEB_FETCH_AGENT` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_CODE_WEB_SEARCH_FAST_ARG` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_WEB_SEARCH_REFILLS_PER_HOUR` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
-| `CLAUDE_CODE_WHIMSICAL_ELEPHANT` | Not on a page yet |
+| `CLAUDE_CODE_WHIMSICAL_ELEPHANT` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_WILLOW_TERN` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
-| `CLAUDE_CODE_WISE_COMET` | Not on a page yet |
+| `CLAUDE_CODE_WISE_COMET` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_WITTY_DEWDROP` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_CODE_WORKER_CHECKIN_SCHEDULE` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_CODE_WORKER_EPOCH` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_WORKFLOWS` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
-| `CLAUDE_CODE_WORKFLOW_LAUNCH_SHA256` | Not on a page yet |
+| `CLAUDE_CODE_WORKFLOW_LAUNCH_SHA256` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_WORKFLOW_MAX_CONCURRENT_AGENTS` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_CODE_WORKFLOW_PREFIX_STAGGER_MS` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_CODE_WORKFLOW_PROMPT_PROVENANCE` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
@@ -1605,14 +1605,14 @@ Items: 1846.
 | `CLAUDE_GATEWAY_LOG_LEVEL` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
 | `CLAUDE_GATEWAY_PROXY_IS_EGRESS_BOUNDARY` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
 | `CLAUDE_IMPORT_CONVERSATIONS` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
-| `CLAUDE_INTERNAL_ASSISTANT_TEAM_NAME` | Not on a page yet |
-| `CLAUDE_INTERNAL_FC_OVERRIDES` | Not on a page yet |
+| `CLAUDE_INTERNAL_ASSISTANT_TEAM_NAME` | Excluded: Internal variable for Anthropic staff or Anthropic-run services. The program reads it, but it is not meant for users. |
+| `CLAUDE_INTERNAL_FC_OVERRIDES` | Excluded: Internal variable for Anthropic staff or Anthropic-run services. The program reads it, but it is not meant for users. |
 | `CLAUDE_JOB_DIR` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `CLAUDE_LOCAL_OAUTH_API_BASE` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `CLAUDE_LOCAL_OAUTH_APPS_BASE` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `CLAUDE_LOCAL_OAUTH_CONSOLE_BASE` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `CLAUDE_MEMORY_STORES` | [Context and Compaction](../configure/env-vars/context-and-compaction.md) |
-| `CLAUDE_MOCK_HEADERLESS_429` | Not on a page yet |
+| `CLAUDE_MOCK_HEADERLESS_429` | Excluded: Test or evaluation harness variable. It is not meant for normal use. |
 | `CLAUDE_PID` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_PLUGIN_DATA` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_PLUGIN_ROOT` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
@@ -1628,67 +1628,67 @@ Items: 1846.
 | `CLAUDE_REMOTE_TOOLS_BRIDGE_URL` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_REMOTE_WORKFLOW_ARGS` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_REMOTE_WORKFLOW_SCRIPT` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
-| `CLAUDE_RUNNER_ACCOUNT_EMAIL` | Not on a page yet |
-| `CLAUDE_RUNNER_ACCOUNT_ID` | Not on a page yet |
+| `CLAUDE_RUNNER_ACCOUNT_EMAIL` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
+| `CLAUDE_RUNNER_ACCOUNT_ID` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_RUNNER_ACTIVITY_FD` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_RUNNER_ALIVE_EVERY_MS` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_RUNNER_API_BASE_URL` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
-| `CLAUDE_RUNNER_ATTEMPT` | Not on a page yet |
-| `CLAUDE_RUNNER_CHECKOUT_PATH` | Not on a page yet |
+| `CLAUDE_RUNNER_ATTEMPT` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
+| `CLAUDE_RUNNER_CHECKOUT_PATH` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_RUNNER_CLIENT_PLATFORM` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
-| `CLAUDE_RUNNER_CORRELATION_ID` | Not on a page yet |
-| `CLAUDE_RUNNER_DEBUG_LOG_PATH` | Not on a page yet |
+| `CLAUDE_RUNNER_CORRELATION_ID` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
+| `CLAUDE_RUNNER_DEBUG_LOG_PATH` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_RUNNER_DISABLE_AWAITING_ACTION_OVERRIDE` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_RUNNER_DISABLE_TURN_BEGAN_BEFORE_INIT` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
-| `CLAUDE_RUNNER_EXIT_REASON` | Not on a page yet |
-| `CLAUDE_RUNNER_FAIL_FAST_FETCH` | Not on a page yet |
+| `CLAUDE_RUNNER_EXIT_REASON` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
+| `CLAUDE_RUNNER_FAIL_FAST_FETCH` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_RUNNER_FETCH_DEPTH` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_RUNNER_FETCH_SERVER_PROGRESS_CAP_MS` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
-| `CLAUDE_RUNNER_GIT_MOUNT_URL` | Not on a page yet |
-| `CLAUDE_RUNNER_ORDER_ID` | Not on a page yet |
-| `CLAUDE_RUNNER_ORDER_SERVER_TIME` | Not on a page yet |
-| `CLAUDE_RUNNER_POOL_ID` | Not on a page yet |
-| `CLAUDE_RUNNER_PRIMARY_REPO_REVISION` | Not on a page yet |
-| `CLAUDE_RUNNER_PRIMARY_REPO_URL` | Not on a page yet |
-| `CLAUDE_RUNNER_REPO_REF` | Not on a page yet |
-| `CLAUDE_RUNNER_REPO_SOURCES` | Not on a page yet |
-| `CLAUDE_RUNNER_REPO_URL` | Not on a page yet |
+| `CLAUDE_RUNNER_GIT_MOUNT_URL` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
+| `CLAUDE_RUNNER_ORDER_ID` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
+| `CLAUDE_RUNNER_ORDER_SERVER_TIME` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
+| `CLAUDE_RUNNER_POOL_ID` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
+| `CLAUDE_RUNNER_PRIMARY_REPO_REVISION` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
+| `CLAUDE_RUNNER_PRIMARY_REPO_URL` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
+| `CLAUDE_RUNNER_REPO_REF` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
+| `CLAUDE_RUNNER_REPO_SOURCES` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
+| `CLAUDE_RUNNER_REPO_URL` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_RUNNER_SESSION_ID` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
-| `CLAUDE_RUNNER_SESSION_UUID` | Not on a page yet |
+| `CLAUDE_RUNNER_SESSION_UUID` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_RUNNER_SKIP_GIT_VERIFY` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
-| `CLAUDE_RUNNER_STALL_GIVEUP` | Not on a page yet |
+| `CLAUDE_RUNNER_STALL_GIVEUP` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_RUNNER_TRUST_CANONICAL_PREWARM` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
-| `CLAUDE_RUNNER_UPDATE_BIN` | Not on a page yet |
+| `CLAUDE_RUNNER_UPDATE_BIN` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_RUNNER_USE_GIT_PROXY` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
-| `CLAUDE_RUNNER_WORKSPACE_PATHS` | Not on a page yet |
-| `CLAUDE_RUNNER_WORK_ORDER_FILE` | Not on a page yet |
+| `CLAUDE_RUNNER_WORKSPACE_PATHS` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
+| `CLAUDE_RUNNER_WORK_ORDER_FILE` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_SECURESTORAGE_CONFIG_DIR` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
-| `CLAUDE_SERVE_DRAIN_TIMEOUT_MS` | Not on a page yet |
+| `CLAUDE_SERVE_DRAIN_TIMEOUT_MS` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `CLAUDE_SESSION_INGRESS_TOKEN_FILE` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `CLAUDE_SLOW_FIRST_BYTE_MS` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
-| `CLAUDE_SNIP` | Not on a page yet |
+| `CLAUDE_SNIP` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `CLAUDE_SSH_DAEMON_CHILD` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
-| `CLAUDE_SSH_LOCAL_BINARY` | Not on a page yet |
+| `CLAUDE_SSH_LOCAL_BINARY` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `CLAUDE_SSH_RUN_DIR` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
-| `CLAUDE_SSH_VERSION` | Not on a page yet |
+| `CLAUDE_SSH_VERSION` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `CLAUDE_STAGE_FILE_ROOT` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_STREAM_FIRST_BYTE_TIMEOUT_MS` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
 | `CLAUDE_STREAM_IDLE_TIMEOUT_MS` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
-| `CLAUDE_TEST_PROJECT_DIR` | Not on a page yet |
+| `CLAUDE_TEST_PROJECT_DIR` | Excluded: Test or evaluation harness variable. It is not meant for normal use. |
 | `CLAUDE_TMPDIR` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `CLAUDE_TRUSTED_DEVICE_TOKEN` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `CLAUDE_WORKFLOW_NAME_ONLY` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `CLAUDE_WORKSHOP_PROGRESS` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
-| `CLICOLOR_FORCE` | Not on a page yet |
-| `CLIPBOARD_NAPI_NODE_PATH` | Not on a page yet |
+| `CLICOLOR_FORCE` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `CLIPBOARD_NAPI_NODE_PATH` | Excluded: Set or read by Claude Code for its own helper programs, sandbox, or built-in services. The code does not show an effect that a user can use or change, so it is left out. |
 | `CLOUDSDK_ACTIVE_CONFIG_NAME` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
 | `CLOUDSDK_AUTH_ACCESS_TOKEN` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
-| `CLOUDSDK_AUTH_ACCESS_TOKEN_FILE` | Not on a page yet |
-| `CLOUDSDK_AUTH_AUTHORIZATION_TOKEN_FILE` | Not on a page yet |
-| `CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE` | Not on a page yet |
+| `CLOUDSDK_AUTH_ACCESS_TOKEN_FILE` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `CLOUDSDK_AUTH_AUTHORIZATION_TOKEN_FILE` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `CLOUDSDK_CONFIG` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
 | `CLOUDSDK_CORE_CUSTOM_CA_CERTS_FILE` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
-| `CLOUDSDK_ROOT_DIR` | Not on a page yet |
+| `CLOUDSDK_ROOT_DIR` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `CLOUD_ML_REGION` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
 | `CLOUD_RUN_JOB` | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) |
 | `CODER` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
@@ -1696,44 +1696,44 @@ Items: 1846.
 | `CODESPACES` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `COLORFGBG` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
 | `COLORTERM` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `COMPOSER_AUTH` | Not on a page yet |
-| `COMPOSER_HOME` | Not on a page yet |
+| `COMPOSER_AUTH` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `COMPOSER_HOME` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `COMPUTERNAME` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `COMSPEC` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `CONAN_LOGIN_USERNAME` | Not on a page yet |
-| `CONAN_PASSWORD` | Not on a page yet |
-| `CONSUL_CLIENT_CERT` | Not on a page yet |
-| `CONSUL_CLIENT_KEY` | Not on a page yet |
-| `CONSUL_HTTP_AUTH` | Not on a page yet |
-| `CONSUL_HTTP_TOKEN` | Not on a page yet |
-| `CONSUL_HTTP_TOKEN_FILE` | Not on a page yet |
+| `CONAN_LOGIN_USERNAME` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `CONAN_PASSWORD` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `CONSUL_CLIENT_CERT` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `CONSUL_CLIENT_KEY` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `CONSUL_HTTP_AUTH` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `CONSUL_HTTP_TOKEN` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `CONSUL_HTTP_TOKEN_FILE` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `CONTAINER_SANDBOX_MOUNT_POINT` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `COURSIER_CONFIG_DIR` | Not on a page yet |
-| `COURSIER_CREDENTIALS` | Not on a page yet |
-| `CPLUS_INCLUDE_PATH` | Not on a page yet |
-| `CREDENTIALS_DIRECTORY` | Not on a page yet |
+| `COURSIER_CONFIG_DIR` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `COURSIER_CREDENTIALS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `CPLUS_INCLUDE_PATH` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `CREDENTIALS_DIRECTORY` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `CURL_CA_BUNDLE` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
-| `CURL_HOME` | Not on a page yet |
+| `CURL_HOME` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `CURSOR_TRACE_ID` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `C_INCLUDE_PATH` | Not on a page yet |
+| `C_INCLUDE_PATH` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `ComSpec` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `ConEmuANSI` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `ConEmuPID` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `ConEmuTask` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `DAYTONA_WS_ID` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `DBUS_SESSION_BUS_ADDRESS` | Not on a page yet |
-| `DEBIAN_FRONTEND` | Not on a page yet |
+| `DBUS_SESSION_BUS_ADDRESS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `DEBIAN_FRONTEND` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `DEBUG` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
 | `DEBUG_AUTH` | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) |
 | `DEBUG_CLAUDE_AGENT_SDK` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
 | `DEBUG_SDK` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
-| `DEFAULT_IDENTITY_CLIENT_ID` | Not on a page yet |
-| `DEFAULT_WORKFLOW_TOKEN` | Not on a page yet |
+| `DEFAULT_IDENTITY_CLIENT_ID` | Excluded: Read only by a library bundled in the program (the Azure identity library, the AWS SDK, gRPC, or a TLS or cloud detector). Claude Code has no setting for it. |
+| `DEFAULT_WORKFLOW_TOKEN` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `DEMO_VERSION` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
 | `DENO_CERT` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
 | `DENO_DEPLOYMENT_ID` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `DETECT_GCP_RETRIES` | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) |
-| `DEVELOPER_DIR` | Not on a page yet |
+| `DEVELOPER_DIR` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `DEVPOD` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `DEVPOD_WORKSPACE_UID` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `DISABLE_AUTOUPDATER` | [Environment Variables](../configure/env-vars/index.md) |
@@ -1761,40 +1761,40 @@ Items: 1846.
 | `DISABLE_TELEMETRY` | [Environment Variables](../configure/env-vars/index.md) |
 | `DISABLE_UPDATES` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `DISABLE_UPGRADE_COMMAND` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
-| `DISCORD_WEBHOOK` | Not on a page yet |
-| `DISCORD_WEBHOOK_URL` | Not on a page yet |
+| `DISCORD_WEBHOOK` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `DISCORD_WEBHOOK_URL` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `DISPLAY` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `DOCKER_CERT_PATH` | Not on a page yet |
-| `DOCKER_CONFIG` | Not on a page yet |
+| `DOCKER_CERT_PATH` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `DOCKER_CONFIG` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `DO_NOT_TRACK` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
-| `DYLD_FALLBACK_FRAMEWORK_PATH` | Not on a page yet |
-| `DYLD_FALLBACK_LIBRARY_PATH` | Not on a page yet |
-| `DYLD_FRAMEWORK_PATH` | Not on a page yet |
-| `DYLD_INSERT_LIBRARIES` | Not on a page yet |
-| `DYLD_LIBRARY_PATH` | Not on a page yet |
-| `DYLD_VERSIONED_FRAMEWORK_PATH` | Not on a page yet |
-| `DYLD_VERSIONED_LIBRARY_PATH` | Not on a page yet |
+| `DYLD_FALLBACK_FRAMEWORK_PATH` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `DYLD_FALLBACK_LIBRARY_PATH` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `DYLD_FRAMEWORK_PATH` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `DYLD_INSERT_LIBRARIES` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `DYLD_LIBRARY_PATH` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `DYLD_VERSIONED_FRAMEWORK_PATH` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `DYLD_VERSIONED_LIBRARY_PATH` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `DYNO` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `EDITOR` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `EMBEDDED_SEARCH_TOOLS` | Not on a page yet |
+| `EMBEDDED_SEARCH_TOOLS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `ENABLE_BETA_TRACING_DETAILED` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
 | `ENABLE_CLAUDEAI_MCP_SERVERS` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `ENABLE_ENHANCED_TELEMETRY_BETA` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
-| `ENABLE_LOCKLESS_UPDATES` | Not on a page yet |
-| `ENABLE_LSP_TOOL` | Not on a page yet |
+| `ENABLE_LOCKLESS_UPDATES` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
+| `ENABLE_LSP_TOOL` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `ENABLE_MCP_LARGE_OUTPUT_FILES` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
-| `ENABLE_PID_BASED_VERSION_LOCKING` | Not on a page yet |
+| `ENABLE_PID_BASED_VERSION_LOCKING` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `ENABLE_PROMPT_CACHING_1H` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
 | `ENABLE_PROMPT_CACHING_1H_BEDROCK` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
-| `ENABLE_SESSION_BACKGROUNDING` | Not on a page yet |
-| `ENABLE_SESSION_PERSISTENCE` | Not on a page yet |
+| `ENABLE_SESSION_BACKGROUNDING` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
+| `ENABLE_SESSION_PERSISTENCE` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `ENABLE_TOOL_SEARCH` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
-| `ENVIRONMENT_SERVICE_KEY` | Not on a page yet |
-| `ES_JAVA_OPTS` | Not on a page yet |
+| `ENVIRONMENT_SERVICE_KEY` | Excluded: Internal variable for Anthropic staff or Anthropic-run services. The program reads it, but it is not meant for users. |
+| `ES_JAVA_OPTS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `FALLBACK_FOR_ALL_PRIMARY_MODELS` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
-| `FASTLANE_SESSION` | Not on a page yet |
-| `FLIT_PASSWORD` | Not on a page yet |
-| `FLIT_USERNAME` | Not on a page yet |
+| `FASTLANE_SESSION` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `FLIT_PASSWORD` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `FLIT_USERNAME` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `FLY_APP_NAME` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `FLY_MACHINE_ID` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `FORCE_AUTOUPDATE_PLUGINS` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
@@ -1802,27 +1802,27 @@ Items: 1846.
 | `FORCE_COLOR` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `FORCE_HYPERLINK` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
 | `FORCE_PROMPT_CACHING_5M` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
-| `FORCE_VCR` | Not on a page yet |
+| `FORCE_VCR` | Excluded: Test or evaluation harness variable. It is not meant for normal use. |
 | `FUNCTION_NAME` | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) |
 | `FUNCTION_TARGET` | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) |
 | `GAE_MODULE_NAME` | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) |
 | `GAE_SERVICE` | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) |
-| `GCC_COLORS` | Not on a page yet |
+| `GCC_COLORS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `GCE_METADATA_HOST` | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) |
 | `GCE_METADATA_IP` | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) |
-| `GCE_METADATA_ROOT` | Not on a page yet |
+| `GCE_METADATA_ROOT` | Excluded: Read only by a library bundled in the program (the Azure identity library, the AWS SDK, gRPC, or a TLS or cloud detector). Claude Code has no setting for it. |
 | `GCLOUD_PROJECT` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
 | `GCM_INTERACTIVE` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
-| `GCONV_PATH` | Not on a page yet |
-| `GEM_HOME` | Not on a page yet |
-| `GEM_HOST_API_KEY` | Not on a page yet |
-| `GEM_PATH` | Not on a page yet |
+| `GCONV_PATH` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GEM_HOME` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GEM_HOST_API_KEY` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GEM_PATH` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `GH_CONFIG_DIR` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `GH_ENTERPRISE_TOKEN` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `GH_HOST` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `GH_REPO` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `GH_TOKEN` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
-| `GIO_MODULE_DIR` | Not on a page yet |
+| `GIO_MODULE_DIR` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `GITEA_ACTIONS` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `GITHUB_ACTIONS` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `GITHUB_ACTION_INPUTS` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
@@ -1839,82 +1839,82 @@ Items: 1846.
 | `GITHUB_REPOSITORY_OWNER_ID` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
 | `GITHUB_TOKEN` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `GITHUB_WORKSPACE` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `GITLAB_ACCESS_TOKEN` | Not on a page yet |
+| `GITLAB_ACCESS_TOKEN` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `GITLAB_CI` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `GITLAB_TOKEN` | Not on a page yet |
+| `GITLAB_TOKEN` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `GITPOD_WORKSPACE_ID` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `GIT_ALLOW_PROTOCOL` | Not on a page yet |
-| `GIT_ALTERNATE_OBJECT_DIRECTORIES` | Not on a page yet |
+| `GIT_ALLOW_PROTOCOL` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_ALTERNATE_OBJECT_DIRECTORIES` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `GIT_ASKPASS` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
-| `GIT_ATTR_NOSYSTEM` | Not on a page yet |
-| `GIT_ATTR_SOURCE` | Not on a page yet |
-| `GIT_AUTHOR_DATE` | Not on a page yet |
-| `GIT_AUTHOR_EMAIL` | Not on a page yet |
-| `GIT_AUTHOR_NAME` | Not on a page yet |
-| `GIT_CEILING_DIRECTORIES` | Not on a page yet |
-| `GIT_COMMITTER_DATE` | Not on a page yet |
-| `GIT_COMMITTER_EMAIL` | Not on a page yet |
-| `GIT_COMMITTER_NAME` | Not on a page yet |
-| `GIT_COMMON_DIR` | Not on a page yet |
-| `GIT_CONFIG` | Not on a page yet |
+| `GIT_ATTR_NOSYSTEM` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_ATTR_SOURCE` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_AUTHOR_DATE` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_AUTHOR_EMAIL` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_AUTHOR_NAME` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_CEILING_DIRECTORIES` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_COMMITTER_DATE` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_COMMITTER_EMAIL` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_COMMITTER_NAME` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_COMMON_DIR` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_CONFIG` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `GIT_CONFIG_COUNT` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `GIT_CONFIG_GLOBAL` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `GIT_CONFIG_NOSYSTEM` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
-| `GIT_CONFIG_PARAMETERS` | Not on a page yet |
-| `GIT_CONFIG_SYSTEM` | Not on a page yet |
-| `GIT_DIFF_OPTS` | Not on a page yet |
-| `GIT_DIR` | Not on a page yet |
-| `GIT_DISCOVERY_ACROSS_FILESYSTEM` | Not on a page yet |
-| `GIT_EDITOR` | Not on a page yet |
-| `GIT_EXEC_PATH` | Not on a page yet |
-| `GIT_EXTERNAL_DIFF` | Not on a page yet |
-| `GIT_GLOB_PATHSPECS` | Not on a page yet |
-| `GIT_GRAFT_FILE` | Not on a page yet |
-| `GIT_HTTP_PROXY_AUTHMETHOD` | Not on a page yet |
-| `GIT_ICASE_PATHSPECS` | Not on a page yet |
-| `GIT_IMPLICIT_WORK_TREE` | Not on a page yet |
-| `GIT_INDEX_FILE` | Not on a page yet |
-| `GIT_LFS_SKIP_SMUDGE` | Not on a page yet |
-| `GIT_LITERAL_PATHSPECS` | Not on a page yet |
-| `GIT_NAMESPACE` | Not on a page yet |
-| `GIT_NOGLOB_PATHSPECS` | Not on a page yet |
-| `GIT_NO_LAZY_FETCH` | Not on a page yet |
-| `GIT_NO_REPLACE_OBJECTS` | Not on a page yet |
-| `GIT_OBJECT_DIRECTORY` | Not on a page yet |
-| `GIT_OPTIONAL_LOCKS` | Not on a page yet |
-| `GIT_PAGER` | Not on a page yet |
-| `GIT_PROGRESS_DELAY` | Not on a page yet |
-| `GIT_PROXY_COMMAND` | Not on a page yet |
-| `GIT_REFERENCE_BACKEND` | Not on a page yet |
-| `GIT_REPLACE_REF_BASE` | Not on a page yet |
-| `GIT_SEQUENCE_EDITOR` | Not on a page yet |
-| `GIT_SHALLOW_FILE` | Not on a page yet |
-| `GIT_SSH` | Not on a page yet |
+| `GIT_CONFIG_PARAMETERS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_CONFIG_SYSTEM` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_DIFF_OPTS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_DIR` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_DISCOVERY_ACROSS_FILESYSTEM` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_EDITOR` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_EXEC_PATH` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_EXTERNAL_DIFF` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_GLOB_PATHSPECS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_GRAFT_FILE` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_HTTP_PROXY_AUTHMETHOD` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_ICASE_PATHSPECS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_IMPLICIT_WORK_TREE` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_INDEX_FILE` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_LFS_SKIP_SMUDGE` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_LITERAL_PATHSPECS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_NAMESPACE` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_NOGLOB_PATHSPECS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_NO_LAZY_FETCH` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_NO_REPLACE_OBJECTS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_OBJECT_DIRECTORY` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_OPTIONAL_LOCKS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_PAGER` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_PROGRESS_DELAY` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_PROXY_COMMAND` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_REFERENCE_BACKEND` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_REPLACE_REF_BASE` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_SEQUENCE_EDITOR` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_SHALLOW_FILE` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_SSH` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `GIT_SSH_COMMAND` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `GIT_SSH_VARIANT` | Not on a page yet |
+| `GIT_SSH_VARIANT` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `GIT_SSL_CAINFO` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
-| `GIT_SSL_CAPATH` | Not on a page yet |
-| `GIT_SSL_CERT` | Not on a page yet |
-| `GIT_SSL_KEY` | Not on a page yet |
-| `GIT_SSL_NO_VERIFY` | Not on a page yet |
-| `GIT_TEMPLATE_DIR` | Not on a page yet |
+| `GIT_SSL_CAPATH` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_SSL_CERT` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_SSL_KEY` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_SSL_NO_VERIFY` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_TEMPLATE_DIR` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `GIT_TERMINAL_PROMPT` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
-| `GIT_TEST_PACK_PATH_WALK` | Not on a page yet |
-| `GIT_TEXTDOMAINDIR` | Not on a page yet |
-| `GIT_WORK_TREE` | Not on a page yet |
+| `GIT_TEST_PACK_PATH_WALK` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_TEXTDOMAINDIR` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GIT_WORK_TREE` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `GNOME_TERMINAL_SERVICE` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `GOOGLE_APPLICATION_CREDENTIALS` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
 | `GOOGLE_CLOUD_PROJECT` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
 | `GOOGLE_CLOUD_QUOTA_PROJECT` | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) |
 | `GOOGLE_CLOUD_WORKSTATIONS` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `GOOGLE_EXTERNAL_ACCOUNT_ALLOW_EXECUTABLES` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
-| `GOOGLE_GHA_CREDS_PATH` | Not on a page yet |
-| `GOOGLE_OAUTH_ACCESS_TOKEN` | Not on a page yet |
+| `GOOGLE_GHA_CREDS_PATH` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GOOGLE_OAUTH_ACCESS_TOKEN` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `GRACEFUL_FS_PLATFORM` | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) |
-| `GRADLE_OPTS` | Not on a page yet |
-| `GRADLE_USER_HOME` | Not on a page yet |
-| `GREP_COLOR` | Not on a page yet |
-| `GREP_COLORS` | Not on a page yet |
+| `GRADLE_OPTS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GRADLE_USER_HOME` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GREP_COLOR` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `GREP_COLORS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `GRPC_DEFAULT_SSL_ROOTS_FILE_PATH` | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) |
 | `GRPC_EXPERIMENTAL_ENABLE_OUTLIER_DETECTION` | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) |
 | `GRPC_NODE_TRACE` | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) |
@@ -1923,77 +1923,77 @@ Items: 1846.
 | `GRPC_SSL_CIPHER_SUITES` | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) |
 | `GRPC_TRACE` | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) |
 | `GRPC_VERBOSITY` | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) |
-| `GTK_PATH` | Not on a page yet |
-| `HATCH_INDEX_AUTH` | Not on a page yet |
-| `HATCH_INDEX_USER` | Not on a page yet |
-| `HELM_CONFIG_HOME` | Not on a page yet |
-| `HELM_REGISTRY_CONFIG` | Not on a page yet |
-| `HELM_REPOSITORY_CONFIG` | Not on a page yet |
-| `HEX_CACERTS_PATH` | Not on a page yet |
-| `HEX_HOME` | Not on a page yet |
-| `HF_HOME` | Not on a page yet |
-| `HF_STORED_TOKENS_PATH` | Not on a page yet |
-| `HF_TOKEN` | Not on a page yet |
-| `HF_TOKEN_PATH` | Not on a page yet |
+| `GTK_PATH` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `HATCH_INDEX_AUTH` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `HATCH_INDEX_USER` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `HELM_CONFIG_HOME` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `HELM_REGISTRY_CONFIG` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `HELM_REPOSITORY_CONFIG` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `HEX_CACERTS_PATH` | Excluded: Read only by a library bundled in the program (the Azure identity library, the AWS SDK, gRPC, or a TLS or cloud detector). Claude Code has no setting for it. |
+| `HEX_HOME` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `HF_HOME` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `HF_STORED_TOKENS_PATH` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `HF_TOKEN` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `HF_TOKEN_PATH` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `HISTFILE` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `HOME` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `HOMEBREW_NO_AUTO_UPDATE` | Not on a page yet |
+| `HOMEBREW_NO_AUTO_UPDATE` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `HOMEDRIVE` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `HOMEPATH` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `HOMESHARE` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `HOSTNAME` | Not on a page yet |
-| `HTTPLIB2_CA_CERTS` | Not on a page yet |
+| `HOSTNAME` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `HTTPLIB2_CA_CERTS` | Excluded: Read only by a library bundled in the program (the Azure identity library, the AWS SDK, gRPC, or a TLS or cloud detector). Claude Code has no setting for it. |
 | `HTTPS_PROXY` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
 | `HTTP_PROXY` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
-| `HUB_CONFIG` | Not on a page yet |
-| `HUGGINGFACEHUB_API_TOKEN` | Not on a page yet |
-| `HUGGING_FACE_HUB_TOKEN` | Not on a page yet |
-| `IBM_JAVA_OPTIONS` | Not on a page yet |
-| `IDENTITY_ENDPOINT` | Not on a page yet |
-| `IDENTITY_HEADER` | Not on a page yet |
-| `IDENTITY_SERVER_THUMBPRINT` | Not on a page yet |
-| `IMDS_ENDPOINT` | Not on a page yet |
+| `HUB_CONFIG` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `HUGGINGFACEHUB_API_TOKEN` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `HUGGING_FACE_HUB_TOKEN` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `IBM_JAVA_OPTIONS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `IDENTITY_ENDPOINT` | Excluded: Read only by a library bundled in the program (the Azure identity library, the AWS SDK, gRPC, or a TLS or cloud detector). Claude Code has no setting for it. |
+| `IDENTITY_HEADER` | Excluded: Read only by a library bundled in the program (the Azure identity library, the AWS SDK, gRPC, or a TLS or cloud detector). Claude Code has no setting for it. |
+| `IDENTITY_SERVER_THUMBPRINT` | Excluded: Read only by a library bundled in the program (the Azure identity library, the AWS SDK, gRPC, or a TLS or cloud detector). Claude Code has no setting for it. |
+| `IMDS_ENDPOINT` | Excluded: Read only by a library bundled in the program (the Azure identity library, the AWS SDK, gRPC, or a TLS or cloud detector). Claude Code has no setting for it. |
 | `INK_SCREEN_READER` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
 | `INTELLIJ_TERMINAL_COMMAND_BLOCKS` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
 | `INTELLIJ_TERMINAL_COMMAND_BLOCKS_REWORKED` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
 | `IS_DEMO` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
 | `IS_SANDBOX` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `ITERM_SESSION_ID` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
-| `JAVA_HOME` | Not on a page yet |
-| `JAVA_OPTS` | Not on a page yet |
+| `JAVA_HOME` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `JAVA_OPTS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `JAVA_TOOL_OPTIONS` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
-| `JDK_JAVA_OPTIONS` | Not on a page yet |
-| `JF_USER` | Not on a page yet |
-| `JVM_OPTS` | Not on a page yet |
+| `JDK_JAVA_OPTIONS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `JF_USER` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `JVM_OPTS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `KITTY_WINDOW_ID` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
 | `KONSOLE_VERSION` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
-| `KRB5_CONFIG` | Not on a page yet |
+| `KRB5_CONFIG` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `KUBERNETES_SERVICE_HOST` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `K_CONFIGURATION` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
 | `K_SERVICE` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
 | `LANG` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
 | `LC_ALL` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
-| `LC_CTYPE` | Not on a page yet |
+| `LC_CTYPE` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `LC_TERMINAL` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
 | `LC_TIME` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
-| `LD_AUDIT` | Not on a page yet |
-| `LD_LIBRARY_PATH` | Not on a page yet |
-| `LD_PRELOAD` | Not on a page yet |
-| `LEIN_HOME` | Not on a page yet |
-| `LEIN_JVM_OPTS` | Not on a page yet |
-| `LIBRARY_PATH` | Not on a page yet |
+| `LD_AUDIT` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `LD_LIBRARY_PATH` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `LD_PRELOAD` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `LEIN_HOME` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `LEIN_JVM_OPTS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `LIBRARY_PATH` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `LOCALAPPDATA` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `LOCAL_BRIDGE` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
-| `LS_COLORS` | Not on a page yet |
-| `M2_HOME` | Not on a page yet |
-| `MATCH_GIT_BASIC_AUTHORIZATION` | Not on a page yet |
-| `MATURIN_PASSWORD` | Not on a page yet |
-| `MATURIN_PYPI_TOKEN` | Not on a page yet |
-| `MATURIN_USERNAME` | Not on a page yet |
-| `MAVEN_ARGS` | Not on a page yet |
-| `MAVEN_CONFIG` | Not on a page yet |
-| `MAVEN_HOME` | Not on a page yet |
-| `MAVEN_OPTS` | Not on a page yet |
+| `LS_COLORS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `M2_HOME` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `MATCH_GIT_BASIC_AUTHORIZATION` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `MATURIN_PASSWORD` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `MATURIN_PYPI_TOKEN` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `MATURIN_USERNAME` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `MAVEN_ARGS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `MAVEN_CONFIG` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `MAVEN_HOME` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `MAVEN_OPTS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `MAX_MCP_OUTPUT_TOKENS` | [Context and Compaction](../configure/env-vars/context-and-compaction.md) |
 | `MAX_STRUCTURED_OUTPUT_RETRIES` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
 | `MAX_THINKING_TOKENS` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
@@ -2015,44 +2015,44 @@ Items: 1846.
 | `MCP_TRUNCATION_PROMPT_OVERRIDE` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `MCP_XAA_IDP_CLIENT_SECRET` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `METADATA_SERVER_DETECTION` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
-| `MONO_PATH` | Not on a page yet |
-| `MSAL_FORCE_REGION` | Not on a page yet |
-| `MSI_ENDPOINT` | Not on a page yet |
-| `MSI_SECRET` | Not on a page yet |
+| `MONO_PATH` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `MSAL_FORCE_REGION` | Excluded: Read only by a library bundled in the program (the Azure identity library, the AWS SDK, gRPC, or a TLS or cloud detector). Claude Code has no setting for it. |
+| `MSI_ENDPOINT` | Excluded: Read only by a library bundled in the program (the Azure identity library, the AWS SDK, gRPC, or a TLS or cloud detector). Claude Code has no setting for it. |
+| `MSI_SECRET` | Excluded: Read only by a library bundled in the program (the Azure identity library, the AWS SDK, gRPC, or a TLS or cloud detector). Claude Code has no setting for it. |
 | `MSYSTEM` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
-| `MS_TEAMS_WEBHOOK_URI` | Not on a page yet |
+| `MS_TEAMS_WEBHOOK_URI` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `NETLIFY` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
 | `NIX_SSL_CERT_FILE` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
-| `NODE_AUTH_TOKEN` | Not on a page yet |
-| `NODE_COMPILE_CACHE` | Not on a page yet |
+| `NODE_AUTH_TOKEN` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `NODE_COMPILE_CACHE` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `NODE_DEBUG` | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) |
 | `NODE_ENV` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `NODE_EXTRA_CA_CERTS` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
 | `NODE_OPTIONS` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `NODE_PATH` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `NODE_REDIRECT_WARNINGS` | Not on a page yet |
+| `NODE_REDIRECT_WARNINGS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `NODE_REPL_EXTERNAL_MODULE` | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) |
-| `NODE_V8_COVERAGE` | Not on a page yet |
-| `NOMAD_CLIENT_CERT` | Not on a page yet |
-| `NOMAD_CLIENT_KEY` | Not on a page yet |
-| `NOMAD_HTTP_AUTH` | Not on a page yet |
-| `NOMAD_TOKEN` | Not on a page yet |
+| `NODE_V8_COVERAGE` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `NOMAD_CLIENT_CERT` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `NOMAD_CLIENT_KEY` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `NOMAD_HTTP_AUTH` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `NOMAD_TOKEN` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `NO_COLOR` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
 | `NO_PROXY` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
-| `NPM_CONFIG_GLOBALCONFIG` | Not on a page yet |
-| `NPM_CONFIG_HTTPS_PROXY` | Not on a page yet |
-| `NPM_CONFIG_HTTP_PROXY` | Not on a page yet |
-| `NPM_CONFIG_PREFIX` | Not on a page yet |
-| `NPM_CONFIG_PROXY` | Not on a page yet |
-| `NPM_CONFIG_USERCONFIG` | Not on a page yet |
-| `NUGET_AUTH_TOKEN` | Not on a page yet |
+| `NPM_CONFIG_GLOBALCONFIG` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `NPM_CONFIG_HTTPS_PROXY` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `NPM_CONFIG_HTTP_PROXY` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `NPM_CONFIG_PREFIX` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `NPM_CONFIG_PROXY` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `NPM_CONFIG_USERCONFIG` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `NUGET_AUTH_TOKEN` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `NoDefaultCurrentDirectoryInExePath` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
-| `OAUTH_TOKEN` | Not on a page yet |
-| `OPENJ9_JAVA_OPTIONS` | Not on a page yet |
-| `OPENSSL_CONF` | Not on a page yet |
-| `OPENSSL_CONF_INCLUDE` | Not on a page yet |
-| `OPENSSL_ENGINES` | Not on a page yet |
-| `OPENSSL_MODULES` | Not on a page yet |
+| `OAUTH_TOKEN` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `OPENJ9_JAVA_OPTIONS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `OPENSSL_CONF` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `OPENSSL_CONF_INCLUDE` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `OPENSSL_ENGINES` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `OPENSSL_MODULES` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `OSTYPE` | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) |
 | `OTEL_ATTRIBUTE_COUNT_LIMIT` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
 | `OTEL_ATTRIBUTE_VALUE_LENGTH_LIMIT` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
@@ -2088,13 +2088,13 @@ Items: 1846.
 | `OTEL_EXPORTER_OTLP_METRICS_INSECURE` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
 | `OTEL_EXPORTER_OTLP_METRICS_PROTOCOL` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
 | `OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
-| `OTEL_EXPORTER_OTLP_PROFILES_CERTIFICATE` | Not on a page yet |
-| `OTEL_EXPORTER_OTLP_PROFILES_CLIENT_CERTIFICATE` | Not on a page yet |
-| `OTEL_EXPORTER_OTLP_PROFILES_CLIENT_KEY` | Not on a page yet |
-| `OTEL_EXPORTER_OTLP_PROFILES_ENDPOINT` | Not on a page yet |
-| `OTEL_EXPORTER_OTLP_PROFILES_HEADERS` | Not on a page yet |
-| `OTEL_EXPORTER_OTLP_PROFILES_INSECURE` | Not on a page yet |
-| `OTEL_EXPORTER_OTLP_PROFILES_PROTOCOL` | Not on a page yet |
+| `OTEL_EXPORTER_OTLP_PROFILES_CERTIFICATE` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
+| `OTEL_EXPORTER_OTLP_PROFILES_CLIENT_CERTIFICATE` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
+| `OTEL_EXPORTER_OTLP_PROFILES_CLIENT_KEY` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
+| `OTEL_EXPORTER_OTLP_PROFILES_ENDPOINT` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
+| `OTEL_EXPORTER_OTLP_PROFILES_HEADERS` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
+| `OTEL_EXPORTER_OTLP_PROFILES_INSECURE` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
+| `OTEL_EXPORTER_OTLP_PROFILES_PROTOCOL` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `OTEL_EXPORTER_OTLP_PROTOCOL` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
 | `OTEL_EXPORTER_OTLP_TIMEOUT` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
 | `OTEL_EXPORTER_OTLP_TRACES_CERTIFICATE` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
@@ -2137,61 +2137,61 @@ Items: 1846.
 | `OTEL_TRACES_EXPORT_INTERVAL` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
 | `OTEL_TRACES_SAMPLER` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
 | `OTEL_TRACES_SAMPLER_ARG` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
-| `OVERRIDE_GITHUB_TOKEN` | Not on a page yet |
+| `OVERRIDE_GITHUB_TOKEN` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `OneDrive` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `OneDriveCommercial` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `OneDriveConsumer` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `P4PORT` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `PATH` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
 | `PATHEXT` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `PHP_INI_SCAN_DIR` | Not on a page yet |
+| `PHP_INI_SCAN_DIR` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `PIP_CERT` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `PIP_CLIENT_CERT` | Not on a page yet |
-| `PIP_CONFIG_FILE` | Not on a page yet |
+| `PIP_CLIENT_CERT` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `PIP_CONFIG_FILE` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `PLAYWRIGHT_BROWSERS_PATH` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `POETRY_CONFIG_DIR` | Not on a page yet |
+| `POETRY_CONFIG_DIR` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `PREFIX` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
-| `PROCESSOR_ARCHITECTURE` | Not on a page yet |
+| `PROCESSOR_ARCHITECTURE` | Excluded: Read only by a library bundled in the program (the Azure identity library, the AWS SDK, gRPC, or a TLS or cloud detector). Claude Code has no setting for it. |
 | `PROGRAMDATA` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `PROJECT_DOMAIN` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `PS1` | Not on a page yet |
-| `PS2` | Not on a page yet |
+| `PS1` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `PS2` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `PWD` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `PYPI_API_TOKEN` | Not on a page yet |
-| `PYPI_TOKEN` | Not on a page yet |
-| `PYTEST_DEBUG` | Not on a page yet |
-| `PYTEST_DISABLE_PLUGIN_AUTOLOAD` | Not on a page yet |
+| `PYPI_API_TOKEN` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `PYPI_TOKEN` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `PYTEST_DEBUG` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `PYTEST_DISABLE_PLUGIN_AUTOLOAD` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `ProgramData` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `ProgramFiles` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `QT_PLUGIN_PATH` | Not on a page yet |
+| `QT_PLUGIN_PATH` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `RAILWAY_ENVIRONMENT_NAME` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `RAILWAY_SERVICE_NAME` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `RCLONE_CONFIG` | Not on a page yet |
-| `REGION_NAME` | Not on a page yet |
-| `REGISTRY_AUTH_FILE` | Not on a page yet |
+| `RCLONE_CONFIG` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `REGION_NAME` | Excluded: Read only by a library bundled in the program (the Azure identity library, the AWS SDK, gRPC, or a TLS or cloud detector). Claude Code has no setting for it. |
+| `REGISTRY_AUTH_FILE` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `RENDER` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `REPL_ID` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `REPL_SLUG` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `REQUESTS_CA_BUNDLE` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `RES_OPTIONS` | Not on a page yet |
+| `RES_OPTIONS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `RUNNER_ENVIRONMENT` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `RUNNER_OS` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `RUSTUP_HOME` | Not on a page yet |
-| `RUST_BACKTRACE` | Not on a page yet |
-| `RUST_LOG` | Not on a page yet |
-| `R_LIBS` | Not on a page yet |
-| `R_LIBS_SITE` | Not on a page yet |
-| `R_LIBS_USER` | Not on a page yet |
-| `R_PROFILE_USER` | Not on a page yet |
-| `S3CMD_CONFIG` | Not on a page yet |
+| `RUSTUP_HOME` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `RUST_BACKTRACE` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `RUST_LOG` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `R_LIBS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `R_LIBS_SITE` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `R_LIBS_USER` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `R_PROFILE_USER` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `S3CMD_CONFIG` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `SAFEUSER` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
-| `SASL_PATH` | Not on a page yet |
-| `SBT_CREDENTIALS` | Not on a page yet |
-| `SBT_OPTS` | Not on a page yet |
+| `SASL_PATH` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `SBT_CREDENTIALS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `SBT_OPTS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `SDK_NATIVE_BIN` | [SDK and Automation](../configure/env-vars/sdk-and-automation.md) |
-| `SELF_HOSTED_RUNNER_AGENT_PROXY_URL` | Not on a page yet |
+| `SELF_HOSTED_RUNNER_AGENT_PROXY_URL` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `SELF_HOSTED_RUNNER_BASE_DIR` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
-| `SELF_HOSTED_RUNNER_BG_RESULT_GRACE_MS` | Not on a page yet |
+| `SELF_HOSTED_RUNNER_BG_RESULT_GRACE_MS` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `SELF_HOSTED_RUNNER_CHECKOUT_HOOK_TIMEOUT_MS` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `SELF_HOSTED_RUNNER_CLIENT_LABEL` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `SELF_HOSTED_RUNNER_CONFIGURE_GIT` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
@@ -2202,7 +2202,7 @@ Items: 1846.
 | `SELF_HOSTED_RUNNER_DIFF_FINDS_NESTED_REPOSITORY` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `SELF_HOSTED_RUNNER_DRAIN_GRACE_MS` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `SELF_HOSTED_RUNNER_DRAIN_MARKER_FILE` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
-| `SELF_HOSTED_RUNNER_DRAIN_WAIT_BG_TASKS_MS` | Not on a page yet |
+| `SELF_HOSTED_RUNNER_DRAIN_WAIT_BG_TASKS_MS` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `SELF_HOSTED_RUNNER_DRAIN_WAIT_MS` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `SELF_HOSTED_RUNNER_ENVIRONMENT_SECRET` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `SELF_HOSTED_RUNNER_EXEC_PATH` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
@@ -2213,51 +2213,51 @@ Items: 1846.
 | `SELF_HOSTED_RUNNER_IDLE_SHUTDOWN_MS` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `SELF_HOSTED_RUNNER_LOCK_TO_ACCOUNT` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `SELF_HOSTED_RUNNER_LOG_FILE` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
-| `SELF_HOSTED_RUNNER_MAX_LIFETIME_GRACE_MS` | Not on a page yet |
+| `SELF_HOSTED_RUNNER_MAX_LIFETIME_GRACE_MS` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `SELF_HOSTED_RUNNER_MAX_LIFETIME_MS` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `SELF_HOSTED_RUNNER_POOL_SECRET` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `SELF_HOSTED_RUNNER_POST_SESSION_HOOK_TIMEOUT_MS` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
-| `SELF_HOSTED_RUNNER_POST_TURN_SETTLE_MS` | Not on a page yet |
-| `SELF_HOSTED_RUNNER_PROXY_AUTHORIZATION_COMMAND` | Not on a page yet |
-| `SELF_HOSTED_RUNNER_PROXY_AUTHORIZATION_FILE` | Not on a page yet |
+| `SELF_HOSTED_RUNNER_POST_TURN_SETTLE_MS` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
+| `SELF_HOSTED_RUNNER_PROXY_AUTHORIZATION_COMMAND` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
+| `SELF_HOSTED_RUNNER_PROXY_AUTHORIZATION_FILE` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `SELF_HOSTED_RUNNER_PUSH_OUTCOME_ON_RELEASE` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `SELF_HOSTED_RUNNER_REMOVE_SESSION_STATE` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `SELF_HOSTED_RUNNER_RETIRE_AT` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `SELF_HOSTED_RUNNER_SERVER_AUTO_MODE_LISTS` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `SELF_HOSTED_RUNNER_SESSION_IDLE_MS` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `SELF_HOSTED_RUNNER_SESSION_STOP_GRACE_MS` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
-| `SELF_HOSTED_RUNNER_SIGKILL_GRACE_MS` | Not on a page yet |
-| `SELF_HOSTED_RUNNER_SIGKILL_TIMEOUT_MS` | Not on a page yet |
+| `SELF_HOSTED_RUNNER_SIGKILL_GRACE_MS` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
+| `SELF_HOSTED_RUNNER_SIGKILL_TIMEOUT_MS` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `SELF_HOSTED_RUNNER_STARTUP_TIMEOUT_MS` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `SELF_HOSTED_RUNNER_TRUST_WORKSPACE` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `SESSIONNAME` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `SESSION_INGRESS_URL` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `SHELL` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
-| `SHR_GIT_PROXY_TOKEN` | Not on a page yet |
-| `SLACK_WEBHOOK` | Not on a page yet |
-| `SLACK_WEBHOOK_URL` | Not on a page yet |
+| `SHR_GIT_PROXY_TOKEN` | Excluded: Set or read by Claude Code for its own helper programs, sandbox, or built-in services. The code does not show an effect that a user can use or change, so it is left out. |
+| `SLACK_WEBHOOK` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `SLACK_WEBHOOK_URL` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `SLASH_COMMAND_TOOL_CHAR_BUDGET` | [Context and Compaction](../configure/env-vars/context-and-compaction.md) |
-| `SONARQUBE_SCANNER_PARAMS` | Not on a page yet |
-| `SONAR_SCANNER_JAVA_OPTS` | Not on a page yet |
-| `SONAR_SCANNER_JSON_PARAMS` | Not on a page yet |
-| `SONAR_SCANNER_OPTS` | Not on a page yet |
-| `SONAR_TOKEN` | Not on a page yet |
-| `SOPS_AGE_KEY_FILE` | Not on a page yet |
+| `SONARQUBE_SCANNER_PARAMS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `SONAR_SCANNER_JAVA_OPTS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `SONAR_SCANNER_JSON_PARAMS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `SONAR_SCANNER_OPTS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `SONAR_TOKEN` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `SOPS_AGE_KEY_FILE` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `SPACE_CREATOR_USER_ID` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `SRT_DEBUG` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
-| `SRT_ENCODED_CMD` | Not on a page yet |
-| `SRT_OBSERVE_SOCK` | Not on a page yet |
-| `SSH_AGENT_PID` | Not on a page yet |
+| `SRT_ENCODED_CMD` | Excluded: Set or read by Claude Code for its own helper programs, sandbox, or built-in services. The code does not show an effect that a user can use or change, so it is left out. |
+| `SRT_OBSERVE_SOCK` | Excluded: Set or read by Claude Code for its own helper programs, sandbox, or built-in services. The code does not show an effect that a user can use or change, so it is left out. |
+| `SSH_AGENT_PID` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `SSH_ASKPASS` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
-| `SSH_ASKPASS_REQUIRE` | Not on a page yet |
+| `SSH_ASKPASS_REQUIRE` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `SSH_AUTH_SOCK` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `SSH_CLIENT` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `SSH_CONNECTION` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `SSH_SIGNING_KEY` | Not on a page yet |
+| `SSH_SIGNING_KEY` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `SSH_TTY` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `SSL_CERT_DIR` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
 | `SSL_CERT_FILE` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
-| `SSL_CLIENT_CERT` | Not on a page yet |
+| `SSL_CLIENT_CERT` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `STY` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `SUDO_GID` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `SUDO_UID` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
@@ -2266,12 +2266,12 @@ Items: 1846.
 | `SWE_BENCH_RUN_ID` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
 | `SWE_BENCH_TASK_ID` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
 | `SYSTEMROOT` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `SYSTEM_REMINDER_MEMORY_CONTEXT` | Not on a page yet |
-| `SYSTEM_WGETRC` | Not on a page yet |
+| `SYSTEM_REMINDER_MEMORY_CONTEXT` | Excluded: Set or read by Claude Code for its own helper programs, sandbox, or built-in services. The code does not show an effect that a user can use or change, so it is left out. |
+| `SYSTEM_WGETRC` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `SystemRoot` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `TASK_MAX_OUTPUT_LENGTH` | Not on a page yet |
+| `TASK_MAX_OUTPUT_LENGTH` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `TEAMCITY_VERSION` | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) |
-| `TEAMS_WEBHOOK_URL` | Not on a page yet |
+| `TEAMS_WEBHOOK_URL` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `TEMP` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `TERM` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `TERMINAL` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
@@ -2280,71 +2280,71 @@ Items: 1846.
 | `TERMUX_VERSION` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `TERM_PROGRAM` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `TERM_PROGRAM_VERSION` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `TEST_ENABLE_SESSION_PERSISTENCE` | Not on a page yet |
-| `TEST_GRACEFUL_FS_GLOBAL_PATCH` | Not on a page yet |
-| `TF_CLI_CONFIG_FILE` | Not on a page yet |
+| `TEST_ENABLE_SESSION_PERSISTENCE` | Excluded: Test or evaluation harness variable. It is not meant for normal use. |
+| `TEST_GRACEFUL_FS_GLOBAL_PATCH` | Excluded: Test or evaluation harness variable. It is not meant for normal use. |
+| `TF_CLI_CONFIG_FILE` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `TILIX_ID` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `TIME_STYLE` | Not on a page yet |
+| `TIME_STYLE` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `TMP` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `TMPDIR` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `TMUX` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `TMUX_PANE` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `TRACEPARENT` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
 | `TRACESTATE` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
-| `TWINE_PASSWORD` | Not on a page yet |
-| `TWINE_USERNAME` | Not on a page yet |
-| `TZ` | Not on a page yet |
-| `ULTRAPLAN_PROMPT_FILE` | Not on a page yet |
+| `TWINE_PASSWORD` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `TWINE_USERNAME` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `TZ` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `ULTRAPLAN_PROMPT_FILE` | Excluded: Internal variable for Anthropic staff or Anthropic-run services. The program reads it, but it is not meant for users. |
 | `USER` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `USERNAME` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `USERPROFILE` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `USER_TYPE` | Not on a page yet |
+| `USER_TYPE` | Excluded: Internal variable for Anthropic staff or Anthropic-run services. The program reads it, but it is not meant for users. |
 | `USE_API_CONTEXT_MANAGEMENT` | [Context and Compaction](../configure/env-vars/context-and-compaction.md) |
 | `USE_BUILTIN_RIPGREP` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `USE_LOCAL_OAUTH` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `USE_STAGING_OAUTH` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
-| `UV_CONFIG_FILE` | Not on a page yet |
-| `UV_PUBLISH_PASSWORD` | Not on a page yet |
-| `UV_PUBLISH_TOKEN` | Not on a page yet |
-| `UV_PUBLISH_USERNAME` | Not on a page yet |
+| `UV_CONFIG_FILE` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `UV_PUBLISH_PASSWORD` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `UV_PUBLISH_TOKEN` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `UV_PUBLISH_USERNAME` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `UV_THREADPOOL_SIZE` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `VAULT_AUTH_TOKEN` | Not on a page yet |
-| `VAULT_CLIENT_CERT` | Not on a page yet |
-| `VAULT_CLIENT_KEY` | Not on a page yet |
-| `VAULT_ROLE_ID` | Not on a page yet |
-| `VAULT_SECRET_ID` | Not on a page yet |
-| `VAULT_TOKEN` | Not on a page yet |
-| `VCR_RECORD` | Not on a page yet |
+| `VAULT_AUTH_TOKEN` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `VAULT_CLIENT_CERT` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `VAULT_CLIENT_KEY` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `VAULT_ROLE_ID` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `VAULT_SECRET_ID` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `VAULT_TOKEN` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `VCR_RECORD` | Excluded: Test or evaluation harness variable. It is not meant for normal use. |
 | `VERCEL` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `VERTEX_REGION_CLAUDE_3_5_HAIKU` | Not on a page yet |
-| `VERTEX_REGION_CLAUDE_3_5_SONNET` | Not on a page yet |
-| `VERTEX_REGION_CLAUDE_3_7_SONNET` | Not on a page yet |
-| `VERTEX_REGION_CLAUDE_4_0_OPUS` | Not on a page yet |
-| `VERTEX_REGION_CLAUDE_4_0_SONNET` | Not on a page yet |
-| `VERTEX_REGION_CLAUDE_4_1_OPUS` | Not on a page yet |
-| `VERTEX_REGION_CLAUDE_4_5_OPUS` | Not on a page yet |
-| `VERTEX_REGION_CLAUDE_4_5_SONNET` | Not on a page yet |
-| `VERTEX_REGION_CLAUDE_4_6_OPUS` | Not on a page yet |
-| `VERTEX_REGION_CLAUDE_4_6_SONNET` | Not on a page yet |
-| `VERTEX_REGION_CLAUDE_4_7_OPUS` | Not on a page yet |
-| `VERTEX_REGION_CLAUDE_4_8_OPUS` | Not on a page yet |
-| `VERTEX_REGION_CLAUDE_5_5_OPUS` | Not on a page yet |
-| `VERTEX_REGION_CLAUDE_5_5_SONNET` | Not on a page yet |
-| `VERTEX_REGION_CLAUDE_5_OPUS` | Not on a page yet |
-| `VERTEX_REGION_CLAUDE_5_SONNET` | Not on a page yet |
-| `VERTEX_REGION_CLAUDE_FABLE_5` | Not on a page yet |
-| `VERTEX_REGION_CLAUDE_FABLE_5_1` | Not on a page yet |
-| `VERTEX_REGION_CLAUDE_HAIKU_4_5` | Not on a page yet |
-| `VERTEX_REGION_CLAUDE_HAIKU_5_5` | Not on a page yet |
+| `VERTEX_REGION_CLAUDE_3_5_HAIKU` | [/configure/env-vars/cloud-providers#variables](/configure/env-vars/cloud-providers#variables) |
+| `VERTEX_REGION_CLAUDE_3_5_SONNET` | [/configure/env-vars/cloud-providers#variables](/configure/env-vars/cloud-providers#variables) |
+| `VERTEX_REGION_CLAUDE_3_7_SONNET` | [/configure/env-vars/cloud-providers#variables](/configure/env-vars/cloud-providers#variables) |
+| `VERTEX_REGION_CLAUDE_4_0_OPUS` | [/configure/env-vars/cloud-providers#variables](/configure/env-vars/cloud-providers#variables) |
+| `VERTEX_REGION_CLAUDE_4_0_SONNET` | [/configure/env-vars/cloud-providers#variables](/configure/env-vars/cloud-providers#variables) |
+| `VERTEX_REGION_CLAUDE_4_1_OPUS` | [/configure/env-vars/cloud-providers#variables](/configure/env-vars/cloud-providers#variables) |
+| `VERTEX_REGION_CLAUDE_4_5_OPUS` | [/configure/env-vars/cloud-providers#variables](/configure/env-vars/cloud-providers#variables) |
+| `VERTEX_REGION_CLAUDE_4_5_SONNET` | [/configure/env-vars/cloud-providers#variables](/configure/env-vars/cloud-providers#variables) |
+| `VERTEX_REGION_CLAUDE_4_6_OPUS` | [/configure/env-vars/cloud-providers#variables](/configure/env-vars/cloud-providers#variables) |
+| `VERTEX_REGION_CLAUDE_4_6_SONNET` | [/configure/env-vars/cloud-providers#variables](/configure/env-vars/cloud-providers#variables) |
+| `VERTEX_REGION_CLAUDE_4_7_OPUS` | [/configure/env-vars/cloud-providers#variables](/configure/env-vars/cloud-providers#variables) |
+| `VERTEX_REGION_CLAUDE_4_8_OPUS` | [/configure/env-vars/cloud-providers#variables](/configure/env-vars/cloud-providers#variables) |
+| `VERTEX_REGION_CLAUDE_5_5_OPUS` | [/configure/env-vars/cloud-providers#variables](/configure/env-vars/cloud-providers#variables) |
+| `VERTEX_REGION_CLAUDE_5_5_SONNET` | [/configure/env-vars/cloud-providers#variables](/configure/env-vars/cloud-providers#variables) |
+| `VERTEX_REGION_CLAUDE_5_OPUS` | [/configure/env-vars/cloud-providers#variables](/configure/env-vars/cloud-providers#variables) |
+| `VERTEX_REGION_CLAUDE_5_SONNET` | [/configure/env-vars/cloud-providers#variables](/configure/env-vars/cloud-providers#variables) |
+| `VERTEX_REGION_CLAUDE_FABLE_5` | [/configure/env-vars/cloud-providers#variables](/configure/env-vars/cloud-providers#variables) |
+| `VERTEX_REGION_CLAUDE_FABLE_5_1` | [/configure/env-vars/cloud-providers#variables](/configure/env-vars/cloud-providers#variables) |
+| `VERTEX_REGION_CLAUDE_HAIKU_4_5` | [/configure/env-vars/cloud-providers#variables](/configure/env-vars/cloud-providers#variables) |
+| `VERTEX_REGION_CLAUDE_HAIKU_5_5` | [/configure/env-vars/cloud-providers#variables](/configure/env-vars/cloud-providers#variables) |
 | `VISUAL` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `VITALS_CLI_VERSION` | Not on a page yet |
+| `VITALS_CLI_VERSION` | Excluded: Internal variable for Anthropic staff or Anthropic-run services. The program reads it, but it is not meant for users. |
 | `VITALS_EMITTER_BIN` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
-| `VOICE_STREAM_BASE_URL` | Not on a page yet |
+| `VOICE_STREAM_BASE_URL` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `VSCODE_GIT_ASKPASS_MAIN` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `VSS_NUGET_ACCESSTOKEN` | Not on a page yet |
-| `VSS_NUGET_EXTERNAL_FEED_ENDPOINTS` | Not on a page yet |
+| `VSS_NUGET_ACCESSTOKEN` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `VSS_NUGET_EXTERNAL_FEED_ENDPOINTS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `VTE_VERSION` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `VisualStudioVersion` | Not on a page yet |
+| `VisualStudioVersion` | Excluded: Read only by a library bundled in the program (the Azure identity library, the AWS SDK, gRPC, or a TLS or cloud detector). Claude Code has no setting for it. |
 | `WAYLAND_DISPLAY` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `WEBSITE_SITE_NAME` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `WEBSITE_SKU` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
@@ -2354,30 +2354,30 @@ Items: 1846.
 | `WSL_INTEROP` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `WT_SESSION` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `XDG_CACHE_HOME` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
-| `XDG_CONFIG_DIRS` | Not on a page yet |
+| `XDG_CONFIG_DIRS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `XDG_CONFIG_HOME` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
-| `XDG_DATA_DIRS` | Not on a page yet |
+| `XDG_DATA_DIRS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `XDG_DATA_HOME` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
-| `XDG_DESKTOP_DIR` | Not on a page yet |
-| `XDG_DOCUMENTS_DIR` | Not on a page yet |
-| `XDG_DOWNLOAD_DIR` | Not on a page yet |
+| `XDG_DESKTOP_DIR` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `XDG_DOCUMENTS_DIR` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
+| `XDG_DOWNLOAD_DIR` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `XDG_RUNTIME_DIR` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `XDG_STATE_HOME` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `XTERM_VERSION` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `ZDOTDIR` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `ZED_TERM` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `ZELLIJ` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
-| `_CLAUDE_CODE_ASSUME_FIRST_PARTY_BASE_URL` | Not on a page yet |
-| `_X_AMZN_TRACE_ID` | Not on a page yet |
+| `_CLAUDE_CODE_ASSUME_FIRST_PARTY_BASE_URL` | Excluded: Internal variable for Anthropic staff or Anthropic-run services. The program reads it, but it is not meant for users. |
+| `_X_AMZN_TRACE_ID` | Excluded: Read only by a library bundled in the program (the Azure identity library, the AWS SDK, gRPC, or a TLS or cloud detector). Claude Code has no setting for it. |
 | `__CFBundleIdentifier` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `all_proxy` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
 | `gcloud_project` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
 | `google_application_credentials` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
 | `google_cloud_project` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
-| `grpc_proxy` | Not on a page yet |
+| `grpc_proxy` | Excluded: Read only by a library bundled in the program (the Azure identity library, the AWS SDK, gRPC, or a TLS or cloud detector). Claude Code has no setting for it. |
 | `http_proxy` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
 | `https_proxy` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
-| `no_grpc_proxy` | Not on a page yet |
+| `no_grpc_proxy` | Excluded: Read only by a library bundled in the program (the Azure identity library, the AWS SDK, gRPC, or a TLS or cloud detector). Claude Code has no setting for it. |
 | `no_proxy` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
 
 ## Error Texts
