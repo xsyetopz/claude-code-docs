@@ -104,7 +104,7 @@
       },
       "anchors": [
         "claudeInChromeDefaultEnabled:«».enabledByDefault",
-        "Ne({enabledByDefault:«»()})",
+        "«»({enabledByDefault:«»()})",
         "value:«».claudeInChromeDefaultEnabled??!1,type:\"boolean\",«»(«»){«»((«»)=>({...«»,claudeInChromeDefaultEnabled:«»}))"
       ],
       "note": "Written from enabledByDefault, which the program validates as a boolean (zod object Ne({enabledByDefault:M()})); readers use ??!1."
@@ -139,7 +139,7 @@
       },
       "anchors": [
         "lspRecommendationNeverPlugins:[...H,«»]",
-        "L.lspRecommendationNeverPlugins??[]"
+        "«».lspRecommendationNeverPlugins??[]"
       ],
       "note": "Dvt(h) appends the plugin id string h to the array: [...H,h] with H=lspRecommendationNeverPlugins??[] and a includes(h) check."
     },
@@ -149,7 +149,7 @@
       },
       "anchors": [
         "lspRecommendationIgnoredCount??0)+1",
-        "lspRecommendationIgnoredCount:L"
+        "lspRecommendationIgnoredCount:«»"
       ],
       "note": "Ovt writes L=(lspRecommendationIgnoredCount??0)+1, a counter that starts at 0 and adds 1."
     },
@@ -206,7 +206,7 @@
       },
       "anchors": [
         "autoUploadSessions:()=>«»().optional().describe(\"Mirror local sessions to claude.ai as view-only (no remote control)\")",
-        "w2t(\"autoUploadSessions\""
+        "«»(\"autoUploadSessions\""
       ],
       "note": "The settings schema key is a boolean (zod M().optional()); w2t returns r??!1 of the resolved boolean."
     },
@@ -225,7 +225,7 @@
         "enum": ["unrestricted", "small", "medium", "large"]
       },
       "anchors": [
-        "V$o=[\"unrestricted\",\"small\",\"medium\",\"large\"]",
+        "«»=[\"unrestricted\",\"small\",\"medium\",\"large\"]",
         "let «»=«»(«»)??\"unrestricted\";«»((«»)=>{if(«».workflowSizeGuideline===«»)return «»;return{...«»,workflowSizeGuideline:«»}})"
       ],
       "note": "The /config picker writes o=lpn(e)??\"unrestricted\"; lpn(e) returns e only when it is in V$o=[\"unrestricted\",\"small\",\"medium\",\"large\"]."

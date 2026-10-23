@@ -496,8 +496,8 @@
       },
       "anchors": [
         "{type:\"memory-mode\",mode:«»,afterUuid:«»,timestamp:«».timestamp",
-        "Eo.reason===\"paused\"||«».reason===\"account_off\"||«».reason===\"account_read_only\"||«».reason===\"session_shape\"||«».reason===\"server_off\"",
-        "Eo.accountChoice===\"on\"||«».accountChoice===\"read_only\"||«».accountChoice===\"off\""
+        "«».reason===\"paused\"||«».reason===\"account_off\"||«».reason===\"account_read_only\"||«».reason===\"session_shape\"||«».reason===\"server_off\"",
+        "«».accountChoice===\"on\"||«».accountChoice===\"read_only\"||«».accountChoice===\"off\""
       ],
       "note": "saveMemoryMode({mode, afterUuid, reason, account, accountChoice, timestamp}) appends the line; timestamp defaults to new Date().toISOString(). The /clear path passes afterUuid:null. The transcript reader keeps only the values listed here (mode on|off, afterUuid string|null, timestamp string, the reason set, account string, accountChoice on|read_only|off), so those are the values it accepts back."
     },
@@ -514,8 +514,8 @@
       },
       "anchors": [
         "{type:\"memory-mode\",mode:«»,afterUuid:«»,timestamp:«».timestamp",
-        "Eo.reason===\"paused\"||«».reason===\"account_off\"||«».reason===\"account_read_only\"||«».reason===\"session_shape\"||«».reason===\"server_off\"",
-        "Eo.accountChoice===\"on\"||«».accountChoice===\"read_only\"||«».accountChoice===\"off\""
+        "«».reason===\"paused\"||«».reason===\"account_off\"||«».reason===\"account_read_only\"||«».reason===\"session_shape\"||«».reason===\"server_off\"",
+        "«».accountChoice===\"on\"||«».accountChoice===\"read_only\"||«».accountChoice===\"off\""
       ],
       "note": "saveMemoryMode({mode, afterUuid, reason, account, accountChoice, timestamp}) appends the line; timestamp defaults to new Date().toISOString(). The /clear path passes afterUuid:null. The transcript reader keeps only the values listed here (mode on|off, afterUuid string|null, timestamp string, the reason set, account string, accountChoice on|read_only|off), so those are the values it accepts back."
     },
@@ -525,8 +525,8 @@
       },
       "anchors": [
         "{type:\"memory-mode\",mode:«»,afterUuid:«»,timestamp:«».timestamp",
-        "Eo.reason===\"paused\"||«».reason===\"account_off\"||«».reason===\"account_read_only\"||«».reason===\"session_shape\"||«».reason===\"server_off\"",
-        "Eo.accountChoice===\"on\"||«».accountChoice===\"read_only\"||«».accountChoice===\"off\""
+        "«».reason===\"paused\"||«».reason===\"account_off\"||«».reason===\"account_read_only\"||«».reason===\"session_shape\"||«».reason===\"server_off\"",
+        "«».accountChoice===\"on\"||«».accountChoice===\"read_only\"||«».accountChoice===\"off\""
       ],
       "note": "saveMemoryMode({mode, afterUuid, reason, account, accountChoice, timestamp}) appends the line; timestamp defaults to new Date().toISOString(). The /clear path passes afterUuid:null. The transcript reader keeps only the values listed here (mode on|off, afterUuid string|null, timestamp string, the reason set, account string, accountChoice on|read_only|off), so those are the values it accepts back."
     },
@@ -542,8 +542,8 @@
       },
       "anchors": [
         "{type:\"memory-mode\",mode:«»,afterUuid:«»,timestamp:«».timestamp",
-        "Eo.reason===\"paused\"||«».reason===\"account_off\"||«».reason===\"account_read_only\"||«».reason===\"session_shape\"||«».reason===\"server_off\"",
-        "Eo.accountChoice===\"on\"||«».accountChoice===\"read_only\"||«».accountChoice===\"off\""
+        "«».reason===\"paused\"||«».reason===\"account_off\"||«».reason===\"account_read_only\"||«».reason===\"session_shape\"||«».reason===\"server_off\"",
+        "«».accountChoice===\"on\"||«».accountChoice===\"read_only\"||«».accountChoice===\"off\""
       ],
       "note": "saveMemoryMode({mode, afterUuid, reason, account, accountChoice, timestamp}) appends the line; timestamp defaults to new Date().toISOString(). The /clear path passes afterUuid:null. The transcript reader keeps only the values listed here (mode on|off, afterUuid string|null, timestamp string, the reason set, account string, accountChoice on|read_only|off), so those are the values it accepts back."
     },
@@ -553,8 +553,8 @@
       },
       "anchors": [
         "{type:\"memory-mode\",mode:«»,afterUuid:«»,timestamp:«».timestamp",
-        "Eo.reason===\"paused\"||«».reason===\"account_off\"||«».reason===\"account_read_only\"||«».reason===\"session_shape\"||«».reason===\"server_off\"",
-        "Eo.accountChoice===\"on\"||«».accountChoice===\"read_only\"||«».accountChoice===\"off\""
+        "«».reason===\"paused\"||«».reason===\"account_off\"||«».reason===\"account_read_only\"||«».reason===\"session_shape\"||«».reason===\"server_off\"",
+        "«».accountChoice===\"on\"||«».accountChoice===\"read_only\"||«».accountChoice===\"off\""
       ],
       "note": "saveMemoryMode({mode, afterUuid, reason, account, accountChoice, timestamp}) appends the line; timestamp defaults to new Date().toISOString(). The /clear path passes afterUuid:null. The transcript reader keeps only the values listed here (mode on|off, afterUuid string|null, timestamp string, the reason set, account string, accountChoice on|read_only|off), so those are the values it accepts back."
     },
@@ -564,8 +564,8 @@
       },
       "anchors": [
         "{type:\"memory-mode\",mode:«»,afterUuid:«»,timestamp:«».timestamp",
-        "Eo.reason===\"paused\"||«».reason===\"account_off\"||«».reason===\"account_read_only\"||«».reason===\"session_shape\"||«».reason===\"server_off\"",
-        "Eo.accountChoice===\"on\"||«».accountChoice===\"read_only\"||«».accountChoice===\"off\""
+        "«».reason===\"paused\"||«».reason===\"account_off\"||«».reason===\"account_read_only\"||«».reason===\"session_shape\"||«».reason===\"server_off\"",
+        "«».accountChoice===\"on\"||«».accountChoice===\"read_only\"||«».accountChoice===\"off\""
       ],
       "note": "saveMemoryMode({mode, afterUuid, reason, account, accountChoice, timestamp}) appends the line; timestamp defaults to new Date().toISOString(). The /clear path passes afterUuid:null. The transcript reader keeps only the values listed here (mode on|off, afterUuid string|null, timestamp string, the reason set, account string, accountChoice on|read_only|off), so those are the values it accepts back."
     },
@@ -575,8 +575,8 @@
       },
       "anchors": [
         "{type:\"memory-mode\",mode:«»,afterUuid:«»,timestamp:«».timestamp",
-        "Eo.reason===\"paused\"||«».reason===\"account_off\"||«».reason===\"account_read_only\"||«».reason===\"session_shape\"||«».reason===\"server_off\"",
-        "Eo.accountChoice===\"on\"||«».accountChoice===\"read_only\"||«».accountChoice===\"off\""
+        "«».reason===\"paused\"||«».reason===\"account_off\"||«».reason===\"account_read_only\"||«».reason===\"session_shape\"||«».reason===\"server_off\"",
+        "«».accountChoice===\"on\"||«».accountChoice===\"read_only\"||«».accountChoice===\"off\""
       ],
       "note": "saveMemoryMode({mode, afterUuid, reason, account, accountChoice, timestamp}) appends the line; timestamp defaults to new Date().toISOString(). The /clear path passes afterUuid:null. The transcript reader keeps only the values listed here (mode on|off, afterUuid string|null, timestamp string, the reason set, account string, accountChoice on|read_only|off), so those are the values it accepts back."
     },
@@ -1105,7 +1105,7 @@
         ]
       },
       "anchors": [
-        "parentUuid:«»?null:«»,logicalParentUuid:«»?we:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
+        "parentUuid:«»?null:«»,logicalParentUuid:«»?«»:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
       ],
       "note": "insertMessageChain builds the line as {parentUuid, logicalParentUuid, isSidechain, teamName, agentName, promptId, agentId, ...message, ...(session fields), version, gitBranch, slug}; parentUuid is null for a compact boundary line (it is true for the boundary check) and otherwise the uuid string of the previous line in the chain (the chain variable starts as the s parameter ?? null, so it is a string or null), or the sourceToolAssistantUUID string of a user line."
     },
@@ -1121,7 +1121,7 @@
         ]
       },
       "anchors": [
-        "parentUuid:«»?null:«»,logicalParentUuid:«»?we:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
+        "parentUuid:«»?null:«»,logicalParentUuid:«»?«»:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
       ],
       "note": "insertMessageChain builds the line as {parentUuid, logicalParentUuid, isSidechain, teamName, agentName, promptId, agentId, ...message, ...(session fields), version, gitBranch, slug}; logicalParentUuid is the chain variable (string, or null when the chain has no previous line) on a compact boundary line and undefined, so not written, on every other line."
     },
@@ -1130,7 +1130,7 @@
         "type": "boolean"
       },
       "anchors": [
-        "parentUuid:«»?null:«»,logicalParentUuid:«»?we:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
+        "parentUuid:«»?null:«»,logicalParentUuid:«»?«»:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
       ],
       "note": "insertMessageChain builds the line as {parentUuid, logicalParentUuid, isSidechain, teamName, agentName, promptId, agentId, ...message, ...(session fields), version, gitBranch, slug}; isSidechain is the boolean n parameter, set again after the literal."
     },
@@ -1139,7 +1139,7 @@
         "type": "string"
       },
       "anchors": [
-        "parentUuid:«»?null:«»,logicalParentUuid:«»?we:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
+        "parentUuid:«»?null:«»,logicalParentUuid:«»?«»:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
       ],
       "note": "insertMessageChain builds the line as {parentUuid, logicalParentUuid, isSidechain, teamName, agentName, promptId, agentId, ...message, ...(session fields), version, gitBranch, slug}; teamName comes from the optional team info object (h?.teamName), a string; left out when there is none."
     },
@@ -1148,7 +1148,7 @@
         "type": "string"
       },
       "anchors": [
-        "parentUuid:«»?null:«»,logicalParentUuid:«»?we:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
+        "parentUuid:«»?null:«»,logicalParentUuid:«»?«»:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
       ],
       "note": "insertMessageChain builds the line as {parentUuid, logicalParentUuid, isSidechain, teamName, agentName, promptId, agentId, ...message, ...(session fields), version, gitBranch, slug}; agentName comes from the optional team info object (h?.agentName), a string; left out when there is none."
     },
@@ -1157,7 +1157,7 @@
         "type": "string"
       },
       "anchors": [
-        "parentUuid:«»?null:«»,logicalParentUuid:«»?we:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
+        "parentUuid:«»?null:«»,logicalParentUuid:«»?«»:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
       ],
       "note": "insertMessageChain builds the line as {parentUuid, logicalParentUuid, isSidechain, teamName, agentName, promptId, agentId, ...message, ...(session fields), version, gitBranch, slug}; promptId is the prompt id of the request journal (a string) for a user line, and undefined, so not written, for every other type."
     },
@@ -1166,7 +1166,7 @@
         "type": "string"
       },
       "anchors": [
-        "parentUuid:«»?null:«»,logicalParentUuid:«»?we:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
+        "parentUuid:«»?null:«»,logicalParentUuid:«»?«»:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
       ],
       "note": "insertMessageChain builds the line as {parentUuid, logicalParentUuid, isSidechain, teamName, agentName, promptId, agentId, ...message, ...(session fields), version, gitBranch, slug}; agentId is the r parameter (the subagent id string), set again when isSidechain is true."
     },
@@ -1175,7 +1175,7 @@
         "enum": ["bg", "daemon", "daemon-worker"]
       },
       "anchors": [
-        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:Gxt",
+        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:«»",
         "e===\"bg\"||«»===\"daemon\"||«»===\"daemon-worker\")return «»;return}"
       ],
       "note": "The session fields function returns sessionKind from the session kind getter, which returns CLAUDE_CODE_SESSION_KIND when it is 'bg', 'daemon' or 'daemon-worker' and undefined otherwise (not written)."
@@ -1185,7 +1185,7 @@
         "type": "string"
       },
       "anchors": [
-        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:Gxt",
+        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:«»",
         "function «»(){return process.env.CLAUDE_CODE_ENTRYPOINT}async function «»(){let «»=«»();return{cwd:«»()??void 0,gitBranch:"
       ],
       "note": "The session fields function returns the CLAUDE_CODE_ENTRYPOINT environment value, a string; not written when it is unset."
@@ -1195,8 +1195,8 @@
         "type": "string"
       },
       "anchors": [
-        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:Gxt",
-        "function «»(){if(«».getStore()?.cwd===void 0&&«»()===null)return null;return «»()}"
+        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:«»",
+        "function «»(){if(«»()?.cwd===void 0&&«»()===null)return null;return «»()}"
       ],
       "note": "The session fields function returns the working directory string (ld() returns null or the cwd string, then ?? void 0 drops the null)."
     },
@@ -1205,7 +1205,7 @@
         "type": "string"
       },
       "anchors": [
-        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:Gxt"
+        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:«»"
       ],
       "note": "The session fields function returns the sessionId string given to insertMessageChain."
     },
@@ -1214,7 +1214,7 @@
         "type": "string"
       },
       "anchors": [
-        "gitBranch:«»,slug:xe",
+        "gitBranch:«»,slug:«»",
         "\"rev-parse\",\"--abbrev-ref\",\"HEAD\"],{cwd:«»,preserveOutputOnError:!1,...«»});return «»===0?«».trim()||\"HEAD\":\"HEAD\"};async function «»("
       ],
       "note": "gitBranch is the awaited current branch (a string from git rev-parse --abbrev-ref HEAD, 'HEAD' when detached); the writer leaves it out when the lookup throws."
@@ -1224,7 +1224,7 @@
         "type": "string"
       },
       "anchors": [
-        "gitBranch:«»,slug:xe",
+        "gitBranch:«»,slug:«»",
         "«»(){return this.#«»}«»(«»){this.#«».delete(«»)}"
       ],
       "note": "slug is the session's plan slug from the plan slug cache (a string); left out when the session has none."
@@ -1241,7 +1241,7 @@
         ]
       },
       "anchors": [
-        "parentUuid:«»?null:«»,logicalParentUuid:«»?we:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
+        "parentUuid:«»?null:«»,logicalParentUuid:«»?«»:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
       ],
       "note": "insertMessageChain builds the line as {parentUuid, logicalParentUuid, isSidechain, teamName, agentName, promptId, agentId, ...message, ...(session fields), version, gitBranch, slug}; parentUuid is null for a compact boundary line (it is true for the boundary check) and otherwise the uuid string of the previous line in the chain (the chain variable starts as the s parameter ?? null, so it is a string or null), or the sourceToolAssistantUUID string of a user line."
     },
@@ -1257,7 +1257,7 @@
         ]
       },
       "anchors": [
-        "parentUuid:«»?null:«»,logicalParentUuid:«»?we:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
+        "parentUuid:«»?null:«»,logicalParentUuid:«»?«»:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
       ],
       "note": "insertMessageChain builds the line as {parentUuid, logicalParentUuid, isSidechain, teamName, agentName, promptId, agentId, ...message, ...(session fields), version, gitBranch, slug}; logicalParentUuid is the chain variable (string, or null when the chain has no previous line) on a compact boundary line and undefined, so not written, on every other line."
     },
@@ -1266,7 +1266,7 @@
         "type": "boolean"
       },
       "anchors": [
-        "parentUuid:«»?null:«»,logicalParentUuid:«»?we:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
+        "parentUuid:«»?null:«»,logicalParentUuid:«»?«»:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
       ],
       "note": "insertMessageChain builds the line as {parentUuid, logicalParentUuid, isSidechain, teamName, agentName, promptId, agentId, ...message, ...(session fields), version, gitBranch, slug}; isSidechain is the boolean n parameter, set again after the literal."
     },
@@ -1275,7 +1275,7 @@
         "type": "string"
       },
       "anchors": [
-        "parentUuid:«»?null:«»,logicalParentUuid:«»?we:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
+        "parentUuid:«»?null:«»,logicalParentUuid:«»?«»:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
       ],
       "note": "insertMessageChain builds the line as {parentUuid, logicalParentUuid, isSidechain, teamName, agentName, promptId, agentId, ...message, ...(session fields), version, gitBranch, slug}; teamName comes from the optional team info object (h?.teamName), a string; left out when there is none."
     },
@@ -1284,7 +1284,7 @@
         "type": "string"
       },
       "anchors": [
-        "parentUuid:«»?null:«»,logicalParentUuid:«»?we:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
+        "parentUuid:«»?null:«»,logicalParentUuid:«»?«»:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
       ],
       "note": "insertMessageChain builds the line as {parentUuid, logicalParentUuid, isSidechain, teamName, agentName, promptId, agentId, ...message, ...(session fields), version, gitBranch, slug}; agentName comes from the optional team info object (h?.agentName), a string; left out when there is none."
     },
@@ -1293,7 +1293,7 @@
         "type": "string"
       },
       "anchors": [
-        "parentUuid:«»?null:«»,logicalParentUuid:«»?we:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
+        "parentUuid:«»?null:«»,logicalParentUuid:«»?«»:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
       ],
       "note": "insertMessageChain builds the line as {parentUuid, logicalParentUuid, isSidechain, teamName, agentName, promptId, agentId, ...message, ...(session fields), version, gitBranch, slug}; promptId is the prompt id of the request journal (a string) for a user line, and undefined, so not written, for every other type."
     },
@@ -1302,7 +1302,7 @@
         "type": "string"
       },
       "anchors": [
-        "parentUuid:«»?null:«»,logicalParentUuid:«»?we:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
+        "parentUuid:«»?null:«»,logicalParentUuid:«»?«»:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
       ],
       "note": "insertMessageChain builds the line as {parentUuid, logicalParentUuid, isSidechain, teamName, agentName, promptId, agentId, ...message, ...(session fields), version, gitBranch, slug}; agentId is the r parameter (the subagent id string), set again when isSidechain is true."
     },
@@ -1311,7 +1311,7 @@
         "enum": ["bg", "daemon", "daemon-worker"]
       },
       "anchors": [
-        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:Gxt",
+        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:«»",
         "e===\"bg\"||«»===\"daemon\"||«»===\"daemon-worker\")return «»;return}"
       ],
       "note": "The session fields function returns sessionKind from the session kind getter, which returns CLAUDE_CODE_SESSION_KIND when it is 'bg', 'daemon' or 'daemon-worker' and undefined otherwise (not written)."
@@ -1321,7 +1321,7 @@
         "type": "string"
       },
       "anchors": [
-        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:Gxt",
+        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:«»",
         "function «»(){return process.env.CLAUDE_CODE_ENTRYPOINT}async function «»(){let «»=«»();return{cwd:«»()??void 0,gitBranch:"
       ],
       "note": "The session fields function returns the CLAUDE_CODE_ENTRYPOINT environment value, a string; not written when it is unset."
@@ -1331,8 +1331,8 @@
         "type": "string"
       },
       "anchors": [
-        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:Gxt",
-        "function «»(){if(«».getStore()?.cwd===void 0&&«»()===null)return null;return «»()}"
+        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:«»",
+        "function «»(){if(«»()?.cwd===void 0&&«»()===null)return null;return «»()}"
       ],
       "note": "The session fields function returns the working directory string (ld() returns null or the cwd string, then ?? void 0 drops the null)."
     },
@@ -1341,7 +1341,7 @@
         "type": "string"
       },
       "anchors": [
-        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:Gxt"
+        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:«»"
       ],
       "note": "The session fields function returns the sessionId string given to insertMessageChain."
     },
@@ -1350,7 +1350,7 @@
         "type": "string"
       },
       "anchors": [
-        "gitBranch:«»,slug:xe",
+        "gitBranch:«»,slug:«»",
         "\"rev-parse\",\"--abbrev-ref\",\"HEAD\"],{cwd:«»,preserveOutputOnError:!1,...«»});return «»===0?«».trim()||\"HEAD\":\"HEAD\"};async function «»("
       ],
       "note": "gitBranch is the awaited current branch (a string from git rev-parse --abbrev-ref HEAD, 'HEAD' when detached); the writer leaves it out when the lookup throws."
@@ -1360,7 +1360,7 @@
         "type": "string"
       },
       "anchors": [
-        "gitBranch:«»,slug:xe",
+        "gitBranch:«»,slug:«»",
         "«»(){return this.#«»}«»(«»){this.#«».delete(«»)}"
       ],
       "note": "slug is the session's plan slug from the plan slug cache (a string); left out when the session has none."
@@ -1377,7 +1377,7 @@
         ]
       },
       "anchors": [
-        "parentUuid:«»?null:«»,logicalParentUuid:«»?we:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
+        "parentUuid:«»?null:«»,logicalParentUuid:«»?«»:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
       ],
       "note": "insertMessageChain builds the line as {parentUuid, logicalParentUuid, isSidechain, teamName, agentName, promptId, agentId, ...message, ...(session fields), version, gitBranch, slug}; parentUuid is null for a compact boundary line (it is true for the boundary check) and otherwise the uuid string of the previous line in the chain (the chain variable starts as the s parameter ?? null, so it is a string or null), or the sourceToolAssistantUUID string of a user line."
     },
@@ -1393,7 +1393,7 @@
         ]
       },
       "anchors": [
-        "parentUuid:«»?null:«»,logicalParentUuid:«»?we:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
+        "parentUuid:«»?null:«»,logicalParentUuid:«»?«»:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
       ],
       "note": "insertMessageChain builds the line as {parentUuid, logicalParentUuid, isSidechain, teamName, agentName, promptId, agentId, ...message, ...(session fields), version, gitBranch, slug}; logicalParentUuid is the chain variable (string, or null when the chain has no previous line) on a compact boundary line and undefined, so not written, on every other line."
     },
@@ -1402,7 +1402,7 @@
         "type": "boolean"
       },
       "anchors": [
-        "parentUuid:«»?null:«»,logicalParentUuid:«»?we:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
+        "parentUuid:«»?null:«»,logicalParentUuid:«»?«»:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
       ],
       "note": "insertMessageChain builds the line as {parentUuid, logicalParentUuid, isSidechain, teamName, agentName, promptId, agentId, ...message, ...(session fields), version, gitBranch, slug}; isSidechain is the boolean n parameter, set again after the literal."
     },
@@ -1411,7 +1411,7 @@
         "type": "string"
       },
       "anchors": [
-        "parentUuid:«»?null:«»,logicalParentUuid:«»?we:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
+        "parentUuid:«»?null:«»,logicalParentUuid:«»?«»:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
       ],
       "note": "insertMessageChain builds the line as {parentUuid, logicalParentUuid, isSidechain, teamName, agentName, promptId, agentId, ...message, ...(session fields), version, gitBranch, slug}; teamName comes from the optional team info object (h?.teamName), a string; left out when there is none."
     },
@@ -1420,7 +1420,7 @@
         "type": "string"
       },
       "anchors": [
-        "parentUuid:«»?null:«»,logicalParentUuid:«»?we:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
+        "parentUuid:«»?null:«»,logicalParentUuid:«»?«»:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
       ],
       "note": "insertMessageChain builds the line as {parentUuid, logicalParentUuid, isSidechain, teamName, agentName, promptId, agentId, ...message, ...(session fields), version, gitBranch, slug}; agentName comes from the optional team info object (h?.agentName), a string; left out when there is none."
     },
@@ -1429,7 +1429,7 @@
         "type": "string"
       },
       "anchors": [
-        "parentUuid:«»?null:«»,logicalParentUuid:«»?we:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
+        "parentUuid:«»?null:«»,logicalParentUuid:«»?«»:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
       ],
       "note": "insertMessageChain builds the line as {parentUuid, logicalParentUuid, isSidechain, teamName, agentName, promptId, agentId, ...message, ...(session fields), version, gitBranch, slug}; promptId is the prompt id of the request journal (a string) for a user line, and undefined, so not written, for every other type."
     },
@@ -1438,7 +1438,7 @@
         "type": "string"
       },
       "anchors": [
-        "parentUuid:«»?null:«»,logicalParentUuid:«»?we:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
+        "parentUuid:«»?null:«»,logicalParentUuid:«»?«»:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
       ],
       "note": "insertMessageChain builds the line as {parentUuid, logicalParentUuid, isSidechain, teamName, agentName, promptId, agentId, ...message, ...(session fields), version, gitBranch, slug}; agentId is the r parameter (the subagent id string), set again when isSidechain is true."
     },
@@ -1447,7 +1447,7 @@
         "enum": ["bg", "daemon", "daemon-worker"]
       },
       "anchors": [
-        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:Gxt",
+        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:«»",
         "e===\"bg\"||«»===\"daemon\"||«»===\"daemon-worker\")return «»;return}"
       ],
       "note": "The session fields function returns sessionKind from the session kind getter, which returns CLAUDE_CODE_SESSION_KIND when it is 'bg', 'daemon' or 'daemon-worker' and undefined otherwise (not written)."
@@ -1457,7 +1457,7 @@
         "type": "string"
       },
       "anchors": [
-        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:Gxt",
+        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:«»",
         "function «»(){return process.env.CLAUDE_CODE_ENTRYPOINT}async function «»(){let «»=«»();return{cwd:«»()??void 0,gitBranch:"
       ],
       "note": "The session fields function returns the CLAUDE_CODE_ENTRYPOINT environment value, a string; not written when it is unset."
@@ -1467,8 +1467,8 @@
         "type": "string"
       },
       "anchors": [
-        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:Gxt",
-        "function «»(){if(«».getStore()?.cwd===void 0&&«»()===null)return null;return «»()}"
+        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:«»",
+        "function «»(){if(«»()?.cwd===void 0&&«»()===null)return null;return «»()}"
       ],
       "note": "The session fields function returns the working directory string (ld() returns null or the cwd string, then ?? void 0 drops the null)."
     },
@@ -1477,7 +1477,7 @@
         "type": "string"
       },
       "anchors": [
-        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:Gxt"
+        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:«»"
       ],
       "note": "The session fields function returns the sessionId string given to insertMessageChain."
     },
@@ -1486,7 +1486,7 @@
         "type": "string"
       },
       "anchors": [
-        "gitBranch:«»,slug:xe",
+        "gitBranch:«»,slug:«»",
         "\"rev-parse\",\"--abbrev-ref\",\"HEAD\"],{cwd:«»,preserveOutputOnError:!1,...«»});return «»===0?«».trim()||\"HEAD\":\"HEAD\"};async function «»("
       ],
       "note": "gitBranch is the awaited current branch (a string from git rev-parse --abbrev-ref HEAD, 'HEAD' when detached); the writer leaves it out when the lookup throws."
@@ -1496,7 +1496,7 @@
         "type": "string"
       },
       "anchors": [
-        "gitBranch:«»,slug:xe",
+        "gitBranch:«»,slug:«»",
         "«»(){return this.#«»}«»(«»){this.#«».delete(«»)}"
       ],
       "note": "slug is the session's plan slug from the plan slug cache (a string); left out when the session has none."
@@ -1513,7 +1513,7 @@
         ]
       },
       "anchors": [
-        "parentUuid:«»?null:«»,logicalParentUuid:«»?we:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
+        "parentUuid:«»?null:«»,logicalParentUuid:«»?«»:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
       ],
       "note": "insertMessageChain builds the line as {parentUuid, logicalParentUuid, isSidechain, teamName, agentName, promptId, agentId, ...message, ...(session fields), version, gitBranch, slug}; parentUuid is null for a compact boundary line (it is true for the boundary check) and otherwise the uuid string of the previous line in the chain (the chain variable starts as the s parameter ?? null, so it is a string or null), or the sourceToolAssistantUUID string of a user line."
     },
@@ -1529,7 +1529,7 @@
         ]
       },
       "anchors": [
-        "parentUuid:«»?null:«»,logicalParentUuid:«»?we:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
+        "parentUuid:«»?null:«»,logicalParentUuid:«»?«»:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
       ],
       "note": "insertMessageChain builds the line as {parentUuid, logicalParentUuid, isSidechain, teamName, agentName, promptId, agentId, ...message, ...(session fields), version, gitBranch, slug}; logicalParentUuid is the chain variable (string, or null when the chain has no previous line) on a compact boundary line and undefined, so not written, on every other line."
     },
@@ -1538,7 +1538,7 @@
         "type": "boolean"
       },
       "anchors": [
-        "parentUuid:«»?null:«»,logicalParentUuid:«»?we:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
+        "parentUuid:«»?null:«»,logicalParentUuid:«»?«»:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
       ],
       "note": "insertMessageChain builds the line as {parentUuid, logicalParentUuid, isSidechain, teamName, agentName, promptId, agentId, ...message, ...(session fields), version, gitBranch, slug}; isSidechain is the boolean n parameter, set again after the literal."
     },
@@ -1547,7 +1547,7 @@
         "type": "string"
       },
       "anchors": [
-        "parentUuid:«»?null:«»,logicalParentUuid:«»?we:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
+        "parentUuid:«»?null:«»,logicalParentUuid:«»?«»:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
       ],
       "note": "insertMessageChain builds the line as {parentUuid, logicalParentUuid, isSidechain, teamName, agentName, promptId, agentId, ...message, ...(session fields), version, gitBranch, slug}; teamName comes from the optional team info object (h?.teamName), a string; left out when there is none."
     },
@@ -1556,7 +1556,7 @@
         "type": "string"
       },
       "anchors": [
-        "parentUuid:«»?null:«»,logicalParentUuid:«»?we:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
+        "parentUuid:«»?null:«»,logicalParentUuid:«»?«»:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
       ],
       "note": "insertMessageChain builds the line as {parentUuid, logicalParentUuid, isSidechain, teamName, agentName, promptId, agentId, ...message, ...(session fields), version, gitBranch, slug}; agentName comes from the optional team info object (h?.agentName), a string; left out when there is none."
     },
@@ -1565,7 +1565,7 @@
         "type": "string"
       },
       "anchors": [
-        "parentUuid:«»?null:«»,logicalParentUuid:«»?we:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
+        "parentUuid:«»?null:«»,logicalParentUuid:«»?«»:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
       ],
       "note": "insertMessageChain builds the line as {parentUuid, logicalParentUuid, isSidechain, teamName, agentName, promptId, agentId, ...message, ...(session fields), version, gitBranch, slug}; promptId is the prompt id of the request journal (a string) for a user line, and undefined, so not written, for every other type."
     },
@@ -1574,7 +1574,7 @@
         "type": "string"
       },
       "anchors": [
-        "parentUuid:«»?null:«»,logicalParentUuid:«»?we:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
+        "parentUuid:«»?null:«»,logicalParentUuid:«»?«»:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
       ],
       "note": "insertMessageChain builds the line as {parentUuid, logicalParentUuid, isSidechain, teamName, agentName, promptId, agentId, ...message, ...(session fields), version, gitBranch, slug}; agentId is the r parameter (the subagent id string), set again when isSidechain is true."
     },
@@ -1583,7 +1583,7 @@
         "enum": ["bg", "daemon", "daemon-worker"]
       },
       "anchors": [
-        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:Gxt",
+        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:«»",
         "e===\"bg\"||«»===\"daemon\"||«»===\"daemon-worker\")return «»;return}"
       ],
       "note": "The session fields function returns sessionKind from the session kind getter, which returns CLAUDE_CODE_SESSION_KIND when it is 'bg', 'daemon' or 'daemon-worker' and undefined otherwise (not written)."
@@ -1593,7 +1593,7 @@
         "type": "string"
       },
       "anchors": [
-        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:Gxt",
+        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:«»",
         "function «»(){return process.env.CLAUDE_CODE_ENTRYPOINT}async function «»(){let «»=«»();return{cwd:«»()??void 0,gitBranch:"
       ],
       "note": "The session fields function returns the CLAUDE_CODE_ENTRYPOINT environment value, a string; not written when it is unset."
@@ -1603,8 +1603,8 @@
         "type": "string"
       },
       "anchors": [
-        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:Gxt",
-        "function «»(){if(«».getStore()?.cwd===void 0&&«»()===null)return null;return «»()}"
+        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:«»",
+        "function «»(){if(«»()?.cwd===void 0&&«»()===null)return null;return «»()}"
       ],
       "note": "The session fields function returns the working directory string (ld() returns null or the cwd string, then ?? void 0 drops the null)."
     },
@@ -1613,7 +1613,7 @@
         "type": "string"
       },
       "anchors": [
-        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:Gxt"
+        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:«»"
       ],
       "note": "The session fields function returns the sessionId string given to insertMessageChain."
     },
@@ -1622,7 +1622,7 @@
         "type": "string"
       },
       "anchors": [
-        "gitBranch:«»,slug:xe",
+        "gitBranch:«»,slug:«»",
         "\"rev-parse\",\"--abbrev-ref\",\"HEAD\"],{cwd:«»,preserveOutputOnError:!1,...«»});return «»===0?«».trim()||\"HEAD\":\"HEAD\"};async function «»("
       ],
       "note": "gitBranch is the awaited current branch (a string from git rev-parse --abbrev-ref HEAD, 'HEAD' when detached); the writer leaves it out when the lookup throws."
@@ -1632,7 +1632,7 @@
         "type": "string"
       },
       "anchors": [
-        "gitBranch:«»,slug:xe",
+        "gitBranch:«»,slug:«»",
         "«»(){return this.#«»}«»(«»){this.#«».delete(«»)}"
       ],
       "note": "slug is the session's plan slug from the plan slug cache (a string); left out when the session has none."
@@ -1649,7 +1649,7 @@
         ]
       },
       "anchors": [
-        "parentUuid:«»?null:«»,logicalParentUuid:«»?we:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
+        "parentUuid:«»?null:«»,logicalParentUuid:«»?«»:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
       ],
       "note": "insertMessageChain builds the line as {parentUuid, logicalParentUuid, isSidechain, teamName, agentName, promptId, agentId, ...message, ...(session fields), version, gitBranch, slug}; parentUuid is null for a compact boundary line (it is true for the boundary check) and otherwise the uuid string of the previous line in the chain (the chain variable starts as the s parameter ?? null, so it is a string or null), or the sourceToolAssistantUUID string of a user line."
     },
@@ -1665,7 +1665,7 @@
         ]
       },
       "anchors": [
-        "parentUuid:«»?null:«»,logicalParentUuid:«»?we:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
+        "parentUuid:«»?null:«»,logicalParentUuid:«»?«»:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
       ],
       "note": "insertMessageChain builds the line as {parentUuid, logicalParentUuid, isSidechain, teamName, agentName, promptId, agentId, ...message, ...(session fields), version, gitBranch, slug}; logicalParentUuid is the chain variable (string, or null when the chain has no previous line) on a compact boundary line and undefined, so not written, on every other line."
     },
@@ -1674,7 +1674,7 @@
         "type": "boolean"
       },
       "anchors": [
-        "parentUuid:«»?null:«»,logicalParentUuid:«»?we:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
+        "parentUuid:«»?null:«»,logicalParentUuid:«»?«»:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
       ],
       "note": "insertMessageChain builds the line as {parentUuid, logicalParentUuid, isSidechain, teamName, agentName, promptId, agentId, ...message, ...(session fields), version, gitBranch, slug}; isSidechain is the boolean n parameter, set again after the literal."
     },
@@ -1683,7 +1683,7 @@
         "type": "string"
       },
       "anchors": [
-        "parentUuid:«»?null:«»,logicalParentUuid:«»?we:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
+        "parentUuid:«»?null:«»,logicalParentUuid:«»?«»:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
       ],
       "note": "insertMessageChain builds the line as {parentUuid, logicalParentUuid, isSidechain, teamName, agentName, promptId, agentId, ...message, ...(session fields), version, gitBranch, slug}; teamName comes from the optional team info object (h?.teamName), a string; left out when there is none."
     },
@@ -1692,7 +1692,7 @@
         "type": "string"
       },
       "anchors": [
-        "parentUuid:«»?null:«»,logicalParentUuid:«»?we:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
+        "parentUuid:«»?null:«»,logicalParentUuid:«»?«»:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
       ],
       "note": "insertMessageChain builds the line as {parentUuid, logicalParentUuid, isSidechain, teamName, agentName, promptId, agentId, ...message, ...(session fields), version, gitBranch, slug}; agentName comes from the optional team info object (h?.agentName), a string; left out when there is none."
     },
@@ -1701,7 +1701,7 @@
         "type": "string"
       },
       "anchors": [
-        "parentUuid:«»?null:«»,logicalParentUuid:«»?we:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
+        "parentUuid:«»?null:«»,logicalParentUuid:«»?«»:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
       ],
       "note": "insertMessageChain builds the line as {parentUuid, logicalParentUuid, isSidechain, teamName, agentName, promptId, agentId, ...message, ...(session fields), version, gitBranch, slug}; promptId is the prompt id of the request journal (a string) for a user line, and undefined, so not written, for every other type."
     },
@@ -1710,7 +1710,7 @@
         "type": "string"
       },
       "anchors": [
-        "parentUuid:«»?null:«»,logicalParentUuid:«»?we:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
+        "parentUuid:«»?null:«»,logicalParentUuid:«»?«»:void 0,isSidechain:«»,teamName:«»?.teamName,agentName:«»?.agentName,promptId:«».type===\"user\"?«»()??void 0:void 0,agentId:«»,"
       ],
       "note": "insertMessageChain builds the line as {parentUuid, logicalParentUuid, isSidechain, teamName, agentName, promptId, agentId, ...message, ...(session fields), version, gitBranch, slug}; agentId is the r parameter (the subagent id string), set again when isSidechain is true."
     },
@@ -1719,7 +1719,7 @@
         "enum": ["bg", "daemon", "daemon-worker"]
       },
       "anchors": [
-        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:Gxt",
+        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:«»",
         "e===\"bg\"||«»===\"daemon\"||«»===\"daemon-worker\")return «»;return}"
       ],
       "note": "The session fields function returns sessionKind from the session kind getter, which returns CLAUDE_CODE_SESSION_KIND when it is 'bg', 'daemon' or 'daemon-worker' and undefined otherwise (not written)."
@@ -1729,7 +1729,7 @@
         "type": "string"
       },
       "anchors": [
-        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:Gxt",
+        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:«»",
         "function «»(){return process.env.CLAUDE_CODE_ENTRYPOINT}async function «»(){let «»=«»();return{cwd:«»()??void 0,gitBranch:"
       ],
       "note": "The session fields function returns the CLAUDE_CODE_ENTRYPOINT environment value, a string; not written when it is unset."
@@ -1739,8 +1739,8 @@
         "type": "string"
       },
       "anchors": [
-        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:Gxt",
-        "function «»(){if(«».getStore()?.cwd===void 0&&«»()===null)return null;return «»()}"
+        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:«»",
+        "function «»(){if(«»()?.cwd===void 0&&«»()===null)return null;return «»()}"
       ],
       "note": "The session fields function returns the working directory string (ld() returns null or the cwd string, then ?? void 0 drops the null)."
     },
@@ -1749,7 +1749,7 @@
         "type": "string"
       },
       "anchors": [
-        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:Gxt"
+        "sessionKind:«»(),userType:«»(),entrypoint:«»(),cwd:«»()??void 0,sessionId:«»,version:«»"
       ],
       "note": "The session fields function returns the sessionId string given to insertMessageChain."
     },
@@ -1758,7 +1758,7 @@
         "type": "string"
       },
       "anchors": [
-        "gitBranch:«»,slug:xe",
+        "gitBranch:«»,slug:«»",
         "\"rev-parse\",\"--abbrev-ref\",\"HEAD\"],{cwd:«»,preserveOutputOnError:!1,...«»});return «»===0?«».trim()||\"HEAD\":\"HEAD\"};async function «»("
       ],
       "note": "gitBranch is the awaited current branch (a string from git rev-parse --abbrev-ref HEAD, 'HEAD' when detached); the writer leaves it out when the lookup throws."
@@ -1768,7 +1768,7 @@
         "type": "string"
       },
       "anchors": [
-        "gitBranch:«»,slug:xe",
+        "gitBranch:«»,slug:«»",
         "«»(){return this.#«»}«»(«»){this.#«».delete(«»)}"
       ],
       "note": "slug is the session's plan slug from the plan slug cache (a string); left out when the session has none."
@@ -2016,7 +2016,7 @@
       "anchors": [
         "subtype:\"stop_hook_summary\",hookCount:«»,hookInfos:«»,hookErrors:«»,hookAdditionalContext:«»,preventedContinuation:«»,stopReason:«»,hasOutput:«»,level:«»,timestamp:new Date().toISOString(),uuid:«»(),toolUseID:«»,hookLabel:«»,totalDurationMs:q",
         "yield «»(«»,«»,«»,«»,«»,«»,\"suggestion\",«»,void 0,void 0,«»)",
-        "subtype:\"informational\",content:`Tool ${_n(n)} running for ${s}s\\u2026`"
+        "subtype:\"informational\",content:`Tool ${«»(«»)} running for ${«»}s\\u2026`"
       ],
       "note": "The tool use id string (stop_hook_summary takes the Stop hook's tool use id)."
     },
@@ -2887,7 +2887,7 @@
         "type": "integer"
       },
       "anchors": [
-        "ym={output_tokens_details:{thinking_tokens:0},input_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,output_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:\"standard\",cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:\"\",iterations:[],speed:\"standard\",fallback_credit:null}",
+        "«»={output_tokens_details:{thinking_tokens:0},input_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,output_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:\"standard\",cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:\"\",iterations:[],speed:\"standard\",fallback_credit:null}",
         "usage:«»={output_tokens_details:null,input_tokens:0,output_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:null,cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:null,iterations:null,speed:null,fallback_credit:null}"
       ],
       "note": "usage: BetaUsage (SDK). The stream path merges the API usage with the defaults in ym, n.X ?? e.X, and the synthetic factory uses the K defaults. Token count, integer."
@@ -2897,7 +2897,7 @@
         "type": "integer"
       },
       "anchors": [
-        "ym={output_tokens_details:{thinking_tokens:0},input_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,output_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:\"standard\",cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:\"\",iterations:[],speed:\"standard\",fallback_credit:null}",
+        "«»={output_tokens_details:{thinking_tokens:0},input_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,output_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:\"standard\",cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:\"\",iterations:[],speed:\"standard\",fallback_credit:null}",
         "usage:«»={output_tokens_details:null,input_tokens:0,output_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:null,cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:null,iterations:null,speed:null,fallback_credit:null}"
       ],
       "note": "usage: BetaUsage (SDK). The stream path merges the API usage with the defaults in ym, n.X ?? e.X, and the synthetic factory uses the K defaults. Token count, integer."
@@ -2907,7 +2907,7 @@
         "type": "integer"
       },
       "anchors": [
-        "ym={output_tokens_details:{thinking_tokens:0},input_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,output_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:\"standard\",cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:\"\",iterations:[],speed:\"standard\",fallback_credit:null}",
+        "«»={output_tokens_details:{thinking_tokens:0},input_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,output_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:\"standard\",cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:\"\",iterations:[],speed:\"standard\",fallback_credit:null}",
         "usage:«»={output_tokens_details:null,input_tokens:0,output_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:null,cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:null,iterations:null,speed:null,fallback_credit:null}"
       ],
       "note": "usage: BetaUsage (SDK). The stream path merges the API usage with the defaults in ym, n.X ?? e.X, and the synthetic factory uses the K defaults. The API value can be null but the merge replaces null with the default 0, so an integer."
@@ -2917,7 +2917,7 @@
         "type": "integer"
       },
       "anchors": [
-        "ym={output_tokens_details:{thinking_tokens:0},input_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,output_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:\"standard\",cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:\"\",iterations:[],speed:\"standard\",fallback_credit:null}",
+        "«»={output_tokens_details:{thinking_tokens:0},input_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,output_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:\"standard\",cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:\"\",iterations:[],speed:\"standard\",fallback_credit:null}",
         "usage:«»={output_tokens_details:null,input_tokens:0,output_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:null,cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:null,iterations:null,speed:null,fallback_credit:null}"
       ],
       "note": "usage: BetaUsage (SDK). The stream path merges the API usage with the defaults in ym, n.X ?? e.X, and the synthetic factory uses the K defaults. The API value can be null but the merge replaces null with the default 0, so an integer."
@@ -2927,7 +2927,7 @@
         "type": "integer"
       },
       "anchors": [
-        "ym={output_tokens_details:{thinking_tokens:0},input_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,output_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:\"standard\",cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:\"\",iterations:[],speed:\"standard\",fallback_credit:null}"
+        "«»={output_tokens_details:{thinking_tokens:0},input_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,output_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:\"standard\",cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:\"\",iterations:[],speed:\"standard\",fallback_credit:null}"
       ],
       "note": "usage: BetaUsage (SDK). The stream path merges the API usage with the defaults in ym, n.X ?? e.X, and the synthetic factory uses the K defaults. BetaOutputTokensDetails.thinking_tokens."
     },
@@ -2936,7 +2936,7 @@
         "type": "integer"
       },
       "anchors": [
-        "ym={output_tokens_details:{thinking_tokens:0},input_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,output_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:\"standard\",cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:\"\",iterations:[],speed:\"standard\",fallback_credit:null}",
+        "«»={output_tokens_details:{thinking_tokens:0},input_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,output_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:\"standard\",cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:\"\",iterations:[],speed:\"standard\",fallback_credit:null}",
         "usage:«»={output_tokens_details:null,input_tokens:0,output_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:null,cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:null,iterations:null,speed:null,fallback_credit:null}"
       ],
       "note": "usage: BetaUsage (SDK). The stream path merges the API usage with the defaults in ym, n.X ?? e.X, and the synthetic factory uses the K defaults. BetaServerToolUsage.web_search_requests."
@@ -2946,7 +2946,7 @@
         "type": "integer"
       },
       "anchors": [
-        "ym={output_tokens_details:{thinking_tokens:0},input_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,output_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:\"standard\",cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:\"\",iterations:[],speed:\"standard\",fallback_credit:null}",
+        "«»={output_tokens_details:{thinking_tokens:0},input_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,output_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:\"standard\",cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:\"\",iterations:[],speed:\"standard\",fallback_credit:null}",
         "usage:«»={output_tokens_details:null,input_tokens:0,output_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:null,cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:null,iterations:null,speed:null,fallback_credit:null}"
       ],
       "note": "usage: BetaUsage (SDK). The stream path merges the API usage with the defaults in ym, n.X ?? e.X, and the synthetic factory uses the K defaults. BetaServerToolUsage.web_fetch_requests."
@@ -2956,7 +2956,7 @@
         "type": "integer"
       },
       "anchors": [
-        "ym={output_tokens_details:{thinking_tokens:0},input_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,output_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:\"standard\",cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:\"\",iterations:[],speed:\"standard\",fallback_credit:null}",
+        "«»={output_tokens_details:{thinking_tokens:0},input_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,output_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:\"standard\",cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:\"\",iterations:[],speed:\"standard\",fallback_credit:null}",
         "usage:«»={output_tokens_details:null,input_tokens:0,output_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:null,cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:null,iterations:null,speed:null,fallback_credit:null}"
       ],
       "note": "usage: BetaUsage (SDK). The stream path merges the API usage with the defaults in ym, n.X ?? e.X, and the synthetic factory uses the K defaults. BetaCacheCreation.ephemeral_1h_input_tokens."
@@ -2966,7 +2966,7 @@
         "type": "integer"
       },
       "anchors": [
-        "ym={output_tokens_details:{thinking_tokens:0},input_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,output_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:\"standard\",cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:\"\",iterations:[],speed:\"standard\",fallback_credit:null}",
+        "«»={output_tokens_details:{thinking_tokens:0},input_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,output_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:\"standard\",cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:\"\",iterations:[],speed:\"standard\",fallback_credit:null}",
         "usage:«»={output_tokens_details:null,input_tokens:0,output_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:null,cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:null,iterations:null,speed:null,fallback_credit:null}"
       ],
       "note": "usage: BetaUsage (SDK). The stream path merges the API usage with the defaults in ym, n.X ?? e.X, and the synthetic factory uses the K defaults. BetaCacheCreation.ephemeral_5m_input_tokens."
@@ -2983,7 +2983,7 @@
         ]
       },
       "anchors": [
-        "ym={output_tokens_details:{thinking_tokens:0},input_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,output_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:\"standard\",cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:\"\",iterations:[],speed:\"standard\",fallback_credit:null}",
+        "«»={output_tokens_details:{thinking_tokens:0},input_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,output_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:\"standard\",cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:\"\",iterations:[],speed:\"standard\",fallback_credit:null}",
         "usage:«»={output_tokens_details:null,input_tokens:0,output_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:null,cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:null,iterations:null,speed:null,fallback_credit:null}"
       ],
       "note": "usage: BetaUsage (SDK). The stream path merges the API usage with the defaults in ym, n.X ?? e.X, and the synthetic factory uses the K defaults. standard|priority|batch|null; the K defaults write null, ym writes 'standard'."
@@ -3000,7 +3000,7 @@
         ]
       },
       "anchors": [
-        "ym={output_tokens_details:{thinking_tokens:0},input_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,output_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:\"standard\",cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:\"\",iterations:[],speed:\"standard\",fallback_credit:null}",
+        "«»={output_tokens_details:{thinking_tokens:0},input_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,output_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:\"standard\",cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:\"\",iterations:[],speed:\"standard\",fallback_credit:null}",
         "usage:«»={output_tokens_details:null,input_tokens:0,output_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:null,cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:null,iterations:null,speed:null,fallback_credit:null}"
       ],
       "note": "usage: BetaUsage (SDK). The stream path merges the API usage with the defaults in ym, n.X ?? e.X, and the synthetic factory uses the K defaults. string | null; ym writes '' and K writes null."
@@ -3017,7 +3017,7 @@
         ]
       },
       "anchors": [
-        "ym={output_tokens_details:{thinking_tokens:0},input_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,output_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:\"standard\",cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:\"\",iterations:[],speed:\"standard\",fallback_credit:null}",
+        "«»={output_tokens_details:{thinking_tokens:0},input_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,output_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:\"standard\",cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:\"\",iterations:[],speed:\"standard\",fallback_credit:null}",
         "usage:«»={output_tokens_details:null,input_tokens:0,output_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:null,cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:null,iterations:null,speed:null,fallback_credit:null}"
       ],
       "note": "usage: BetaUsage (SDK). The stream path merges the API usage with the defaults in ym, n.X ?? e.X, and the synthetic factory uses the K defaults. standard|fast|null."
@@ -3206,7 +3206,7 @@
         ]
       },
       "anchors": [
-        "ym={output_tokens_details:{thinking_tokens:0},input_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,output_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:\"standard\",cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:\"\",iterations:[],speed:\"standard\",fallback_credit:null}",
+        "«»={output_tokens_details:{thinking_tokens:0},input_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,output_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:\"standard\",cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:\"\",iterations:[],speed:\"standard\",fallback_credit:null}",
         "usage:«»={output_tokens_details:null,input_tokens:0,output_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:null,cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:null,iterations:null,speed:null,fallback_credit:null}"
       ],
       "note": "usage: BetaUsage (SDK). The stream path merges the API usage with the defaults in ym, n.X ?? e.X, and the synthetic factory uses the K defaults. BetaIterationsUsage | null: an array of message, compaction, advisor_message and fallback_message iteration objects; ym writes [] and K writes null."
@@ -3239,7 +3239,7 @@
         ]
       },
       "anchors": [
-        "ym={output_tokens_details:{thinking_tokens:0},input_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,output_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:\"standard\",cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:\"\",iterations:[],speed:\"standard\",fallback_credit:null}",
+        "«»={output_tokens_details:{thinking_tokens:0},input_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,output_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:\"standard\",cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:\"\",iterations:[],speed:\"standard\",fallback_credit:null}",
         "usage:«»={output_tokens_details:null,input_tokens:0,output_tokens:0,cache_creation_input_tokens:0,cache_read_input_tokens:0,server_tool_use:{web_search_requests:0,web_fetch_requests:0},service_tier:null,cache_creation:{ephemeral_1h_input_tokens:0,ephemeral_5m_input_tokens:0},inference_geo:null,iterations:null,speed:null,fallback_credit:null}"
       ],
       "note": "usage: BetaUsage (SDK). The stream path merges the API usage with the defaults in ym, n.X ?? e.X, and the synthetic factory uses the K defaults. BetaFallbackCreditUsage | null; both defaults write null. The inner shape follows the SDK type (redeemed | not_applied with reason)."
@@ -3248,7 +3248,7 @@
       "schema": {
         "type": "string"
       },
-      "anchors": ["apiBlockIndex:«».index,requestId:«»??void 0,requestRef:Sm"],
+      "anchors": ["apiBlockIndex:«».index,requestId:«»??void 0,requestRef:«»"],
       "note": "assistant top-level fields come from the object literals of the stream path, the error-message factory Ws/r7n and the stream-json rebuild; requestId is bl ?? undefined, the request id string from the response (fXe returns a string or null, null becomes undefined, so it is not written)."
     },
     "assistant.apiBlockIndex": {
@@ -3347,7 +3347,7 @@
         "type": "string"
       },
       "anchors": [
-        "dv=typeof «»===\"string\"&&«»(«»)?DS:void 0",
+        "let «»=«».output_config?.effort;«»=typeof «»===\"string\"&&«»(«»)?«»:void 0",
         "...«»&&{advisorModel:«»},...«»!==void 0&&{effort:«»},perTurnEffort:«»,perTurnTiming:«»,...{}};return",
         "...void 0,...«»!==void 0&&{effort:«»}",
         "...«»&&{advisorModel:«»},...«»!==void 0&&{effort:«»},perTurnEffort:«»,perTurnTiming:«»,...{}};if("
@@ -3366,7 +3366,7 @@
         ]
       },
       "anchors": [
-        "RR=«».outputConfig.effort??RR",
+        "«»=«».outputConfig.effort??«»",
         "...«»!==void 0&&{effort:«»},perTurnEffort:«»,perTurnTiming:«»,...{}};return",
         "...void 0,...«»!==void 0&&{effort:«»},perTurnEffort:«»",
         "...«»!==void 0&&{effort:«»},perTurnEffort:«»,perTurnTiming:«»,...{}};if("
@@ -3387,7 +3387,7 @@
       "schema": {
         "type": "string"
       },
-      "anchors": ["...wa!==void 0&&{thinkingDisplay:«»}"],
+      "anchors": ["...«»!==void 0&&{thinkingDisplay:«»}"],
       "note": "assistant top-level fields come from the object literals of the stream path, the error-message factory Ws/r7n and the stream-json rebuild; thinkingDisplay is the display mode string of the thinking config (the program reads 'summarized' or 'omitted' elsewhere); written only when defined."
     },
     "assistant.serverClassifierRequest": {
@@ -3415,8 +3415,8 @@
         }
       },
       "anchors": [
-        "...ac.length>0&&{batchToolUses:«»}",
-        "...xf.length>0&&{batchToolUses:«»}"
+        "...«».length>0&&{batchToolUses:«»}",
+        "...«».length>0&&{batchToolUses:«»}"
       ],
       "note": "assistant top-level fields come from the object literals of the stream path, the error-message factory Ws/r7n and the stream-json rebuild; batchToolUses is a non-empty array of {id, name} (the stream-json schema batch_tool_uses is Array<{id: string, name: string}>)."
     },
@@ -3425,8 +3425,8 @@
         "type": "object"
       },
       "anchors": [
-        "...Xd!==void 0&&{wireToolInputs:«»}",
-        "...qc!==void 0&&{wireToolInputs:«»}"
+        "...«»!==void 0&&{wireToolInputs:«»}",
+        "...«»!==void 0&&{wireToolInputs:«»}"
       ],
       "note": "assistant top-level fields come from the object literals of the stream path, the error-message factory Ws/r7n and the stream-json rebuild; wireToolInputs is an object keyed by tool_use id holding the raw API tool input (the stream-json schema is a record of string to unknown)."
     },
@@ -3435,7 +3435,7 @@
         "type": "object"
       },
       "anchors": [
-        "...zd!==void 0&&{wireIngestContext:«»}",
+        "...«»!==void 0&&{wireIngestContext:«»}",
         "...«»!==void 0&&{wireToolInputs:«»},...«»!==void 0&&{wireIngestContext:«»},...«»!==void 0&&«»(«»)",
         "...«»!==void 0&&{wireToolInputs:«»},...«»!==void 0&&{wireIngestContext:«»},...«»!==void 0&&{wireIngestContext:«»}"
       ],
@@ -3502,7 +3502,7 @@
       "anchors": [
         "error:\"authentication_failed\"",
         "error:\"cloud_credential_error\"",
-        "U([\"authentication_failed\",\"oauth_org_not_allowed\""
+        "«»([\"authentication_failed\",\"oauth_org_not_allowed\""
       ],
       "note": "assistant top-level fields come from the object literals of the stream path, the error-message factory Ws/r7n and the stream-json rebuild; error is one of the 13 kinds in the stream-json error enum; every Ws({error}) call site passes one of them."
     },
@@ -3624,7 +3624,7 @@
         "type": "string"
       },
       "anchors": [
-        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...Q!==void 0&&{repeatsCompactSummary:«»},...Se!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new Date().toISOString()),toolUseResult:we"
+        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. uuid is the uuid argument or a randomUUID string."
     },
@@ -3633,7 +3633,7 @@
         "type": "string"
       },
       "anchors": [
-        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...Q!==void 0&&{repeatsCompactSummary:«»},...Se!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new Date().toISOString()),toolUseResult:we"
+        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. timestamp is the timestamp argument or new Date().toISOString(), a string."
     },
@@ -3642,7 +3642,7 @@
         "const": "user"
       },
       "anchors": [
-        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...Q!==void 0&&{repeatsCompactSummary:«»},...Se!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new Date().toISOString()),toolUseResult:we"
+        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. role is the literal 'user'. Type follows MessageParam in @anthropic-ai/sdk."
     },
@@ -3661,7 +3661,7 @@
         ]
       },
       "anchors": [
-        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...Q!==void 0&&{repeatsCompactSummary:«»},...Se!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new Date().toISOString()),toolUseResult:we"
+        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. content is a string, or an array of content block objects (text, image, document, tool_result, ...), as MessageParam.content in @anthropic-ai/sdk (string | Array<ContentBlockParam>)."
     },
@@ -3670,7 +3670,7 @@
         "type": "boolean"
       },
       "anchors": [
-        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...Q!==void 0&&{repeatsCompactSummary:«»},...Se!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new Date().toISOString()),toolUseResult:we"
+        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. isMeta: every call site passes true (the literal !0 or a condition ending in ||void 0), so only true is written, the type is boolean."
     },
@@ -3679,7 +3679,7 @@
         "type": "boolean"
       },
       "anchors": [
-        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...Q!==void 0&&{repeatsCompactSummary:«»},...Se!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new Date().toISOString()),toolUseResult:we"
+        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. isCompactSummary: every call site passes true (the literal !0 or a condition ending in ||void 0), so only true is written, the type is boolean."
     },
@@ -3688,7 +3688,7 @@
         "type": "boolean"
       },
       "anchors": [
-        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...Q!==void 0&&{repeatsCompactSummary:«»},...Se!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new Date().toISOString()),toolUseResult:we"
+        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. isVisibleInTranscriptOnly: every call site passes true (the literal !0 or a condition ending in ||void 0), so only true is written, the type is boolean."
     },
@@ -3697,7 +3697,7 @@
         "type": "boolean"
       },
       "anchors": [
-        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...Q!==void 0&&{repeatsCompactSummary:«»},...Se!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new Date().toISOString()),toolUseResult:we"
+        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. turnCompanion: every call site passes true (the literal !0 or a condition ending in ||void 0), so only true is written, the type is boolean."
     },
@@ -3706,7 +3706,7 @@
         "type": "boolean"
       },
       "anchors": [
-        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...Q!==void 0&&{repeatsCompactSummary:«»},...Se!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new Date().toISOString()),toolUseResult:we"
+        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. isVirtual: every call site passes true (the literal !0 or a condition ending in ||void 0), so only true is written, the type is boolean."
     },
@@ -3715,7 +3715,7 @@
         "type": "boolean"
       },
       "anchors": [
-        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...Q!==void 0&&{repeatsCompactSummary:«»},...Se!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new Date().toISOString()),toolUseResult:we"
+        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. ephemeral: every call site passes true (the literal !0 or a condition ending in ||void 0), so only true is written, the type is boolean."
     },
@@ -3724,7 +3724,7 @@
         "type": "boolean"
       },
       "anchors": [
-        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...Q!==void 0&&{repeatsCompactSummary:«»},...Se!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new Date().toISOString()),toolUseResult:we"
+        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. repeatsCompactSummary: every call site passes true (the literal !0 or a condition ending in ||void 0), so only true is written, the type is boolean."
     },
@@ -3733,7 +3733,7 @@
         "enum": ["wrap_up", "release", "near_limit"]
       },
       "anchors": [
-        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...Q!==void 0&&{repeatsCompactSummary:«»},...Se!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new Date().toISOString()),toolUseResult:we",
+        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»",
         "\"wrap_up\""
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. usageLimitNote: the three call sites pass 'wrap_up', 'release' and 'near_limit'."
@@ -3758,7 +3758,7 @@
         }
       },
       "anchors": [
-        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...Q!==void 0&&{repeatsCompactSummary:«»},...Se!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new Date().toISOString()),toolUseResult:we",
+        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»",
         "{promptShellHandOff:{agentId:«»,commands:«»}}"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. promptShellHandOff is {agentId: string or null (agentId ?? null), commands: non-empty array of the shell commands}."
@@ -3773,8 +3773,8 @@
         }
       },
       "anchors": [
-        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...Q!==void 0&&{repeatsCompactSummary:«»},...Se!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new Date().toISOString()),toolUseResult:we",
-        "{mcpSkill:{...ee,name:«».name}}"
+        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»",
+        "{mcpSkill:{...«»,name:«».name}}"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. mcpSkill is the object {...(skill info), name: the skill name string}; other keys come from the skill info object and are not typed here."
     },
@@ -3794,7 +3794,7 @@
         }
       },
       "anchors": [
-        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...Q!==void 0&&{repeatsCompactSummary:«»},...Se!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new Date().toISOString()),toolUseResult:we",
+        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»",
         "{summarizeMetadata:{messagesSummarized:«».length,userContext:«»,direction:«»}}"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. summarizeMetadata is {messagesSummarized: message count, userContext: the focus text, direction: the summarize direction string ('up_to' or 'from')}."
@@ -3804,7 +3804,7 @@
         "type": "string"
       },
       "anchors": [
-        "toolDenialKind:«»,toolDenialEndsTurn:«»,...xe&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...it!==void 0&&{permissionDecision:«»},...at!==void 0&&{sandboxViolations:«»},...mt!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...bn!==void 0&&{promptId:«»},interruptedMessageId:«»,...rn!==void 0&&{refusedMessageId:«»},interruptedByShutdown:cn",
+        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
         "\"user-rejected\"",
         "\"permission-rule\"",
         "\"interrupted\"",
@@ -3817,8 +3817,8 @@
         "type": "boolean"
       },
       "anchors": [
-        "toolDenialKind:«»,toolDenialEndsTurn:«»,...xe&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...it!==void 0&&{permissionDecision:«»},...at!==void 0&&{sandboxViolations:«»},...mt!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...bn!==void 0&&{promptId:«»},interruptedMessageId:«»,...rn!==void 0&&{refusedMessageId:«»},interruptedByShutdown:cn",
-        "Ao.behavior===\"deny\"&&«».endsTurn?!0:void 0"
+        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
+        "«».behavior===\"deny\"&&«».endsTurn?!0:void 0"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. toolDenialEndsTurn is true when written, else undefined."
     },
@@ -3827,8 +3827,8 @@
         "type": "boolean"
       },
       "anchors": [
-        "toolDenialKind:«»,toolDenialEndsTurn:«»,...xe&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...it!==void 0&&{permissionDecision:«»},...at!==void 0&&{sandboxViolations:«»},...mt!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...bn!==void 0&&{promptId:«»},interruptedMessageId:«»,...rn!==void 0&&{refusedMessageId:«»},interruptedByShutdown:cn",
-        "Ao.decisionReason.monitorBlocked===!0?!0:void 0"
+        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
+        "«».decisionReason.monitorBlocked===!0?!0:void 0"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. toolDenialMonitorBlocked is true when written (the spread is guarded by the value)."
     },
@@ -3837,8 +3837,8 @@
         "type": "array"
       },
       "anchors": [
-        "toolDenialKind:«»,toolDenialEndsTurn:«»,...xe&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...it!==void 0&&{permissionDecision:«»},...at!==void 0&&{sandboxViolations:«»},...mt!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...bn!==void 0&&{promptId:«»},interruptedMessageId:«»,...rn!==void 0&&{refusedMessageId:«»},interruptedByShutdown:cn",
-        "_s instanceof «»?«».sandboxViolations:void 0"
+        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
+        "«» instanceof «»?«».sandboxViolations:void 0"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. sandboxViolations is an array of sandbox violation records from the sandbox runtime; the items are not typed here."
     },
@@ -3847,8 +3847,8 @@
         "type": "boolean"
       },
       "anchors": [
-        "toolDenialKind:«»,toolDenialEndsTurn:«»,...xe&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...it!==void 0&&{permissionDecision:«»},...at!==void 0&&{sandboxViolations:«»},...mt!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...bn!==void 0&&{promptId:«»},interruptedMessageId:«»,...rn!==void 0&&{refusedMessageId:«»},interruptedByShutdown:cn",
-        "_s instanceof «»?«».sandboxed:void 0"
+        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
+        "«» instanceof «»?«».sandboxed:void 0"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. sandboxed is a boolean flag."
     },
@@ -3857,8 +3857,8 @@
         "type": "boolean"
       },
       "anchors": [
-        "toolDenialKind:«»,toolDenialEndsTurn:«»,...xe&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...it!==void 0&&{permissionDecision:«»},...at!==void 0&&{sandboxViolations:«»},...mt!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...bn!==void 0&&{promptId:«»},interruptedMessageId:«»,...rn!==void 0&&{refusedMessageId:«»},interruptedByShutdown:cn",
-        "toolEndsTurn:Ic"
+        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
+        "toolEndsTurn:«»"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. toolEndsTurn is a boolean flag set when the tool ends the turn."
     },
@@ -3875,7 +3875,7 @@
         }
       },
       "anchors": [
-        "toolDenialKind:«»,toolDenialEndsTurn:«»,...xe&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...it!==void 0&&{permissionDecision:«»},...at!==void 0&&{sandboxViolations:«»},...mt!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...bn!==void 0&&{promptId:«»},interruptedMessageId:«»,...rn!==void 0&&{refusedMessageId:«»},interruptedByShutdown:cn",
+        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
         "mcpMeta:«».mcpMeta"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. mcpMeta holds the MCP CallToolResult fields _meta and structuredContent (@modelcontextprotocol/sdk CallToolResult: _meta?: object, structuredContent?: object); only the keys present in the tool result are written."
@@ -3888,7 +3888,7 @@
         }
       },
       "anchors": [
-        "toolDenialKind:«»,toolDenialEndsTurn:«»,...xe&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...it!==void 0&&{permissionDecision:«»},...at!==void 0&&{sandboxViolations:«»},...mt!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...bn!==void 0&&{promptId:«»},interruptedMessageId:«»,...rn!==void 0&&{refusedMessageId:«»},interruptedByShutdown:cn",
+        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
         "q!==void 0?[«»]:void 0"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. imagePasteIds is an array of paste ids (numbers) of images pasted in the prompt."
@@ -3898,7 +3898,7 @@
         "type": "string"
       },
       "anchors": [
-        "toolDenialKind:«»,toolDenialEndsTurn:«»,...xe&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...it!==void 0&&{permissionDecision:«»},...at!==void 0&&{sandboxViolations:«»},...mt!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...bn!==void 0&&{promptId:«»},interruptedMessageId:«»,...rn!==void 0&&{refusedMessageId:«»},interruptedByShutdown:cn",
+        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
         "sourceToolAssistantUUID:«».uuid"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. sourceToolAssistantUUID is the uuid string of the assistant line holding the tool_use."
@@ -3915,8 +3915,8 @@
         ]
       },
       "anchors": [
-        "toolDenialKind:«»,toolDenialEndsTurn:«»,...xe&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...it!==void 0&&{permissionDecision:«»},...at!==void 0&&{sandboxViolations:«»},...mt!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...bn!==void 0&&{promptId:«»},interruptedMessageId:«»,...rn!==void 0&&{refusedMessageId:«»},interruptedByShutdown:cn",
-        "XD=[\"acceptEdits\",\"auto\",\"bypassPermissions\",\"default\",\"dontAsk\",\"plan\"]"
+        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
+        "«»=[\"acceptEdits\",\"auto\",\"bypassPermissions\",\"default\",\"dontAsk\",\"plan\"]"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. permissionMode is a permission mode string; the program's list of modes is acceptEdits, auto, bypassPermissions, default, dontAsk, plan, and the reader drops other values."
     },
@@ -3945,7 +3945,7 @@
         }
       },
       "anchors": [
-        "toolDenialKind:«»,toolDenialEndsTurn:«»,...xe&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...it!==void 0&&{permissionDecision:«»},...at!==void 0&&{sandboxViolations:«»},...mt!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...bn!==void 0&&{promptId:«»},interruptedMessageId:«»,...rn!==void 0&&{refusedMessageId:«»},interruptedByShutdown:cn"
+        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. origin is an object with a kind string ('human', 'plugin', 'channel', 'task-notification', 'peer', 'coordinator', 'unclassified', 'observer', 'auto-continuation', 'observer-activity', 'slack-ping' are handled by the origin helper dle), plus kind-specific keys: name and asUser (plugin), server (channel), subkind (task-notification), plugin (peer, coordinator)."
     },
@@ -3954,7 +3954,7 @@
         "enum": ["typed", "queued", "suggestion_accepted", "sdk", "system"]
       },
       "anchors": [
-        "toolDenialKind:«»,toolDenialEndsTurn:«»,...xe&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...it!==void 0&&{permissionDecision:«»},...at!==void 0&&{sandboxViolations:«»},...mt!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...bn!==void 0&&{promptId:«»},interruptedMessageId:«»,...rn!==void 0&&{refusedMessageId:«»},interruptedByShutdown:cn",
+        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
         "case\"typed\":case\"queued\":case\"suggestion_accepted\":return{kind:\"unclassified\"};case\"sdk\""
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. promptSource is one of the five values the origin helper switches on."
@@ -3964,8 +3964,8 @@
         "type": "string"
       },
       "anchors": [
-        "toolDenialKind:«»,toolDenialEndsTurn:«»,...xe&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...it!==void 0&&{permissionDecision:«»},...at!==void 0&&{sandboxViolations:«»},...mt!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...bn!==void 0&&{promptId:«»},interruptedMessageId:«»,...rn!==void 0&&{refusedMessageId:«»},interruptedByShutdown:cn",
-        "interruptedMessageId:Bn"
+        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
+        "interruptedMessageId:«»"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. interruptedMessageId is a message uuid string."
     },
@@ -3974,7 +3974,7 @@
         "type": "boolean"
       },
       "anchors": [
-        "toolDenialKind:«»,toolDenialEndsTurn:«»,...xe&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...it!==void 0&&{permissionDecision:«»},...at!==void 0&&{sandboxViolations:«»},...mt!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...bn!==void 0&&{promptId:«»},interruptedMessageId:«»,...rn!==void 0&&{refusedMessageId:«»},interruptedByShutdown:cn",
+        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
         "function «»(«»){return «»(«».reason)===\"shutdown\"?!0:void 0}"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. interruptedByShutdown is true when the abort reason is 'shutdown' and is not written otherwise."
@@ -4115,7 +4115,7 @@
       "anchors": [
         "attachment:{type:\"queued_command\",prompt:«».text,source_uuid:«»(),origin:{kind:\"unclassified\"},timestamp:«».timestamp,isMeta:!0,forwardedIntent:{lineage:«».lineage,source:«».source}",
         "type:\"goal_status\",met:«»,sentinel:!0,condition:e",
-        "type:\"async_hook_response_batch\",hooks:_"
+        "type:\"async_hook_response_batch\",hooks:«»"
       ],
       "note": "The attachment line is {type:'attachment', uuid, timestamp, attachment} built by the attachment constructors (a different object shape per attachment type); the key below is the union over those shapes. attachment.type is the string tag of the attachment kind (queued_command, goal_status, async_hook_response_batch, teammate_shutdown_batch and many more); the list of kinds is long and not enumerated here."
     },
@@ -4220,7 +4220,7 @@
         "type": "string"
       },
       "anchors": [
-        "toolUseID:`bash-progress-${Me++}`",
+        "toolUseID:`bash-progress-${«»++}`",
         "toolUseID:`${n}-heartbeat-${w++}`"
       ],
       "note": "The progress line is {type:'progress', data, toolUseID, parentToolUseID, uuid}; data is a different object per progress type (hook_progress, bash_progress, powershell_progress, tool_heartbeat, agent_progress, skill_progress, agent_api_retry, search_results_received, query_update, workflow_log, workflow_phase, workflow_agent, artifact_publish_retry, ...); the key below is the union over the literals of those types. toolUseID is a string: the tool_use id, or a generated id such as 'bash-progress-N', 'workflow_log', 'agent_<message id>'."
@@ -4394,7 +4394,7 @@
         ]
       },
       "anchors": [
-        "type:\"workflow_log\",message:J",
+        "type:\"workflow_log\",message:«»",
         "type:\"agent_progress\",prompt:«»,agentId:«»,agentType:«».agentType,isBuiltIn:«»(«»),description:«»,resolvedModel:«»,modelsUsed:E"
       ],
       "note": "The progress line is {type:'progress', data, toolUseID, parentToolUseID, uuid}; data is a different object per progress type (hook_progress, bash_progress, powershell_progress, tool_heartbeat, agent_progress, skill_progress, agent_api_retry, search_results_received, query_update, workflow_log, workflow_phase, workflow_agent, artifact_publish_retry, ...); the key below is the union over the literals of those types. message is a string for workflow_log and a user or assistant message object for agent_progress and skill_progress."
@@ -4415,7 +4415,7 @@
       },
       "anchors": [
         "type:\"agent_progress\",prompt:«»,agentId:«»,agentType:«».agentType,isBuiltIn:«»(«»),description:«»,resolvedModel:«»,modelsUsed:E",
-        "type:\"agent_api_retry\",agentId:«»,agentType:«».agentType,attempt:«».retryAttempt,maxRetries:«».maxRetries,retryDelayMs:«».retryInMs,errorStatus:«».error.status,errorCategory:V"
+        "type:\"agent_api_retry\",agentId:«»,agentType:«».agentType,attempt:«».retryAttempt,maxRetries:«».maxRetries,retryDelayMs:«».retryInMs,errorStatus:«».error.status,errorCategory:«»"
       ],
       "note": "The progress line is {type:'progress', data, toolUseID, parentToolUseID, uuid}; data is a different object per progress type (hook_progress, bash_progress, powershell_progress, tool_heartbeat, agent_progress, skill_progress, agent_api_retry, search_results_received, query_update, workflow_log, workflow_phase, workflow_agent, artifact_publish_retry, ...); the key below is the union over the literals of those types. agentId is the agent id string."
     },
@@ -4425,7 +4425,7 @@
       },
       "anchors": [
         "type:\"agent_progress\",prompt:«»,agentId:«»,agentType:«».agentType,isBuiltIn:«»(«»),description:«»,resolvedModel:«»,modelsUsed:E",
-        "type:\"agent_api_retry\",agentId:«»,agentType:«».agentType,attempt:«».retryAttempt,maxRetries:«».maxRetries,retryDelayMs:«».retryInMs,errorStatus:«».error.status,errorCategory:V"
+        "type:\"agent_api_retry\",agentId:«»,agentType:«».agentType,attempt:«».retryAttempt,maxRetries:«».maxRetries,retryDelayMs:«».retryInMs,errorStatus:«».error.status,errorCategory:«»"
       ],
       "note": "The progress line is {type:'progress', data, toolUseID, parentToolUseID, uuid}; data is a different object per progress type (hook_progress, bash_progress, powershell_progress, tool_heartbeat, agent_progress, skill_progress, agent_api_retry, search_results_received, query_update, workflow_log, workflow_phase, workflow_agent, artifact_publish_retry, ...); the key below is the union over the literals of those types. agentType is the agent type string."
     },
@@ -4462,7 +4462,7 @@
         "type": "number"
       },
       "anchors": [
-        "type:\"agent_api_retry\",agentId:«»,agentType:«».agentType,attempt:«».retryAttempt,maxRetries:«».maxRetries,retryDelayMs:«».retryInMs,errorStatus:«».error.status,errorCategory:V",
+        "type:\"agent_api_retry\",agentId:«»,agentType:«».agentType,attempt:«».retryAttempt,maxRetries:«».maxRetries,retryDelayMs:«».retryInMs,errorStatus:«».error.status,errorCategory:«»",
         "type:\"workflow_agent\",index:«»,label:«»,phaseIndex:«»,phaseTitle:Re"
       ],
       "note": "The progress line is {type:'progress', data, toolUseID, parentToolUseID, uuid}; data is a different object per progress type (hook_progress, bash_progress, powershell_progress, tool_heartbeat, agent_progress, skill_progress, agent_api_retry, search_results_received, query_update, workflow_log, workflow_phase, workflow_agent, artifact_publish_retry, ...); the key below is the union over the literals of those types. attempt (agent_api_retry, workflow_agent, artifact_publish_retry) is the attempt number."
@@ -4472,7 +4472,7 @@
         "type": "number"
       },
       "anchors": [
-        "type:\"agent_api_retry\",agentId:«»,agentType:«».agentType,attempt:«».retryAttempt,maxRetries:«».maxRetries,retryDelayMs:«».retryInMs,errorStatus:«».error.status,errorCategory:V"
+        "type:\"agent_api_retry\",agentId:«»,agentType:«».agentType,attempt:«».retryAttempt,maxRetries:«».maxRetries,retryDelayMs:«».retryInMs,errorStatus:«».error.status,errorCategory:«»"
       ],
       "note": "The progress line is {type:'progress', data, toolUseID, parentToolUseID, uuid}; data is a different object per progress type (hook_progress, bash_progress, powershell_progress, tool_heartbeat, agent_progress, skill_progress, agent_api_retry, search_results_received, query_update, workflow_log, workflow_phase, workflow_agent, artifact_publish_retry, ...); the key below is the union over the literals of those types. maxRetries (agent_api_retry) is the retry limit number."
     },
@@ -4481,7 +4481,7 @@
         "type": "number"
       },
       "anchors": [
-        "type:\"agent_api_retry\",agentId:«»,agentType:«».agentType,attempt:«».retryAttempt,maxRetries:«».maxRetries,retryDelayMs:«».retryInMs,errorStatus:«».error.status,errorCategory:V"
+        "type:\"agent_api_retry\",agentId:«»,agentType:«».agentType,attempt:«».retryAttempt,maxRetries:«».maxRetries,retryDelayMs:«».retryInMs,errorStatus:«».error.status,errorCategory:«»"
       ],
       "note": "The progress line is {type:'progress', data, toolUseID, parentToolUseID, uuid}; data is a different object per progress type (hook_progress, bash_progress, powershell_progress, tool_heartbeat, agent_progress, skill_progress, agent_api_retry, search_results_received, query_update, workflow_log, workflow_phase, workflow_agent, artifact_publish_retry, ...); the key below is the union over the literals of those types. retryDelayMs (agent_api_retry) is a delay in ms."
     },
@@ -4490,7 +4490,7 @@
         "type": "number"
       },
       "anchors": [
-        "type:\"agent_api_retry\",agentId:«»,agentType:«».agentType,attempt:«».retryAttempt,maxRetries:«».maxRetries,retryDelayMs:«».retryInMs,errorStatus:«».error.status,errorCategory:V"
+        "type:\"agent_api_retry\",agentId:«»,agentType:«».agentType,attempt:«».retryAttempt,maxRetries:«».maxRetries,retryDelayMs:«».retryInMs,errorStatus:«».error.status,errorCategory:«»"
       ],
       "note": "The progress line is {type:'progress', data, toolUseID, parentToolUseID, uuid}; data is a different object per progress type (hook_progress, bash_progress, powershell_progress, tool_heartbeat, agent_progress, skill_progress, agent_api_retry, search_results_received, query_update, workflow_log, workflow_phase, workflow_agent, artifact_publish_retry, ...); the key below is the union over the literals of those types. errorStatus (agent_api_retry) is the HTTP status of the error (a number; not written when the error has none)."
     },
@@ -4691,8 +4691,8 @@
       "anchors": [
         "type:\"api-request\",sessionId:«».sessionId",
         "base:«».lastId",
-        "requestDigest:xe",
-        "cutRequestDigest:xe",
+        "requestDigest:«»",
+        "cutRequestDigest:«»",
         "shapeHash:Q"
       ],
       "note": "A journal line the request journal writes (a hash-chained record of API request bodies): sessionId is a string: the session id, the agent id (written only for subagents), the line's id (a randomUUID string), the query source name, the shape hash, the id of the previous line (base), or the sha256 hex digest of the request (requestDigest, cutRequestDigest)."
@@ -4704,8 +4704,8 @@
       "anchors": [
         "type:\"api-request\",sessionId:«».sessionId",
         "base:«».lastId",
-        "requestDigest:xe",
-        "cutRequestDigest:xe",
+        "requestDigest:«»",
+        "cutRequestDigest:«»",
         "shapeHash:Q"
       ],
       "note": "A journal line the request journal writes (a hash-chained record of API request bodies): agentId is a string: the session id, the agent id (written only for subagents), the line's id (a randomUUID string), the query source name, the shape hash, the id of the previous line (base), or the sha256 hex digest of the request (requestDigest, cutRequestDigest)."
@@ -4717,8 +4717,8 @@
       "anchors": [
         "type:\"api-request\",sessionId:«».sessionId",
         "base:«».lastId",
-        "requestDigest:xe",
-        "cutRequestDigest:xe",
+        "requestDigest:«»",
+        "cutRequestDigest:«»",
         "shapeHash:Q"
       ],
       "note": "A journal line the request journal writes (a hash-chained record of API request bodies): id is a string: the session id, the agent id (written only for subagents), the line's id (a randomUUID string), the query source name, the shape hash, the id of the previous line (base), or the sha256 hex digest of the request (requestDigest, cutRequestDigest)."
@@ -4730,8 +4730,8 @@
       "anchors": [
         "type:\"api-request\",sessionId:«».sessionId",
         "base:«».lastId",
-        "requestDigest:xe",
-        "cutRequestDigest:xe",
+        "requestDigest:«»",
+        "cutRequestDigest:«»",
         "shapeHash:Q"
       ],
       "note": "A journal line the request journal writes (a hash-chained record of API request bodies): querySource is a string: the session id, the agent id (written only for subagents), the line's id (a randomUUID string), the query source name, the shape hash, the id of the previous line (base), or the sha256 hex digest of the request (requestDigest, cutRequestDigest)."
@@ -4743,8 +4743,8 @@
       "anchors": [
         "type:\"api-request\",sessionId:«».sessionId",
         "base:«».lastId",
-        "requestDigest:xe",
-        "cutRequestDigest:xe",
+        "requestDigest:«»",
+        "cutRequestDigest:«»",
         "shapeHash:Q"
       ],
       "note": "A journal line the request journal writes (a hash-chained record of API request bodies): shapeHash is a string: the session id, the agent id (written only for subagents), the line's id (a randomUUID string), the query source name, the shape hash, the id of the previous line (base), or the sha256 hex digest of the request (requestDigest, cutRequestDigest)."
@@ -4756,8 +4756,8 @@
       "anchors": [
         "type:\"api-request\",sessionId:«».sessionId",
         "base:«».lastId",
-        "requestDigest:xe",
-        "cutRequestDigest:xe",
+        "requestDigest:«»",
+        "cutRequestDigest:«»",
         "shapeHash:Q"
       ],
       "note": "A journal line the request journal writes (a hash-chained record of API request bodies): base is a string: the session id, the agent id (written only for subagents), the line's id (a randomUUID string), the query source name, the shape hash, the id of the previous line (base), or the sha256 hex digest of the request (requestDigest, cutRequestDigest)."
@@ -4769,8 +4769,8 @@
       "anchors": [
         "type:\"api-request\",sessionId:«».sessionId",
         "base:«».lastId",
-        "requestDigest:xe",
-        "cutRequestDigest:xe",
+        "requestDigest:«»",
+        "cutRequestDigest:«»",
         "shapeHash:Q"
       ],
       "note": "A journal line the request journal writes (a hash-chained record of API request bodies): requestDigest is a string: the session id, the agent id (written only for subagents), the line's id (a randomUUID string), the query source name, the shape hash, the id of the previous line (base), or the sha256 hex digest of the request (requestDigest, cutRequestDigest)."
@@ -4782,8 +4782,8 @@
       "anchors": [
         "type:\"api-request\",sessionId:«».sessionId",
         "base:«».lastId",
-        "requestDigest:xe",
-        "cutRequestDigest:xe",
+        "requestDigest:«»",
+        "cutRequestDigest:«»",
         "shapeHash:Q"
       ],
       "note": "A journal line the request journal writes (a hash-chained record of API request bodies): cutRequestDigest is a string: the session id, the agent id (written only for subagents), the line's id (a randomUUID string), the query source name, the shape hash, the id of the previous line (base), or the sha256 hex digest of the request (requestDigest, cutRequestDigest)."
@@ -5187,7 +5187,7 @@
         "«»({status:503,attempt:«»,maxAttempts:«»,delayMs:«»})",
         "«»({status:429,attempt:2,maxAttempts:2,delayMs:«»})",
         "«»?.({status:503,attempt:2,maxAttempts:2,delayMs:«»})",
-        "}var «»=3,«»=5000,«»=20000,«»=30000;function «»(«»){let «»=«»(«»)??2000;"
+        "}var «»=3,«»=5000,«»=20000;var «»=30000;function «»(«»){let «»=«»(«»)??2000;"
       ],
       "note": "artifact_publish_retry only (chunk-e4nj3r2k forwards the event of chunk-eawd4gc3): maxAttempts is the literal 2, or the constant is=3 (var is=3 in that module). The 'attempt' of the same event is 2 or the loop counter V from 2 up to 3. The resolved:true form has no maxAttempts."
     },
