@@ -27,14 +27,14 @@ Items that the docs name but describe wrongly are in [Behaves Differently From t
 | [Subagents](#subagents) | 7 |
 | [Plugins](#plugins) | 9 |
 | [MCP](#mcp) | 32 |
-| [Tools](#tools) | 29 |
+| [Tools](#tools) | 30 |
 | [API Endpoints and Betas](#api-endpoints-and-betas) | 54 |
 | [System Prompt](#system-prompt) | 34 |
 | [Transcript and Sessions](#transcript-and-sessions) | 13 |
 | [Headless Protocol](#headless-protocol) | 158 |
 | [Mod API](#mod-api) | 0 |
-| [Other](#other) | 97 |
-| Total | 1535 |
+| [Other](#other) | 98 |
+| Total | 1537 |
 
 ## Settings Keys
 
@@ -333,7 +333,7 @@ Count: 32.
 
 Tools and tool parameters.
 
-Count: 29.
+Count: 30.
 
 | Item | Where |
 | --- | --- |
@@ -358,6 +358,7 @@ Count: 29.
 | `SuggestConnectors` | [Gated and Surface-Specific Tools](tools/gated-and-other.md#gated-tools) (Gated Tools) |
 | `ListConnectors` | [Gated and Surface-Specific Tools](tools/gated-and-other.md#gated-tools) (Gated Tools) |
 | `propose_skills` | [Gated and Surface-Specific Tools](tools/gated-and-other.md#gated-tools) (Gated Tools) |
+| `ListPlugins`, `ListSkills`, `SearchPlugins`, `SearchSkills`, `RefreshMcpTools`, `enable__mcp__claude-in-chrome`, `enable__mcp__remote-devices__Claude_Browser` | [Gated and Surface-Specific Tools](tools/gated-and-other.md#plugin-skill-and-browser-tools) (Plugin, Skill, and Browser Tools) |
 | `StructuredOutput` | [Gated and Surface-Specific Tools](tools/gated-and-other.md#tools-without-an-inventory-row) (Tools without an Inventory Row) |
 | Query `select:A,B` | [Tools](tools/index.md#toolsearch) (ToolSearch) |
 | Query keywords | [Tools](tools/index.md#toolsearch) (ToolSearch) |
@@ -516,11 +517,12 @@ Count: 0.
 
 Items that fit no group above: memory, output styles, the status line, models, and how the harness works inside.
 
-Count: 97.
+Count: 98.
 
 | Item | Where |
 | --- | --- |
 | `/pause-memory` | [Memory and Rules](../configure/memory-and-rules.md#auto-memory) (Auto Memory) |
+| The OpenTelemetry events other than `tool_decision` | [OpenTelemetry Events](opentelemetry.md#events) (Events) |
 | `CLAUDE_CODE_REMOTE_MEMORY_DIR`, `CLAUDE_CODE_POST_TURN_MEMORY`, `CLAUDE_COWORK_MEMORY_*`, `CLAUDE_MEMORY_STORES` | [Memory and Rules](../configure/memory-and-rules.md#auto-memory) (Auto Memory) |
 | `InstructionFileKind` | [Memory and Rules](../configure/memory-and-rules.md#the-instructionsloaded-hook) (The InstructionsLoaded Hook) |
 | `claude-3-5-haiku` | [Models and Providers](../configure/models-and-providers.md#catalog) (Catalog); [Models and Providers](../configure/models-and-providers.md#provider-names) (Provider Names) |

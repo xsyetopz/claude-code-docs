@@ -45,6 +45,20 @@ Source: [Tools Reference](https://code.claude.com/docs/en/tools-reference) for t
 | `SendUserFile` | <Documented /> <Gated note="hidden server-side flag" /> | Delivers files to the user. | `files` (string array), `caption`, `status` (`normal` or `proactive`), `display` (`render` or `attach`). | ❌ | ❌ | Runtime check |
 | `propose_skills` | <Undocumented /> <Gated note="CLAUDE_CODE_SKILL_PROPOSALS or a remote entry point" /> | Proposes skills from recurring procedures. | `proposals`: an array of objects with `name`, `kind` (`new` or `improvement`), `target`, `description`, `evidence`, `skillMd`. | ❌ | ❌ | ❌ |
 
+## Plugin, Skill, and Browser Tools
+
+Source: the program (the tool names and the input schemas in [`claude-code-tools.json`](../schemas.md)). The program does not show a gate for these tools, except where the table gives one, and it does not show their read-only, parallel, or deferred flags here.
+
+| Tool | Status | What It Does | Parameters and Gate |
+| --- | --- | --- | --- |
+| `ListPlugins` | <Undocumented /> | Lists plugins. | `keywords` (up to 8 strings, optional filter; omit to list everything). Gate not confirmed. |
+| `ListSkills` | <Undocumented /> | Lists skills. | `keywords` (up to 8 strings, optional filter; omit to list everything). Gate not confirmed. |
+| `SearchPlugins` | <Undocumented /> | Searches plugins by keyword. | `keywords` (1 to 8 strings, required). Gate not confirmed. |
+| `SearchSkills` | <Undocumented /> | Searches skills by keyword. | `keywords` (1 to 8 strings, required). Gate not confirmed. |
+| `RefreshMcpTools` | <Undocumented /> <Gated note="CLAUDE_CODE_ENABLE_REFRESH_MCP_TOOLS" /> | Queries the tool list of connected MCP servers again and applies it. It never dials a server. | `server` (string, optional; omit to refresh all connected servers). Each result has a `status` of `refreshed`, `error`, or `not_connected`. |
+| `enable__mcp__claude-in-chrome` | <Undocumented /> | Enables Claude in Chrome, the Claude extension in the Chrome browser on your computer, for the conversation. | Parameters and gate not confirmed. |
+| `enable__mcp__remote-devices__Claude_Browser` | <Undocumented /> | Enables the browser built into the Claude desktop app for the conversation. | Parameters and gate not confirmed. |
+
 ## Self-Hosted Runner Tools
 
 These nine tools exist only in self-hosted runner sessions. All are <Undocumented /> and <Gated note="self-hosted runner mode" />. All are deferred.

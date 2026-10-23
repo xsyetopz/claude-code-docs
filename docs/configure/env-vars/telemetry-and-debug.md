@@ -188,6 +188,7 @@ It lists every field of this release, so build on the fields it names and look e
 ## Related Pages
 
 - [Environment Variables](index.md): how Claude Code reads variables and which value wins.
+- [OpenTelemetry Events](../../reference/opentelemetry.md): the events that Claude Code emits and their attributes.
 - [Monitoring](https://code.claude.com/docs/en/monitoring-usage) (see the official docs)
 - [Undocumented Items](../../reference/undocumented.md): every item that only the program shows.
 

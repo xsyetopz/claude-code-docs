@@ -1,1 +1,10 @@
-{}
+{
+  "setting:keybindingFlavor": "Deprecated: the program says it no longer has any effect. Listed under Left Out on Purpose in docs/configure/settings/index.md.",
+  "setting:taskOutputMaxChars": "Deprecated: the program says it no longer has any effect, because the TaskOutput tool was removed. Listed under Left Out on Purpose in docs/configure/settings/index.md.",
+  "tool:ArtifactCheck": "Not a separate tool: the program maps the verify and preview actions of the Artifact tool to this name. The Artifact tool has a row.",
+  "tool:ArtifactComments": "Not a separate tool: the program maps the comment actions of the Artifact tool to this name. The Artifact tool has a row.",
+  "tool:ArtifactData": "Not a separate tool: the program maps the read_db and write_db actions of the Artifact tool to this name. The Artifact tool has a row.",
+  "tool:MonitorTool": "The JS export name of the Monitor tool, not a tool name. The Monitor tool has a row.",
+  "tool:enable__mcp__remote-devices__computer": "Unsure what it does or when it appears: the description text was not read. Not listed until confirmed.",
+  "tool:request_computer": "Unsure what it does or when it appears: the input schema has an untyped task field and no description was read. Not listed until confirmed."
+}
