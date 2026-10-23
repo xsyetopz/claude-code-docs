@@ -13,23 +13,23 @@ Each row below names the page that covers an item, or the reason the item is lef
 | Kind | Items | In a Docs Table | In the Map | Excluded | Not on a Page Yet |
 | --- | --- | --- | --- | --- | --- |
 | [Betas](#betas) | 50 | 50 | 0 | 0 | 0 |
-| [API Endpoints](#api-endpoints) | 431 | 108 | 9 | 314 | 0 |
+| [API Endpoints](#api-endpoints) | 431 | 107 | 10 | 314 | 0 |
 | [Environment Variables](#environment-variables) | 1846 | 1361 | 20 | 465 | 0 |
-| [Error Texts](#error-texts) | 4022 | 24 | 2177 | 1821 | 0 |
+| [Error Texts](#error-texts) | 4022 | 21 | 2181 | 1820 | 0 |
 | [Files](#files) | 78 | 49 | 0 | 29 | 0 |
-| [CLI Flags](#cli-flags) | 303 | 130 | 172 | 1 | 0 |
-| [Gates](#gates) | 1101 | 7 | 0 | 1094 | 0 |
+| [CLI Flags](#cli-flags) | 303 | 118 | 184 | 1 | 0 |
+| [Gates](#gates) | 1101 | 0 | 0 | 1101 | 0 |
 | [Hook Events](#hook-events) | 33 | 33 | 0 | 0 | 0 |
-| [Keybindings](#keybindings) | 204 | 204 | 0 | 0 | 0 |
+| [Keybindings](#keybindings) | 204 | 65 | 139 | 0 | 0 |
 | [Mod API](#mod-api) | 229 | 229 | 0 | 0 | 0 |
-| [Models](#models) | 66 | 66 | 0 | 0 | 0 |
+| [Models](#models) | 66 | 46 | 20 | 0 | 0 |
 | [OpenTelemetry Events](#opentelemetry-events) | 28 | 28 | 0 | 0 | 0 |
 | [Permission Rules](#permission-rules) | 6 | 6 | 0 | 0 | 0 |
 | [Settings](#settings) | 194 | 192 | 0 | 2 | 0 |
-| [Slash Commands](#slash-commands) | 142 | 103 | 32 | 7 | 0 |
-| [Subcommands](#subcommands) | 71 | 9 | 62 | 0 | 0 |
+| [Slash Commands](#slash-commands) | 142 | 101 | 34 | 7 | 0 |
+| [Subcommands](#subcommands) | 71 | 7 | 64 | 0 | 0 |
 | [Tools](#tools) | 89 | 83 | 0 | 6 | 0 |
-| Total | 8893 | 2682 | 2472 | 3739 | 0 |
+| Total | 8893 | 2496 | 2652 | 3745 | 0 |
 
 ## Betas
 
@@ -161,7 +161,7 @@ Items: 431.
 | `/api/frame/user/profiles/${…}` | Excluded: Covered by the `/api/frame/*` row of Account and Service Endpoints; no source states each sub-path. |
 | `/api/frame/versions/${…}` | Excluded: Covered by the `/api/frame/*` row of Account and Service Endpoints; no source states each sub-path. |
 | `/api/frame/watch-token/${…}?vn=${…}` | Excluded: Covered by the `/api/frame/*` row of Account and Service Endpoints; no source states each sub-path. |
-| `/api/hello` | [Endpoints and Headers](api/endpoints.md) |
+| `/api/hello` | [/reference/api/endpoints#model-endpoints](/reference/api/endpoints#model-endpoints) |
 | `/api/model_selector/${…}` | [/reference/api/endpoints#account-and-service-endpoints](/reference/api/endpoints#account-and-service-endpoints) |
 | `/api/oauth/account/grove_notice_viewed` | [Endpoints and Headers](api/endpoints.md) |
 | `/api/oauth/account/settings` | [Endpoints and Headers](api/endpoints.md) |
@@ -544,7 +544,7 @@ Items: 1846.
 | `ALLOW_ANT_COMPUTER_USE_MCP` | Excluded: Internal variable for Anthropic staff or Anthropic-run services. The program reads it, but it is not meant for users. |
 | `ALLUSERSPROFILE` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `ALL_INPUTS` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
-| `ALL_PROXY` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
+| `ALL_PROXY` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `ANACONDA_API_TOKEN` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `ANDROID_HOME` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `ANDROID_SDK_ROOT` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
@@ -556,7 +556,7 @@ Items: 1846.
 | `ANTHROPIC_AWS_API_KEY` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `ANTHROPIC_AWS_BASE_URL` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
 | `ANTHROPIC_AWS_WORKSPACE_ID` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
-| `ANTHROPIC_BASE_URL` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
+| `ANTHROPIC_BASE_URL` | [Environment Variables](../configure/env-vars/index.md) |
 | `ANTHROPIC_BEDROCK_BASE_URL` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
 | `ANTHROPIC_BEDROCK_MANTLE_BASE_URL` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
 | `ANTHROPIC_BEDROCK_REGION_PREFIX` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
@@ -607,7 +607,7 @@ Items: 1846.
 | `ANTHROPIC_SESSION_ID` | [SDK and Automation](../configure/env-vars/sdk-and-automation.md) |
 | `ANTHROPIC_SMALL_FAST_MODEL` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
 | `ANTHROPIC_SMALL_FAST_MODEL_AWS_REGION` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
-| `ANTHROPIC_UNIX_SOCKET` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
+| `ANTHROPIC_UNIX_SOCKET` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
 | `ANTHROPIC_VERTEX_BASE_URL` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
 | `ANTHROPIC_VERTEX_PROJECT_ID` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
 | `ANTHROPIC_WEBHOOK_SIGNING_KEY` | [SDK and Automation](../configure/env-vars/sdk-and-automation.md) |
@@ -790,7 +790,7 @@ Items: 1846.
 | `CLAUDE_BG_RENDEZVOUS_SOCK` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_BG_RV_AUTH` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `CLAUDE_BG_SESSION_PERMISSION_RULES` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
-| `CLAUDE_BG_SOCKET_TOKENS_PATH` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
+| `CLAUDE_BG_SOCKET_TOKENS_PATH` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `CLAUDE_BG_SOURCE` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_BG_STARTUP_WEDGE_MS` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_BG_TCC_DISCLAIMED` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
@@ -919,7 +919,7 @@ Items: 1846.
 | `CLAUDE_CODE_AWS_CHAIN_RESOLVE_TIMEOUT_MS` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
 | `CLAUDE_CODE_BASALT_COVE` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `CLAUDE_CODE_BASE_REF` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
-| `CLAUDE_CODE_BASE_REFS` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
+| `CLAUDE_CODE_BASE_REFS` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `CLAUDE_CODE_BASH_EDIT_DIFF` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_BASH_OUTPUT_AUDIENCE_NOTE` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_BASH_SANDBOX_SHOW_INDICATOR` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
@@ -999,7 +999,7 @@ Items: 1846.
 | `CLAUDE_CODE_DISABLE_1M_CONTEXT` | [Context and Compaction](../configure/env-vars/context-and-compaction.md) |
 | `CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
 | `CLAUDE_CODE_DISABLE_ADMIN_ENV_UNION` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
-| `CLAUDE_CODE_DISABLE_ADVISOR_TOOL` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
+| `CLAUDE_CODE_DISABLE_ADVISOR_TOOL` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_DISABLE_AGENT_VIEW` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_CODE_DISABLE_ALTERNATE_SCREEN` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
 | `CLAUDE_CODE_DISABLE_ARTIFACT` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
@@ -1071,7 +1071,7 @@ Items: 1846.
 | `CLAUDE_CODE_DISABLE_UNKNOWN_MODEL_WINDOW_ENFORCEMENT` | [Context and Compaction](../configure/env-vars/context-and-compaction.md) |
 | `CLAUDE_CODE_DISABLE_VIRTUAL_SCROLL` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
 | `CLAUDE_CODE_DISABLE_VITALS_EMITTER` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
-| `CLAUDE_CODE_DISABLE_WEB_FETCH` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
+| `CLAUDE_CODE_DISABLE_WEB_FETCH` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_DISABLE_WINDOWS_SHELL_LAUNCHER` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_DISABLE_WORKFLOWS` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_DISABLE_WORKING_SYNC` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
@@ -1112,9 +1112,9 @@ Items: 1846.
 | `CLAUDE_CODE_ENABLE_TOKEN_USAGE_ATTACHMENT` | [Context and Compaction](../configure/env-vars/context-and-compaction.md) |
 | `CLAUDE_CODE_ENABLE_XAA` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `CLAUDE_CODE_ENHANCED_TELEMETRY_BETA` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
-| `CLAUDE_CODE_ENTRYPOINT` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
+| `CLAUDE_CODE_ENTRYPOINT` | [SDK and Automation](../configure/env-vars/sdk-and-automation.md) |
 | `CLAUDE_CODE_ENTRYPOINT_ON_REQUESTS` | [SDK and Automation](../configure/env-vars/sdk-and-automation.md) |
-| `CLAUDE_CODE_ENVIRONMENT_KIND` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
+| `CLAUDE_CODE_ENVIRONMENT_KIND` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_ENVIRONMENT_RUNNER_VERSION` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_EVAL_ALLOW_ARTIFACT_PUBLISH` | Excluded: Test or evaluation harness variable. It is not meant for normal use. |
 | `CLAUDE_CODE_EVAL_ALLOW_FLAG_OVERRIDES` | Excluded: Test or evaluation harness variable. It is not meant for normal use. |
@@ -1361,15 +1361,15 @@ Items: 1846.
 | `CLAUDE_CODE_RELAUNCH_PROACTIVITY_EVER_ON` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `CLAUDE_CODE_RELAUNCH_PROACTIVITY_LEVEL` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `CLAUDE_CODE_RELAUNCH_TERMINAL_SIZE` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
-| `CLAUDE_CODE_REMOTE` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
-| `CLAUDE_CODE_REMOTE_ENVIRONMENT_TYPE` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
+| `CLAUDE_CODE_REMOTE` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
+| `CLAUDE_CODE_REMOTE_ENVIRONMENT_TYPE` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_REMOTE_HERMETIC_MODE` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_REMOTE_MCP_CONFIG` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_REMOTE_MEMORY_DIR` | [Context and Compaction](../configure/env-vars/context-and-compaction.md) |
 | `CLAUDE_CODE_REMOTE_RAW_EVENTS_FILE` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
 | `CLAUDE_CODE_REMOTE_SDK_URL` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_REMOTE_SEND_KEEPALIVES` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
-| `CLAUDE_CODE_REMOTE_SESSION_ID` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
+| `CLAUDE_CODE_REMOTE_SESSION_ID` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_REMOTE_SESSION_ORIGIN` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_REMOTE_SESSION_UUID` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_REMOTE_SETTINGS_PATH` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
@@ -1393,7 +1393,7 @@ Items: 1846.
 | `CLAUDE_CODE_RESTRICT_PERSONAL_CONFIG` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `CLAUDE_CODE_RESULT_NONCE` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_RESUME_FROM_SESSION` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
-| `CLAUDE_CODE_RESUME_INTERRUPTED_TURN` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
+| `CLAUDE_CODE_RESUME_INTERRUPTED_TURN` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `CLAUDE_CODE_RESUME_INTERRUPTED_TURN_MAX_AGE_MS` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `CLAUDE_CODE_RESUME_PROMPT` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `CLAUDE_CODE_RESUME_REASON` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
@@ -1426,7 +1426,7 @@ Items: 1846.
 | `CLAUDE_CODE_SESSION_ACCESS_TOKEN` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `CLAUDE_CODE_SESSION_ATTENDED` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_CODE_SESSION_ID` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
-| `CLAUDE_CODE_SESSION_KIND` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
+| `CLAUDE_CODE_SESSION_KIND` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `CLAUDE_CODE_SESSION_LOG` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
 | `CLAUDE_CODE_SESSION_NAME` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `CLAUDE_CODE_SESSION_ORIGIN` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
@@ -1438,7 +1438,7 @@ Items: 1846.
 | `CLAUDE_CODE_SILENT_TURN_REMINDER_SECONDS` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
 | `CLAUDE_CODE_SILENT_TURN_REMINDER_TEXT` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
 | `CLAUDE_CODE_SILENT_TURN_REMINDER_TURNS` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
-| `CLAUDE_CODE_SIMPLE` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
+| `CLAUDE_CODE_SIMPLE` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
 | `CLAUDE_CODE_SIMULATE_PROXY_USAGE` | [SDK and Automation](../configure/env-vars/sdk-and-automation.md) |
 | `CLAUDE_CODE_SKILL_ATTRIBUTION` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
@@ -1481,10 +1481,10 @@ Items: 1846.
 | `CLAUDE_CODE_SUBAGENT_CONFIG_WARNING` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_CODE_SUBAGENT_HISTORY` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_CODE_SUBAGENT_MODEL` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
-| `CLAUDE_CODE_SUBAGENT_MODEL_FORCE` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
+| `CLAUDE_CODE_SUBAGENT_MODEL_FORCE` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
 | `CLAUDE_CODE_SUBAGENT_PROMPT_CACHE_TTL` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
 | `CLAUDE_CODE_SUBAGENT_PROMPT_SNAPSHOT` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
-| `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
+| `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_SUBSCRIPTION_TYPE` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `CLAUDE_CODE_SUPERVISED` | [SDK and Automation](../configure/env-vars/sdk-and-automation.md) |
 | `CLAUDE_CODE_SUPPRESS_SESSION_ATTRIBUTION` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
@@ -1751,7 +1751,7 @@ Items: 1846.
 | `DISABLE_INTERLEAVED_THINKING` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
 | `DISABLE_LOGIN_COMMAND` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `DISABLE_LOGOUT_COMMAND` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
-| `DISABLE_PROMPT_CACHING` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
+| `DISABLE_PROMPT_CACHING` | [Context and Compaction](../configure/env-vars/context-and-compaction.md) |
 | `DISABLE_PROMPT_CACHING_FABLE` | [Context and Compaction](../configure/env-vars/context-and-compaction.md) |
 | `DISABLE_PROMPT_CACHING_HAIKU` | [Context and Compaction](../configure/env-vars/context-and-compaction.md) |
 | `DISABLE_PROMPT_CACHING_MYTHOS` | [Context and Compaction](../configure/env-vars/context-and-compaction.md) |
@@ -1818,7 +1818,7 @@ Items: 1846.
 | `GEM_PATH` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `GH_CONFIG_DIR` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `GH_ENTERPRISE_TOKEN` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
-| `GH_HOST` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
+| `GH_HOST` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `GH_REPO` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `GH_TOKEN` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `GIO_MODULE_DIR` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
@@ -1889,7 +1889,7 @@ Items: 1846.
 | `GIT_SEQUENCE_EDITOR` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `GIT_SHALLOW_FILE` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `GIT_SSH` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
-| `GIT_SSH_COMMAND` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
+| `GIT_SSH_COMMAND` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `GIT_SSH_VARIANT` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `GIT_SSL_CAINFO` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
 | `GIT_SSL_CAPATH` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
@@ -1942,8 +1942,8 @@ Items: 1846.
 | `HOMESHARE` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `HOSTNAME` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `HTTPLIB2_CA_CERTS` | Excluded: Read only by a library bundled in the program (the Azure identity library, the AWS SDK, gRPC, or a TLS or cloud detector). Claude Code has no setting for it. |
-| `HTTPS_PROXY` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
-| `HTTP_PROXY` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
+| `HTTPS_PROXY` | [Environment Variables](../configure/env-vars/index.md) |
+| `HTTP_PROXY` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
 | `HUB_CONFIG` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `HUGGINGFACEHUB_API_TOKEN` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `HUGGING_FACE_HUB_TOKEN` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
@@ -2037,7 +2037,7 @@ Items: 1846.
 | `NOMAD_HTTP_AUTH` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `NOMAD_TOKEN` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `NO_COLOR` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
-| `NO_PROXY` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
+| `NO_PROXY` | [Environment Variables](../configure/env-vars/index.md) |
 | `NPM_CONFIG_GLOBALCONFIG` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `NPM_CONFIG_HTTPS_PROXY` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `NPM_CONFIG_HTTP_PROXY` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
@@ -2141,7 +2141,7 @@ Items: 1846.
 | `OneDriveCommercial` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `OneDriveConsumer` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
 | `P4PORT` | [Features and Toggles](../configure/env-vars/features-and-toggles.md) |
-| `PATH` | [Cloud Providers](../configure/env-vars/cloud-providers.md) |
+| `PATH` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `PATHEXT` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `PHP_INI_SCAN_DIR` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `PIP_CERT` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
@@ -2149,7 +2149,7 @@ Items: 1846.
 | `PIP_CONFIG_FILE` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `PLAYWRIGHT_BROWSERS_PATH` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `POETRY_CONFIG_DIR` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
-| `PREFIX` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
+| `PREFIX` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `PROCESSOR_ARCHITECTURE` | Excluded: Read only by a library bundled in the program (the Azure identity library, the AWS SDK, gRPC, or a TLS or cloud detector). Claude Code has no setting for it. |
 | `PROGRAMDATA` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `PROJECT_DOMAIN` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
@@ -2217,7 +2217,7 @@ Items: 1846.
 | `SELF_HOSTED_RUNNER_POOL_SECRET` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `SELF_HOSTED_RUNNER_POST_SESSION_HOOK_TIMEOUT_MS` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `SELF_HOSTED_RUNNER_POST_TURN_SETTLE_MS` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
-| `SELF_HOSTED_RUNNER_PROXY_AUTHORIZATION_COMMAND` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
+| `SELF_HOSTED_RUNNER_PROXY_AUTHORIZATION_COMMAND` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `SELF_HOSTED_RUNNER_PROXY_AUTHORIZATION_FILE` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `SELF_HOSTED_RUNNER_PUSH_OUTCOME_ON_RELEASE` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `SELF_HOSTED_RUNNER_REMOVE_SESSION_STATE` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
@@ -2335,7 +2335,7 @@ Items: 1846.
 | `VERTEX_REGION_CLAUDE_FABLE_5_1` | [/configure/env-vars/cloud-providers#variables](/configure/env-vars/cloud-providers#variables) |
 | `VERTEX_REGION_CLAUDE_HAIKU_4_5` | [/configure/env-vars/cloud-providers#variables](/configure/env-vars/cloud-providers#variables) |
 | `VERTEX_REGION_CLAUDE_HAIKU_5_5` | [/configure/env-vars/cloud-providers#variables](/configure/env-vars/cloud-providers#variables) |
-| `VISUAL` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
+| `VISUAL` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
 | `VITALS_CLI_VERSION` | Excluded: Internal variable for Anthropic staff or Anthropic-run services. The program reads it, but it is not meant for users. |
 | `VITALS_EMITTER_BIN` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `VOICE_STREAM_BASE_URL` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.309. It has no known effect. |
@@ -2354,7 +2354,7 @@ Items: 1846.
 | `WT_SESSION` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
 | `XDG_CACHE_HOME` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `XDG_CONFIG_DIRS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
-| `XDG_CONFIG_HOME` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
+| `XDG_CONFIG_HOME` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `XDG_DATA_DIRS` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
 | `XDG_DATA_HOME` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `XDG_DESKTOP_DIR` | Excluded: Variable of the OS or another tool. Claude Code only names it in its lists of variables that it removes, protects, or blocks for child processes (see What the Scrub Removes on the Tools and Bash page), or it passes it through to a child process. It has no setting for it. |
@@ -2476,7 +2476,7 @@ Items: 4022.
 | `${…} can only be called once` | Excluded: Bundled jose library (JWT, JWS, JWE, JWK) |
 | `${…} cannot be NaN or Infinity` | Excluded: Bundled protobuf and CEL libraries (@bufbuild/protobuf, cel-js) |
 | `${…} cannot be combined with --proxy-authorization-command / --proxy-authorization-file: sessions would reach that proxy without the egress listener. Remove one of the two.` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
-| `${…} cannot load in the builtin tier: this Claude Code bundles a plugin of that name, and would load its copy` | Excluded: Plugin test kit and render-surface assertions (Client drawing, mounted tree, timers) |
+| `${…} cannot load in the builtin tier: this Claude Code bundles a plugin of that name, and would load its copy` | Excluded: Plugin test kit check: a plugin of this name is already bundled in the builtin tier |
 | `${…} case file(s) failed to load` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
 | `${…} changed while being opened; try again` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
 | `${…} changed while being read (vetted at ${…} bytes, read ${…}); try again` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
@@ -2542,9 +2542,9 @@ Items: 4022.
 | `${…} is on a network (UNC) path, which cannot be scoped — run the evaluation from a local checkout` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
 | `${…} is on the declared network ${…}, which Claude Code checks over a direct connection, not through an HTTP proxy. Add ${…} to NO_PROXY and try again.` | [/configure/settings/auth#errors](/configure/settings/auth#errors) |
 | `${…} is one of ${…}'s own MCP tools; the session runs it on that machine and it cannot run here.` | [/extend/mcp/cli#errors](/extend/mcp/cli#errors) |
-| `${…} is required but not provided` | Excluded: Setting value type checks (length, single line, boolean) |
+| `${…} is required but not provided` | Excluded: Plugin configure validation: a required option is blank |
 | `${…} is too large (or, if negative, too small) to represent as an Int64` | Excluded: Bundled AWS SDK and Smithy libraries |
-| `${…} is too long (over 64 KB).` | Excluded: Setting value type checks (length, single line, boolean) |
+| `${…} is too long (over 64 KB).` | Excluded: Plugin option value checks (required, length, single line, boolean, integer, JSON object) |
 | `${…} is unavailable. No underlying credential could be used. To troubleshoot, visit https://aka.ms/azsdk/js/identity/environmentcredential/troubleshoot.` | Excluded: Bundled Azure SDK (@azure/identity, @azure/core) |
 | `${…} it is outside the plugin's folder (${…})` | Excluded: Mod engine load and registration assertions (plugin module shape, hook results) |
 | `${…} keys cannot be imported as CryptoKey instances` | Excluded: Bundled jose library (JWT, JWS, JWE, JWK) |
@@ -2552,12 +2552,12 @@ Items: 4022.
 | `${…} missing or invalid` | Excluded: Bundled jose library (JWT, JWS, JWE, JWK) |
 | `${…} must be a non-negative number of minutes (0 disables, max ${…}), got: ${…}` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
 | `${…} must be a non-negative number of seconds (max 86400), got: ${…}` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
-| `${…} must be a single line.` | Excluded: Setting value type checks (length, single line, boolean) |
-| `${…} must be a small JSON object` | Excluded: Setting value type checks (length, single line, boolean) |
+| `${…} must be a single line.` | Excluded: Plugin option value checks (required, length, single line, boolean, integer, JSON object) |
+| `${…} must be a small JSON object` | Excluded: Plugin option value checks (required, length, single line, boolean, integer, JSON object) |
 | `${…} must be an integer in [0, 65535], got: "${…}"` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
 | `${…} must be between ${…} and ${…}, inclusive` | Excluded: Bundled AWS SDK and Smithy libraries |
 | `${…} must be one of 1/true/yes/on or 0/false/no/off (got: ${…})` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
-| `${…} must be true or false (or 1/0, yes/no, on/off).` | Excluded: Setting value type checks (length, single line, boolean) |
+| `${…} must be true or false (or 1/0, yes/no, on/off).` | Excluded: Plugin option value checks (required, length, single line, boolean, integer, JSON object) |
 | `${…} must have a value` | Excluded: Bundled protobuf and CEL libraries (@bufbuild/protobuf, cel-js) |
 | `${…} no longer holds what this run wrote — something else is writing into ${…}` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
 | `${…} no such file under ${…}` | Excluded: Mod engine load and registration assertions (plugin module shape, hook results) |
@@ -2648,7 +2648,7 @@ Items: 4022.
 | `${…}: $.ui.notify: the channel's write failed` | [/extend/mod-api#errors](/extend/mod-api#errors) |
 | `${…}: $.ui.resolve ${…}` | [/extend/mod-api#errors](/extend/mod-api#errors) |
 | `${…}: ${…} ${…}s of ${…} are drawn in this drawing; key each once` | Excluded: Plugin test kit and render-surface assertions (Client drawing, mounted tree, timers) |
-| `${…}: ${…} (host check)` | Excluded: Internal consistency checks on bundled prompt, skill, and hook text |
+| `${…}: ${…} (host check)` | Excluded: Internal consistency and refusal messages (bundled text, tool pairing, import size cap, host checks) |
 | `${…}: ${…} exports no register(on, options) function` | Excluded: Mod engine load and registration assertions (plugin module shape, hook results) |
 | `${…}: ${…} exports the name "then" (its own, or through an export *), which no entry module may: rename the export` | Excluded: Mod engine load and registration assertions (plugin module shape, hook results) |
 | `${…}: ${…} failed: ${…}` | Excluded: Mod engine load and registration assertions (plugin module shape, hook results) |
@@ -2658,7 +2658,7 @@ Items: 4022.
 | `${…}: ${…} is not a PEM ${…}` | [/configure/permissions/sandbox#errors](/configure/permissions/sandbox#errors) |
 | `${…}: ${…} is not available in this mode: no session is bound in this process (the REPL has not mounted and no headless session is built); catch it and carry on` | Excluded: Mod engine load and registration assertions (plugin module shape, hook results) |
 | `${…}: ${…} leads to an automounter map directory (/net, /net/<host>; macOS /Network, /home) — refusing it (naming anything in it asks the automounter or a host)` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| `${…}: ${…} must be a non-negative integer, got ${…}` | Excluded: Setting value type checks (length, single line, boolean) |
+| `${…}: ${…} must be a non-negative integer, got ${…}` | Excluded: Plugin option value checks (required, length, single line, boolean, integer, JSON object) |
 | `${…}: ${…} passes through a component that cannot be examined (unreadable, a link or junction whose target does not exist, or a symlink chain too long to follow) — refusing it (it could not be vetted)` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
 | `${…}: ${…} passes through a symlink to a network-reaching path (or a dotted one that cannot be vetted) — refusing it` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
 | `${…}: ${…} takes a function` | Excluded: Mod engine load and registration assertions (plugin module shape, hook results) |
@@ -2725,7 +2725,7 @@ Items: 4022.
 | `${…}: cannot read ${…} (${…})` | [/configure/permissions/sandbox#errors](/configure/permissions/sandbox#errors) |
 | `${…}: cannot tell what "${…}" under the eval directory is — make it readable or remove it` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
 | `${…}: collection must be an odd-depth path of 1-15 segments and doc_id one segment, within the path byte cap, after permission or hook rewrites` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
-| `${…}: cursor must be a non-empty string of at most ${…} characters` | Excluded: Internal consistency checks on bundled prompt, skill, and hook text |
+| `${…}: cursor must be a non-empty string of at most ${…} characters` | Excluded: Internal consistency and refusal messages (bundled text, tool pairing, import size cap, host checks) |
 | `${…}: disappeared while loading` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
 | `${…}: engine.create must return $ ({ ...await next(e), <noun>: { <event>() {} } }), not ${…}` | [/extend/mod-api#errors](/extend/mod-api#errors) |
 | `${…}: engine.create returned $.${…} changed; it is this plugin's identity, not a noun` | [/extend/mod-api#errors](/extend/mod-api#errors) |
@@ -2959,8 +2959,8 @@ Items: 4022.
 | `@smithy/util-stream: unsupported source type ${…} in ChecksumStream.` | Excluded: Bundled AWS SDK and Smithy libraries |
 | `@smithy/util-utf8: toUtf8 encoder function only accepts string \| Uint8Array.` | Excluded: Bundled AWS SDK and Smithy libraries |
 | `@smithy::core/protocols - initial-response event encountered in event stream but no response schema given.` | Excluded: Bundled AWS SDK and Smithy libraries |
-| `A .gitignore here cannot be read` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
-| `A .gitignore line cannot be read` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `A .gitignore here cannot be read` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
+| `A .gitignore line cannot be read` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `A DEFAULT_3P_*_KEY points at a model config with bedrock: null — Bedrock setup has no fallback id for that tier` | [/configure/settings/auth#errors](/configure/settings/auth#errors) |
 | `A ToolHost permission request with an unknown step reached the permission check.` | Excluded: Coding-error guards: a provider, delegate, or controller used before it is bound, and test-only setters |
 | `A WorktreeCreate hook from your own Claude Code files ran, but this session doesn't let your own hooks choose the worktree folder (CLAUDE_CODE_RESTRICT_PERSONAL_CONFIG), so Claude Code didn't use any …` | [/reference/tools/agents-and-tasks#errors](/reference/tools/agents-and-tasks#errors) |
@@ -2975,7 +2975,7 @@ Items: 4022.
 | `A diskless session moves no transcript between project folders on disk` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
 | `A diskless session writes no side file to disk` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
 | `A file path cannot be attached here: this tool cannot read files in this session.` | [/reference/tools/files#errors](/reference/tools/files#errors) |
-| `A filesystem path entry must be a path, or { path, literal: true }; got ${…}` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `A filesystem path entry must be a path, or { path, literal: true }; got ${…}` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `A goal proposal is already awaiting the user's decision. Keep working; if it is approved you will receive a kickoff message.` | [/reference/tools/agents-and-tasks#errors](/reference/tools/agents-and-tasks#errors) |
 | `A key or a keyFile must be provided to getCredentials.` | Excluded: Bundled Google auth library (google-auth-library) |
 | `A link in the staged farm could not be read (${…}); refusing to relink it.` | [/extend/plugins/loading#errors](/extend/plugins/loading#errors) |
@@ -2990,7 +2990,7 @@ Items: 4022.
 | `A top-level entry of the plugin directory (${…}) points at a network location or through a link that cannot be trusted; refusing to link it.` | [/extend/plugins/loading#errors](/extend/plugins/loading#errors) |
 | `A top-level entry of the plugin directory its command produced (${…}) points outside that directory; refusing to link it.` | [/extend/plugins/loading#errors](/extend/plugins/loading#errors) |
 | `A top-level entry of the plugin directory its command produced could not be resolved (${…}); refusing to link it.` | [/extend/plugins/loading#errors](/extend/plugins/loading#errors) |
-| `A withProject fork cannot re-identify the session — update the root session instead` | Excluded: Internal tool plumbing assertions (permission descriptor, IDE client, frame API, tool host) |
+| `A withProject fork cannot re-identify the session — update the root session instead` | Excluded: Internal session guard: a withProject fork cannot change the session ID |
 | `A workflow v2 run cannot withhold its script` | [/reference/tools/agents-and-tasks#errors](/reference/tools/agents-and-tasks#errors) |
 | `ANTHROPIC_API_KEY is set in this environment and takes precedence over a profile, so a profile sign-in would not be used. Unset it to sign in this way.` | [/configure/settings/auth#errors](/configure/settings/auth#errors) |
 | `ANTHROPIC_API_KEY is set in this environment. Unset it to sign in without an API key.` | [/configure/settings/auth#errors](/configure/settings/auth#errors) |
@@ -3050,7 +3050,7 @@ Items: 4022.
 | `Background tasks still running ${…} after the last turn (${…}); stopping them. Set CLAUDE_CODE_PRINT_BG_WAIT_CEILING_MS=0 to wait indefinitely.` | [/extend/headless#errors](/extend/headless#errors) |
 | `BackgroundGesture: used before its screen bound a host` | Excluded: Coding-error guards: a provider, delegate, or controller used before it is bound, and test-only setters |
 | `Backslash in path key: "${…}"` | [/configure/memory-and-rules#errors](/configure/memory-and-rules#errors) |
-| `Base directory must be a string, received ${…}` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `Base directory must be a string, received ${…}` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `Base64Coder: incorrect characters for decoding` | Excluded: Bundled Anthropic SDK (@anthropic-ai/sdk) |
 | `Base64Coder: incorrect padding` | Excluded: Bundled Anthropic SDK (@anthropic-ai/sdk) |
 | `Bearer token authentication is not permitted for non-TLS protected (non-https) URLs.` | Excluded: Bundled Azure SDK (@azure/identity, @azure/core) |
@@ -3265,7 +3265,7 @@ Items: 4022.
 | `Config accessed before allowed.` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
 | `Config fallback write through storage failed` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
 | `Config update through storage failed` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
-| `Configuration error in ${…}: ${…}` | Excluded: Small shared type, date, and UUID guards (Expected a function, Invalid ISO date, Invalid UUID hex length) |
+| `Configuration error in ${…}: ${…}` | Excluded: Small shared guards and generic failure messages (type, date, UUID, abort, sanitization) |
 | `Configuration: Could not parse user-provided export URL: '${…}'` | Excluded: Bundled p-map and OpenTelemetry exporter helpers |
 | `Configuration: timeoutMillis is invalid, expected number greater than 0 (actual: '${…}')` | Excluded: Bundled p-map and OpenTelemetry exporter helpers |
 | `Configured auth server metadata at ${…} is not valid JSON` | [/extend/mcp/auth#errors](/extend/mcp/auth#errors) |
@@ -3361,7 +3361,7 @@ Items: 4022.
 | `Duplicate middleware name '${…}'` | Excluded: Bundled AWS SDK and Smithy libraries |
 | `Duplicate policy names not allowed in pipeline` | Excluded: Bundled Azure SDK (@azure/identity, @azure/core) |
 | `Duplicate schema id "${…}" detected during JSON Schema conversion. Two different schemas cannot share the same id when converted together.` | Excluded: Bundled Zod schema library |
-| `Durable scheduled tasks are unavailable in a session started with --project-config-root` | Excluded: Internal tool plumbing assertions (permission descriptor, IDE client, frame API, tool host) |
+| `Durable scheduled tasks are unavailable in a session started with --project-config-root` | [/configure/cli/flags#safe-modes-settings-and-debug](/configure/cli/flags#safe-modes-settings-and-debug) |
 | `Dynamic catch values are not supported in JSON Schema` | Excluded: Build-time schema, model catalog, and field-coverage drift assertions |
 | `ECDH with the provided key is not allowed or not supported by your javascript runtime` | Excluded: Bundled jose library (JWT, JWS, JWE, JWK) |
 | `ECONNREFUSED_SSRF: blocked loopback/metadata host via proxy` | [/configure/cli/subcommands#errors](/configure/cli/subcommands#errors) |
@@ -3389,7 +3389,7 @@ Items: 4022.
 | `Error converting ${…} to IANA timezone ${…}` | Excluded: Bundled protobuf and CEL libraries (@bufbuild/protobuf, cel-js) |
 | `Error converting schema to JSON.` | Excluded: Bundled Zod schema library |
 | `Error evaluating pattern ${…}, invalid RE2 syntax` | Excluded: Bundled protobuf and CEL libraries (@bufbuild/protobuf, cel-js) |
-| `Error: ${…}` | Excluded: Small shared type, date, and UUID guards (Expected a function, Invalid ISO date, Invalid UUID hex length) |
+| `Error: ${…}` | Excluded: Small shared guards and generic failure messages (type, date, UUID, abort, sanitization) |
 | ``Error: ${…} cannot be evaluated where sessions load it: no session could load it now. ${…} Check the marketplace with `claude plugin marketplace list`, or pass ./<dir> to evaluate a directory.`` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
 | `Error: ${…} has a recorded install path that ${…}; reinstall it, or pass ./<dir> to evaluate a directory.` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
 | `Error: --concurrency must be a whole number from 1 to ${…}` | [/configure/cli/flags#errors](/configure/cli/flags#errors) |
@@ -3444,10 +3444,10 @@ Items: 4022.
 | `` Expected `options.indent` to be a `string`, got `${…}` `` | Excluded: Bundled Ink and ow validation libraries |
 | `` Expected `stdio` to be of type `string` or `Array`, got `${…}` `` | Excluded: Bundled execa process runner |
 | `` Expected a `target` `` | [/configure/cli/flags#errors](/configure/cli/flags#errors) |
-| `Expected a function` | Excluded: Small shared type, date, and UUID guards (Expected a function, Invalid ISO date, Invalid UUID hex length) |
+| `Expected a function` | Excluded: Small shared guards and generic failure messages (type, date, UUID, abort, sanitization) |
 | `Expected a non-null value` | Excluded: Bundled AWS SDK and Smithy libraries |
 | `Expected a non-null value for ${…}` | Excluded: Bundled AWS SDK and Smithy libraries |
-| `Expected a string, got ${…}` | Excluded: Small shared type, date, and UUID guards (Expected a function, Invalid ISO date, Invalid UUID hex length) |
+| `Expected a string, got ${…}` | Excluded: Small shared guards and generic failure messages (type, date, UUID, abort, sanitization) |
 | `Expected boolean, got ${…}: ${…}` | Excluded: Bundled AWS SDK and Smithy libraries |
 | `Expected http options but got ${…}` | Excluded: Bundled AWS SDK and Smithy libraries |
 | `Expected integer, got ${…}: ${…}` | Excluded: Bundled AWS SDK and Smithy libraries |
@@ -3584,7 +3584,7 @@ Items: 4022.
 | `Gateway hosts must be on your organization's private network; ${…} resolves to the public (or unrecognized) address ${…}${…}. ${…}` | [/configure/settings/auth#errors](/configure/settings/auth#errors) |
 | `Gateway login would go through proxy ${…}, which is not on a private network. Add ${…} to NO_PROXY for a direct connection, or use a proxy on your organization's private network.` | [/configure/settings/auth#errors](/configure/settings/auth#errors) |
 | `Generator is already executing.` | Excluded: Bundled tslib helpers |
-| `Glob pattern ${…} does not lie beneath the anchor ${…}` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `Glob pattern ${…} does not lie beneath the anchor ${…}` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `Goal proposals need an interactive session to render the approval prompt; none is available here.` | [/reference/tools/agents-and-tasks#errors](/reference/tools/agents-and-tasks#errors) |
 | `Google's library returned no Authorization header` | [/configure/cli/subcommands#errors](/configure/cli/subcommands#errors) |
 | `Got multipart request body, but content-type header was not multipart: ${…}` | Excluded: Bundled Azure SDK (@azure/identity, @azure/core) |
@@ -3605,7 +3605,7 @@ Items: 4022.
 | `Hooks file not found at ${…} for plugin ${…}. If the manifest declares hooks, the file must exist.` | [/extend/plugins/loading#errors](/extend/plugins/loading#errors) |
 | `Hooks file read failed at ${…} for plugin ${…}: ${…}` | [/extend/plugins/loading#errors](/extend/plugins/loading#errors) |
 | `Hunk at line ${…} contained invalid line ${…}` | Excluded: Bundled diff library |
-| `IDE client not available` | Excluded: Internal tool plumbing assertions (permission descriptor, IDE client, frame API, tool host) |
+| `IDE client not available` | Excluded: IDE diff tab handling: no connected IDE client |
 | `ITermBackend not registered. Import ITermBackend.ts before using the registry.` | [/extend/skills-and-commands/slash-commands#errors](/extend/skills-and-commands/slash-commands#errors) |
 | `` IdP claims missing required `sub` `` | [/configure/cli/subcommands#errors](/configure/cli/subcommands#errors) |
 | `IdP refresh response had neither id_token nor access_token` | [/configure/cli/subcommands#errors](/configure/cli/subcommands#errors) |
@@ -3648,7 +3648,7 @@ Items: 4022.
 | `Invalid DER signature` | Excluded: DER parser errors for the certificates of a signed statement |
 | `Invalid GitHub repository format: ${…}. Expected format: owner/repo` | [/extend/plugins/marketplace#errors](/extend/plugins/marketplace#errors) |
 | `Invalid IP address or CIDR range: ${…}` | Excluded: Address and URL vetting for outbound connections (private range, scheme, host) |
-| `Invalid ISO date string` | Excluded: Small shared type, date, and UUID guards (Expected a function, Invalid ISO date, Invalid UUID hex length) |
+| `Invalid ISO date string` | Excluded: Small shared guards and generic failure messages (type, date, UUID, abort, sanitization) |
 | `Invalid Initialization Vector length` | Excluded: Bundled jose library (JWT, JWS, JWE, JWK) |
 | `Invalid JSON in ${…}: ${…}` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
 | `Invalid JSON in manifest.json: ${…}` | [/extend/plugins/loading#errors](/extend/plugins/loading#errors) |
@@ -3666,7 +3666,7 @@ Items: 4022.
 | `Invalid URL` | [/reference/tools/shell-and-web#errors](/reference/tools/shell-and-web#errors) |
 | `Invalid URL format: ${…}` | [/reference/tools/shell-and-web#errors](/reference/tools/shell-and-web#errors) |
 | `Invalid URL protocol: must use http:// or https://, got ${…}` | [/reference/tools/shell-and-web#errors](/reference/tools/shell-and-web#errors) |
-| `Invalid UUID hex length: ${…}` | Excluded: Small shared type, date, and UUID guards (Expected a function, Invalid ISO date, Invalid UUID hex length) |
+| `Invalid UUID hex length: ${…}` | Excluded: Small shared guards and generic failure messages (type, date, UUID, abort, sanitization) |
 | `Invalid UUID received: ${…}` | Excluded: Bundled AWS SDK and Smithy libraries |
 | `Invalid UUID version: "${…}"` | Excluded: Bundled Zod schema library |
 | `Invalid X-Api-Key header value${…}: ${…}.` | [/configure/settings/auth#errors](/configure/settings/auth#errors) |
@@ -3800,7 +3800,7 @@ Items: 4022.
 | `Invalid service config: invalid loadBalancingConfig` | Excluded: Bundled gRPC library (@grpc/grpc-js) |
 | `Invalid service config: invalid loadBalancingPolicy` | Excluded: Bundled gRPC library (@grpc/grpc-js) |
 | `Invalid session_id: contains unsafe characters` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
-| `Invalid setting source: ${…}. Valid options are: ${…}` | Excluded: Setting value type checks (length, single line, boolean) |
+| `Invalid setting source: ${…}. Valid options are: ${…}` | [/configure/cli/flags#safe-modes-settings-and-debug](/configure/cli/flags#safe-modes-settings-and-debug) |
 | `Invalid sha "${…}": must be a full commit hash (40 or 64 hex digits)` | [/extend/plugins/marketplace#errors](/extend/plugins/marketplace#errors) |
 | `Invalid skill name ${…}: consecutive backslashes are not allowed — the permission-rule parser collapses escaped backslashes, so the rule would name a different skill. Rename the skill.` | [/extend/headless#errors](/extend/headless#errors) |
 | `Invalid skill name ${…}: leading or trailing whitespace is not allowed — the Skill tool trims the invoked name, so a padded rule can never match. Remove the padding.` | [/extend/headless#errors](/extend/headless#errors) |
@@ -4076,11 +4076,11 @@ Items: 4022.
 | `Non-string provided as watch path: ${…}` | Excluded: Bundled chokidar, readdirp, and anymatch |
 | `Not a CEL value: ${…}` | Excluded: Bundled protobuf and CEL libraries (@bufbuild/protobuf, cel-js) |
 | `Not a ZodError: ${…}` | Excluded: Bundled Zod schema library |
-| `Not accepted` | Excluded: Internal tool plumbing assertions (permission descriptor, IDE client, frame API, tool host) |
+| `Not accepted` | Excluded: IDE diff tab handling: the IDE gave an answer that is no known result |
 | `Not available in this build` | [/configure/cli/subcommands#errors](/configure/cli/subcommands#errors) |
 | `Not available in this library. Use @grpc/proto-loader and loadPackageDefinition instead` | Excluded: Bundled gRPC library (@grpc/grpc-js) |
 | `Not connected` | Excluded: Bundled MCP SDK (@modelcontextprotocol/sdk) |
-| `Not enough messages to compact.` | [Hook Input and Output](../extend/hooks/input-and-output.md) |
+| `Not enough messages to compact.` | [/how-it-works/context-and-compaction#errors](/how-it-works/context-and-compaction#errors) |
 | `Not implemented` | Excluded: Bundled gRPC library (@grpc/grpc-js) |
 | `Not implemented. Use addService() instead` | Excluded: Bundled gRPC library (@grpc/grpc-js) |
 | `Not implemented. Use bindAsync() instead` | Excluded: Bundled gRPC library (@grpc/grpc-js) |
@@ -4137,7 +4137,7 @@ Items: 4022.
 | `Parsing XML not supported.` | Excluded: Bundled Azure SDK (@azure/identity, @azure/core) |
 | ``Pass at most one of `profile`, `credentials`, or `config`.`` | Excluded: Bundled Anthropic SDK (@anthropic-ai/sdk) |
 | `Path from environment variable "${…}" is invalid: ${…}` | Excluded: Bundled Google auth library (google-auth-library) |
-| `Path must be a string, received ${…}` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `Path must be a string, received ${…}` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `Path traversal detected: "${…}" would escape the base directory` | [/extend/plugins/marketplace#errors](/extend/plugins/marketplace#errors) |
 | `Path-style addressing cannot be used with ARN buckets` | Excluded: Bundled AWS SDK and Smithy libraries |
 | `Path: '${…}' does not end with ']'` | Excluded: Bundled AWS SDK and Smithy libraries |
@@ -4187,9 +4187,9 @@ Items: 4022.
 | `Plugin source command printed the working directory or one of its parents (${…}); refusing to use it as a plugin.` | [/extend/plugins/marketplace#errors](/extend/plugins/marketplace#errors) |
 | `Plugin source directory not found: ${…} (from entry.source: ${…})` | [/extend/plugins/marketplace#errors](/extend/plugins/marketplace#errors) |
 | `Plugin tree at ${…} could not be made symlink-free (${…}); refusing to cache it` | [/extend/plugins/marketplace#errors](/extend/plugins/marketplace#errors) |
-| `Plugin zip cache is not enabled` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
+| `Plugin zip cache is not enabled` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
 | `Policies inside a phase cannot specify afterPhase.` | Excluded: Bundled Azure SDK (@azure/identity, @azure/core) |
-| `Poll is available on the main thread only` | Excluded: Internal tool plumbing assertions (permission descriptor, IDE client, frame API, tool host) |
+| `Poll is available on the main thread only` | Excluded: Poll tool guard: refused for a call that carries an agent ID |
 | `PollWork: response assignment_ids contains a malformed session id — rejecting the malformed poll response` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
 | `PollWork: response assignment_ids is not an array — rejecting the malformed poll response` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
 | `PollWork: response body is not a JSON object (an intercepting proxy may have answered) — rejecting the malformed poll response` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
@@ -4207,7 +4207,7 @@ Items: 4022.
 | `Profile ${…} credential_process returned expired credentials.` | Excluded: Bundled AWS SDK and Smithy libraries |
 | `Profile ${…} credential_process returned invalid JSON.` | Excluded: Bundled AWS SDK and Smithy libraries |
 | `Profile ${…} credential_process returned invalid credentials.` | Excluded: Bundled AWS SDK and Smithy libraries |
-| `ProgramData is not set` | [System and Third-Party](../configure/env-vars/system-and-third-party.md) |
+| `ProgramData is not set` | [/configure/permissions/sandbox#errors](/configure/permissions/sandbox#errors) |
 | `Programs are unavailable in this session; the command was not run.` | Excluded: Bundled execa process runner |
 | `Progress handler for token ${…} already registered` | Excluded: Bundled vscode-jsonrpc and LSP client library |
 | `Project-scope MCP server changes are unavailable in a session started with --project-config-root. Use the local or user scope instead.` | [/extend/mcp/cli#errors](/extend/mcp/cli#errors) |
@@ -4241,7 +4241,7 @@ Items: 4022.
 | `ReadCalls: ${…} has more than ${…} entries` | [/reference/tools/agents-and-tasks#errors](/reference/tools/agents-and-tasks#errors) |
 | `ReadCalls: ${…} is not a valid tool_use_id${…}. An id is 1 to 128 letters, digits or _ . : @ -, and not only dots.` | [/reference/tools/agents-and-tasks#errors](/reference/tools/agents-and-tasks#errors) |
 | `ReadNotifications can only be called from the main conversation — subagents must not drain the session notification buffer.` | [/reference/tools/agents-and-tasks#errors](/reference/tools/agents-and-tasks#errors) |
-| `ReadTaskOutput: no shell task has that task_id` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `ReadTaskOutput: no shell task has that task_id` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `Readable.toWeb() is not supported. Please ensure a polyfill is available.` | Excluded: Bundled AWS SDK and Smithy libraries |
 | `ReadableStream is locked.` | Excluded: Bundled AWS SDK and Smithy libraries |
 | `` Received ${…} for "${…}"; to upload raw bytes, wrap them with `await toFile(bytes, 'filename')` `` | Excluded: Bundled Anthropic SDK (@anthropic-ai/sdk) |
@@ -4286,7 +4286,7 @@ Items: 4022.
 | `Rename it back to ${…}, or reinstall with: npm i -g ${…}` | [/configure/cli/subcommands#errors](/configure/cli/subcommands#errors) |
 | `ReplSessionScope: used before its screen bound a host` | Excluded: Coding-error guards: a provider, delegate, or controller used before it is bound, and test-only setters |
 | `Reported message length does not match received message length` | Excluded: Bundled AWS SDK and Smithy libraries |
-| `Request aborted` | Excluded: Small shared type, date, and UUID guards (Expected a function, Invalid ISO date, Invalid UUID hex length) |
+| `Request aborted` | Excluded: Small shared guards and generic failure messages (type, date, UUID, abort, sanitization) |
 | `Request body gzip: compression stopped` | Excluded: Bundled p-map and OpenTelemetry exporter helpers |
 | `Request timed out while downloading marketplace from ${…}. The server may be slow or unreachable. Technical details: ${…}` | [/extend/plugins/marketplace#errors](/extend/plugins/marketplace#errors) |
 | `Resolved credential object is not valid` | Excluded: Bundled AWS SDK and Smithy libraries |
@@ -4397,7 +4397,7 @@ Items: 4022.
 | `StdioClientTransport already started! If using Client class, note that connect() calls start() automatically.` | [/extend/mcp/runtime#errors](/extend/mcp/runtime#errors) |
 | `StdioServerTransport already started! If using Server class, note that connect() calls start() automatically.` | Excluded: Bundled MCP SDK (@modelcontextprotocol/sdk) |
 | `Stream can only be iterated once` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
-| `Stream closed` | Excluded: Small shared type, date, and UUID guards (Expected a function, Invalid ISO date, Invalid UUID hex length) |
+| `Stream closed` | Excluded: Small shared guards and generic failure messages (type, date, UUID, abort, sanitization) |
 | `StreamableHTTPClientTransport already started! If using Client class, note that connect() calls start() automatically.` | Excluded: Bundled MCP SDK (@modelcontextprotocol/sdk) |
 | `Streams in object mode are not supported: ${…}` | Excluded: Bundled execa process runner |
 | `String not found in file. Failed to apply edit.` | [/reference/tools/files#errors](/reference/tools/files#errors) |
@@ -4442,10 +4442,10 @@ Items: 4022.
 | `The "input" argument must be of type string. Received type ${…} (${…})` | Excluded: Bundled AWS SDK and Smithy libraries |
 | `The '${…}' property is not allowed when passing additionalClaims. This claim is included in the JWT by default.` | Excluded: Bundled Google auth library (google-auth-library) |
 | `The Cloud gateway session that named this collector ended — dropping this telemetry batch` | [/extend/headless#errors](/extend/headless#errors) |
-| `The IDE connection is managed automatically and can't be reconnected manually` | Excluded: Internal tool plumbing assertions (permission descriptor, IDE client, frame API, tool host) |
+| `The IDE connection is managed automatically and can't be reconnected manually` | Excluded: Reconnect refusal for the `ide` server name, thrown by the MCP reconnect function |
 | ``The `input` and `inputFile` options cannot be both set.`` | Excluded: Bundled execa process runner |
 | ``The `input` option cannot be a stream in sync mode`` | Excluded: Bundled execa process runner |
-| ``The `level` option should be an integer from 0 to 3`` | Excluded: Setting value type checks (length, single line, boolean) |
+| ``The `level` option should be an integer from 0 to 3`` | Excluded: A value check of an option named `level`, range 0 to 3 |
 | `The access token expiry_date field is missing in the provided credentials.` | Excluded: Bundled Google auth library (google-auth-library) |
 | `The account or conversation changed after this action was checked, or that check is no longer on record — nothing was done; retry so it is checked again` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `The amount of data is too big to be stored in a QR Code` | Excluded: Bundled QR code library |
@@ -4532,7 +4532,7 @@ Items: 4022.
 | `This plugin's marketplace entry is invalid: ${…}` | [/extend/plugins/marketplace#errors](/extend/plugins/marketplace#errors) |
 | `This profile is bound to a different Anthropic deployment, so Claude Code will not replace it here. Sign out of it with the tool that created it, then try again.` | [/configure/settings/auth#errors](/configure/settings/auth#errors) |
 | `This profile keeps its sign-in somewhere custom, so Claude Code cannot replace it. Sign out of it with the tool that created it, then try again.` | [/configure/settings/auth#errors](/configure/settings/auth#errors) |
-| `This runtime has no Bun.ant.CellSegmenter. Run Claude Code on the @anthropic-ai/bun-internal version pinned in package.json.` | Excluded: Internal tool plumbing assertions (permission descriptor, IDE client, frame API, tool host) |
+| `This runtime has no Bun.ant.CellSegmenter. Run Claude Code on the @anthropic-ai/bun-internal version pinned in package.json.` | Excluded: Runtime check: the program needs a Bun build that has CellSegmenter |
 | ``This schema contains multiple valid literal values. Use `.values` instead.`` | Excluded: Bundled Zod schema library |
 | `This session doesn't save settings, so the ${…} can't be turned ${…}` | Excluded: Managed settings read and device registry assertions |
 | `This session requires a trusted device, and it still refused this computer after its trusted-device enrollment was renewed. Open the session at claude.ai/code or in the Claude app instead.` | [/configure/settings/auth#errors](/configure/settings/auth#errors) |
@@ -4552,7 +4552,7 @@ Items: 4022.
 | `Token used too early, ${…} < ${…}: ${…}` | Excluded: Bundled Google auth library (google-auth-library) |
 | `Token used too late, ${…} > ${…}: ${…}` | Excluded: Bundled Google auth library (google-auth-library) |
 | `Too few arguments provided` | Excluded: Bundled QR code library |
-| `Tool ${…} not found` | Excluded: Internal tool plumbing assertions (permission descriptor, IDE client, frame API, tool host) |
+| `Tool ${…} not found` | Excluded: MCP tool call by name found no tool |
 | `Tool use input must be a string or object` | [/reference/tools/shell-and-web#errors](/reference/tools/shell-and-web#errors) |
 | `Transcript file too large to load as JSON (${…} bytes)` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
 | `Transcript messages must be an array` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
@@ -4612,7 +4612,7 @@ Items: 4022.
 | `Unhandled outcome of a read of the Directory` | [/extend/plugins/marketplace#errors](/extend/plugins/marketplace#errors) |
 | `Unhandled repo validation status: ${…}` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
 | `Unhandled schema-value pair ${…}=${…}` | Excluded: Bundled AWS SDK and Smithy libraries |
-| `Unicode sanitization reached maximum iterations (${…}) for input: ${…}` | Excluded: Small shared type, date, and UUID guards (Expected a function, Invalid ISO date, Invalid UUID hex length) |
+| `Unicode sanitization reached maximum iterations (${…}) for input: ${…}` | Excluded: Small shared guards and generic failure messages (type, date, UUID, abort, sanitization) |
 | `Unicode-normalized traversal in path key: "${…}"` | [/configure/memory-and-rules#errors](/configure/memory-and-rules#errors) |
 | `Unions must have exactly one non-null member. Keys ${…} were not null.` | Excluded: Bundled AWS SDK and Smithy libraries |
 | `Unions must have exactly one non-null member. None were found.` | Excluded: Bundled AWS SDK and Smithy libraries |
@@ -4691,7 +4691,7 @@ Items: 4022.
 | `Version of executable is not currently supported, maximum supported version is ${…}.` | Excluded: Bundled Google auth library (google-auth-library) |
 | `Views with a specified name must be declared with an instrument selector that selects at most one instrument per meter.` | Excluded: Bundled OpenTelemetry SDK |
 | `Waking session ${…}…` | [/configure/cli/subcommands#errors](/configure/cli/subcommands#errors) |
-| `Warning: ${…}` | Excluded: Internal consistency checks on bundled prompt, skill, and hook text |
+| `Warning: ${…}` | Excluded: Internal consistency and refusal messages (bundled text, tool pairing, import size cap, host checks) |
 | `Warning: ${…} tracked ${…} skipped: ${…}. Run with --debug for the paths.` | [/extend/headless#errors](/extend/headless#errors) |
 | `Warning: --client-id, --client-secret, --callback-port, and --xaa are only supported for HTTP/SSE transports and will be ignored for stdio.` | [/extend/mcp/cli#errors](/extend/mcp/cli#errors) |
 | `Warning: The command "${…}" looks like a URL, but is being interpreted as a stdio server as --transport was not specified.` | [/extend/mcp/cli#errors](/extend/mcp/cli#errors) |
@@ -4863,15 +4863,15 @@ Items: 4022.
 | `a directory moved while its names were being read` | [/extend/plugins/marketplace#errors](/extend/plugins/marketplace#errors) |
 | ``a fact may not carry `${…}` — the host sets it on the row`` | [/reference/tools/agents-and-tasks#errors](/reference/tools/agents-and-tasks#errors) |
 | `` a fact must be an object with a non-empty string `topic` `` | [/reference/tools/agents-and-tasks#errors](/reference/tools/agents-and-tasks#errors) |
-| `a file could not be inflated, or holds more than its stated size` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
-| `a file does not inflate to its stated size` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
-| `a file does not match its stated SHA-256` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
-| `a file's offset and length reach past the end of the archive` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `a file could not be inflated, or holds more than its stated size` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
+| `a file does not inflate to its stated size` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
+| `a file does not match its stated SHA-256` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
+| `a file's offset and length reach past the end of the archive` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `a function was expected` | Excluded: Coding-error guards: a provider, delegate, or controller used before it is bound, and test-only setters |
-| `a held-directory leaf must be one plain name` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
-| `a list of files needs the archive that holds them` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `a held-directory leaf must be one plain name` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
+| `a list of files needs the archive that holds them` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `a lossless WebP encode wrote a file that is not lossless` | [/reference/tools/files#errors](/reference/tools/files#errors) |
-| `a name is in the list twice` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `a name is in the list twice` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `a newer turn began before the compaction could be applied` | [/how-it-works/context-and-compaction#errors](/how-it-works/context-and-compaction#errors) |
 | `a pattern must be a JSON object (nested objects as subsets, arrays exact, v("x") binds)` | [/reference/tools/agents-and-tasks#errors](/reference/tools/agents-and-tasks#errors) |
 | `a permission entry has an impossible size` | [/configure/permissions/sandbox#errors](/configure/permissions/sandbox#errors) |
@@ -4881,8 +4881,8 @@ Items: 4022.
 | `a run restored from the journal cannot be founded` | [/reference/tools/agents-and-tasks#errors](/reference/tools/agents-and-tasks#errors) |
 | `a schema whose subtree contains a reference cycle` | Excluded: Bundled Zod schema library |
 | `a served tool must have an object input schema` | Excluded: Coding-error guards: a provider, delegate, or controller used before it is bound, and test-only setters |
-| `a settings file could not be read` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
-| `a settings file names another host` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `a settings file could not be read` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
+| `a settings file names another host` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `a string was expected` | Excluded: Coding-error guards: a provider, delegate, or controller used before it is bound, and test-only setters |
 | `a test start folder must be absolute` | [/reference/tools/agents-and-tasks#errors](/reference/tools/agents-and-tasks#errors) |
 | `a timer takes a function` | Excluded: Plugin test kit and render-surface assertions (Client drawing, mounted tree, timers) |
@@ -4900,9 +4900,9 @@ Items: 4022.
 | `add_directory mount_path must be under /uploads/` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `add_directory mount_path must be under /uploads/ and not under /uploads/.home/` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `address must be a string` | Excluded: Bundled undici HTTP client |
-| `adopted agent ${…} declares forked-skill ${…} but its scoping record is unusable (${…})` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
-| `adopted agent ${…} declares forked-skill ${…} but its scoping record names a different skill` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
-| `adopted agent ${…} has an unusable forked-skill scoping record (${…})` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `adopted agent ${…} declares forked-skill ${…} but its scoping record is unusable (${…})` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
+| `adopted agent ${…} declares forked-skill ${…} but its scoping record names a different skill` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
+| `adopted agent ${…} has an unusable forked-skill scoping record (${…})` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | ``advance(${…}): ${…} timer ticks fired and more were due; advance in smaller steps, or check for an `every` the module re-arms on each tick`` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
 | `after must be the next value from a previous list_assets result` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `agent stop sibling: no storage key for this path` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
@@ -4935,7 +4935,7 @@ Items: 4022.
 | `alg ${…} is not supported either by JOSE or your javascript runtime` | Excluded: Bundled jose library (JWT, JWS, JWE, JWK) |
 | `alias namespace path not allowed: ${…}` | [/reference/tools/files#errors](/reference/tools/files#errors) |
 | `ambiguous mock server "${…}": declared by plugins ${…} — rename mocks/${…}/ to ${…}` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
-| `an --add-dir settings file names another host` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `an --add-dir settings file names another host` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `an ArrayBuffer was expected` | Excluded: Coding-error guards: a provider, delegate, or controller used before it is bound, and test-only setters |
 | ``an Artifact created from an Artifact type takes only its own files — `capabilities` and `contract` come from the type; drop them and publish again`` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | ``an Artifact was already created from this type for ${…} this session: ${…} — omit `type_url` and pass that `url` to update it`` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
@@ -4943,17 +4943,17 @@ Items: 4022.
 | `an entry that is no file, directory or symlink` | [/extend/plugins/marketplace#errors](/extend/plugins/marketplace#errors) |
 | `ancestry walk failed` | [/configure/cli/flags#errors](/configure/cli/flags#errors) |
 | `ancestry walk truncated (maxDepth) above the prefix` | [/configure/cli/flags#errors](/configure/cli/flags#errors) |
-| `anchored open never creates` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
-| `anchored open never writes on this backend` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
-| `anchored path must be relative, of plain segments` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
-| `another file has the name` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `anchored open never creates` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
+| `anchored open never writes on this backend` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
+| `anchored path must be relative, of plain segments` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
+| `another file has the name` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `anymatch: specify first argument` | Excluded: Bundled chokidar, readdirp, and anymatch |
 | `append to ${…} made no progress` | [Plugin Commands](../extend/plugins/cli.md) |
 | `appendEntryToExistingFileSync: short write` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
 | `appendToExistingTranscript: short write` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
 | `argument string is required` | Excluded: Bundled MCP SDK (@modelcontextprotocol/sdk) |
 | `argument string is required to be a string` | Excluded: Bundled MCP SDK (@modelcontextprotocol/sdk) |
-| `armLiveSubscription: late-park fall-through lost its park` | Excluded: Request digest and replay recording checks |
+| `armLiveSubscription: late-park fall-through lost its park` | Excluded: Internal subscription assertion (armLiveSubscription) |
 | `array length ${…} exceeds the maximum of ${…} supported across the workflow VM boundary` | Excluded: Coding-error guards: a provider, delegate, or controller used before it is bound, and test-only setters |
 | `array length is not a safe integer across the workflow VM boundary` | Excluded: Coding-error guards: a provider, delegate, or controller used before it is bound, and test-only setters |
 | `artifact endpoints are not available in this build` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
@@ -5015,16 +5015,16 @@ Items: 4022.
 | `branch "${…}" for worktree "${…}" is already checked out elsewhere in this repository. Pass a different --worktree name.` | [/reference/tools/agents-and-tasks#errors](/reference/tools/agents-and-tasks#errors) |
 | `bridge spawn root has unexpected owner or mode` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
 | `bridge spawn root is not a directory` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
-| `buildFilePermissionDescriptor called with non-file tool: ${…}` | Excluded: Internal tool plumbing assertions (permission descriptor, IDE client, frame API, tool host) |
+| `buildFilePermissionDescriptor called with non-file tool: ${…}` | Excluded: Internal assertion of the permission descriptor builder |
 | `buildRunMockFiles: empty selfCommand` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
-| `bundle capability line out of place` | Excluded: Internal consistency checks on bundled prompt, skill, and hook text |
+| `bundle capability line out of place` | Excluded: Internal consistency and refusal messages (bundled text, tool pairing, import size cap, host checks) |
 | `bundle header carries a seed ref that is not this build's` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
 | `bundle header does not name every ref to relabel` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
 | `bundle header line too long` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
 | `bundle header names a ref to relabel twice` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
 | `bundled file path escapes its extraction dir` | Excluded: Build-time schema, model catalog, and field-coverage drift assertions |
 | `byte-order mark before the JSON value` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
-| `bytes is not base64` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `bytes is not base64` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `cache value is not JSON-serializable: ${…}` | Excluded: Bundled MCP SDK (@modelcontextprotocol/sdk) |
 | `cache value is not JSON-serializable: it has no JSON representation` | Excluded: Bundled MCP SDK (@modelcontextprotocol/sdk) |
 | `cacheKeyAttributes are only used for remoteEval` | Excluded: Bundled GrowthBook SDK |
@@ -5150,7 +5150,7 @@ Items: 4022.
 | `could not confirm where the plugin's folder is, so the packages were not added` | [/extend/plugins/marketplace#errors](/extend/plugins/marketplace#errors) |
 | `could not open the directory above ${…}: ${…}` | [/reference/tools/agents-and-tasks#errors](/reference/tools/agents-and-tasks#errors) |
 | `could not read ${…} (${…})` | [/reference/tools/shell-and-web#errors](/reference/tools/shell-and-web#errors) |
-| `could not read file (${…})` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `could not read file (${…})` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `could not resolve ${…}` | Excluded: Address and URL vetting for outbound connections (private range, scheme, host) |
 | `could not resolve ${…}: ${…}` | Excluded: Address and URL vetting for outbound connections (private range, scheme, host) |
 | `could not tell the current branch for {branch}: spell the branch out` | [/reference/tools/shell-and-web#errors](/reference/tools/shell-and-web#errors) |
@@ -5163,7 +5163,7 @@ Items: 4022.
 | `countLength ${…} greater than remaining buf len.` | Excluded: Bundled AWS SDK and Smithy libraries |
 | `create requires body` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `createMultiStoreState: length mismatch` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
-| `createSeedAttestation: a NUL in an event uuid or type` | Excluded: Request digest and replay recording checks |
+| `createSeedAttestation: a NUL in an event uuid or type` | Excluded: Internal attestation check (createSeedAttestation) |
 | `createTagFormScrub: tag names are lowercase [a-z0-9_-]` | Excluded: Scrub-pattern constructor guards for tag and bracketed-lead text |
 | `create_webhook_trigger requires body` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `` creating an Artifact from an Artifact type (`type_url`) is not available in this session — remove `type_url` `` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
@@ -5289,7 +5289,7 @@ Items: 4022.
 | `engine: queryParams called before send — turn wiring bug` | Excluded: Request digest and replay recording checks |
 | ``ensurePersistentWindowsCa: sandbox user is not provisioned (user=${…}, cred=${…}). Run `npx sandbox-runtime windows-install` first.`` | [/configure/permissions/sandbox#errors](/configure/permissions/sandbox#errors) |
 | ``ensurePersistentWindowsCa: state directory ${…} does not exist. Run `npx sandbox-runtime windows-install` first.`` | [/configure/permissions/sandbox#errors](/configure/permissions/sandbox#errors) |
-| `ensureToolResultPairing: tool_use/tool_result pairing mismatch detected (strict mode). Refusing to repair — would inject synthetic placeholders into model context. Message structure: ${…}. See inc-497…` | Excluded: Internal consistency checks on bundled prompt, skill, and hook text |
+| `ensureToolResultPairing: tool_use/tool_result pairing mismatch detected (strict mode). Refusing to repair — would inject synthetic placeholders into model context. Message structure: ${…}. See inc-497…` | Excluded: Internal consistency and refusal messages (bundled text, tool pairing, import size cap, host checks) |
 | `enum must have non-empty array` | Excluded: Bundled Ajv JSON Schema validator |
 | `enum schema without enumerated values` | Excluded: Bundled Zod schema library |
 | `enumeration deadline reached` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
@@ -5332,7 +5332,7 @@ Items: 4022.
 | `field coverage drift: "${…}" is a lazy schema below an eager node — make the enclosing field()/subfield() value type the lazy one, or keep this node eager` | Excluded: Build-time schema, model catalog, and field-coverage drift assertions |
 | `field coverage drift: "${…}" is a lazy schema with no field()/subfield() metadata` | Excluded: Build-time schema, model catalog, and field-coverage drift assertions |
 | `field coverage drift: "${…}" is a primitive leaf with no field()/subfield() metadata` | Excluded: Build-time schema, model catalog, and field-coverage drift assertions |
-| `file exceeds IMPORT_MAX_FILE_BYTES; refusing to load` | Excluded: Internal consistency checks on bundled prompt, skill, and hook text |
+| `file exceeds IMPORT_MAX_FILE_BYTES; refusing to load` | Excluded: Internal consistency and refusal messages (bundled text, tool pairing, import size cap, host checks) |
 | `file_path is required for action "upload_asset"` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `file_path is required to publish` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `file_path: could not verify the file is the one that was admitted; retry the upload` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
@@ -5361,7 +5361,7 @@ Items: 4022.
 | `fork_conversation: title must be a string` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
 | `forked-skill sidecar write refused: diskless session with no storage backend or key for the path` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
 | `founding row landed at ${…}, expected ${…}` | [/reference/tools/agents-and-tasks#errors](/reference/tools/agents-and-tasks#errors) |
-| `frameApi: this session may not make the direct call` | Excluded: Internal tool plumbing assertions (permission descriptor, IDE client, frame API, tool host) |
+| `frameApi: this session may not make the direct call` | Excluded: Internal frame API guard |
 | `frameTunnel requires host 'frame' and auth 'session-jwt'` | [/configure/settings/auth#errors](/configure/settings/auth#errors) |
 | `fromJSONSchema input is not valid JSON (possibly cyclic); use $defs/$ref for recursive schemas` | Excluded: Bundled Zod schema library |
 | `frontmatter was not read: ${…}` | Excluded: Build-time schema, model catalog, and field-coverage drift assertions |
@@ -5405,7 +5405,7 @@ Items: 4022.
 | `gitdir back-link is a symlink` | [/reference/tools/agents-and-tasks#errors](/reference/tools/agents-and-tasks#errors) |
 | `github-ssh source for '${…}' is missing url — SSH URLs are not synthesizable from slug alone` | [/extend/plugins/marketplace#errors](/extend/plugins/marketplace#errors) |
 | `given KeyObject instance cannot be used for this algorithm` | Excluded: Bundled jose library (JWT, JWS, JWE, JWK) |
-| `glob "${…}" exceeds ${…} '*'/'**' wildcards` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `glob "${…}" exceeds ${…} '*'/'**' wildcards` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `global config not parseable` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
 | `global config not readable through storage` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
 | `google token endpoint ${…}: ${…}` | [/configure/cli/subcommands#errors](/configure/cli/subcommands#errors) |
@@ -5421,8 +5421,8 @@ Items: 4022.
 | `headless session: a turn is already in flight` | [/extend/headless#errors](/extend/headless#errors) |
 | `headless session: the engine loop ended before the turn result` | [/extend/headless#errors](/extend/headless#errors) |
 | `headless session: turn picked up without prepared params` | [/extend/headless#errors](/extend/headless#errors) |
-| `held directory belongs to another anchor` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
-| `held directory is closed` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `held directory belongs to another anchor` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
+| `held directory is closed` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `history lock compromised before the rewrite` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
 | `history readRecords cursor failed to advance` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
 | `history readRecords failed` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
@@ -5528,9 +5528,9 @@ Items: 4022.
 | `is over the size cap, or not a regular file, and was not read` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
 | `` isInstance must be called on the class (e.g. `SdkError.isInstance(value)`); for callbacks use `v => SdkError.isInstance(v)` `` | Excluded: Bundled MCP SDK (@modelcontextprotocol/sdk) |
 | `it answered about another hostname` | [/configure/settings/auth#errors](/configure/settings/auth#errors) |
-| `it opened at a different path than approved` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `it opened at a different path than approved` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `it patches its dependencies (patchedDependencies), which this install does not apply` | [/extend/plugins/marketplace#errors](/extend/plugins/marketplace#errors) |
-| `it re-resolved elsewhere once opened` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `it re-resolved elsewhere once opened` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `it was locked while the checkout was being deleted` | [/reference/tools/agents-and-tasks#errors](/reference/tools/agents-and-tasks#errors) |
 | `its ${…} has no packages section with the plugin in it` | [/extend/plugins/marketplace#errors](/extend/plugins/marketplace#errors) |
 | `its ${…} is in an old format; regenerate it with npm 7 or later` | [/extend/plugins/marketplace#errors](/extend/plugins/marketplace#errors) |
@@ -5564,9 +5564,9 @@ Items: 4022.
 | `kitty graphics: payload must be standard base64 (A-Z a-z 0-9 + / =)` | [/extend/skills-and-commands/slash-commands#errors](/extend/skills-and-commands/slash-commands#errors) |
 | `latest pointer returned empty body` | [Marketplaces](../extend/plugins/marketplace.md) |
 | `latinLetterConfusableClass: expected one ASCII lowercase letter` | Excluded: Scrub-pattern constructor guards for tag and bracketed-lead text |
-| `link body climbs out of a directory it entered` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
-| `link body is not valid UTF-8` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
-| `link chain too long to vet` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `link body climbs out of a directory it entered` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
+| `link body is not valid UTF-8` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
+| `link chain too long to vet` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `list ${…}: 404 on page ${…} (cursor expired or store deleted mid-walk)` | [/configure/memory-and-rules#errors](/configure/memory-and-rules#errors) |
 | `list_runs requires trigger_id` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `listen EADDRINUSE on the auto socket path and its moved-aside siblings` | [/configure/cli/flags#errors](/configure/cli/flags#errors) |
@@ -5583,13 +5583,13 @@ Items: 4022.
 | `macOS only` | [/configure/cli/flags#errors](/configure/cli/flags#errors) |
 | `malformed bundle prerequisite line` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
 | `malformed bundle ref line` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
-| `malformed connector response` | Excluded: Internal tool plumbing assertions (permission descriptor, IDE client, frame API, tool host) |
+| `malformed connector response` | Excluded: Internal check of the shape of a connector response |
 | `malformed doc entry` | Excluded: Search index file-format assertions (postings, doc entries, term entries) |
 | `malformed doc metadata` | Excluded: Search index file-format assertions (postings, doc entries, term entries) |
 | `malformed index shape` | Excluded: Search index file-format assertions (postings, doc entries, term entries) |
 | `malformed posting data` | Excluded: Search index file-format assertions (postings, doc entries, term entries) |
 | `malformed posting positions` | Excluded: Search index file-format assertions (postings, doc entries, term entries) |
-| `malformed search response` | Excluded: Internal tool plumbing assertions (permission descriptor, IDE client, frame API, tool host) |
+| `malformed search response` | Excluded: Internal check of the shape of a search response |
 | `malformed term entry` | Excluded: Search index file-format assertions (postings, doc entries, term entries) |
 | `managed-mcp.json could not be read whole, so the servers it delivers cannot be named` | [/extend/mcp/cli#errors](/extend/mcp/cli#errors) |
 | `manifest create failed: ${…}` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
@@ -5622,7 +5622,7 @@ Items: 4022.
 | `methods/accessors not allowed in meta` | [/reference/tools/agents-and-tasks#errors](/reference/tools/agents-and-tasks#errors) |
 | `metrics_enabled response missing metrics_logging_enabled` | [/configure/settings/auth#errors](/configure/settings/auth#errors) |
 | `metrics_enabled unavailable: ${…}` | [/configure/settings/auth#errors](/configure/settings/auth#errors) |
-| `minTimeout is greater than maxTimeout` | Excluded: Small shared type, date, and UUID guards (Expected a function, Invalid ISO date, Invalid UUID hex length) |
+| `minTimeout is greater than maxTimeout` | Excluded: Small shared guards and generic failure messages (type, date, UUID, abort, sanitization) |
 | `mintDisplayedUpdates: non-integer length in mint input — plain data only` | Excluded: Display-intake validation of consent rows and updates |
 | `mintDisplayedUpdates: non-plain array in mint input — plain data only` | Excluded: Display-intake validation of consent rows and updates |
 | `mintDisplayedUpdates: sparse mint input — plain data only` | Excluded: Display-intake validation of consent rows and updates |
@@ -5660,17 +5660,17 @@ Items: 4022.
 | `more than ${…} test files under ${…}; name a narrower folder` | Excluded: Plugin test kit and render-surface assertions (Client drawing, mounted tree, timers) |
 | `mount dir holds another store's .memory-sync manifest at write time (fail closed)` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
 | `mount walk failed: ${…}` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
-| `mount_path contains null bytes` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
-| `mount_path must be absolute` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
-| `mount_path must be under /uploads/ or /outputs/` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
-| `mount_path must not contain ".." segments` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
-| `mount_path names a reserved temporary-file name` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
-| `multi-hop symlink chain` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `mount_path contains null bytes` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
+| `mount_path must be absolute` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
+| `mount_path must be under /uploads/ or /outputs/` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
+| `mount_path must not contain ".." segments` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
+| `mount_path names a reserved temporary-file name` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
+| `multi-hop symlink chain` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `multi-store-sync: a publishFence is not honoured on the storage write arm: add the publish-time check there before giving a storage-keyed store one` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
 | `multi-store-sync: empty store receipt not removed` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
 | `multipartBody and regular body cannot be set at the same time` | Excluded: Bundled Azure SDK (@azure/identity, @azure/core) |
 | `multiple_of check with a zero divisor` | Excluded: Bundled Zod schema library |
-| `must be an absolute local path` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `must be an absolute local path` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `named CLAUDE_*_CONFIG export for '${…}' has null ${…}` | [/configure/settings/auth#errors](/configure/settings/auth#errors) |
 | `nested indefinite string.` | Excluded: Bundled AWS SDK and Smithy libraries |
 | `nested key display would drop code points` | Excluded: Display-intake validation of consent rows and updates |
@@ -5680,9 +5680,9 @@ Items: 4022.
 | `nests deeper than ${…}` | Excluded: Coding-error guards: a provider, delegate, or controller used before it is bound, and test-only setters |
 | `network path not allowed: ${…}` | [/reference/tools/files#errors](/reference/tools/files#errors) |
 | `network-spelled original cwd (screened, never touched)` | [/reference/tools/agents-and-tasks#errors](/reference/tools/agents-and-tasks#errors) |
-| `network-spelled output path` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
-| `network-spelled symlink hop` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
-| `network-spelled symlink target` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `network-spelled output path` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
+| `network-spelled symlink hop` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
+| `network-spelled symlink target` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `network.tlsTerminate and network.mitmProxy are mutually exclusive` | [/configure/permissions/sandbox#errors](/configure/permissions/sandbox#errors) |
 | `newlineIsToken may not be used with patch-generation functions, only with diffing functions` | Excluded: Bundled diff library |
 | `no JSON value on line` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
@@ -5690,8 +5690,8 @@ Items: 4022.
 | `no device hook templates in a diskless session` | [/extend/hooks/configuration#errors](/extend/hooks/configuration#errors) |
 | `no enabled plugin with that id` | [/extend/hooks/configuration#errors](/extend/hooks/configuration#errors) |
 | `no file at ${…} — write the page first, then preview it.` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
-| `no file path could be derived from the hook-rewritten input` | Excluded: Internal tool plumbing assertions (permission descriptor, IDE client, frame API, tool host) |
-| `no final status` | Excluded: Small shared type, date, and UUID guards (Expected a function, Invalid ISO date, Invalid UUID hex length) |
+| `no file path could be derived from the hook-rewritten input` | Excluded: Internal check of the file path after a hook rewrote the tool input |
+| `no final status` | Excluded: Small shared guards and generic failure messages (type, date, UUID, abort, sanitization) |
 | `no hooks module named ${…} is loaded or declared` | Excluded: Mod engine load and registration assertions (plugin module shape, hook results) |
 | `no hostname` | [/configure/settings/auth#errors](/configure/settings/auth#errors) |
 | `no kill handler is registered for task type mcp_task` | [/extend/headless#errors](/extend/headless#errors) |
@@ -5717,23 +5717,23 @@ Items: 4022.
 | `not a host-check answer (not JSON)` | [/configure/settings/auth#errors](/configure/settings/auth#errors) |
 | `not a host-check answer (unrecognized JSON)` | [/configure/settings/auth#errors](/configure/settings/auth#errors) |
 | `not a pipe` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
-| `not a regular file` | Excluded: Small shared type, date, and UUID guards (Expected a function, Invalid ISO date, Invalid UUID hex length) |
-| `not a single-named regular file at read time` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `not a regular file` | Excluded: Small shared guards and generic failure messages (type, date, UUID, abort, sanitization) |
+| `not a single-named regular file at read time` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `not a v2 or v3 git bundle` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
 | `not an artifact URL: ${…}` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
-| `not in this runtime` | Excluded: Small shared type, date, and UUID guards (Expected a function, Invalid ISO date, Invalid UUID hex length) |
+| `not in this runtime` | Excluded: Small shared guards and generic failure messages (type, date, UUID, abort, sanitization) |
 | `not is not supported in Zod (except { not: {} } for never)` | Excluded: Bundled Zod schema library |
-| `not opened no-follow for the head read` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `not opened no-follow for the head read` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `not read in a diskless session` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
-| `not the regular file at the name at read time` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `not the regular file at the name at read time` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `not unpadded base64url` | Excluded: Canonical JSON and base64url encoding checks of the browser pairing channel |
 | `note: the installed service has not come up yet — a temporary background daemon (pid ${…}) is serving this session; check 'claude daemon status'.` | [/configure/cli/subcommands#errors](/configure/cli/subcommands#errors) |
 | `note: woke session ${…} with its saved options (${…}).` | [/configure/cli/subcommands#errors](/configure/cli/subcommands#errors) |
 | `nothing can be written at as_level 'view', your own data/users subtree included, so nothing was sent. Omit as_level to write as yourself, or pass 'interact' or 'admin' to check what that level can wri…` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
-| `nothing selected` | Excluded: Internal consistency checks on bundled prompt, skill, and hook text |
+| `nothing selected` | Excluded: Internal consistency and refusal messages (bundled text, tool pairing, import size cap, host checks) |
 | `number format ${…}` | Excluded: Bundled Zod schema library |
 | `object shape key "__proto__"` | Excluded: Bundled Zod schema library |
-| `observer marker read-back failed` | Excluded: Request digest and replay recording checks |
+| `observer marker read-back failed` | Excluded: Internal observer marker check |
 | `oidc.ca_cert_pem has no usable certificate once those on the CLI's deny list are removed, so the gateway can't verify the identity provider. Set oidc.ca_cert_pem to the identity provider's intermediat…` | [/configure/cli/subcommands#errors](/configure/cli/subcommands#errors) |
 | `oidc.google_groups: ${…} is not a Google service-account key (missing client_email or private_key)` | [/configure/cli/subcommands#errors](/configure/cli/subcommands#errors) |
 | `oidc: the IdP discovery document has no token_endpoint, which private_key_jwt needs as the assertion audience` | [/configure/cli/subcommands#errors](/configure/cli/subcommands#errors) |
@@ -5765,12 +5765,12 @@ Items: 4022.
 | `output base ${…} ${…} — refusing to write beneath a directory you did not name (pass --output-dir, or name the directory itself as the target)` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
 | `output base ${…} is a symlink — refusing to write beneath it` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
 | `output location ${…} ${…} — refusing to write there` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
-| `output path has a symlink chain too long to vet` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
-| `output path traverses a junction to remote UNC` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `output path has a symlink chain too long to vet` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
+| `output path traverses a junction to remote UNC` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `output schema expansion exceeds the node budget` | [/reference/tools/agents-and-tasks#errors](/reference/tools/agents-and-tasks#errors) |
 | `output schema too large to classify` | [/reference/tools/agents-and-tasks#errors](/reference/tools/agents-and-tasks#errors) |
 | `outputHelp callback must return a string or a Buffer` | Excluded: Bundled commander CLI parser |
-| `over the size bound` | Excluded: Small shared type, date, and UUID guards (Expected a function, Invalid ISO date, Invalid UUID hex length) |
+| `over the size bound` | Excluded: Small shared guards and generic failure messages (type, date, UUID, abort, sanitization) |
 | `overage_spend_limit unavailable: ${…}` | [/configure/settings/auth#errors](/configure/settings/auth#errors) |
 | `overwrite check without a transform function` | Excluded: Bundled Zod schema library |
 | `packages/managed-config/src/desktop/generated/hybridServablePathLedger.json must be JSON with a "paths" list of strings. If it has merge-conflict markers, keep the paths from both sides and delete the…` | Excluded: Build-time schema, model catalog, and field-coverage drift assertions |
@@ -5782,15 +5782,15 @@ Items: 4022.
 | `parent-segment spelling not allowed: ${…}` | [/reference/tools/files#errors](/reference/tools/files#errors) |
 | `parseEpochTimestamp - numeric string invalid.` | Excluded: Bundled AWS SDK and Smithy libraries |
 | `parser must be boolean\|regexp\|function` | Excluded: Bundled undici HTTP client |
-| `part does not follow the bytes already written` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `part does not follow the bytes already written` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | ``pass the type as `type` (its name) or `type_url` (its link) — exactly one`` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `passThroughOptions cannot be used for '${…}' without turning on enablePositionalOptions for parent command(s)` | Excluded: Bundled commander CLI parser |
-| `path contains null bytes` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `path contains null bytes` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `path could not be vetted (symbolic link chain or unreadable component)` | [/reference/tools/files#errors](/reference/tools/files#errors) |
 | `path escaped the configured origin` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
 | `path escapes mount ${…}: ${…}` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
-| `path must be absolute` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
-| `path must be under the working sync dir` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `path must be absolute` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
+| `path must be under the working sync dir` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `path too long` | [/reference/tools/files#errors](/reference/tools/files#errors) |
 | `payload exceeds the element serialization wall` | Excluded: Size and depth limits on payloads that cross the worker boundary |
 | `payload exceeds the serialization budget` | Excluded: Size and depth limits on payloads that cross the worker boundary |
@@ -5859,7 +5859,7 @@ Items: 4022.
 | `query is not accepted with write_db` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `query.cursor is not accepted with query.order_by — an ordered query is a single page` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `query.where and query.order_by are only accepted with db_op "query"` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
-| `queryWithObserverTap: missing terminal after completion` | Excluded: Request digest and replay recording checks |
+| `queryWithObserverTap: missing terminal after completion` | Excluded: Internal query-loop assertion (queryWithObserverTap): the stream ended with no final result |
 | `quickstart is not available in this session — list the Artifact types with their own call instead` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `read denied: ${…}` | [/reference/tools/files#errors](/reference/tools/files#errors) |
 | `read not allowed (${…}): ${…}` | [/reference/tools/files#errors](/reference/tools/files#errors) |
@@ -5883,7 +5883,7 @@ Items: 4022.
 | `reading file_path is blocked by a Read permission rule` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `reading file_path is blocked by a Read permission rule — the upload was not attempted` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `reading this file is blocked by a Read permission rule — the upload was not attempted` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
-| `realpath would misread a backslash in the path` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `realpath would misread a backslash in the path` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `reconnectMcpServer: no mcpDelegate wired (server: ${…})` | [/extend/headless#errors](/extend/headless#errors) |
 | `record aged out` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
 | `record key "__proto__"` | Excluded: Bundled Zod schema library |
@@ -5919,7 +5919,7 @@ Items: 4022.
 | `registerCommandNetworkLists: allowedDomains must be an array of strings.` | [/configure/permissions/sandbox#errors](/configure/permissions/sandbox#errors) |
 | `registerCommandNetworkLists: commandId must be a string of at least ${…} characters, unpaired surrogates not counted. The id is the only thing that binds a proxy connection to this allow list, and the…` | [/configure/permissions/sandbox#errors](/configure/permissions/sandbox#errors) |
 | `registerCommandNetworkLists: invalid allowedDomains entry ${…}. ${…}` | [/configure/permissions/sandbox#errors](/configure/permissions/sandbox#errors) |
-| `registerPlan: plan failed shape validation` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `registerPlan: plan failed shape validation` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `registerSyncCacheResetListener: a listener is already registered; a second one would unhook the first` | Excluded: Build-time schema, model catalog, and field-coverage drift assertions |
 | `registerWorker: invalid worker_epoch in response${…}` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
 | `register_repo_root: ${…} ${…}` | [/extend/headless#errors](/extend/headless#errors) |
@@ -5937,7 +5937,7 @@ Items: 4022.
 | `rename_session: title must be a string` | [/extend/headless#errors](/extend/headless#errors) |
 | `renderer '${…}' does not exist` | Excluded: Markdown extension registration errors |
 | `repeated posting docId` | Excluded: Search index file-format assertions (postings, doc entries, term entries) |
-| `replaceRemoteHosts was handed a ToolHost registered by another source` | Excluded: Internal consistency checks on bundled prompt, skill, and hook text |
+| `replaceRemoteHosts was handed a ToolHost registered by another source` | Excluded: Internal consistency and refusal messages (bundled text, tool pairing, import size cap, host checks) |
 | `replayWorldJournal: the world is not empty` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
 | `replicated "aud" claim header parameter mismatch` | Excluded: Bundled jose library (JWT, JWS, JWE, JWK) |
 | `replicated "iss" claim header parameter mismatch` | Excluded: Bundled jose library (JWT, JWS, JWE, JWK) |
@@ -6057,7 +6057,7 @@ Items: 4022.
 | `spec file is over the size limit the harness writes — refusing to read it` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
 | `spec path is not a regular file — refusing to read it` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
 | `spread not allowed in meta` | [/reference/tools/agents-and-tasks#errors](/reference/tools/agents-and-tasks#errors) |
-| `staging block exited without a staging file` | Excluded: Internal tool plumbing assertions (permission descriptor, IDE client, frame API, tool host) |
+| `staging block exited without a staging file` | Excluded: Internal staging check |
 | `stats: transcript project listing failed` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
 | `stats: transcript project listing unfinished at the page cap` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
 | `steeringVarTable has no row for tier family "${…}"` | [/configure/settings/auth#errors](/configure/settings/auth#errors) |
@@ -6082,10 +6082,10 @@ Items: 4022.
 | `surrogate code points are not allowed` | Excluded: Bundled protobuf and CEL libraries (@bufbuild/protobuf, cel-js) |
 | `surrounding whitespace` | [/reference/tools/files#errors](/reference/tools/files#errors) |
 | `suspicious path spelling: ${…}` | [/reference/tools/files#errors](/reference/tools/files#errors) |
-| `symlink target has a symlink chain too long to vet` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
-| `symlink target traverses a junction to remote UNC` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `symlink target has a symlink chain too long to vet` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
+| `symlink target traverses a junction to remote UNC` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `sync is not available in this build` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
-| `syncDir must be absolute` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `syncDir must be absolute` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `synced item name contains display-hazard characters` | Excluded: Validation of synced settings packs, sidecars, and item names |
 | `synced item name escapes the sync root` | Excluded: Validation of synced settings packs, sidecars, and item names |
 | `synced item name resolves to reserved path` | Excluded: Validation of synced settings packs, sidecars, and item names |
@@ -6124,7 +6124,7 @@ Items: 4022.
 | `the context breakdown isn't available over this remote connection` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
 | `the create was cancelled` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
 | `the destination no longer matches the one this read was approved for — nothing was fetched; retry so it is checked again` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
-| `the directory cannot be opened` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `the directory cannot be opened` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `the directory for verified hook copies is no longer the one this process made` | Excluded: Hook copy directory checks for cloud sessions |
 | `the directory for verified hook copies is now where the cloud session can write` | Excluded: Hook copy directory checks for cloud sessions |
 | `the directory modes did not take, the sealed trees are not the ones that were moved, the kept directory holds an unexpected entry, or something reappeared at home/ or tmp/ before the directory locked` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
@@ -6132,15 +6132,15 @@ Items: 4022.
 | `the endpoint contains a tab, a line break, a control character or a backslash` | [/reference/tools/shell-and-web#errors](/reference/tools/shell-and-web#errors) |
 | `the endpoint is not a valid URL path` | [/reference/tools/shell-and-web#errors](/reference/tools/shell-and-web#errors) |
 | `the engine is used before its load` | Excluded: Plugin test kit and render-surface assertions (Client drawing, mounted tree, timers) |
-| `the file at this path could not be vouched for` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
-| `the file at this path is not the one approved` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `the file at this path could not be vouched for` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
+| `the file at this path is not the one approved` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `the file became shorter while it was being uploaded` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
 | `the file is one of Claude's own files, or its name has text-direction characters` | [/reference/tools/files#errors](/reference/tools/files#errors) |
-| `the file is over the size limit` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `the file is over the size limit` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `the file is too large to send back as text` | [/reference/tools/files#errors](/reference/tools/files#errors) |
 | `the file was fetched but could not be saved (${…})` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `the files map no longer names the copies that were approved (each destination with its source) — nothing was published; retry so the publish is checked again` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
-| `the files together are larger than one call places` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `the files together are larger than one call places` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `the frontmatter is refused or does not parse` | Excluded: Build-time schema, model catalog, and field-coverage drift assertions |
 | `the harness is running as root, which a directory mode does not bind` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
 | `the home, Claude config, temp, plugin-parent or case-parent directory on this machine has a glob character (* ? [ ]) in its path (as written or where it really points), so the Bash sandbox cannot excl…` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
@@ -6185,11 +6185,11 @@ Items: 4022.
 | `the session's events could not be read` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
 | `the settings pack to re-send carries permissions of an unknown shape` | Excluded: Canonical JSON and base64url encoding checks of the browser pairing channel |
 | `the settings pack to re-send does not parse` | Excluded: Canonical JSON and base64url encoding checks of the browser pairing channel |
-| `the staged archive is missing, or is not the file this write staged` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
-| `the staged file could not take the whole part` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
-| `the staged file is not a file of this write` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
-| `the staged file is not the one this write began` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
-| `the staged file was replaced before it was placed` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `the staged archive is missing, or is not the file this write staged` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
+| `the staged file could not take the whole part` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
+| `the staged file is not a file of this write` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
+| `the staged file is not the one this write began` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
+| `the staged file was replaced before it was placed` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `the staging folder is not a real directory` | [/reference/tools/agents-and-tasks#errors](/reference/tools/agents-and-tasks#errors) |
 | `the stop action is missing` | [/configure/cli/subcommands#errors](/configure/cli/subcommands#errors) |
 | `the stub publish directory is not a real directory` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
@@ -6241,7 +6241,7 @@ Items: 4022.
 | `toggleMcpServer: no mcpDelegate wired (server: ${…})` | [/extend/headless#errors](/extend/headless#errors) |
 | `tokenizer '${…}' does not exist` | Excluded: Markdown extension registration errors |
 | `too many stream-base spellings` | [/reference/tools/files#errors](/reference/tools/files#errors) |
-| `tool host helper: the session id is not usable` | Excluded: Internal tool plumbing assertions (permission descriptor, IDE client, frame API, tool host) |
+| `tool host helper: the session id is not usable` | Excluded: Internal tool host check |
 | `tool-results file refused: this session keeps no files on this machine` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
 | `tool-results path refused: ${…} is a link or not a directory` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
 | `tool_result blocks are not matching any tool_use from the previous message` | Excluded: Bundled MCP SDK (@modelcontextprotocol/sdk) |
@@ -6255,7 +6255,7 @@ Items: 4022.
 | `transcript stream append failed` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
 | `transcript stream replace failed` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
 | `transcriptLines takes text: open the stream with an encoding` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
-| `tree anchor is closed` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `tree anchor is closed` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `tryAppend: short write to ${…} stalled with ${…} bytes remaining` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
 | `ttl must be a positive integer if specified` | Excluded: Bundled lru-cache |
 | `type cannot be converted ${…}` | Excluded: Bundled protobuf and CEL libraries (@bufbuild/protobuf, cel-js) |
@@ -6289,7 +6289,7 @@ Items: 4022.
 | `unknown placement option — the only one is top (a boolean)` | [/reference/tools/agents-and-tasks#errors](/reference/tools/agents-and-tasks#errors) |
 | `unknown worker kind: ${…}` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
 | `unknown-tool stub cannot render parameters` | Excluded: Coding-error guards: a provider, delegate, or controller used before it is bound, and test-only setters |
-| `unreachable: fetchFilestoreToFile retry loop fell through` | Excluded: Path-vetting reasons with no sentence of their own (network-spelled path, symlink chain too long, junction to a UNC path) |
+| `unreachable: fetchFilestoreToFile retry loop fell through` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `unrecognised depth` | Excluded: Bundled QR code library |
 | `unrecognized resolve refusal` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `unsafe device-hook template directory` | [/extend/hooks/configuration#errors](/extend/hooks/configuration#errors) |
@@ -6526,9 +6526,9 @@ Items: 303.
 | `--brief` | [All Flags](../configure/cli/flags.md) |
 | `--channels` | [All Flags](../configure/cli/flags.md) |
 | `--chrome` | [All Flags](../configure/cli/flags.md) |
-| `--client-data-url` | [All Flags](../configure/cli/flags.md) |
-| `--cloud` | [All Flags](../configure/cli/flags.md) |
-| `--continue` | [All Flags](../configure/cli/flags.md) |
+| `--client-data-url` | [/configure/cli/flags#start-and-print-mode](/configure/cli/flags#start-and-print-mode) |
+| `--cloud` | [/configure/cli/flags#cloud-and-remote-sessions](/configure/cli/flags#cloud-and-remote-sessions) |
+| `--continue` | [/configure/cli/flags#sessions-and-worktrees](/configure/cli/flags#sessions-and-worktrees) |
 | `--correlation-id` | [All Flags](../configure/cli/flags.md) |
 | `--dangerously-load-development-channels` | [All Flags](../configure/cli/flags.md) |
 | `--dangerously-skip-permissions` | [All Flags](../configure/cli/flags.md) |
@@ -6545,7 +6545,7 @@ Items: 303.
 | `--effort` | [All Flags](../configure/cli/flags.md) |
 | `--enable-auth-status` | [All Flags](../configure/cli/flags.md) |
 | `--enable-auto-mode` | [All Flags](../configure/cli/flags.md) |
-| `--environment` | [All Flags](../configure/cli/flags.md) |
+| `--environment` | [CLI Overview](../configure/cli/index.md) |
 | `--exclude-dynamic-system-prompt-sections` | [All Flags](../configure/cli/flags.md) |
 | `--fallback-model` | [All Flags](../configure/cli/flags.md) |
 | `--fast-mode` | [All Flags](../configure/cli/flags.md) |
@@ -6569,7 +6569,7 @@ Items: 303.
 | `--max-budget-usd` | [All Flags](../configure/cli/flags.md) |
 | `--max-thinking-tokens` | [All Flags](../configure/cli/flags.md) |
 | `--max-turns` | [All Flags](../configure/cli/flags.md) |
-| `--mcp-config` | [All Flags](../configure/cli/flags.md) |
+| `--mcp-config` | [/configure/cli/flags#agents-plugins-mcp-and-context](/configure/cli/flags#agents-plugins-mcp-and-context) |
 | `--messaging-socket-path` | [All Flags](../configure/cli/flags.md) |
 | `--model` | [All Flags](../configure/cli/flags.md) |
 | `--name` | [All Flags](../configure/cli/flags.md) |
@@ -6579,29 +6579,29 @@ Items: 303.
 | `--output-format` | [All Flags](../configure/cli/flags.md) |
 | `--parent-session-id` | [All Flags](../configure/cli/flags.md) |
 | `--permission-mode` | [All Flags](../configure/cli/flags.md) |
-| `--permission-prompt-tool` | [All Flags](../configure/cli/flags.md) |
+| `--permission-prompt-tool` | [/configure/cli/flags#permissions-and-tools](/configure/cli/flags#permissions-and-tools) |
 | `--permission-prompts` | [All Flags](../configure/cli/flags.md) |
 | `--plan-mode-instructions` | [All Flags](../configure/cli/flags.md) |
 | `--plan-mode-required` | [All Flags](../configure/cli/flags.md) |
-| `--plugin-dir` | [All Flags](../configure/cli/flags.md) |
+| `--plugin-dir` | [/configure/cli/flags#agents-plugins-mcp-and-context](/configure/cli/flags#agents-plugins-mcp-and-context) |
 | `--plugin-dir-no-mcp` | [All Flags](../configure/cli/flags.md) |
 | `--plugin-url` | [All Flags](../configure/cli/flags.md) |
 | `--pool` | [All Flags](../configure/cli/flags.md) |
 | `--prefill` | [All Flags](../configure/cli/flags.md) |
 | `--prefill-b64` | [All Flags](../configure/cli/flags.md) |
-| `--print` | [All Flags](../configure/cli/flags.md) |
+| `--print` | [/configure/cli/flags#start-and-print-mode](/configure/cli/flags#start-and-print-mode) |
 | `--proactivity` | [All Flags](../configure/cli/flags.md) |
 | `--project-config-root` | [All Flags](../configure/cli/flags.md) |
 | `--prompt-suggestions` | [All Flags](../configure/cli/flags.md) |
 | `--rc` | [All Flags](../configure/cli/flags.md) |
 | `--ref` | [All Flags](../configure/cli/flags.md) |
 | `--remote` | [All Flags](../configure/cli/flags.md) |
-| `--remote-control` | [All Flags](../configure/cli/flags.md) |
+| `--remote-control` | [/configure/cli/flags#cloud-and-remote-sessions](/configure/cli/flags#cloud-and-remote-sessions) |
 | `--remote-control-session-name-prefix` | [All Flags](../configure/cli/flags.md) |
 | `--replay-user-messages` | [All Flags](../configure/cli/flags.md) |
 | `--reply-on-resume` | [All Flags](../configure/cli/flags.md) |
 | `--restricted` | [All Flags](../configure/cli/flags.md) |
-| `--resume` | [All Flags](../configure/cli/flags.md) |
+| `--resume` | [/configure/cli/flags#sessions-and-worktrees](/configure/cli/flags#sessions-and-worktrees) |
 | `--resume-drops-turn` | [All Flags](../configure/cli/flags.md) |
 | `--resume-session-at` | [All Flags](../configure/cli/flags.md) |
 | `--rewind-files` | [All Flags](../configure/cli/flags.md) |
@@ -6620,7 +6620,7 @@ Items: 303.
 | `--team-name` | [All Flags](../configure/cli/flags.md) |
 | `--teammate-mode` | [All Flags](../configure/cli/flags.md) |
 | `--teleport` | [CLI Overview](../configure/cli/index.md) |
-| `--thinking` | [All Flags](../configure/cli/flags.md) |
+| `--thinking` | [/configure/cli/flags#model-and-thinking](/configure/cli/flags#model-and-thinking) |
 | `--thinking-display` | [All Flags](../configure/cli/flags.md) |
 | `--tmux` | [All Flags](../configure/cli/flags.md) |
 | `--tools` | [All Flags](../configure/cli/flags.md) |
@@ -6628,7 +6628,7 @@ Items: 303.
 | `--watch-artifact` | [All Flags](../configure/cli/flags.md) |
 | `--watch-artifact-no-autoreact` | [All Flags](../configure/cli/flags.md) |
 | `--workload` | [All Flags](../configure/cli/flags.md) |
-| `--worktree` | [All Flags](../configure/cli/flags.md) |
+| `--worktree` | [/configure/cli/flags#sessions-and-worktrees](/configure/cli/flags#sessions-and-worktrees) |
 | `add --callback-port` | [/extend/mcp/cli#flags](/extend/mcp/cli#flags) |
 | `add --client-id` | [/extend/mcp/cli#flags](/extend/mcp/cli#flags) |
 | `add --client-secret` | [/extend/mcp/cli#flags](/extend/mcp/cli#flags) |
@@ -6666,7 +6666,7 @@ Items: 303.
 | `auto-mode defaults --label` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
 | `auto-mode reset --yes` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
 | `design-login --json` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
-| `design-login --status` | [Subcommands](../configure/cli/subcommands.md) |
+| `design-login --status` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
 | `drop-worktree-registrations --json` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
 | `edit-chrome-settings --json` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
 | `edit-hook --json` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
@@ -7058,7 +7058,7 @@ Items: 1101.
 | `tengu_cosmic_lake` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_cosmic_shore` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_cowork_auto_mode_include_allowed_write_mcp` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
-| `tengu_cowork_chrome_automode_default` | [Auto Mode](../configure/permissions/auto-mode.md) |
+| `tengu_cowork_chrome_automode_default` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_cozy_dusk` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_cozy_eagle` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_cozy_fern` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
@@ -7213,7 +7213,7 @@ Items: 1101.
 | `tengu_harp_voatavo` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_hashed_lark` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_hawthorn_steeple` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
-| `tengu_haze_glass` | [Files, Search, and Memory](tools/files.md) |
+| `tengu_haze_glass` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_hazel_lantern` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_hazel_osprey` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_hazel_osprey_floor` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
@@ -7292,7 +7292,7 @@ Items: 1101.
 | `tengu_kairos_input_needed_push` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_kairos_loop_keepalive` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_kairos_loop_persistent` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
-| `tengu_kairos_push_notifications` | [Probes](probes.md) |
+| `tengu_kairos_push_notifications` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_kairos_ready_nudge` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_keen_anchor` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_keen_dolphin` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
@@ -7331,7 +7331,7 @@ Items: 1101.
 | `tengu_linear_brook` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_linear_fog` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_linear_owl` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
-| `tengu_linen_orbit` | [Files, Search, and Memory](tools/files.md) |
+| `tengu_linen_orbit` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_linked_cake` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_linked_clover` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_lively_beaver` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
@@ -7598,7 +7598,7 @@ Items: 1101.
 | `tengu_sage_compass2` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_salt_marsh` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_satchel_banjo` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
-| `tengu_scratch` | [Status Line](../configure/status-line.md) |
+| `tengu_scratch` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_sdk_mcp_manifests` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_sedge_lantern_config` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_send_file` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
@@ -7630,7 +7630,7 @@ Items: 1101.
 | `tengu_silent_heron` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_silk_hinge` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_silly_waterfall` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
-| `tengu_skills_dashboard_enabled` | [Endpoints and Headers](api/endpoints.md) |
+| `tengu_skills_dashboard_enabled` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_slate_bittern` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_slate_finch` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_slate_harbor_experiment` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
@@ -7837,7 +7837,7 @@ Items: 1101.
 | `tengu_violin_plan_classifier` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_violin_purfling` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_violin_rib` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
-| `tengu_violin_rosin` | [Shell, Web, and Background Tasks](tools/shell-and-web.md) |
+| `tengu_violin_rosin` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_violin_saddle` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_violin_scroll` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_violin_speculative_classifier` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
@@ -7917,39 +7917,39 @@ Items: 33.
 
 | Item | Where |
 | --- | --- |
-| `ConfigChange` | [Hook Configuration](../extend/hooks/configuration.md) |
-| `CwdChanged` | [Hook Configuration](../extend/hooks/configuration.md) |
-| `DirectoryAdded` | [Hook Configuration](../extend/hooks/configuration.md) |
-| `Elicitation` | [Hook Configuration](../extend/hooks/configuration.md) |
-| `ElicitationResult` | [Hook Configuration](../extend/hooks/configuration.md) |
+| `ConfigChange` | [Hook Events](../extend/hooks/events.md) |
+| `CwdChanged` | [Hook Events](../extend/hooks/events.md) |
+| `DirectoryAdded` | [Hook Events](../extend/hooks/events.md) |
+| `Elicitation` | [Hook Events](../extend/hooks/events.md) |
+| `ElicitationResult` | [Hook Events](../extend/hooks/events.md) |
 | `FileChanged` | [Hook Configuration](../extend/hooks/configuration.md) |
-| `InstructionsLoaded` | [Hook Configuration](../extend/hooks/configuration.md) |
-| `MessageDisplay` | [Hook Configuration](../extend/hooks/configuration.md) |
-| `Notification` | [Hook Configuration](../extend/hooks/configuration.md) |
-| `PermissionDenied` | [Hook Configuration](../extend/hooks/configuration.md) |
-| `PermissionRequest` | [Hook Configuration](../extend/hooks/configuration.md) |
-| `PostCompact` | [Hook Configuration](../extend/hooks/configuration.md) |
-| `PostModelSwitch` | [Hook Configuration](../extend/hooks/configuration.md) |
-| `PostToolBatch` | [Hook Configuration](../extend/hooks/configuration.md) |
-| `PostToolUse` | [Hook Configuration](../extend/hooks/configuration.md) |
-| `PostToolUseFailure` | [Hook Configuration](../extend/hooks/configuration.md) |
-| `PreCompact` | [Hook Configuration](../extend/hooks/configuration.md) |
+| `InstructionsLoaded` | [Hook Events](../extend/hooks/events.md) |
+| `MessageDisplay` | [Hook Events](../extend/hooks/events.md) |
+| `Notification` | [Hook Events](../extend/hooks/events.md) |
+| `PermissionDenied` | [Hook Events](../extend/hooks/events.md) |
+| `PermissionRequest` | [Hook Events](../extend/hooks/events.md) |
+| `PostCompact` | [Hook Events](../extend/hooks/events.md) |
+| `PostModelSwitch` | [Hook Events](../extend/hooks/events.md) |
+| `PostToolBatch` | [Hook Events](../extend/hooks/events.md) |
+| `PostToolUse` | [Hook Events](../extend/hooks/events.md) |
+| `PostToolUseFailure` | [Hook Events](../extend/hooks/events.md) |
+| `PreCompact` | [Hook Events](../extend/hooks/events.md) |
 | `PreModelSwitch` | [Hook Configuration](../extend/hooks/configuration.md) |
 | `PreToolUse` | [Hook Configuration](../extend/hooks/configuration.md) |
 | `SessionEnd` | [Hook Configuration](../extend/hooks/configuration.md) |
-| `SessionStart` | [Hook Configuration](../extend/hooks/configuration.md) |
-| `Setup` | [Hook Configuration](../extend/hooks/configuration.md) |
-| `Stop` | [Hook Configuration](../extend/hooks/configuration.md) |
+| `SessionStart` | [Hook Events](../extend/hooks/events.md) |
+| `Setup` | [Hook Events](../extend/hooks/events.md) |
+| `Stop` | [Hook Events](../extend/hooks/events.md) |
 | `StopFailure` | [Hook Configuration](../extend/hooks/configuration.md) |
-| `SubagentStart` | [Hook Configuration](../extend/hooks/configuration.md) |
-| `SubagentStop` | [Hook Configuration](../extend/hooks/configuration.md) |
-| `TaskCompleted` | [Hook Configuration](../extend/hooks/configuration.md) |
-| `TaskCreated` | [Hook Configuration](../extend/hooks/configuration.md) |
-| `TeammateIdle` | [Hook Configuration](../extend/hooks/configuration.md) |
-| `UserPromptExpansion` | [Hook Configuration](../extend/hooks/configuration.md) |
-| `UserPromptSubmit` | [Hook Configuration](../extend/hooks/configuration.md) |
-| `WorktreeCreate` | [Hook Configuration](../extend/hooks/configuration.md) |
-| `WorktreeRemove` | [Hook Configuration](../extend/hooks/configuration.md) |
+| `SubagentStart` | [Hook Events](../extend/hooks/events.md) |
+| `SubagentStop` | [Hook Events](../extend/hooks/events.md) |
+| `TaskCompleted` | [Hook Events](../extend/hooks/events.md) |
+| `TaskCreated` | [Hook Events](../extend/hooks/events.md) |
+| `TeammateIdle` | [Hook Events](../extend/hooks/events.md) |
+| `UserPromptExpansion` | [Hook Events](../extend/hooks/events.md) |
+| `UserPromptSubmit` | [Hook Events](../extend/hooks/events.md) |
+| `WorktreeCreate` | [Hook Events](../extend/hooks/events.md) |
+| `WorktreeRemove` | [Hook Events](../extend/hooks/events.md) |
 
 ## Keybindings
 
@@ -7986,157 +7986,157 @@ Items: 204.
 | `Task` | [Keybindings](../configure/keybindings.md) |
 | `ThemePicker` | [Keybindings](../configure/keybindings.md) |
 | `Transcript` | [Keybindings](../configure/keybindings.md) |
-| `abovePrompt:focus` | [Keybindings](../configure/keybindings.md) |
-| `abovePrompt:highlightNext` | [Keybindings](../configure/keybindings.md) |
-| `abovePrompt:highlightPrevious` | [Keybindings](../configure/keybindings.md) |
-| `abovePrompt:leave` | [Keybindings](../configure/keybindings.md) |
-| `abovePrompt:next` | [Keybindings](../configure/keybindings.md) |
-| `abovePrompt:press` | [Keybindings](../configure/keybindings.md) |
-| `abovePrompt:previous` | [Keybindings](../configure/keybindings.md) |
-| `abovePrompt:toggle` | [Keybindings](../configure/keybindings.md) |
-| `agents:find` | [Keybindings](../configure/keybindings.md) |
-| `agents:nextGroup` | [Keybindings](../configure/keybindings.md) |
-| `agents:previousGroup` | [Keybindings](../configure/keybindings.md) |
-| `agents:rename` | [Keybindings](../configure/keybindings.md) |
+| `abovePrompt:focus` | [/configure/keybindings#chat](/configure/keybindings#chat) |
+| `abovePrompt:highlightNext` | [/configure/keybindings#abovepromptselect](/configure/keybindings#abovepromptselect) |
+| `abovePrompt:highlightPrevious` | [/configure/keybindings#abovepromptselect](/configure/keybindings#abovepromptselect) |
+| `abovePrompt:leave` | [/configure/keybindings#aboveprompt](/configure/keybindings#aboveprompt) |
+| `abovePrompt:next` | [/configure/keybindings#aboveprompt](/configure/keybindings#aboveprompt) |
+| `abovePrompt:press` | [/configure/keybindings#aboveprompt](/configure/keybindings#aboveprompt) |
+| `abovePrompt:previous` | [/configure/keybindings#aboveprompt](/configure/keybindings#aboveprompt) |
+| `abovePrompt:toggle` | [/configure/keybindings#chat](/configure/keybindings#chat) |
+| `agents:find` | [/configure/keybindings#agents](/configure/keybindings#agents) |
+| `agents:nextGroup` | [/configure/keybindings#agents](/configure/keybindings#agents) |
+| `agents:previousGroup` | [/configure/keybindings#agents](/configure/keybindings#agents) |
+| `agents:rename` | [/configure/keybindings#agents](/configure/keybindings#agents) |
 | `agents:setGroup` | [Keybindings](../configure/keybindings.md) |
-| `agents:switchView` | [Keybindings](../configure/keybindings.md) |
-| `agents:togglePin` | [Keybindings](../configure/keybindings.md) |
-| `app:cycleDiffBase` | [Keybindings](../configure/keybindings.md) |
-| `app:diffFileListDown` | [Keybindings](../configure/keybindings.md) |
-| `app:diffFileListUp` | [Keybindings](../configure/keybindings.md) |
-| `app:exit` | [Keybindings](../configure/keybindings.md) |
-| `app:interrupt` | [Keybindings](../configure/keybindings.md) |
-| `app:openArtifact` | [Keybindings](../configure/keybindings.md) |
+| `agents:switchView` | [/configure/keybindings#agents](/configure/keybindings#agents) |
+| `agents:togglePin` | [/configure/keybindings#agents](/configure/keybindings#agents) |
+| `app:cycleDiffBase` | [/configure/keybindings#diffpanel](/configure/keybindings#diffpanel) |
+| `app:diffFileListDown` | [/configure/keybindings#global](/configure/keybindings#global) |
+| `app:diffFileListUp` | [/configure/keybindings#global](/configure/keybindings#global) |
+| `app:exit` | [/configure/keybindings#global](/configure/keybindings#global) |
+| `app:interrupt` | [/configure/keybindings#global](/configure/keybindings#global) |
+| `app:openArtifact` | [/configure/keybindings#global](/configure/keybindings#global) |
 | `app:redraw` | [Keybindings](../configure/keybindings.md) |
-| `app:toggleBrief` | [Keybindings](../configure/keybindings.md) |
+| `app:toggleBrief` | [/configure/keybindings#global](/configure/keybindings#global) |
 | `app:toggleDiffNoiseFilter` | [Keybindings](../configure/keybindings.md) |
 | `app:toggleDiffPreSession` | [Keybindings](../configure/keybindings.md) |
 | `app:toggleReplTab` | [Keybindings](../configure/keybindings.md) |
 | `app:toggleTerminal` | [Keybindings](../configure/keybindings.md) |
-| `app:toggleTodos` | [Keybindings](../configure/keybindings.md) |
-| `app:toggleTranscript` | [Keybindings](../configure/keybindings.md) |
-| `attachments:exit` | [Keybindings](../configure/keybindings.md) |
-| `attachments:next` | [Keybindings](../configure/keybindings.md) |
-| `attachments:previous` | [Keybindings](../configure/keybindings.md) |
-| `attachments:remove` | [Keybindings](../configure/keybindings.md) |
-| `autocomplete:accept` | [Keybindings](../configure/keybindings.md) |
-| `autocomplete:dismiss` | [Keybindings](../configure/keybindings.md) |
-| `autocomplete:next` | [Keybindings](../configure/keybindings.md) |
-| `autocomplete:previous` | [Keybindings](../configure/keybindings.md) |
+| `app:toggleTodos` | [/configure/keybindings#global](/configure/keybindings#global) |
+| `app:toggleTranscript` | [/configure/keybindings#global](/configure/keybindings#global) |
+| `attachments:exit` | [/configure/keybindings#attachments](/configure/keybindings#attachments) |
+| `attachments:next` | [/configure/keybindings#attachments](/configure/keybindings#attachments) |
+| `attachments:previous` | [/configure/keybindings#attachments](/configure/keybindings#attachments) |
+| `attachments:remove` | [/configure/keybindings#attachments](/configure/keybindings#attachments) |
+| `autocomplete:accept` | [/configure/keybindings#autocomplete](/configure/keybindings#autocomplete) |
+| `autocomplete:dismiss` | [/configure/keybindings#autocomplete](/configure/keybindings#autocomplete) |
+| `autocomplete:next` | [/configure/keybindings#autocomplete](/configure/keybindings#autocomplete) |
+| `autocomplete:previous` | [/configure/keybindings#autocomplete](/configure/keybindings#autocomplete) |
 | `chat:attentionDown` | [Keybindings](../configure/keybindings.md) |
 | `chat:attentionUp` | [Keybindings](../configure/keybindings.md) |
-| `chat:cancel` | [Keybindings](../configure/keybindings.md) |
-| `chat:clearInput` | [Keybindings](../configure/keybindings.md) |
-| `chat:clearScreen` | [Keybindings](../configure/keybindings.md) |
-| `chat:cycleMode` | [Keybindings](../configure/keybindings.md) |
+| `chat:cancel` | [/configure/keybindings#chat](/configure/keybindings#chat) |
+| `chat:clearInput` | [/configure/keybindings#chat](/configure/keybindings#chat) |
+| `chat:clearScreen` | [/configure/keybindings#chat](/configure/keybindings#chat) |
+| `chat:cycleMode` | [/configure/keybindings#chat](/configure/keybindings#chat) |
 | `chat:cycleProactivity` | [Keybindings](../configure/keybindings.md) |
 | `chat:decreaseEffort` | [Keybindings](../configure/keybindings.md) |
-| `chat:defaultToNewerModel` | [Keybindings](../configure/keybindings.md) |
-| `chat:externalEditor` | [Keybindings](../configure/keybindings.md) |
-| `chat:fastMode` | [Keybindings](../configure/keybindings.md) |
-| `chat:imagePaste` | [Keybindings](../configure/keybindings.md) |
+| `chat:defaultToNewerModel` | [/configure/keybindings#chat](/configure/keybindings#chat) |
+| `chat:externalEditor` | [/configure/keybindings#chat](/configure/keybindings#chat) |
+| `chat:fastMode` | [/configure/keybindings#chat](/configure/keybindings#chat) |
+| `chat:imagePaste` | [/configure/keybindings#chat](/configure/keybindings#chat) |
 | `chat:increaseEffort` | [Keybindings](../configure/keybindings.md) |
-| `chat:killAgents` | [Keybindings](../configure/keybindings.md) |
-| `chat:modelPicker` | [Keybindings](../configure/keybindings.md) |
-| `chat:newline` | [Keybindings](../configure/keybindings.md) |
-| `chat:queueSubmit` | [Keybindings](../configure/keybindings.md) |
-| `chat:sendNow` | [Keybindings](../configure/keybindings.md) |
-| `chat:stash` | [Keybindings](../configure/keybindings.md) |
-| `chat:submit` | [Keybindings](../configure/keybindings.md) |
-| `chat:thinkingToggle` | [Keybindings](../configure/keybindings.md) |
-| `chat:undo` | [Keybindings](../configure/keybindings.md) |
-| `chat:workflowKeywordToggle` | [Keybindings](../configure/keybindings.md) |
-| `confirm:cycleMode` | [Keybindings](../configure/keybindings.md) |
-| `confirm:next` | [Keybindings](../configure/keybindings.md) |
-| `confirm:nextField` | [Keybindings](../configure/keybindings.md) |
-| `confirm:no` | [Keybindings](../configure/keybindings.md) |
-| `confirm:previous` | [Keybindings](../configure/keybindings.md) |
+| `chat:killAgents` | [/configure/keybindings#chat](/configure/keybindings#chat) |
+| `chat:modelPicker` | [/configure/keybindings#chat](/configure/keybindings#chat) |
+| `chat:newline` | [/configure/keybindings#chat](/configure/keybindings#chat) |
+| `chat:queueSubmit` | [/configure/keybindings#chat](/configure/keybindings#chat) |
+| `chat:sendNow` | [/configure/keybindings#chat](/configure/keybindings#chat) |
+| `chat:stash` | [/configure/keybindings#chat](/configure/keybindings#chat) |
+| `chat:submit` | [/configure/keybindings#chat](/configure/keybindings#chat) |
+| `chat:thinkingToggle` | [/configure/keybindings#chat](/configure/keybindings#chat) |
+| `chat:undo` | [/configure/keybindings#chat](/configure/keybindings#chat) |
+| `chat:workflowKeywordToggle` | [/configure/keybindings#chat](/configure/keybindings#chat) |
+| `confirm:cycleMode` | [/configure/keybindings#confirmation](/configure/keybindings#confirmation) |
+| `confirm:next` | [/configure/keybindings#confirmation](/configure/keybindings#confirmation) |
+| `confirm:nextField` | [/configure/keybindings#confirmation](/configure/keybindings#confirmation) |
+| `confirm:no` | [/configure/keybindings#confirmation](/configure/keybindings#confirmation) |
+| `confirm:previous` | [/configure/keybindings#confirmation](/configure/keybindings#confirmation) |
 | `confirm:previousField` | [Keybindings](../configure/keybindings.md) |
-| `confirm:toggle` | [Keybindings](../configure/keybindings.md) |
-| `confirm:yes` | [Keybindings](../configure/keybindings.md) |
+| `confirm:toggle` | [/configure/keybindings#confirmation](/configure/keybindings#confirmation) |
+| `confirm:yes` | [/configure/keybindings#confirmation](/configure/keybindings#confirmation) |
 | `diff:back` | [Keybindings](../configure/keybindings.md) |
-| `diff:dismiss` | [Keybindings](../configure/keybindings.md) |
-| `diff:nextFile` | [Keybindings](../configure/keybindings.md) |
-| `diff:nextSource` | [Keybindings](../configure/keybindings.md) |
-| `diff:previousFile` | [Keybindings](../configure/keybindings.md) |
-| `diff:previousSource` | [Keybindings](../configure/keybindings.md) |
-| `effortSlider:decreaseEffort` | [Keybindings](../configure/keybindings.md) |
-| `effortSlider:increaseEffort` | [Keybindings](../configure/keybindings.md) |
-| `effortSlider:thisSessionOnly` | [Keybindings](../configure/keybindings.md) |
-| `effortSlider:toggleUltracode` | [Keybindings](../configure/keybindings.md) |
-| `feedbackSurvey:bad` | [Keybindings](../configure/keybindings.md) |
-| `feedbackSurvey:fine` | [Keybindings](../configure/keybindings.md) |
-| `feedbackSurvey:good` | [Keybindings](../configure/keybindings.md) |
-| `footer:clearSelection` | [Keybindings](../configure/keybindings.md) |
-| `footer:close` | [Keybindings](../configure/keybindings.md) |
+| `diff:dismiss` | [/configure/keybindings#diffdialog](/configure/keybindings#diffdialog) |
+| `diff:nextFile` | [/configure/keybindings#diffdialog](/configure/keybindings#diffdialog) |
+| `diff:nextSource` | [/configure/keybindings#diffdialog](/configure/keybindings#diffdialog) |
+| `diff:previousFile` | [/configure/keybindings#diffdialog](/configure/keybindings#diffdialog) |
+| `diff:previousSource` | [/configure/keybindings#diffdialog](/configure/keybindings#diffdialog) |
+| `effortSlider:decreaseEffort` | [/configure/keybindings#effortslider](/configure/keybindings#effortslider) |
+| `effortSlider:increaseEffort` | [/configure/keybindings#effortslider](/configure/keybindings#effortslider) |
+| `effortSlider:thisSessionOnly` | [/configure/keybindings#effortslider](/configure/keybindings#effortslider) |
+| `effortSlider:toggleUltracode` | [/configure/keybindings#effortslider](/configure/keybindings#effortslider) |
+| `feedbackSurvey:bad` | [/configure/keybindings#feedbacksurvey](/configure/keybindings#feedbacksurvey) |
+| `feedbackSurvey:fine` | [/configure/keybindings#feedbacksurvey](/configure/keybindings#feedbacksurvey) |
+| `feedbackSurvey:good` | [/configure/keybindings#feedbacksurvey](/configure/keybindings#feedbacksurvey) |
+| `footer:clearSelection` | [/configure/keybindings#footer](/configure/keybindings#footer) |
+| `footer:close` | [/configure/keybindings#footer](/configure/keybindings#footer) |
 | `footer:dismiss` | [Keybindings](../configure/keybindings.md) |
-| `footer:down` | [Keybindings](../configure/keybindings.md) |
-| `footer:next` | [Keybindings](../configure/keybindings.md) |
-| `footer:openSelected` | [Keybindings](../configure/keybindings.md) |
-| `footer:previous` | [Keybindings](../configure/keybindings.md) |
-| `footer:up` | [Keybindings](../configure/keybindings.md) |
-| `help:dismiss` | [Keybindings](../configure/keybindings.md) |
-| `history:next` | [Keybindings](../configure/keybindings.md) |
-| `history:previous` | [Keybindings](../configure/keybindings.md) |
-| `history:search` | [Keybindings](../configure/keybindings.md) |
-| `historySearch:accept` | [Keybindings](../configure/keybindings.md) |
-| `historySearch:cancel` | [Keybindings](../configure/keybindings.md) |
-| `historySearch:cycleScope` | [Keybindings](../configure/keybindings.md) |
-| `historySearch:execute` | [Keybindings](../configure/keybindings.md) |
-| `historySearch:next` | [Keybindings](../configure/keybindings.md) |
-| `modelPicker:decreaseEffort` | [Keybindings](../configure/keybindings.md) |
-| `modelPicker:increaseEffort` | [Keybindings](../configure/keybindings.md) |
-| `modelPicker:thisSessionOnly` | [Keybindings](../configure/keybindings.md) |
-| `pane:bottom` | [Keybindings](../configure/keybindings.md) |
-| `pane:close` | [Keybindings](../configure/keybindings.md) |
-| `pane:grow` | [Keybindings](../configure/keybindings.md) |
+| `footer:down` | [/configure/keybindings#footer](/configure/keybindings#footer) |
+| `footer:next` | [/configure/keybindings#footer](/configure/keybindings#footer) |
+| `footer:openSelected` | [/configure/keybindings#footer](/configure/keybindings#footer) |
+| `footer:previous` | [/configure/keybindings#footer](/configure/keybindings#footer) |
+| `footer:up` | [/configure/keybindings#footer](/configure/keybindings#footer) |
+| `help:dismiss` | [/configure/keybindings#help](/configure/keybindings#help) |
+| `history:next` | [/configure/keybindings#chat](/configure/keybindings#chat) |
+| `history:previous` | [/configure/keybindings#chat](/configure/keybindings#chat) |
+| `history:search` | [/configure/keybindings#global](/configure/keybindings#global) |
+| `historySearch:accept` | [/configure/keybindings#historysearch](/configure/keybindings#historysearch) |
+| `historySearch:cancel` | [/configure/keybindings#historysearch](/configure/keybindings#historysearch) |
+| `historySearch:cycleScope` | [/configure/keybindings#historysearch](/configure/keybindings#historysearch) |
+| `historySearch:execute` | [/configure/keybindings#historysearch](/configure/keybindings#historysearch) |
+| `historySearch:next` | [/configure/keybindings#historysearch](/configure/keybindings#historysearch) |
+| `modelPicker:decreaseEffort` | [/configure/keybindings#modelpicker](/configure/keybindings#modelpicker) |
+| `modelPicker:increaseEffort` | [/configure/keybindings#modelpicker](/configure/keybindings#modelpicker) |
+| `modelPicker:thisSessionOnly` | [/configure/keybindings#modelpicker](/configure/keybindings#modelpicker) |
+| `pane:bottom` | [/configure/keybindings#aboveprompt](/configure/keybindings#aboveprompt) |
+| `pane:close` | [/configure/keybindings#pane](/configure/keybindings#pane) |
+| `pane:grow` | [/configure/keybindings#pane](/configure/keybindings#pane) |
 | `pane:next` | [Keybindings](../configure/keybindings.md) |
-| `pane:pageDown` | [Keybindings](../configure/keybindings.md) |
-| `pane:pageUp` | [Keybindings](../configure/keybindings.md) |
+| `pane:pageDown` | [/configure/keybindings#aboveprompt](/configure/keybindings#aboveprompt) |
+| `pane:pageUp` | [/configure/keybindings#aboveprompt](/configure/keybindings#aboveprompt) |
 | `pane:previous` | [Keybindings](../configure/keybindings.md) |
-| `pane:scrollDown` | [Keybindings](../configure/keybindings.md) |
-| `pane:scrollUp` | [Keybindings](../configure/keybindings.md) |
-| `pane:shrink` | [Keybindings](../configure/keybindings.md) |
-| `pane:top` | [Keybindings](../configure/keybindings.md) |
+| `pane:scrollDown` | [/configure/keybindings#aboveprompt](/configure/keybindings#aboveprompt) |
+| `pane:scrollUp` | [/configure/keybindings#aboveprompt](/configure/keybindings#aboveprompt) |
+| `pane:shrink` | [/configure/keybindings#pane](/configure/keybindings#pane) |
+| `pane:top` | [/configure/keybindings#aboveprompt](/configure/keybindings#aboveprompt) |
 | `permission:toggleDebug` | [Keybindings](../configure/keybindings.md) |
-| `plugin:cycleMarketplace` | [Keybindings](../configure/keybindings.md) |
-| `plugin:favorite` | [Keybindings](../configure/keybindings.md) |
-| `plugin:install` | [Keybindings](../configure/keybindings.md) |
-| `plugin:toggle` | [Keybindings](../configure/keybindings.md) |
+| `plugin:cycleMarketplace` | [/configure/keybindings#plugin](/configure/keybindings#plugin) |
+| `plugin:favorite` | [/configure/keybindings#plugin](/configure/keybindings#plugin) |
+| `plugin:install` | [/configure/keybindings#plugin](/configure/keybindings#plugin) |
+| `plugin:toggle` | [/configure/keybindings#plugin](/configure/keybindings#plugin) |
 | `proactivityMenu:nextMode` | [Keybindings](../configure/keybindings.md) |
 | `proactivityMenu:previousMode` | [Keybindings](../configure/keybindings.md) |
-| `scroll:bottom` | [Keybindings](../configure/keybindings.md) |
-| `scroll:fullPageDown` | [Keybindings](../configure/keybindings.md) |
-| `scroll:fullPageUp` | [Keybindings](../configure/keybindings.md) |
-| `scroll:halfPageDown` | [Keybindings](../configure/keybindings.md) |
-| `scroll:halfPageUp` | [Keybindings](../configure/keybindings.md) |
-| `scroll:lineDown` | [Keybindings](../configure/keybindings.md) |
-| `scroll:lineUp` | [Keybindings](../configure/keybindings.md) |
-| `scroll:pageDown` | [Keybindings](../configure/keybindings.md) |
-| `scroll:pageUp` | [Keybindings](../configure/keybindings.md) |
-| `scroll:top` | [Keybindings](../configure/keybindings.md) |
-| `select:accept` | [Keybindings](../configure/keybindings.md) |
-| `select:cancel` | [Keybindings](../configure/keybindings.md) |
-| `select:first` | [Keybindings](../configure/keybindings.md) |
-| `select:last` | [Keybindings](../configure/keybindings.md) |
-| `select:next` | [Keybindings](../configure/keybindings.md) |
-| `select:pageDown` | [Keybindings](../configure/keybindings.md) |
-| `select:pageUp` | [Keybindings](../configure/keybindings.md) |
-| `select:previous` | [Keybindings](../configure/keybindings.md) |
+| `scroll:bottom` | [/configure/keybindings#transcript](/configure/keybindings#transcript) |
+| `scroll:fullPageDown` | [/configure/keybindings#transcript](/configure/keybindings#transcript) |
+| `scroll:fullPageUp` | [/configure/keybindings#transcript](/configure/keybindings#transcript) |
+| `scroll:halfPageDown` | [/configure/keybindings#transcript](/configure/keybindings#transcript) |
+| `scroll:halfPageUp` | [/configure/keybindings#transcript](/configure/keybindings#transcript) |
+| `scroll:lineDown` | [/configure/keybindings#transcript](/configure/keybindings#transcript) |
+| `scroll:lineUp` | [/configure/keybindings#transcript](/configure/keybindings#transcript) |
+| `scroll:pageDown` | [/configure/keybindings#diffdialog](/configure/keybindings#diffdialog) |
+| `scroll:pageUp` | [/configure/keybindings#diffdialog](/configure/keybindings#diffdialog) |
+| `scroll:top` | [/configure/keybindings#transcript](/configure/keybindings#transcript) |
+| `select:accept` | [/configure/keybindings#settings](/configure/keybindings#settings) |
+| `select:cancel` | [/configure/keybindings#select](/configure/keybindings#select) |
+| `select:first` | [/configure/keybindings#settings](/configure/keybindings#settings) |
+| `select:last` | [/configure/keybindings#settings](/configure/keybindings#settings) |
+| `select:next` | [/configure/keybindings#settings](/configure/keybindings#settings) |
+| `select:pageDown` | [/configure/keybindings#settings](/configure/keybindings#settings) |
+| `select:pageUp` | [/configure/keybindings#settings](/configure/keybindings#settings) |
+| `select:previous` | [/configure/keybindings#settings](/configure/keybindings#settings) |
 | `selection:clear` | [Keybindings](../configure/keybindings.md) |
-| `selection:copy` | [Keybindings](../configure/keybindings.md) |
-| `selection:extendDown` | [Keybindings](../configure/keybindings.md) |
-| `selection:extendLeft` | [Keybindings](../configure/keybindings.md) |
-| `selection:extendLineEnd` | [Keybindings](../configure/keybindings.md) |
-| `selection:extendLineStart` | [Keybindings](../configure/keybindings.md) |
-| `selection:extendRight` | [Keybindings](../configure/keybindings.md) |
-| `selection:extendUp` | [Keybindings](../configure/keybindings.md) |
-| `settings:fixUsage` | [Keybindings](../configure/keybindings.md) |
-| `settings:periodDay` | [Keybindings](../configure/keybindings.md) |
-| `settings:periodWeek` | [Keybindings](../configure/keybindings.md) |
-| `settings:retry` | [Keybindings](../configure/keybindings.md) |
-| `settings:search` | [Keybindings](../configure/keybindings.md) |
-| `settings:sortByTokens` | [Keybindings](../configure/keybindings.md) |
+| `selection:copy` | [/configure/keybindings#scroll](/configure/keybindings#scroll) |
+| `selection:extendDown` | [/configure/keybindings#scroll](/configure/keybindings#scroll) |
+| `selection:extendLeft` | [/configure/keybindings#scroll](/configure/keybindings#scroll) |
+| `selection:extendLineEnd` | [/configure/keybindings#scroll](/configure/keybindings#scroll) |
+| `selection:extendLineStart` | [/configure/keybindings#scroll](/configure/keybindings#scroll) |
+| `selection:extendRight` | [/configure/keybindings#scroll](/configure/keybindings#scroll) |
+| `selection:extendUp` | [/configure/keybindings#scroll](/configure/keybindings#scroll) |
+| `settings:fixUsage` | [/configure/keybindings#settings](/configure/keybindings#settings) |
+| `settings:periodDay` | [/configure/keybindings#settings](/configure/keybindings#settings) |
+| `settings:periodWeek` | [/configure/keybindings#settings](/configure/keybindings#settings) |
+| `settings:retry` | [/configure/keybindings#settings](/configure/keybindings#settings) |
+| `settings:search` | [/configure/keybindings#settings](/configure/keybindings#settings) |
+| `settings:sortByTokens` | [/configure/keybindings#settings](/configure/keybindings#settings) |
 | `strip:jump1` | [Keybindings](../configure/keybindings.md) |
 | `strip:jump2` | [Keybindings](../configure/keybindings.md) |
 | `strip:jump3` | [Keybindings](../configure/keybindings.md) |
@@ -8153,14 +8153,14 @@ Items: 204.
 | `strip:tabPrevious` | [Keybindings](../configure/keybindings.md) |
 | `strip:toggle` | [Keybindings](../configure/keybindings.md) |
 | `strip:viewAll` | [Keybindings](../configure/keybindings.md) |
-| `tabs:next` | [Keybindings](../configure/keybindings.md) |
-| `tabs:previous` | [Keybindings](../configure/keybindings.md) |
-| `task:background` | [Keybindings](../configure/keybindings.md) |
-| `theme:editCustom` | [Keybindings](../configure/keybindings.md) |
-| `theme:toggleSyntaxHighlighting` | [Keybindings](../configure/keybindings.md) |
-| `transcript:exit` | [Keybindings](../configure/keybindings.md) |
-| `transcript:toggleShowAll` | [Keybindings](../configure/keybindings.md) |
-| `voice:pushToTalk` | [Keybindings](../configure/keybindings.md) |
+| `tabs:next` | [/configure/keybindings#tabs](/configure/keybindings#tabs) |
+| `tabs:previous` | [/configure/keybindings#tabs](/configure/keybindings#tabs) |
+| `task:background` | [/configure/keybindings#task](/configure/keybindings#task) |
+| `theme:editCustom` | [/configure/keybindings#themepicker](/configure/keybindings#themepicker) |
+| `theme:toggleSyntaxHighlighting` | [/configure/keybindings#themepicker](/configure/keybindings#themepicker) |
+| `transcript:exit` | [/configure/keybindings#transcript](/configure/keybindings#transcript) |
+| `transcript:toggleShowAll` | [/configure/keybindings#transcript](/configure/keybindings#transcript) |
+| `voice:pushToTalk` | [/configure/keybindings#chat](/configure/keybindings#chat) |
 
 ## Mod API
 
@@ -8171,8 +8171,8 @@ Items: 229.
 | `$.agent.list` | [Agent](../extend/mod-api/agent.md) |
 | `$.agent.register` | [Agent](../extend/mod-api/agent.md) |
 | `$.agent.spawn` | [Agent](../extend/mod-api/agent.md) |
-| `$.audio.play` | [Mod API Overview](../extend/mod-api/index.md) |
-| `$.audio.speak` | [Mod API Overview](../extend/mod-api/index.md) |
+| `$.audio.play` | [Model, Audio, and MCP](../extend/mod-api/model-audio-mcp.md) |
+| `$.audio.speak` | [Model, Audio, and MCP](../extend/mod-api/model-audio-mcp.md) |
 | `$.clock.after` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/clock-http-process-env-settings.md) |
 | `$.clock.every` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/clock-http-process-env-settings.md) |
 | `$.clock.now` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/clock-http-process-env-settings.md) |
@@ -8180,8 +8180,8 @@ Items: 229.
 | `$.command.list` | [Tool, Command, and Config](../extend/mod-api/tool-command-config.md) |
 | `$.command.register` | [Tool, Command, and Config](../extend/mod-api/tool-command-config.md) |
 | `$.command.run` | [Tool, Command, and Config](../extend/mod-api/tool-command-config.md) |
-| `$.config.list` | [Mod API Overview](../extend/mod-api/index.md) |
-| `$.config.set` | [Mod API Overview](../extend/mod-api/index.md) |
+| `$.config.list` | [Tool, Command, and Config](../extend/mod-api/tool-command-config.md) |
+| `$.config.set` | [Tool, Command, and Config](../extend/mod-api/tool-command-config.md) |
 | `$.env.get` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/clock-http-process-env-settings.md) |
 | `$.env.set` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/clock-http-process-env-settings.md) |
 | `$.fs.ancestors` | [Files, Store, and State](../extend/mod-api/fs-store-state.md) |
@@ -8191,24 +8191,24 @@ Items: 229.
 | `$.fs.stat` | [Files, Store, and State](../extend/mod-api/fs-store-state.md) |
 | `$.fs.write` | [Files, Store, and State](../extend/mod-api/fs-store-state.md) |
 | `$.http.fetch` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/clock-http-process-env-settings.md) |
-| `$.mcp.call` | [Mod API Overview](../extend/mod-api/index.md) |
+| `$.mcp.call` | [Model, Audio, and MCP](../extend/mod-api/model-audio-mcp.md) |
 | `$.mcp.connect` | [Model, Audio, and MCP](../extend/mod-api/model-audio-mcp.md) |
-| `$.model.classify` | [Mod API Overview](../extend/mod-api/index.md) |
-| `$.model.complete` | [Mod API Overview](../extend/mod-api/index.md) |
+| `$.model.classify` | [Model, Audio, and MCP](../extend/mod-api/model-audio-mcp.md) |
+| `$.model.complete` | [Model, Audio, and MCP](../extend/mod-api/model-audio-mcp.md) |
 | `$.model.fork` | [Model, Audio, and MCP](../extend/mod-api/model-audio-mcp.md) |
 | `$.plugin.name` | [Plugin and Engine](../extend/mod-api/plugin.md) |
 | `$.plugin.root` | [Plugin and Engine](../extend/mod-api/plugin.md) |
 | `$.process.run` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/clock-http-process-env-settings.md) |
 | `$.process.spawn` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/clock-http-process-env-settings.md) |
-| `$.prompt.compose` | [Mod API Overview](../extend/mod-api/index.md) |
+| `$.prompt.compose` | [Turn and Prompt](../extend/mod-api/turn-prompt.md) |
 | `$.prompt.fill` | [Turn and Prompt](../extend/mod-api/turn-prompt.md) |
 | `$.prompt.media` | [Turn and Prompt](../extend/mod-api/turn-prompt.md) |
 | `$.prompt.read` | [Turn and Prompt](../extend/mod-api/turn-prompt.md) |
 | `$.prompt.submit` | [Turn and Prompt](../extend/mod-api/turn-prompt.md) |
 | `$.prompt.suggest` | [Turn and Prompt](../extend/mod-api/turn-prompt.md) |
-| `$.session.append` | [Mod API Overview](../extend/mod-api/index.md) |
+| `$.session.append` | [Session](../extend/mod-api/session.md) |
 | `$.session.authorize` | [Session](../extend/mod-api/session.md) |
-| `$.session.compact` | [Mod API Overview](../extend/mod-api/index.md) |
+| `$.session.compact` | [Session](../extend/mod-api/session.md) |
 | `$.session.cwd` | [Session](../extend/mod-api/session.md) |
 | `$.session.id` | [Session](../extend/mod-api/session.md) |
 | `$.session.identity` | [Session](../extend/mod-api/session.md) |
@@ -8231,24 +8231,24 @@ Items: 229.
 | `$.store.set` | [Files, Store, and State](../extend/mod-api/fs-store-state.md) |
 | `$.telemetry.log` | [Telemetry](../extend/mod-api/telemetry.md) |
 | `$.telemetry.mark` | [Telemetry](../extend/mod-api/telemetry.md) |
-| `$.tool.call` | [Agent](../extend/mod-api/agent.md) |
-| `$.tool.check` | [Mod API Overview](../extend/mod-api/index.md) |
+| `$.tool.call` | [Tool, Command, and Config](../extend/mod-api/tool-command-config.md) |
+| `$.tool.check` | [Tool, Command, and Config](../extend/mod-api/tool-command-config.md) |
 | `$.tool.list` | [Tool, Command, and Config](../extend/mod-api/tool-command-config.md) |
-| `$.tool.register` | [Mod API Overview](../extend/mod-api/index.md) |
+| `$.tool.register` | [Tool, Command, and Config](../extend/mod-api/tool-command-config.md) |
 | `$.turn.abort` | [Turn and Prompt](../extend/mod-api/turn-prompt.md) |
-| `$.ui.ask` | [Mod API Overview](../extend/mod-api/index.md) |
-| `$.ui.blit` | [UI Types](../extend/mod-api/types/ui.md) |
-| `$.ui.close` | [UI Types](../extend/mod-api/types/ui.md) |
+| `$.ui.ask` | [UI Methods](../extend/mod-api/ui.md) |
+| `$.ui.blit` | [UI Methods](../extend/mod-api/ui.md) |
+| `$.ui.close` | [UI Methods](../extend/mod-api/ui.md) |
 | `$.ui.copy` | [UI Methods](../extend/mod-api/ui.md) |
-| `$.ui.focus` | [UI Types](../extend/mod-api/types/ui.md) |
-| `$.ui.invalidate` | [Hooks and the Hook Chain](../extend/mod-api/hooks.md) |
-| `$.ui.log` | [Plugin and Engine](../extend/mod-api/plugin.md) |
-| `$.ui.notice` | [Model, Audio, and MCP Types](../extend/mod-api/types/model.md) |
-| `$.ui.notify` | [Mod API Overview](../extend/mod-api/index.md) |
-| `$.ui.open` | [UI Types](../extend/mod-api/types/ui.md) |
+| `$.ui.focus` | [UI Methods](../extend/mod-api/ui.md) |
+| `$.ui.invalidate` | [UI Methods](../extend/mod-api/ui.md) |
+| `$.ui.log` | [UI Methods](../extend/mod-api/ui.md) |
+| `$.ui.notice` | [UI Methods](../extend/mod-api/ui.md) |
+| `$.ui.notify` | [UI Methods](../extend/mod-api/ui.md) |
+| `$.ui.open` | [UI Methods](../extend/mod-api/ui.md) |
 | `$.ui.panes` | [UI Methods](../extend/mod-api/ui.md) |
-| `$.ui.resolve` | [UI Types](../extend/mod-api/types/ui.md) |
-| `$.ui.scroll` | [UI Types](../extend/mod-api/types/ui.md) |
+| `$.ui.resolve` | [UI Methods](../extend/mod-api/ui.md) |
+| `$.ui.scroll` | [UI Methods](../extend/mod-api/ui.md) |
 | `$.ui.selection` | [UI Methods](../extend/mod-api/ui.md) |
 | `$.ui.status` | [UI Methods](../extend/mod-api/ui.md) |
 | `$.ui.toast` | [Files, Nouns, and Gates](../extend/mod-api/nouns-and-gates.md) |
@@ -8350,7 +8350,7 @@ Items: 229.
 | `session.repo` | [Session](../extend/mod-api/session.md) |
 | `session.root` | [Session](../extend/mod-api/session.md) |
 | `session.send` | [Session](../extend/mod-api/session.md) |
-| `session.start` | [Agent](../extend/mod-api/agent.md) |
+| `session.start` | [Session](../extend/mod-api/session.md) |
 | `session.surface` | [Session](../extend/mod-api/session.md) |
 | `session.surfaces` | [Session](../extend/mod-api/session.md) |
 | `session.turns` | [Session](../extend/mod-api/session.md) |
@@ -8364,8 +8364,8 @@ Items: 229.
 | `store.get` | [Files, Store, and State](../extend/mod-api/fs-store-state.md) |
 | `store.keys` | [Files, Store, and State](../extend/mod-api/fs-store-state.md) |
 | `store.set` | [Files, Store, and State](../extend/mod-api/fs-store-state.md) |
-| `telemetry.log` | [Mod API Overview](../extend/mod-api/index.md) |
-| `telemetry.mark` | [Mod API Overview](../extend/mod-api/index.md) |
+| `telemetry.log` | [Telemetry](../extend/mod-api/telemetry.md) |
+| `telemetry.mark` | [Telemetry](../extend/mod-api/telemetry.md) |
 | `tool.call` | [Hooks and the Hook Chain](../extend/mod-api/hooks.md) |
 | `tool.check` | [Hooks and the Hook Chain](../extend/mod-api/hooks.md) |
 | `tool.describe` | [Tool, Command, and Config](../extend/mod-api/tool-command-config.md) |
@@ -8374,25 +8374,25 @@ Items: 229.
 | `turn.abort` | [Turn and Prompt](../extend/mod-api/turn-prompt.md) |
 | `turn.complete` | [Hooks and the Hook Chain](../extend/mod-api/hooks.md) |
 | `turn.start` | [Turn and Prompt](../extend/mod-api/turn-prompt.md) |
-| `turn.step` | [Hooks and the Hook Chain](../extend/mod-api/hooks.md) |
+| `turn.step` | [Turn and Prompt](../extend/mod-api/turn-prompt.md) |
 | `ui.blit` | [UI Events](../extend/mod-api/ui-events.md) |
-| `ui.close` | [UI Types](../extend/mod-api/types/ui.md) |
+| `ui.close` | [UI Events](../extend/mod-api/ui-events.md) |
 | `ui.copy` | [UI Events](../extend/mod-api/ui-events.md) |
 | `ui.fault` | [Hooks and the Hook Chain](../extend/mod-api/hooks.md) |
 | `ui.focus` | [Hooks and the Hook Chain](../extend/mod-api/hooks.md) |
-| `ui.input` | [Testing Types](../extend/mod-api/types/testing.md) |
+| `ui.input` | [UI Events](../extend/mod-api/ui-events.md) |
 | `ui.invalidate` | [UI Events](../extend/mod-api/ui-events.md) |
-| `ui.log` | [UI Types](../extend/mod-api/types/ui.md) |
-| `ui.message` | [Hook Machinery Types](../extend/mod-api/types/hooks.md) |
+| `ui.log` | [UI Events](../extend/mod-api/ui-events.md) |
+| `ui.message` | [UI Events](../extend/mod-api/ui-events.md) |
 | `ui.notice` | [UI Events](../extend/mod-api/ui-events.md) |
 | `ui.notify` | [UI Events](../extend/mod-api/ui-events.md) |
-| `ui.open` | [Surfaces, Elements, and Render Sites](../extend/mod-api/ui-elements.md) |
+| `ui.open` | [UI Events](../extend/mod-api/ui-events.md) |
 | `ui.panes` | [UI Events](../extend/mod-api/ui-events.md) |
-| `ui.press` | [Mod API Overview](../extend/mod-api/index.md) |
-| `ui.render` | [Files, Store, and State](../extend/mod-api/fs-store-state.md) |
+| `ui.press` | [UI Events](../extend/mod-api/ui-events.md) |
+| `ui.render` | [UI Events](../extend/mod-api/ui-events.md) |
 | `ui.resolve` | [Hooks and the Hook Chain](../extend/mod-api/hooks.md) |
-| `ui.scroll` | [UI Types](../extend/mod-api/types/ui.md) |
-| `ui.select` | [Testing Types](../extend/mod-api/types/testing.md) |
+| `ui.scroll` | [UI Events](../extend/mod-api/ui-events.md) |
+| `ui.select` | [UI Events](../extend/mod-api/ui-events.md) |
 | `ui.selection` | [UI Events](../extend/mod-api/ui-events.md) |
 | `ui.status` | [UI Events](../extend/mod-api/ui-events.md) |
 | `ui.toast` | [UI Events](../extend/mod-api/ui-events.md) |
@@ -8406,14 +8406,14 @@ Items: 66.
 | --- | --- |
 | `best` | [Models and Providers](../configure/models-and-providers.md) |
 | `claude-3-5-haiku` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-3-5-haiku-20241022` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-3-5-haiku@20241022` | [Models and Providers](../configure/models-and-providers.md) |
+| `claude-3-5-haiku-20241022` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
+| `claude-3-5-haiku@20241022` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
 | `claude-3-5-sonnet` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-3-5-sonnet-20241022` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-3-5-sonnet-v2@20241022` | [Models and Providers](../configure/models-and-providers.md) |
+| `claude-3-5-sonnet-20241022` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
+| `claude-3-5-sonnet-v2@20241022` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
 | `claude-3-7-sonnet` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-3-7-sonnet-20250219` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-3-7-sonnet@20250219` | [Models and Providers](../configure/models-and-providers.md) |
+| `claude-3-7-sonnet-20250219` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
+| `claude-3-7-sonnet@20250219` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
 | `claude-3-haiku` | [Models and Providers](../configure/models-and-providers.md) |
 | `claude-3-opus` | [Models and Providers](../configure/models-and-providers.md) |
 | `claude-3-sonnet` | [Models and Providers](../configure/models-and-providers.md) |
@@ -8422,42 +8422,42 @@ Items: 66.
 | `claude-fable-5[1m]` | [Models and Providers](../configure/models-and-providers.md) |
 | `claude-haiku-3-5` | [Models and Providers](../configure/models-and-providers.md) |
 | `claude-haiku-4-5` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-haiku-4-5-20251001` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-haiku-4-5@20251001` | [Models and Providers](../configure/models-and-providers.md) |
+| `claude-haiku-4-5-20251001` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
+| `claude-haiku-4-5@20251001` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
 | `claude-haiku-5-5` | [Models and Providers](../configure/models-and-providers.md) |
 | `claude-mythos-5` | [Models and Providers](../configure/models-and-providers.md) |
 | `claude-mythos-5-1` | [Models and Providers](../configure/models-and-providers.md) |
 | `claude-mythos-preview` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-opus-4` | [Models and Providers](../configure/models-and-providers.md) |
+| `claude-opus-4` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
 | `claude-opus-4-0` | [Models and Providers](../configure/models-and-providers.md) |
 | `claude-opus-4-1` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-opus-4-1-20250805` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-opus-4-1@20250805` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-opus-4-20250514` | [Models and Providers](../configure/models-and-providers.md) |
+| `claude-opus-4-1-20250805` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
+| `claude-opus-4-1@20250805` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
+| `claude-opus-4-20250514` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
 | `claude-opus-4-5` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-opus-4-5-20251101` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-opus-4-5@20251101` | [Models and Providers](../configure/models-and-providers.md) |
+| `claude-opus-4-5-20251101` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
+| `claude-opus-4-5@20251101` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
 | `claude-opus-4-6` | [Models and Providers](../configure/models-and-providers.md) |
 | `claude-opus-4-6[1m]` | [Models and Providers](../configure/models-and-providers.md) |
 | `claude-opus-4-7` | [Models and Providers](../configure/models-and-providers.md) |
 | `claude-opus-4-8` | [Models and Providers](../configure/models-and-providers.md) |
 | `claude-opus-4-8[1m]` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-opus-4@20250514` | [Models and Providers](../configure/models-and-providers.md) |
+| `claude-opus-4@20250514` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
 | `claude-opus-5` | [Models and Providers](../configure/models-and-providers.md) |
 | `claude-opus-5-5` | [Models and Providers](../configure/models-and-providers.md) |
 | `claude-opus-5-5[1m]` | [Models and Providers](../configure/models-and-providers.md) |
 | `claude-opus-5[1m]` | [Models and Providers](../configure/models-and-providers.md) |
 | `claude-sonnet-3-7` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-sonnet-4` | [Models and Providers](../configure/models-and-providers.md) |
+| `claude-sonnet-4` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
 | `claude-sonnet-4-0` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-sonnet-4-20250514` | [Models and Providers](../configure/models-and-providers.md) |
+| `claude-sonnet-4-20250514` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
 | `claude-sonnet-4-5` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-sonnet-4-5-20250929` | [Models and Providers](../configure/models-and-providers.md) |
+| `claude-sonnet-4-5-20250929` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
 | `claude-sonnet-4-5-20250929[1m]` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-sonnet-4-5@20250929` | [Models and Providers](../configure/models-and-providers.md) |
+| `claude-sonnet-4-5@20250929` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
 | `claude-sonnet-4-6` | [Models and Providers](../configure/models-and-providers.md) |
 | `claude-sonnet-4-6[1m]` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-sonnet-4@20250514` | [Models and Providers](../configure/models-and-providers.md) |
+| `claude-sonnet-4@20250514` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
 | `claude-sonnet-5` | [Models and Providers](../configure/models-and-providers.md) |
 | `claude-sonnet-5-5` | [Models and Providers](../configure/models-and-providers.md) |
 | `claude-sonnet-5-5[1m]` | [Models and Providers](../configure/models-and-providers.md) |
@@ -8514,9 +8514,9 @@ Items: 6.
 | --- | --- |
 | `acceptEdits` | [Permission Modes](../configure/permissions/modes.md) |
 | `auto` | [Permission Modes](../configure/permissions/modes.md) |
-| `bypassPermissions` | [Permissions Overview](../configure/permissions/index.md) |
+| `bypassPermissions` | [Permission Modes](../configure/permissions/modes.md) |
 | `default` | [Permission Modes](../configure/permissions/modes.md) |
-| `dontAsk` | [Permissions Overview](../configure/permissions/index.md) |
+| `dontAsk` | [Permission Modes](../configure/permissions/modes.md) |
 | `plan` | [Permission Modes](../configure/permissions/modes.md) |
 
 ## Settings
@@ -8583,7 +8583,7 @@ Items: 194.
 | `disableAgentView` | [Agents and Remote Settings](../configure/settings/agents-and-remote.md) |
 | `disableAllHooks` | [Hooks, Plugins, and Skills Settings](../configure/settings/hooks-and-plugins.md) |
 | `disableArtifact` | [Core Settings](../configure/settings/core.md) |
-| `disableAutoMode` | [Extra Keys and Global Config](../configure/settings/extra-keys.md) |
+| `disableAutoMode` | [Hooks, Plugins, and Skills Settings](../configure/settings/hooks-and-plugins.md) |
 | `disableBundledSkills` | [Hooks, Plugins, and Skills Settings](../configure/settings/hooks-and-plugins.md) |
 | `disableClaudeAiConnectors` | [Settings Files and Scopes](../configure/settings/index.md) |
 | `disableCommandPluginSources` | [Hooks, Plugins, and Skills Settings](../configure/settings/hooks-and-plugins.md) |
@@ -8603,7 +8603,7 @@ Items: 194.
 | `enabledMcpjsonServers` | [MCP and Channels Settings](../configure/settings/mcp-and-channels.md) |
 | `enabledPlugins` | [Hooks, Plugins, and Skills Settings](../configure/settings/hooks-and-plugins.md) |
 | `enforceAvailableModels` | [Model Settings](../configure/settings/model.md) |
-| `env` | [Auth Settings](../configure/settings/auth.md) |
+| `env` | [Core Settings](../configure/settings/core.md) |
 | `extraKnownMarketplaces` | [Hooks, Plugins, and Skills Settings](../configure/settings/hooks-and-plugins.md) |
 | `fallbackModel` | [Model Settings](../configure/settings/model.md) |
 | `fastMode` | [Model Settings](../configure/settings/model.md) |
@@ -8705,13 +8705,13 @@ Items: 194.
 | `totalTokensReminder` | [Model Settings](../configure/settings/model.md) |
 | `totalTokensReminderAfterUserTurn` | [Model Settings](../configure/settings/model.md) |
 | `totalTokensReminderBudget` | [Model Settings](../configure/settings/model.md) |
-| `tui` | [Settings Files and Scopes](../configure/settings/index.md) |
+| `tui` | [Interface Settings](../configure/settings/ui.md) |
 | `ultracode` | [Agents and Remote Settings](../configure/settings/agents-and-remote.md) |
 | `useAutoModeDuringPlan` | [Extra Keys and Global Config](../configure/settings/extra-keys.md) |
 | `verbose` | [Interface Settings](../configure/settings/ui.md) |
 | `viewMode` | [Interface Settings](../configure/settings/ui.md) |
 | `vimInsertModeRemaps` | [Interface Settings](../configure/settings/ui.md) |
-| `voice` | [Extra Keys and Global Config](../configure/settings/extra-keys.md) |
+| `voice` | [Interface Settings](../configure/settings/ui.md) |
 | `voiceEnabled` | [Extra Keys and Global Config](../configure/settings/extra-keys.md) |
 | `wheelScrollAccelerationEnabled` | [Interface Settings](../configure/settings/ui.md) |
 | `workflowKeywordTriggerEnabled` | [Agents and Remote Settings](../configure/settings/agents-and-remote.md) |
@@ -8767,10 +8767,10 @@ Items: 142.
 | `/design-consent` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/design-login` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/design-revoke` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
-| `/design-sync` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
+| `/design-sync` | [/extend/skills-and-commands/bundled-skills#skills](/extend/skills-and-commands/bundled-skills#skills) |
 | `/desktop` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/diff` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
-| `/doctor` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
+| `/doctor` | [/extend/skills-and-commands/bundled-skills#skills](/extend/skills-and-commands/bundled-skills#skills) |
 | `/effort` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/exit` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `/explain-usage` | [/extend/skills-and-commands/bundled-skills#skills](/extend/skills-and-commands/bundled-skills#skills) |
@@ -8899,7 +8899,7 @@ Items: 71.
 | `gateway` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
 | `import` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
 | `import-conversations` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
-| `install` | [Subcommands](../configure/cli/subcommands.md) |
+| `install` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
 | `mcp` | [/extend/mcp/cli#subcommands](/extend/mcp/cli#subcommands) |
 | `mcp add-from-claude-desktop` | [/extend/mcp/cli#subcommands](/extend/mcp/cli#subcommands) |
 | `mcp add-json` | [/extend/mcp/cli#subcommands](/extend/mcp/cli#subcommands) |
@@ -8931,7 +8931,7 @@ Items: 71.
 | `plugin uninstall` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
 | `plugin update` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
 | `plugin validate` | [/extend/plugins/cli#subcommands](/extend/plugins/cli#subcommands) |
-| `project` | [All Flags](../configure/cli/flags.md) |
+| `project` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
 | `purge` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
 | `remote-control` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
 | `sandbox` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
@@ -8960,7 +8960,7 @@ Items: 89.
 | `ArtifactComments` | Excluded: Not a separate tool: the program maps the comment actions of the Artifact tool to this name. The Artifact tool has a row. |
 | `ArtifactData` | Excluded: Not a separate tool: the program maps the read_db and write_db actions of the Artifact tool to this name. The Artifact tool has a row. |
 | `AskUserQuestion` | [Agents, Tasks, and Planning](tools/agents-and-tasks.md) |
-| `Bash` | [Tools](tools/index.md) |
+| `Bash` | [Shell, Web, and Background Tasks](tools/shell-and-web.md) |
 | `ClaudeDesign` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |
 | `CronCreate` | [Agents, Tasks, and Planning](tools/agents-and-tasks.md) |
 | `CronDelete` | [Agents, Tasks, and Planning](tools/agents-and-tasks.md) |
@@ -8973,7 +8973,7 @@ Items: 89.
 | `ExitPlanMode` | [Agents, Tasks, and Planning](tools/agents-and-tasks.md) |
 | `ExitWorktree` | [Agents, Tasks, and Planning](tools/agents-and-tasks.md) |
 | `FetchInboxMessage` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |
-| `GetTask` | [Tools](tools/index.md) |
+| `GetTask` | [Shell, Web, and Background Tasks](tools/shell-and-web.md) |
 | `Glob` | [Files, Search, and Memory](tools/files.md) |
 | `Grep` | [Files, Search, and Memory](tools/files.md) |
 | `LSP` | [Files, Search, and Memory](tools/files.md) |
@@ -8986,7 +8986,7 @@ Items: 89.
 | `NotebookEdit` | [Files, Search, and Memory](tools/files.md) |
 | `OfferChromeSetup` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |
 | `Poll` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |
-| `PowerShell` | [Tools](tools/index.md) |
+| `PowerShell` | [Shell, Web, and Background Tasks](tools/shell-and-web.md) |
 | `Projects` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |
 | `ProposeGoal` | [Agents, Tasks, and Planning](tools/agents-and-tasks.md) |
 | `PublishPlugin` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |
@@ -8994,7 +8994,7 @@ Items: 89.
 | `Read` | [Files, Search, and Memory](tools/files.md) |
 | `ReadMcpResourceDirTool` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |
 | `ReadMcpResourceTool` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |
-| `ReadNotifications` | [Agents, Tasks, and Planning](tools/agents-and-tasks.md) |
+| `ReadNotifications` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |
 | `RefreshMcpTools` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |
 | `RemoteTrigger` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |
 | `ReportFindings` | [Agents, Tasks, and Planning](tools/agents-and-tasks.md) |
@@ -9016,13 +9016,13 @@ Items: 89.
 | `TaskCreate` | [Agents, Tasks, and Planning](tools/agents-and-tasks.md) |
 | `TaskGet` | [Agents, Tasks, and Planning](tools/agents-and-tasks.md) |
 | `TaskList` | [Agents, Tasks, and Planning](tools/agents-and-tasks.md) |
-| `TaskStop` | [Tools](tools/index.md) |
+| `TaskStop` | [Shell, Web, and Background Tasks](tools/shell-and-web.md) |
 | `TaskUpdate` | [Agents, Tasks, and Planning](tools/agents-and-tasks.md) |
 | `TodoWrite` | [Agents, Tasks, and Planning](tools/agents-and-tasks.md) |
 | `ToolSearch` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |
 | `WaitForMcpServers` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |
-| `WebFetch` | [Tools](tools/index.md) |
-| `WebSearch` | [Tools](tools/index.md) |
+| `WebFetch` | [Shell, Web, and Background Tasks](tools/shell-and-web.md) |
+| `WebSearch` | [Shell, Web, and Background Tasks](tools/shell-and-web.md) |
 | `Workflow` | [Agents, Tasks, and Planning](tools/agents-and-tasks.md) |
 | `Write` | [Files, Search, and Memory](tools/files.md) |
 | `enable__mcp__claude-in-chrome` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |

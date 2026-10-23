@@ -1,6 +1,6 @@
 // Usage: bun tools/surface/coverage.ts [--kind <a,b>] [--all] [--root <dir>]   (also: bun run surface:check)
 // Every item of schemas/surface.json must be covered (design D4) by one of:
-//   1. a docs table row that names it in backticks, exactly, on a page of its kind (PAGES below);
+//   1. a docs table row whose first cell names it in backticks, exactly, on a page of its kind (PAGES below);
 //   2. an entry of tools/surface/map.json: { "<kind>:<name>": { "route": "/path", "anchor": "id" } };
 //      for the `error` kind only, a key ending in `*` maps a family by its stable prefix (design D3);
 //   3. an entry of tools/surface/exclusions.json: { "<kind>:<name>" or "<kind>:<prefix>*": "reason" }.
@@ -12,6 +12,8 @@ import type { Committed } from "./snapshot.ts";
 
 const ROOT = join(import.meta.dir, "..", "..");
 const SHOWN = 20;
+/** The shortest prefix of an `error:` key ending in `*`: a shorter one would also cover errors that nobody has seen. */
+const MIN_PREFIX = 8;
 
 /** The docs pages (a file, or a folder read in full) whose tables name the items of a kind. */
 export const PAGES: Record<string, string[]> = {
@@ -59,7 +61,7 @@ const markdown = (path: string): string[] => {
 /** The page that render.ts writes from the snapshot: it names every item, so it covers none. */
 export const GENERATED = "docs/reference/surface-coverage.md";
 
-/** The exact backticked names in the table rows of the pages, each with its first file. A missing page names nothing. */
+/** The exact backticked names in the name cell (the first) of the table rows of the pages, each with its first file. A missing page names nothing. */
 export const docsNames = (
   root: string,
   pages: string[],
@@ -70,7 +72,12 @@ export const docsNames = (
       if (file !== join(root, GENERATED))
         for (const line of readFileSync(file, "utf8").split("\n")) {
           if (!line.trimStart().startsWith("|")) continue;
-          for (const m of line.matchAll(/`([^`\n]+)`/g)) {
+          const cell =
+            line
+              .trimStart()
+              .slice(1)
+              .split(/(?<!\\)\|/)[0] ?? "";
+          for (const m of cell.matchAll(/`([^`\n]+)`/g)) {
             const name = (m[1] as string).replaceAll("\\|", "|");
             if (!names.has(name)) names.set(name, file);
           }
@@ -191,6 +198,19 @@ export const shape = (
   for (const [k, v] of Object.entries(exclusions))
     if (typeof v !== "string" || !v.trim())
       bad.push(`exclusions.json: ${k} needs a non-empty reason`);
+  for (const [file, keys] of [
+    ["map.json", Object.keys(map)],
+    ["exclusions.json", Object.keys(exclusions)],
+  ] as const)
+    for (const k of keys)
+      if (
+        k.startsWith("error:") &&
+        k.endsWith("*") &&
+        k.length - "error:".length - 1 < MIN_PREFIX
+      )
+        bad.push(
+          `${file}: ${k} needs a prefix of ${MIN_PREFIX} characters or more before the *`,
+        );
   return bad;
 };
 
