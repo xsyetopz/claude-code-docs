@@ -24,13 +24,13 @@ Each row below names the page that covers an item, or the reason the item is lef
 | [Keybindings](#keybindings) | 204 | 0 | 0 | 0 | 204 |
 | [Mod API](#mod-api) | 229 | 229 | 0 | 0 | 0 |
 | [Models](#models) | 66 | 51 | 0 | 0 | 15 |
-| [OpenTelemetry Events](#opentelemetry-events) | 28 | 0 | 0 | 0 | 28 |
+| [OpenTelemetry Events](#opentelemetry-events) | 28 | 28 | 0 | 0 | 0 |
 | [Permission Rules](#permission-rules) | 6 | 6 | 0 | 0 | 0 |
-| [Settings](#settings) | 194 | 192 | 0 | 0 | 2 |
+| [Settings](#settings) | 194 | 192 | 0 | 2 | 0 |
 | [Slash Commands](#slash-commands) | 142 | 100 | 0 | 0 | 42 |
 | [Subcommands](#subcommands) | 71 | 8 | 0 | 0 | 63 |
-| [Tools](#tools) | 89 | 76 | 0 | 0 | 13 |
-| Total | 8893 | 2152 | 0 | 0 | 6741 |
+| [Tools](#tools) | 89 | 83 | 0 | 6 | 0 |
+| Total | 8893 | 2187 | 0 | 8 | 6698 |
 
 ## Betas
 
@@ -8478,34 +8478,34 @@ Items: 28.
 
 | Item | Where |
 | --- | --- |
-| `api_error` | Not on a page yet |
-| `api_refusal` | Not on a page yet |
-| `api_request` | Not on a page yet |
-| `api_retries_exhausted` | Not on a page yet |
-| `assistant_response` | Not on a page yet |
-| `at_mention` | Not on a page yet |
-| `auth` | Not on a page yet |
-| `compaction` | Not on a page yet |
-| `feedback_survey` | Not on a page yet |
-| `hook_execution_complete` | Not on a page yet |
-| `hook_execution_start` | Not on a page yet |
-| `hook_plugin_metrics` | Not on a page yet |
-| `hook_registered` | Not on a page yet |
-| `internal_error` | Not on a page yet |
-| `managed_settings_resolved` | Not on a page yet |
-| `mcp_server_connection` | Not on a page yet |
-| `permission_mode_changed` | Not on a page yet |
-| `plugin_installed` | Not on a page yet |
-| `plugin_loaded` | Not on a page yet |
-| `retention_sweep` | Not on a page yet |
-| `safety_event` | Not on a page yet |
-| `skill_activated` | Not on a page yet |
-| `subagent_completed` | Not on a page yet |
-| `system_prompt` | Not on a page yet |
-| `tool` | Not on a page yet |
-| `tool_decision` | Not on a page yet |
-| `tool_result` | Not on a page yet |
-| `user_prompt` | Not on a page yet |
+| `api_error` | [OpenTelemetry Events](opentelemetry.md) |
+| `api_refusal` | [OpenTelemetry Events](opentelemetry.md) |
+| `api_request` | [OpenTelemetry Events](opentelemetry.md) |
+| `api_retries_exhausted` | [OpenTelemetry Events](opentelemetry.md) |
+| `assistant_response` | [OpenTelemetry Events](opentelemetry.md) |
+| `at_mention` | [OpenTelemetry Events](opentelemetry.md) |
+| `auth` | [OpenTelemetry Events](opentelemetry.md) |
+| `compaction` | [OpenTelemetry Events](opentelemetry.md) |
+| `feedback_survey` | [OpenTelemetry Events](opentelemetry.md) |
+| `hook_execution_complete` | [OpenTelemetry Events](opentelemetry.md) |
+| `hook_execution_start` | [OpenTelemetry Events](opentelemetry.md) |
+| `hook_plugin_metrics` | [OpenTelemetry Events](opentelemetry.md) |
+| `hook_registered` | [OpenTelemetry Events](opentelemetry.md) |
+| `internal_error` | [OpenTelemetry Events](opentelemetry.md) |
+| `managed_settings_resolved` | [OpenTelemetry Events](opentelemetry.md) |
+| `mcp_server_connection` | [OpenTelemetry Events](opentelemetry.md) |
+| `permission_mode_changed` | [OpenTelemetry Events](opentelemetry.md) |
+| `plugin_installed` | [OpenTelemetry Events](opentelemetry.md) |
+| `plugin_loaded` | [OpenTelemetry Events](opentelemetry.md) |
+| `retention_sweep` | [OpenTelemetry Events](opentelemetry.md) |
+| `safety_event` | [OpenTelemetry Events](opentelemetry.md) |
+| `skill_activated` | [OpenTelemetry Events](opentelemetry.md) |
+| `subagent_completed` | [OpenTelemetry Events](opentelemetry.md) |
+| `system_prompt` | [OpenTelemetry Events](opentelemetry.md) |
+| `tool` | [OpenTelemetry Events](opentelemetry.md) |
+| `tool_decision` | [OpenTelemetry Events](opentelemetry.md) |
+| `tool_result` | [OpenTelemetry Events](opentelemetry.md) |
+| `user_prompt` | [OpenTelemetry Events](opentelemetry.md) |
 
 ## Permission Rules
 
@@ -8627,7 +8627,7 @@ Items: 194.
 | `includeGitInstructions` | [Core Settings](../configure/settings/core.md) |
 | `inputNeededNotifEnabled` | [Agents and Remote Settings](../configure/settings/agents-and-remote.md) |
 | `isolatePeerMachines` | [Agents and Remote Settings](../configure/settings/agents-and-remote.md) |
-| `keybindingFlavor` | Not on a page yet |
+| `keybindingFlavor` | Excluded: Deprecated: the program says it no longer has any effect. Listed under Left Out on Purpose in docs/configure/settings/index.md. |
 | `language` | [Core Settings](../configure/settings/core.md) |
 | `managedMcpServers` | [MCP and Channels Settings](../configure/settings/mcp-and-channels.md) |
 | `managedSourcesBehavior` | [Enterprise Settings](../configure/settings/enterprise.md) |
@@ -8695,7 +8695,7 @@ Items: 194.
 | `syncClaudeAiPlugins` | [Hooks, Plugins, and Skills Settings](../configure/settings/hooks-and-plugins.md) |
 | `syncClaudeAiSkills` | [Hooks, Plugins, and Skills Settings](../configure/settings/hooks-and-plugins.md) |
 | `syntaxHighlightingDisabled` | [Interface Settings](../configure/settings/ui.md) |
-| `taskOutputMaxChars` | Not on a page yet |
+| `taskOutputMaxChars` | Excluded: Deprecated: the program says it no longer has any effect, because the TaskOutput tool was removed. Listed under Left Out on Purpose in docs/configure/settings/index.md. |
 | `teammateMode` | [Agents and Remote Settings](../configure/settings/agents-and-remote.md) |
 | `terminalProgressBarEnabled` | [Interface Settings](../configure/settings/ui.md) |
 | `terminalTitleFromRename` | [Interface Settings](../configure/settings/ui.md) |
@@ -8957,9 +8957,9 @@ Items: 89.
 | `Agent` | [Agents, Tasks, and Planning](tools/agents-and-tasks.md) |
 | `AppifactRepl` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |
 | `Artifact` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |
-| `ArtifactCheck` | Not on a page yet |
-| `ArtifactComments` | Not on a page yet |
-| `ArtifactData` | Not on a page yet |
+| `ArtifactCheck` | Excluded: Not a separate tool: the program maps the verify and preview actions of the Artifact tool to this name. The Artifact tool has a row. |
+| `ArtifactComments` | Excluded: Not a separate tool: the program maps the comment actions of the Artifact tool to this name. The Artifact tool has a row. |
+| `ArtifactData` | Excluded: Not a separate tool: the program maps the read_db and write_db actions of the Artifact tool to this name. The Artifact tool has a row. |
 | `AskUserQuestion` | [Agents, Tasks, and Planning](tools/agents-and-tasks.md) |
 | `Bash` | [Tools](tools/index.md) |
 | `ClaudeDesign` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |
@@ -8981,9 +8981,9 @@ Items: 89.
 | `ListAgents` | [Agents, Tasks, and Planning](tools/agents-and-tasks.md) |
 | `ListConnectors` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |
 | `ListMcpResourcesTool` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |
-| `ListPlugins` | Not on a page yet |
-| `ListSkills` | Not on a page yet |
-| `MonitorTool` | Not on a page yet |
+| `ListPlugins` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |
+| `ListSkills` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |
+| `MonitorTool` | Excluded: The JS export name of the Monitor tool, not a tool name. The Monitor tool has a row. |
 | `NotebookEdit` | [Files, Search, and Memory](tools/files.md) |
 | `OfferChromeSetup` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |
 | `Poll` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |
@@ -8996,13 +8996,13 @@ Items: 89.
 | `ReadMcpResourceDirTool` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |
 | `ReadMcpResourceTool` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |
 | `ReadNotifications` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |
-| `RefreshMcpTools` | Not on a page yet |
+| `RefreshMcpTools` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |
 | `RemoteTrigger` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |
 | `ReportFindings` | [Agents, Tasks, and Planning](tools/agents-and-tasks.md) |
 | `ScheduleWakeup` | [Agents, Tasks, and Planning](tools/agents-and-tasks.md) |
 | `SearchMcpRegistry` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |
-| `SearchPlugins` | Not on a page yet |
-| `SearchSkills` | Not on a page yet |
+| `SearchPlugins` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |
+| `SearchSkills` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |
 | `SendFeedback` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |
 | `SendFile` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |
 | `SendMessage` | [Agents, Tasks, and Planning](tools/agents-and-tasks.md) |
@@ -9026,14 +9026,14 @@ Items: 89.
 | `WebSearch` | [Tools](tools/index.md) |
 | `Workflow` | [Agents, Tasks, and Planning](tools/agents-and-tasks.md) |
 | `Write` | [Files, Search, and Memory](tools/files.md) |
-| `enable__mcp__claude-in-chrome` | Not on a page yet |
-| `enable__mcp__remote-devices__Claude_Browser` | Not on a page yet |
-| `enable__mcp__remote-devices__computer` | Not on a page yet |
+| `enable__mcp__claude-in-chrome` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |
+| `enable__mcp__remote-devices__Claude_Browser` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |
+| `enable__mcp__remote-devices__computer` | Excluded: Unsure what it does or when it appears: the description text was not read. Not listed until confirmed. |
 | `memory_list` | [Files, Search, and Memory](tools/files.md) |
 | `memory_read` | [Files, Search, and Memory](tools/files.md) |
 | `memory_write` | [Files, Search, and Memory](tools/files.md) |
 | `propose_skills` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |
-| `request_computer` | Not on a page yet |
+| `request_computer` | Excluded: Unsure what it does or when it appears: the input schema has an untyped task field and no description was read. Not listed until confirmed. |
 | `self_hosted_runner_get_pool` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |
 | `self_hosted_runner_list_runners` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |
 | `self_hosted_runner_list_secrets` | [Gated and Surface-Specific Tools](tools/gated-and-other.md) |

@@ -124,4 +124,5 @@ This site has no copy of it. We found no validator for that file in the `claude`
 - [Settings](../configure/settings/index.md)
 - [Files on Disk](../start/files-on-disk.md)
 - [Probes](probes.md)
+- [OpenTelemetry Events](opentelemetry.md)
 - [Undocumented Features](undocumented.md)
