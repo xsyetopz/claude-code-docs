@@ -1,8 +1,9 @@
-// Writes llms.txt, llms-full.txt, llms-manifest.json, and one .md per doc page
+// Writes llms.txt, llms-full.txt, llms-manifest.json, search-index.json (design D6), and one .md per doc page
 // into the build output (design: agent-access D1). Output is deterministic.
 import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join, posix } from "node:path";
 import type { LoadContext, Plugin } from "@docusaurus/types";
+import { searchIndexJson } from "../../../plugin/mcp/src/search";
 import { CLAUDE_CODE_VERSION } from "../../version";
 import { convertBody } from "./convert";
 
@@ -185,6 +186,18 @@ export default function llmsTxtPlugin(context: LoadContext): Plugin {
       out.set("llms.txt", lines.join("\n"));
       out.set("llms-full.txt", full);
       out.set("llms-manifest.json", `${JSON.stringify(manifest, null, 2)}\n`);
+      out.set(
+        "search-index.json",
+        searchIndexJson(
+          CLAUDE_CODE_VERSION,
+          pages.map((p) => ({
+            route: p.route,
+            title: p.doc.title,
+            description: p.doc.description,
+            text: files.get(p.mdPath) ?? "",
+          })),
+        ),
+      );
       for (const [name, text] of out) {
         const dest = join(outDir, name);
         await mkdir(dirname(dest), { recursive: true });

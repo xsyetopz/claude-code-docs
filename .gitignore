@@ -13,3 +13,6 @@ __pycache__/
 *.pyc
 
 .claudetto/
+
+# Agent worktrees of Claude Code (each has its own biome.json)
+.claude/worktrees/

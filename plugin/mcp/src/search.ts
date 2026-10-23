@@ -1,4 +1,5 @@
 // Small BM25 index over the pages: title, description, headings, and body, weighted.
+import { createHash } from "node:crypto";
 import type { Entry } from "./content.ts";
 
 const W_TITLE = 5;
@@ -144,4 +145,42 @@ const snippetOf = (body: string, terms: string[]): string => {
   const line =
     best.line.length > 240 ? `${best.line.slice(0, 237)}...` : best.line;
   return best.heading ? `[${best.heading}] ${line}` : line;
+};
+
+/** The cap of the prebuilt search-index.json (design D6): the build fails above it, and the client reads no more. */
+export const SEARCH_INDEX_MAX = 8 * 1024 * 1024;
+
+export type IndexPage = {
+  route: string;
+  title: string;
+  description: string;
+  headings: string[];
+  extra: string;
+  body: string;
+};
+
+/** search-index.json (design D6) from each page's route, title, description, and markdown with front matter. */
+export const searchIndexJson = (
+  version: string,
+  pages: { route: string; title: string; description: string; text: string }[],
+): string => {
+  const out: IndexPage[] = pages.map((p) => {
+    const body = stripFrontMatter(p.text);
+    return {
+      route: p.route,
+      title: p.title,
+      description: p.description.replace(/\s+/g, " ").trim(),
+      headings: headingsOf(body),
+      extra: "",
+      body,
+    };
+  });
+  const hash = createHash("sha256").update(JSON.stringify(out)).digest("hex");
+  const json = `${JSON.stringify({ version, hash, pages: out })}\n`;
+  const bytes = Buffer.byteLength(json);
+  if (bytes > SEARCH_INDEX_MAX)
+    throw new Error(
+      `search-index.json is ${bytes} bytes, above the cap of ${SEARCH_INDEX_MAX} (SEARCH_INDEX_MAX in plugin/mcp/src/search.ts)`,
+    );
+  return json;
 };
