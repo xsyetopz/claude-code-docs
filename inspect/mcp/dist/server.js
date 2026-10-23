@@ -25220,7 +25220,7 @@ var package_default = {
     "@types/estree": "^1.0.9"
   },
   patchedDependencies: {
-    "meriyah@7.4.0": "patches/meriyah@7.4.0.patch"
+    "meriyah@7.4.0": "../../patches/meriyah@7.4.0.patch"
   }
 };
 
