@@ -1,1 +1,42 @@
-{}
+{
+  "endpoint:/api/event_logging/": {
+    "route": "/reference/api/endpoints",
+    "anchor": "account-and-service-endpoints"
+  },
+  "endpoint:/api/hello": {
+    "route": "/reference/api/endpoints",
+    "anchor": "model-endpoints"
+  },
+  "endpoint:/api/model_selector/${…}": {
+    "route": "/reference/api/endpoints",
+    "anchor": "account-and-service-endpoints"
+  },
+  "endpoint:/api/oauth/usage?${…}=${…}&skip_spend=1": {
+    "route": "/reference/api/endpoints",
+    "anchor": "account-and-service-endpoints"
+  },
+  "endpoint:/model/${…}/invoke": {
+    "route": "/reference/api/endpoints",
+    "anchor": "model-endpoints"
+  },
+  "endpoint:/model/${…}/invoke-with-response-stream": {
+    "route": "/reference/api/endpoints",
+    "anchor": "model-endpoints"
+  },
+  "endpoint:/v1/messages": {
+    "route": "/reference/api/endpoints",
+    "anchor": "model-endpoints"
+  },
+  "endpoint:/v1/messages/count_tokens?beta=true": {
+    "route": "/reference/api/endpoints",
+    "anchor": "model-endpoints"
+  },
+  "endpoint:/v1/models?limit=1000": {
+    "route": "/reference/api/endpoints",
+    "anchor": "model-endpoints"
+  },
+  "endpoint:https://api.anthropic.com/api/event_logging/v2/batch": {
+    "route": "/reference/api/endpoints",
+    "anchor": "account-and-service-endpoints"
+  }
+}

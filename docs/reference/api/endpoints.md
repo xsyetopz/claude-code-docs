@@ -47,6 +47,78 @@ The program also holds an Anthropic SDK client with paths such as `/v1/agents`, 
 They belong to the SDK code, and the Claude Code loop does not call them.
 The program names these hosts: `code.claude.com`, `claude.ai`, `claude.com`, `api.anthropic.com`, `platform.claude.com`, `www.anthropic.com`, `support.claude.com`, `downloads.claude.ai`, and `mcp-proxy.anthropic.com`.
 
+## Sign-In and Account Paths
+
+These paths are strings in the program. No source states their rules, so the Use column comes from the code that calls each path.
+Where the code does not show the purpose, the row says so.
+
+| Path | Status | Use |
+| --- | --- | --- |
+| `/api/claude_cli/bootstrap` | <Undocumented /> | A startup fetch with a 5 second timeout. Claude Code skips it on third-party providers. |
+| `/api/claude_code/settings` | <Undocumented /> | The URL that the remote managed settings are read from. |
+| `/api/claude_code/metrics` | <Undocumented /> | The target of the first-party metrics exporter, with a 5 second timeout. |
+| `/api/claude_cli_profile` | <Undocumented /> | Reads a profile with an API key and the account UUID. |
+| `/api/claude_code_grove`, `/api/oauth/account/grove_notice_viewed` | <Undocumented /> | The Grove notice. The first path returns the config with a `grove_enabled` flag. The second is named for the notice-viewed event. |
+| `/api/claude_code_penguin_mode` | <Undocumented /> | The fast mode status of your organization. Claude Code emits `orgFastModeChange` when it changes. |
+| `/api/auth/trusted_devices` | <Undocumented /> | Enrolls the device with your OAuth token. The body holds a display name such as `Claude Code on` and the host. |
+| `/api/oauth/validate` | <Undocumented /> | Part of the Claude in Chrome check. The OAuth token needs a scope that this path accepts (`user:profile`, `user:office`, or `user:ccr_inference`), or Claude Code turns the feature off. |
+| `/api/oauth/claude_cli/create_api_key`, `/api/oauth/claude_cli/roles`, `https://api.anthropic.com/api/oauth/claude_cli/create_api_key`, `https://api.anthropic.com/api/oauth/claude_cli/roles` | <Undocumented /> | The `API_KEY_URL` and `ROLES_URL` of the OAuth config. |
+| `/api/oauth/organizations/${…}`, `/api/oauth/organizations/${…}/code/repos/${…}/${…}`, `/api/oauth/organizations/${…}/code/repos/resync`, `/api/oauth/organizations/${…}/sync/github/auth` | <Undocumented /> | Organization paths for the GitHub app. `/code/repos/<owner>/<repo>` checks whether the app is installed, `/code/repos/resync` asks the server to resync that status, and `/sync/github/auth` checks whether the GitHub token is synced by web setup. Other calls also use the first path as a prefix. |
+| `/api/organizations/${…}/reset_rate_limits` | <Undocumented /> | Posts a rate limit reset claim for your OAuth organization. |
+| `/api/oauth/file_upload`, `/api/oauth/files/${…}/content` | <Undocumented /> | File upload with your OAuth token (scope `user:file_upload`), and file content. |
+| `/api/oauth/cri`, `https://api.anthropic.com/api/oauth/cri` | <Undocumented /> | The base of an issuer for `cri+jwt` tokens (ES256), with its keys at `/jwks.json` below it. No source states what it is for. |
+| `/api/oauth/local_pairing` | <Undocumented /> | The issuer for local pairing. Claude Code builds `/attest` and `/jwks.json` below it. |
+| `/v1/oauth/hello` | <Undocumented /> | The startup preflight checks `/api/hello` on the API host and `/v1/oauth/hello` on the OAuth host, with a 10 second timeout. |
+
+## OAuth URLs and Hosts
+
+The URLs below are part of the production OAuth config in the program. `CLAUDE_CODE_CUSTOM_OAUTH_URL` changes them.
+
+| URL | Status | Use |
+| --- | --- | --- |
+| `https://platform.claude.com/oauth/authorize` | <Undocumented /> | The Console sign-in page (`CONSOLE_AUTHORIZE_URL`). |
+| `https://claude.com/cai/oauth/authorize` | <Undocumented /> | The claude.ai sign-in page (`CLAUDE_AI_AUTHORIZE_URL`). |
+| `https://platform.claude.com/v1/oauth/token` | <Undocumented /> | The token URL (`TOKEN_URL`). |
+| `https://platform.claude.com/oauth/code/callback` | <Undocumented /> | The redirect for the manual code flow (`MANUAL_REDIRECT_URL`). |
+| `https://platform.claude.com/oauth/code/success?app=claude-code`, `https://platform.claude.com/buy_credits?returnUrl=/oauth/code/success%3Fapp%3Dclaude-code` | <Undocumented /> | The success pages (`CLAUDEAI_SUCCESS_URL` and `CONSOLE_SUCCESS_URL`) where the local callback server sends the browser. |
+| `https://claude.ai/oauth/claude-code-client-metadata` | <Undocumented /> | Held next to the OAuth config. No source states its use. |
+| `https://api.anthropic.com`, `https://claude.ai`, `https://mcp-proxy.anthropic.com` | <Undocumented /> | `BASE_API_URL`, `CLAUDE_AI_ORIGIN`, and `MCP_PROXY_URL`. |
+
+## MCP Paths
+
+| Path | Status | Use |
+| --- | --- | --- |
+| `/v1/mcp_servers?limit=1000` | <Undocumented /> | Lists your claude.ai MCP connectors. It needs the `user:mcp_servers` scope, and Claude Code adds `include_additional_installs=true`. |
+| `/v1/mcp/{server_id}`, `/v1/toolbox/shttp/mcp/{server_id}` | <Undocumented /> | The `MCP_PROXY_PATH` on `https://mcp-proxy.anthropic.com`, and the one of the local OAuth config at `http://localhost:8205`. |
+| `/api/organizations/${…}/mcp/start-auth/${…}?product_surface=${…}` | <Undocumented /> | A claude.ai URL that starts the sign-in of a connector. `product_surface` is the entrypoint, such as `cli`. |
+| `/api/directory/servers?${…}`, `/api/directory/plugins` | <Undocumented /> | `servers` is read without credentials, with a 5 second timeout, in pages of 500, and Claude Code keeps the URLs of the remote servers. `plugins` is a constant, and no source states its use. |
+| `/v1/pages/mcp`, `/api/artifacts/mcp`, `/v1/code/mcp/ccr-artifacts`, `/v1/code/mcp/hearthbot`, `/v1/claudeai-agents/mcp` | <Undocumented /> | Paths of built-in MCP servers that the program holds as constants. It names the servers `Claude_Pages`, `Claude_Docs`, and `claude-artifacts`. No source states the use of each path. |
+| `https://microsoft365.mcp.claude.com/mcp` | <Undocumented /> | The URL of the managed MCP preset "Microsoft 365" (name `m365`, HTTP transport). |
+
+## Flags, Environments, and Files
+
+| Path | Status | Use |
+| --- | --- | --- |
+| `/api/features/${…}`, `/api/eval/${…}`, `/api/eval-authed/${…}`, `https://api.anthropic.com/` | <Undocumented /> | The GrowthBook client that delivers the `tengu_*` gates. It reads the feature list, evaluates remotely, and evaluates with your auth headers (it falls back to `/api/eval` on an error). `${…}` is the client key, and `https://api.anthropic.com/` is the host. `DISABLE_GROWTHBOOK` turns the fetch off. |
+| `/v1/environments/bridge`, `/v1/environments/bridge/${…}`, `/v1/environments/bridge/${…}/offline`, `/v1/environments/${…}/bridge/reconnect` | <Undocumented /> | The bridge client of Remote Control. `POST /v1/environments/bridge` registers the environment. The other paths are named for the environment, going offline, and reconnecting. |
+| `/v1/environments/${…}/work/poll`, `/v1/environments/${…}/work/${…}/ack`, `/v1/environments/${…}/work/${…}/heartbeat`, `/v1/environments/${…}/work/${…}/stop` | <Undocumented /> | Work item calls of the same bridge client, named for polling, acknowledging, heartbeat, and stop. |
+| `/v1/environment_providers`, `/v1/environment_providers/cloud/create` | <Undocumented /> | `cloud/create` posts a new cloud environment of kind `anthropic_cloud` with the description "Default - trusted network access". |
+| `/v1/sessions`, `/v1/sessions/${…}`, `/v1/sessions/${…}${…}`, `/v1/sessions/${…}/archive`, `/v1/sessions/${…}/events` | <Undocumented /> | Session paths without `beta=true`. Claude Code posts events to `/v1/sessions/<id>/events`, and to `/v1/code/sessions/<id>/events` for a cloud session. |
+| `/v1/files`, `/v1/files/${…}`, `/v1/files/${…}/content` | <Undocumented /> | Files API paths without `beta=true`. Both Claude Code and the SDK client hold them. |
+| `/v1/filestore/fs/listDirectory`, `/v1/filestore/fs/readFile` | <Undocumented /> | File store calls. `readFile` posts a `filesystem_id` and a `path` with a JWT, and stops after 60 seconds without bytes. |
+| `/v1/code/local/memory/mounts`, `/v1/code/local/memory/credential` | <Undocumented /> | Organization memory stores. The program caches the discovery answer in `org-memory-discovery.json`. |
+
+## Hosts and Downloads
+
+| URL | Status | Use |
+| --- | --- | --- |
+| `https://downloads.claude.ai/claude-code-releases` | <Undocumented /> | The base URL for release downloads, next to the update errors (`update_apply_*`). |
+| `https://downloads.claude.ai/claude-code-releases/plugins/claude-plugins-official` | <Undocumented /> | Where the program fetches the official plugin marketplace. It is cached under `marketplaces/claude-plugins-official/`. |
+| `https://downloads.claude.ai/model-catalog/v1/catalog.json`, `https://downloads.claude.ai/model-catalog/v1/schema.json` | <Undocumented /> | The signed model catalog (the signature is a `.raw-sig.json` file, key `claude-code-release-signing-key`), and the `$schema` of its entries. |
+| `https://anthropic.com/claude-code/plugin.schema.json` | <Undocumented /> | The URL of the plugin manifest schema, by its name. |
+| `https://code.claude.com/docs/en/claude_code_docs_map.md`, `https://platform.claude.com/llms.txt`, `https://claude.com/docs/llms.txt`, `https://claude.com/docs/claude-tag/overview.md` | <Undocumented /> | Doc sources that the program holds next to the `claude-code-guide` agent. |
+| `https://status.claude.com` | <Undocumented /> | Named next to the "Repeated 529 Overloaded errors" message. |
+
 ## Request Headers
 
 Source: [Gateway Compatibility Guide](https://code.claude.com/docs/en/llm-gateway-protocol#request-headers). Header names are not case-sensitive.
