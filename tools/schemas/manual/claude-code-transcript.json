@@ -2015,8 +2015,7 @@
       },
       "anchors": [
         "subtype:\"stop_hook_summary\",hookCount:«»,hookInfos:«»,hookErrors:«»,hookAdditionalContext:«»,preventedContinuation:«»,stopReason:«»,hasOutput:«»,level:«»,timestamp:new Date().toISOString(),uuid:«»(),toolUseID:«»,hookLabel:«»,totalDurationMs:q",
-        "yield «»(«»,«»,«»,«»,«»,«»,\"suggestion\",«»,void 0,void 0,«»)",
-        "subtype:\"informational\",content:`Tool ${«»(«»)} running for ${«»}s\\u2026`"
+        "yield «»(«»,«»,«»,«»,«»,«»,\"suggestion\",«»,void 0,void 0,«»)"
       ],
       "note": "The tool use id string (stop_hook_summary takes the Stop hook's tool use id)."
     },
@@ -2371,7 +2370,7 @@
         "type": "string"
       },
       "anchors": [
-        "formatted:«»(«»),connection:«»(«»),isNetworkDown:«»(«»),rateLimits:«»||«»?{...a&&{rateLimitType:«»},...s&&{resetsAt:Math.round(Number(«»))}}:null,noResponse:«»?{waitedMs:«»(«».deadline),retryWaitMs:«».deadline.retryWindowMs}:null",
+        "formatted:«»(«»),connection:«»(«»),isNetworkDown:«»(«»),rateLimits:«»||«»?{...«»&&{rateLimitType:«»},...«»&&{resetsAt:Math.round(Number(«»))}}:null,noResponse:«»?{waitedMs:«»(«».deadline),retryWaitMs:«».deadline.retryWindowMs}:null",
         "message:«».message,status:«».status,requestId:«».requestID"
       ],
       "note": "api_error: error is the plain-data snapshot of the API error built by Itr() for an APIError, or by the fallback literal in pJe() ({message, status: undefined, requestId: undefined, formatted, connection: null, isNetworkDown: false, rateLimits: null, noResponse: null}); message is the error message string."
@@ -2381,7 +2380,7 @@
         "type": "number"
       },
       "anchors": [
-        "formatted:«»(«»),connection:«»(«»),isNetworkDown:«»(«»),rateLimits:«»||«»?{...a&&{rateLimitType:«»},...s&&{resetsAt:Math.round(Number(«»))}}:null,noResponse:«»?{waitedMs:«»(«».deadline),retryWaitMs:«».deadline.retryWindowMs}:null",
+        "formatted:«»(«»),connection:«»(«»),isNetworkDown:«»(«»),rateLimits:«»||«»?{...«»&&{rateLimitType:«»},...«»&&{resetsAt:Math.round(Number(«»))}}:null,noResponse:«»?{waitedMs:«»(«».deadline),retryWaitMs:«».deadline.retryWindowMs}:null",
         "message:«».message,status:«».status"
       ],
       "note": "api_error: error is the plain-data snapshot of the API error built by Itr() for an APIError, or by the fallback literal in pJe() ({message, status: undefined, requestId: undefined, formatted, connection: null, isNetworkDown: false, rateLimits: null, noResponse: null}); status is the HTTP status of the APIError (a number); undefined (not written) at the fallback literal."
@@ -2391,7 +2390,7 @@
         "type": "string"
       },
       "anchors": [
-        "formatted:«»(«»),connection:«»(«»),isNetworkDown:«»(«»),rateLimits:«»||«»?{...a&&{rateLimitType:«»},...s&&{resetsAt:Math.round(Number(«»))}}:null,noResponse:«»?{waitedMs:«»(«».deadline),retryWaitMs:«».deadline.retryWindowMs}:null",
+        "formatted:«»(«»),connection:«»(«»),isNetworkDown:«»(«»),rateLimits:«»||«»?{...«»&&{rateLimitType:«»},...«»&&{resetsAt:Math.round(Number(«»))}}:null,noResponse:«»?{waitedMs:«»(«».deadline),retryWaitMs:«».deadline.retryWindowMs}:null",
         "requestId:«».requestID??void 0"
       ],
       "note": "api_error: error is the plain-data snapshot of the API error built by Itr() for an APIError, or by the fallback literal in pJe() ({message, status: undefined, requestId: undefined, formatted, connection: null, isNetworkDown: false, rateLimits: null, noResponse: null}); requestId is the request id string of the response, or not written."
@@ -2401,7 +2400,7 @@
         "type": "string"
       },
       "anchors": [
-        "formatted:«»(«»),connection:«»(«»),isNetworkDown:«»(«»),rateLimits:«»||«»?{...a&&{rateLimitType:«»},...s&&{resetsAt:Math.round(Number(«»))}}:null,noResponse:«»?{waitedMs:«»(«».deadline),retryWaitMs:«».deadline.retryWindowMs}:null",
+        "formatted:«»(«»),connection:«»(«»),isNetworkDown:«»(«»),rateLimits:«»||«»?{...«»&&{rateLimitType:«»},...«»&&{resetsAt:Math.round(Number(«»))}}:null,noResponse:«»?{waitedMs:«»(«».deadline),retryWaitMs:«».deadline.retryWindowMs}:null",
         "{message:«»(«»),status:void 0,requestId:void 0,formatted:«»(«»),connection:null,isNetworkDown:!1,rateLimits:null,noResponse:null}:null"
       ],
       "note": "api_error: error is the plain-data snapshot of the API error built by Itr() for an APIError, or by the fallback literal in pJe() ({message, status: undefined, requestId: undefined, formatted, connection: null, isNetworkDown: false, rateLimits: null, noResponse: null}); formatted is the display string from r_e(e) (and d(e) at the fallback)."
@@ -2411,7 +2410,7 @@
         "type": "string"
       },
       "anchors": [
-        "formatted:«»(«»),connection:«»(«»),isNetworkDown:«»(«»),rateLimits:«»||«»?{...a&&{rateLimitType:«»},...s&&{resetsAt:Math.round(Number(«»))}}:null,noResponse:«»?{waitedMs:«»(«».deadline),retryWaitMs:«».deadline.retryWindowMs}:null",
+        "formatted:«»(«»),connection:«»(«»),isNetworkDown:«»(«»),rateLimits:«»||«»?{...«»&&{rateLimitType:«»},...«»&&{resetsAt:Math.round(Number(«»))}}:null,noResponse:«»?{waitedMs:«»(«».deadline),retryWaitMs:«».deadline.retryWindowMs}:null",
         "return{code:«»,message:«».message,isSSLError:«»}"
       ],
       "note": "api_error: error is the plain-data snapshot of the API error built by Itr() for an APIError, or by the fallback literal in pJe() ({message, status: undefined, requestId: undefined, formatted, connection: null, isNetworkDown: false, rateLimits: null, noResponse: null}); connection comes from Zm(e): {code: the string code of the error or its cause, message, isSSLError}, or the literal code 'ConnectionClosed'; null when the error is no connection error."
@@ -2421,7 +2420,7 @@
         "type": "string"
       },
       "anchors": [
-        "formatted:«»(«»),connection:«»(«»),isNetworkDown:«»(«»),rateLimits:«»||«»?{...a&&{rateLimitType:«»},...s&&{resetsAt:Math.round(Number(«»))}}:null,noResponse:«»?{waitedMs:«»(«».deadline),retryWaitMs:«».deadline.retryWindowMs}:null",
+        "formatted:«»(«»),connection:«»(«»),isNetworkDown:«»(«»),rateLimits:«»||«»?{...«»&&{rateLimitType:«»},...«»&&{resetsAt:Math.round(Number(«»))}}:null,noResponse:«»?{waitedMs:«»(«».deadline),retryWaitMs:«».deadline.retryWindowMs}:null",
         "return{code:«»,message:«».message,isSSLError:«»}"
       ],
       "note": "api_error: error is the plain-data snapshot of the API error built by Itr() for an APIError, or by the fallback literal in pJe() ({message, status: undefined, requestId: undefined, formatted, connection: null, isNetworkDown: false, rateLimits: null, noResponse: null}); message is the Error message string."
@@ -2431,7 +2430,7 @@
         "type": "boolean"
       },
       "anchors": [
-        "formatted:«»(«»),connection:«»(«»),isNetworkDown:«»(«»),rateLimits:«»||«»?{...a&&{rateLimitType:«»},...s&&{resetsAt:Math.round(Number(«»))}}:null,noResponse:«»?{waitedMs:«»(«».deadline),retryWaitMs:«».deadline.retryWindowMs}:null",
+        "formatted:«»(«»),connection:«»(«»),isNetworkDown:«»(«»),rateLimits:«»||«»?{...«»&&{rateLimitType:«»},...«»&&{resetsAt:Math.round(Number(«»))}}:null,noResponse:«»?{waitedMs:«»(«».deadline),retryWaitMs:«».deadline.retryWindowMs}:null",
         "return{code:\"ConnectionClosed\",message:«».message,isSSLError:!1}"
       ],
       "note": "api_error: error is the plain-data snapshot of the API error built by Itr() for an APIError, or by the fallback literal in pJe() ({message, status: undefined, requestId: undefined, formatted, connection: null, isNetworkDown: false, rateLimits: null, noResponse: null}); isSSLError is a boolean (set membership test, or false)."
@@ -2441,7 +2440,7 @@
         "type": "boolean"
       },
       "anchors": [
-        "formatted:«»(«»),connection:«»(«»),isNetworkDown:«»(«»),rateLimits:«»||«»?{...a&&{rateLimitType:«»},...s&&{resetsAt:Math.round(Number(«»))}}:null,noResponse:«»?{waitedMs:«»(«».deadline),retryWaitMs:«».deadline.retryWindowMs}:null",
+        "formatted:«»(«»),connection:«»(«»),isNetworkDown:«»(«»),rateLimits:«»||«»?{...«»&&{rateLimitType:«»},...«»&&{resetsAt:Math.round(Number(«»))}}:null,noResponse:«»?{waitedMs:«»(«».deadline),retryWaitMs:«».deadline.retryWindowMs}:null",
         "isNetworkDown:«»(«»)",
         "{message:«»(«»),status:void 0,requestId:void 0,formatted:«»(«»),connection:null,isNetworkDown:!1,rateLimits:null,noResponse:null}:null"
       ],
@@ -2452,8 +2451,8 @@
         "type": "string"
       },
       "anchors": [
-        "formatted:«»(«»),connection:«»(«»),isNetworkDown:«»(«»),rateLimits:«»||«»?{...a&&{rateLimitType:«»},...s&&{resetsAt:Math.round(Number(«»))}}:null,noResponse:«»?{waitedMs:«»(«».deadline),retryWaitMs:«».deadline.retryWindowMs}:null",
-        "...a&&{rateLimitType:«»}"
+        "formatted:«»(«»),connection:«»(«»),isNetworkDown:«»(«»),rateLimits:«»||«»?{...«»&&{rateLimitType:«»},...«»&&{resetsAt:Math.round(Number(«»))}}:null,noResponse:«»?{waitedMs:«»(«».deadline),retryWaitMs:«».deadline.retryWindowMs}:null",
+        "...«»&&{rateLimitType:«»}"
       ],
       "note": "api_error: error is the plain-data snapshot of the API error built by Itr() for an APIError, or by the fallback literal in pJe() ({message, status: undefined, requestId: undefined, formatted, connection: null, isNetworkDown: false, rateLimits: null, noResponse: null}); rateLimitType is the value of the anthropic-ratelimit-unified-representative-claim header (a string)."
     },
@@ -2462,7 +2461,7 @@
         "type": "integer"
       },
       "anchors": [
-        "formatted:«»(«»),connection:«»(«»),isNetworkDown:«»(«»),rateLimits:«»||«»?{...a&&{rateLimitType:«»},...s&&{resetsAt:Math.round(Number(«»))}}:null,noResponse:«»?{waitedMs:«»(«».deadline),retryWaitMs:«».deadline.retryWindowMs}:null",
+        "formatted:«»(«»),connection:«»(«»),isNetworkDown:«»(«»),rateLimits:«»||«»?{...«»&&{rateLimitType:«»},...«»&&{resetsAt:Math.round(Number(«»))}}:null,noResponse:«»?{waitedMs:«»(«».deadline),retryWaitMs:«».deadline.retryWindowMs}:null",
         "{resetsAt:Math.round(Number(«»))}"
       ],
       "note": "api_error: error is the plain-data snapshot of the API error built by Itr() for an APIError, or by the fallback literal in pJe() ({message, status: undefined, requestId: undefined, formatted, connection: null, isNetworkDown: false, rateLimits: null, noResponse: null}); resetsAt is Math.round(Number(header anthropic-ratelimit-unified-reset)), an integer (epoch seconds)."
@@ -2472,7 +2471,7 @@
         "type": "number"
       },
       "anchors": [
-        "formatted:«»(«»),connection:«»(«»),isNetworkDown:«»(«»),rateLimits:«»||«»?{...a&&{rateLimitType:«»},...s&&{resetsAt:Math.round(Number(«»))}}:null,noResponse:«»?{waitedMs:«»(«».deadline),retryWaitMs:«».deadline.retryWindowMs}:null",
+        "formatted:«»(«»),connection:«»(«»),isNetworkDown:«»(«»),rateLimits:«»||«»?{...«»&&{rateLimitType:«»},...«»&&{resetsAt:Math.round(Number(«»))}}:null,noResponse:«»?{waitedMs:«»(«».deadline),retryWaitMs:«».deadline.retryWindowMs}:null",
         "waitedMs:«»(«».deadline)"
       ],
       "note": "api_error: error is the plain-data snapshot of the API error built by Itr() for an APIError, or by the fallback literal in pJe() ({message, status: undefined, requestId: undefined, formatted, connection: null, isNetworkDown: false, rateLimits: null, noResponse: null}); waitedMs is the first-byte window in ms of the deadline (retryWindowMs or firstWindowMs), a number."
@@ -2482,7 +2481,7 @@
         "type": "number"
       },
       "anchors": [
-        "formatted:«»(«»),connection:«»(«»),isNetworkDown:«»(«»),rateLimits:«»||«»?{...a&&{rateLimitType:«»},...s&&{resetsAt:Math.round(Number(«»))}}:null,noResponse:«»?{waitedMs:«»(«».deadline),retryWaitMs:«».deadline.retryWindowMs}:null",
+        "formatted:«»(«»),connection:«»(«»),isNetworkDown:«»(«»),rateLimits:«»||«»?{...«»&&{rateLimitType:«»},...«»&&{resetsAt:Math.round(Number(«»))}}:null,noResponse:«»?{waitedMs:«»(«».deadline),retryWaitMs:«».deadline.retryWindowMs}:null",
         "retryWaitMs:«».deadline.retryWindowMs"
       ],
       "note": "api_error: error is the plain-data snapshot of the API error built by Itr() for an APIError, or by the fallback literal in pJe() ({message, status: undefined, requestId: undefined, formatted, connection: null, isNetworkDown: false, rateLimits: null, noResponse: null}); retryWaitMs is the retry window in ms, a number."
@@ -2878,7 +2877,7 @@
       },
       "anchors": [
         "diagnostics:null,id:«»(),container:null,model:«»,role:\"assistant\",stop_details:null,stop_reason:\"stop_sequence\",stop_sequence:\"\",type:\"message\",usage:«»,content:«»,context_management:null",
-        "message:{...Gr,content:«»,usage:«»(«»,«».usage)}"
+        "message:{...«»,content:«»,usage:«»(«»,«».usage)}"
       ],
       "note": "The line carries the Anthropic API message as returned by the API (the program spreads the streamed message, {...Gr, content, usage:cve(ym, Gr.usage)}) or the synthetic message built by the message factory in the same module. Types follow BetaMessage in @anthropic-ai/sdk (the program bundles 0.128.0; read in 0.129.0, resources/beta/messages/messages.d.ts). Array<BetaContentBlock>: text, thinking, redacted_thinking, tool_use, server_tool_use, mcp_tool_use, the *_tool_result blocks and others; each block is an object, not typed per block here."
     },
@@ -3616,7 +3615,7 @@
           "type": "string"
         }
       },
-      "anchors": ["...s.length>0&&{cloudMemoryToolUseIds:«»}"],
+      "anchors": ["...«».length>0&&{cloudMemoryToolUseIds:«»}"],
       "note": "assistant top-level fields come from the object literals of the stream path, the error-message factory Ws/r7n and the stream-json rebuild; An array of tool_use id strings, written only when not empty."
     },
     "user.uuid": {
@@ -4395,7 +4394,7 @@
       },
       "anchors": [
         "type:\"workflow_log\",message:«»",
-        "type:\"agent_progress\",prompt:«»,agentId:«»,agentType:«».agentType,isBuiltIn:«»(«»),description:«»,resolvedModel:«»,modelsUsed:E"
+        "type:\"agent_progress\",prompt:«»,agentId:«»,agentType:«».agentType,isBuiltIn:«»(«»),description:«»,resolvedModel:«»,modelsUsed:«»"
       ],
       "note": "The progress line is {type:'progress', data, toolUseID, parentToolUseID, uuid}; data is a different object per progress type (hook_progress, bash_progress, powershell_progress, tool_heartbeat, agent_progress, skill_progress, agent_api_retry, search_results_received, query_update, workflow_log, workflow_phase, workflow_agent, artifact_publish_retry, ...); the key below is the union over the literals of those types. message is a string for workflow_log and a user or assistant message object for agent_progress and skill_progress."
     },
@@ -4404,7 +4403,7 @@
         "type": "string"
       },
       "anchors": [
-        "type:\"agent_progress\",prompt:«»,agentId:«»,agentType:«».agentType,isBuiltIn:«»(«»),description:«»,resolvedModel:«»,modelsUsed:E",
+        "type:\"agent_progress\",prompt:«»,agentId:«»,agentType:«».agentType,isBuiltIn:«»(«»),description:«»,resolvedModel:«»,modelsUsed:«»",
         "type:\"agent_progress\",prompt:\"\""
       ],
       "note": "The progress line is {type:'progress', data, toolUseID, parentToolUseID, uuid}; data is a different object per progress type (hook_progress, bash_progress, powershell_progress, tool_heartbeat, agent_progress, skill_progress, agent_api_retry, search_results_received, query_update, workflow_log, workflow_phase, workflow_agent, artifact_publish_retry, ...); the key below is the union over the literals of those types. prompt (agent_progress, skill_progress) is the prompt string ('' for later updates)."
@@ -4414,7 +4413,7 @@
         "type": "string"
       },
       "anchors": [
-        "type:\"agent_progress\",prompt:«»,agentId:«»,agentType:«».agentType,isBuiltIn:«»(«»),description:«»,resolvedModel:«»,modelsUsed:E",
+        "type:\"agent_progress\",prompt:«»,agentId:«»,agentType:«».agentType,isBuiltIn:«»(«»),description:«»,resolvedModel:«»,modelsUsed:«»",
         "type:\"agent_api_retry\",agentId:«»,agentType:«».agentType,attempt:«».retryAttempt,maxRetries:«».maxRetries,retryDelayMs:«».retryInMs,errorStatus:«».error.status,errorCategory:«»"
       ],
       "note": "The progress line is {type:'progress', data, toolUseID, parentToolUseID, uuid}; data is a different object per progress type (hook_progress, bash_progress, powershell_progress, tool_heartbeat, agent_progress, skill_progress, agent_api_retry, search_results_received, query_update, workflow_log, workflow_phase, workflow_agent, artifact_publish_retry, ...); the key below is the union over the literals of those types. agentId is the agent id string."
@@ -4424,7 +4423,7 @@
         "type": "string"
       },
       "anchors": [
-        "type:\"agent_progress\",prompt:«»,agentId:«»,agentType:«».agentType,isBuiltIn:«»(«»),description:«»,resolvedModel:«»,modelsUsed:E",
+        "type:\"agent_progress\",prompt:«»,agentId:«»,agentType:«».agentType,isBuiltIn:«»(«»),description:«»,resolvedModel:«»,modelsUsed:«»",
         "type:\"agent_api_retry\",agentId:«»,agentType:«».agentType,attempt:«».retryAttempt,maxRetries:«».maxRetries,retryDelayMs:«».retryInMs,errorStatus:«».error.status,errorCategory:«»"
       ],
       "note": "The progress line is {type:'progress', data, toolUseID, parentToolUseID, uuid}; data is a different object per progress type (hook_progress, bash_progress, powershell_progress, tool_heartbeat, agent_progress, skill_progress, agent_api_retry, search_results_received, query_update, workflow_log, workflow_phase, workflow_agent, artifact_publish_retry, ...); the key below is the union over the literals of those types. agentType is the agent type string."
@@ -4434,7 +4433,7 @@
         "type": "boolean"
       },
       "anchors": [
-        "type:\"agent_progress\",prompt:«»,agentId:«»,agentType:«».agentType,isBuiltIn:«»(«»),description:«»,resolvedModel:«»,modelsUsed:E"
+        "type:\"agent_progress\",prompt:«»,agentId:«»,agentType:«».agentType,isBuiltIn:«»(«»),description:«»,resolvedModel:«»,modelsUsed:«»"
       ],
       "note": "The progress line is {type:'progress', data, toolUseID, parentToolUseID, uuid}; data is a different object per progress type (hook_progress, bash_progress, powershell_progress, tool_heartbeat, agent_progress, skill_progress, agent_api_retry, search_results_received, query_update, workflow_log, workflow_phase, workflow_agent, artifact_publish_retry, ...); the key below is the union over the literals of those types. isBuiltIn (agent_progress) is a boolean (source === 'built-in')."
     },
@@ -4443,7 +4442,7 @@
         "type": "string"
       },
       "anchors": [
-        "type:\"agent_progress\",prompt:«»,agentId:«»,agentType:«».agentType,isBuiltIn:«»(«»),description:«»,resolvedModel:«»,modelsUsed:E"
+        "type:\"agent_progress\",prompt:«»,agentId:«»,agentType:«».agentType,isBuiltIn:«»(«»),description:«»,resolvedModel:«»,modelsUsed:«»"
       ],
       "note": "The progress line is {type:'progress', data, toolUseID, parentToolUseID, uuid}; data is a different object per progress type (hook_progress, bash_progress, powershell_progress, tool_heartbeat, agent_progress, skill_progress, agent_api_retry, search_results_received, query_update, workflow_log, workflow_phase, workflow_agent, artifact_publish_retry, ...); the key below is the union over the literals of those types. description (agent_progress, skill_progress) is the description string."
     },
@@ -4575,7 +4574,7 @@
         "enum": ["worktree", "remote"]
       },
       "anchors": [
-        "type:\"workflow_agent\",index:«»,label:«»,phaseIndex:«»,phaseTitle:«»,agentType:«»?.agentType!=null?String(«».agentType):void 0,isolation:«»?.isolation===\"worktree\"||«»?.isolation===\"remote\"?«».isolation:void 0,model:«»(«»?.model),state:\"start\",queuedAt:«»,promptPreview:«»,lastProgressAt:it",
+        "type:\"workflow_agent\",index:«»,label:«»,phaseIndex:«»,phaseTitle:«»,agentType:«»?.agentType!=null?String(«».agentType):void 0,isolation:«»?.isolation===\"worktree\"||«»?.isolation===\"remote\"?«».isolation:void 0,model:«»(«»?.model),state:\"start\",queuedAt:«»,promptPreview:«»,lastProgressAt:«»",
         "isolation:\"remote\",remoteSessionId:Qe"
       ],
       "note": "The progress line is {type:'progress', data, toolUseID, parentToolUseID, uuid}; data is a different object per progress type (hook_progress, bash_progress, powershell_progress, tool_heartbeat, agent_progress, skill_progress, agent_api_retry, search_results_received, query_update, workflow_log, workflow_phase, workflow_agent, artifact_publish_retry, ...); the key below is the union over the literals of those types. isolation (workflow_agent) is 'worktree' or 'remote'; not written otherwise."
@@ -4625,7 +4624,7 @@
       },
       "anchors": [
         "state:\"error\",blocked:!0,error:«»,queuedAt:«»,promptPreview:«»(«»),lastProgressAt:Date.now()",
-        "type:\"workflow_agent\",index:«»,label:«»,phaseIndex:«»,phaseTitle:«»,agentType:«»?.agentType!=null?String(«».agentType):void 0,isolation:«»?.isolation===\"worktree\"||«»?.isolation===\"remote\"?«».isolation:void 0,model:«»(«»?.model),state:\"start\",queuedAt:«»,promptPreview:«»,lastProgressAt:it"
+        "type:\"workflow_agent\",index:«»,label:«»,phaseIndex:«»,phaseTitle:«»,agentType:«»?.agentType!=null?String(«».agentType):void 0,isolation:«»?.isolation===\"worktree\"||«»?.isolation===\"remote\"?«».isolation:void 0,model:«»(«»?.model),state:\"start\",queuedAt:«»,promptPreview:«»,lastProgressAt:«»"
       ],
       "note": "The progress line is {type:'progress', data, toolUseID, parentToolUseID, uuid}; data is a different object per progress type (hook_progress, bash_progress, powershell_progress, tool_heartbeat, agent_progress, skill_progress, agent_api_retry, search_results_received, query_update, workflow_log, workflow_phase, workflow_agent, artifact_publish_retry, ...); the key below is the union over the literals of those types. queuedAt (workflow_agent) is a Date.now() millisecond timestamp."
     },
@@ -4655,7 +4654,7 @@
       "anchors": [
         "state:\"error\",blocked:!0,error:«»,queuedAt:«»,promptPreview:«»(«»),lastProgressAt:Date.now()",
         "type:\"workflow_agent\",index:«»,label:«»,phaseIndex:«»,phaseTitle:«»,agentId:«».agentId,model:«»(«»?.model),state:\"done\",startedAt:Date.now(),lastProgressAt:Date.now(),cached:!0,resultPreview:«»(«».result),promptPreview:Lt",
-        "type:\"workflow_agent\",index:«»,label:«»,phaseIndex:«»,phaseTitle:«»,agentType:«»?.agentType!=null?String(«».agentType):void 0,isolation:«»?.isolation===\"worktree\"||«»?.isolation===\"remote\"?«».isolation:void 0,model:«»(«»?.model),state:\"start\",queuedAt:«»,promptPreview:«»,lastProgressAt:it"
+        "type:\"workflow_agent\",index:«»,label:«»,phaseIndex:«»,phaseTitle:«»,agentType:«»?.agentType!=null?String(«».agentType):void 0,isolation:«»?.isolation===\"worktree\"||«»?.isolation===\"remote\"?«».isolation:void 0,model:«»(«»?.model),state:\"start\",queuedAt:«»,promptPreview:«»,lastProgressAt:«»"
       ],
       "note": "The progress line is {type:'progress', data, toolUseID, parentToolUseID, uuid}; data is a different object per progress type (hook_progress, bash_progress, powershell_progress, tool_heartbeat, agent_progress, skill_progress, agent_api_retry, search_results_received, query_update, workflow_log, workflow_phase, workflow_agent, artifact_publish_retry, ...); the key below is the union over the literals of those types. promptPreview (workflow_agent) is a truncated prompt string."
     },
@@ -5187,7 +5186,7 @@
         "«»({status:503,attempt:«»,maxAttempts:«»,delayMs:«»})",
         "«»({status:429,attempt:2,maxAttempts:2,delayMs:«»})",
         "«»?.({status:503,attempt:2,maxAttempts:2,delayMs:«»})",
-        "}var «»=3,«»=5000,«»=20000;var «»=30000;function «»(«»){let «»=«»(«»)??2000;"
+        "var «»=3,«»=5000;var «»=20000,«»=30000;function «»(«»){let «»=«»(«»)??2000;"
       ],
       "note": "artifact_publish_retry only (chunk-e4nj3r2k forwards the event of chunk-eawd4gc3): maxAttempts is the literal 2, or the constant is=3 (var is=3 in that module). The 'attempt' of the same event is 2 or the loop counter V from 2 up to 3. The resolved:true form has no maxAttempts."
     },
