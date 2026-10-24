@@ -109,8 +109,10 @@ Source: the program. See also [Environment Variables](../env-vars/index.md).
 - The sandbox creates empty placeholder files such as `.mcp.json` in places where none exists.
 - Since `2.1.304`, sandboxed commands start on Linux when a `sandbox.filesystem.denyRead` glob has brackets that are not a character class, such as a `[user-id]` route folder. Source: the [release notes](https://github.com/anthropics/claude-code/releases/tag/v2.1.304).
 - Linux ignores glob patterns in `Edit` and `Read` rules for the sandbox, and shows a warning.
+- Since `2.1.310`, on Linux, `/sandbox` and the startup warning name Ubuntu's AppArmor limit on user namespaces when it stops bubblewrap. The fix they give is to add bubblewrap's AppArmor profile, or to run `sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0`, which holds until reboot.
+- Since `2.1.310`, when some deny paths are on another computer, a startup warning says the sandbox does not enforce them. A `Read` or `Edit` rule for such a path still applies to the file tools. `claude doctor` lists every entry.
 
-Source for all four: the program prompt and warning texts.
+Source for the others: the program prompt and warning texts. The AppArmor item is also in the [v2.1.310 release](https://github.com/anthropics/claude-code/releases/tag/v2.1.310).
 
 ## How It Works
 

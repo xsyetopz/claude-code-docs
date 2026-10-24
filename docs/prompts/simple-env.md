@@ -32,12 +32,12 @@ This variant sends exactly the same text and tools as [Bare Mode](./bare.md). Th
 
 The diff below starts from [Default, Lean Prompt](./default-lean.md). Lines that start with `-` are only in the baseline. Lines that start with `+` are only here.
 
-Lines added: 2. Lines removed: 117. Size change: -15,139 characters.
+Lines added: 2. Lines removed: 118. Size change: -15,147 characters.
 
 ````diff
 --- default-lean
 +++ simple-env
-@@ -5,125 +5,8 @@
+@@ -5,126 +5,8 @@
  You are a Claude agent, built on Anthropic's Claude Agent SDK.
 
  === system[2] (cache marker: {"type":"ephemeral"}) ===
@@ -129,6 +129,7 @@ Lines added: 2. Lines removed: 117. Size change: -15,139 characters.
 -CronList
 -EnterWorktree
 -ExitWorktree
+-Monitor
 -NotebookEdit
 -SendMessage
 -TaskStop

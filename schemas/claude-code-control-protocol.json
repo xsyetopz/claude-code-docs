@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-control-protocol.json",
-  "title": "Claude Code control protocol (Claude Code 2.1.309)",
-  "$comment": "For the request and response of each control_request subtype in stream-json mode (definitions <subtype>Request and <subtype>Response, direction in x-direction). Generated from Claude Code 2.1.309 by calling the zod v4 toJSONSchema embedded in the binary on its own validator (method A, runtime export). Anchor: the SDK schema module, table of rows {request, originator, response}; the request union is described as \"Control requests a client sends to drive the loop\". Do not edit by hand: run \"bun run schemas\".",
+  "title": "Claude Code control protocol (Claude Code 2.1.310)",
+  "$comment": "For the request and response of each control_request subtype in stream-json mode (definitions <subtype>Request and <subtype>Response, direction in x-direction). Generated from Claude Code 2.1.310 by calling the zod v4 toJSONSchema embedded in the binary on its own validator (method A, runtime export). Anchor: the SDK schema module, table of rows {request, originator, response}; the request union is described as \"Control requests a client sends to drive the loop\". Do not edit by hand: run \"bun run schemas\".",
   "$defs": {
     "apply_flag_settingsRequest": {
       "type": "object",
@@ -6127,12 +6127,17 @@
                 "type": "boolean",
                 "description": "@internal When true, the CLI never moves a call to this server's tools to a background task on its own: not after the auto-background delay, and not early for a priority 'now' message, which instead interrupts the turn and so ends the call. Meant for a server whose calls wait on a person. The turn waits for the call's own result, up to the server's timeout, so set timeout too. A tool that advertises MCP task support can still run as a task. Any value but true counts as unset. Read when the server is first registered, from initialize, mcp_set_servers or --mcp-config."
               },
+              "connectorId": {
+                "type": "string",
+                "minLength": 1,
+                "description": "@internal The id of the claude.ai connector this server proxies, for a host that keys the server by another name. The server must declare the same id in its own capabilities for the CLI to treat it as that connector. Read from initialize and mcp_set_servers, not --mcp-config, when the server is first registered."
+              },
               "tools": {
-                "$ref": "#/$defs/initializeRequest____schema14"
+                "$ref": "#/$defs/initializeRequest____schema16"
               }
             }
           },
-          "description": "Settings for the SDK-hosted MCP servers named in sdkMcpServers, keyed by server name. Sent as a separate field so a CLI that predates it ignores it; entries whose name is not in sdkMcpServers, and values that do not match this shape, are ignored rather than rejected. timeout and disableAutoBackground apply when the server is first registered; tools (the per-tool permission policy) adds its ask and deny rules on every initialize that names the server. An initialize never removes a rule; mcp_set_servers replaces them."
+          "description": "Settings for the SDK-hosted MCP servers named in sdkMcpServers, keyed by server name. Sent as a separate field so a CLI that predates it ignores it; entries whose name is not in sdkMcpServers, and values that do not match this shape, are ignored rather than rejected. timeout, disableAutoBackground and connectorId apply when the server is first registered; tools (the per-tool permission policy) adds its ask and deny rules on every initialize that names the server. An initialize never removes a rule; mcp_set_servers replaces them."
         },
         "sdkMcpServerManifests": {
           "type": "object",
@@ -6472,8 +6477,13 @@
                                 "type": "boolean",
                                 "description": "@internal When true, the CLI never moves a call to this server's tools to a background task on its own: not after the auto-background delay, and not early for a priority 'now' message, which instead interrupts the turn and so ends the call. Meant for a server whose calls wait on a person. The turn waits for the call's own result, up to the server's timeout, so set timeout too. A tool that advertises MCP task support can still run as a task. Any value but true counts as unset. Read when the server is first registered, from initialize, mcp_set_servers or --mcp-config."
                               },
+                              "connectorId": {
+                                "type": "string",
+                                "minLength": 1,
+                                "description": "@internal The id of the claude.ai connector this server proxies, for a host that keys the server by another name. The server must declare the same id in its own capabilities for the CLI to treat it as that connector. Read from initialize and mcp_set_servers, not --mcp-config, when the server is first registered."
+                              },
                               "tools": {
-                                "$ref": "#/$defs/initializeRequest____schema14"
+                                "$ref": "#/$defs/initializeRequest____schema16"
                               }
                             },
                             "required": ["type", "name"]
@@ -6670,7 +6680,7 @@
       "description": "Initializes the SDK session with hooks, MCP servers, and agent configuration.",
       "x-direction": "client"
     },
-    "initializeRequest____schema14": {
+    "initializeRequest____schema16": {
       "type": "array",
       "items": {
         "type": "object",
@@ -6997,9 +7007,13 @@
               "type": "boolean",
               "description": "Whether the box may send this sign-in's session transcript, and so may open: true for Pro and Max only. Read at session start."
             },
+            "logs_followup": {
+              "type": "boolean",
+              "description": "Whether this CLI logs the followup_* survey events a host sends it. Absent means no: it would log them with no event type, so the host must not send them."
+            },
             "every_rating": {
               "type": "boolean",
-              "description": "Whether VS Code opens this box in place of its own, which follows Bad only and is sent with submit_feedback. Never true unless transcript_allowed is. VS Code keeps its own box where reports are saved on the user's computer rather than sent."
+              "description": "Whether VS Code opens this box in place of its own, which follows Bad only and is sent with submit_feedback. Never true unless transcript_allowed is, nor for a desktop session. VS Code keeps its own box where reports are saved on the user's computer rather than sent."
             }
           },
           "required": ["transcript_allowed", "every_rating"],
@@ -8098,6 +8112,11 @@
                     "type": "boolean",
                     "description": "@internal When true, the CLI never moves a call to this server's tools to a background task on its own: not after the auto-background delay, and not early for a priority 'now' message, which instead interrupts the turn and so ends the call. Meant for a server whose calls wait on a person. The turn waits for the call's own result, up to the server's timeout, so set timeout too. A tool that advertises MCP task support can still run as a task. Any value but true counts as unset. Read when the server is first registered, from initialize, mcp_set_servers or --mcp-config."
                   },
+                  "connectorId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "@internal The id of the claude.ai connector this server proxies, for a host that keys the server by another name. The server must declare the same id in its own capabilities for the CLI to treat it as that connector. Read from initialize and mcp_set_servers, not --mcp-config, when the server is first registered."
+                  },
                   "tools": {
                     "type": "array",
                     "items": {
@@ -8430,6 +8449,11 @@
                           "disableAutoBackground": {
                             "type": "boolean",
                             "description": "@internal When true, the CLI never moves a call to this server's tools to a background task on its own: not after the auto-background delay, and not early for a priority 'now' message, which instead interrupts the turn and so ends the call. Meant for a server whose calls wait on a person. The turn waits for the call's own result, up to the server's timeout, so set timeout too. A tool that advertises MCP task support can still run as a task. Any value but true counts as unset. Read when the server is first registered, from initialize, mcp_set_servers or --mcp-config."
+                          },
+                          "connectorId": {
+                            "type": "string",
+                            "minLength": 1,
+                            "description": "@internal The id of the claude.ai connector this server proxies, for a host that keys the server by another name. The server must declare the same id in its own capabilities for the CLI to treat it as that connector. Read from initialize and mcp_set_servers, not --mcp-config, when the server is first registered."
                           },
                           "tools": {
                             "type": "array",
@@ -9548,6 +9572,11 @@
                             "type": "boolean",
                             "description": "@internal When true, the CLI never moves a call to this server's tools to a background task on its own: not after the auto-background delay, and not early for a priority 'now' message, which instead interrupts the turn and so ends the call. Meant for a server whose calls wait on a person. The turn waits for the call's own result, up to the server's timeout, so set timeout too. A tool that advertises MCP task support can still run as a task. Any value but true counts as unset. Read when the server is first registered, from initialize, mcp_set_servers or --mcp-config."
                           },
+                          "connectorId": {
+                            "type": "string",
+                            "minLength": 1,
+                            "description": "@internal The id of the claude.ai connector this server proxies, for a host that keys the server by another name. The server must declare the same id in its own capabilities for the CLI to treat it as that connector. Read from initialize and mcp_set_servers, not --mcp-config, when the server is first registered."
+                          },
                           "tools": {
                             "type": "array",
                             "items": {
@@ -10553,7 +10582,7 @@
         }
       },
       "required": ["subtype"],
-      "description": "Sets the maximum number of thinking tokens for extended thinking. When max_thinking_tokens is null, thinking resets to the session default: any mid-session budget override is cleared (back to the spawn-time budget, if one was set), and thinking stays off for sessions that have it disabled. When max_thinking_tokens is omitted, the budget is left as it is, so a request that only changes thinking_display can leave the field out. thinking_display optionally sets the thinking display mode for the rest of the session: a value replaces the session display mode, null clears that override so Claude Code's default display handling applies again, and when omitted the display mode from session start (--thinking-display) is kept. 'highlights' returns one short title per stretch of thinking instead of a prose summary. The API accepts it only from Claude Code sessions that Anthropic hosts; if the API rejects it, the session sends 'omitted' (no thinking text) in its place from then on. A request for 'highlights' gets an error reply after such a rejection, on Amazon Bedrock, Google Vertex AI or another provider to which Claude Code sends no first-party-only beta features, when experimental betas are off (CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS or organization policy), or on a Claude 3 model (except on Microsoft Foundry). The error names which of these it was; the display stays as it was, and max_thinking_tokens still applies when the request has it.",
+      "description": "Sets the maximum number of thinking tokens for extended thinking. When max_thinking_tokens is null, thinking resets to the session default: any mid-session budget override is cleared (back to the spawn-time budget, if one was set), and thinking stays off for sessions that have it disabled. When max_thinking_tokens is omitted, the budget is left as it is, so a request that only changes thinking_display can leave the field out. thinking_display optionally sets the thinking display mode for the rest of the session: a value replaces the session display mode, null clears that override so Claude Code's default display handling applies again, and when omitted the display mode from session start (--thinking-display) is kept. 'highlights' returns one short title per stretch of thinking instead of a prose summary. The API accepts it only from Claude Code sessions that Anthropic hosts; if the API rejects it, the session sends 'omitted' (no thinking text) in its place from then on. A request for 'highlights' gets an error reply after such a rejection, when experimental betas are off (CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS or organization policy), on a Claude 3 model (except on Microsoft Foundry), or on Amazon Bedrock (Mantle included), Google Vertex AI or a Claude apps gateway (API provider \"gateway\") with a model released before Claude Opus 4.7. The error names which of these it was; the display stays as it was, and max_thinking_tokens still applies when the request has it.",
       "x-direction": "client"
     },
     "set_mcp_permission_mode_overrideRequest": {

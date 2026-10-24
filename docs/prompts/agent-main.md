@@ -15,9 +15,9 @@ Running the whole session as a custom agent. Save an agent file in `.claude/agen
 | `system[2]` | 58 |
 | `messages[0].content[0]` | 592 |
 | `messages[0].content[1]` | 16 |
-| `messages[1].content[0]` | 8,920 |
+| `messages[1].content[0]` | 8,928 |
 | System blocks only | 198 |
-| Everything shown here | 10,016 |
+| Everything shown here | 10,024 |
 | Tools sent | 12 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -33,7 +33,7 @@ The text below is every part of the request that Claude Code builds before your 
 
 ```text
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.309.<build>; cc_entrypoint=sdk-cli;
+x-anthropic-billing-header: cc_version=2.1.310.<build>; cc_entrypoint=sdk-cli;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -71,6 +71,7 @@ CronDelete
 CronList
 EnterWorktree
 ExitWorktree
+Monitor
 NotebookEdit
 SendMessage
 TaskStop
@@ -183,7 +184,7 @@ Lines added: 2. Lines removed: 53. Size change: -5,499 characters.
  === messages[0].content[0] (role: user) ===
  <system-reminder>
  Attribution for git commits and pull requests you create from here on (this replaces Claude Code's own earlier attribution guidance, such as a previous copy of this reminder; the user's own instructions about these lines, such as a CLAUDE.md or memory rule, take precedence over this reminder, but do not add attribution lines this reminder leaves out):
-@@ -102,6 +48,7 @@
+@@ -103,6 +49,7 @@
  - Explore: Read-only search agent for broad fan-out searches — when answering means sweeping many files, directories, or naming conventions and you only need the conclusion, not the file dumps. It reads excerpts rather than whole files, so it locates code; it doesn't review or audit it. Specify search breadth: "medium" for moderate exploration, "very thorough" for multiple locations and naming conventions. (Tools: All tools except Agent, Artifact, ArtifactComments, ArtifactData, ArtifactCheck, ExitPlanMode, Edit, Write, NotebookEdit)
  - general-purpose: General-purpose agent for researching complex questions, searching for code, and executing multi-step tasks. When you are searching for a keyword or file and are not confident that you will find the right match in the first few tries use this agent to perform the search for you. (Tools: *)
  - Plan: Software architect agent for designing implementation plans. Use this when you need to plan the implementation strategy for a task. Returns step-by-step plans, identifies critical files, and considers architectural trade-offs. (Tools: All tools except Agent, Artifact, ArtifactComments, ArtifactData, ArtifactCheck, ExitPlanMode, Edit, Write, NotebookEdit)

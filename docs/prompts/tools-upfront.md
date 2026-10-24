@@ -18,7 +18,7 @@ sidebar_position: 61
 | `messages[1].content[0]` | 8,489 |
 | System blocks only | 5,767 |
 | Everything shown here | 15,154 |
-| Tools sent | 20 |
+| Tools sent | 21 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
 
@@ -28,7 +28,7 @@ The text below is every part of the request that Claude Code builds before your 
 
 ````text
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.309.<build>; cc_entrypoint=sdk-cli;
+x-anthropic-billing-header: cc_version=2.1.310.<build>; cc_entrypoint=sdk-cli;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -150,12 +150,12 @@ Today's date is <date>.
 
 The diff below starts from [Default, Lean Prompt](./default-lean.md). Lines that start with `-` are only in the baseline. Lines that start with `+` are only here.
 
-Lines added: 0. Lines removed: 12. Size change: -361 characters.
+Lines added: 0. Lines removed: 13. Size change: -369 characters.
 
 ```diff
 --- default-lean
 +++ tools-upfront
-@@ -85,18 +85,6 @@
+@@ -85,19 +85,6 @@
 
  You are powered by the model named Opus 5.5. The exact model ID is claude-opus-5-5. Assistant knowledge cutoff is June 2026.
 
@@ -165,6 +165,7 @@ Lines added: 0. Lines removed: 12. Size change: -361 characters.
 -CronList
 -EnterWorktree
 -ExitWorktree
+-Monitor
 -NotebookEdit
 -SendMessage
 -TaskStop
@@ -176,4 +177,4 @@ Lines added: 0. Lines removed: 12. Size change: -361 characters.
  - Explore: Read-only search agent for broad fan-out searches — when answering means sweeping many files, directories, or naming conventions and you only need the conclusion, not the file dumps. It reads excerpts rather than whole files, so it locates code; it doesn't review or audit it. Specify search breadth: "medium" for moderate exploration, "very thorough" for multiple locations and naming conventions. (Tools: All tools except Agent, Artifact, ArtifactComments, ArtifactData, ArtifactCheck, ExitPlanMode, Edit, Write, NotebookEdit)
 ```
 
-Tool list: adds `CronCreate`, `CronDelete`, `CronList`, `EnterWorktree`, `ExitWorktree`, `NotebookEdit`, `SendMessage`, `TaskStop`, `WebFetch`, `WebSearch`. removes `ToolSearch`, `DeferredToolPlaceholder`. See [Tools per Variant](./tools-per-variant.md).
+Tool list: adds `CronCreate`, `CronDelete`, `CronList`, `EnterWorktree`, `ExitWorktree`, `Monitor`, `NotebookEdit`, `SendMessage`, `TaskStop`, `WebFetch`, `WebSearch`. removes `ToolSearch`, `DeferredToolPlaceholder`. See [Tools per Variant](./tools-per-variant.md).

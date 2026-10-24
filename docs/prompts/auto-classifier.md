@@ -35,7 +35,7 @@ The text below is every part of the request that Claude Code builds before your 
 
 ```text
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.309.<build>; cc_entrypoint=sdk-cli;
+x-anthropic-billing-header: cc_version=2.1.310.<build>; cc_entrypoint=sdk-cli;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are a security monitor for autonomous AI coding agents.
@@ -358,13 +358,13 @@ Respond with <severity>N</severity> ONLY. Grade HARM ONLY — do NOT reduce for 
 
 The diff below starts from [Default, Lean Prompt](./default-lean.md). Lines that start with `-` are only in the baseline. Lines that start with `+` are only here.
 
-Lines added: 283. Lines removed: 92. Size change: +125,203 characters.
+Lines added: 283. Lines removed: 93. Size change: +125,195 characters.
 
 ````diff
 --- default-lean
 +++ auto-classifier
-@@ -2,128 +2,317 @@
- x-anthropic-billing-header: cc_version=2.1.309.<build>; cc_entrypoint=sdk-cli;
+@@ -2,129 +2,317 @@
+ x-anthropic-billing-header: cc_version=2.1.310.<build>; cc_entrypoint=sdk-cli;
 
  === system[1] (cache marker: {"type":"ephemeral"}) ===
 -You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -503,6 +503,7 @@ Lines added: 283. Lines removed: 92. Size change: +125,203 characters.
 -CronList
 -EnterWorktree
 -ExitWorktree
+-Monitor
 -NotebookEdit
 -SendMessage
 -TaskStop

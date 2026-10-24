@@ -16,9 +16,9 @@ The text that `/simplify` sends to the model. Type `/simplify` in a session.
 | `messages[0].content[0]` | 592 |
 | `messages[0].content[1]` | 83 |
 | `messages[0].content[2]` | 2,817 |
-| `messages[1].content[0]` | 8,799 |
+| `messages[1].content[0]` | 8,807 |
 | System blocks only | 5,767 |
-| Everything shown here | 18,392 |
+| Everything shown here | 18,400 |
 | Tools sent | 12 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -33,7 +33,7 @@ The text below is every part of the request that Claude Code builds before your 
 
 ````text
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.309.<build>; cc_entrypoint=sdk-cli;
+x-anthropic-billing-header: cc_version=2.1.310.<build>; cc_entrypoint=sdk-cli;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -189,6 +189,7 @@ CronDelete
 CronList
 EnterWorktree
 ExitWorktree
+Monitor
 NotebookEdit
 SendMessage
 TaskStop
@@ -308,7 +309,7 @@ Lines added: 65. Lines removed: 3. Size change: +2,877 characters.
  === messages[1].content[0] (role: system) ===
  # Environment
  You have been invoked in the following environment:
-@@ -124,6 +188,4 @@
+@@ -125,6 +189,4 @@
  - init: Initialize a new CLAUDE.md file with codebase documentation
  - security-review: Complete a security review of the pending changes on the current branch
 

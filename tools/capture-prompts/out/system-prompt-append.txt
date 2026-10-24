@@ -1,5 +1,5 @@
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.309.<build>; cc_entrypoint=sdk-cli;
+x-anthropic-billing-header: cc_version=2.1.310.<build>; cc_entrypoint=sdk-cli;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are Claude Code, Anthropic's official CLI for Claude, running within the Claude Agent SDK.
@@ -39,6 +39,7 @@ CronDelete
 CronList
 EnterWorktree
 ExitWorktree
+Monitor
 NotebookEdit
 SendMessage
 TaskStop

@@ -15,9 +15,9 @@ The built-in Learning output style on the lean prompt. Run `/output-style Learni
 | `system[2]` | 5,665 |
 | `messages[0].content[0]` | 592 |
 | `messages[0].content[1]` | 16 |
-| `messages[1].content[0]` | 13,858 |
+| `messages[1].content[0]` | 13,866 |
 | System blocks only | 5,805 |
-| Everything shown here | 20,561 |
+| Everything shown here | 20,569 |
 | Tools sent | 12 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -33,7 +33,7 @@ The text below is every part of the request that Claude Code builds before your 
 
 ````text
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.309.<build>; cc_entrypoint=sdk-cli;
+x-anthropic-billing-header: cc_version=2.1.310.<build>; cc_entrypoint=sdk-cli;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -206,6 +206,7 @@ CronDelete
 CronList
 EnterWorktree
 ExitWorktree
+Monitor
 NotebookEdit
 SendMessage
 TaskStop
@@ -352,7 +353,7 @@ Lines added: 84. Lines removed: 1. Size change: +5,046 characters.
  The following deferred tools are now available via ToolSearch. Their schemas are NOT loaded — calling them directly will fail with InputValidationError. Use ToolSearch with query "select:<name>[,<name>...]" to load tool schemas before calling them:
  CronCreate
  CronDelete
-@@ -126,4 +207,6 @@
+@@ -127,4 +208,6 @@
 
  <total_tokens>15000000 tokens left</total_tokens>
 

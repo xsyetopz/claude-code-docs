@@ -33,7 +33,7 @@ The text below is every part of the request that Claude Code builds before your 
 
 ```text
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.309.<build>; cc_entrypoint=sdk-cli;
+x-anthropic-billing-header: cc_version=2.1.310.<build>; cc_entrypoint=sdk-cli;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -69,7 +69,7 @@ Today's date is <date>.
 
 The diff below starts from [Default, Lean Prompt](./default-lean.md). Lines that start with `-` are only in the baseline. Lines that start with `+` are only here.
 
-Lines added: 7. Lines removed: 103. Size change: -13,153 characters.
+Lines added: 7. Lines removed: 104. Size change: -13,161 characters.
 
 ````diff
 --- default-lean
@@ -143,7 +143,7 @@ Lines added: 7. Lines removed: 103. Size change: -13,153 characters.
  === messages[0].content[0] (role: user) ===
  <system-reminder>
  Attribution for git commits and pull requests you create from here on (this replaces Claude Code's own earlier attribution guidance, such as a previous copy of this reminder; the user's own instructions about these lines, such as a CLAUDE.md or memory rule, take precedence over this reminder, but do not add attribution lines this reminder leaves out):
-@@ -71,59 +25,7 @@
+@@ -71,60 +25,7 @@
  </system-reminder>
 
  === messages[0].content[1] (role: user) ===
@@ -168,6 +168,7 @@ Lines added: 7. Lines removed: 103. Size change: -13,153 characters.
 -CronList
 -EnterWorktree
 -ExitWorktree
+-Monitor
 -NotebookEdit
 -SendMessage
 -TaskStop

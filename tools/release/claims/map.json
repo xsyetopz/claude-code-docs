@@ -313,7 +313,7 @@
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
   },
-  "docs/extend/plugins/cli.md#subcommands:36b66bbf": {
+  "docs/extend/plugins/cli.md#subcommands:b4c4d15b": {
     "kind": "static",
     "probes": [],
     "note": "release history: when it started; recheck only if the feature is removed"
@@ -488,7 +488,7 @@
     "kind": "behaviour",
     "probes": ["print.plugindata.bash-bin"]
   },
-  "docs/reference/tools/index.md#which-built-in-tools-are-deferred:7a31190f": {
+  "docs/reference/tools/index.md#which-built-in-tools-are-deferred:5071153a": {
     "kind": "behaviour",
     "probes": ["print.hooks.posttooluse.glob", "print.hooks.posttooluse.grep"]
   },
@@ -604,10 +604,6 @@
   "docs/how-it-works/context-budget.md#what-an-empty-session-holds:3b9fe4b7": {
     "kind": "behaviour",
     "probes": ["live.context-budget"]
-  },
-  "docs/how-it-works/context-budget.md#what-else-changes-the-budget:ec33657e": {
-    "kind": "behaviour",
-    "probes": ["print.dsc.sizes"]
   },
   "docs/prompts/override.md#:15eac422": {
     "kind": "behaviour",
@@ -922,11 +918,6 @@
     "probes": [],
     "note": "cites the official release notes"
   },
-  "docs/extend/skills-and-commands/bundled-skills.md#skills:43808aae": {
-    "kind": "external",
-    "probes": [],
-    "note": "cites the official release notes"
-  },
   "docs/extend/subagents/runtime.md#built-in-agents:adb4feaf": {
     "kind": "external",
     "probes": [],
@@ -1111,7 +1102,7 @@
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
   },
-  "docs/configure/cli/subcommands.md#commands:6af24a9d": {
+  "docs/configure/cli/subcommands.md#commands:16cc755f": {
     "kind": "command",
     "probes": [],
     "note": "claude ultrareview --help in 2.1.309 lists --trust-workspace; trust check read in the program"
@@ -1145,5 +1136,63 @@
     "kind": "schema",
     "probes": [],
     "note": "PromptFillInput cursor in schemas/claude-code.d.ts"
+  },
+  "docs/configure/models-and-providers.md#effort:65f09f9d": {
+    "kind": "manual",
+    "probes": [],
+    "note": "effort retry read in the program (2.1.310 chunk-31gxg38t.js:2834376); needs a server that refuses effort"
+  },
+  "docs/configure/permissions/sandbox.md#other-behavior:0a2f2baf": {
+    "kind": "external",
+    "probes": [],
+    "note": "cites the v2.1.310 release notes; warning text read in the program (2.1.310 chunk-aet23r5k.js:919487), Linux only"
+  },
+  "docs/configure/permissions/sandbox.md#other-behavior:b4d4ce4f": {
+    "kind": "manual",
+    "probes": [],
+    "note": "startup warning read in the program (2.1.310 chunk-8a19274q.js); needs deny paths on another computer"
+  },
+  "docs/extend/mod-api/index.md#errors:8cd47ec3": {
+    "kind": "manual",
+    "probes": [],
+    "note": "the ui.resolve error text names a vm context in the 2.1.310 program strings"
+  },
+  "docs/extend/mod-api/types/ui.md#imageprops:9c581f61": {
+    "kind": "schema",
+    "probes": [],
+    "note": "ImageProps doc in schemas/claude-code.d.ts"
+  },
+  "docs/extend/mod-api/types/ui.md#uiblitresult:dcf78d34": {
+    "kind": "schema",
+    "probes": [],
+    "note": "UiBlitResult.fix in schemas/claude-code.d.ts"
+  },
+  "docs/extend/plugins/manifest.md#top-level-keys:72274c47": {
+    "kind": "external",
+    "probes": [],
+    "note": "cites the v2.1.310 release notes; tengu_amber_sentinel gate on plugin monitors gone (2.1.309 chunk-smka8wcm.js:222106)"
+  },
+  "docs/reference/api/betas.md#registry:49f0736a": {
+    "kind": "external",
+    "probes": [],
+    "note": "cites the v2.1.310 release notes; retry read in the program (2.1.310 chunk-31gxg38t.js:2834376)"
+  },
+  "docs/reference/tools/gated-and-other.md#gated-tools:5910d9d5": {
+    "kind": "manual",
+    "probes": [],
+    "note": "propose_skills enable check read in the 2.1.310 program; needs a remote or diskless host launch"
+  },
+  "docs/reference/tools/shell-and-web.md#how-it-works:2982c539": {
+    "kind": "behaviour",
+    "probes": ["print.request.baseline-a", "print.request.baseline-b"]
+  },
+  "docs/reference/tools/shell-and-web.md#how-it-works:44d3082c": {
+    "kind": "manual",
+    "probes": [],
+    "note": "sleep check read in the program (2.1.310 chunk-31gxg38t.js:4972903, limit 25 s); needs the model to run a leading sleep"
+  },
+  "docs/how-it-works/context-budget.md#what-else-changes-the-budget:251dc99e": {
+    "kind": "behaviour",
+    "probes": ["print.dsc.sizes"]
   }
 }

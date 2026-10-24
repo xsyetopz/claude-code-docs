@@ -61,7 +61,7 @@ See [Request and Cache](request-and-cache.md#system-blocks-and-cache-markers) fo
 
 A model gets the short prompt (one `lean_body` section, about 5.7k characters) or the full prompt (six longer sections, about 26.9k characters).
 The official docs and the real request captures agree here. Only the old wiki was wrong.
-Captures of 2.1.309 show the following. See [Captured System Prompts](../prompts/index.md) for the texts.
+Captures of 2.1.310 show the following. See [Captured System Prompts](../prompts/index.md) for the texts.
 
 ```mermaid
 flowchart TD
@@ -104,7 +104,7 @@ The models with the catalog flag `lean_prompt` get the short prompt: Haiku 5.5, 
 | `claude-haiku-4-5`, `claude-3-5-haiku`, `claude-3-5-sonnet`, `claude-3-7-sonnet`, `claude-sonnet-4-0`, `claude-sonnet-4-5`, `claude-sonnet-4-6`, `claude-opus-4-5`, `claude-opus-4-6`, `claude-opus-4-7` | Full | 27,046 |
 | `claude-opus-4-0`, `claude-opus-4-1` | Claude Code silently changes the request model to `claude-opus-5-5`, so they get the short prompt | 5,699 |
 
-The 3.5 and 3.7 Haiku and Sonnet models also get 24 tools and not 12, because they have no tool search. The captures cover only Opus 5.5, Sonnet 5.5, Haiku 5.5, and the full prompt. The other models have no capture page.
+The 3.5 and 3.7 Haiku and Sonnet models also get 25 tools and not 12, because they have no tool search. In `2.1.309` it was 24, before `Monitor` joined the tool list (probe `print.models.matrix`). The captures cover only Opus 5.5, Sonnet 5.5, Haiku 5.5, and the full prompt. The other models have no capture page.
 
 The [official docs](https://code.claude.com/docs/en/env-vars) say that Haiku 4.5, Sonnet 5, Opus 4.7, and earlier models get the full prompt, and newer models get the short one.
 The captures match this for Sonnet 5.5, Opus 5.5, and Haiku 5.5. The old wiki said Sonnet gets the full prompt, and that is wrong.

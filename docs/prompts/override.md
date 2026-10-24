@@ -1,6 +1,6 @@
 ---
 title: "Override a Prompt"
-description: "Which built-in prompt texts in Claude Code 2.1.309 you can replace, append to, or turn off, and how."
+description: "Which built-in prompt texts in Claude Code 2.1.310 you can replace, append to, or turn off, and how."
 sidebar_position: 1.5
 generated: false
 index:
@@ -78,7 +78,7 @@ The flags `--system-prompt` and `--append-system-prompt` do not reach built-in s
 | [/code-review](./skill-code-review.md) and its `/review` alias | Replace | Same rule as `/simplify`. | The program |
 | Other bundled skills: [batch](./skill-batch.md), [claude-api](./skill-claude-api.md), [dataviz](./skill-dataviz.md), [deep-research](./skill-deep-research.md), [doctor](./skill-doctor.md), [fewer-permission-prompts](./skill-fewer-permission-prompts.md), [goal](./skill-goal.md), [insights](./skill-insights.md), [loop](./skill-loop.md), [plugin-authoring](./skill-plugin-authoring.md), [run](./skill-run.md), [run-skill-generator](./skill-run-skill-generator.md), [team-onboarding](./skill-team-onboarding.md), [update-config](./skill-update-config.md), [verify](./skill-verify.md), [workflow-authoring](./skill-workflow-authoring.md) | Replace | A same-named skill file. | The program |
 
-`/recap`, `/auto-mode-setup`, and `/autocompact` sent no model request, so they have no prompt to change. `/pr-comments` does not exist in 2.1.309.
+`/recap`, `/auto-mode-setup`, and `/autocompact` sent no model request, so they have no prompt to change. `/pr-comments` does not exist in 2.1.310.
 
 ## Output Styles
 

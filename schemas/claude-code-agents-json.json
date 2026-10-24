@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-agents-json.json",
-  "title": "Claude Code --agents JSON entry (Claude Code 2.1.309)",
-  "$comment": "For one subagent definition of the --agents JSON (and the SDK agents option). Generated from Claude Code 2.1.309 by calling the zod v4 toJSONSchema embedded in the binary on its own validator (method A, runtime export). Anchor: the SDK schema module, object described as \"Definition for a custom subagent that can be invoked via the Agent tool.\". Do not edit by hand: run \"bun run schemas\".",
+  "title": "Claude Code --agents JSON entry (Claude Code 2.1.310)",
+  "$comment": "For one subagent definition of the --agents JSON (and the SDK agents option). Generated from Claude Code 2.1.310 by calling the zod v4 toJSONSchema embedded in the binary on its own validator (method A, runtime export). Anchor: the SDK schema module, object described as \"Definition for a custom subagent that can be invoked via the Agent tool.\". Do not edit by hand: run \"bun run schemas\".",
   "type": "object",
   "properties": {
     "description": {
@@ -245,6 +245,11 @@
                     "disableAutoBackground": {
                       "description": "@internal When true, the CLI never moves a call to this server's tools to a background task on its own: not after the auto-background delay, and not early for a priority 'now' message, which instead interrupts the turn and so ends the call. Meant for a server whose calls wait on a person. The turn waits for the call's own result, up to the server's timeout, so set timeout too. A tool that advertises MCP task support can still run as a task. Any value but true counts as unset. Read when the server is first registered, from initialize, mcp_set_servers or --mcp-config.",
                       "type": "boolean"
+                    },
+                    "connectorId": {
+                      "description": "@internal The id of the claude.ai connector this server proxies, for a host that keys the server by another name. The server must declare the same id in its own capabilities for the CLI to treat it as that connector. Read from initialize and mcp_set_servers, not --mcp-config, when the server is first registered.",
+                      "type": "string",
+                      "minLength": 1
                     },
                     "tools": {
                       "description": "Per-tool permission policy the host declares for this server's tools (not the tool definitions passed to createSdkMcpServer). always_ask: the CLI asks the host (canUseTool or the permission prompt tool) before each call, even where an allow rule or allowedTools covers the tool, and under bypassPermissions outside a hosted remote session (CLAUDE_CODE_REMOTE); under dontAsk the call is denied; in auto mode the classifier decides, except that by default a tool annotated destructiveHint still asks. always_deny: calls are denied. always_allow and org_max_permission are ignored on sdk servers; grant allows with allowedTools or canUseTool. Read from initialize (sdkMcpServerConfigs) and from each mcp_set_servers entry that names the server. On the wire an entry without tools states no policy: on initialize the stored list and the rules stand; on mcp_set_servers the rules are replaced without them. The Agent SDK always re-sends the registered list. An entry whose policy is not one of the three asks; an entry without a string name is dropped and the rest apply; a value that is not a list reads as absent.",

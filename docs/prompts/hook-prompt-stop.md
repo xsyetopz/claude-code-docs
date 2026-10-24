@@ -15,11 +15,11 @@ A prompt hook on the `Stop` event gets a different system text from a tool hook.
 | `system[2]` | 1,920 |
 | `messages[0].content[0]` | 592 |
 | `messages[0].content[1]` | 16 |
-| `messages[1].content[0]` | 8,850 |
+| `messages[1].content[0]` | 8,858 |
 | `messages[2].content[0]` | 2 |
 | `messages[3].content[0]` | 509 |
 | System blocks only | 2,060 |
-| Everything shown here | 12,416 |
+| Everything shown here | 12,424 |
 | Tools sent | 0 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -34,7 +34,7 @@ The text below is every part of the request that Claude Code builds before your 
 
 ```text
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.309.<build>; cc_entrypoint=sdk-cli;
+x-anthropic-billing-header: cc_version=2.1.310.<build>; cc_entrypoint=sdk-cli;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -83,6 +83,7 @@ CronDelete
 CronList
 EnterWorktree
 ExitWorktree
+Monitor
 NotebookEdit
 SendMessage
 TaskStop
@@ -135,12 +136,12 @@ ARGUMENTS: {"session_id":"<uuid-1>","transcript_path":"<config-dir>/projects/<pr
 
 The diff below starts from [Prompt Hook Request](./hook-prompt.md). Lines that start with `-` are only in the baseline. Lines that start with `+` are only here.
 
-Lines added: 82. Lines removed: 5. Size change: +10,938 characters.
+Lines added: 83. Lines removed: 5. Size change: +10,946 characters.
 
 ```diff
 --- hook-prompt
 +++ hook-prompt-stop
-@@ -5,15 +5,92 @@
+@@ -5,15 +5,93 @@
  You are a Claude agent, built on Anthropic's Claude Agent SDK.
 
  === system[2] (cache marker: {"type":"ephemeral"}) ===
@@ -192,6 +193,7 @@ Lines added: 82. Lines removed: 5. Size change: +10,938 characters.
 +CronList
 +EnterWorktree
 +ExitWorktree
++Monitor
 +NotebookEdit
 +SendMessage
 +TaskStop

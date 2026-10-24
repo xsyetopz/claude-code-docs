@@ -1,6 +1,6 @@
 ---
 title: Betas
-description: Every anthropic-beta value in Claude Code 2.1.309, when it is sent, and how the list is built and turned off.
+description: Every anthropic-beta value in Claude Code 2.1.310, when it is sent, and how the list is built and turned off.
 sidebar_position: 3
 ---
 
@@ -59,7 +59,7 @@ The Registry Name column is the internal name of the value in the program.
 | `web-search-2025-03-05` | <Undocumented /> | `web_search` | On Vertex for models with web search there, and on Foundry. |
 | `advanced-tool-use-2025-11-20` | <Undocumented /> | `tool_search` | With tool search, as a second header value. |
 | `tool-search-tool-2025-10-19` | <Undocumented /> | `tool_search` | With tool search. On Bedrock it goes in the body instead. |
-| `effort-2025-11-24` | <Undocumented /> | `effort` | The program lists it, and no source states when it is sent. |
+| `effort-2025-11-24` | <Undocumented /> | `effort` | The program lists it, and no source states when it is sent. Since `2.1.310`, when the server refuses the effort setting, Claude Code sends the request again without `output_config.effort` and this beta, and leaves both out for that model until the process ends ([v2.1.310 release](https://github.com/anthropics/claude-code/releases/tag/v2.1.310); the program). |
 | `task-budgets-2026-03-13` | <Undocumented /> | `task_budgets` | The program lists it, and no source states when it is sent. |
 | `prompt-caching-scope-2026-01-05` | <Undocumented /> | `prompt_caching_scope` | On the Anthropic API and Anthropic-run clouds, and when MCP tools are in the tool list. Since `2.1.307` it is not sent behind a custom `ANTHROPIC_BASE_URL` gateway or on Foundry ([release notes](https://github.com/anthropics/claude-code/releases/tag/v2.1.307)). |
 | `prompt-caching-evict-2026-05-12` | <Undocumented /> | `prompt_caching_evict` | When a message has the `evict_on_complete` cache control. |

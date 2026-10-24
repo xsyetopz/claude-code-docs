@@ -43,7 +43,7 @@ Source: [Tools Reference](https://code.claude.com/docs/en/tools-reference) for t
 | `SuggestConnectors` | <Undocumented /> <Gated note="hidden server-side flag" /> | Resolves MCP connector payloads by `directoryUuid`. | `uuids` (1 to 32 strings). | ❌ | ❌ | Runtime check |
 | `ListConnectors` | <Undocumented /> <Gated note="hidden server-side flag" /> | Lists installed MCP connectors. | `keywords` (optional filter). | ❌ | ❌ | ✅ |
 | `SendUserFile` | <Documented /> <Gated note="hidden server-side flag" /> | Delivers files to the user. | `files` (string array), `caption`, `status` (`normal` or `proactive`), `display` (`render` or `attach`). | ❌ | ❌ | Runtime check |
-| `propose_skills` | <Undocumented /> <Gated note="CLAUDE_CODE_SKILL_PROPOSALS or a remote entry point" /> | Proposes skills from recurring procedures. | `proposals`: an array of objects with `name`, `kind` (`new` or `improvement`), `target`, `description`, `evidence`, `skillMd`. | ❌ | ❌ | ❌ |
+| `propose_skills` | <Undocumented /> <Gated note="CLAUDE_CODE_SKILL_PROPOSALS or a remote entry point" /> | Proposes skills from recurring procedures. It needs a remote environment (`CLAUDE_CODE_REMOTE_ENVIRONMENT_TYPE` set). Since `2.1.310`, a host launch with no disk also works when both `CLAUDE_CODE_SKILL_PROPOSALS` and `CLAUDE_CODE_SYNC_SKILLS` are set (the program). | `proposals`: an array of objects with `name`, `kind` (`new` or `improvement`), `target`, `description`, `evidence`, `skillMd`. | ❌ | ❌ | ❌ |
 
 ## Plugin, Skill, and Browser Tools
 
@@ -90,7 +90,7 @@ The inventory file does not list these tools, because their definitions do not u
 
 ## Example
 
-Turn on skill proposals for one shell session.
+Turn on skill proposals for one session. The tool also needs a remote environment (see the `propose_skills` row), so in a local terminal this line alone does not turn it on.
 
 ```bash title="Enable propose_skills"
 CLAUDE_CODE_SKILL_PROPOSALS=1 claude

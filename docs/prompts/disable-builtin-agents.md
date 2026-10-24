@@ -15,9 +15,9 @@ sidebar_position: 43
 | `system[2]` | 5,627 |
 | `messages[0].content[0]` | 592 |
 | `messages[0].content[1]` | 16 |
-| `messages[1].content[0]` | 7,212 |
+| `messages[1].content[0]` | 7,220 |
 | System blocks only | 5,767 |
-| Everything shown here | 13,877 |
+| Everything shown here | 13,885 |
 | Tools sent | 12 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -32,7 +32,7 @@ The text below is every part of the request that Claude Code builds before your 
 
 ````text
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.309.<build>; cc_entrypoint=sdk-cli;
+x-anthropic-billing-header: cc_version=2.1.310.<build>; cc_entrypoint=sdk-cli;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -124,6 +124,7 @@ CronDelete
 CronList
 EnterWorktree
 ExitWorktree
+Monitor
 NotebookEdit
 SendMessage
 TaskStop
@@ -162,7 +163,7 @@ Lines added: 0. Lines removed: 9. Size change: -1,638 characters.
 ```diff
 --- default-lean
 +++ disable-builtin-agents
-@@ -97,15 +97,6 @@
+@@ -98,15 +98,6 @@
  WebFetch
  WebSearch
 

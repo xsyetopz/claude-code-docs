@@ -246,7 +246,7 @@ A `$.ui.blit` argument swapping one of the caller's mounted keyed Images to its 
 
 ### `ImageProps`
 
-The props of `Image`, the terminal surface's picture leaf: pixels over a box of cells where the terminal can (kitty, Ghostty), the `alt` elsewhere. Since `2.1.305` it also draws in iTerm2 3.5 and later with fullscreen rendering. The program detects it from an XTVERSION reply that names iTerm2 3.5 or later; otherwise it shows the `alt` text. Object with the fields `key?`, `source`, `columns`, `rows`, `alt`. A leaf with no children, `hover`, or `onPress`. A new `source` replaces the picture in place.
+The props of `Image`, the terminal surface's picture leaf: pixels over a box of cells where the terminal can (kitty, Ghostty), the `alt` elsewhere. Since `2.1.305` it also draws in iTerm2 3.5 and later with fullscreen rendering. The program detects it from an XTVERSION reply that names iTerm2 3.5 or later; otherwise it shows the `alt` text. Since `2.1.310` it also draws inside tmux, for a bytes `source` only, when tmux's `allow-passthrough` and `focus-events` are on. Object with the fields `key?`, `source`, `columns`, `rows`, `alt`. A leaf with no children, `hover`, or `onPress`. A new `source` replaces the picture in place.
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
@@ -629,6 +629,7 @@ What `$.ui.blit` resolves to and what a `ui.blit` hook's `{ value }` holds: `{}`
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
 | `deny` | <Documented /> | Absent when the cells or source were taken, else why not. | Type: `string`. Optional. Says why nothing was drawn: not mounted, wrong size, bad cells or source. With no surface `no-surface` heads it. |
+| `fix` | <Documented /> | With `deny`, a stable code to key on instead of the words of `deny`. | Type: `'tmux-passthrough'`. Optional. New in `2.1.310`. `tmux-passthrough`: tmux 3.3 or later holds back images that the terminal outside it can draw, because `allow-passthrough` or `focus-events` is off. Both must be on. Absent for every other cause. |
 
 ### `UiCopyArgs`
 

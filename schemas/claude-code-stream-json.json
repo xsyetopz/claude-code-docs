@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-stream-json.json",
-  "title": "Claude Code stream-json messages (Claude Code 2.1.309)",
-  "$comment": "For each message type the CLI writes (<type>[_<subtype>]Output) and reads (<type>Input) in stream-json mode. Generated from Claude Code 2.1.309 by calling the zod v4 toJSONSchema embedded in the binary on its own validator (method A, runtime export). Anchor: the SDK schema module, unions described as \"Everything the CLI writes to its output stream\" and \"Everything a client may write to the CLI's input stream\". Do not edit by hand: run \"bun run schemas\".",
+  "title": "Claude Code stream-json messages (Claude Code 2.1.310)",
+  "$comment": "For each message type the CLI writes (<type>[_<subtype>]Output) and reads (<type>Input) in stream-json mode. Generated from Claude Code 2.1.310 by calling the zod v4 toJSONSchema embedded in the binary on its own validator (method A, runtime export). Anchor: the SDK schema module, unions described as \"Everything the CLI writes to its output stream\" and \"Everything a client may write to the CLI's input stream\". Do not edit by hand: run \"bun run schemas\".",
   "$defs": {
     "active_goalOutput": {
       "type": "object",
@@ -1860,6 +1860,13 @@
                   "type": "integer",
                   "minimum": -9007199254740991,
                   "maximum": 9007199254740991
+                },
+                "status": {
+                  "type": "string",
+                  "enum": ["allowed", "allowed_warning", "rejected"]
+                },
+                "surpassedThreshold": {
+                  "type": "number"
                 }
               },
               "required": ["utilization", "resetsAt"]
@@ -1874,6 +1881,13 @@
                   "type": "integer",
                   "minimum": -9007199254740991,
                   "maximum": 9007199254740991
+                },
+                "status": {
+                  "type": "string",
+                  "enum": ["allowed", "allowed_warning", "rejected"]
+                },
+                "surpassedThreshold": {
+                  "type": "number"
                 }
               },
               "required": ["utilization", "resetsAt"]
@@ -1888,12 +1902,19 @@
                   "type": "integer",
                   "minimum": -9007199254740991,
                   "maximum": 9007199254740991
+                },
+                "status": {
+                  "type": "string",
+                  "enum": ["allowed", "allowed_warning", "rejected"]
+                },
+                "surpassedThreshold": {
+                  "type": "number"
                 }
               },
               "required": ["utilization", "resetsAt"]
             }
           },
-          "description": "@internal Per-window usage for the session (5-hour), weekly (7-day), and overage-included weekly (per-model bucket; present only for accounts whose responses carry that window) subscription rate-limit windows, as read from the anthropic-ratelimit-unified-* response headers. utilization is the fraction of the window used (usually 0-1, same scale as the top-level utilization field; values above 1 occur when usage legitimately runs past a window's cap, e.g. lower-priority episodes past the 5-hour limit); resetsAt is unix epoch seconds. Unlike the top-level status/utilization fields, which describe the currently limiting window, both windows are tracked on every observation, and events are emitted when a window's rounded percentage or reset time moves, not only on status transitions. Windows absent from the account state are absent here. Absent until the first response carrying these headers is observed, and always absent for API-key, Bedrock, and Vertex sessions, whose responses do not carry them."
+          "description": "@internal Per-window usage for the session (5-hour), weekly (7-day), and overage-included weekly (per-model bucket; present only for accounts whose responses carry that window) subscription rate-limit windows, as read from the anthropic-ratelimit-unified-* response headers. utilization is the fraction of the window used (usually 0-1, same scale as the top-level utilization field; values above 1 occur when usage legitimately runs past a window's cap, e.g. lower-priority episodes past the 5-hour limit); resetsAt is unix epoch seconds. status is the status the server sent for the window: allowed_warning once past a warning threshold, rejected at or past its limit. A rejected window alone does not mean requests are refused; the top-level status says whether they are. surpassedThreshold is the highest warning threshold passed, as a fraction of the limit (1 once rejected). Each is absent when the server sent none or a value this version cannot read. Unlike the top-level status/utilization fields, which describe the currently limiting window, every window is tracked on every observation, and events are emitted when a window's rounded percentage, reset time, status or threshold moves, not only on status transitions. Windows absent from the account state are absent here. Absent until the first response carrying these headers is observed, and always absent for API-key, Bedrock, and Vertex sessions, whose responses do not carry them."
         },
         "overageStatus": {
           "type": "string",
@@ -3382,7 +3403,7 @@
             "minimum": -9007199254740991,
             "maximum": 9007199254740991
           },
-          "description": "@internal How the time from frame_enqueued_wall_ms to turn_started_wall_ms was spent, in integer ms per step of the host's work through its message queue. Each step is where the host was at the time, which for part of the stretch may be an earlier message's turn. The steps: idle (the host was not working through its queue), earlier_turn (an earlier turn still running, including its work after its result), after_turn (the host's work after an earlier turn ended and before it took the next message: recording the outcome, writing the transcript and acknowledgements, and releasing the queue; also its handling of a crash), background_wait (waiting on background tasks before looking at the queue again), entry_joins (other waits when the host starts on its queue, before it may take a message), sdk_mcp_update (the claude -p host updating its SDK MCP servers when it starts on its queue), loop_top (reloading plugins that changed, at the start of each pass over the queue), session_start_wait (waiting for the plugins' first session.start hook, and taking the message off the queue), first_command (the claude -p host's waits for its plugin registry and a Projects mount before the first message it takes each time it starts on its queue), mcp_prewait (waiting for MCP servers still connecting, before that same first message), repo_wait (a claude-code-server session waiting for its repository before a turn), turn_joins (before every turn: starting the memory re-check, and waiting for a Projects mount and for SDK or newly added MCP servers), tool_pool (building the turn's tools), commit (marking the message taken and setting up its turn), after_arm (waiting for a cleared permission prompt's record to be written, and the host's other work once the turn is set up), turn_gate (work the host requires before every turn), turn_open (the host's turn-start hook and other turn setup), engine_setup (getting the engine for the turn; on the claude -p host's first turn, building its session), tool_reread (re-reading tools, MCP clients and settings for the turn), cwd (switching to the turn's working directory), and other (the rest: rounding, and the wall clock running ahead of the monotonic one). Values are rounded so that they add up: each is within 1 ms of its step's time, a step that comes out as 0 is absent, and other is always present. The values sum to turn_started_wall_ms minus frame_enqueued_wall_ms, except that they can exceed it, usually by 1 ms from rounding and by more if the wall clock stepped back. Present only when frame_received_wall_ms is, and absent from older producers."
+          "description": "@internal How the time from frame_enqueued_wall_ms to turn_started_wall_ms was spent, in integer ms per step of the host's work through its message queue. Each step is where the host was at the time, which for part of the stretch may be an earlier message's turn. The steps: idle (the host was not working through its queue), earlier_turn (an earlier turn still running, including its work after its result), after_turn (the host's work after an earlier turn ended and before it took the next message: recording the outcome, writing the transcript and acknowledgements, and releasing the queue; also its handling of a crash), background_wait (waiting on background tasks before looking at the queue again), entry_joins (other waits when the host starts on its queue, before it may take a message), sdk_mcp_update (the claude -p host updating its SDK MCP servers when it starts on its queue), loop_top (reloading plugins that changed, at the start of each pass over the queue), session_start_wait (waiting for the plugins' first session.start hook, and taking the message off the queue), first_command (the claude -p host's waits for its plugin registry and a Projects mount before the first message it takes each time it starts on its queue), mcp_prewait (waiting for MCP servers still connecting, before that same first message), repo_wait (a claude-code-server session waiting for its repository before a turn), turn_joins (before every turn: waiting for a Projects mount and for SDK or newly added MCP servers), tool_pool (building the turn's tools), commit (marking the message taken and setting up its turn), after_arm (waiting for a cleared permission prompt's record to be written, and the host's other work once the turn is set up), turn_gate (work the host requires before every turn), turn_open (the host's turn-start hook and other turn setup), engine_setup (getting the engine for the turn; on the claude -p host's first turn, building its session), tool_reread (re-reading tools, MCP clients and settings for the turn), cwd (switching to the turn's working directory), and other (the rest: rounding, and the wall clock running ahead of the monotonic one). Values are rounded so that they add up: each is within 1 ms of its step's time, a step that comes out as 0 is absent, and other is always present. The values sum to turn_started_wall_ms minus frame_enqueued_wall_ms, except that they can exceed it, usually by 1 ms from rounding and by more if the wall clock stepped back. Present only when frame_received_wall_ms is, and absent from older producers."
         },
         "turn_start_control_requests_ms": {
           "type": "integer",

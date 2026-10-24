@@ -1,7 +1,7 @@
 {
   "$schema": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-plugin-manifest.json",
   "name": "cc-inspect",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "MCP server that reads your Claude Code session transcripts (list_sessions, read_session, search_sessions, validate_session) and the code inside the installed Claude Code binary (list_installs, list_modules, search_binary, read_module, resolve_object, resolve_event, list_tools, list_surface). Local and read only.",
   "author": {
     "name": "xsyetopz"

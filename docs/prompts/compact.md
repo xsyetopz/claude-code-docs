@@ -15,11 +15,11 @@ The request that summarizes a conversation. Run `/compact` in a session with som
 | `system[2]` | 5,627 |
 | `messages[0].content[0]` | 592 |
 | `messages[0].content[1]` | 16 |
-| `messages[1].content[0]` | 8,850 |
+| `messages[1].content[0]` | 8,858 |
 | `messages[2].content[0]` | 2 |
 | `messages[3].content[0]` | 6,361 |
 | System blocks only | 5,767 |
-| Everything shown here | 21,975 |
+| Everything shown here | 21,983 |
 | Tools sent | 12 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -36,7 +36,7 @@ The text below is every part of the request that Claude Code builds before your 
 
 ````text
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.309.<build>; cc_entrypoint=sdk-cli;
+x-anthropic-billing-header: cc_version=2.1.310.<build>; cc_entrypoint=sdk-cli;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -128,6 +128,7 @@ CronDelete
 CronList
 EnterWorktree
 ExitWorktree
+Monitor
 NotebookEdit
 SendMessage
 TaskStop
@@ -286,7 +287,7 @@ Lines added: 111. Lines removed: 0. Size change: +6,460 characters.
 ```diff
 --- default-lean
 +++ compact
-@@ -127,3 +127,114 @@
+@@ -128,3 +128,114 @@
  <total_tokens>15000000 tokens left</total_tokens>
 
  Today's date is <date>.

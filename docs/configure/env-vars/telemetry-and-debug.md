@@ -192,4 +192,4 @@ It lists every field of this release, so build on the fields it names and look e
 - [Monitoring](https://code.claude.com/docs/en/monitoring-usage) (see the official docs)
 - [Undocumented Items](../../reference/undocumented.md): every item that only the program shows.
 
-Source: the program (variable names found in the `2.1.309` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
+Source: the program (variable names found in the `2.1.310` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.

@@ -16,9 +16,9 @@ Moves per-machine text from the system prompt into the first user message. Run `
 | `messages[0].content[0]` | 2,216 |
 | `messages[0].content[1]` | 592 |
 | `messages[0].content[2]` | 16 |
-| `messages[1].content[0]` | 8,850 |
+| `messages[1].content[0]` | 8,858 |
 | System blocks only | 3,400 |
-| Everything shown here | 15,410 |
+| Everything shown here | 15,418 |
 | Tools sent | 12 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -36,7 +36,7 @@ The text below is every part of the request that Claude Code builds before your 
 
 ````text
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.309.<build>; cc_entrypoint=sdk-cli;
+x-anthropic-billing-header: cc_version=2.1.310.<build>; cc_entrypoint=sdk-cli;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -129,6 +129,7 @@ CronDelete
 CronList
 EnterWorktree
 ExitWorktree
+Monitor
 NotebookEdit
 SendMessage
 TaskStop

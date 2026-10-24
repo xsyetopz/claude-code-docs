@@ -5,7 +5,7 @@ sidebar_position: 81
 generated: false
 ---
 
-This is the verbatim text that Claude Code 2.1.309 uses for the built-in `/workflow-authoring` skill.
+This is the verbatim text that Claude Code 2.1.310 uses for the built-in `/workflow-authoring` skill.
 
 ## Where It Comes From
 

@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-otel.json",
-  "title": "Claude Code OpenTelemetry metrics, spans, and events (Claude Code 2.1.309)",
-  "$comment": "For the OpenTelemetry data Claude Code emits. Each $defs entry is one metric, span, or event; the kind is in x-otel-kind and the properties are its attributes. Generated from Claude Code 2.1.309 by tools/schemas/code.ts. Anchors: \"Count of CLI sessions started\" (the meter setup that registers each metric with its description and unit) with the counter accessor functions and their .add(value, attributes) call sites; the span helpers (startSpan(\"claude_code.<name>\") with the attribute literal built just before it, and the wrapper that takes {spanType, attrs, contentAttrs}); the event emitter that sets \"event.name\", \"event.timestamp\", \"event.sequence\" and its call sites with the attribute literal; the base attribute builder behind \"OTEL_METRICS_INCLUDE_SESSION_ID\". No probe in captures/ records telemetry, so nothing is marked x-observed. Do not edit by hand. A field that is still x-unverified may carry x-observed-type: the JSON types that real payloads had there, from the fixtures in tools/schemas/observed/ (stub probes and local files, no value kept). It is a note, not a check.",
+  "title": "Claude Code OpenTelemetry metrics, spans, and events (Claude Code 2.1.310)",
+  "$comment": "For the OpenTelemetry data Claude Code emits. Each $defs entry is one metric, span, or event; the kind is in x-otel-kind and the properties are its attributes. Generated from Claude Code 2.1.310 by tools/schemas/code.ts. Anchors: \"Count of CLI sessions started\" (the meter setup that registers each metric with its description and unit) with the counter accessor functions and their .add(value, attributes) call sites; the span helpers (startSpan(\"claude_code.<name>\") with the attribute literal built just before it, and the wrapper that takes {spanType, attrs, contentAttrs}); the event emitter that sets \"event.name\", \"event.timestamp\", \"event.sequence\" and its call sites with the attribute literal; the base attribute builder behind \"OTEL_METRICS_INCLUDE_SESSION_ID\". No probe in captures/ records telemetry, so nothing is marked x-observed. Do not edit by hand. A field that is still x-unverified may carry x-observed-type: the JSON types that real payloads had there, from the fixtures in tools/schemas/observed/ (stub probes and local files, no value kept). It is a note, not a check.",
   "$defs": {
     "event:api_error": {
       "x-otel-kind": "event",
@@ -219,7 +219,7 @@
           "type": "number"
         },
         "duration_ms": {
-          "type": "number"
+          "x-unverified": true
         },
         "ttft_ms": {
           "type": "number"
@@ -533,19 +533,13 @@
         "appearance_id": {
           "type": "string"
         },
-        "response": {
-          "type": "string"
-        },
         "survey_type": {
           "type": "string"
         },
         "enabled_via_override": {
           "type": "boolean"
         },
-        "event_origin": {
-          "const": "sdk_host"
-        },
-        "event_origin_server": {
+        "response": {
           "type": "string"
         },
         "trigger_type": {
@@ -555,6 +549,12 @@
           "type": "string"
         },
         "plugin.name": {
+          "type": "string"
+        },
+        "event_origin": {
+          "const": "sdk_host"
+        },
+        "event_origin_server": {
           "type": "string"
         }
       }
@@ -1515,6 +1515,9 @@
         },
         "permission_mode": {
           "type": "string"
+        },
+        "request_id": {
+          "x-unverified": true
         }
       }
     },
@@ -1588,6 +1591,9 @@
         },
         "vcs.ref.head.type": {
           "const": "branch"
+        },
+        "request_id": {
+          "x-unverified": true
         },
         "error_type": {
           "type": "string"

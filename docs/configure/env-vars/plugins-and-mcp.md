@@ -36,6 +36,7 @@ The table is sorted by name. See [Environment Variables](index.md#how-to-read-th
 | `CLAUDE_CODE_CCR_EARLY_SKILLS_SYNC` | <Undocumented /> | Starts the first skills sync early in a cloud session. | On or off. Applies only to non-interactive sessions | Cloud sessions |
 | `CLAUDE_CODE_CCR_FOLD_FIRST_TURN_RESCAN` | <Undocumented /> | Folds the command rescan into the first turn when plugin startup is still pending. Else it refreshes commands right after the skills sync. | On or off | Cloud sessions |
 | `CLAUDE_CODE_CCR_SURFACE` | <Undocumented /> | Set to `tag` to add the `claude-tag-plugins` default marketplace to plugin download and plugin search requests. | Text. Only the value `tag` has an effect | Cloud sessions |
+| `CLAUDE_CODE_DESKTOP_CONNECTOR_NAMES` | <Undocumented /> | Gives the names of the desktop connectors to Claude Code, then Claude Code removes it from the environment. New in `2.1.310`. | Text | Desktop app |
 | `CLAUDE_CODE_DESKTOP_SKILLS_PLUGIN_DIR` | <Undocumented /> | Gives the desktop skills plugin folder to Claude Code, then Claude Code removes it from the environment. A Probes run saw no effect. | Text | Desktop app |
 | `CLAUDE_CODE_DISABLE_BUNDLED_SKILLS` | <Documented /> | Removes bundled skills and workflows. Same effect as the `disableBundledSkills` setting. | On or off. Messages name both the setting and the variable | All sessions. Project `env` can set it before trust |
 | `CLAUDE_CODE_DISABLE_CFC_PROMPT` | <Documented /> | Keeps the Chrome tools but empties the Chrome system prompt section and disables the `/claude-in-chrome` skill. | On or off | Claude in Chrome |
@@ -142,4 +143,4 @@ Some variables are passed to MCP server and hook processes. Claude Code can stri
 - [Hooks](../../extend/hooks/index.md)
 - [Undocumented Items](../../reference/undocumented.md): every item that only the program shows.
 
-Source: the program (variable names found in the `2.1.309` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
+Source: the program (variable names found in the `2.1.310` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.

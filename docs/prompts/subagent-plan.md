@@ -15,9 +15,9 @@ The prompt that a `Plan` subagent gets. The main agent calls the `Agent` tool wi
 | `system[2]` | 3,570 |
 | `messages[0].content[0]` | 592 |
 | `messages[0].content[1]` | 36 |
-| `messages[1].content[0]` | 7,117 |
+| `messages[1].content[0]` | 7,125 |
 | System blocks only | 3,731 |
-| Everything shown here | 11,766 |
+| Everything shown here | 11,774 |
 | Tools sent | 5 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -33,7 +33,7 @@ The text below is every part of the request that Claude Code builds before your 
 
 ```text
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.309.<build>; cc_entrypoint=sdk-cli; cc_is_subagent=true;
+x-anthropic-billing-header: cc_version=2.1.310.<build>; cc_entrypoint=sdk-cli; cc_is_subagent=true;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -117,6 +117,7 @@ PROBE-SUBAGENT-TASK Reply with 'OK'.
 The following deferred tools are now available via ToolSearch. Their schemas are NOT loaded — calling them directly will fail with InputValidationError. Use ToolSearch with query "select:<name>[,<name>...]" to load tool schemas before calling them:
 EnterWorktree
 ExitWorktree
+Monitor
 SendMessage
 TaskStop
 WebFetch
@@ -158,15 +159,15 @@ Today's date is <date>.
 
 The diff below starts from [Default, Lean Prompt](./default-lean.md). Lines that start with `-` are only in the baseline. Lines that start with `+` are only here.
 
-Lines added: 55. Lines removed: 62. Size change: -3,749 characters.
+Lines added: 56. Lines removed: 63. Size change: -3,749 characters.
 
 ````diff
 --- default-lean
 +++ subagent-plan
 @@ -1,64 +1,70 @@
  === system[0] (no cache marker) ===
--x-anthropic-billing-header: cc_version=2.1.309.<build>; cc_entrypoint=sdk-cli;
-+x-anthropic-billing-header: cc_version=2.1.309.<build>; cc_entrypoint=sdk-cli; cc_is_subagent=true;
+-x-anthropic-billing-header: cc_version=2.1.310.<build>; cc_entrypoint=sdk-cli;
++x-anthropic-billing-header: cc_version=2.1.310.<build>; cc_entrypoint=sdk-cli; cc_is_subagent=true;
 
  === system[1] (cache marker: {"type":"ephemeral"}) ===
  You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -274,7 +275,7 @@ Lines added: 55. Lines removed: 62. Size change: -3,749 characters.
  <total_tokens>15000000 tokens left</total_tokens>
 
  === messages[0].content[0] (role: user) ===
-@@ -71,9 +77,17 @@
+@@ -71,9 +77,18 @@
  </system-reminder>
 
  === messages[0].content[1] (role: user) ===
@@ -285,6 +286,7 @@ Lines added: 55. Lines removed: 62. Size change: -3,749 characters.
 +The following deferred tools are now available via ToolSearch. Their schemas are NOT loaded — calling them directly will fail with InputValidationError. Use ToolSearch with query "select:<name>[,<name>...]" to load tool schemas before calling them:
 +EnterWorktree
 +ExitWorktree
++Monitor
 +SendMessage
 +TaskStop
 +WebFetch
@@ -293,7 +295,7 @@ Lines added: 55. Lines removed: 62. Size change: -3,749 characters.
  # Environment
  You have been invoked in the following environment:
   - Primary working directory: <cwd>
-@@ -85,27 +99,6 @@
+@@ -85,28 +100,6 @@
 
  You are powered by the model named Opus 5.5. The exact model ID is claude-opus-5-5. Assistant knowledge cutoff is June 2026.
 
@@ -303,6 +305,7 @@ Lines added: 55. Lines removed: 62. Size change: -3,749 characters.
 -CronList
 -EnterWorktree
 -ExitWorktree
+-Monitor
 -NotebookEdit
 -SendMessage
 -TaskStop
@@ -321,7 +324,7 @@ Lines added: 55. Lines removed: 62. Size change: -3,749 characters.
  The following skills are available for use with the Skill tool:
 
  - dataviz: Use this skill whenever you are about to create ANY chart, graph, plot, dashboard, or data visualization, in ANY output medium — an HTML or React artifact, inline SVG, plotting code in any library (matplotlib, plotly, d3, Recharts, …), an image/PNG you will render and upload, or a chart shared into Slack. Read it BEFORE writing the first line of chart code, choosing chart colors, building a stat tile / meter / KPI row, or laying out a dashboard. When the destination is a first-party document connector (host-designated, never self-described) that renders live charts, hand it the rows (inline, or as an uploaded data file the chart cites) rather than a rendered PNG/SVG — a picture of a chart loses hover, data inspection and per-value comments. Produces visualizations that read as one system — elegant, accessible, consistent in light and dark — using a brand-neutral placeholder palette you swap for your own. Teaches a design-system-agnostic method: a form heuristic, a color formula with a runnable validator, mark specs, and interaction rules. A validated default palette is documented in `references/palette.md` — swap that file's values for your brand's. Triggers on: "chart", "graph", "plot", "data viz", "visualization", "dashboard", "analytics", "visualize data", "categorical colors", "sequential / diverging palette", "stat tile", "sparkline", "heatmap", "legend", "axis", "tooltip", "chart colors", "color by series".
-@@ -124,6 +117,4 @@
+@@ -125,6 +118,4 @@
  - init: Initialize a new CLAUDE.md file with codebase documentation
  - security-review: Complete a security review of the pending changes on the current branch
 

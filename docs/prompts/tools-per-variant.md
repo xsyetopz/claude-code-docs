@@ -13,7 +13,7 @@ The default list has 12 tools on Opus 5.5. The columns show the length of the de
 | Tool | Description | Schema |
 | --- | --- | --- |
 | [`Agent`](./tools.md#agent) | 3,227 | 1,942 |
-| [`Bash`](./tools.md#bash) | 1,688 | 1,720 |
+| [`Bash`](./tools.md#bash) | 1,774 | 1,720 |
 | [`Edit`](./tools.md#edit) | 360 | 552 |
 | [`ListAgents`](./tools.md#listagents) | 777 | 316 |
 | [`Read`](./tools.md#read) | 790 | 1,071 |
@@ -58,7 +58,7 @@ Each row compares one variant to the default list. Variants with the same tools 
 | [Git Instructions Turned Off](./git-instructions-off.md) | 12 | changes the text or schema of `Bash`. |
 | [Subagent with --system-prompt and --append-system-prompt](./subagent-with-prompt-flags.md) | 5 | removes `Agent`, `Edit`, `ListAgents`, `ReportFindings`, `ScheduleWakeup`, `Workflow`, `Write`. |
 | [Prompt Hook on Stop](./hook-prompt-stop.md) | 0 | removes `Agent`, `Bash`, `Edit`, `ListAgents`, `Read`, `ReportFindings`, `ScheduleWakeup`, `Skill`, `ToolSearch`, `Workflow`, `DeferredToolPlaceholder`, `Write`. |
-| [All Tools Sent Upfront](./tools-upfront.md) | 20 | adds `CronCreate`, `CronDelete`, `CronList`, `EnterWorktree`, `ExitWorktree`, `NotebookEdit`, `SendMessage`, `TaskStop`, `WebFetch`, `WebSearch`. removes `ToolSearch`, `DeferredToolPlaceholder`. |
+| [All Tools Sent Upfront](./tools-upfront.md) | 21 | adds `CronCreate`, `CronDelete`, `CronList`, `EnterWorktree`, `ExitWorktree`, `Monitor`, `NotebookEdit`, `SendMessage`, `TaskStop`, `WebFetch`, `WebSearch`. removes `ToolSearch`, `DeferredToolPlaceholder`. |
 
 ## Same Tools as the Default
 

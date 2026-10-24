@@ -1,5 +1,5 @@
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.309.<build>; cc_entrypoint=sdk-cli; cc_is_subagent=true;
+x-anthropic-billing-header: cc_version=2.1.310.<build>; cc_entrypoint=sdk-cli; cc_is_subagent=true;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are Claude Code, Anthropic's official CLI for Claude, running within the Claude Agent SDK.
@@ -66,6 +66,7 @@ PROBE-SUBAGENT-TASK Reply with 'OK'.
 The following deferred tools are now available via ToolSearch. Their schemas are NOT loaded — calling them directly will fail with InputValidationError. Use ToolSearch with query "select:<name>[,<name>...]" to load tool schemas before calling them:
 EnterWorktree
 ExitWorktree
+Monitor
 SendMessage
 TaskStop
 WebFetch

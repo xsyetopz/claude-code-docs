@@ -15,9 +15,9 @@ The long prompt, forced on a model that would get the lean one. Set `CLAUDE_CODE
 | `system[2]` | 26,804 |
 | `messages[0].content[0]` | 592 |
 | `messages[0].content[1]` | 16 |
-| `messages[1].content[0]` | 9,057 |
+| `messages[1].content[0]` | 9,065 |
 | System blocks only | 26,944 |
-| Everything shown here | 36,899 |
+| Everything shown here | 36,907 |
 | Tools sent | 12 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -34,7 +34,7 @@ The text below is every part of the request that Claude Code builds before your 
 
 ````text
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.309.<build>; cc_entrypoint=sdk-cli;
+x-anthropic-billing-header: cc_version=2.1.310.<build>; cc_entrypoint=sdk-cli;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -287,6 +287,7 @@ CronDelete
 CronList
 EnterWorktree
 ExitWorktree
+Monitor
 NotebookEdit
 SendMessage
 TaskStop
@@ -564,7 +565,7 @@ Lines added: 181. Lines removed: 20. Size change: +21,384 characters.
  # Environment
   - The most recent Claude models are the Claude 5 family. Model IDs — Fable 5.1: 'claude-fable-5-1', Opus 5.5: 'claude-opus-5-5', Sonnet 5.5: 'claude-sonnet-5-5', Haiku 5.5: 'claude-haiku-5-5'. When building AI applications, default to the latest and most capable Claude models.
   - Claude Code is available as a CLI in the terminal, desktop app (Mac/Windows), web app (claude.ai/code), and IDE extensions (VS Code, JetBrains).
-@@ -99,7 +260,7 @@
+@@ -100,7 +261,7 @@
 
  Available agent types for the Agent tool:
  - claude: Catch-all for any task that doesn't fit a more specific agent. FleetView's default when no agent name is typed. (Tools: *)

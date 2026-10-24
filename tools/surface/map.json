@@ -255,6 +255,10 @@
     "route": "/extend/plugins/cli",
     "anchor": "errors"
   },
+  "error:${…} and this call's permission check did not ask for it. Call read_comments again for this artifact so the user can be asked.": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
   "error:${…} became a symlink while being created; refusing it (an empty file may have been created at its target, ${…})": {
     "route": "/extend/plugins/cli",
     "anchor": "errors"
@@ -489,10 +493,6 @@
   },
   "error:${…} vanished from ${…}/ while being read; try again": {
     "route": "/extend/plugins/cli",
-    "anchor": "errors"
-  },
-  "error:${…} was not run: its ${…} could not be read. Retrying won't help.": {
-    "route": "/reference/tools/agents-and-tasks",
     "anchor": "errors"
   },
   "error:${…} was not written by this run (it served no mocks) — nothing there is to be adopted": {
@@ -1175,7 +1175,7 @@
     "route": "/extend/mod-api",
     "anchor": "errors"
   },
-  "error:${…}: returned a drawing that holds a Proxy; an element, its props and its hover are plain objects and arrays": {
+  "error:${…}: returned a drawing that holds a Proxy or a vm context; an element, its props and its hover are plain objects and arrays": {
     "route": "/extend/mod-api",
     "anchor": "errors"
   },
@@ -3503,6 +3503,14 @@
     "route": "/reference/tools/agents-and-tasks",
     "anchor": "errors"
   },
+  "error:Write not done; nothing in the project was changed. B*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:Write refused; nothing in the project was changed. A*": {
+    "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
   "error:Write refused; nothing in the project was changed. Th*": {
     "route": "/reference/tools/gated-and-other",
     "anchor": "errors"
@@ -5769,6 +5777,10 @@
   },
   "error:┌─────────────────────────────────────┐ │ Claude Code Gateway │ └─────────────────────────────────────┘": {
     "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:⚠ ${…} ${…} `claude doctor` lists every entry.": {
+    "route": "/configure/permissions/sandbox",
     "anchor": "errors"
   },
   "error:⚠ Sandbox disabled: ${…} Commands will run WITHOUT sandboxing. Network and filesystem restrictions will NOT be enforced.": {

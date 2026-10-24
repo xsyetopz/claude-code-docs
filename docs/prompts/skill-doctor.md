@@ -5,7 +5,7 @@ sidebar_position: 70
 generated: false
 ---
 
-This is the verbatim text that Claude Code 2.1.309 uses for the built-in `/doctor` skill.
+This is the verbatim text that Claude Code 2.1.310 uses for the built-in `/doctor` skill.
 
 ## Where It Comes From
 

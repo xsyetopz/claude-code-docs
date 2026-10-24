@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-The site documents Claude Code `2.1.309`, the only release it tracks. The version of the site itself is set in `package.json`, and the tracked Claude Code version is set in `src/version.ts`.
+The site documents Claude Code `2.1.310`, the only release it tracks. The version of the site itself is set in `package.json`, and the tracked Claude Code version is set in `src/version.ts`.
 
 ## [Unreleased]
 
@@ -22,7 +22,7 @@ The site documents Claude Code `2.1.309`, the only release it tracks. The versio
 - Prompt pages that show what you can override and its default text: Tool Descriptions (every tool's description and input schema), Built-In Agents, and Built-In Skills.
 - Status labels (Managed Only, Experimental, Deprecated, Caution) in place of emoji markers, and screen-reader text for ✅ and ❌.
 - A `check:examples` gate that runs Biome on code examples, and `check-docs` rules for code spans in headings and admonition titles.
-- An unofficial docs site for Claude Code `2.1.309`, with pages for start, configure, extend, prompts, reference, and how it works.
+- An unofficial docs site for Claude Code `2.1.310`, with pages for start, configure, extend, prompts, reference, and how it works.
 - Provenance badges (Documented, Undocumented, Differs, and Gated) that mark each item.
 - A style guide for contributors in `docs/contributing/`.
 - Capture and check tools in `tools/`, and a GitHub Pages deploy workflow.
@@ -40,7 +40,7 @@ The site documents Claude Code `2.1.309`, the only release it tracks. The versio
 - Diagrams render after the fonts load, scroll sideways on small screens instead of shrinking, and keep lines out of labels.
 - Merged duplicated rows into one home per item, with links from other pages.
 - Code examples follow `biome.json`, including arrow functions.
-- Updated to Claude Code `2.1.309`.
+- Updated to Claude Code `2.1.310`: `Monitor` and plugin monitors on every provider, the long `sleep` block, the effort retry, the sandbox warnings, the Mod `Image` in tmux, and three new environment variables. The `2.1.309` section of What Changed moved to the Release Archive.
 - `release:diff` compares the surface snapshots of both versions for all 17 kinds, in place of `strings` heuristics, and names the target page of each added item.
 - What Changed lists only the current release. Earlier sections moved to a new Release Archive page.
 - The schema generator follows a value through its variables, calls, and returns to find its type, so fewer generated fields carry `x-unverified`.

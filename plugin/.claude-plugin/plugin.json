@@ -1,7 +1,7 @@
 {
   "$schema": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-plugin-manifest.json",
   "name": "cc-docs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Claude Code Docs for version 2.1.309 as an MCP server (search_docs, read_page, list_pages, get_schema) and a lightweight skill. The first three also read the Claude API and platform docs (source \"platform\"). Fetches live with a disk cache and falls back to it offline.",
   "author": {
     "name": "xsyetopz"

@@ -15,9 +15,9 @@ The prompt that Haiku 5.5 gets with no flags. Run `claude --model claude-haiku-5
 | `system[2]` | 8,419 |
 | `messages[0].content[0]` | 593 |
 | `messages[0].content[1]` | 16 |
-| `messages[1].content[0]` | 8,852 |
+| `messages[1].content[0]` | 8,860 |
 | System blocks only | 8,559 |
-| Everything shown here | 18,310 |
+| Everything shown here | 18,318 |
 | Tools sent | 12 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -33,7 +33,7 @@ The text below is every part of the request that Claude Code builds before your 
 
 ````text
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.309.<build>; cc_entrypoint=sdk-cli;
+x-anthropic-billing-header: cc_version=2.1.310.<build>; cc_entrypoint=sdk-cli;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -135,6 +135,7 @@ CronDelete
 CronList
 EnterWorktree
 ExitWorktree
+Monitor
 NotebookEdit
 SendMessage
 TaskStop

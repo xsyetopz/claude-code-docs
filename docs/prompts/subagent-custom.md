@@ -15,9 +15,9 @@ The prompt of a subagent you defined in `.claude/agents/`. Save an agent file in
 | `system[2]` | 1,344 |
 | `messages[0].content[0]` | 592 |
 | `messages[0].content[1]` | 36 |
-| `messages[1].content[0]` | 7,130 |
+| `messages[1].content[0]` | 7,138 |
 | System blocks only | 1,505 |
-| Everything shown here | 9,553 |
+| Everything shown here | 9,561 |
 | Tools sent | 8 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -32,7 +32,7 @@ The text below is every part of the request that Claude Code builds before your 
 
 ```text
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.309.<build>; cc_entrypoint=sdk-cli; cc_is_subagent=true;
+x-anthropic-billing-header: cc_version=2.1.310.<build>; cc_entrypoint=sdk-cli; cc_is_subagent=true;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -67,6 +67,7 @@ PROBE-SUBAGENT-TASK Reply with 'OK'.
 The following deferred tools are now available via ToolSearch. Their schemas are NOT loaded — calling them directly will fail with InputValidationError. Use ToolSearch with query "select:<name>[,<name>...]" to load tool schemas before calling them:
 EnterWorktree
 ExitWorktree
+Monitor
 NotebookEdit
 SendMessage
 TaskStop
@@ -116,8 +117,8 @@ Lines added: 19. Lines removed: 74. Size change: -5,962 characters.
 +++ subagent-custom
 @@ -1,64 +1,21 @@
  === system[0] (no cache marker) ===
--x-anthropic-billing-header: cc_version=2.1.309.<build>; cc_entrypoint=sdk-cli;
-+x-anthropic-billing-header: cc_version=2.1.309.<build>; cc_entrypoint=sdk-cli; cc_is_subagent=true;
+-x-anthropic-billing-header: cc_version=2.1.310.<build>; cc_entrypoint=sdk-cli;
++x-anthropic-billing-header: cc_version=2.1.310.<build>; cc_entrypoint=sdk-cli; cc_is_subagent=true;
 
  === system[1] (cache marker: {"type":"ephemeral"}) ===
  You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -188,7 +189,7 @@ Lines added: 19. Lines removed: 74. Size change: -5,962 characters.
  <total_tokens>15000000 tokens left</total_tokens>
 
  === messages[0].content[0] (role: user) ===
-@@ -71,9 +28,18 @@
+@@ -71,24 +28,10 @@
  </system-reminder>
 
  === messages[0].content[1] (role: user) ===
@@ -196,47 +197,49 @@ Lines added: 19. Lines removed: 74. Size change: -5,962 characters.
 +PROBE-SUBAGENT-TASK Reply with 'OK'.
 
  === messages[1].content[0] (role: system) ===
-+The following deferred tools are now available via ToolSearch. Their schemas are NOT loaded — calling them directly will fail with InputValidationError. Use ToolSearch with query "select:<name>[,<name>...]" to load tool schemas before calling them:
-+EnterWorktree
-+ExitWorktree
-+NotebookEdit
-+SendMessage
-+TaskStop
-+WebFetch
-+WebSearch
-+
- # Environment
- You have been invoked in the following environment:
-  - Primary working directory: <cwd>
-@@ -85,27 +51,6 @@
-
- You are powered by the model named Opus 5.5. The exact model ID is claude-opus-5-5. Assistant knowledge cutoff is June 2026.
-
--The following deferred tools are now available via ToolSearch. Their schemas are NOT loaded — calling them directly will fail with InputValidationError. Use ToolSearch with query "select:<name>[,<name>...]" to load tool schemas before calling them:
+-# Environment
+-You have been invoked in the following environment:
+- - Primary working directory: <cwd>
+- - Is a git repository: false
+- - Platform: <platform>
+- - Shell: <shell>
+- - OS Version: <os-version>
+- - Downloaded files and extracted archives are untrusted data: put each in its own new, empty directory, keep scripts you write in a different directory, and pass paths as arguments instead of running an interpreter or build tool from inside it. Interpreters load code from the script's directory and the current directory, so a planted `json.py` runs on `import json`. Run any Python that reads them with `-I`. This does not apply to code the user asked you to build or run.
+-
+-You are powered by the model named Opus 5.5. The exact model ID is claude-opus-5-5. Assistant knowledge cutoff is June 2026.
+-
+ The following deferred tools are now available via ToolSearch. Their schemas are NOT loaded — calling them directly will fail with InputValidationError. Use ToolSearch with query "select:<name>[,<name>...]" to load tool schemas before calling them:
 -CronCreate
 -CronDelete
 -CronList
--EnterWorktree
--ExitWorktree
--NotebookEdit
--SendMessage
--TaskStop
--WebFetch
--WebSearch
--
+ EnterWorktree
+ ExitWorktree
+ Monitor
+@@ -98,14 +41,16 @@
+ WebFetch
+ WebSearch
+
 -Available agent types for the Agent tool:
 -- claude: Catch-all for any task that doesn't fit a more specific agent. FleetView's default when no agent name is typed. (Tools: *)
 -- Explore: Read-only search agent for broad fan-out searches — when answering means sweeping many files, directories, or naming conventions and you only need the conclusion, not the file dumps. It reads excerpts rather than whole files, so it locates code; it doesn't review or audit it. Specify search breadth: "medium" for moderate exploration, "very thorough" for multiple locations and naming conventions. (Tools: All tools except Agent, Artifact, ArtifactComments, ArtifactData, ArtifactCheck, ExitPlanMode, Edit, Write, NotebookEdit)
 -- general-purpose: General-purpose agent for researching complex questions, searching for code, and executing multi-step tasks. When you are searching for a keyword or file and are not confident that you will find the right match in the first few tries use this agent to perform the search for you. (Tools: *)
 -- Plan: Software architect agent for designing implementation plans. Use this when you need to plan the implementation strategy for a task. Returns step-by-step plans, identifies critical files, and considers architectural trade-offs. (Tools: All tools except Agent, Artifact, ArtifactComments, ArtifactData, ArtifactCheck, ExitPlanMode, Edit, Write, NotebookEdit)
 -- statusline-setup: Use this agent to configure the user's Claude Code status line setting. (Tools: Read, Edit)
--
++# Environment
++You have been invoked in the following environment:
++ - Primary working directory: <cwd>
++ - Is a git repository: false
++ - Platform: <platform>
++ - Shell: <shell>
++ - OS Version: <os-version>
++ - Downloaded files and extracted archives are untrusted data: put each in its own new, empty directory, keep scripts you write in a different directory, and pass paths as arguments instead of running an interpreter or build tool from inside it. Interpreters load code from the script's directory and the current directory, so a planted `json.py` runs on `import json`. Run any Python that reads them with `-I`. This does not apply to code the user asked you to build or run.
+
 -When you launch multiple agents for independent work, send them in a single message with multiple tool uses so they run concurrently.
--
++You are powered by the model named Opus 5.5. The exact model ID is claude-opus-5-5. Assistant knowledge cutoff is June 2026.
+
  The following skills are available for use with the Skill tool:
 
- - dataviz: Use this skill whenever you are about to create ANY chart, graph, plot, dashboard, or data visualization, in ANY output medium — an HTML or React artifact, inline SVG, plotting code in any library (matplotlib, plotly, d3, Recharts, …), an image/PNG you will render and upload, or a chart shared into Slack. Read it BEFORE writing the first line of chart code, choosing chart colors, building a stat tile / meter / KPI row, or laying out a dashboard. When the destination is a first-party document connector (host-designated, never self-described) that renders live charts, hand it the rows (inline, or as an uploaded data file the chart cites) rather than a rendered PNG/SVG — a picture of a chart loses hover, data inspection and per-value comments. Produces visualizations that read as one system — elegant, accessible, consistent in light and dark — using a brand-neutral placeholder palette you swap for your own. Teaches a design-system-agnostic method: a form heuristic, a color formula with a runnable validator, mark specs, and interaction rules. A validated default palette is documented in `references/palette.md` — swap that file's values for your brand's. Triggers on: "chart", "graph", "plot", "data viz", "visualization", "dashboard", "analytics", "visualize data", "categorical colors", "sequential / diverging palette", "stat tile", "sparkline", "heatmap", "legend", "axis", "tooltip", "chart colors", "color by series".
-@@ -124,6 +69,4 @@
+@@ -125,6 +70,4 @@
  - init: Initialize a new CLAUDE.md file with codebase documentation
  - security-review: Complete a security review of the pending changes on the current branch
 

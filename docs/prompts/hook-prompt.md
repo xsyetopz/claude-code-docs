@@ -31,7 +31,7 @@ The text below is every part of the request that Claude Code builds before your 
 
 ```text
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.309.<build>; cc_entrypoint=sdk-cli;
+x-anthropic-billing-header: cc_version=2.1.310.<build>; cc_entrypoint=sdk-cli;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -55,12 +55,12 @@ PROBE-HOOK-PROMPT: check this call. {"session_id":"<uuid-1>","transcript_path":"
 
 The diff below starts from [Default, Lean Prompt](./default-lean.md). Lines that start with `-` are only in the baseline. Lines that start with `+` are only here.
 
-Lines added: 7. Lines removed: 115. Size change: -14,037 characters.
+Lines added: 7. Lines removed: 116. Size change: -14,045 characters.
 
 ````diff
 --- default-lean
 +++ hook-prompt
-@@ -5,125 +5,15 @@
+@@ -5,126 +5,15 @@
  You are a Claude agent, built on Anthropic's Claude Agent SDK.
 
  === system[2] (cache marker: {"type":"ephemeral"}) ===
@@ -156,6 +156,7 @@ Lines added: 7. Lines removed: 115. Size change: -14,037 characters.
 -CronList
 -EnterWorktree
 -ExitWorktree
+-Monitor
 -NotebookEdit
 -SendMessage
 -TaskStop

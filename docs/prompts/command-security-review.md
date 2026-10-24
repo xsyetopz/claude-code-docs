@@ -16,9 +16,9 @@ The text that `/security-review` sends to the model. Type `/security-review` in 
 | `messages[0].content[0]` | 592 |
 | `messages[0].content[1]` | 97 |
 | `messages[0].content[2]` | 450 |
-| `messages[1].content[0]` | 8,799 |
+| `messages[1].content[0]` | 8,807 |
 | System blocks only | 5,767 |
-| Everything shown here | 16,040 |
+| Everything shown here | 16,048 |
 | Tools sent | 12 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -33,7 +33,7 @@ The text below is every part of the request that Claude Code builds before your 
 
 ````text
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.309.<build>; cc_entrypoint=sdk-cli;
+x-anthropic-billing-header: cc_version=2.1.310.<build>; cc_entrypoint=sdk-cli;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -133,6 +133,7 @@ CronDelete
 CronList
 EnterWorktree
 ExitWorktree
+Monitor
 NotebookEdit
 SendMessage
 TaskStop
@@ -196,7 +197,7 @@ Lines added: 9. Lines removed: 3. Size change: +525 characters.
  === messages[1].content[0] (role: system) ===
  # Environment
  You have been invoked in the following environment:
-@@ -124,6 +132,4 @@
+@@ -125,6 +133,4 @@
  - init: Initialize a new CLAUDE.md file with codebase documentation
  - security-review: Complete a security review of the pending changes on the current branch
 

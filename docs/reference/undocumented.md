@@ -18,7 +18,7 @@ Items that the docs name but describe wrongly are in [Behaves Differently From t
 | Group | Count |
 | --- | --- |
 | [Settings Keys](#settings-keys) | 25 |
-| [Environment Variables](#environment-variables) | 921 |
+| [Environment Variables](#environment-variables) | 924 |
 | [CLI Flags and Subcommands](#cli-flags-and-subcommands) | 52 |
 | [Permissions](#permissions) | 121 |
 | [Hooks](#hooks) | 15 |
@@ -34,7 +34,7 @@ Items that the docs name but describe wrongly are in [Behaves Differently From t
 | [Headless Protocol](#headless-protocol) | 158 |
 | [Mod API](#mod-api) | 0 |
 | [Other](#other) | 106 |
-| Total | 1629 |
+| Total | 1632 |
 
 ## Settings Keys
 
@@ -74,7 +74,7 @@ Count: 25.
 
 There are too many to list one by one. Each page below holds a table, and every undocumented variable in it has the Undocumented badge. The pages sort variables by what they do.
 
-Count: 921.
+Count: 924.
 
 | Page | Undocumented Rows |
 | --- | --- |
@@ -83,10 +83,10 @@ Count: 921.
 | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) | 121 |
 | [Cloud Providers](../configure/env-vars/cloud-providers.md) | 30 |
 | [Context and Compaction](../configure/env-vars/context-and-compaction.md) | 30 |
-| [Features and Toggles](../configure/env-vars/features-and-toggles.md) | 55 |
+| [Features and Toggles](../configure/env-vars/features-and-toggles.md) | 56 |
 | [Models and Effort](../configure/env-vars/models-and-effort.md) | 31 |
-| [Network and Proxy](../configure/env-vars/network-and-proxy.md) | 22 |
-| [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) | 51 |
+| [Network and Proxy](../configure/env-vars/network-and-proxy.md) | 23 |
+| [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) | 52 |
 | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) | 136 |
 | [SDK and Automation](../configure/env-vars/sdk-and-automation.md) | 22 |
 | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) | 48 |
@@ -671,7 +671,7 @@ Count: 106.
 | `CLAUDE_CODE_SYNC_PLUGIN_INSTALL` | [Probes](probes.md#effects-and-differences) (Effects and Differences) |
 | `CLAUDE_CODE_USE_COWORK_PLUGINS` | [Probes](probes.md#effects-and-differences) (Effects and Differences) |
 
-## Behaves Differently From the Docs
+## Behaves Differently from the Docs
 
 These items exist in the official docs, but the program works in another way. Count: 42. The badge on each page says how.
 
@@ -722,29 +722,29 @@ These items exist in the official docs, but the program works in another way. Co
 
 ## In the Program
 
-The program of `2.1.309` holds 8893 items in 17 kinds, counted from `schemas/surface.json`.
+The program of `2.1.310` holds 8927 items in 17 kinds, counted from `schemas/surface.json`.
 [Surface Coverage](surface-coverage.md) lists each item with its page.
 
 | Kind | Items | Not on a Page Yet |
 | --- | --- | --- |
 | [Betas](surface-coverage.md#betas) | 50 | 0 |
 | [API Endpoints](surface-coverage.md#api-endpoints) | 431 | 0 |
-| [Environment Variables](surface-coverage.md#environment-variables) | 1846 | 0 |
-| [Error Texts](surface-coverage.md#error-texts) | 4022 | 0 |
+| [Environment Variables](surface-coverage.md#environment-variables) | 1852 | 0 |
+| [Error Texts](surface-coverage.md#error-texts) | 4026 | 0 |
 | [Files](surface-coverage.md#files) | 78 | 0 |
 | [CLI Flags](surface-coverage.md#cli-flags) | 303 | 0 |
-| [Gates](surface-coverage.md#gates) | 1101 | 0 |
+| [Gates](surface-coverage.md#gates) | 1117 | 0 |
 | [Hook Events](surface-coverage.md#hook-events) | 33 | 0 |
 | [Keybindings](surface-coverage.md#keybindings) | 204 | 0 |
 | [Mod API](surface-coverage.md#mod-api) | 229 | 0 |
-| [Models](surface-coverage.md#models) | 66 | 0 |
+| [Models](surface-coverage.md#models) | 74 | 0 |
 | [OpenTelemetry Events](surface-coverage.md#opentelemetry-events) | 28 | 0 |
 | [Permission Rules](surface-coverage.md#permission-rules) | 6 | 0 |
 | [Settings](surface-coverage.md#settings) | 194 | 0 |
 | [Slash Commands](surface-coverage.md#slash-commands) | 142 | 0 |
 | [Subcommands](surface-coverage.md#subcommands) | 71 | 0 |
 | [Tools](surface-coverage.md#tools) | 89 | 0 |
-| All kinds | 8893 | 0 |
+| All kinds | 8927 | 0 |
 
 ## Related Pages
 

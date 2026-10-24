@@ -15,7 +15,7 @@ The protocol is on whenever you start `claude -p --input-format stream-json --ou
 
 The schema does not mark the direction of each request.
 Only the Agent SDK pages describe most of them, and no other docs page does, so every row is marked <Undocumented />.
-Source: the program (the bundled schema of `2.1.309`).
+Source: the program (the bundled schema of `2.1.310`).
 
 | `subtype` | Status | What It Does |
 | --- | --- | --- |

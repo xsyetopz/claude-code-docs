@@ -174,7 +174,7 @@ It comes from the catalog (<Undocumented />). `claude-opus-4-7` has the default 
 | `--effort <level>` | <Documented /> | Sets the effort for a session. `ultracode` sets `xhigh` and turns on the workflow mode. |
 | `CLAUDE_CODE_EFFORT_LEVEL` | <Documented /> | Sets the effort. It wins over `--effort`, `/effort`, and settings. `auto` uses the model default. |
 | `effortLevel`, `maxEffortLevel`, `modelSettings` | <Documented /> | Settings for the default level and a cap. |
-| `output_config.effort` | <Documented /> | The request field that carries the level. |
+| `output_config.effort` | <Documented /> | The request field that carries the level. Since `2.1.310`, when the server refuses it, the request goes again without it, and it stays off for that model until the process ends (the program). |
 | `per-turn-control-2026-07-01` | <Undocumented /> | A beta that lets some models take the effort with each message. |
 | `ultrathink` | <Documented /> | A word in a prompt that asks for deeper thinking on that turn only. |
 | Default effort | <Documented /> | `high`, except `medium` for Opus 5.5, Sonnet 5.5, and Haiku 5.5, and `xhigh` for Opus 4.7. |
@@ -216,7 +216,7 @@ Sources: [Model Configuration](https://code.claude.com/docs/en/model-config) and
 | `--fallback-model <model...>`, `fallbackModel` | <Documented /> | A chain of up to three models for overload and server errors. |
 | `CLAUDE_CODE_NO_MODEL_FALLBACK` | <Undocumented /> | Forbids the substitution of a model. |
 | `CLAUDE_CODE_MAX_RETRIES` | <Documented /> | Number of retries. Default 10, up to 15. |
-| `CLAUDE_CODE_RETRY_WATCHDOG` | <Documented /> | Retries `429` and `529` errors without end and removes the cap. Off by default. |
+| `CLAUDE_CODE_RETRY_WATCHDOG` | <Documented /> | Retries `429` and `529` errors without end and removes the cap. Off by default. Since `2.1.310`, `CLAUDE_CODE_RETRY_WATCHDOG_SCOPE=capacity` keeps only that part. |
 | `CLAUDE_CODE_OVERLOADED_RETRY_BASE_DELAY_MS`, `CLAUDE_CODE_OVERLOADED_RETRY_MAX_DELAY_MS` | <Documented /> | Start and longest wait after a `529`. Defaults 500 and 32000. |
 | `API_TIMEOUT_MS` | <Documented /> | Request timeout. Default 600000. |
 | `CLAUDE_STREAM_IDLE_TIMEOUT_MS`, `CLAUDE_STREAM_FIRST_BYTE_TIMEOUT_MS` | <Documented /> | Stream silence and first-byte deadlines. The program sets the defaults. A value below 5 minutes for `CLAUDE_STREAM_IDLE_TIMEOUT_MS` counts as 5 minutes. |

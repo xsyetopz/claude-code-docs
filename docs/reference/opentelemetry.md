@@ -1,6 +1,6 @@
 ---
 title: OpenTelemetry Events
-description: The log events that Claude Code 2.1.309 emits through OpenTelemetry, with the attributes of each, read from the program.
+description: The log events that Claude Code 2.1.310 emits through OpenTelemetry, with the attributes of each, read from the program.
 sidebar_position: 7
 ---
 
