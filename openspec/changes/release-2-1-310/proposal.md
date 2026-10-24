@@ -37,20 +37,32 @@ The site tracks `2.1.309`, and `2.1.310` shipped 2026-10-23 with user-visible ch
 - Add the `2.1.310` section to `docs/start/what-changed.md`, move the `2.1.309` section to the top of `docs/start/release-archive.md`, and rename its claim ids in `tools/release/claims/map.json`.
 - Add the `CHANGELOG.md` entry, bump `cc-docs` with `version:bump` (and `cc-inspect` if `inspect/` changes), and bump `src/version.ts` last.
 - Leave out VS Code, Cloud sessions, Claude Tag, and Code Review items, and fixes with no new behavior.
+- Add a cc-inspect release diff (`prd.md` goal 6, added on 2026-10-24 at the user's request):
+  - A clean step for each install: stable local names and `bun fmt`, with a function index, cached under `captures/<version>/clean/`.
+  - `release` `diff`: functions added, gone, or changed between two versions, each with its cleaned code.
+  - `release` `explain`: for a function or name, where it is, what it does, who calls it, when it runs (gates, env reads, `isEnabled`), how (a no-op, a stub, or handled code), and why (the matched notes line).
+  - `release` `notes`: each release-notes line marked matched, unmatched, or gated.
+  - `code` `find`: a plain-words query over the index, and MCP prompts that walk an agent through a release (the user, 2026-10-24).
+  - The MCP tools merge into 4 (`sessions`, `code`, `surface`, `release`) with one-sentence descriptions (the user, 2026-10-24).
+  - `release:all` runs the clean step. A one-time `humanify` trial with Haiku is recorded as a reading aid only.
 
 ## Capabilities
 
 ### New Capabilities
 
 - `tracked-release-docs`: the site documents the one Claude Code version in `src/version.ts`, with each user-facing release change on its page and each label checked.
+- `inspect-release-diff`: cc-inspect cleans each install, diffs two versions by function, explains each change, and matches the release notes to it.
 
 ### Modified Capabilities
 
-None. `binary-surface-map` already requires each surface item to have a page or an exclusion. This change applies it to `2.1.310`.
+- `inspect-surface-lookup`: the lookup moves from `list_surface` to the `surface` tool, with `version` in place of `binary`, when the 13 cc-inspect tools merge into 4 (the user, 2026-10-24).
+
+`binary-surface-map` already requires each surface item to have a page or an exclusion. This change applies it to `2.1.310`.
 
 ## Impact
 
 - Docs, schemas, the surface snapshot, prompt pages, `tools/release/claims/map.json`, `tools/surface/exclusions.json`, plugin and repo texts.
-- No site code or toolkit change, unless a probe needs a new case. A new probe goes into cc-inspect with a test.
+- No site code change. Toolkit: the cc-inspect release diff (`inspect/mcp/src/`, tests in `inspect/mcp/test/`), a `release:all` step, the runbook, and a `cc-inspect` minor bump.
+- The `humanify` trial (task 5.10) uses `ANTHROPIC_API_KEY` through `tools/release/secret-runner.sh apikey`, a small paid run.
 - Step 9 (managed) needs the user for `sudo`. Step 10 (live) uses subscription quota. See `architecture.md` decision 3.
 - `release:probe:pty` takes about 11 minutes on an idle machine.

@@ -13,6 +13,7 @@ const STEPS: Step[] = [
   { name: "check", extra: [] },
   { name: "schemas", extra: [] },
   { name: "diff", extra: [] },
+  { name: "clean", extra: [] },
   { name: "prompts", extra: ["--no-render"] },
   { name: "probe:print", extra: [], soft: true },
   { name: "probe:pty", extra: [], soft: true },

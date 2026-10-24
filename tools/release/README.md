@@ -64,6 +64,14 @@ Steps 1 to 8 are unattended and safe in a fresh session. Steps 9 and 10 need the
 4. **Diff.** `bun run release:diff`. Read `captures/<to>/diff/report.md` first. It shows which docs pages are affected.
    - Takes a surface snapshot of each binary (`captures/<version>/surface.json`) and compares the items of each kind. Each added or changed item names the page that takes it, from `tools/surface/map.json`, `tools/surface/exclusions.json`, and the docs tables.
    - Writes `captures/<to>/diff/*.json` and `report.md`. The files `strings-env.json`, `flags.json`, `commands.json`, `settings.json`, `hooks.json`, and `gates.json` keep their names for `release:claims` and `release:compare`.
+   - Then `bun run release:clean -- --from <from> --to <to>`. It cleans each module of both binaries (stable local names) and indexes their functions into `captures/<version>/clean/`, about 14 s for each version the first time.
+   - With the clean step done, read the code diff through the `cc-inspect` tool `release`:
+     - `diff` with `from` and `to` lists the changed, added, and gone functions. Pass `name` to keep those that hold a text, such as a tool name.
+     - `notes` with `version: <to>` marks each line of the release notes as matched, gated, or unmatched. It runs `gh release view` once and caches the notes in `captures/<to>/notes.md`.
+     - `explain` with `name` gives where a name's code is, who uses it, the gates and env reads that guard it, and whether it is a no-op, a stub, or handled.
+     - The `code` action `find` finds code by plain words. The MCP prompt `release_review` runs these steps in order.
+   - The server finds this cache only when it starts in the repo root, or with `CC_INSPECT_CACHE` set to the repo's `captures/`. Otherwise it cleans again into `~/.cache/cc-inspect`.
+   - A match is a lead to read, not a proof. Read the code before a page states it.
    - User: no.
 
 5. **Prompts.** `bun run release:prompts`. Add `-- --no-render` to skip the render.
@@ -101,13 +109,13 @@ Steps 1 to 8 are unattended and safe in a fresh session. Steps 9 and 10 need the
 
 ## Shortcut: `release:all`
 
-`bun run release:all` runs check, schemas, diff, prompts, probe:print, probe:pty, claims, and compare, in that order.
+`bun run release:all` runs check, schemas, diff, clean, prompts, probe:print, probe:pty, claims, and compare, in that order.
 
 - It passes `--no-render` to prompts, so it never edits `docs/prompts/`.
 - It rewrites `schemas/*.json` in the working tree (see step 12).
 - It runs `claims --check` before `claims`. That step writes nothing and fails only on an unmapped claim. The `print.sweep does not list claim` warnings keep exit 0.
 - It accepts only `--from`, `--to` and `--dry`. Any other argument exits 2.
-- It stops at the first failed check, schemas, diff or prompts step and prints the commands you still need to run by hand, with the same `--from`, `--to` and `--dry`.
+- It stops at the first failed check, schemas, diff, clean or prompts step and prints the commands you still need to run by hand, with the same `--from`, `--to` and `--dry`.
 - If probe:print, probe:pty or `claims --check` exits non-zero, it still runs the later steps (so a flaky pty case still gives a worklist). It then exits non-zero and names the failed steps.
 - It never runs steps 9 and 10. It prints them under "Needs you".
 
@@ -144,6 +152,18 @@ Open `captures/<to>/compare/compare.md`.
 - A changed result is not a probe failure. Probes exit non-zero only when a case could not run.
 - Never use a live result with `cacheWarm: true` as a doc number.
 - `--samples` adds the trimmed sample text. The positional form also works: `bun run release:compare -- 2.1.305 2.1.306`.
+
+## Optional: Name Guesses with `humanify`
+
+[humanify](https://github.com/jehna/humanify) (`humanifyjs` 2.2.2) asks a model for a name for each local of one module. It is a reading aid only: its names are guesses, so never state one as a fact, and never feed its output to the diff. It costs one model call per local, so run it on one small module, not on a binary. It uses the API key, not the subscription.
+
+```sh
+mkdir -p /tmp/hf && (cd /tmp/hf && bun add --ignore-scripts humanifyjs@2.2.2)
+tools/release/secret-runner.sh apikey /bin/sh -c 'OPENAI_API_KEY="$ANTHROPIC_API_KEY" OPENAI_BASE_URL=https://api.anthropic.com/v1 HOME=/tmp/hf exec bun /tmp/hf/node_modules/.bin/humanify openai -m claude-haiku-5-5 -o /tmp/hf/out <module.js>'
+```
+
+- `--ignore-scripts` skips the native build of `isolated-vm`, which fails and which the `openai` command does not need.
+- Trial (2.1.310 release, on the 501-byte minified `inspect/mcp/test/fixtures/clean-app.ts`): 23 calls, 8,881 input and 913 output tokens. Good guesses: `readBooleanEnvFlag`, `parseSleepCommand`. Wrong guesses: the class exported as `Monitor` became `FeatureGate`, and the sleep limit became `maxIterations`.
 
 ## Claim Map
 

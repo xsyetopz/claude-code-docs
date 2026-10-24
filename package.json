@@ -32,6 +32,7 @@
     "plugin:smoke": "bun tools/plugin/smoke.ts",
     "release:check": "bun tools/release/cli.ts check",
     "release:diff": "bun tools/release/cli.ts diff",
+    "release:clean": "bun tools/release/cli.ts clean",
     "release:schemas": "bun tools/release/cli.ts schemas",
     "release:prompts": "bun tools/release/cli.ts prompts",
     "release:probe:print": "bun tools/release/cli.ts probe:print",

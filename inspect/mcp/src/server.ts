@@ -1,5 +1,7 @@
-// cc-inspect MCP server (stdio). Read-only. No network, no telemetry.
+// cc-inspect MCP server (stdio). Writes only its cache; its one network call is `gh release view` for `release` `notes`. No telemetry.
 // Reads Claude Code session transcripts (sessions.ts) and the modules inside the Claude Code binary (binary.ts).
+import { existsSync, readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import type * as ES from "estree";
@@ -7,7 +9,19 @@ import { z } from "zod";
 import pkg from "../package.json" with { type: "json" };
 import type { Node } from "./ast.ts";
 import { listInstalls, program } from "./binary.ts";
+import {
+  type Change,
+  cut,
+  diffIndexes,
+  filterChanges,
+  lines as linesOf,
+  unitDiff,
+} from "./diff.ts";
 import { eventSites } from "./events.ts";
+import { explain } from "./explain.ts";
+import { findUnits } from "./find.ts";
+import { checkNotes, readNotes } from "./notes.ts";
+import { prepared } from "./prepare.ts";
 import { type Entry, mergeEntries, type Val } from "./resolve.ts";
 import {
   checkLine,
@@ -25,6 +39,11 @@ const READ_ONLY = {
   destructiveHint: false,
   idempotentHint: true,
   openWorldHint: false,
+} as const;
+// `code` and `release` write the cache of cleaned code, and `release` `notes` runs `gh release view`.
+const WRITES_CACHE = {
+  ...READ_ONLY,
+  readOnlyHint: false,
 } as const;
 const MAX_CHARS = 40000;
 
@@ -77,32 +96,92 @@ const entriesJson = (entries: Entry[]): Record<string, unknown> =>
 
 const server = new McpServer({ name: "cc-inspect", version: pkg.version });
 
-const binaryArg = z
-  .string()
-  .optional()
-  .describe(
-    "Version (e.g. 2.1.307) or path of a Claude Code binary. Default: the install the claude launcher points to.",
+// Shared parameters: the same name means the same thing in each tool.
+const P = {
+  version: z
+    .string()
+    .optional()
+    .describe(
+      "Claude Code version or binary path; default: the current install.",
+    ),
+  query: z.string().min(1).optional().describe("Text to find."),
+  regex: z
+    .boolean()
+    .optional()
+    .describe("Treat query as a regular expression."),
+  name: z
+    .string()
+    .optional()
+    .describe("Name or filter (any case where it filters)."),
+  module: z.string().optional().describe('Module name, e.g. "chunk-abc.js".'),
+  offset: z.number().int().min(0).optional(),
+  limit: z.number().int().min(1).max(400).optional(),
+};
+
+type Args = Record<string, unknown> & {
+  action?: string;
+  version?: string;
+  query?: string;
+  regex?: boolean;
+  name?: string;
+  module?: string;
+  offset?: number;
+  limit?: number;
+};
+/** One tool whose operations are the values of `action`; each handler gets the parsed arguments. */
+const group = <A extends Args>(
+  tool: string,
+  description: string,
+  key: "action" | "kind",
+  handlers: Record<string, (a: A) => Out | Promise<Out>>,
+  extra: Record<string, z.ZodType>,
+  annotations: Record<string, boolean> = READ_ONLY,
+) =>
+  server.registerTool(
+    tool,
+    {
+      description,
+      inputSchema: {
+        [key]: z
+          .string()
+          .optional()
+          .describe(`One of: ${Object.keys(handlers).join(", ")}.`),
+        ...extra,
+      },
+      annotations,
+    },
+    (a: Record<string, unknown>) =>
+      run(() => {
+        const k = String(a[key] ?? "");
+        const h = Object.hasOwn(handlers, k) ? handlers[k] : undefined;
+        if (!h)
+          throw new Error(
+            `unknown ${key} "${k}"; ${key}s: ${Object.keys(handlers).filter(Boolean).join(", ")}`,
+          );
+        return h(a as A);
+      }),
   );
+
+const need = (v: string | undefined, what: string): string => {
+  if (!v) throw new Error(`give ${what}`);
+  return v;
+};
 
 // ---- sessions ----
 
-server.registerTool(
-  "list_sessions",
+group<
+  Args & {
+    session?: string;
+    project?: string;
+    type?: string;
+    max_line_chars?: number;
+  }
+>(
+  "sessions",
+  "Read Claude Code session transcripts: list, read, search, or validate them against the transcript schema.",
+  "action",
   {
-    title: "List Claude Code sessions",
-    description: `List session transcripts under <config dir>/projects (CLAUDE_CONFIG_DIR, or ~/.claude), newest first.
-Args:
-  - project (string, optional): keep projects whose folder name contains this (the folder is the project path with "/" as "-").
-  - limit (number 1-200, default 20).
-Returns: one line per session: id, project, size, modified time; structuredContent {sessions:[{id,project,path,bytes,modified}]}.`,
-    inputSchema: {
-      project: z.string().optional(),
-      limit: z.number().int().min(1).max(200).default(20),
-    },
-    annotations: READ_ONLY,
-  },
-  ({ project, limit }) =>
-    run(() => {
+    list: ({ project, limit = 20 }) => {
       const all = listSessions(project);
       const sessions = all.slice(0, limit);
       return text(
@@ -116,33 +195,15 @@ Returns: one line per session: id, project, size, modified time; structuredConte
           : `No sessions under ${configDir()}/projects${project ? ` for "${project}"` : ""}.`,
         { sessions },
       );
-    }),
-);
-
-server.registerTool(
-  "read_session",
-  {
-    title: "Read a Claude Code session transcript",
-    description: `Read lines of a session transcript (.jsonl), numbered from 1.
-Args:
-  - session (string): session id (a unique prefix works) or a path to a .jsonl file.
-  - type (string, optional): keep lines with this "type" (user, assistant, system, attachment, summary, ...).
-  - offset (number, default 0): lines to skip, after the type filter.
-  - limit (number 1-200, default 20).
-  - max_line_chars (number, default 2000): each line is cut to this length.
-Returns: the lines as JSON text, with "next_offset" when more remain.`,
-    inputSchema: {
-      session: z.string(),
-      type: z.string().optional(),
-      offset: z.number().int().min(0).default(0),
-      limit: z.number().int().min(1).max(200).default(20),
-      max_line_chars: z.number().int().min(100).max(MAX_CHARS).default(2000),
     },
-    annotations: READ_ONLY,
-  },
-  ({ session, type, offset, limit, max_line_chars }) =>
-    run(() => {
-      const path = sessionPath(session);
+    read: ({
+      session,
+      type,
+      offset = 0,
+      limit = 20,
+      max_line_chars = 2000,
+    }) => {
+      const path = sessionPath(need(session, "session"));
       const lines = readLines(path).filter(
         (l) => !type || l.json?.type === type,
       );
@@ -153,33 +214,15 @@ Returns: the lines as JSON text, with "next_offset" when more remain.`,
           .map((l) => `${l.n}: ${clip(l.text, max_line_chars)}`)
           .join("\n")}`,
       );
-    }),
-);
-
-server.registerTool(
-  "search_sessions",
-  {
-    title: "Search Claude Code session transcripts",
-    description: `Find transcript lines that match a pattern, newest session first.
-Args:
-  - pattern (string): text to find (or a regular expression with regex: true).
-  - regex (boolean, default false).
-  - session (string, optional): search one session (id, prefix, or path).
-  - project (string, optional): search projects whose folder name contains this.
-  - limit (number 1-200, default 20): maximum hits.
-Returns: one hit per line: session id, line number, type, and a snippet around the match.`,
-    inputSchema: {
-      pattern: z.string().min(1),
-      regex: z.boolean().default(false),
-      session: z.string().optional(),
-      project: z.string().optional(),
-      limit: z.number().int().min(1).max(200).default(20),
     },
-    annotations: READ_ONLY,
-  },
-  ({ pattern, regex: isRegex, session, project, limit }) =>
-    run(() => {
-      const re = regex(pattern, isRegex);
+    search: ({
+      query,
+      regex: isRegex = false,
+      session,
+      project,
+      limit = 20,
+    }) => {
+      const re = regex(need(query, "query"), isRegex);
       const files = session
         ? [{ id: session, path: sessionPath(session) }]
         : listSessions(project);
@@ -212,27 +255,9 @@ Returns: one hit per line: session id, line number, type, and a snippet around t
           : `No match for ${re} in ${files.length} sessions.`,
         { hits },
       );
-    }),
-);
-
-server.registerTool(
-  "validate_session",
-  {
-    title: "Check a session transcript against the schema",
-    description: `Check each line of a session transcript against the transcript JSON Schema (generated from Claude Code ${SCHEMA_VERSION}), using the definition of the line's "type". Shows the lines whose fields differ from what that version writes: a new version, a hand-edited file, or a gap in the schema.
-Args:
-  - session (string): session id (a unique prefix works) or a path to a .jsonl file.
-  - limit (number 1-200, default 20): maximum failing lines to show.
-Returns: counts of lines and failures by type, then each failing line with its problems; structuredContent {lines, failed, byType, failures:[{line,type,problems}]}.`,
-    inputSchema: {
-      session: z.string(),
-      limit: z.number().int().min(1).max(200).default(20),
     },
-    annotations: READ_ONLY,
-  },
-  ({ session, limit }) =>
-    run(() => {
-      const path = sessionPath(session);
+    validate: ({ session, limit = 20 }) => {
+      const path = sessionPath(need(session, "session"));
       const lines = readLines(path);
       const byType: Record<string, { lines: number; failed: number }> = {};
       const failures: { line: number; type: unknown; problems: string[] }[] =
@@ -263,22 +288,34 @@ Returns: counts of lines and failures by type, then each failing line with its p
           failures: shown,
         },
       );
-    }),
+    },
+  },
+  {
+    session: z
+      .string()
+      .optional()
+      .describe("Session id, unique prefix, or .jsonl path."),
+    project: z
+      .string()
+      .optional()
+      .describe("Keep project folders whose name contains this."),
+    type: z.string().optional().describe('Keep lines with this "type" (read).'),
+    query: P.query,
+    regex: P.regex,
+    offset: P.offset,
+    limit: P.limit,
+    max_line_chars: z.number().int().min(100).max(MAX_CHARS).optional(),
+  },
 );
 
-// ---- binary ----
+// ---- code ----
 
-server.registerTool(
-  "list_installs",
+group<Args & { context?: number; length?: number }>(
+  "code",
+  "Read the code inside a Claude Code binary: list installs or modules, search literal text, find code by plain words, read a module slice, or prepare a cleaned index for release diffs.",
+  "action",
   {
-    title: "List Claude Code installs",
-    description: `List the Claude Code binaries under ~/.local/share/claude/versions, newest first, and mark the one ~/.local/bin/claude points to.
-Returns: one line per version with its path; structuredContent {installs:[{version,path,current}]}.`,
-    inputSchema: {},
-    annotations: READ_ONLY,
-  },
-  () =>
-    run(() => {
+    installs: () => {
       const installs = listInstalls();
       return text(
         installs.length
@@ -291,62 +328,28 @@ Returns: one line per version with its path; structuredContent {installs:[{versi
           : "No Claude Code install found.",
         { installs },
       );
-    }),
-);
-
-server.registerTool(
-  "list_modules",
-  {
-    title: "List the modules in a Claude Code binary",
-    description: `List the files embedded in a Claude Code binary (a Bun single-file executable): JavaScript chunks and assets.
-Args:
-  - binary (string, optional): version or path.
-  - filter (string, optional): keep names that contain this.
-Returns: one line per module with its size; structuredContent {path, modules:[{name,bytes}]}.`,
-    inputSchema: { binary: binaryArg, filter: z.string().optional() },
-    annotations: READ_ONLY,
-  },
-  ({ binary, filter }) =>
-    run(() => {
-      const p = program(binary);
+    },
+    modules: ({ version, name }) => {
+      const p = program(version);
       const modules = p.modules
-        .filter((m) => !filter || m.name.includes(filter))
+        .filter((m) => !name || m.name.includes(name))
         .map((m) => ({ name: m.name, bytes: m.bytes.length }));
       return text(
         `${p.path}: ${modules.length} modules\n${modules.map((m) => `- ${m.name}  ${m.bytes} bytes`).join("\n")}`,
         { path: p.path, modules },
       );
-    }),
-);
-
-server.registerTool(
-  "search_binary",
-  {
-    title: "Search the code of a Claude Code binary",
-    description: `Find text in the JavaScript modules of a Claude Code binary. Search literal anchors (strings, event names, setting keys, env var names), since identifiers are minified and change between versions.
-Args:
-  - pattern (string): text to find (or a regular expression with regex: true).
-  - regex (boolean, default false).
-  - module (string, optional): search modules whose name contains this.
-  - binary (string, optional): version or path.
-  - context (number 0-2000, default 150): characters shown on each side.
-  - limit (number 1-200, default 20).
-Returns: one hit per match: module, offset, and the code around it. Use read_module or resolve_object with the module and offset.`,
-    inputSchema: {
-      pattern: z.string().min(1),
-      regex: z.boolean().default(false),
-      module: z.string().optional(),
-      binary: binaryArg,
-      context: z.number().int().min(0).max(2000).default(150),
-      limit: z.number().int().min(1).max(200).default(20),
     },
-    annotations: READ_ONLY,
-  },
-  ({ pattern, regex: isRegex, module, binary, context, limit }) =>
-    run(() => {
-      const re = new RegExp(regex(pattern, isRegex).source, "g");
+    search: ({
+      query,
+      regex: isRegex = false,
+      module,
+      version,
+      context = 150,
+      limit = 20,
+    }) => {
+      const re = new RegExp(regex(need(query, "query"), isRegex).source, "g");
       const hits: { module: string; offset: number; snippet: string }[] = [];
-      for (const m of program(binary).bundle.modules.values()) {
+      for (const m of program(version).bundle.modules.values()) {
         if (module && !m.name.includes(module)) continue;
         for (const h of m.text.matchAll(re)) {
           hits.push({
@@ -369,65 +372,149 @@ Returns: one hit per match: module, offset, and the code around it. Use read_mod
           : `No match for ${re}.`,
         { hits },
       );
-    }),
-);
-
-server.registerTool(
-  "read_module",
-  {
-    title: "Read code from a Claude Code binary",
-    description: `Read a slice of one module of a Claude Code binary.
-Args:
-  - module (string): module name from list_modules or search_binary (e.g. "chunk-abc.js").
-  - offset (number, default 0): character offset.
-  - length (number 1-${MAX_CHARS}, default 4000).
-  - binary (string, optional): version or path.
-Returns: the code, headed by its range and the module length.`,
-    inputSchema: {
-      module: z.string(),
-      offset: z.number().int().min(0).default(0),
-      length: z.number().int().min(1).max(MAX_CHARS).default(4000),
-      binary: binaryArg,
     },
-    annotations: READ_ONLY,
-  },
-  ({ module, offset, length, binary }) =>
-    run(() => {
-      const p = program(binary);
+    read: ({ module, offset = 0, length = 4000, version }) => {
+      const p = program(version);
+      const mod = need(module, "module");
       const m =
-        p.modules.find((x) => x.name.endsWith(`/${module}`)) ??
-        p.modules.find((x) => x.name === module);
-      if (!m) throw new Error(`no module "${module}" in ${p.path}`);
+        p.modules.find((x) => x.name.endsWith(`/${mod}`)) ??
+        p.modules.find((x) => x.name === mod);
+      if (!m) throw new Error(`no module "${mod}" in ${p.path}`);
       const end = Math.min(m.source.length, offset + length);
       return text(
         `${m.name} [${offset}, ${end}) of ${m.source.length}\n${m.source.slice(offset, end)}`,
       );
-    }),
+    },
+    find: ({ query, version, limit = 10 }) => {
+      const q = need(query, "query");
+      const r = prepared(version);
+      const found = findUnits(r.index, q, Math.min(limit, 10));
+      return text(
+        found.length
+          ? `${r.index.version}: top ${found.length} for "${clip(q, 100)}"\n${found
+              .map(
+                ({ u, n, hits }) =>
+                  `## ${u.k}  ${u.m}:${u.s}  score ${n} (${hits.join(", ")})\n${linesOf(
+                    u.t,
+                  )
+                    .slice(0, 4)
+                    .map(cut)
+                    .join("\n")}`,
+              )
+              .join("\n\n")}`
+          : `No unit holds a word of "${clip(q, 100)}".`,
+        {
+          found: found.map(({ u, n, hits }) => ({
+            label: u.k,
+            module: u.m,
+            offset: u.s,
+            score: n,
+            hits,
+          })),
+        },
+      );
+    },
+    prepare: ({ version }) => {
+      const r = prepared(version);
+      const skipped = Object.keys(r.index.skipped);
+      return text(
+        `${r.index.version}: ${r.parsed ? `${r.parsed} modules cleaned` : "read from the cache"}, ${r.index.units.length} units, ${r.ms} ms -> ${r.dir}${skipped.length ? `\nNot JavaScript: ${skipped.join(", ")}` : ""}`,
+        {
+          dir: r.dir,
+          version: r.index.version,
+          parsed: r.parsed,
+          units: r.index.units.length,
+          skipped,
+          ms: r.ms,
+        },
+      );
+    },
+  },
+  {
+    version: P.version,
+    query: P.query,
+    regex: P.regex,
+    name: P.name,
+    module: P.module,
+    offset: P.offset,
+    limit: P.limit,
+    context: z
+      .number()
+      .int()
+      .min(0)
+      .max(2000)
+      .optional()
+      .describe("Characters shown around a search hit (default 150)."),
+    length: z
+      .number()
+      .int()
+      .min(1)
+      .max(MAX_CHARS)
+      .optional()
+      .describe("Characters to read (default 4000)."),
+  },
+  WRITES_CACHE,
 );
 
-server.registerTool(
-  "resolve_object",
+// ---- surface ----
+
+const SURFACE_LIMIT = 200;
+const SURFACE_NAME_CHARS = 120;
+/** Room kept in the reply for the header line (it names the filter and the next offset). */
+const SURFACE_HEADER_CHARS = 300;
+const surfaceLine = (i: SurfaceItem) =>
+  `- ${clip(i.name, SURFACE_NAME_CHARS)}${i.default !== undefined ? `  default ${i.default}` : ""}${i.values ? `  values ${i.values.join("|")}` : ""}${i.gate ? `  gate ${clip(i.gate, 120)}` : ""}${i.detail ? `  (${clip(i.detail, 120)})` : ""}  ${i.module ?? "-"}:${i.offset ?? "-"}`;
+
+const listKind = (
+  kind: string,
+  { name, offset = 0, limit = SURFACE_LIMIT, version }: Args,
+) => {
+  const { bundle, modules } = program(version);
+  if (!kind)
+    return text(
+      Object.keys(KINDS)
+        .map((k) => {
+          try {
+            return `- ${k}: ${surface(bundle, k, modules).length}`;
+          } catch (e) {
+            return `- ${k}: error: ${(e as Error).message}`;
+          }
+        })
+        .join("\n"),
+    );
+  const q = name?.toLowerCase();
+  const all = surface(bundle, kind, modules).filter(
+    (i) => !q || i.name.toLowerCase().includes(q),
+  );
+  const budget = MAX_CHARS - SURFACE_HEADER_CHARS;
+  let used = 0;
+  const lines: string[] = [];
+  for (const i of all.slice(offset, offset + limit)) {
+    const l = surfaceLine(i);
+    if (used + l.length + 1 > budget) {
+      if (!lines.length) lines.push(l.slice(0, budget));
+      break;
+    }
+    lines.push(l);
+    used += l.length + 1;
+  }
+  const more = offset + lines.length < all.length;
+  return text(
+    `${kind}: items ${offset + 1}-${offset + lines.length} of ${all.length}${name ? ` matching "${clip(name, 100)}"` : ""}${more ? `, next_offset ${offset + lines.length}` : ""}\n${lines.join("\n")}`,
+  );
+};
+
+group<Args & { kind?: string; anchor?: string }>(
+  "surface",
+  `List what a Claude Code binary exposes by kind (${Object.keys(KINDS).join(", ")}), or resolve object-keys, event-keys, or tool-gates from its code.`,
+  "kind",
   {
-    title: "Resolve an object literal in a Claude Code binary",
-    description: `Parse the object literal around a place in the code and list its keys, following spreads into the functions and modules they come from (minified names do not matter). A key ending in "?" is optional (behind a condition, or missing at some sites). Values show {const}, {enum}, nested keys, or {unknown: <code>}.
-Args:
-  - module (string): module name (from search_binary).
-  - offset (number, optional): offset inside or at the "{" of the literal.
-  - anchor (string, optional): instead of offset, the first place this text occurs in the module; the innermost literal around it is used.
-  - binary (string, optional): version or path.
-Returns: the keys as JSON, and the spreads that could not be followed.`,
-    inputSchema: {
-      module: z.string(),
-      offset: z.number().int().min(0).optional(),
-      anchor: z.string().optional(),
-      binary: binaryArg,
-    },
-    annotations: READ_ONLY,
-  },
-  ({ module, offset, anchor, binary }) =>
-    run(() => {
-      const { bundle, resolver: R } = program(binary);
-      const m = bundle.get(module);
+    ...Object.fromEntries(
+      ["", ...Object.keys(KINDS)].map((k) => [k, (a: Args) => listKind(k, a)]),
+    ),
+    "object-keys": ({ module, offset, anchor, version }) => {
+      const { bundle, resolver: R } = program(version);
+      const m = bundle.get(need(module, "module"));
       if (!m) throw new Error(`no JavaScript module "${module}"`);
       const pos = anchor ? m.text.indexOf(anchor) : (offset ?? -1);
       if (pos < 0)
@@ -446,24 +533,9 @@ Returns: the keys as JSON, and the spreads that could not be followed.`,
         `${JSON.stringify(keys, null, 2)}${unresolved.length ? `\n\nSpreads not followed:\n${unresolved.map((u) => `- ${u}`).join("\n")}` : ""}`,
         { keys, unresolved },
       );
-    }),
-);
-
-server.registerTool(
-  "resolve_event",
-  {
-    title: "Resolve an OpenTelemetry event of Claude Code",
-    description: `Find every place the program emits an OpenTelemetry event (log record) and merge the attribute keys of all call sites. A key missing from some sites ends in "?". Base attributes (session.id, user.id, ...) and event.* fields are added to every event and are not listed.
-Args:
-  - name (string, optional): event name without the "claude_code." prefix (e.g. "tool_result"). Without it, lists the event names.
-  - binary (string, optional): version or path.
-Returns: the keys as JSON, or the list of events with their call site counts.`,
-    inputSchema: { name: z.string().optional(), binary: binaryArg },
-    annotations: READ_ONLY,
-  },
-  ({ name, binary }) =>
-    run(() => {
-      const { bundle, resolver } = program(binary);
+    },
+    "event-keys": ({ name, version }) => {
+      const { bundle, resolver } = program(version);
       const events = eventSites(bundle, resolver);
       if (!name)
         return text(
@@ -490,23 +562,9 @@ Returns: the keys as JSON, or the list of events with their call site counts.`,
           keys,
         },
       );
-    }),
-);
-
-server.registerTool(
-  "list_tools",
-  {
-    title: "List the built-in tools of Claude Code",
-    description: `List the tools the program's getAllBaseTools gives, each with the code that gates it in that list ("when": the test of a "cond?[T]:[]" spread, or the function of a "[A,B].filter(f)") and its own isEnabled ("enabled"), when its definition has one; without it, the tool builder's default applies. The per-session filters of getTools are not included, so a listed tool may still be off for a user: confirm with a probe before you call it available. Minified names change between versions; "functions" holds the source of each function the gates call, two calls deep.
-Args:
-  - binary (string, optional): version or path.
-Returns: one line per tool with its gates, then the functions; structuredContent {module, tools:[{name,when,enabled?,unresolved?}], functions}.`,
-    inputSchema: { binary: binaryArg },
-    annotations: READ_ONLY,
-  },
-  ({ binary }) =>
-    run(() => {
-      const { bundle, resolver } = program(binary);
+    },
+    "tool-gates": ({ version }) => {
+      const { bundle, resolver } = program(version);
       const r = baseTools(bundle, resolver);
       return text(
         `${r.module}: ${r.tools.length} tools\n${r.tools
@@ -519,74 +577,214 @@ Returns: one line per tool with its gates, then the functions; structuredContent
           .join("\n")}`,
         r,
       );
-    }),
+    },
+  },
+  {
+    version: P.version,
+    name: P.name,
+    module: P.module,
+    offset: P.offset,
+    limit: P.limit,
+    anchor: z
+      .string()
+      .optional()
+      .describe("For object-keys: text inside the literal, instead of offset."),
+  },
 );
 
-// ---- surface ----
+// ---- release ----
 
-const SURFACE_LIMIT = 200;
-const SURFACE_NAME_CHARS = 120;
-/** Room kept in the reply for the header line (it names the filter and the next offset). */
-const SURFACE_HEADER_CHARS = 300;
-const surfaceLine = (i: SurfaceItem) =>
-  `- ${clip(i.name, SURFACE_NAME_CHARS)}${i.default !== undefined ? `  default ${i.default}` : ""}${i.values ? `  values ${i.values.join("|")}` : ""}${i.gate ? `  gate ${clip(i.gate, 120)}` : ""}${i.detail ? `  (${clip(i.detail, 120)})` : ""}  ${i.module ?? "-"}:${i.offset ?? "-"}`;
+const DIFF_LINES = 40;
+const changeHead = (c: Change) => {
+  const u = (c.to ?? c.from) as NonNullable<Change["to"]>;
+  const at = [
+    c.from && `${c.from.m}:${c.from.s}`,
+    c.to && `${c.to.m}:${c.to.s}`,
+  ]
+    .filter(Boolean)
+    .join(" -> ");
+  return `## ${c.kind} ${u.k}  ${at}${c.within.length ? `  in ${c.within.slice(0, 3).join(", ")}` : ""}${c.calls.length ? `\n  calls: ${c.calls.slice(0, 6).join("; ")}` : ""}`;
+};
 
-server.registerTool(
-  "list_surface",
+group<Args & { from?: string; to?: string }>(
+  "release",
+  "Compare two Claude Code versions by function (diff), check the release notes against that diff (notes), or explain where a name lives and who, when, and how its code runs (explain).",
+  "action",
   {
-    title: "List the functional surface of Claude Code by kind",
-    description: `List the items of one kind of surface in a Claude Code binary, found by the same extractors as the docs surface snapshot. Kinds: ${Object.keys(KINDS).join(", ")}.
-Args:
-  - kind (string, optional): without it, lists each kind with its item count.
-  - name (string, optional): keep items whose name contains this (any case).
-  - offset (number, default 0), limit (number 1-400, default ${SURFACE_LIMIT}). A name over ${SURFACE_NAME_CHARS} characters is clipped. The reply stops at ${MAX_CHARS} characters, at a line end.
-  - binary (string, optional): version or path.
-Returns: one line per item: the name, then the default, values, gate, and detail when the code shows them ("unknown" when the code computes it), then module:offset ("-" when the source gives no place), with "next_offset" when more remain, also when the character cap cut the page.`,
-    inputSchema: {
-      kind: z.string().optional(),
-      name: z.string().optional(),
-      offset: z.number().int().min(0).default(0),
-      limit: z.number().int().min(1).max(400).default(SURFACE_LIMIT),
-      binary: binaryArg,
-    },
-    annotations: READ_ONLY,
-  },
-  ({ kind, name, offset, limit, binary }) =>
-    run(() => {
-      const { bundle, modules } = program(binary);
-      if (!kind)
-        return text(
-          Object.keys(KINDS)
-            .map((k) => {
-              try {
-                return `- ${k}: ${surface(bundle, k, modules).length}`;
-              } catch (e) {
-                return `- ${k}: error: ${(e as Error).message}`;
-              }
-            })
-            .join("\n"),
-        );
-      const q = name?.toLowerCase();
-      const all = surface(bundle, kind, modules).filter(
-        (i) => !q || i.name.toLowerCase().includes(q),
+    diff: ({ from, to, name, offset = 0, limit = 30 }) => {
+      const [x, y] = [need(from, "from"), need(to, "to")];
+      const a = prepared(x);
+      const b = prepared(y);
+      const d = diffIndexes(a.index, b.index);
+      const all = name ? filterChanges(d, name) : d.changes;
+      const order = { changed: 0, added: 1, gone: 2 };
+      // Small changes first: they are the most of a release and the cheapest to read.
+      const size = (c: Change) =>
+        (c.from?.t.length ?? 0) + (c.to?.t.length ?? 0);
+      const list = [...all].sort(
+        (x, y) => order[x.kind] - order[y.kind] || size(x) - size(y),
       );
-      const budget = MAX_CHARS - SURFACE_HEADER_CHARS;
-      let used = 0;
-      const lines: string[] = [];
-      for (const i of all.slice(offset, offset + limit)) {
-        const l = surfaceLine(i);
-        if (used + l.length + 1 > budget) {
-          if (!lines.length) lines.push(l.slice(0, budget));
-          break;
-        }
-        lines.push(l);
-        used += l.length + 1;
-      }
-      const more = offset + lines.length < all.length;
+      const page = list.slice(offset, offset + Math.min(limit, 30));
+      const count = (k: Change["kind"]) =>
+        all.filter((c) => c.kind === k).length;
+      const more = offset + page.length < list.length;
       return text(
-        `${kind}: items ${offset + 1}-${offset + lines.length} of ${all.length}${name ? ` matching "${clip(name, 100)}"` : ""}${more ? `, next_offset ${offset + lines.length}` : ""}\n${lines.join("\n")}`,
+        `${a.index.version} -> ${b.index.version}: ${d.counts.changed} changed, ${d.counts.added} added, ${d.counts.gone} gone (imports and exports left out).${name ? ` Matching "${name}": ${count("changed")} changed, ${count("added")} added, ${count("gone")} gone.` : ""} Showing ${offset + 1}-${offset + page.length}${more ? `, next_offset ${offset + page.length}` : ""}.\n\n${page
+          .map((c) => `${changeHead(c)}\n${unitDiff(c, DIFF_LINES).join("\n")}`)
+          .join("\n\n")}`,
+        { counts: d.counts, matching: name ? all.length : undefined },
       );
-    }),
+    },
+    notes: ({ version, from }) => {
+      const b = prepared(version);
+      const num = (v: string) => v.split(/[.-]/).map((x) => Number(x) || 0);
+      const below = (x: string, y: string) => {
+        const [p, q] = [num(x), num(y)];
+        const i = p.findIndex((n, j) => n !== q[j]);
+        return i >= 0 && (p[i] as number) < (q[i] ?? 0);
+      };
+      const older =
+        from ??
+        listInstalls()
+          .map((i) => i.version)
+          .filter((v) => below(v, b.index.version))
+          .sort((x, y) => (below(x, y) ? 1 : -1))[0];
+      if (!older)
+        throw new Error(`no install older than ${b.index.version}; give from`);
+      const a = prepared(older);
+      const root = dirname(b.dir);
+      const report = join(root, "diff", "report.md");
+      const items = existsSync(report)
+        ? readFileSync(report, "utf8")
+            .split("\n")
+            .filter((l) => l.startsWith("- "))
+        : [];
+      const lines = checkNotes(
+        readNotes(b.index.version, join(root, "notes.md")),
+        diffIndexes(a.index, b.index),
+        items,
+      );
+      const count = (k: string) => lines.filter((l) => l.status === k).length;
+      return text(
+        `${b.index.version} notes against ${a.index.version}: ${lines.length} lines, ${count("matched")} matched, ${count("gated")} gated, ${count("unmatched")} unmatched. A match is a lead to read, not a proof.\n${lines
+          .map((l) => {
+            const u = l.change && (l.change.to ?? l.change.from);
+            const why = u
+              ? `\n    -> ${l.change?.kind} ${u.k} ${u.m}:${u.s} (${l.hits.join(", ")})`
+              : l.item
+                ? `\n    -> report: ${clip(l.item, 120)} (${l.hits.join(", ")})`
+                : "";
+            return `- [${l.status}] ${clip(l.line, 160)}${why}`;
+          })
+          .join("\n")}`,
+        {
+          lines: lines.map((l) => ({
+            line: l.line,
+            status: l.status,
+            hits: l.hits,
+            ...(l.change && {
+              at: `${(l.change.to ?? l.change.from)?.m}:${(l.change.to ?? l.change.from)?.s}`,
+            }),
+          })),
+        },
+      );
+    },
+    explain: ({ version, name }) => {
+      const wanted = need(name, "name");
+      const r = prepared(version);
+      const e = explain(r.index, wanted);
+      if (!e) return text(`"${name}" is not in ${r.index.version}.`);
+      const h = e.holder;
+      const list = (xs: string[], n: number) =>
+        xs.length
+          ? `${xs.slice(0, n).join(", ")}${xs.length > n ? `, and ${xs.length - n} more` : ""}`
+          : "none found";
+      return text(
+        [
+          `"${name}" in ${r.index.version}`,
+          `Where: ${h.m}:${h.s} (${h.k})${e.others.length ? `; also in ${e.others.join(", ")}` : ""}`,
+          `Who: ${list(e.who, 10)}`,
+          `When: gates ${list(e.when.gates, 10)}; env reads ${list(e.when.env, 10)}${e.when.isEnabled ? `; isEnabled ${e.when.isEnabled}` : ""}`,
+          `How: ${e.how.length ? e.how.map((x) => `${x.label} ${x.how}${x.value ? ` (returns ${x.value})` : ""}`).join("; ") : "no function"}`,
+          "What:",
+          ...e.what,
+        ].join("\n"),
+        {
+          where: `${h.m}:${h.s}`,
+          who: e.who,
+          when: e.when,
+          how: e.how,
+        },
+      );
+    },
+  },
+  {
+    version: P.version,
+    from: z.string().optional().describe("Older version or path."),
+    to: z.string().optional().describe("Newer version or path."),
+    name: z
+      .string()
+      .optional()
+      .describe(
+        "diff: keep changes whose code or enclosing strings hold this; explain: the string, command, or tool name.",
+      ),
+    offset: P.offset,
+    limit: z.number().int().min(1).max(30).optional(),
+  },
+  { ...WRITES_CACHE, openWorldHint: true },
+);
+
+// ---- prompts: the steps of a task, for an agent with no plan of its own ----
+
+const ask = (t: string) => ({
+  messages: [
+    { role: "user" as const, content: { type: "text" as const, text: t } },
+  ],
+});
+server.registerPrompt(
+  "release_review",
+  {
+    description: "Review a Claude Code release against the code that changed.",
+    argsSchema: {
+      from: z.string().describe("Older version."),
+      to: z.string().describe("Newer version."),
+    },
+  },
+  ({ from, to }) =>
+    ask(
+      [
+        `Review Claude Code ${to} against ${from} with the cc-inspect tools.`,
+        `1. Run \`code\` \`prepare\` for ${from} and for ${to}.`,
+        `2. Run \`release\` \`diff\` with from ${from} and to ${to}, and page with \`offset\` while it gives next_offset.`,
+        `3. Run \`release\` \`notes\` with version ${to} and from ${from}.`,
+        "4. For each gated or unmatched line, run `code` `find` with its words, then `release` `explain` with the name you found.",
+        '5. Report each line as matched, gated, or not found in the code, with `module:offset`. Call the source "the program", and state only what the code shows.',
+      ].join("\n"),
+    ),
+);
+server.registerPrompt(
+  "explain_change",
+  {
+    description: "Explain one name of a Claude Code version from its code.",
+    argsSchema: {
+      name: z
+        .string()
+        .describe("A string, a command such as /loops, or a tool name."),
+      version: z
+        .string()
+        .optional()
+        .describe("Version; default: the current install."),
+    },
+  },
+  ({ name, version }) =>
+    ask(
+      [
+        `Explain "${name}" in Claude Code ${version ?? "(the current install)"} with the cc-inspect tools.`,
+        `1. Run \`code\` \`find\` with query "${name}"${version ? ` and version ${version}` : ""}.`,
+        `2. Run \`release\` \`explain\` with name "${name}", and \`code\` \`read\` at the offsets it gives when you need more code.`,
+        '3. Report where it is, who uses it, when it runs (gates, env reads, isEnabled), and how (no-op, stub, or handled), with `module:offset`. Call the source "the program".',
+      ].join("\n"),
+    ),
 );
 
 await server.connect(new StdioServerTransport());

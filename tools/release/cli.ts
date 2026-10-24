@@ -5,6 +5,7 @@ import { runCheck } from "./check.ts";
 import { normaliseArgs } from "./claims/args.ts";
 import { runClaims } from "./claims/claims.ts";
 import { runCompare } from "./claims/compare.ts";
+import { runClean } from "./clean.ts";
 import { runDiff } from "./diff/diff.ts";
 import { runProbeLive } from "./probes/live/index.ts";
 import { runProbeManaged } from "./probes/managed/index.ts";
@@ -20,6 +21,11 @@ const COMMANDS: Record<string, Command> = {
   diff: {
     run: runDiff,
     summary: "strings diff of --from and --to; writes diff/*",
+  },
+  clean: {
+    run: runClean,
+    summary:
+      "cc-inspect clean of --from and --to; writes captures/<version>/clean/",
   },
   schemas: {
     run: runSchemas,
@@ -56,7 +62,7 @@ const COMMANDS: Record<string, Command> = {
   all: {
     run: runAll,
     summary:
-      "check, diff, schemas, prompts, probe:print, probe:pty, claims, compare; lists managed/live as needs you",
+      "check, schemas, diff, clean, prompts, probe:print, probe:pty, claims, compare; lists managed/live as needs you",
   },
 };
 

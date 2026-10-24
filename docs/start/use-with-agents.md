@@ -112,31 +112,41 @@ It does not send or keep cookies.
 ## Inspect Sessions and the Program
 
 The same marketplace has a second plugin, `cc-inspect`.
-It reads files on your machine only: your session transcripts and the installed Claude Code binary.
-It makes no network request and changes no file.
+It reads your session transcripts and the installed Claude Code binary.
+It makes one kind of network request: `release` `notes` runs `gh release view` to get the release notes, once for each version.
+It writes only its cache of cleaned code, under `CC_INSPECT_CACHE`, else `./captures` when that folder exists, else `~/.cache/cc-inspect`.
 
 ```text
 /plugin install cc-inspect@claude-code-docs
 ```
 
 It adds the MCP server `cc-inspect`, which runs with plain `bun`, and the skill `cc-inspect`, which tells Claude when to use it.
+The server has 4 tools. Each takes an `action` or a `kind` that picks what it does, and the same parameter names: `version` (a version or a binary path), `query`, `name`, `offset`, and `limit`.
 
-| Tool | What it does |
-| --- | --- |
-| `list_sessions` | Lists the transcripts in `projects/` of the config folder (`CLAUDE_CONFIG_DIR`, or `~/.claude`), newest first. Pass `project` to narrow it. |
-| `read_session` | Gives the lines of one session. Pass `type` to keep one line type, and `offset` to page. A session id prefix works. |
-| `search_sessions` | Finds a text or a regular expression in one session or in all of them. |
-| `validate_session` | Checks each line against the [transcript schema](../reference/schemas.md) of its `type`, and lists the lines that do not fit. The schema is the one for Claude Code `2.1.310`. |
-| `list_installs` | Lists the versions in `~/.local/share/claude/versions`, and marks the one that `~/.local/bin/claude` runs. |
-| `list_modules` | Lists the files inside a binary. Every binary tool takes `binary`, a version or a path. |
-| `search_binary` | Finds a text or a regular expression in the code of a binary, with the module and offset of each hit. |
-| `read_module` | Gives a slice of one module. |
-| `resolve_object` | Lists the keys of the object literal around an offset or an `anchor` text, and follows spreads into the functions and modules they come from. |
-| `resolve_event` | Lists the OpenTelemetry events of a binary. With `name`, it merges the attribute keys of every place the program emits that event. |
-| `list_tools` | Lists the built-in tools of a binary. Each tool comes with the code in the tool list that turns it on or off, its own `isEnabled()` check when it has one, and the source of the functions they call. The filters of each session are not included, so a listed tool may still be off. |
+| Tool | Choice | What it does |
+| --- | --- | --- |
+| `sessions` | `action: "list"` | Lists the transcripts in `projects/` of the config folder (`CLAUDE_CONFIG_DIR`, or `~/.claude`), newest first. Pass `project` to narrow it. |
+| `sessions` | `action: "read"` | Gives the lines of one `session`. Pass `type` to keep one line type, and `offset` to page. A session id prefix works. |
+| `sessions` | `action: "search"` | Finds a `query` (text, or a regular expression with `regex`) in one session or in all of them. |
+| `sessions` | `action: "validate"` | Checks each line against the [transcript schema](../reference/schemas.md) of its `type`, and lists the lines that do not fit. The schema is the one for Claude Code `2.1.310`. |
+| `code` | `action: "installs"` | Lists the versions in `~/.local/share/claude/versions`, and marks the one that `~/.local/bin/claude` runs. |
+| `code` | `action: "modules"` | Lists the files inside a binary. |
+| `code` | `action: "search"` | Finds a `query` in the code of a binary, with the module and offset of each hit. |
+| `code` | `action: "read"` | Gives a slice of one `module`. |
+| `code` | `action: "find"` | Finds code by plain words in a `query`, such as "sleep Monitor until-loop". It ranks the functions of a prepared version by the words in their strings, property names, and labels, and gives the top 10 with module, offset, and first lines. |
+| `code` | `action: "prepare"` | Cleans each module of a version (stable local names, then `bun fmt`) and indexes its functions, into the cache. |
+| `surface` | `kind: "env"`, `"setting"`, and the other surface kinds | Lists the items of one kind, each with its default, gate, module, and offset when the code shows them. With no `kind`, it gives each kind with its count. |
+| `surface` | `kind: "object-keys"` | Lists the keys of the object literal around an `offset` or an `anchor` text in a `module`, and follows spreads into the functions and modules they come from. |
+| `surface` | `kind: "event-keys"` | Lists the OpenTelemetry events of a binary. With `name`, it merges the attribute keys of every place the program emits that event. |
+| `surface` | `kind: "tool-gates"` | Lists the built-in tools of a binary. Each tool comes with the code in the tool list that turns it on or off, its own `isEnabled()` check when it has one, and the source of the functions they call. The filters of each session are not included, so a listed tool may still be off. |
+| `release` | `action: "diff"` | Lists the functions changed, added, and gone between two versions (`from` and `to`), each with the changed lines of its cleaned code. Pass `name` to keep the changes that hold a text. |
+| `release` | `action: "explain"` | For a `name` (a string, a command such as `/loops`, or a tool name), gives where its code is, who uses it, the gates and env reads that guard it, and whether each function is a no-op, a stub, or handled. |
+| `release` | `action: "notes"` | Marks each line of the release notes of `version` as matched (a changed function or a `release:diff` item holds its code span or words), gated (the match reads a `tengu_` gate), or unmatched, against `from` (else the newest older install). A match is a lead to read, not a proof. |
 
-In `resolve_object` and `resolve_event`, a key that ends in `?` is optional, and a value shown as `unknown` is computed, so its type is not known.
-The binary tools read the code with the [meriyah](https://github.com/meriyah/meriyah) parser and [eslint-scope](https://github.com/eslint/js/tree/main/packages/eslint-scope), so minified names do not matter.
+The server also has 2 MCP prompts, which give an agent the steps of a task: `release_review` (with `from` and `to`) runs `prepare`, `diff`, and `notes`, then `find` and `explain` for each gated or unmatched line, and `explain_change` (with `name`) runs `find` and `explain` for one name.
+
+In `object-keys` and `event-keys`, a key that ends in `?` is optional, and a value shown as `unknown` is computed, so its type is not known.
+The code tools read the code with the [meriyah](https://github.com/meriyah/meriyah) parser and [eslint-scope](https://github.com/eslint/js/tree/main/packages/eslint-scope), so minified names do not matter.
 
 ## Related Pages
 

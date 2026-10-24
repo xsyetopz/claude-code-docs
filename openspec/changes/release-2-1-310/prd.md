@@ -22,13 +22,15 @@ The `2.1.310` binary is installed (`claude --version` gives `2.1.310`), so reade
 3. Current-behavior version labels say `2.1.310`, each after a check, and change notes keep their versions.
 4. What Changed holds the `2.1.310` section, and the `2.1.309` section moves to the Release Archive.
 5. Schemas, the type file, the surface snapshot, prompt pages, the claim map, and the plugin texts name `2.1.310`.
+6. The next release takes few tokens: cc-inspect prepares each install as cleaned code, diffs two versions by function, says for each change who, what, when, where, why, and how (a no-op, a stub, or handled code, and behind which gate), and matches the release notes to the diff (the user, 2026-10-24: "find new, bam done").
 
 ## Non-goals
 
 - VS Code, Cloud sessions, Claude Tag, and Code Review web items of the notes, which the binary and the site do not cover.
 - Plain bug fixes with no new behavior a user can use or change.
 - Server-side gates beyond the rows where they change documented behavior (the existing exclusion rule).
-- Changes to the site code, theme, or toolkit, except a probe case for a new claim.
+- Changes to the site code or theme. Toolkit changes only for a probe case of a new claim and for goal 6.
+- Model-made names as facts. A model may help a person read code (`humanify`), but no page cites its names.
 
 ## Success Measures
 
@@ -37,3 +39,4 @@ The `2.1.310` binary is installed (`claude --version` gives `2.1.310`), so reade
 - `bun run release:claims -- --check` shows no `unmapped` claim.
 - `captures/2.1.310/compare/compare.md` has no changed case left unexplained.
 - Each kept notes item names its module and offset or its probe case in `tasks.md`.
+- On `2.1.309` to `2.1.310`, the cc-inspect diff lists the `Monitor` `isEnabled` change, and the notes check matches the Monitor, effort, and AppArmor items, with no model call.

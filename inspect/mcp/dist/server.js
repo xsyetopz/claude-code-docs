@@ -8020,6 +8020,10 @@ __export(exports_iso, {
   time: () => time2
 });
 
+// inspect/mcp/src/server.ts
+import { existsSync as existsSync5, readFileSync as readFileSync5 } from "fs";
+import { dirname as dirname2, join as join4 } from "path";
+
 // inspect/mcp/node_modules/zod/v3/helpers/util.js
 var util;
 (function(util) {
@@ -25202,7 +25206,7 @@ class StdioServerTransport {
 // inspect/mcp/package.json
 var package_default = {
   name: "cc-inspect-mcp",
-  version: "0.3.1",
+  version: "0.4.0",
   private: true,
   license: "MIT",
   type: "module",
@@ -34891,6 +34895,301 @@ var program = (binary) => {
   return p;
 };
 
+// inspect/mcp/src/diff.ts
+var SMALL = 3;
+var callsOf2 = (s, u) => {
+  const out = new Set;
+  for (const [h] of u?.t.matchAll(NAME) ?? []) {
+    const v = s.names.constant(u.m, h);
+    if (v !== undefined)
+      out.add(`${h} ${JSON.stringify(v)}`);
+    const f = s.names.fn(u.m, h);
+    const lits = f?.f.filter((x) => x.startsWith('"')) ?? [];
+    if (lits.length && lits.length <= SMALL)
+      out.add(`${h} ${lits.join(" ")}`);
+  }
+  return [...out];
+};
+var norm = (t) => t.replace(/\$[0-9a-f]{6}(?:_\d+)?/g, "$").replace(/chunk@[0-9a-f]{8}\.js/g, "chunk@").replace(/\.\.\./g, "\u2026").replace(/(?<![.\w$])([a-z])\d+\b/g, "$1");
+var parentsOf = (us) => {
+  const p = new Int32Array(us.length).fill(-1);
+  const stack = [];
+  us.forEach((u, i) => {
+    for (;; ) {
+      const top = us[stack.at(-1) ?? -1];
+      if (!top || top.m === u.m && top.s <= u.s && u.e <= top.e)
+        break;
+      stack.pop();
+    }
+    p[i] = stack.at(-1) ?? -1;
+    stack.push(i);
+  });
+  return p;
+};
+var NAME = /\$[0-9a-f]{6}(?:_\d+)?/g;
+var namesOf = (ix) => {
+  const val = new Map;
+  const fn = new Map;
+  const exp = new Map;
+  const imp = new Map;
+  for (const u of ix.units) {
+    if (u.k === "VariableDeclaration")
+      for (const x of u.t.matchAll(/(\$[0-9a-f]{6}(?:_\d+)?)="((?:[^"\\]|\\.)*)"/g))
+        val.set(`${u.m}|${x[1]}`, x[2]);
+    else if (u.k === "function") {
+      const h = u.t.match(/^(?:async )?function\*? ?(\$[0-9a-f]{6}(?:_\d+)?)\(/)?.[1];
+      if (h)
+        fn.set(`${u.m}|${h}`, u);
+    } else if (u.k === "ExportNamedDeclaration" && !u.t.includes("from"))
+      for (const x of u.t.matchAll(/(\$[0-9a-f]{6}(?:_\d+)?) as ([\w$]+)/g))
+        exp.set(`${ix.chunks[u.m] ?? u.m}|${x[2]}`, `${u.m}|${x[1]}`);
+    else if (u.k === "ImportDeclaration") {
+      const from = u.t.match(/from"\/\$bunfs\/root\/([^"]+)"/)?.[1];
+      if (from)
+        for (const x of u.t.matchAll(/([\w$]+) as (\$[0-9a-f]{6}(?:_\d+)?)/g))
+          imp.set(`${u.m}|${x[2]}`, `${from}|${x[1]}`);
+    }
+  }
+  const key = (m, h) => {
+    const k = `${m}|${h}`;
+    return val.has(k) || fn.has(k) ? k : exp.get(imp.get(k) ?? "") ?? "";
+  };
+  const multi = (pairs) => {
+    const r = new Map;
+    for (const [k, v] of pairs)
+      r.get(k)?.push(v) ?? r.set(k, [v]);
+    return r;
+  };
+  const exported = multi([...exp].map(([x, k]) => [k, x]));
+  const imported = multi([...imp].map(([k, x]) => [x, k]));
+  const byValue = multi([...val].map(([k, v]) => [v, k]));
+  const aliases = (k) => [
+    k,
+    ...(exported.get(k) ?? []).flatMap((x) => imported.get(x) ?? [])
+  ];
+  return {
+    constant: (m, h) => val.get(key(m, h)),
+    fn: (m, h) => fn.get(key(m, h)),
+    aliases,
+    holding: (v) => (byValue.get(v) ?? []).flatMap(aliases)
+  };
+};
+var glue = /^(Import|Export(Named|All))Declaration$/;
+var side = (ix) => {
+  const us = ix.units.filter((u) => !glue.test(u.k));
+  return {
+    us,
+    parent: parentsOf(us),
+    free: us.map(() => true),
+    match: new Int32Array(us.length).fill(-1),
+    names: namesOf(ix)
+  };
+};
+var fkey = (u) => `${u.k}|${u.f.join(`
+`)}`;
+var pkey = (s, i) => {
+  const p = s.parent[i];
+  return p < 0 ? undefined : `${s.us[i]?.k}<${fkey(s.us[p])}`;
+};
+var pair = (a, b, key, hit) => {
+  const open = new Map;
+  a.us.forEach((_, i) => {
+    const k = a.free[i] && key(a, i);
+    if (k !== undefined && k !== false) {
+      const l = open.get(k);
+      l ? l.push(i) : open.set(k, [i]);
+    }
+  });
+  b.us.forEach((_, j) => {
+    const k = b.free[j] && key(b, j);
+    if (k === undefined || k === false)
+      return;
+    const i = open.get(k)?.shift();
+    if (i === undefined)
+      return;
+    a.free[i] = b.free[j] = false;
+    a.match[i] = j;
+    b.match[j] = i;
+    hit(i, j);
+  });
+};
+var subjectOf = (s, i) => {
+  for (let p = s.parent[i];p >= 0; p = s.parent[p]) {
+    const u = s.us[p];
+    const m = u.t.match(/name:(?:"([^"]*)"|(\$[0-9a-f]{6}(?:_\d+)?))/);
+    if (m)
+      return m[1] ?? s.names.constant(u.m, m[2]);
+  }
+  return;
+};
+var withinOf = (s, i) => {
+  const names = new Set;
+  let lits = [];
+  for (let p = s.parent[i];p >= 0; p = s.parent[p]) {
+    const u = s.us[p];
+    for (const [h] of u.t.matchAll(NAME)) {
+      const v = s.names.constant(u.m, h);
+      if (v)
+        names.add(JSON.stringify(v));
+    }
+    if (!lits.length)
+      lits = u.f.filter((x) => x.startsWith('"'));
+  }
+  return [...names, ...lits];
+};
+var diffIndexes = (from, to) => {
+  const a = side(from);
+  const b = side(to);
+  const changes = [];
+  const changed = (i, j) => {
+    const [x, y] = [a.us[i], b.us[j]];
+    if (norm(x.t) !== norm(y.t))
+      changes.push({
+        kind: "changed",
+        from: x,
+        to: y,
+        calls: [...callsOf2(a, x), ...callsOf2(b, y)],
+        within: withinOf(b, j),
+        subject: subjectOf(b, j)
+      });
+  };
+  pair(a, b, (s, i) => {
+    const u = s.us[i];
+    const p = s.parent[i];
+    const t = `${u.k}|${norm(u.t)}`;
+    return u.f.length || p < 0 ? t : `${t}<${fkey(s.us[p])}`;
+  }, () => {});
+  pair(a, b, (s, i) => s.us[i].f.length ? fkey(s.us[i]) : undefined, changed);
+  pair(a, b, pkey, changed);
+  const underPair = () => {
+    let n = 0;
+    pair(a, b, (s, i) => {
+      const p = s.parent[i];
+      const q = p < 0 ? -1 : s === a ? p : b.match[p];
+      return q < 0 ? undefined : `${s.us[i]?.k}<${q}`;
+    }, (i, j) => {
+      n++;
+      changed(i, j);
+    });
+    return n;
+  };
+  while (underPair())
+    ;
+  const post = new Map;
+  a.us.forEach((u, i) => {
+    if (a.free[i])
+      for (const x of u.f)
+        post.get(x)?.push(i) ?? post.set(x, [i]);
+  });
+  b.us.forEach((u, j) => {
+    if (!b.free[j] || !u.f.length)
+      return;
+    const hits = new Map;
+    for (const x of u.f) {
+      const l = post.get(x);
+      if (l && l.length <= 50) {
+        for (const i of l)
+          if (a.free[i])
+            hits.set(i, (hits.get(i) ?? 0) + 1);
+      }
+    }
+    let best = -1;
+    let score = 0.6;
+    for (const [i, n] of hits) {
+      const r = n / Math.max(u.f.length, a.us[i].f.length);
+      if (r >= score)
+        [best, score] = [i, r];
+    }
+    if (best < 0)
+      return;
+    a.free[best] = b.free[j] = false;
+    a.match[best] = j;
+    b.match[j] = best;
+    changed(best, j);
+  });
+  while (underPair())
+    ;
+  b.us.forEach((u, j) => {
+    if (b.free[j])
+      changes.push({
+        kind: "added",
+        to: u,
+        calls: callsOf2(b, u),
+        within: withinOf(b, j),
+        subject: subjectOf(b, j)
+      });
+  });
+  a.us.forEach((u, i) => {
+    if (a.free[i])
+      changes.push({
+        kind: "gone",
+        from: u,
+        calls: callsOf2(a, u),
+        within: withinOf(a, i),
+        subject: subjectOf(a, i)
+      });
+  });
+  const count = (k) => changes.filter((c) => c.kind === k).length;
+  return {
+    counts: {
+      changed: count("changed"),
+      added: count("added"),
+      gone: count("gone")
+    },
+    changes
+  };
+};
+var lines = (t) => t.replace(/([;{}])/g, `$1
+`).split(`
+`).map((l) => l.trim()).filter(Boolean);
+var LINE_CHARS = 200;
+var cut = (l) => l.length > LINE_CHARS ? `${l.slice(0, LINE_CHARS)}\u2026` : l;
+var unitDiff = (c, cap = 40) => {
+  const x = c.from ? lines(c.from.t) : [];
+  const y = c.to ? lines(c.to.t) : [];
+  const nx = x.map(norm);
+  const ny = y.map(norm);
+  const w = ny.length + 1;
+  const ops = [];
+  if (nx.length * ny.length > 4000000) {
+    for (const l of x)
+      ops.push(["-", l]);
+    for (const l of y)
+      ops.push(["+", l]);
+  } else {
+    const dp = new Uint32Array((nx.length + 1) * w);
+    for (let i = nx.length - 1;i >= 0; i--)
+      for (let j = ny.length - 1;j >= 0; j--)
+        dp[i * w + j] = nx[i] === ny[j] ? dp[(i + 1) * w + j + 1] + 1 : Math.max(dp[(i + 1) * w + j], dp[i * w + j + 1]);
+    let i = 0;
+    let j = 0;
+    while (i < nx.length || j < ny.length) {
+      if (i < nx.length && j < ny.length && nx[i] === ny[j]) {
+        ops.push([" ", y[j++]]);
+        i++;
+      } else if (j >= ny.length || i < nx.length && dp[(i + 1) * w + j] >= dp[i * w + j + 1])
+        ops.push(["-", x[i++]]);
+      else
+        ops.push(["+", y[j++]]);
+    }
+  }
+  const near = (k) => [k - 1, k, k + 1].some((t) => (ops[t]?.[0] ?? " ") !== " ");
+  const out = [];
+  let gap = false;
+  ops.forEach(([op, l], k) => {
+    if (!near(k)) {
+      gap = out.length > 0;
+      return;
+    }
+    if (gap)
+      out.push("  \u2026");
+    gap = false;
+    out.push(`${op} ${cut(l)}`);
+  });
+  return out.length > cap ? [...out.slice(0, cap), `\u2026 ${out.length - cap} more lines`] : out;
+};
+var filterChanges = (d, name) => d.changes.filter((c) => [c.from, c.to].some((u) => u && (u.t.includes(name) || u.f.some((x) => x.includes(name)))) || [...c.calls, ...c.within].some((x) => x.includes(name)));
+
 // inspect/mcp/src/events.ts
 var esc2 = (id) => id.replace(/\$/g, "\\$");
 var aliasesOf = (src, chunk, exportName) => {
@@ -34933,10 +35232,481 @@ var eventSites = (bundle, R) => {
   return events;
 };
 
-// inspect/mcp/src/sessions.ts
-import { existsSync as existsSync2, readdirSync as readdirSync2, readFileSync as readFileSync2, statSync as statSync2 } from "fs";
-import { homedir as homedir2 } from "os";
+// inspect/mcp/src/explain.ts
+var CONST = String.raw`(?:!0|!1|null|void 0|""|-?\d+(?:\.\d+)?|\[\]|\{\}|"(?:[^"\\]|\\.)*")`;
+var HEAD = String.raw`^(?:async )?(?:function\*? ?[\w$]*)?\([^)]*\)`;
+var NOOP = [
+  new RegExp(`${HEAD}=>\\{\\}$`),
+  new RegExp(`${HEAD}=>\\(?(${CONST})?\\)?$`),
+  new RegExp(`${HEAD}(?:=>)?\\{(?:return ?(${CONST}))?;?\\}$`)
+];
+var GUARD = String.raw`if\([^{}]*\)(?:return ?${CONST}|throw [^;{}]*);?`;
+var STUB = new RegExp(`${HEAD}(?:=>)?\\{(?:${GUARD})*(?:throw [^;{}]*|return ?(${CONST}));?\\}$`);
+var SHOW = {
+  "!0": "true",
+  "!1": "false",
+  "void 0": "undefined"
+};
+var howOf = (t) => {
+  for (const re of NOOP) {
+    const m = t.match(re);
+    if (m)
+      return { how: "no-op", value: SHOW[m[1] ?? "void 0"] ?? m[1] };
+  }
+  const s = t.match(STUB);
+  if (s && (s[1] === undefined || /throw |if\(/.test(t)))
+    return { how: "stub", ...s[1] && { value: SHOW[s[1]] ?? s[1] } };
+  return { how: "handled" };
+};
+var DECL = /(?:^|,|var |let |const |function\*? ?|class )(\$[0-9a-f]{6}(?:_\d+)?)(?=[=({ ])/g;
+var isFnLabel = (k) => !/^[A-Z]/.test(k);
+var explain = (ix, name, cap = 40) => {
+  const bare = name.replace(/^\//, "");
+  const lits = new Set([JSON.stringify(name), JSON.stringify(bare)]);
+  const names = namesOf(ix);
+  const refs = new Set([...names.holding(name), ...names.holding(bare)]);
+  const refers = (u) => refs.size > 0 && [...u.t.matchAll(NAME)].some(([h]) => refs.has(`${u.m}|${h}`));
+  const named = (u) => [...lits].some((l) => u.t.includes(`name:${l}`)) || [...u.t.matchAll(/name:(\$[0-9a-f]{6}(?:_\d+)?)/g)].some(([, h]) => refs.has(`${u.m}|${h}`));
+  const hits = ix.units.filter((u) => u.f.some((x) => lits.has(x)) || refers(u)).map((u) => ({ u, score: (named(u) ? 2 : 0) + (u.f.length > 3 ? 1 : 0) })).sort((a, b) => b.score - a.score || b.u.f.length - a.u.f.length);
+  const holder = hits[0]?.u;
+  if (!holder)
+    return;
+  const mod = ix.units.filter((u) => u.m === holder.m);
+  const parent = parentsOf(mod);
+  const at = mod.indexOf(holder);
+  const inside = mod.filter((u) => u !== holder && u.s >= holder.s && u.e <= holder.e);
+  const direct = mod.filter((_, i) => parent[i] === at);
+  const own = [holder, ...inside];
+  const small = own.flatMap((u) => [...u.t.matchAll(NAME)].flatMap(([h]) => {
+    const f = names.fn(u.m, h);
+    return f && f.f.length <= 3 ? [f] : [];
+  }));
+  const strings = new Set([...own, ...small].flatMap((u) => u.f.filter((x) => x.startsWith('"'))));
+  const gates = [...strings].filter((x) => x.startsWith('"tengu_'));
+  const env = [
+    ...new Set([...own, ...small].filter((u) => u.f.includes(".env")).flatMap((u) => u.f.filter((x) => /^\.[A-Z][A-Z0-9_]{2,}$/.test(x)).map((x) => x.slice(1))))
+  ];
+  const enabled = direct.find((u) => u.k === "isEnabled");
+  const declared = [...holder.t.matchAll(DECL)].map(([, h]) => h);
+  const users = declared.flatMap((h) => names.aliases(`${holder.m}|${h}`));
+  const who = [
+    ...new Set(users.flatMap((k) => {
+      const [m, h] = k.split("|");
+      const re = new RegExp(`${h.replace("$", "\\$")}(?![\\w])`);
+      return ix.units.filter((u) => u.m === m && u.k !== "ImportDeclaration" && !u.t.startsWith("export{") && !(u.m === holder.m && u.s >= holder.s && u.e <= holder.e) && re.test(u.t)).map((u) => `${u.k} ${u.m}:${u.s}`);
+    }))
+  ];
+  const all = lines(holder.t).map(cut);
+  return {
+    holder,
+    others: hits.slice(1, 6).map(({ u }) => `${u.m}:${u.s}`),
+    what: all.length > cap ? [...all.slice(0, cap), `\u2026 ${all.length - cap} more lines`] : all,
+    who,
+    when: {
+      gates,
+      env,
+      ...enabled && { isEnabled: enabled.t }
+    },
+    how: (isFnLabel(holder.k) ? [holder, ...direct] : direct).filter((u) => isFnLabel(u.k)).map((u) => ({ label: u.k, at: u.s, ...howOf(u.t) }))
+  };
+};
+
+// inspect/mcp/src/find.ts
+var findUnits = (ix, query, limit = 10) => {
+  const words = [
+    ...new Set(query.toLowerCase().split(/\s+/).filter((w) => w.length >= 2))
+  ];
+  const score = (u) => {
+    const f = u.f.map((x) => x.toLowerCase());
+    const k = u.k.toLowerCase();
+    const t = u.t.toLowerCase();
+    let n = 0;
+    const hits = [];
+    for (const w of words) {
+      const s = f.includes(`.${w}`) ? 2 : f.some((x) => x.includes(w)) || k.includes(w) ? 1 : t.includes(w) ? 0.5 : 0;
+      if (s)
+        hits.push(w);
+      n += s;
+    }
+    return { u, n, hits };
+  };
+  return ix.units.map(score).filter((x) => x.n > 0).sort((a, b) => b.n - a.n || a.u.t.length - b.u.t.length).slice(0, limit);
+};
+
+// inspect/mcp/src/notes.ts
+import { existsSync as existsSync2, mkdirSync, readFileSync as readFileSync2, writeFileSync } from "fs";
+import { dirname } from "path";
+var STOP = new Set("added fixed improved changed which there their about after before being would could should these those where while other through without within instead claude still first every again showing shows error errors their".split(" "));
+var readNotes = (version, file) => {
+  if (existsSync2(file))
+    return readFileSync2(file, "utf8");
+  const r = Bun.spawnSync([
+    "gh",
+    "release",
+    "view",
+    `v${version}`,
+    "--repo",
+    "anthropics/claude-code",
+    "--json",
+    "body",
+    "-q",
+    ".body"
+  ]);
+  if (r.exitCode !== 0)
+    throw new Error(`gh release view v${version} failed: ${r.stderr.toString().slice(0, 200)}`);
+  if (!r.stdout.toString().trim())
+    throw new Error(`gh release view v${version} gave no notes`);
+  mkdirSync(dirname(file), { recursive: true });
+  writeFileSync(file, r.stdout.toString());
+  return r.stdout.toString();
+};
+var keysOf = (line) => {
+  const text = line.replace(/^\[[^\]]*\]\s*|^[A-Z][a-z]+:\s*/, "");
+  const spans = [...text.matchAll(/`([^`]+)`/g)].map((x) => x[1]).filter((x) => x.length >= 3);
+  const tokens = text.replace(/`[^`]+`/g, " ").toLowerCase().replace(/'s\b/g, "").split(/[^a-z]+/);
+  const words = [
+    ...new Set(tokens.filter((w) => w.length >= 5 && !STOP.has(w)))
+  ];
+  return { spans, words, tokens: new Set(tokens) };
+};
+var WORDS = 3;
+var stringsOf = (c, side) => [
+  ...c[side]?.f ?? [],
+  ...c.kind === "changed" ? [] : c.calls.map((x) => x.replace(/^\S+ /, ""))
+].filter((x) => x.startsWith('"'));
+var scoreChange = (k, c) => {
+  const all = [
+    ...stringsOf(c, "from"),
+    ...stringsOf(c, "to"),
+    ...c.calls.map((x) => x.replace(/^\S+ /, ""))
+  ];
+  const found = k.spans.filter((x) => all.some((t) => t.includes(x.replace(/^\//, ""))));
+  const subject = c.subject && k.tokens.has(c.subject.toLowerCase()) ? [c.subject] : [];
+  const a = new Set(stringsOf(c, "from"));
+  const b = new Set(stringsOf(c, "to"));
+  const changed = [
+    ...[...a].filter((x) => !b.has(x)),
+    ...[...b].filter((x) => !a.has(x))
+  ];
+  let top = [];
+  for (const t of changed) {
+    const lower = t.toLowerCase();
+    const w = k.words.filter((x) => lower.includes(x));
+    if (w.length > top.length)
+      top = w;
+  }
+  if (top.length < WORDS)
+    top = [];
+  return {
+    hits: [...found, ...subject, ...top],
+    n: (found.length + subject.length) * 2 + top.length
+  };
+};
+var scoreItem = (k, item) => {
+  const found = k.spans.filter((x) => item.includes(x));
+  const lower = item.toLowerCase();
+  const w = k.words.filter((x) => lower.includes(x));
+  const top = w.length >= WORDS ? w : [];
+  return { hits: [...found, ...top], n: found.length * 2 + top.length };
+};
+var size = (c) => (c.from?.t.length ?? 0) + (c.to?.t.length ?? 0);
+var checkNotes = (notes, d, items = []) => {
+  return notes.split(`
+`).filter((l) => l.startsWith("- ")).map((raw) => {
+    const line = raw.slice(2).trim();
+    const k = keysOf(line);
+    let best = { i: -1, n: 0, hits: [], item: false };
+    d.changes.forEach((c, i) => {
+      const s = scoreChange(k, c);
+      if (s.n > best.n || s.n === best.n && s.n > 0 && !best.item && size(c) < size(d.changes[best.i]))
+        best = { i, ...s, item: false };
+    });
+    items.forEach((t, i) => {
+      const s = scoreItem(k, t);
+      if (s.n > best.n)
+        best = { i, ...s, item: true };
+    });
+    if (best.n < 2)
+      return { line, status: "unmatched", hits: [] };
+    if (best.item)
+      return {
+        line,
+        status: "matched",
+        item: items[best.i],
+        hits: best.hits
+      };
+    const change = d.changes[best.i];
+    const gated = [
+      ...change.from?.f ?? [],
+      ...change.to?.f ?? [],
+      ...change.calls
+    ].some((x) => x.includes('"tengu_'));
+    return {
+      line,
+      status: gated ? "gated" : "matched",
+      change,
+      hits: best.hits
+    };
+  });
+};
+
+// inspect/mcp/src/prepare.ts
+import { createHash as createHash2 } from "crypto";
+import {
+  existsSync as existsSync3,
+  mkdirSync as mkdirSync2,
+  mkdtempSync,
+  readdirSync as readdirSync2,
+  readFileSync as readFileSync3,
+  renameSync,
+  rmSync,
+  statSync as statSync2,
+  writeFileSync as writeFileSync2
+} from "fs";
+import { homedir as homedir2, tmpdir } from "os";
 import { basename as basename2, join as join2 } from "path";
+
+// inspect/mcp/src/clean.ts
+import { createHash } from "crypto";
+var hash2 = (s, n = 6) => createHash("sha1").update(s).digest("hex").slice(0, n);
+var localName = (depth, i) => `${depth <= 26 ? String.fromCharCode(96 + depth) : `z${depth}_`}${i}`;
+var depthOf = (s) => {
+  let d = 0;
+  for (let x = s.upper;x && x.type !== "module" && x.type !== "global"; x = x.upper)
+    d++;
+  return d + 1;
+};
+var declared = (m) => m.scopes.scopes.filter((s) => s.type !== "global").flatMap((s) => s.variables.filter((v) => v.defs.length > 0).map((v) => ({
+  v,
+  s,
+  ids: [
+    ...new Set([
+      ...v.identifiers,
+      ...v.references.map((r) => r.identifier)
+    ])
+  ]
+})));
+var spell = (m, id, old, name) => {
+  const p = m.parent(id);
+  if (p?.type === "ExportSpecifier" && p.exported.start === id.start)
+    return `${name} as ${old}`;
+  if (p?.type === "ImportSpecifier" && p.imported.start === id.start)
+    return `${old} as ${name}`;
+  const prop = p?.type === "AssignmentPattern" && p.left === id ? m.parent(p) : p;
+  if (prop?.type === "Property" && prop.shorthand)
+    return `${old}:${name}`;
+  return name;
+};
+var renamer = (m) => {
+  const all = declared(m);
+  const names = new Map;
+  const count = new Map;
+  const edits = all.flatMap(({ v, ids }) => ids.map((id) => ({ id, v }))).sort((a, b) => a.id.start - b.id.start);
+  const render = (start, end, nameOf) => {
+    let out = "";
+    let at = start;
+    let lo = 0;
+    for (let hi = edits.length;lo < hi; ) {
+      const mid = lo + hi >> 1;
+      if (edits[mid].id.start < start)
+        lo = mid + 1;
+      else
+        hi = mid;
+    }
+    for (let k = lo;k < edits.length; k++) {
+      const { id, v } = edits[k];
+      if (id.start >= end)
+        break;
+      if (id.end > end || id.start < at)
+        continue;
+      out += m.text.slice(at, id.start) + spell(m, id, v.name, nameOf(v));
+      at = id.end;
+    }
+    return out + m.text.slice(at, end);
+  };
+  const outerOf = (v, s) => {
+    const o = s.type === "class" ? s.upper?.set.get(v.name) : undefined;
+    return o?.identifiers.some((id) => v.identifiers.includes(id)) ? o : undefined;
+  };
+  for (const { v, s } of all)
+    if (s.type !== "module" && !outerOf(v, s)) {
+      const i = (count.get(s) ?? 0) + 1;
+      count.set(s, i);
+      names.set(v, localName(depthOf(s), i));
+    }
+  const taken = new Set;
+  for (const { v, s } of all)
+    if (s.type === "module") {
+      const def = v.defs[0]?.node;
+      const base = `$${hash2(render(def.start, def.end, (x) => names.get(x) ?? "$"))}`;
+      let n = base;
+      for (let k = 2;taken.has(n); k++)
+        n = `${base}_${k}`;
+      taken.add(n);
+      names.set(v, n);
+    }
+  for (const { v, s } of all) {
+    const o = outerOf(v, s);
+    if (o)
+      names.set(v, names.get(o));
+  }
+  return (start, end) => render(start, end, (v) => names.get(v));
+};
+var renameChunks = (text, chunkNames) => chunkNames ? text.replace(/\/\$bunfs\/root\/(chunk-[a-z0-9]+\.js)/g, (_, c) => `/$bunfs/root/${chunkNames.get(c) ?? c}`) : text;
+
+// inspect/mcp/src/prepare.ts
+var FORMAT = 1;
+var sha = (s, n) => createHash2("sha1").update(s).digest("hex").slice(0, n);
+var cacheRoot = () => process.env["CC_INSPECT_CACHE"] ?? (existsSync3(join2(process.cwd(), "captures")) ? join2(process.cwd(), "captures") : join2(homedir2(), ".cache", "cc-inspect"));
+var labelOf = (m, n) => {
+  const p = m.parent(n);
+  if (!isFn(n))
+    return n.type;
+  const key = (k) => k?.type === "Identifier" ? k.name : k?.type === "Literal" ? String(k.value) : "";
+  if (p?.type === "Property" || p?.type === "MethodDefinition")
+    return key(p.key) || "fn";
+  if (p?.type === "VariableDeclarator" || p?.type === "AssignmentExpression")
+    return "fn";
+  return n.type === "FunctionDeclaration" ? "function" : "fn";
+};
+var unitsOf = (name, m, render = renamer(m)) => {
+  const done = [];
+  const walk = (n, cur) => {
+    let here = cur;
+    if (!cur || isFn(n)) {
+      here = { n, holes: [], f: new Set };
+      cur?.holes.push(n);
+      done.push(here);
+    }
+    const f = here.f;
+    if (n.type === "Literal" && typeof n.value === "string")
+      f.add(JSON.stringify(n.value.slice(0, 80)));
+    else if (n.type === "TemplateElement" && n.value.cooked)
+      f.add(JSON.stringify(n.value.cooked.slice(0, 80)));
+    else if ((n.type === "MemberExpression" || n.type === "Property" || n.type === "MethodDefinition") && !n.computed) {
+      const k = n.type === "MemberExpression" ? n.property : n.key;
+      if (k.type === "Identifier")
+        f.add(`.${k.name}`);
+    }
+    for (const c of children(n))
+      walk(c, here);
+  };
+  for (const s of children(m.ast))
+    walk(s, undefined);
+  return done.map(({ n, holes, f }) => {
+    let t = "";
+    let at = n.start;
+    for (const h of holes) {
+      t += `${render(at, h.start)}\u0192`;
+      at = h.end;
+    }
+    t += render(at, n.end);
+    return {
+      m: name,
+      s: n.start,
+      e: n.end,
+      k: labelOf(m, n),
+      t,
+      h: "",
+      f: [...f].sort()
+    };
+  });
+};
+var binaryStat = (path) => {
+  const st = statSync2(path);
+  return { size: st.size, mtime: Math.round(st.mtimeMs) };
+};
+var formatDir = (files, out) => {
+  const tmp = mkdtempSync(join2(tmpdir(), "cc-inspect-fmt-"));
+  try {
+    for (const [f, t] of files)
+      writeFileSync2(join2(tmp, f), t);
+    const r = Bun.spawnSync([process.execPath, "fmt", "--no-script", "."], {
+      cwd: tmp,
+      env: { PATH: process.env["PATH"] ?? "" }
+    });
+    if (r.exitCode !== 0)
+      throw new Error(`bun fmt failed: ${r.stderr.toString().slice(0, 300)}`);
+    mkdirSync2(out, { recursive: true });
+    for (const f of readdirSync2(tmp))
+      renameSync(join2(tmp, f), join2(out, f));
+  } finally {
+    rmSync(tmp, { recursive: true, force: true });
+  }
+};
+var prepare = (version, binaryPath, modules, root = cacheRoot()) => {
+  const t0 = performance.now();
+  const dir = join2(root, version, "clean");
+  const file = join2(dir, "index.json");
+  const binary = binaryStat(binaryPath);
+  if (existsSync3(file)) {
+    const index = JSON.parse(readFileSync3(file, "utf8"));
+    if (index.format === FORMAT && index.binary.size === binary.size && index.binary.mtime === binary.mtime)
+      return { dir, index, parsed: 0, ms: Math.round(performance.now() - t0) };
+  }
+  const js = modules.filter((x) => /\.m?js$/.test(x.name));
+  const units = [];
+  const texts = new Map;
+  const literals = new Map;
+  const skipped = {};
+  for (const x of js) {
+    const name = x.name.split("/").pop();
+    const m = new Module(x.name, x.text);
+    try {
+      m.ast;
+    } catch (e) {
+      skipped[name] = String(e.message).slice(0, 120);
+      continue;
+    }
+    const render = renamer(m);
+    const us = unitsOf(name, m, render);
+    units.push(...us);
+    texts.set(name, render(0, m.text.length));
+    literals.set(name, [...new Set(us.flatMap((u) => u.f))].sort());
+  }
+  const chunks = new Map;
+  for (const [name, lits] of literals)
+    if (/^chunk-[a-z0-9]+\.js$/.test(name))
+      chunks.set(name, `chunk@${sha(lits.join(`
+`), 8)}.js`);
+  for (const u of units) {
+    u.t = renameChunks(u.t, chunks);
+    u.h = sha(u.t, 12);
+  }
+  const index = {
+    format: FORMAT,
+    version,
+    binary,
+    skipped,
+    chunks: Object.fromEntries(chunks),
+    units
+  };
+  mkdirSync2(dir, { recursive: true });
+  formatDir(new Map([...texts].map(([n, t]) => [n, renameChunks(t, chunks)])), join2(dir, "modules"));
+  writeFileSync2(file, JSON.stringify(index));
+  return {
+    dir,
+    index,
+    parsed: js.length - Object.keys(skipped).length,
+    ms: Math.round(performance.now() - t0)
+  };
+};
+var preparedCache = new Map;
+var prepared = (binary) => {
+  const p = program(binary);
+  const version = listInstalls().find((i) => i.path === p.path)?.version ?? basename2(p.path);
+  let r = preparedCache.get(p.path);
+  if (!r) {
+    r = prepare(version, p.path, p.modules.map((m) => ({ name: m.name, text: m.source })));
+    preparedCache.set(p.path, r);
+  }
+  return r;
+};
+
+// inspect/mcp/src/sessions.ts
+import { existsSync as existsSync4, readdirSync as readdirSync3, readFileSync as readFileSync4, statSync as statSync3 } from "fs";
+import { homedir as homedir3 } from "os";
+import { basename as basename3, join as join3 } from "path";
 // schemas/claude-code-transcript.json
 var claude_code_transcript_default = {
   $schema: "https://json-schema.org/draft/2020-12/schema",
@@ -38635,26 +39405,26 @@ var claude_code_transcript_default = {
 };
 
 // inspect/mcp/src/sessions.ts
-var configDir = () => process.env["CLAUDE_CONFIG_DIR"] || join2(homedir2(), ".claude");
-var projectsDir = () => join2(configDir(), "projects");
+var configDir = () => process.env["CLAUDE_CONFIG_DIR"] || join3(homedir3(), ".claude");
+var projectsDir = () => join3(configDir(), "projects");
 var listSessions = (project) => {
   const root = projectsDir();
-  if (!existsSync2(root))
+  if (!existsSync4(root))
     return [];
   const out = [];
-  for (const p of readdirSync2(root)) {
+  for (const p of readdirSync3(root)) {
     if (project && !p.includes(project))
       continue;
-    const dir = join2(root, p);
-    if (!statSync2(dir).isDirectory())
+    const dir = join3(root, p);
+    if (!statSync3(dir).isDirectory())
       continue;
-    for (const f of readdirSync2(dir)) {
+    for (const f of readdirSync3(dir)) {
       if (!f.endsWith(".jsonl"))
         continue;
-      const path = join2(dir, f);
-      const st = statSync2(path);
+      const path = join3(dir, f);
+      const st = statSync3(path);
       out.push({
-        id: basename2(f, ".jsonl"),
+        id: basename3(f, ".jsonl"),
         project: p,
         path,
         bytes: st.size,
@@ -38665,7 +39435,7 @@ var listSessions = (project) => {
   return out.sort((a, b) => b.modified.localeCompare(a.modified));
 };
 var sessionPath = (session) => {
-  if (session.endsWith(".jsonl") && existsSync2(session))
+  if (session.endsWith(".jsonl") && existsSync4(session))
     return session;
   const hits = listSessions().filter((s) => s.id.startsWith(session));
   const exact = hits.find((s) => s.id === session);
@@ -38675,7 +39445,7 @@ var sessionPath = (session) => {
     return hits[0].path;
   throw new Error(hits.length ? `session "${session}" matches ${hits.length} sessions: ${hits.slice(0, 5).map((s) => s.id).join(", ")}` : `no session "${session}" under ${projectsDir()}`);
 };
-var readLines = (path) => readFileSync2(path, "utf8").split(`
+var readLines = (path) => readFileSync4(path, "utf8").split(`
 `).flatMap((text, i) => {
   if (!text.trim())
     return [];
@@ -38996,7 +39766,7 @@ var extractEndpoints = (bundle) => {
 };
 
 // inspect/mcp/src/surface/env.ts
-var NAME = /^[A-Za-z_][A-Za-z0-9_]*$/;
+var NAME2 = /^[A-Za-z_][A-Za-z0-9_]*$/;
 var UPPER = /^[A-Z_][A-Z0-9_]*$/;
 var LISTED = /^[A-Z][A-Z0-9]*_[A-Z0-9_]+$/;
 var TYPES = new Set([
@@ -39144,7 +39914,7 @@ var paramOf = (m, id) => {
 var extractEnv = (bundle) => {
   const out = [];
   const add = (m, n, name, extra = {}) => {
-    if (NAME.test(name))
+    if (NAME2.test(name))
       out.push({
         kind: "env",
         name,
@@ -39160,7 +39930,7 @@ var extractEnv = (bundle) => {
       return;
     const o = n.arguments[1];
     const keys = o.properties.map(keyOf);
-    if (keys.length < 3 || !keys.every((k) => k && NAME.test(k)))
+    if (keys.length < 3 || !keys.every((k) => k && NAME2.test(k)))
       return;
     const types = o.properties.map((p) => registryType(m, p.value));
     if (types.filter((t) => t && TYPES.has(t.method)).length * 2 < types.length)
@@ -39521,7 +40291,7 @@ var extractKeybindings = (bundle) => {
 };
 
 // plugin/mcp/src/types.ts
-var HEAD = /^(\s*)(?:export )?(?:declare )?(?:type|interface|function|const|class|namespace) ([\w$]+)/;
+var HEAD2 = /^(\s*)(?:export )?(?:declare )?(?:type|interface|function|const|class|namespace) ([\w$]+)/;
 var MODULE = /^declare module '([^']+)' \{/;
 var code = (line, inDoc) => {
   let out = "";
@@ -39594,7 +40364,7 @@ var declarations = (lines) => {
     inDoc = code(line, inDoc).inDoc;
     if (wasDoc)
       continue;
-    const h = HEAD.exec(line);
+    const h = HEAD2.exec(line);
     if (!h || (h[1] ?? "").length !== 2)
       continue;
     const end = blockEnd(lines, i);
@@ -39809,7 +40579,7 @@ var extractSettings = (bundle) => {
 
 // inspect/mcp/src/surface/slash-command.ts
 var TYPES2 = new Set(["local", "local-jsx", "prompt"]);
-var NAME2 = /^[a-z][\w:-]*$/;
+var NAME3 = /^[a-z][\w:-]*$/;
 var builderType = (m, call) => {
   if (call.type !== "CallExpression")
     return;
@@ -39847,7 +40617,7 @@ var extractSlashCommands = (bundle) => {
       return;
     const o = n;
     const name = constString(m, prop(o, "name")?.value);
-    if (!name || !NAME2.test(name))
+    if (!name || !NAME3.test(name))
       return;
     const parent = m.parent(n);
     const type = constString(m, prop(o, "type")?.value) ?? (parent?.type === "CallExpression" && parent.arguments[0] === n ? builderType(m, parent) : undefined);
@@ -40139,6 +40909,10 @@ var READ_ONLY = {
   idempotentHint: true,
   openWorldHint: false
 };
+var WRITES_CACHE = {
+  ...READ_ONLY,
+  readOnlyHint: false
+};
 var MAX_CHARS = 40000;
 var text2 = (t, data) => ({
   content: [{ type: "text", text: t }],
@@ -40159,339 +40933,229 @@ var regex = (pattern, isRegex) => new RegExp(isRegex ? pattern : pattern.replace
 var valJson = (v) => v.k === "obj" ? entriesJson(v.e) : v.k === "str" || v.k === "num" || v.k === "bool" ? { const: v.v } : v.k === "enum" ? { enum: v.v } : v.k === "arr" ? { type: "array" } : { unknown: clip(v.text, 120) };
 var entriesJson = (entries) => Object.fromEntries(entries.map((e) => ("key" in e) ? [`${e.key}${e.opt ? "?" : ""}`, valJson(e.val)] : [`...${clip(e.spread, 80)}`, "unresolved spread"]));
 var server = new McpServer({ name: "cc-inspect", version: package_default.version });
-var binaryArg = string2().optional().describe("Version (e.g. 2.1.307) or path of a Claude Code binary. Default: the install the claude launcher points to.");
-server.registerTool("list_sessions", {
-  title: "List Claude Code sessions",
-  description: `List session transcripts under <config dir>/projects (CLAUDE_CONFIG_DIR, or ~/.claude), newest first.
-Args:
-  - project (string, optional): keep projects whose folder name contains this (the folder is the project path with "/" as "-").
-  - limit (number 1-200, default 20).
-Returns: one line per session: id, project, size, modified time; structuredContent {sessions:[{id,project,path,bytes,modified}]}.`,
+var P = {
+  version: string2().optional().describe("Claude Code version or binary path; default: the current install."),
+  query: string2().min(1).optional().describe("Text to find."),
+  regex: boolean2().optional().describe("Treat query as a regular expression."),
+  name: string2().optional().describe("Name or filter (any case where it filters)."),
+  module: string2().optional().describe('Module name, e.g. "chunk-abc.js".'),
+  offset: number2().int().min(0).optional(),
+  limit: number2().int().min(1).max(400).optional()
+};
+var group = (tool, description, key, handlers, extra, annotations = READ_ONLY) => server.registerTool(tool, {
+  description,
   inputSchema: {
-    project: string2().optional(),
-    limit: number2().int().min(1).max(200).default(20)
+    [key]: string2().optional().describe(`One of: ${Object.keys(handlers).join(", ")}.`),
+    ...extra
   },
-  annotations: READ_ONLY
-}, ({ project, limit }) => run(() => {
-  const all = listSessions(project);
-  const sessions = all.slice(0, limit);
-  return text2(sessions.length ? `${all.length} sessions under ${configDir()}/projects${all.length > limit ? `, showing ${limit}` : ""}:
+  annotations
+}, (a) => run(() => {
+  const k = String(a[key] ?? "");
+  const h = Object.hasOwn(handlers, k) ? handlers[k] : undefined;
+  if (!h)
+    throw new Error(`unknown ${key} "${k}"; ${key}s: ${Object.keys(handlers).filter(Boolean).join(", ")}`);
+  return h(a);
+}));
+var need = (v, what) => {
+  if (!v)
+    throw new Error(`give ${what}`);
+  return v;
+};
+group("sessions", "Read Claude Code session transcripts: list, read, search, or validate them against the transcript schema.", "action", {
+  list: ({ project, limit = 20 }) => {
+    const all = listSessions(project);
+    const sessions = all.slice(0, limit);
+    return text2(sessions.length ? `${all.length} sessions under ${configDir()}/projects${all.length > limit ? `, showing ${limit}` : ""}:
 ${sessions.map((s) => `- ${s.id}  ${s.project}  ${Math.round(s.bytes / 1024)} KB  ${s.modified}`).join(`
 `)}` : `No sessions under ${configDir()}/projects${project ? ` for "${project}"` : ""}.`, { sessions });
-}));
-server.registerTool("read_session", {
-  title: "Read a Claude Code session transcript",
-  description: `Read lines of a session transcript (.jsonl), numbered from 1.
-Args:
-  - session (string): session id (a unique prefix works) or a path to a .jsonl file.
-  - type (string, optional): keep lines with this "type" (user, assistant, system, attachment, summary, ...).
-  - offset (number, default 0): lines to skip, after the type filter.
-  - limit (number 1-200, default 20).
-  - max_line_chars (number, default 2000): each line is cut to this length.
-Returns: the lines as JSON text, with "next_offset" when more remain.`,
-  inputSchema: {
-    session: string2(),
-    type: string2().optional(),
-    offset: number2().int().min(0).default(0),
-    limit: number2().int().min(1).max(200).default(20),
-    max_line_chars: number2().int().min(100).max(MAX_CHARS).default(2000)
   },
-  annotations: READ_ONLY
-}, ({ session, type, offset, limit, max_line_chars }) => run(() => {
-  const path = sessionPath(session);
-  const lines = readLines(path).filter((l) => !type || l.json?.type === type);
-  const page = lines.slice(offset, offset + limit);
-  const more = offset + page.length < lines.length;
-  return text2(`${path}: lines ${offset + 1}-${offset + page.length} of ${lines.length}${type ? ` with type "${type}"` : ""}${more ? `, next_offset ${offset + page.length}` : ""}
+  read: ({
+    session,
+    type,
+    offset = 0,
+    limit = 20,
+    max_line_chars = 2000
+  }) => {
+    const path = sessionPath(need(session, "session"));
+    const lines = readLines(path).filter((l) => !type || l.json?.type === type);
+    const page = lines.slice(offset, offset + limit);
+    const more = offset + page.length < lines.length;
+    return text2(`${path}: lines ${offset + 1}-${offset + page.length} of ${lines.length}${type ? ` with type "${type}"` : ""}${more ? `, next_offset ${offset + page.length}` : ""}
 ${page.map((l) => `${l.n}: ${clip(l.text, max_line_chars)}`).join(`
 `)}`);
-}));
-server.registerTool("search_sessions", {
-  title: "Search Claude Code session transcripts",
-  description: `Find transcript lines that match a pattern, newest session first.
-Args:
-  - pattern (string): text to find (or a regular expression with regex: true).
-  - regex (boolean, default false).
-  - session (string, optional): search one session (id, prefix, or path).
-  - project (string, optional): search projects whose folder name contains this.
-  - limit (number 1-200, default 20): maximum hits.
-Returns: one hit per line: session id, line number, type, and a snippet around the match.`,
-  inputSchema: {
-    pattern: string2().min(1),
-    regex: boolean2().default(false),
-    session: string2().optional(),
-    project: string2().optional(),
-    limit: number2().int().min(1).max(200).default(20)
   },
-  annotations: READ_ONLY
-}, ({ pattern, regex: isRegex, session, project, limit }) => run(() => {
-  const re = regex(pattern, isRegex);
-  const files = session ? [{ id: session, path: sessionPath(session) }] : listSessions(project);
-  const hits = [];
-  for (const f of files) {
-    for (const l of readLines(f.path)) {
-      const m = re.exec(l.text);
-      if (!m)
-        continue;
-      const from = Math.max(0, m.index - 100);
-      hits.push({
-        session: f.id,
-        line: l.n,
-        type: l.json?.type,
-        snippet: l.text.slice(from, m.index + m[0].length + 100)
-      });
+  search: ({
+    query,
+    regex: isRegex = false,
+    session,
+    project,
+    limit = 20
+  }) => {
+    const re = regex(need(query, "query"), isRegex);
+    const files = session ? [{ id: session, path: sessionPath(session) }] : listSessions(project);
+    const hits = [];
+    for (const f of files) {
+      for (const l of readLines(f.path)) {
+        const m = re.exec(l.text);
+        if (!m)
+          continue;
+        const from = Math.max(0, m.index - 100);
+        hits.push({
+          session: f.id,
+          line: l.n,
+          type: l.json?.type,
+          snippet: l.text.slice(from, m.index + m[0].length + 100)
+        });
+        if (hits.length >= limit)
+          break;
+      }
       if (hits.length >= limit)
         break;
     }
-    if (hits.length >= limit)
-      break;
-  }
-  return text2(hits.length ? hits.map((h) => `- ${h.session}:${h.line} [${h.type}] \u2026${h.snippet}\u2026`).join(`
+    return text2(hits.length ? hits.map((h) => `- ${h.session}:${h.line} [${h.type}] \u2026${h.snippet}\u2026`).join(`
 `) : `No match for ${re} in ${files.length} sessions.`, { hits });
-}));
-server.registerTool("validate_session", {
-  title: "Check a session transcript against the schema",
-  description: `Check each line of a session transcript against the transcript JSON Schema (generated from Claude Code ${SCHEMA_VERSION}), using the definition of the line's "type". Shows the lines whose fields differ from what that version writes: a new version, a hand-edited file, or a gap in the schema.
-Args:
-  - session (string): session id (a unique prefix works) or a path to a .jsonl file.
-  - limit (number 1-200, default 20): maximum failing lines to show.
-Returns: counts of lines and failures by type, then each failing line with its problems; structuredContent {lines, failed, byType, failures:[{line,type,problems}]}.`,
-  inputSchema: {
-    session: string2(),
-    limit: number2().int().min(1).max(200).default(20)
   },
-  annotations: READ_ONLY
-}, ({ session, limit }) => run(() => {
-  const path = sessionPath(session);
-  const lines = readLines(path);
-  const byType = {};
-  const failures = [];
-  for (const l of lines) {
-    const t = String(l.json?.type);
-    const c = byType[t] ?? { lines: 0, failed: 0 };
-    byType[t] = c;
-    c.lines++;
-    const problems = checkLine(l);
-    if (!problems.length)
-      continue;
-    c.failed++;
-    failures.push({ line: l.n, type: l.json?.type, problems });
-  }
-  const shown = failures.slice(0, limit);
-  return text2(`${path}: ${lines.length} lines, ${failures.length} fail the ${SCHEMA_VERSION} schema.
+  validate: ({ session, limit = 20 }) => {
+    const path = sessionPath(need(session, "session"));
+    const lines = readLines(path);
+    const byType = {};
+    const failures = [];
+    for (const l of lines) {
+      const t = String(l.json?.type);
+      const c = byType[t] ?? { lines: 0, failed: 0 };
+      byType[t] = c;
+      c.lines++;
+      const problems = checkLine(l);
+      if (!problems.length)
+        continue;
+      c.failed++;
+      failures.push({ line: l.n, type: l.json?.type, problems });
+    }
+    const shown = failures.slice(0, limit);
+    return text2(`${path}: ${lines.length} lines, ${failures.length} fail the ${SCHEMA_VERSION} schema.
 ${Object.entries(byType).map(([t, c]) => `- ${t}: ${c.lines} lines, ${c.failed} fail`).join(`
 `)}${shown.length ? `
 
 Failures:
 ${shown.map((f) => `- line ${f.line} [${f.type}]: ${f.problems.slice(0, 5).join("; ")}`).join(`
 `)}` : ""}`, {
-    lines: lines.length,
-    failed: failures.length,
-    byType,
-    failures: shown
-  });
-}));
-server.registerTool("list_installs", {
-  title: "List Claude Code installs",
-  description: `List the Claude Code binaries under ~/.local/share/claude/versions, newest first, and mark the one ~/.local/bin/claude points to.
-Returns: one line per version with its path; structuredContent {installs:[{version,path,current}]}.`,
-  inputSchema: {},
-  annotations: READ_ONLY
-}, () => run(() => {
-  const installs = listInstalls();
-  return text2(installs.length ? installs.map((i) => `- ${i.version}${i.current ? " (current)" : ""}  ${i.path}`).join(`
+      lines: lines.length,
+      failed: failures.length,
+      byType,
+      failures: shown
+    });
+  }
+}, {
+  session: string2().optional().describe("Session id, unique prefix, or .jsonl path."),
+  project: string2().optional().describe("Keep project folders whose name contains this."),
+  type: string2().optional().describe('Keep lines with this "type" (read).'),
+  query: P.query,
+  regex: P.regex,
+  offset: P.offset,
+  limit: P.limit,
+  max_line_chars: number2().int().min(100).max(MAX_CHARS).optional()
+});
+group("code", "Read the code inside a Claude Code binary: list installs or modules, search literal text, find code by plain words, read a module slice, or prepare a cleaned index for release diffs.", "action", {
+  installs: () => {
+    const installs = listInstalls();
+    return text2(installs.length ? installs.map((i) => `- ${i.version}${i.current ? " (current)" : ""}  ${i.path}`).join(`
 `) : "No Claude Code install found.", { installs });
-}));
-server.registerTool("list_modules", {
-  title: "List the modules in a Claude Code binary",
-  description: `List the files embedded in a Claude Code binary (a Bun single-file executable): JavaScript chunks and assets.
-Args:
-  - binary (string, optional): version or path.
-  - filter (string, optional): keep names that contain this.
-Returns: one line per module with its size; structuredContent {path, modules:[{name,bytes}]}.`,
-  inputSchema: { binary: binaryArg, filter: string2().optional() },
-  annotations: READ_ONLY
-}, ({ binary, filter }) => run(() => {
-  const p = program(binary);
-  const modules = p.modules.filter((m) => !filter || m.name.includes(filter)).map((m) => ({ name: m.name, bytes: m.bytes.length }));
-  return text2(`${p.path}: ${modules.length} modules
+  },
+  modules: ({ version, name }) => {
+    const p = program(version);
+    const modules = p.modules.filter((m) => !name || m.name.includes(name)).map((m) => ({ name: m.name, bytes: m.bytes.length }));
+    return text2(`${p.path}: ${modules.length} modules
 ${modules.map((m) => `- ${m.name}  ${m.bytes} bytes`).join(`
 `)}`, { path: p.path, modules });
-}));
-server.registerTool("search_binary", {
-  title: "Search the code of a Claude Code binary",
-  description: `Find text in the JavaScript modules of a Claude Code binary. Search literal anchors (strings, event names, setting keys, env var names), since identifiers are minified and change between versions.
-Args:
-  - pattern (string): text to find (or a regular expression with regex: true).
-  - regex (boolean, default false).
-  - module (string, optional): search modules whose name contains this.
-  - binary (string, optional): version or path.
-  - context (number 0-2000, default 150): characters shown on each side.
-  - limit (number 1-200, default 20).
-Returns: one hit per match: module, offset, and the code around it. Use read_module or resolve_object with the module and offset.`,
-  inputSchema: {
-    pattern: string2().min(1),
-    regex: boolean2().default(false),
-    module: string2().optional(),
-    binary: binaryArg,
-    context: number2().int().min(0).max(2000).default(150),
-    limit: number2().int().min(1).max(200).default(20)
   },
-  annotations: READ_ONLY
-}, ({ pattern, regex: isRegex, module, binary, context, limit }) => run(() => {
-  const re = new RegExp(regex(pattern, isRegex).source, "g");
-  const hits = [];
-  for (const m of program(binary).bundle.modules.values()) {
-    if (module && !m.name.includes(module))
-      continue;
-    for (const h of m.text.matchAll(re)) {
-      hits.push({
-        module: m.name,
-        offset: h.index,
-        snippet: m.text.slice(Math.max(0, h.index - context), h.index + h[0].length + context)
-      });
+  search: ({
+    query,
+    regex: isRegex = false,
+    module,
+    version,
+    context = 150,
+    limit = 20
+  }) => {
+    const re = new RegExp(regex(need(query, "query"), isRegex).source, "g");
+    const hits = [];
+    for (const m of program(version).bundle.modules.values()) {
+      if (module && !m.name.includes(module))
+        continue;
+      for (const h of m.text.matchAll(re)) {
+        hits.push({
+          module: m.name,
+          offset: h.index,
+          snippet: m.text.slice(Math.max(0, h.index - context), h.index + h[0].length + context)
+        });
+        if (hits.length >= limit)
+          break;
+      }
       if (hits.length >= limit)
         break;
     }
-    if (hits.length >= limit)
-      break;
-  }
-  return text2(hits.length ? hits.map((h) => `- ${h.module}@${h.offset}: ${h.snippet}`).join(`
+    return text2(hits.length ? hits.map((h) => `- ${h.module}@${h.offset}: ${h.snippet}`).join(`
 
 `) : `No match for ${re}.`, { hits });
-}));
-server.registerTool("read_module", {
-  title: "Read code from a Claude Code binary",
-  description: `Read a slice of one module of a Claude Code binary.
-Args:
-  - module (string): module name from list_modules or search_binary (e.g. "chunk-abc.js").
-  - offset (number, default 0): character offset.
-  - length (number 1-${MAX_CHARS}, default 4000).
-  - binary (string, optional): version or path.
-Returns: the code, headed by its range and the module length.`,
-  inputSchema: {
-    module: string2(),
-    offset: number2().int().min(0).default(0),
-    length: number2().int().min(1).max(MAX_CHARS).default(4000),
-    binary: binaryArg
   },
-  annotations: READ_ONLY
-}, ({ module, offset, length, binary }) => run(() => {
-  const p = program(binary);
-  const m = p.modules.find((x) => x.name.endsWith(`/${module}`)) ?? p.modules.find((x) => x.name === module);
-  if (!m)
-    throw new Error(`no module "${module}" in ${p.path}`);
-  const end = Math.min(m.source.length, offset + length);
-  return text2(`${m.name} [${offset}, ${end}) of ${m.source.length}
+  read: ({ module, offset = 0, length = 4000, version }) => {
+    const p = program(version);
+    const mod = need(module, "module");
+    const m = p.modules.find((x) => x.name.endsWith(`/${mod}`)) ?? p.modules.find((x) => x.name === mod);
+    if (!m)
+      throw new Error(`no module "${mod}" in ${p.path}`);
+    const end = Math.min(m.source.length, offset + length);
+    return text2(`${m.name} [${offset}, ${end}) of ${m.source.length}
 ${m.source.slice(offset, end)}`);
-}));
-server.registerTool("resolve_object", {
-  title: "Resolve an object literal in a Claude Code binary",
-  description: `Parse the object literal around a place in the code and list its keys, following spreads into the functions and modules they come from (minified names do not matter). A key ending in "?" is optional (behind a condition, or missing at some sites). Values show {const}, {enum}, nested keys, or {unknown: <code>}.
-Args:
-  - module (string): module name (from search_binary).
-  - offset (number, optional): offset inside or at the "{" of the literal.
-  - anchor (string, optional): instead of offset, the first place this text occurs in the module; the innermost literal around it is used.
-  - binary (string, optional): version or path.
-Returns: the keys as JSON, and the spreads that could not be followed.`,
-  inputSchema: {
-    module: string2(),
-    offset: number2().int().min(0).optional(),
-    anchor: string2().optional(),
-    binary: binaryArg
   },
-  annotations: READ_ONLY
-}, ({ module, offset, anchor, binary }) => run(() => {
-  const { bundle, resolver: R } = program(binary);
-  const m = bundle.get(module);
-  if (!m)
-    throw new Error(`no JavaScript module "${module}"`);
-  const pos = anchor ? m.text.indexOf(anchor) : offset ?? -1;
-  if (pos < 0)
-    throw new Error(anchor ? `anchor not found: ${anchor}` : "give offset or anchor");
-  let obj = m.nodeAt(pos);
-  while (obj && obj.type !== "ObjectExpression")
-    obj = m.parent(obj);
-  if (!obj)
-    throw new Error(`no object literal around ${module}@${pos}`);
-  const before = R.unresolved.length;
-  const keys = entriesJson(R.pin(R.entries(m, obj)));
-  const unresolved = [...new Set(R.unresolved.slice(before))];
-  return text2(`${JSON.stringify(keys, null, 2)}${unresolved.length ? `
+  find: ({ query, version, limit = 10 }) => {
+    const q = need(query, "query");
+    const r = prepared(version);
+    const found = findUnits(r.index, q, Math.min(limit, 10));
+    return text2(found.length ? `${r.index.version}: top ${found.length} for "${clip(q, 100)}"
+${found.map(({ u, n, hits }) => `## ${u.k}  ${u.m}:${u.s}  score ${n} (${hits.join(", ")})
+${lines(u.t).slice(0, 4).map(cut).join(`
+`)}`).join(`
 
-Spreads not followed:
-${unresolved.map((u) => `- ${u}`).join(`
-`)}` : ""}`, { keys, unresolved });
-}));
-server.registerTool("resolve_event", {
-  title: "Resolve an OpenTelemetry event of Claude Code",
-  description: `Find every place the program emits an OpenTelemetry event (log record) and merge the attribute keys of all call sites. A key missing from some sites ends in "?". Base attributes (session.id, user.id, ...) and event.* fields are added to every event and are not listed.
-Args:
-  - name (string, optional): event name without the "claude_code." prefix (e.g. "tool_result"). Without it, lists the event names.
-  - binary (string, optional): version or path.
-Returns: the keys as JSON, or the list of events with their call site counts.`,
-  inputSchema: { name: string2().optional(), binary: binaryArg },
-  annotations: READ_ONLY
-}, ({ name, binary }) => run(() => {
-  const { bundle, resolver } = program(binary);
-  const events = eventSites(bundle, resolver);
-  if (!name)
-    return text2([...events].sort(([a], [b]) => a.localeCompare(b)).map(([n, l]) => `- ${n}: ${l.length} call sites`).join(`
-`), {
-      events: Object.fromEntries([...events].map(([n, l]) => [n, l.length]))
+`)}` : `No unit holds a word of "${clip(q, 100)}".`, {
+      found: found.map(({ u, n, hits }) => ({
+        label: u.k,
+        module: u.m,
+        offset: u.s,
+        score: n,
+        hits
+      }))
     });
-  const lists = events.get(name.replace(/^claude_code\./, ""));
-  if (!lists)
-    throw new Error(`no event "${name}"; events: ${[...events.keys()].join(", ")}`);
-  const keys = entriesJson(mergeEntries(lists));
-  return text2(`${lists.length} call sites
-${JSON.stringify(keys, null, 2)}`, {
-    sites: lists.length,
-    keys
-  });
-}));
-server.registerTool("list_tools", {
-  title: "List the built-in tools of Claude Code",
-  description: `List the tools the program's getAllBaseTools gives, each with the code that gates it in that list ("when": the test of a "cond?[T]:[]" spread, or the function of a "[A,B].filter(f)") and its own isEnabled ("enabled"), when its definition has one; without it, the tool builder's default applies. The per-session filters of getTools are not included, so a listed tool may still be off for a user: confirm with a probe before you call it available. Minified names change between versions; "functions" holds the source of each function the gates call, two calls deep.
-Args:
-  - binary (string, optional): version or path.
-Returns: one line per tool with its gates, then the functions; structuredContent {module, tools:[{name,when,enabled?,unresolved?}], functions}.`,
-  inputSchema: { binary: binaryArg },
-  annotations: READ_ONLY
-}, ({ binary }) => run(() => {
-  const { bundle, resolver } = program(binary);
-  const r = baseTools(bundle, resolver);
-  return text2(`${r.module}: ${r.tools.length} tools
-${r.tools.map((t) => `- ${t.name}${t.unresolved ? " (unresolved)" : ""}${t.when.length ? `  when: ${t.when.join(" && ")}` : ""}${t.enabled ? `  own: ${t.enabled}` : ""}`).join(`
-`)}
-
-Functions:
-${Object.entries(r.functions).map(([n, s]) => `- ${n}: ${s}`).join(`
-`)}`, r);
-}));
+  },
+  prepare: ({ version }) => {
+    const r = prepared(version);
+    const skipped = Object.keys(r.index.skipped);
+    return text2(`${r.index.version}: ${r.parsed ? `${r.parsed} modules cleaned` : "read from the cache"}, ${r.index.units.length} units, ${r.ms} ms -> ${r.dir}${skipped.length ? `
+Not JavaScript: ${skipped.join(", ")}` : ""}`, {
+      dir: r.dir,
+      version: r.index.version,
+      parsed: r.parsed,
+      units: r.index.units.length,
+      skipped,
+      ms: r.ms
+    });
+  }
+}, {
+  version: P.version,
+  query: P.query,
+  regex: P.regex,
+  name: P.name,
+  module: P.module,
+  offset: P.offset,
+  limit: P.limit,
+  context: number2().int().min(0).max(2000).optional().describe("Characters shown around a search hit (default 150)."),
+  length: number2().int().min(1).max(MAX_CHARS).optional().describe("Characters to read (default 4000).")
+}, WRITES_CACHE);
 var SURFACE_LIMIT = 200;
 var SURFACE_NAME_CHARS = 120;
 var SURFACE_HEADER_CHARS = 300;
 var surfaceLine = (i) => `- ${clip(i.name, SURFACE_NAME_CHARS)}${i.default !== undefined ? `  default ${i.default}` : ""}${i.values ? `  values ${i.values.join("|")}` : ""}${i.gate ? `  gate ${clip(i.gate, 120)}` : ""}${i.detail ? `  (${clip(i.detail, 120)})` : ""}  ${i.module ?? "-"}:${i.offset ?? "-"}`;
-server.registerTool("list_surface", {
-  title: "List the functional surface of Claude Code by kind",
-  description: `List the items of one kind of surface in a Claude Code binary, found by the same extractors as the docs surface snapshot. Kinds: ${Object.keys(KINDS).join(", ")}.
-Args:
-  - kind (string, optional): without it, lists each kind with its item count.
-  - name (string, optional): keep items whose name contains this (any case).
-  - offset (number, default 0), limit (number 1-400, default ${SURFACE_LIMIT}). A name over ${SURFACE_NAME_CHARS} characters is clipped. The reply stops at ${MAX_CHARS} characters, at a line end.
-  - binary (string, optional): version or path.
-Returns: one line per item: the name, then the default, values, gate, and detail when the code shows them ("unknown" when the code computes it), then module:offset ("-" when the source gives no place), with "next_offset" when more remain, also when the character cap cut the page.`,
-  inputSchema: {
-    kind: string2().optional(),
-    name: string2().optional(),
-    offset: number2().int().min(0).default(0),
-    limit: number2().int().min(1).max(400).default(SURFACE_LIMIT),
-    binary: binaryArg
-  },
-  annotations: READ_ONLY
-}, ({ kind, name, offset, limit, binary }) => run(() => {
-  const { bundle, modules } = program(binary);
+var listKind = (kind, { name, offset = 0, limit = SURFACE_LIMIT, version }) => {
+  const { bundle, modules } = program(version);
   if (!kind)
     return text2(Object.keys(KINDS).map((k) => {
       try {
@@ -40520,5 +41184,199 @@ Returns: one line per item: the name, then the default, values, gate, and detail
   return text2(`${kind}: items ${offset + 1}-${offset + lines.length} of ${all.length}${name ? ` matching "${clip(name, 100)}"` : ""}${more ? `, next_offset ${offset + lines.length}` : ""}
 ${lines.join(`
 `)}`);
-}));
+};
+group("surface", `List what a Claude Code binary exposes by kind (${Object.keys(KINDS).join(", ")}), or resolve object-keys, event-keys, or tool-gates from its code.`, "kind", {
+  ...Object.fromEntries(["", ...Object.keys(KINDS)].map((k) => [k, (a) => listKind(k, a)])),
+  "object-keys": ({ module, offset, anchor, version }) => {
+    const { bundle, resolver: R } = program(version);
+    const m = bundle.get(need(module, "module"));
+    if (!m)
+      throw new Error(`no JavaScript module "${module}"`);
+    const pos = anchor ? m.text.indexOf(anchor) : offset ?? -1;
+    if (pos < 0)
+      throw new Error(anchor ? `anchor not found: ${anchor}` : "give offset or anchor");
+    let obj = m.nodeAt(pos);
+    while (obj && obj.type !== "ObjectExpression")
+      obj = m.parent(obj);
+    if (!obj)
+      throw new Error(`no object literal around ${module}@${pos}`);
+    const before = R.unresolved.length;
+    const keys = entriesJson(R.pin(R.entries(m, obj)));
+    const unresolved = [...new Set(R.unresolved.slice(before))];
+    return text2(`${JSON.stringify(keys, null, 2)}${unresolved.length ? `
+
+Spreads not followed:
+${unresolved.map((u) => `- ${u}`).join(`
+`)}` : ""}`, { keys, unresolved });
+  },
+  "event-keys": ({ name, version }) => {
+    const { bundle, resolver } = program(version);
+    const events = eventSites(bundle, resolver);
+    if (!name)
+      return text2([...events].sort(([a], [b]) => a.localeCompare(b)).map(([n, l]) => `- ${n}: ${l.length} call sites`).join(`
+`), {
+        events: Object.fromEntries([...events].map(([n, l]) => [n, l.length]))
+      });
+    const lists = events.get(name.replace(/^claude_code\./, ""));
+    if (!lists)
+      throw new Error(`no event "${name}"; events: ${[...events.keys()].join(", ")}`);
+    const keys = entriesJson(mergeEntries(lists));
+    return text2(`${lists.length} call sites
+${JSON.stringify(keys, null, 2)}`, {
+      sites: lists.length,
+      keys
+    });
+  },
+  "tool-gates": ({ version }) => {
+    const { bundle, resolver } = program(version);
+    const r = baseTools(bundle, resolver);
+    return text2(`${r.module}: ${r.tools.length} tools
+${r.tools.map((t) => `- ${t.name}${t.unresolved ? " (unresolved)" : ""}${t.when.length ? `  when: ${t.when.join(" && ")}` : ""}${t.enabled ? `  own: ${t.enabled}` : ""}`).join(`
+`)}
+
+Functions:
+${Object.entries(r.functions).map(([n, s]) => `- ${n}: ${s}`).join(`
+`)}`, r);
+  }
+}, {
+  version: P.version,
+  name: P.name,
+  module: P.module,
+  offset: P.offset,
+  limit: P.limit,
+  anchor: string2().optional().describe("For object-keys: text inside the literal, instead of offset.")
+});
+var DIFF_LINES = 40;
+var changeHead = (c) => {
+  const u = c.to ?? c.from;
+  const at = [
+    c.from && `${c.from.m}:${c.from.s}`,
+    c.to && `${c.to.m}:${c.to.s}`
+  ].filter(Boolean).join(" -> ");
+  return `## ${c.kind} ${u.k}  ${at}${c.within.length ? `  in ${c.within.slice(0, 3).join(", ")}` : ""}${c.calls.length ? `
+  calls: ${c.calls.slice(0, 6).join("; ")}` : ""}`;
+};
+group("release", "Compare two Claude Code versions by function (diff), check the release notes against that diff (notes), or explain where a name lives and who, when, and how its code runs (explain).", "action", {
+  diff: ({ from, to, name, offset = 0, limit = 30 }) => {
+    const [x, y] = [need(from, "from"), need(to, "to")];
+    const a = prepared(x);
+    const b = prepared(y);
+    const d = diffIndexes(a.index, b.index);
+    const all = name ? filterChanges(d, name) : d.changes;
+    const order = { changed: 0, added: 1, gone: 2 };
+    const size = (c) => (c.from?.t.length ?? 0) + (c.to?.t.length ?? 0);
+    const list = [...all].sort((x, y) => order[x.kind] - order[y.kind] || size(x) - size(y));
+    const page = list.slice(offset, offset + Math.min(limit, 30));
+    const count = (k) => all.filter((c) => c.kind === k).length;
+    const more = offset + page.length < list.length;
+    return text2(`${a.index.version} -> ${b.index.version}: ${d.counts.changed} changed, ${d.counts.added} added, ${d.counts.gone} gone (imports and exports left out).${name ? ` Matching "${name}": ${count("changed")} changed, ${count("added")} added, ${count("gone")} gone.` : ""} Showing ${offset + 1}-${offset + page.length}${more ? `, next_offset ${offset + page.length}` : ""}.
+
+${page.map((c) => `${changeHead(c)}
+${unitDiff(c, DIFF_LINES).join(`
+`)}`).join(`
+
+`)}`, { counts: d.counts, matching: name ? all.length : undefined });
+  },
+  notes: ({ version, from }) => {
+    const b = prepared(version);
+    const num = (v) => v.split(/[.-]/).map((x) => Number(x) || 0);
+    const below = (x, y) => {
+      const [p, q] = [num(x), num(y)];
+      const i = p.findIndex((n, j) => n !== q[j]);
+      return i >= 0 && p[i] < (q[i] ?? 0);
+    };
+    const older = from ?? listInstalls().map((i) => i.version).filter((v) => below(v, b.index.version)).sort((x, y) => below(x, y) ? 1 : -1)[0];
+    if (!older)
+      throw new Error(`no install older than ${b.index.version}; give from`);
+    const a = prepared(older);
+    const root = dirname2(b.dir);
+    const report = join4(root, "diff", "report.md");
+    const items = existsSync5(report) ? readFileSync5(report, "utf8").split(`
+`).filter((l) => l.startsWith("- ")) : [];
+    const lines = checkNotes(readNotes(b.index.version, join4(root, "notes.md")), diffIndexes(a.index, b.index), items);
+    const count = (k) => lines.filter((l) => l.status === k).length;
+    return text2(`${b.index.version} notes against ${a.index.version}: ${lines.length} lines, ${count("matched")} matched, ${count("gated")} gated, ${count("unmatched")} unmatched. A match is a lead to read, not a proof.
+${lines.map((l) => {
+      const u = l.change && (l.change.to ?? l.change.from);
+      const why = u ? `
+    -> ${l.change?.kind} ${u.k} ${u.m}:${u.s} (${l.hits.join(", ")})` : l.item ? `
+    -> report: ${clip(l.item, 120)} (${l.hits.join(", ")})` : "";
+      return `- [${l.status}] ${clip(l.line, 160)}${why}`;
+    }).join(`
+`)}`, {
+      lines: lines.map((l) => ({
+        line: l.line,
+        status: l.status,
+        hits: l.hits,
+        ...l.change && {
+          at: `${(l.change.to ?? l.change.from)?.m}:${(l.change.to ?? l.change.from)?.s}`
+        }
+      }))
+    });
+  },
+  explain: ({ version, name }) => {
+    const wanted = need(name, "name");
+    const r = prepared(version);
+    const e = explain(r.index, wanted);
+    if (!e)
+      return text2(`"${name}" is not in ${r.index.version}.`);
+    const h = e.holder;
+    const list = (xs, n) => xs.length ? `${xs.slice(0, n).join(", ")}${xs.length > n ? `, and ${xs.length - n} more` : ""}` : "none found";
+    return text2([
+      `"${name}" in ${r.index.version}`,
+      `Where: ${h.m}:${h.s} (${h.k})${e.others.length ? `; also in ${e.others.join(", ")}` : ""}`,
+      `Who: ${list(e.who, 10)}`,
+      `When: gates ${list(e.when.gates, 10)}; env reads ${list(e.when.env, 10)}${e.when.isEnabled ? `; isEnabled ${e.when.isEnabled}` : ""}`,
+      `How: ${e.how.length ? e.how.map((x) => `${x.label} ${x.how}${x.value ? ` (returns ${x.value})` : ""}`).join("; ") : "no function"}`,
+      "What:",
+      ...e.what
+    ].join(`
+`), {
+      where: `${h.m}:${h.s}`,
+      who: e.who,
+      when: e.when,
+      how: e.how
+    });
+  }
+}, {
+  version: P.version,
+  from: string2().optional().describe("Older version or path."),
+  to: string2().optional().describe("Newer version or path."),
+  name: string2().optional().describe("diff: keep changes whose code or enclosing strings hold this; explain: the string, command, or tool name."),
+  offset: P.offset,
+  limit: number2().int().min(1).max(30).optional()
+}, { ...WRITES_CACHE, openWorldHint: true });
+var ask = (t) => ({
+  messages: [
+    { role: "user", content: { type: "text", text: t } }
+  ]
+});
+server.registerPrompt("release_review", {
+  description: "Review a Claude Code release against the code that changed.",
+  argsSchema: {
+    from: string2().describe("Older version."),
+    to: string2().describe("Newer version.")
+  }
+}, ({ from, to }) => ask([
+  `Review Claude Code ${to} against ${from} with the cc-inspect tools.`,
+  `1. Run \`code\` \`prepare\` for ${from} and for ${to}.`,
+  `2. Run \`release\` \`diff\` with from ${from} and to ${to}, and page with \`offset\` while it gives next_offset.`,
+  `3. Run \`release\` \`notes\` with version ${to} and from ${from}.`,
+  "4. For each gated or unmatched line, run `code` `find` with its words, then `release` `explain` with the name you found.",
+  '5. Report each line as matched, gated, or not found in the code, with `module:offset`. Call the source "the program", and state only what the code shows.'
+].join(`
+`)));
+server.registerPrompt("explain_change", {
+  description: "Explain one name of a Claude Code version from its code.",
+  argsSchema: {
+    name: string2().describe("A string, a command such as /loops, or a tool name."),
+    version: string2().optional().describe("Version; default: the current install.")
+  }
+}, ({ name, version }) => ask([
+  `Explain "${name}" in Claude Code ${version ?? "(the current install)"} with the cc-inspect tools.`,
+  `1. Run \`code\` \`find\` with query "${name}"${version ? ` and version ${version}` : ""}.`,
+  `2. Run \`release\` \`explain\` with name "${name}", and \`code\` \`read\` at the offsets it gives when you need more code.`,
+  '3. Report where it is, who uses it, when it runs (gates, env reads, isEnabled), and how (no-op, stub, or handled), with `module:offset`. Call the source "the program".'
+].join(`
+`)));
 await server.connect(new StdioServerTransport);

@@ -1,4 +1,4 @@
-// Kind `tool`: the built-in tools, from `baseTools` (tools.ts, the list_tools source), the array that
+// Kind `tool`: the built-in tools, from `baseTools` (tools.ts, the `tool-gates` source), the array that
 // `getAllBaseTools` returns. Anchor (checked on 2.1.309, task 1.1): the `getAllBaseTools:` key. `gate` is the
 // code of the conditions on the tool's entry, `detail` its own `isEnabled`. baseTools gives no offsets.
 // The old `strings` heuristic has no tool list, so there is nothing to compare.

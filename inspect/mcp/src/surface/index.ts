@@ -1,4 +1,4 @@
-// The surface extractors by kind (design D1). The list_surface tool and tools/surface/snapshot.ts both use them.
+// The surface extractors by kind (design D1). The `surface` tool and tools/surface/snapshot.ts both use them.
 // Run: bun inspect/mcp/src/surface/index.ts [--binary <version|path>] [--kind <kind>] [--names | --json]
 import type { Bundle } from "../ast.ts";
 import { extractBetas } from "./beta.ts";

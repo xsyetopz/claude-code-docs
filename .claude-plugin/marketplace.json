@@ -24,7 +24,7 @@
     {
       "name": "cc-inspect",
       "source": "./inspect",
-      "description": "MCP server and skill that read your Claude Code session transcripts (list, read, search, and check them against the transcript schema) and the code inside the installed Claude Code binary (list installs and modules, search, read, resolve object literals and OpenTelemetry events, list the built-in tools with what gates them, and list the surface by kind: env vars, flags, settings, gates, errors, and more). Local and read only.",
+      "description": "MCP server and skill that read your Claude Code session transcripts (list, read, search, and check them against the transcript schema) and the code inside the installed Claude Code binary (list installs and modules, search, read, resolve object literals and OpenTelemetry events, list the built-in tools with what gates them, list the surface by kind: env vars, flags, settings, gates, errors, and more, and diff two versions by function), in 4 tools. Local; writes only its cache of cleaned code.",
       "category": "development"
     }
   ]

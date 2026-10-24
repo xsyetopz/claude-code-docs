@@ -670,7 +670,7 @@ describe.skipIf(!has)("installed binary 2.1.309", () => {
   const b = p?.bundle;
   const get = (kind: string) => surface(b, kind, p.modules).map((i) => i.name);
 
-  test("tool: the names of list_tools", () => {
+  test("tool: the names of tool-gates", () => {
     const n = get("tool");
     expect(n).toEqual(
       [

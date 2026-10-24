@@ -2,14 +2,14 @@
 
 ## Agreement
 
-- [x] Each capability of the proposal has a spec: `tracked-release-docs` has `specs/tracked-release-docs/spec.md`. No modified capability.
-- [x] Each requirement has a scenario: 4 requirements, each with 2 scenarios.
+- [x] Each capability of the proposal has a spec: `tracked-release-docs` has `specs/tracked-release-docs/spec.md`. `inspect-release-diff` (added 2026-10-24) has `specs/inspect-release-diff/spec.md`. `inspect-surface-lookup` (modified 2026-10-24) has `specs/inspect-surface-lookup/spec.md`.
+- [x] Each requirement has a scenario: each requirement has 1 to 3 scenarios.
 - [x] The design covers each requirement: notes coverage (decisions 1, 2, 6), diff coverage (decisions 3 to 6), labels (decision 7), and the version stamp (decision 1, runbook step 12, task 4.1).
 - [x] No `[NEEDS CLARIFICATION` marker is open.
 
 ## PM
 
-- [x] Each goal of `prd.md` has a requirement: goal 1 to Release Notes Coverage, goal 2 to Surface Diff Coverage, goals 3 and 4 to Version Labels, goal 5 to Tracked Version Stamp.
+- [x] Each goal of `prd.md` has a requirement: goal 1 to Release Notes Coverage, goal 2 to Surface Diff Coverage, goals 3 and 4 to Version Labels, goal 5 to Tracked Version Stamp, goal 6 to the 6 `inspect-release-diff` requirements and the modified `inspect-surface-lookup` (tasks 5.1 to 5.11, `design.md` decisions 9 to 16).
 - [x] Each requirement traces to a goal.
 
 ## Architect
