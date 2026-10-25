@@ -39393,6 +39393,7 @@ var prepare = (version, binaryPath, modules, root = cacheRoot()) => {
     units
   };
   mkdirSync(dir, { recursive: true });
+  rmSync(join3(dir, "readable"), { recursive: true, force: true });
   formatDir(new Map([...texts].map(([n, t]) => [n, renameChunks(t, chunks)])), join3(dir, "modules"));
   writeFileSync(file, JSON.stringify(index));
   return {
@@ -39415,24 +39416,55 @@ var prepared = (binary) => {
 };
 
 // inspect/mcp/src/readable.ts
-import { existsSync as existsSync4, mkdirSync as mkdirSync2, readFileSync as readFileSync4, writeFileSync as writeFileSync2 } from "fs";
+import {
+  existsSync as existsSync4,
+  mkdirSync as mkdirSync2,
+  mkdtempSync as mkdtempSync2,
+  readFileSync as readFileSync4,
+  renameSync as renameSync2,
+  rmSync as rmSync2,
+  writeFileSync as writeFileSync2
+} from "fs";
+import { tmpdir as tmpdir2 } from "os";
 import { basename as basename4, join as join4 } from "path";
 var wakaru = () => (process.env["CC_INSPECT_WAKARU"] ?? "bunx @wakaru/cli@1.14.0").split(/\s+/).filter(Boolean);
-var readable = (binary, module) => {
-  const { dir } = prepared(binary);
+var readable = async (binary, module) => {
+  const { dir, index } = prepared(binary);
   const name = basename4(module);
   const input = join4(dir, "modules", name);
   const file = join4(dir, "readable", name);
   if (existsSync4(file))
     return readFileSync4(file, "utf8");
   if (!existsSync4(input))
-    throw new Error(`"${name}" has no cleaned source (it is not JavaScript)`);
-  const r = Bun.spawnSync([...wakaru(), "--formatter", input]);
-  if (r.exitCode !== 0)
-    throw new Error(`wakaru failed (exit ${r.exitCode}): ${r.stderr.toString().slice(0, 300)}`);
-  mkdirSync2(join4(dir, "readable"), { recursive: true });
-  writeFileSync2(file, r.stdout);
-  return r.stdout.toString();
+    throw new Error(`"${name}" has no cleaned source (${index.skipped[name] ?? "it is not JavaScript"})`);
+  const cwd = mkdtempSync2(join4(tmpdir2(), "cc-inspect-wakaru-"));
+  try {
+    const p = Bun.spawn([...wakaru(), "--formatter", input], {
+      cwd,
+      env: {
+        PATH: process.env["PATH"] ?? "",
+        HOME: process.env["HOME"] ?? ""
+      },
+      stdout: "pipe",
+      stderr: "pipe",
+      timeout: 120000
+    });
+    const [out, err, code] = await Promise.all([
+      new Response(p.stdout).text(),
+      new Response(p.stderr).text(),
+      p.exited
+    ]);
+    if (code !== 0)
+      throw new Error(`wakaru failed (exit ${code}): ${err.slice(0, 300)}`);
+    if (!out.trim())
+      throw new Error("wakaru printed nothing");
+    mkdirSync2(join4(dir, "readable"), { recursive: true });
+    writeFileSync2(`${file}.${process.pid}.tmp`, out);
+    renameSync2(`${file}.${process.pid}.tmp`, file);
+    return out;
+  } finally {
+    rmSync2(cwd, { recursive: true, force: true });
+  }
 };
 
 // inspect/mcp/src/mcp/code.ts
@@ -39478,7 +39510,7 @@ ${modules.map((m) => `- ${m.name}  ${m.bytes} bytes`).join(`
 
 `) : `No match for ${re}.`, { hits });
   },
-  read: ({ module, offset = 0, length = 4000, version, view }) => {
+  read: async ({ module, offset = 0, length = 4000, version, view }) => {
     const p = program(version);
     const mod = need(module, "module");
     const m = p.modules.find((x) => x.name.endsWith(`/${mod}`)) ?? p.modules.find((x) => x.name === mod);
@@ -39487,7 +39519,7 @@ ${modules.map((m) => `- ${m.name}  ${m.bytes} bytes`).join(`
     if (view !== undefined && view !== "readable")
       throw new Error(`unknown view "${view}"; views: readable`);
     if (view) {
-      const t = readable(version, m.name);
+      const t = await readable(version, m.name);
       const end = Math.min(t.length, offset + length);
       const slice = t.slice(offset, end);
       return text(`${m.name} (readable) [${offset}, ${end}) of ${t.length}
@@ -39544,7 +39576,7 @@ Not JavaScript: ${skipped.join(", ")}` : ""}`, {
   context: number2().int().min(0).max(2000).optional().describe("Characters shown around a search hit (default 150)."),
   view: string2().optional().describe('With read: "readable" gives the module through Wakaru (the first call per module runs it, then it is cached).'),
   length: number2().int().min(1).max(MAX_CHARS).optional().describe("Characters to read (default 4000).")
-}, WRITES_CACHE);
+}, { ...WRITES_CACHE, openWorldHint: true });
 
 // inspect/mcp/src/events.ts
 var esc2 = (id) => id.replace(/\$/g, "\\$");

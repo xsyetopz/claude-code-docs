@@ -79,7 +79,7 @@ group<Args & { context?: number; length?: number; view?: string }>(
         { hits },
       );
     },
-    read: ({ module, offset = 0, length = 4000, version, view }) => {
+    read: async ({ module, offset = 0, length = 4000, version, view }) => {
       const p = program(version);
       const mod = need(module, "module");
       const m =
@@ -89,7 +89,7 @@ group<Args & { context?: number; length?: number; view?: string }>(
       if (view !== undefined && view !== "readable")
         throw new Error(`unknown view "${view}"; views: readable`);
       if (view) {
-        const t = readable(version, m.name);
+        const t = await readable(version, m.name);
         const end = Math.min(t.length, offset + length);
         const slice = t.slice(offset, end);
         return text(
@@ -175,5 +175,5 @@ group<Args & { context?: number; length?: number; view?: string }>(
       .optional()
       .describe("Characters to read (default 4000)."),
   },
-  WRITES_CACHE,
+  { ...WRITES_CACHE, openWorldHint: true },
 );

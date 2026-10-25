@@ -5,7 +5,7 @@ description: Look into the user's Claude Code sessions and into the installed Cl
 
 # Inspect Claude Code
 
-The `cc-inspect` MCP server reads local files only. It writes only its cache of cleaned code.
+The `cc-inspect` MCP server reads local files, except `release` `notes` (`gh release view`) and `code` `read` with `view: "readable"` (`bunx @wakaru/cli`). It writes only its cache of cleaned code.
 It has 4 tools, `sessions`, `code`, `surface`, and `release`. Each takes an `action` (or, for `surface`, a `kind`), and the same parameter names: `version` (a version or a binary path), `query`, `name`, `offset`, and `limit`.
 
 ## Sessions

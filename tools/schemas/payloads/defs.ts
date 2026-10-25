@@ -1,4 +1,4 @@
-// Helpers of payloads-build.ts: reference rewriting, definition merging, inlining, and size limits.
+// Helpers of payloads/build.ts: reference rewriting, definition merging, inlining, and size limits.
 import type { Json } from "../build.ts";
 
 export const isObject = (v: unknown): v is Json =>

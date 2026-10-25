@@ -1,5 +1,7 @@
 import { expect, test } from "bun:test";
 import {
+  existsSync,
+  mkdirSync,
   mkdtempSync,
   readdirSync,
   readFileSync,
@@ -60,13 +62,16 @@ test("a second call for the same binary reads the cache and parses nothing", () 
     const second = prepare("9.9.9", import.meta.path, modules, root);
     expect(second.parsed).toBe(0);
     expect(second.index.units).toEqual(first.index.units);
-    // An index from an older cleaning format is cleaned again.
+    // An index from an older cleaning format is cleaned again, and the readable views of the old text go.
     const file = join(first.dir, "index.json");
     writeFileSync(
       file,
       JSON.stringify({ ...JSON.parse(readFileSync(file, "utf8")), format: 0 }),
     );
+    mkdirSync(join(first.dir, "readable"));
+    writeFileSync(join(first.dir, "readable", "cli.js"), "old");
     expect(prepare("9.9.9", import.meta.path, modules, root).parsed).toBe(2);
+    expect(existsSync(join(first.dir, "readable"))).toBe(false);
   } finally {
     rmSync(root, { recursive: true, force: true });
   }

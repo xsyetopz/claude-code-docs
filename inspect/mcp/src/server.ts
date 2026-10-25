@@ -1,4 +1,4 @@
-// cc-inspect MCP server (stdio). Writes only its cache; its one network call is `gh release view` for `release` `notes`. No telemetry.
+// cc-inspect MCP server (stdio). Writes only its cache; its network calls are `gh release view` for `release` `notes` and `bunx @wakaru/cli` for `code` `read` `view: "readable"`. No telemetry.
 // Reads Claude Code session transcripts (sessions.ts) and the modules inside the Claude Code binary (binary.ts).
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { server } from "./mcp/app.ts";

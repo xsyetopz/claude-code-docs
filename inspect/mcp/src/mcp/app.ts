@@ -8,7 +8,8 @@ export const READ_ONLY = {
   idempotentHint: true,
   openWorldHint: false,
 } as const;
-// `code` and `release` write the cache of cleaned code, and `release` `notes` runs `gh release view`.
+// `code` and `release` write the cache of cleaned code; `release` `notes` runs `gh release view`, and `code` `read`
+// with `view: "readable"` runs `bunx @wakaru/cli`.
 export const WRITES_CACHE = {
   ...READ_ONLY,
   readOnlyHint: false,

@@ -1,4 +1,4 @@
-// Types and helpers shared by the core-*.ts files: the result shape, the singletons, and the guard.
+// Types and helpers shared by the core/*.ts files: the result shape, the singletons, and the guard.
 import { Content, ContentError } from "../content.ts";
 import type { Source } from "../fetcher.ts";
 import { Platform } from "../platform.ts";

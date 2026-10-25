@@ -211,6 +211,7 @@ export const prepare = (
     units,
   };
   mkdirSync(dir, { recursive: true });
+  rmSync(join(dir, "readable"), { recursive: true, force: true });
   formatDir(
     new Map([...texts].map(([n, t]) => [n, renameChunks(t, chunks)])),
     join(dir, "modules"),

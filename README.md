@@ -47,7 +47,7 @@ Leave out items that are removed, inert, test-only, or for Anthropic staff.
 ```text
 docs/        pages (Markdown and MDX)
 src/         theme tweaks, badge components, version constant
-tools/       check-docs.ts (emoji, front matter, Title Case)
+tools/       check/docs.ts (emoji, front matter, Title Case)
 ```
 
 ## License

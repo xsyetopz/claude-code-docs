@@ -1,4 +1,4 @@
-// The print-mode cases of observe-print.ts: the arguments, files, and scripted tool calls of each run.
+// The print-mode cases of observe/print.ts: the arguments, files, and scripted tool calls of each run.
 import { PROMPT } from "../../../release/lib/env.ts";
 
 export type Case = {

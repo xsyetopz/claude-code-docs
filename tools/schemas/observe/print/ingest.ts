@@ -1,4 +1,4 @@
-// Collector side of observe-print.ts: reads the OTLP/JSON the program posts and tallies the key paths and
+// Collector side of observe/print.ts: reads the OTLP/JSON the program posts and tallies the key paths and
 // types of the three recorded files.
 import { Tally } from "../../observe.ts";
 

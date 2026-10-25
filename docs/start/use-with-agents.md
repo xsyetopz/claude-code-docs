@@ -113,7 +113,7 @@ It does not send or keep cookies.
 
 The same marketplace has a second plugin, `cc-inspect`.
 It reads your session transcripts and the installed Claude Code binary.
-It makes one kind of network request: `release` `notes` runs `gh release view` to get the release notes, once for each version.
+It makes two kinds of network request: `release` `notes` runs `gh release view` to get the release notes, once for each version, and `code` `read` with `view: "readable"` runs `bunx @wakaru/cli@1.14.0`, once for each module.
 It writes only its cache of cleaned code, under `CC_INSPECT_CACHE`, else `./captures` when that folder exists, else `~/.cache/cc-inspect`.
 
 ```text

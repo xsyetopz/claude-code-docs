@@ -1,9 +1,9 @@
 // Usage: bun run schemas:observe [-- --user] [--skip print,statusline]
 // Refreshes tools/schemas/observed/*.json, the value-free fixtures of observed field types that code.ts adds
 // to the schemas as "x-observed-type". Sources:
-//   print       print-mode runs against the local stub with OTLP/JSON sent to a local collector (observe-print.ts)
-//   statusline  the status line pty probes (observe-statusline.ts); about 90 s
-//   --user      your own ~/.claude files, read-only (observe-user.ts): transcripts, .claude.json, frontmatter
+//   print       print-mode runs against the local stub with OTLP/JSON sent to a local collector (observe/print.ts)
+//   statusline  the status line pty probes (observe/statusline.ts); about 90 s
+//   --user      your own ~/.claude files, read-only (observe/user.ts): transcripts, .claude.json, frontmatter
 // Each source writes raw key path -> type counts to a temp dir. This script keeps only paths that are fields of
 // a schema in schemas/ that carry "x-unverified", and merges them into the fixtures: per path and type, the larger
 // count wins, capped at COUNT_CAP. No value and no key outside the schemas reaches a fixture. The temp dir is removed.

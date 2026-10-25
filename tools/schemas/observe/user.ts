@@ -4,7 +4,7 @@
 //   user-claude-json.json   <home>/.claude.json, root `$root`
 //   user-frontmatter.json   YAML headers of skill, command, agent, and output style .md files under <home>/.claude
 // The raw output holds key names of the user's data (project paths in .claude.json); it is a temp file for
-// observe-run.ts, which keeps only paths that are fields of a schema and never a value.
+// observe/run.ts, which keeps only paths that are fields of a schema and never a value.
 import {
   existsSync,
   mkdirSync,

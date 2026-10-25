@@ -3,9 +3,11 @@
 import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import {
   chmodSync,
+  existsSync,
   mkdirSync,
   mkdtempSync,
   readFileSync,
+  realpathSync,
   rmSync,
   statSync,
   symlinkSync,
@@ -84,10 +86,12 @@ beforeAll(async () => {
   ]);
   if (b.exitCode !== 0) throw new Error(b.stderr.toString());
   symlinkSync(join(tmp, "app.js"), join(versions, "9.9.9"));
-  // Stands in for `bunx @wakaru/cli@1.14.0`: counts its runs, fails while `wakaru-fail` exists, else prints a marker and the input.
+  // Stands in for `bunx @wakaru/cli@1.14.0`: counts its runs, records its env and cwd and leaves a file there,
+  // fails while `wakaru-fail` exists, prints nothing while `wakaru-empty` exists, waits while `wakaru-slow` exists,
+  // else prints a marker and the input.
   writeFileSync(
     join(tmp, "wakaru-stub"),
-    `#!/bin/sh\necho run >> "${tmp}/wakaru-runs"\n[ -e "${tmp}/wakaru-fail" ] && { echo "stub broke" >&2; exit 3; }\necho "// readable: $*"\nfor last; do :; done\ncat "$last"\n`,
+    `#!/bin/sh\necho run >> "${tmp}/wakaru-runs"\nenv > "${tmp}/wakaru-env"\npwd > "${tmp}/wakaru-cwd"\ntouch out\n[ -e "${tmp}/wakaru-fail" ] && { echo "stub broke" >&2; exit 3; }\n[ -e "${tmp}/wakaru-empty" ] && exit 0\n[ -e "${tmp}/wakaru-slow" ] && sleep 2\necho "// readable: $*"\nfor last; do :; done\ncat "$last"\n`,
   );
   chmodSync(join(tmp, "wakaru-stub"), 0o755);
   client = new Client({ name: "test", version: "0" });
@@ -104,6 +108,7 @@ beforeAll(async () => {
         CC_INSPECT_LAUNCHER: join(tmp, "no-launcher"),
         CC_INSPECT_CACHE: join(tmp, "cache"),
         CC_INSPECT_WAKARU: join(tmp, "wakaru-stub"),
+        CC_INSPECT_TEST_SECRET: "do-not-pass",
       },
     }),
   );
@@ -133,6 +138,9 @@ describe("tools", () => {
     ]);
     for (const t of tools)
       expect(t.description?.match(/[.!?](\s|$)/g)).toHaveLength(1);
+    // `code` reaches npm for the readable view, and `release` runs `gh`.
+    const open = tools.filter((t) => t.annotations?.openWorldHint);
+    expect(open.map((t) => t.name).sort()).toEqual(["code", "release"]);
   });
 
   test("an inherited name such as constructor is an unknown action", async () => {
@@ -258,7 +266,34 @@ describe("binary", () => {
     expect(bad.content[0]?.text).toContain("stub broke");
     rmSync(fail);
     const args = { action: "read", module: "app.js", view: "readable" };
-    const a = await call("code", { ...args, version: "9.9.9", length: 60 });
+    const cached = join(tmp, "cache", "9.9.9", "clean", "readable", "app.js");
+    const empty = join(tmp, "wakaru-empty");
+    writeFileSync(empty, "");
+    const none = await call("code", { ...args, version: "9.9.9" });
+    expect(none.isError).toBe(true);
+    expect(existsSync(cached)).toBe(false);
+    rmSync(empty);
+    // Wakaru gets PATH and HOME only, runs in its own temp folder, and does not hold up other calls.
+    const slow = join(tmp, "wakaru-slow");
+    writeFileSync(slow, "");
+    const pending = call("code", { ...args, version: "9.9.9", length: 60 });
+    await Bun.sleep(300);
+    let other = false;
+    await call("code", { action: "installs" }).then(() => {
+      other = !existsSync(cached);
+    });
+    const a = await pending;
+    rmSync(slow);
+    expect(other).toBe(true);
+    // A boolean, so a failure does not print the environment.
+    expect(
+      readFileSync(join(tmp, "wakaru-env"), "utf8").includes(
+        "CC_INSPECT_TEST_SECRET",
+      ),
+    ).toBe(false);
+    const cwd = readFileSync(join(tmp, "wakaru-cwd"), "utf8").trim();
+    expect(cwd).not.toBe(realpathSync(process.cwd()));
+    expect(existsSync(cwd)).toBe(false);
     expect(a.content[0]?.text).toContain("// readable: --formatter");
     expect(a.structuredContent?.["text"]).toContain("// readable:");
     const b = await call("code", {
@@ -270,9 +305,10 @@ describe("binary", () => {
     expect(b.structuredContent?.["text"]).toBe(
       String(a.structuredContent?.["text"]).slice(20, 50),
     );
-    const cached = join(tmp, "cache", "9.9.9", "clean", "readable", "app.js");
     expect(readFileSync(cached, "utf8")).toStartWith("// readable:");
-    expect(readFileSync(join(tmp, "wakaru-runs"), "utf8")).toBe("run\nrun\n");
+    expect(readFileSync(join(tmp, "wakaru-runs"), "utf8")).toBe(
+      "run\nrun\nrun\n",
+    );
   });
 
   test("surface object-keys follows a spread into a function", async () => {
