@@ -1,53 +1,24 @@
 // Subagent probes (ported from p305-print sub.ts, sub2.ts, sub3.ts, setup.ts).
 // The stub issues one Agent tool_use, so the CLI prompt stays the standard one; the subagent prompt is a marker.
-import { existsSync } from "node:fs";
 import {
   bodyOf,
   type CaseDef,
   json,
   msgs,
-  type Run,
-  readCfg,
   runCases,
   sysText,
   toolNames,
-  toolResultTexts,
   withRun,
 } from "./run/helpers.ts";
+import { fmCase, isoCase, setupCase } from "./subagents/iso.ts";
+import {
+  agentCall,
+  agentFile,
+  BASE,
+  firstResult,
+  subReqs,
+} from "./subagents/util.ts";
 import type { PrintGroup } from "./types.ts";
-
-const MARK = "PROBEMARK Reply with 'OK'.";
-const agentCall = (type: string) => [
-  {
-    name: "Agent",
-    input: {
-      description: "d",
-      prompt: MARK,
-      subagent_type: type,
-      run_in_background: false,
-    },
-  },
-];
-const BASE = ["--permission-mode", "bypassPermissions"];
-const agentFile = (name: string, fm: string) => ({
-  [`.claude/agents/${name}.md`]: `---\nname: ${name}\ndescription: probe agent\n${fm}\n---\nHello.\n`,
-});
-
-/** Requests made by the subagent itself: carry the marker, and the tool list has no Agent tool. */
-const subReqs = (r: Run) =>
-  msgs(r).filter(
-    (q) =>
-      json(bodyOf(q).messages).includes("PROBEMARK") &&
-      !toolNames(q).includes("Agent"),
-  );
-const firstResult = (r: Run) => toolResultTexts(r)[0] ?? "";
-const cwdInSub = (r: Run) => {
-  const t = json(subReqs(r)[0] ? bodyOf(subReqs(r)[0] as never).messages : "");
-  return (t.match(/Primary working directory: ([^\\ ]+)/)?.[1] ?? "").replace(
-    r.sb.proj,
-    "<PROJ>",
-  );
-};
 
 const TYPES = [
   "claude",
@@ -188,100 +159,6 @@ const observerCase = (on: boolean): CaseDef => ({
           },
         };
       },
-    ),
-});
-
-const fmCase = (name: string, fm: string): CaseDef => ({
-  name: `frontmatter.${name}`,
-  run: (ctx) =>
-    withRun(
-      ctx,
-      {
-        args: BASE,
-        projFiles: agentFile("pa", fm),
-        stub: { seq: agentCall("pa") },
-      },
-      (r) => {
-        const sub = subReqs(r);
-        return {
-          from: r,
-          facts: {
-            precondition: sub.length > 0,
-            subRequests: sub.length,
-            subTools: sub.map((q) => toolNames(q).join(",")),
-            // stable text fragment only, not the whole hand-back
-            handBack: firstResult(r).includes("[Subagent hand-back]"),
-          },
-        };
-      },
-    ),
-});
-
-const isoCase = (iso: "remote" | "worktree" | "none"): CaseDef => ({
-  name: `isolation.${iso}`,
-  run: (ctx) =>
-    withRun(
-      ctx,
-      {
-        args: BASE,
-        commit: true,
-        projFiles: {
-          ...agentFile("pa", iso === "none" ? "" : `isolation: ${iso}`),
-          "README.md": "x\n",
-        },
-        stub: { seq: agentCall("pa") },
-      },
-      (r) => {
-        const sub = subReqs(r);
-        const cwd = cwdInSub(r);
-        return {
-          from: r,
-          facts: {
-            precondition: sub.length > 0,
-            subRequests: sub.length,
-            cwdInSub: cwd.replace(/agent-[0-9a-f]+/, "agent-<id>"),
-            inWorktree: cwd.includes("/.claude/worktrees/"),
-            stderrHead: r.stderr.slice(0, 100),
-          },
-        };
-      },
-    ),
-});
-
-const HOOK = {
-  hooks: {
-    Setup: [
-      {
-        hooks: [
-          {
-            type: "command",
-            command: `echo ran >> {CFG}/setup.ran; echo '{"hookSpecificOutput":{"hookEventName":"Setup","additionalContext":"ZZSETUPCTXZZ"}}'`,
-          },
-        ],
-      },
-    ],
-  },
-};
-const setupCase = (flag: string): CaseDef => ({
-  name: `setup-hook.${flag.slice(2)}`,
-  run: (ctx) =>
-    withRun(
-      ctx,
-      { args: [...BASE, flag], cfgFiles: { "settings.json": json(HOOK) } },
-      (r) => ({
-        from: r,
-        facts: {
-          precondition: r.code !== null && !r.timedOut,
-          hookRan:
-            existsSync(`${r.sb.cfg}/setup.ran`) ||
-            readCfg(r, "setup.ran") !== "",
-          contextInRequest: msgs(r).some((q) =>
-            json(bodyOf(q)).includes("ZZSETUPCTXZZ"),
-          ),
-          contextInStdout: r.stdout.includes("ZZSETUPCTXZZ"),
-          requests: msgs(r).length,
-        },
-      }),
     ),
 });
 
