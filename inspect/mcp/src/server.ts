@@ -388,28 +388,27 @@ group<Args & { context?: number; length?: number }>(
     find: ({ query, version, limit = 10 }) => {
       const q = need(query, "query");
       const r = prepared(version);
-      const found = findUnits(r.index, q, Math.min(limit, 10));
+      const found = findUnits(r.index, q, Math.min(limit, 10)).map((f) => ({
+        ...f,
+        excerpt: linesOf(f.u.t).slice(0, 4).map(cut),
+      }));
       return text(
         found.length
           ? `${r.index.version}: top ${found.length} for "${clip(q, 100)}"\n${found
               .map(
-                ({ u, n, hits }) =>
-                  `## ${u.k}  ${u.m}:${u.s}  score ${n} (${hits.join(", ")})\n${linesOf(
-                    u.t,
-                  )
-                    .slice(0, 4)
-                    .map(cut)
-                    .join("\n")}`,
+                ({ u, n, hits, excerpt }) =>
+                  `## ${u.k}  ${u.m}:${u.s}  score ${n} (${hits.join(", ")})\n${excerpt.join("\n")}`,
               )
               .join("\n\n")}`
           : `No unit holds a word of "${clip(q, 100)}".`,
         {
-          found: found.map(({ u, n, hits }) => ({
+          found: found.map(({ u, n, hits, excerpt }) => ({
             label: u.k,
             module: u.m,
             offset: u.s,
             score: n,
             hits,
+            excerpt,
           })),
         },
       );
@@ -632,7 +631,20 @@ group<Args & { from?: string; to?: string }>(
         `${a.index.version} -> ${b.index.version}: ${d.counts.changed} changed, ${d.counts.added} added, ${d.counts.gone} gone (imports and exports left out).${name ? ` Matching "${name}": ${count("changed")} changed, ${count("added")} added, ${count("gone")} gone.` : ""} Showing ${offset + 1}-${offset + page.length}${more ? `, next_offset ${offset + page.length}` : ""}.\n\n${page
           .map((c) => `${changeHead(c)}\n${unitDiff(c, DIFF_LINES).join("\n")}`)
           .join("\n\n")}`,
-        { counts: d.counts, matching: name ? all.length : undefined },
+        {
+          counts: d.counts,
+          matching: name ? all.length : undefined,
+          next_offset: more ? offset + page.length : undefined,
+          changes: page.map((c) => ({
+            kind: c.kind,
+            label: (c.to ?? c.from)?.k,
+            from: c.from && { module: c.from.m, offset: c.from.s },
+            to: c.to && { module: c.to.m, offset: c.to.s },
+            within: c.within.slice(0, 3),
+            calls: c.calls.slice(0, 6),
+            diff: unitDiff(c, DIFF_LINES),
+          })),
+        },
       );
     },
     notes: ({ version, from }) => {

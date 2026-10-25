@@ -306,6 +306,8 @@ describe("find and prompts", () => {
     }[];
     expect(top?.hits).toEqual(["sleep", "seconds", "blocked"]);
     expect(r.content[0]?.text).toContain("/^sleep");
+    // the model sees only structuredContent, so the excerpt must be in it
+    expect(JSON.stringify(r.structuredContent)).toContain("/^sleep");
   });
 
   test("prompts/list gives the release and explain prompts", async () => {
@@ -358,6 +360,37 @@ describe("release", () => {
       gone: 0,
     });
   });
+
+  test("release diff puts each listed change in the structured data", async () => {
+    writeFileSync(
+      join(tmp, "app2.mjs"),
+      APP.replace('process.env.GREP === "1"', 'process.env.GREP === "2"'),
+    );
+    const b = Bun.spawnSync([
+      "bun",
+      "build",
+      "--compile",
+      "--minify",
+      join(tmp, "app2.mjs"),
+      `--outfile=${join(tmp, "app2.js")}`,
+    ]);
+    if (b.exitCode !== 0) throw new Error(b.stderr.toString());
+    const r = await call("release", {
+      action: "diff",
+      from: join(tmp, "app.js"),
+      to: join(tmp, "app2.js"),
+    });
+    const changes = (r.structuredContent?.["changes"] ?? []) as {
+      kind: string;
+      from?: { module: string; offset: number };
+      to?: { module: string; offset: number };
+      diff: string[];
+    }[];
+    const grep = changes.find((c) => c.diff.join("\n").includes('"2"'));
+    expect(grep?.kind).toBe("changed");
+    expect(typeof grep?.from?.offset).toBe("number");
+    expect(typeof grep?.to?.module).toBe("string");
+  }, 60000);
 });
 
 describe("surface", () => {

@@ -601,7 +601,7 @@
       "live.usage.envelope"
     ]
   },
-  "docs/how-it-works/context-budget.md#what-an-empty-session-holds:3b9fe4b7": {
+  "docs/how-it-works/context-budget.md#what-an-empty-session-holds:b62adccc": {
     "kind": "behaviour",
     "probes": ["live.context-budget"]
   },
@@ -770,7 +770,7 @@
     "kind": "behaviour",
     "probes": ["live.context-budget"]
   },
-  "docs/reference/probes.md#live-login-probes:31766416": {
+  "docs/reference/probes.md#live-login-probes:f3c21843": {
     "kind": "behaviour",
     "probes": ["live.oauth-parity", "live.artifacts"]
   },
@@ -778,7 +778,7 @@
     "kind": "behaviour",
     "probes": ["live.oauth-parity"]
   },
-  "docs/reference/probes.md#live-login-probes:25e2f867": {
+  "docs/reference/probes.md#live-login-probes:e686f459": {
     "kind": "behaviour",
     "probes": ["live.artifacts"]
   },
@@ -865,7 +865,7 @@
     "kind": "behaviour",
     "probes": ["pty.captures.guide"]
   },
-  "docs/reference/probes.md#interactive-probes:9f82d851": {
+  "docs/reference/probes.md#interactive-probes:deadca8f": {
     "kind": "behaviour",
     "probes": [
       "live.usage.429",
@@ -968,7 +968,7 @@
     "probes": [],
     "note": "program behaviour (approver set next to tool.check); no probe checks it yet"
   },
-  "docs/reference/probes.md#managed-folder-probe:67ae3edd": {
+  "docs/reference/probes.md#managed-folder-probe:bab8af87": {
     "kind": "behaviour",
     "probes": [
       "managed.baseline.agent-mcp",
@@ -1028,7 +1028,7 @@
       "managed.true.classify-user-true-and-flag-false"
     ]
   },
-  "docs/reference/probes.md#managed-folder-probe:06b8069e": {
+  "docs/reference/probes.md#managed-folder-probe:e39b7371": {
     "kind": "behaviour",
     "probes": [
       "managed.baseline.agent-mcp",
@@ -1067,7 +1067,7 @@
       "managed.main.skill-disabled"
     ]
   },
-  "docs/reference/probes.md#managed-folder-probe:9dea0ba8": {
+  "docs/reference/probes.md#managed-folder-probe:0a62b96a": {
     "kind": "static",
     "probes": [],
     "note": "record of the managed probe runs; release:probe:managed reruns them"
