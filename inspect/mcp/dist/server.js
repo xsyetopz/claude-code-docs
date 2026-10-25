@@ -37771,7 +37771,7 @@ function parse6(source, options) {
   return parseSource(source, options);
 }
 
-// src/ast.ts
+// src/ast-node.ts
 var isNode = (x) => typeof x === "object" && x !== null && typeof x.type === "string" && typeof x.start === "number";
 var isFn = (n) => n?.type === "FunctionDeclaration" || n?.type === "FunctionExpression" || n?.type === "ArrowFunctionExpression";
 var children = (n) => {
@@ -37788,6 +37788,103 @@ var children = (n) => {
   return out.sort((a, b) => a.start - b.start);
 };
 
+// src/ast-calls.ts
+var functionOf = (m, callee) => {
+  if (callee.type !== "Identifier")
+    return;
+  const v0 = m.variable(callee);
+  const o = v0 && (m.bundle ? m.bundle.origin(m, v0) : { module: m, variable: v0 });
+  if (!o)
+    return;
+  const { module, variable: v } = o;
+  for (const d of v.defs) {
+    if (d.type === "FunctionName" && isFn(d.node))
+      return { module, fn: d.node };
+    if (d.type === "Variable" && isFn(d.node.init)) {
+      const writes = v.references.filter((r) => r.isWrite());
+      if (writes.length <= 1)
+        return { module, fn: d.node.init };
+    }
+  }
+  const writes = v.references.filter((r) => r.isWrite());
+  const w = writes[0]?.writeExpr;
+  if (writes.length === 1 && isFn(w))
+    return { module, fn: w };
+  return;
+};
+var nameOf = (m, fn) => {
+  if (fn.type === "FunctionDeclaration" && fn.id)
+    return m.variable(fn.id);
+  const p = m.parent(fn);
+  if (p?.type === "VariableDeclarator" && p.id.type === "Identifier")
+    return m.variable(p.id);
+  if (p?.type === "AssignmentExpression" && p.left.type === "Identifier")
+    return m.variable(p.left);
+  return;
+};
+var callsOf = (m, fn) => {
+  const v = nameOf(m, fn);
+  if (!v)
+    return [undefined];
+  const out = [];
+  const scan = (module, variable) => {
+    for (const r of variable.references) {
+      if (r.init || r.isWrite() && r.writeExpr === fn)
+        continue;
+      const id = r.identifier;
+      const p = module.parent(id);
+      if (p?.type === "CallExpression" && p.callee === id)
+        out.push({ module, call: p });
+      else if (p?.type !== "ExportSpecifier")
+        out.push(undefined);
+    }
+  };
+  scan(m, v);
+  if (m.bundle)
+    for (const i of m.bundle.importers(m, v))
+      scan(i.module, i.variable);
+  return out;
+};
+var constString = (m, n, depth = 0) => {
+  if (!n || depth > 8)
+    return;
+  if (n.type === "Literal" && typeof n.value === "string")
+    return n.value;
+  if (n.type === "TemplateLiteral" && n.expressions.length === 0)
+    return n.quasis[0]?.value.cooked ?? undefined;
+  if (n.type !== "Identifier")
+    return;
+  const v0 = m.variable(n);
+  const o = v0 && (m.bundle ? m.bundle.origin(m, v0) : { module: m, variable: v0 });
+  if (!o)
+    return;
+  const writes = o.variable.references.filter((r) => r.isWrite());
+  const def = o.variable.defs[0];
+  const values = [
+    ...def?.type === "Variable" && def.node.init ? [def.node.init] : [],
+    ...writes.filter((r) => !r.init).map((r) => r.writeExpr)
+  ];
+  if (values.length !== 1)
+    return;
+  return constString(o.module, values[0], depth + 1);
+};
+var returnsOf = (fn) => {
+  if (fn.body.type !== "BlockStatement")
+    return [fn.body];
+  const out = [];
+  const stack = [fn.body];
+  while (stack.length) {
+    const n = stack.pop();
+    if (n.type === "ReturnStatement")
+      out.push(n.argument ?? null);
+    for (const c of children(n))
+      if (!isFn(c) && c.type !== "ClassBody")
+        stack.push(c);
+  }
+  return out.sort((a, b) => (a?.start ?? 0) - (b?.start ?? 0));
+};
+
+// src/ast.ts
 class Module {
   name;
   text;
@@ -37992,100 +38089,6 @@ class Bundle {
     return out;
   }
 }
-var functionOf = (m, callee) => {
-  if (callee.type !== "Identifier")
-    return;
-  const v0 = m.variable(callee);
-  const o = v0 && (m.bundle ? m.bundle.origin(m, v0) : { module: m, variable: v0 });
-  if (!o)
-    return;
-  const { module, variable: v } = o;
-  for (const d of v.defs) {
-    if (d.type === "FunctionName" && isFn(d.node))
-      return { module, fn: d.node };
-    if (d.type === "Variable" && isFn(d.node.init)) {
-      const writes = v.references.filter((r) => r.isWrite());
-      if (writes.length <= 1)
-        return { module, fn: d.node.init };
-    }
-  }
-  const writes = v.references.filter((r) => r.isWrite());
-  const w = writes[0]?.writeExpr;
-  if (writes.length === 1 && isFn(w))
-    return { module, fn: w };
-  return;
-};
-var nameOf = (m, fn) => {
-  if (fn.type === "FunctionDeclaration" && fn.id)
-    return m.variable(fn.id);
-  const p = m.parent(fn);
-  if (p?.type === "VariableDeclarator" && p.id.type === "Identifier")
-    return m.variable(p.id);
-  if (p?.type === "AssignmentExpression" && p.left.type === "Identifier")
-    return m.variable(p.left);
-  return;
-};
-var callsOf = (m, fn) => {
-  const v = nameOf(m, fn);
-  if (!v)
-    return [undefined];
-  const out = [];
-  const scan = (module, variable) => {
-    for (const r of variable.references) {
-      if (r.init || r.isWrite() && r.writeExpr === fn)
-        continue;
-      const id = r.identifier;
-      const p = module.parent(id);
-      if (p?.type === "CallExpression" && p.callee === id)
-        out.push({ module, call: p });
-      else if (p?.type !== "ExportSpecifier")
-        out.push(undefined);
-    }
-  };
-  scan(m, v);
-  if (m.bundle)
-    for (const i of m.bundle.importers(m, v))
-      scan(i.module, i.variable);
-  return out;
-};
-var constString = (m, n, depth = 0) => {
-  if (!n || depth > 8)
-    return;
-  if (n.type === "Literal" && typeof n.value === "string")
-    return n.value;
-  if (n.type === "TemplateLiteral" && n.expressions.length === 0)
-    return n.quasis[0]?.value.cooked ?? undefined;
-  if (n.type !== "Identifier")
-    return;
-  const v0 = m.variable(n);
-  const o = v0 && (m.bundle ? m.bundle.origin(m, v0) : { module: m, variable: v0 });
-  if (!o)
-    return;
-  const writes = o.variable.references.filter((r) => r.isWrite());
-  const def = o.variable.defs[0];
-  const values = [
-    ...def?.type === "Variable" && def.node.init ? [def.node.init] : [],
-    ...writes.filter((r) => !r.init).map((r) => r.writeExpr)
-  ];
-  if (values.length !== 1)
-    return;
-  return constString(o.module, values[0], depth + 1);
-};
-var returnsOf = (fn) => {
-  if (fn.body.type !== "BlockStatement")
-    return [fn.body];
-  const out = [];
-  const stack = [fn.body];
-  while (stack.length) {
-    const n = stack.pop();
-    if (n.type === "ReturnStatement")
-      out.push(n.argument ?? null);
-    for (const c of children(n))
-      if (!isFn(c) && c.type !== "ClassBody")
-        stack.push(c);
-  }
-  return out.sort((a, b) => (a?.start ?? 0) - (b?.start ?? 0));
-};
 
 // src/bunfs.ts
 import { readFileSync as readFileSync2 } from "fs";
@@ -38839,6 +38842,59 @@ var program = (binary) => {
   return p;
 };
 
+// src/diff-render.ts
+var norm = (t) => t.replace(/\$[0-9a-f]{6}(?:_\d+)?/g, "$").replace(/chunk@[0-9a-f]{8}\.js/g, "chunk@").replace(/\.\.\./g, "\u2026").replace(/(?<![.\w$])([a-z])\d+\b/g, "$1");
+var lines = (t) => t.replace(/([;{}])/g, `$1
+`).split(`
+`).map((l) => l.trim()).filter(Boolean);
+var LINE_CHARS = 200;
+var cut = (l) => l.length > LINE_CHARS ? `${l.slice(0, LINE_CHARS)}\u2026` : l;
+var unitDiff = (c, cap = 40) => {
+  const x = c.from ? lines(c.from.t) : [];
+  const y = c.to ? lines(c.to.t) : [];
+  const nx = x.map(norm);
+  const ny = y.map(norm);
+  const w = ny.length + 1;
+  const ops = [];
+  if (nx.length * ny.length > 4000000) {
+    for (const l of x)
+      ops.push(["-", l]);
+    for (const l of y)
+      ops.push(["+", l]);
+  } else {
+    const dp = new Uint32Array((nx.length + 1) * w);
+    for (let i = nx.length - 1;i >= 0; i--)
+      for (let j = ny.length - 1;j >= 0; j--)
+        dp[i * w + j] = nx[i] === ny[j] ? dp[(i + 1) * w + j + 1] + 1 : Math.max(dp[(i + 1) * w + j], dp[i * w + j + 1]);
+    let i = 0;
+    let j = 0;
+    while (i < nx.length || j < ny.length) {
+      if (i < nx.length && j < ny.length && nx[i] === ny[j]) {
+        ops.push([" ", y[j++]]);
+        i++;
+      } else if (j >= ny.length || i < nx.length && dp[(i + 1) * w + j] >= dp[i * w + j + 1])
+        ops.push(["-", x[i++]]);
+      else
+        ops.push(["+", y[j++]]);
+    }
+  }
+  const near = (k) => [k - 1, k, k + 1].some((t) => (ops[t]?.[0] ?? " ") !== " ");
+  const out = [];
+  let gap = false;
+  ops.forEach(([op, l], k) => {
+    if (!near(k)) {
+      gap = out.length > 0;
+      return;
+    }
+    if (gap)
+      out.push("  \u2026");
+    gap = false;
+    out.push(`${op} ${cut(l)}`);
+  });
+  return out.length > cap ? [...out.slice(0, cap), `\u2026 ${out.length - cap} more lines`] : out;
+};
+var filterChanges = (d, name) => d.changes.filter((c) => [c.from, c.to].some((u) => u && (u.t.includes(name) || u.f.some((x) => x.includes(name)))) || [...c.calls, ...c.within].some((x) => x.includes(name)));
+
 // src/diff.ts
 var SMALL = 3;
 var callsOf2 = (s, u) => {
@@ -38854,7 +38910,6 @@ var callsOf2 = (s, u) => {
   }
   return [...out];
 };
-var norm = (t) => t.replace(/\$[0-9a-f]{6}(?:_\d+)?/g, "$").replace(/chunk@[0-9a-f]{8}\.js/g, "chunk@").replace(/\.\.\./g, "\u2026").replace(/(?<![.\w$])([a-z])\d+\b/g, "$1");
 var parentsOf = (us) => {
   const p = new Int32Array(us.length).fill(-1);
   const stack = [];
@@ -39083,56 +39138,6 @@ var diffIndexes = (from, to) => {
     changes
   };
 };
-var lines = (t) => t.replace(/([;{}])/g, `$1
-`).split(`
-`).map((l) => l.trim()).filter(Boolean);
-var LINE_CHARS = 200;
-var cut = (l) => l.length > LINE_CHARS ? `${l.slice(0, LINE_CHARS)}\u2026` : l;
-var unitDiff = (c, cap = 40) => {
-  const x = c.from ? lines(c.from.t) : [];
-  const y = c.to ? lines(c.to.t) : [];
-  const nx = x.map(norm);
-  const ny = y.map(norm);
-  const w = ny.length + 1;
-  const ops = [];
-  if (nx.length * ny.length > 4000000) {
-    for (const l of x)
-      ops.push(["-", l]);
-    for (const l of y)
-      ops.push(["+", l]);
-  } else {
-    const dp = new Uint32Array((nx.length + 1) * w);
-    for (let i = nx.length - 1;i >= 0; i--)
-      for (let j = ny.length - 1;j >= 0; j--)
-        dp[i * w + j] = nx[i] === ny[j] ? dp[(i + 1) * w + j + 1] + 1 : Math.max(dp[(i + 1) * w + j], dp[i * w + j + 1]);
-    let i = 0;
-    let j = 0;
-    while (i < nx.length || j < ny.length) {
-      if (i < nx.length && j < ny.length && nx[i] === ny[j]) {
-        ops.push([" ", y[j++]]);
-        i++;
-      } else if (j >= ny.length || i < nx.length && dp[(i + 1) * w + j] >= dp[i * w + j + 1])
-        ops.push(["-", x[i++]]);
-      else
-        ops.push(["+", y[j++]]);
-    }
-  }
-  const near = (k) => [k - 1, k, k + 1].some((t) => (ops[t]?.[0] ?? " ") !== " ");
-  const out = [];
-  let gap = false;
-  ops.forEach(([op, l], k) => {
-    if (!near(k)) {
-      gap = out.length > 0;
-      return;
-    }
-    if (gap)
-      out.push("  \u2026");
-    gap = false;
-    out.push(`${op} ${cut(l)}`);
-  });
-  return out.length > cap ? [...out.slice(0, cap), `\u2026 ${out.length - cap} more lines`] : out;
-};
-var filterChanges = (d, name) => d.changes.filter((c) => [c.from, c.to].some((u) => u && (u.t.includes(name) || u.f.some((x) => x.includes(name)))) || [...c.calls, ...c.within].some((x) => x.includes(name)));
 
 // src/find.ts
 var findUnits = (ix, query, limit = 10) => {
@@ -39865,44 +39870,9 @@ var extractEndpoints = (bundle) => {
   return unique(out);
 };
 
-// src/surface/env.ts
-var NAME2 = /^[A-Za-z_][A-Za-z0-9_]*$/;
-var UPPER = /^[A-Z_][A-Z0-9_]*$/;
-var LISTED = /^[A-Z][A-Z0-9]*_[A-Z0-9_]+$/;
-var TYPES = new Set([
-  "bool",
-  "triBool",
-  "int",
-  "num",
-  "float",
-  "str",
-  "enum",
-  "list",
-  "json",
-  "url",
-  "path"
-]);
+// src/surface/env-objects.ts
 var isName = (n, name) => n.type === "Identifier" && n.name === name || n.type === "MemberExpression" && !n.computed && n.property.type === "Identifier" && n.property.name === name && n.object.type === "Identifier" && n.object.name === "globalThis";
 var isProcessEnv = (n) => n.type === "MemberExpression" && !n.computed && isName(n.object, "process") && n.property.type === "Identifier" && n.property.name === "env";
-var registryType = (m, getter) => {
-  if (getter.type !== "ArrowFunctionExpression" || getter.body.type !== "Identifier")
-    return;
-  const v = m.variable(getter.body);
-  const def = v?.defs[0];
-  const init = def?.type === "Variable" ? def.node.init : null;
-  if (init?.type !== "CallExpression")
-    return;
-  const c = init.callee;
-  if (c.type !== "MemberExpression" || c.property.type !== "Identifier")
-    return;
-  const values = strings(m, init.arguments[0]);
-  const opts = init.arguments[0]?.type === "ObjectExpression" ? m.src(init.arguments[0]) : "";
-  return {
-    method: c.property.name,
-    detail: `${c.property.name}${opts}`,
-    ...values && { values }
-  };
-};
 var initOf = (v) => {
   const def = v.defs[0];
   if (def?.type !== "Variable" || !def.node.init)
@@ -40001,6 +39971,43 @@ class EnvObjects {
     return index >= 0 && calls.length > 0 && calls.every((c) => c?.call.arguments[index] && this.is(c.module, c.call.arguments[index], seen));
   }
 }
+
+// src/surface/env.ts
+var NAME2 = /^[A-Za-z_][A-Za-z0-9_]*$/;
+var UPPER = /^[A-Z_][A-Z0-9_]*$/;
+var LISTED = /^[A-Z][A-Z0-9]*_[A-Z0-9_]+$/;
+var TYPES = new Set([
+  "bool",
+  "triBool",
+  "int",
+  "num",
+  "float",
+  "str",
+  "enum",
+  "list",
+  "json",
+  "url",
+  "path"
+]);
+var registryType = (m, getter) => {
+  if (getter.type !== "ArrowFunctionExpression" || getter.body.type !== "Identifier")
+    return;
+  const v = m.variable(getter.body);
+  const def = v?.defs[0];
+  const init = def?.type === "Variable" ? def.node.init : null;
+  if (init?.type !== "CallExpression")
+    return;
+  const c = init.callee;
+  if (c.type !== "MemberExpression" || c.property.type !== "Identifier")
+    return;
+  const values = strings(m, init.arguments[0]);
+  const opts = init.arguments[0]?.type === "ObjectExpression" ? m.src(init.arguments[0]) : "";
+  return {
+    method: c.property.name,
+    detail: `${c.property.name}${opts}`,
+    ...values && { values }
+  };
+};
 var paramOf = (m, id) => {
   if (id.type !== "Identifier")
     return;
