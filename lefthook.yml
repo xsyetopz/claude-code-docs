@@ -26,12 +26,12 @@ pre-commit:
           - name: check-docs
             glob:
               - "{docs,src}/**/*"
-              - "tools/check-docs.ts"
+              - "tools/check/docs.ts"
             run: bun run check:docs
           - name: check-examples
             glob:
               - "docs/**/*.{md,mdx}"
-              - "tools/check-examples.ts"
+              - "tools/check/examples.ts"
               - "biome.json"
               - "tools/lint/*"
             run: bun run check:examples

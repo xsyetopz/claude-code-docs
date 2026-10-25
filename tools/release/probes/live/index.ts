@@ -9,7 +9,7 @@ import { dirname, join } from "node:path";
 import { createInterface } from "node:readline/promises";
 import { cacheNote } from "../../lib/cache.ts";
 import { SYSTEM_PATH } from "../../lib/env.ts";
-import { DRY_TOKEN } from "../../lib/live-env.ts";
+import { DRY_TOKEN } from "../../lib/live/env.ts";
 import { type Ctx, ROOT } from "../../util.ts";
 import { pick } from "./cases.ts";
 

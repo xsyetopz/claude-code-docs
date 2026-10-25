@@ -2,7 +2,7 @@ import { describe, expect, test } from "bun:test";
 import { Bundle, children, type Node } from "../src/ast.ts";
 import { literal, short, unique } from "../src/surface/common.ts";
 import { KINDS, surface } from "../src/surface/index.ts";
-import { bundle, items, names } from "./surface-util.ts";
+import { bundle, items, names } from "./surface/util.ts";
 
 describe("registry", () => {
   test("lists the kinds", () => {

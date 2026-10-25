@@ -37771,7 +37771,7 @@ function parse6(source, options) {
   return parseSource(source, options);
 }
 
-// inspect/mcp/src/ast-node.ts
+// inspect/mcp/src/ast/node.ts
 var isNode = (x) => typeof x === "object" && x !== null && typeof x.type === "string" && typeof x.start === "number";
 var isFn = (n) => n?.type === "FunctionDeclaration" || n?.type === "FunctionExpression" || n?.type === "ArrowFunctionExpression";
 var children = (n) => {
@@ -37788,7 +37788,7 @@ var children = (n) => {
   return out.sort((a, b) => a.start - b.start);
 };
 
-// inspect/mcp/src/ast-calls.ts
+// inspect/mcp/src/ast/calls.ts
 var functionOf = (m, callee) => {
   if (callee.type !== "Identifier")
     return;
@@ -38135,7 +38135,7 @@ var extractModules = (binaryPath) => {
   return { modules, entry: modules[entryId]?.name ?? "" };
 };
 
-// inspect/mcp/src/resolve-tables.ts
+// inspect/mcp/src/resolve/tables.ts
 var isVoid = (n) => !n || n.type === "UnaryExpression" && n.operator === "void" || n.type === "Literal" && n.value === null || n.type === "Identifier" && n.name === "undefined";
 var memberPath = (m, n) => {
   const path = [];
@@ -38228,7 +38228,7 @@ var COMPARE = new Set([
   "in"
 ]);
 
-// inspect/mcp/src/resolve-types.ts
+// inspect/mcp/src/resolve/types.ts
 var kindType = (v) => v.k === "str" || v.k === "enum" ? "string" : v.k === "num" ? "number" : v.k === "bool" ? "boolean" : v.k === "arr" ? "array" : v.k === "obj" ? "object" : undefined;
 var union3 = (a, b) => a && b ? [...new Set([...a, ...b])].sort() : undefined;
 var jsonTypes = (t) => {
@@ -38293,7 +38293,7 @@ var mergeEntries = (lists, ty = (v) => v.k === "unk" ? v.t ?? undefined : kindTy
   return [...seen.values()].map((e) => ("key" in e) ? { ...e, opt: e.opt || (count.get(e.key) ?? 0) < lists.length } : e);
 };
 
-// inspect/mcp/src/resolve-typeof.ts
+// inspect/mcp/src/resolve/typeof.ts
 class TypeResolver {
   #varTypes = new Map;
   ty = (v) => this.typeOfVal(v);
@@ -38472,7 +38472,7 @@ class TypeResolver {
   }
 }
 
-// inspect/mcp/src/resolve-value.ts
+// inspect/mcp/src/resolve/value.ts
 class ValueResolver extends TypeResolver {
   #names = new Map;
   objectAt(m, pos) {
@@ -38842,7 +38842,7 @@ var program = (binary) => {
   return p;
 };
 
-// inspect/mcp/src/diff-render.ts
+// inspect/mcp/src/diff/render.ts
 var norm = (t) => t.replace(/\$[0-9a-f]{6}(?:_\d+)?/g, "$").replace(/chunk@[0-9a-f]{8}\.js/g, "chunk@").replace(/\.\.\./g, "\u2026").replace(/(?<![.\w$])([a-z])\d+\b/g, "$1");
 var lines = (t) => t.replace(/([;{}])/g, `$1
 `).split(`
@@ -39870,7 +39870,7 @@ var extractEndpoints = (bundle) => {
   return unique(out);
 };
 
-// inspect/mcp/src/surface/env-objects.ts
+// inspect/mcp/src/surface/env/objects.ts
 var isName = (n, name) => n.type === "Identifier" && n.name === name || n.type === "MemberExpression" && !n.computed && n.property.type === "Identifier" && n.property.name === name && n.object.type === "Identifier" && n.object.name === "globalThis";
 var isProcessEnv = (n) => n.type === "MemberExpression" && !n.computed && isName(n.object, "process") && n.property.type === "Identifier" && n.property.name === "env";
 var initOf = (v) => {

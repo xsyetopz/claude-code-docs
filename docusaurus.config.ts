@@ -4,8 +4,8 @@ import type * as Preset from "@docusaurus/preset-classic";
 import type { Config, Plugin } from "@docusaurus/types";
 import { themes as prismThemes } from "prism-react-renderer";
 import llmsTxtPlugin from "./src/plugins/llms-txt";
-import rehypeCodeWbr from "./src/plugins/rehype-code-wbr";
-import rehypeTableMarks from "./src/plugins/rehype-table-marks";
+import rehypeCodeWbr from "./src/plugins/rehype/code-wbr";
+import rehypeTableMarks from "./src/plugins/rehype/table-marks";
 import { CLAUDE_CODE_VERSION } from "./src/version";
 
 const REPO = "https://github.com/xsyetopz/claude-code-docs";

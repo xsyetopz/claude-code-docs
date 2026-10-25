@@ -195,7 +195,7 @@ Use these marks in a table cell that is a yes, no, or unknown answer, such as an
 - Do not use a mark where Yes or No is part of a value, such as a default that is literally "no".
 - Never put a mark in a heading, a sidebar label, or link text.
 - For a short clarification, put `\*` after the mark (`✅\*`) and write `\* The note.` right after the table. Use `\*\*` for a second note.
-- `bun run check:docs` rejects every emoji that is not on the allow-list in `tools/check-docs.ts`.
+- `bun run check:docs` rejects every emoji that is not on the allow-list in `tools/check/docs.ts`.
 
 ### Status Labels
 

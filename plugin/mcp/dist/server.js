@@ -22073,81 +22073,6 @@ var sourceData = (s) => ({
   fetchedAt: s.fetchedAt
 });
 
-// plugin/mcp/src/manifest.ts
-var SITE = "https://xsyetopz.github.io/claude-code-docs";
-var siteBase = () => baseUrl("CC_DOCS_BASE_URL", SITE);
-var normalizeRoute = (input) => {
-  let r = input.trim();
-  for (const o of new Set([siteBase(), SITE]))
-    if (r === o || r.startsWith(`${o}/`)) {
-      r = r.slice(o.length);
-      break;
-    }
-  r = r.replace(/[?#].*$/, "").replace(/\.(md|html)$/, "");
-  return r.replace(/^\/+|\/+$/g, "") || "index";
-};
-var ROUTE_RE = /^\/?[a-z0-9][a-z0-9/_-]*$/i;
-var sanitizeManifest = (list, base = siteBase()) => {
-  if (!Array.isArray(list))
-    return [];
-  const out = [];
-  for (const raw of list) {
-    if (!raw || typeof raw !== "object")
-      continue;
-    const { route, title, description, section, md, url } = raw;
-    if (typeof route !== "string" || typeof title !== "string" || typeof description !== "string" || typeof section !== "string" || typeof url !== "string")
-      continue;
-    const okRoute = route === "/" || ROUTE_RE.test(route) && !route.includes("//") && !route.includes("..");
-    if (!okRoute || !(url === base || url.startsWith(`${base}/`)))
-      continue;
-    out.push({
-      route: normalizeRoute(route),
-      title,
-      description,
-      section,
-      md: typeof md === "string" ? md : "",
-      url
-    });
-  }
-  return out;
-};
-var parseManifest = (text) => {
-  try {
-    return sanitizeManifest(JSON.parse(text));
-  } catch {
-    return [];
-  }
-};
-var parseSearchIndex = (text) => {
-  try {
-    const j = JSON.parse(text);
-    if (typeof j !== "object" || j === null)
-      return;
-    const { hash, pages } = j;
-    if (typeof hash !== "string" || !Array.isArray(pages))
-      return;
-    const out = [];
-    for (const p of pages) {
-      if (!p || typeof p !== "object")
-        continue;
-      const { route, title, description, headings, extra, body } = p;
-      if (typeof route !== "string" || typeof title !== "string" || typeof description !== "string" || !Array.isArray(headings) || typeof extra !== "string" || typeof body !== "string")
-        continue;
-      out.push({
-        route: normalizeRoute(route),
-        title,
-        description,
-        headings: headings.filter((h) => typeof h === "string"),
-        extra,
-        body
-      });
-    }
-    return out.length > 0 ? { hash, pages: out } : undefined;
-  } catch {
-    return;
-  }
-};
-
 // plugin/mcp/src/search.ts
 var W_TITLE = 5;
 var W_DESC = 3;
@@ -22277,6 +22202,81 @@ var snippetOf = (body, terms) => {
 };
 var SEARCH_INDEX_FILE = "llms-search-index.json";
 var SEARCH_INDEX_MAX = 8 * 1024 * 1024;
+
+// plugin/mcp/src/manifest.ts
+var SITE = "https://xsyetopz.github.io/claude-code-docs";
+var siteBase = () => baseUrl("CC_DOCS_BASE_URL", SITE);
+var normalizeRoute = (input) => {
+  let r = input.trim();
+  for (const o of new Set([siteBase(), SITE]))
+    if (r === o || r.startsWith(`${o}/`)) {
+      r = r.slice(o.length);
+      break;
+    }
+  r = r.replace(/[?#].*$/, "").replace(/\.(md|html)$/, "");
+  return r.replace(/^\/+|\/+$/g, "") || "index";
+};
+var ROUTE_RE = /^\/?[a-z0-9][a-z0-9/_-]*$/i;
+var sanitizeManifest = (list, base = siteBase()) => {
+  if (!Array.isArray(list))
+    return [];
+  const out = [];
+  for (const raw of list) {
+    if (!raw || typeof raw !== "object")
+      continue;
+    const { route, title, description, section, md, url } = raw;
+    if (typeof route !== "string" || typeof title !== "string" || typeof description !== "string" || typeof section !== "string" || typeof url !== "string")
+      continue;
+    const okRoute = route === "/" || ROUTE_RE.test(route) && !route.includes("//") && !route.includes("..");
+    if (!okRoute || !(url === base || url.startsWith(`${base}/`)))
+      continue;
+    out.push({
+      route: normalizeRoute(route),
+      title,
+      description,
+      section,
+      md: typeof md === "string" ? md : "",
+      url
+    });
+  }
+  return out;
+};
+var parseManifest = (text) => {
+  try {
+    return sanitizeManifest(JSON.parse(text));
+  } catch {
+    return [];
+  }
+};
+var parseSearchIndex = (text) => {
+  try {
+    const j = JSON.parse(text);
+    if (typeof j !== "object" || j === null)
+      return;
+    const { hash, pages } = j;
+    if (typeof hash !== "string" || !Array.isArray(pages))
+      return;
+    const out = [];
+    for (const p of pages) {
+      if (!p || typeof p !== "object")
+        continue;
+      const { route, title, description, headings, extra, body } = p;
+      if (typeof route !== "string" || typeof title !== "string" || typeof description !== "string" || !Array.isArray(headings) || typeof extra !== "string" || typeof body !== "string")
+        continue;
+      out.push({
+        route: normalizeRoute(route),
+        title,
+        description,
+        headings: headings.filter((h) => typeof h === "string"),
+        extra,
+        body
+      });
+    }
+    return out.length > 0 ? { hash, pages: out } : undefined;
+  } catch {
+    return;
+  }
+};
 
 // plugin/mcp/src/content.ts
 var MANIFEST_TTL_MS = 10 * 60 * 1000;
@@ -22601,7 +22601,7 @@ Closest matches:
 ${near}` : "";
 };
 
-// plugin/mcp/src/core-shared.ts
+// plugin/mcp/src/core/shared.ts
 var DEFAULT_PAGE_CHARS = 20000;
 var MAX_PAGE_CHARS = 40000;
 var content = new Content;
@@ -22630,7 +22630,7 @@ var heading = async () => {
 ` : "";
 };
 
-// plugin/mcp/src/core-list.ts
+// plugin/mcp/src/core/list.ts
 var listPlatform = async ({ section }) => {
   const { entries, source } = await platform.index();
   const line = sourceLine(source);
@@ -22705,7 +22705,7 @@ ${sourceLine(source)}`, {
     source: sourceData(source)
   }, source, true);
 });
-// plugin/mcp/src/core-read.ts
+// plugin/mcp/src/core/read.ts
 var sectionOf = (md, want0) => {
   const want = want0.trim().toLowerCase().replace(/^#+\s*/, "");
   const lines = md.split(`
@@ -22974,7 +22974,7 @@ ${parts.join(`
 `)}`;
 };
 
-// plugin/mcp/src/core-schema.ts
+// plugin/mcp/src/core/schema.ts
 var isObj = (v) => typeof v === "object" && v !== null && !Array.isArray(v);
 var walk = (schema, path) => {
   let cur = schema;
@@ -23079,7 +23079,7 @@ ${rows.join(`
   }
   return schemaPage(name, property, out, offset, source);
 });
-// plugin/mcp/src/core-index.ts
+// plugin/mcp/src/core/site-index.ts
 var PARTIAL_INDEX_TTL_MS = 60 * 1000;
 var index;
 var building;
@@ -23162,7 +23162,7 @@ var indexLine = (b) => {
   return `Source: ${b.source.origin}, index built from ${b.pages} pages${cover}, ${load.fromCache} from cache${load.offline > 0 ? " (offline)" : ""}; ${b.fallback}`;
 };
 
-// plugin/mcp/src/core-search.ts
+// plugin/mcp/src/core/search.ts
 var searchPlatform = async ({
   query,
   limit = 8,

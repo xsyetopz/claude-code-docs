@@ -439,7 +439,7 @@ input:focus-visible,
   color: var(--cc-badge-caution-fg);
 }
 
-/* Yes/No glyphs from rehype-table-marks. */
+/* Yes/No glyphs from rehype/table-marks. */
 .cc-mark {
   font-style: normal;
 }

@@ -4,7 +4,7 @@
 import { mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { PROMPT } from "../../lib/env.ts";
-import { liveEnv } from "../../lib/live-env.ts";
+import { liveEnv } from "../../lib/live/env.ts";
 import type { Mitm } from "../../lib/mitm.ts";
 import { runChild } from "../../lib/proc.ts";
 import { type PtyResult, type PtyStep, runPty } from "../../lib/pty/driver.ts";

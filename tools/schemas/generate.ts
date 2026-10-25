@@ -7,7 +7,7 @@ import { join } from "node:path";
 import { CLAUDE_CODE_VERSION } from "../../src/version.ts";
 import { buildFiles, type RawSchemas } from "./build.ts";
 import { type Capture, findBinary, ID, runCapture } from "./capture.ts";
-import { PAYLOAD_CAPTURES } from "./payloads-capture.ts";
+import { PAYLOAD_CAPTURES } from "./payloads/capture.ts";
 
 const ROOT = join(import.meta.dir, "..", "..");
 const SCHEMAS = join(ROOT, "schemas");

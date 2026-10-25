@@ -16,12 +16,12 @@
 // A field typed by hand in tools/schemas/manual/ (see manual.ts) gets that type and loses "x-unverified".
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { buildClaudeJson } from "./code-claudejson.ts";
-import { argv, countProps, mods, OUT, R, ROOT, report } from "./code-ctx.ts";
-import { buildFrontmatter } from "./code-frontmatter.ts";
-import { buildOtel } from "./code-otel.ts";
-import { buildStatusLine } from "./code-statusline.ts";
-import { buildTranscript } from "./code-transcript.ts";
+import { buildClaudeJson } from "./code/claudejson.ts";
+import { argv, countProps, mods, OUT, R, ROOT, report } from "./code/ctx.ts";
+import { buildFrontmatter } from "./code/frontmatter.ts";
+import { buildOtel } from "./code/otel.ts";
+import { buildStatusLine } from "./code/statusline.ts";
+import { buildTranscript } from "./code/transcript.ts";
 import { anchorIn, applyManual } from "./manual.ts";
 import { applyObserved } from "./observed.ts";
 

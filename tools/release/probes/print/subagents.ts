@@ -13,7 +13,7 @@ import {
   toolNames,
   toolResultTexts,
   withRun,
-} from "./harness-b.ts";
+} from "./run/helpers.ts";
 import type { PrintGroup } from "./types.ts";
 
 const MARK = "PROBEMARK Reply with 'OK'.";

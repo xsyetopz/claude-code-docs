@@ -6,7 +6,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { maybeWarm, recordLiveRun } from "../../lib/cache.ts";
 import { binaryPath } from "../../lib/env.ts";
-import { DRY_TOKEN, liveToken } from "../../lib/live-env.ts";
+import { DRY_TOKEN, liveToken } from "../../lib/live/env.ts";
 import { allocPort } from "../../lib/ports.ts";
 import {
   type CaseResult,

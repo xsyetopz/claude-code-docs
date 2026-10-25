@@ -14,7 +14,7 @@ import { join } from "node:path";
 import { claimsForProbe } from "./claims/map.ts";
 import { runClaimsSelftest } from "./claims/selftest.ts";
 import { assertSafeEnv, childEnv, FAKE_KEY, PROMPT } from "./lib/env.ts";
-import { runLiveSelftest } from "./lib/live-selftest.ts";
+import { runLiveSelftest } from "./lib/live/selftest.ts";
 import { allocPort } from "./lib/ports.ts";
 import { runChild } from "./lib/proc.ts";
 import { runPtySelftest } from "./lib/pty/selftest.ts";

@@ -11,7 +11,7 @@ import {
 import type * as ES from "estree";
 import { parse } from "meriyah";
 
-import { children, type Node } from "./ast-node.ts";
+import { children, type Node } from "./ast/node.ts";
 
 export {
   type Call,
@@ -21,8 +21,8 @@ export {
   functionOf,
   nameOf,
   returnsOf,
-} from "./ast-calls.ts";
-export { children, type Fn, isFn, type Node } from "./ast-node.ts";
+} from "./ast/calls.ts";
+export { children, type Fn, isFn, type Node } from "./ast/node.ts";
 
 export class Module {
   readonly name: string;

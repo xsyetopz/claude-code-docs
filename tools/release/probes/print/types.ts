@@ -1,5 +1,5 @@
 // Shared contract for print probes (task 1.3, chunks B2 and B3).
-// index.ts (B2) runs groups from groups-a.ts (B2) and groups-b.ts (B3).
+// index.ts (B2) runs groups from groups/a.ts (B2) and groups/b.ts (B3).
 import type { CaseResult } from "../../lib/results.ts";
 
 export type PrintCtx = {

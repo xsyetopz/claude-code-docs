@@ -1,4 +1,4 @@
-// Host-data normalizer shared by render.ts (generated pages) and check-docs.ts
+// Host-data normalizer shared by render.ts (generated pages) and check/docs.ts
 // (hand-written prompt pages). Replaces values that depend on the machine.
 export const normalizeHost = (s: string): string =>
   s

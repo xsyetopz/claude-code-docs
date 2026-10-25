@@ -13,7 +13,7 @@ import {
   newState,
   SERVER,
   stops,
-} from "./server-harness.ts";
+} from "./server/harness.ts";
 
 afterAll(cleanup);
 

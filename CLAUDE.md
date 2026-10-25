@@ -25,7 +25,7 @@ Not made by or tied to Anthropic. Hosted at <https://xsyetopz.github.io/claude-c
 - List only items a user can use or change. Never invent a fact.
 - Before you state a field of a payload (a `$` call, an event, a hook input or output, a tool input), find it in `schemas/claude-code.d.ts` or a schema in `schemas/`. State only the fields you found there, and mark any other field as unconfirmed.
 - Cite external sources as markdown links to the exact page and section. Facts from the binary: "the program".
-- Emojis only from the allow-list in `tools/check-docs.ts` (✅ and ❌). Code identifiers in headings and admonition titles go in backticks. Escape MDX: `\{`, `\}`, `<` in code, `\|` in table code cells.
+- Emojis only from the allow-list in `tools/check/docs.ts` (✅ and ❌). Code identifiers in headings and admonition titles go in backticks. Escape MDX: `\{`, `\}`, `<` in code, `\|` in table code cells.
 
 ## Conventions
 

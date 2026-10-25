@@ -6,8 +6,8 @@ import { join } from "node:path";
 import { binaryPath, PROMPT } from "../../lib/env.ts";
 import { type CaseResult, openRun, writeCase } from "../../lib/results.ts";
 import type { Ctx } from "../../util.ts";
-import { groupsA } from "./groups-a.ts";
-import { groupsB } from "./groups-b.ts";
+import { groupsA } from "./groups/a.ts";
+import { groupsB } from "./groups/b.ts";
 import { selected, stopStub } from "./run.ts";
 import type { PrintCtx } from "./types.ts";
 

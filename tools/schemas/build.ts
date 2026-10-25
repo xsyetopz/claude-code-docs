@@ -4,7 +4,7 @@ import {
   hookOutput,
   streamJson,
   tools,
-} from "./payloads-build.ts";
+} from "./payloads/build.ts";
 
 // Turns the raw toJSONSchema output into the published files (design D2).
 export type Json = { [key: string]: unknown };

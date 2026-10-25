@@ -1,6 +1,6 @@
 // Diffs two prepared installs (`prepare.ts`) by code unit, so a release shows as the few functions it changed.
 
-import { norm } from "./diff-render.ts";
+import { norm } from "./diff/render.ts";
 import type { Index, Unit } from "./prepare.ts";
 
 export type Change = {
@@ -297,4 +297,4 @@ export const diffIndexes = (from: Index, to: Index): Diff => {
   };
 };
 
-export { cut, filterChanges, lines, unitDiff } from "./diff-render.ts";
+export { cut, filterChanges, lines, unitDiff } from "./diff/render.ts";

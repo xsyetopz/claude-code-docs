@@ -7,7 +7,7 @@ import {
   runCases,
   toolNames,
   withRun,
-} from "./harness-b.ts";
+} from "./run/helpers.ts";
 import type { PrintGroup } from "./types.ts";
 
 const S = "claude-sonnet-5-5";

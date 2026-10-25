@@ -6,7 +6,7 @@ import type { ComponentProps } from "react";
 
 const OriginalCode = MDXComponents.code;
 
-// Inline code with <wbr> children (rehype-code-wbr) is still inline code.
+// Inline code with <wbr> children (rehype/code-wbr) is still inline code.
 const Code = (props: ComponentProps<"code">) => {
   return (props as Record<string, unknown>)["data-wbr"] ? (
     <CodeInline {...props} />

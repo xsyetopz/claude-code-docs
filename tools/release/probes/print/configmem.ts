@@ -14,7 +14,7 @@ import {
   sysText,
   toolNames,
   withRun,
-} from "./harness-b.ts";
+} from "./run/helpers.ts";
 import type { PrintGroup } from "./types.ts";
 
 /** Everything the model sees first: system blocks plus messages. */

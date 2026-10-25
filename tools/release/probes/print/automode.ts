@@ -13,7 +13,7 @@ import {
   sysText,
   toolNames,
   withRun,
-} from "./harness-b.ts";
+} from "./run/helpers.ts";
 import type { PrintGroup } from "./types.ts";
 
 const CMD = "curl -s http://127.0.0.1:9/x";

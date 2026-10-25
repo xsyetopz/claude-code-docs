@@ -11,17 +11,17 @@ import {
   type Node,
   returnsOf,
 } from "./ast.ts";
-import { bind, isVoid } from "./resolve-tables.ts";
+import { bind, isVoid } from "./resolve/tables.ts";
 import {
   type Entry,
   type Env,
   mergeEntries,
   type Val,
-} from "./resolve-types.ts";
-import { ValueResolver } from "./resolve-value.ts";
+} from "./resolve/types.ts";
+import { ValueResolver } from "./resolve/value.ts";
 
-export type { Entry, Env, JType, Ref, Val } from "./resolve-types.ts";
-export { mergeEntries } from "./resolve-types.ts";
+export type { Entry, Env, JType, Ref, Val } from "./resolve/types.ts";
+export { mergeEntries } from "./resolve/types.ts";
 
 export class Resolver extends ValueResolver {
   /**

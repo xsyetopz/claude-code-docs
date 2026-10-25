@@ -67,7 +67,7 @@ const TYPES = new Set([
   "path",
 ]);
 
-import { EnvObjects, isProcessEnv, type Variable } from "./env-objects.ts";
+import { EnvObjects, isProcessEnv, type Variable } from "./env/objects.ts";
 
 const registryType = (
   m: Module,

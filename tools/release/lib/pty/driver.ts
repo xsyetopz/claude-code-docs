@@ -12,7 +12,7 @@ import {
 import { tmpdir } from "node:os";
 import { dirname, isAbsolute, join } from "node:path";
 import { assertSafeEnv } from "../env.ts";
-import { assertLiveEnv } from "../live-env.ts";
+import { assertLiveEnv } from "../live/env.ts";
 import { registerPid, runChild, unregisterPid } from "../proc.ts";
 import { assertShimReady } from "../shim.ts";
 
