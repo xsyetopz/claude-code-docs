@@ -2,8 +2,10 @@
 // Builds a small Bun single-file executable as the "Claude Code" binary, and a config dir with one session.
 import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import {
+  chmodSync,
   mkdirSync,
   mkdtempSync,
+  readFileSync,
   rmSync,
   statSync,
   symlinkSync,
@@ -82,6 +84,12 @@ beforeAll(async () => {
   ]);
   if (b.exitCode !== 0) throw new Error(b.stderr.toString());
   symlinkSync(join(tmp, "app.js"), join(versions, "9.9.9"));
+  // Stands in for `bunx @wakaru/cli@1.14.0`: counts its runs, fails while `wakaru-fail` exists, else prints a marker and the input.
+  writeFileSync(
+    join(tmp, "wakaru-stub"),
+    `#!/bin/sh\necho run >> "${tmp}/wakaru-runs"\n[ -e "${tmp}/wakaru-fail" ] && { echo "stub broke" >&2; exit 3; }\necho "// readable: $*"\nfor last; do :; done\ncat "$last"\n`,
+  );
+  chmodSync(join(tmp, "wakaru-stub"), 0o755);
   client = new Client({ name: "test", version: "0" });
   await client.connect(
     new StdioClientTransport({
@@ -95,6 +103,7 @@ beforeAll(async () => {
         CC_INSPECT_VERSIONS_DIR: versions,
         CC_INSPECT_LAUNCHER: join(tmp, "no-launcher"),
         CC_INSPECT_CACHE: join(tmp, "cache"),
+        CC_INSPECT_WAKARU: join(tmp, "wakaru-stub"),
       },
     }),
   );
@@ -234,6 +243,36 @@ describe("binary", () => {
       length: 11,
     });
     expect(m.content[0]?.text).toEndWith('"api_error"');
+  });
+
+  test("code read with view readable runs Wakaru once, caches it, and pages the text", async () => {
+    const fail = join(tmp, "wakaru-fail");
+    writeFileSync(fail, "");
+    const bad = await call("code", {
+      action: "read",
+      module: "app.js",
+      view: "readable",
+      version: "9.9.9",
+    });
+    expect(bad.isError).toBe(true);
+    expect(bad.content[0]?.text).toContain("stub broke");
+    rmSync(fail);
+    const args = { action: "read", module: "app.js", view: "readable" };
+    const a = await call("code", { ...args, version: "9.9.9", length: 60 });
+    expect(a.content[0]?.text).toContain("// readable: --formatter");
+    expect(a.structuredContent?.["text"]).toContain("// readable:");
+    const b = await call("code", {
+      ...args,
+      version: "9.9.9",
+      offset: 20,
+      length: 30,
+    });
+    expect(b.structuredContent?.["text"]).toBe(
+      String(a.structuredContent?.["text"]).slice(20, 50),
+    );
+    const cached = join(tmp, "cache", "9.9.9", "clean", "readable", "app.js");
+    expect(readFileSync(cached, "utf8")).toStartWith("// readable:");
+    expect(readFileSync(join(tmp, "wakaru-runs"), "utf8")).toBe("run\nrun\n");
   });
 
   test("surface object-keys follows a spread into a function", async () => {

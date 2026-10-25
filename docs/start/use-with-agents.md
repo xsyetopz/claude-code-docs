@@ -132,7 +132,7 @@ The server has 4 tools. Each takes an `action` or a `kind` that picks what it do
 | `code` | `action: "installs"` | Lists the versions in `~/.local/share/claude/versions`, and marks the one that `~/.local/bin/claude` runs. |
 | `code` | `action: "modules"` | Lists the files inside a binary. |
 | `code` | `action: "search"` | Finds a `query` in the code of a binary, with the module and offset of each hit. |
-| `code` | `action: "read"` | Gives a slice of one `module`. |
+| `code` | `action: "read"` | Gives a slice of one `module`. With `view: "readable"`, it gives the module after [Wakaru](https://github.com/wakaru-dev/wakaru) rewrote it for reading. The first call for a module runs `bunx @wakaru/cli@1.14.0`, which needs a network and takes a few seconds on a large module. Later calls read the cache. |
 | `code` | `action: "find"` | Finds code by plain words in a `query`, such as "sleep Monitor until-loop". It ranks the functions of a prepared version by the words in their strings, property names, and labels, and gives the top 10 with module, offset, and first lines. |
 | `code` | `action: "prepare"` | Cleans each module of a version (stable local names, then `bun fmt`) and indexes its functions, into the cache. |
 | `surface` | `kind: "env"`, `"setting"`, and the other surface kinds | Lists the items of one kind, each with its default, gate, module, and offset when the code shows them. With no `kind`, it gives each kind with its count. |
