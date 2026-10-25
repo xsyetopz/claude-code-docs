@@ -219,7 +219,8 @@
           "type": "number"
         },
         "duration_ms": {
-          "x-unverified": true
+          "x-unverified": true,
+          "x-observed-type": ["number"]
         },
         "ttft_ms": {
           "type": "number"
