@@ -21583,7 +21583,7 @@ class StdioServerTransport {
 // plugin/mcp/package.json
 var package_default = {
   name: "claude-code-docs-mcp",
-  version: "1.0.1",
+  version: "1.0.2",
   private: true,
   license: "MIT",
   type: "module",
@@ -22073,6 +22073,81 @@ var sourceData = (s) => ({
   fetchedAt: s.fetchedAt
 });
 
+// plugin/mcp/src/manifest.ts
+var SITE = "https://xsyetopz.github.io/claude-code-docs";
+var siteBase = () => baseUrl("CC_DOCS_BASE_URL", SITE);
+var normalizeRoute = (input) => {
+  let r = input.trim();
+  for (const o of new Set([siteBase(), SITE]))
+    if (r === o || r.startsWith(`${o}/`)) {
+      r = r.slice(o.length);
+      break;
+    }
+  r = r.replace(/[?#].*$/, "").replace(/\.(md|html)$/, "");
+  return r.replace(/^\/+|\/+$/g, "") || "index";
+};
+var ROUTE_RE = /^\/?[a-z0-9][a-z0-9/_-]*$/i;
+var sanitizeManifest = (list, base = siteBase()) => {
+  if (!Array.isArray(list))
+    return [];
+  const out = [];
+  for (const raw of list) {
+    if (!raw || typeof raw !== "object")
+      continue;
+    const { route, title, description, section, md, url } = raw;
+    if (typeof route !== "string" || typeof title !== "string" || typeof description !== "string" || typeof section !== "string" || typeof url !== "string")
+      continue;
+    const okRoute = route === "/" || ROUTE_RE.test(route) && !route.includes("//") && !route.includes("..");
+    if (!okRoute || !(url === base || url.startsWith(`${base}/`)))
+      continue;
+    out.push({
+      route: normalizeRoute(route),
+      title,
+      description,
+      section,
+      md: typeof md === "string" ? md : "",
+      url
+    });
+  }
+  return out;
+};
+var parseManifest = (text) => {
+  try {
+    return sanitizeManifest(JSON.parse(text));
+  } catch {
+    return [];
+  }
+};
+var parseSearchIndex = (text) => {
+  try {
+    const j = JSON.parse(text);
+    if (typeof j !== "object" || j === null)
+      return;
+    const { hash, pages } = j;
+    if (typeof hash !== "string" || !Array.isArray(pages))
+      return;
+    const out = [];
+    for (const p of pages) {
+      if (!p || typeof p !== "object")
+        continue;
+      const { route, title, description, headings, extra, body } = p;
+      if (typeof route !== "string" || typeof title !== "string" || typeof description !== "string" || !Array.isArray(headings) || typeof extra !== "string" || typeof body !== "string")
+        continue;
+      out.push({
+        route: normalizeRoute(route),
+        title,
+        description,
+        headings: headings.filter((h) => typeof h === "string"),
+        extra,
+        body
+      });
+    }
+    return out.length > 0 ? { hash, pages: out } : undefined;
+  } catch {
+    return;
+  }
+};
+
 // plugin/mcp/src/search.ts
 var W_TITLE = 5;
 var W_DESC = 3;
@@ -22204,8 +22279,6 @@ var SEARCH_INDEX_FILE = "llms-search-index.json";
 var SEARCH_INDEX_MAX = 8 * 1024 * 1024;
 
 // plugin/mcp/src/content.ts
-var SITE = "https://xsyetopz.github.io/claude-code-docs";
-var siteBase = () => baseUrl("CC_DOCS_BASE_URL", SITE);
 var MANIFEST_TTL_MS = 10 * 60 * 1000;
 var PAGE_TTL_MS = 60 * 60 * 1000;
 var INDEX_TTL_MS = 60 * 60 * 1000;
@@ -22234,77 +22307,6 @@ var SCHEMA_NAMES = [
 ];
 var TYPE_FILE = "claude-code.d.ts";
 var TYPE_NAMES = ["types", "claude-code", TYPE_FILE];
-var normalizeRoute = (input) => {
-  let r = input.trim();
-  for (const o of new Set([siteBase(), SITE]))
-    if (r === o || r.startsWith(`${o}/`)) {
-      r = r.slice(o.length);
-      break;
-    }
-  r = r.replace(/[?#].*$/, "").replace(/\.(md|html)$/, "");
-  return r.replace(/^\/+|\/+$/g, "") || "index";
-};
-var ROUTE_RE = /^\/?[a-z0-9][a-z0-9/_-]*$/i;
-var sanitizeManifest = (list, base = siteBase()) => {
-  if (!Array.isArray(list))
-    return [];
-  const out = [];
-  for (const raw of list) {
-    if (!raw || typeof raw !== "object")
-      continue;
-    const { route, title, description, section, md, url } = raw;
-    if (typeof route !== "string" || typeof title !== "string" || typeof description !== "string" || typeof section !== "string" || typeof url !== "string")
-      continue;
-    const okRoute = route === "/" || ROUTE_RE.test(route) && !route.includes("//") && !route.includes("..");
-    if (!okRoute || !(url === base || url.startsWith(`${base}/`)))
-      continue;
-    out.push({
-      route: normalizeRoute(route),
-      title,
-      description,
-      section,
-      md: typeof md === "string" ? md : "",
-      url
-    });
-  }
-  return out;
-};
-var parseManifest = (text) => {
-  try {
-    return sanitizeManifest(JSON.parse(text));
-  } catch {
-    return [];
-  }
-};
-var parseSearchIndex = (text) => {
-  try {
-    const j = JSON.parse(text);
-    if (typeof j !== "object" || j === null)
-      return;
-    const { hash, pages } = j;
-    if (typeof hash !== "string" || !Array.isArray(pages))
-      return;
-    const out = [];
-    for (const p of pages) {
-      if (!p || typeof p !== "object")
-        continue;
-      const { route, title, description, headings, extra, body } = p;
-      if (typeof route !== "string" || typeof title !== "string" || typeof description !== "string" || !Array.isArray(headings) || typeof extra !== "string" || typeof body !== "string")
-        continue;
-      out.push({
-        route: normalizeRoute(route),
-        title,
-        description,
-        headings: headings.filter((h) => typeof h === "string"),
-        extra,
-        body
-      });
-    }
-    return out.length > 0 ? { hash, pages: out } : undefined;
-  } catch {
-    return;
-  }
-};
 
 class ContentError extends Error {
 }
@@ -22599,6 +22601,211 @@ Closest matches:
 ${near}` : "";
 };
 
+// plugin/mcp/src/core-shared.ts
+var DEFAULT_PAGE_CHARS = 20000;
+var MAX_PAGE_CHARS = 40000;
+var content = new Content;
+var platform = new Platform;
+var ok = (text, data, source, complete = false) => ({ ok: true, text, data, source, complete });
+var fail = (text, source) => ({
+  ok: false,
+  text,
+  data: { error: text },
+  source,
+  complete: false
+});
+var guarded = async (f) => {
+  try {
+    return await f();
+  } catch (e) {
+    if (e instanceof ContentError)
+      return fail(e.message);
+    throw e;
+  }
+};
+var heading = async () => {
+  const v = await content.claudeCode();
+  return v ? `Claude Code Docs (Claude Code ${v})
+
+` : "";
+};
+
+// plugin/mcp/src/core-list.ts
+var listPlatform = async ({ section }) => {
+  const { entries, source } = await platform.index();
+  const line = sourceLine(source);
+  const src = sourceData(source);
+  const groups = new Map;
+  for (const e of entries)
+    groups.set(e.group, (groups.get(e.group) ?? 0) + 1);
+  if (!section) {
+    const rows = [...groups].map(([g, n]) => `- ${g || "(none)"}: ${n}`);
+    return ok(`${entries.length} page(s) in ${groups.size} group(s). Pass a group to list its pages:
+
+${rows.join(`
+`)}
+
+${line}`, {
+      groups: [...groups].map(([group, count]) => ({ group, count })),
+      source: src
+    }, source, true);
+  }
+  const want = section.trim().toLowerCase();
+  const list = entries.filter((e) => e.group.toLowerCase() === want);
+  if (list.length === 0)
+    return fail(`No group "${section}". Groups: ${[...groups.keys()].join(", ")}`);
+  const rows = list.map((e) => `- \`${e.path}\`: ${e.title}${e.description ? `. ${e.description}` : ""}`);
+  return ok(`${list.length} page(s) in "${list[0]?.group}":
+
+${rows.join(`
+`)}
+
+${line}`, {
+    pages: list.map(({ path, title, group, description }) => ({
+      route: path,
+      title,
+      section: group,
+      description
+    })),
+    source: src
+  }, source, true);
+};
+var list = (args = {}) => guarded(async () => {
+  if (args.source === "platform")
+    return await listPlatform(args);
+  const { section } = args;
+  const { entries: all, source } = await content.manifest();
+  const pages = section ? all.filter((e) => matchesSection(e, section)) : all;
+  if (pages.length === 0) {
+    const secs = [...new Set(all.map((e) => e.section))].join(", ");
+    return fail(`No pages in section "${section}". Sections: ${secs}`);
+  }
+  const lines = [];
+  let current = "";
+  for (const e of pages) {
+    if (e.section !== current) {
+      current = e.section;
+      lines.push(`
+## ${current}`);
+    }
+    lines.push(section ? `- \`${e.route}\`: ${e.title}. ${e.description}` : `- \`${e.route}\`: ${e.title}`);
+  }
+  const version = await content.claudeCode();
+  return ok(`${await heading()}${pages.length} page(s):${lines.join(`
+`)}
+
+${sourceLine(source)}`, {
+    ...version ? { claudeCode: version } : {},
+    pages: pages.map(({ route, title, section: s, description }) => ({
+      route,
+      title,
+      section: s,
+      ...section ? { description } : {}
+    })),
+    source: sourceData(source)
+  }, source, true);
+});
+// plugin/mcp/src/core-read.ts
+var sectionOf = (md, want0) => {
+  const want = want0.trim().toLowerCase().replace(/^#+\s*/, "");
+  const lines = md.split(`
+`);
+  const h2 = [];
+  let fence = false;
+  lines.forEach((line, at) => {
+    if (/^```/.test(line))
+      fence = !fence;
+    const m = !fence && /^##\s+(.*)$/.exec(line);
+    if (m)
+      h2.push({ at, title: (m[1] ?? "").trim().toLowerCase() });
+  });
+  const i = h2.findIndex((h) => h.title === want);
+  const k = i >= 0 ? i : h2.findIndex((h) => want.length > 2 && h.title.includes(want));
+  const from = h2[k];
+  if (!from)
+    return;
+  const to = h2[k + 1]?.at ?? lines.length;
+  return lines.slice(from.at, to).join(`
+`);
+};
+var nearList = (route, entries) => {
+  const want = new Set(tokenize(route.replace(/[/_-]+/g, " ")));
+  const near = entries.map((e) => ({
+    e,
+    n: tokenize(`${e.route.replace(/[/_-]+/g, " ")} ${e.title}`).filter((t) => want.has(t)).length
+  })).filter((x) => x.n > 0 && x.e.route !== route).sort((a, b) => b.n - a.n).slice(0, 5).map((x) => `  - ${x.e.route}`).join(`
+`);
+  return near ? `
+Closest matches:
+${near}` : "";
+};
+var pageResult = (info, md0, heading, offset, maxChars, source) => {
+  let md = md0;
+  if (heading) {
+    const sec = sectionOf(md, heading);
+    if (sec === undefined) {
+      const hs = headingsOf(md).map((h) => `  - ${h}`).join(`
+`);
+      return fail(`No H2 section "${heading}" on "${info.route}". Headings:
+${hs}`, source);
+    }
+    md = sec;
+  }
+  const total = md.length;
+  if (offset >= total && total > 0)
+    return fail(`offset ${offset} is past the end (${total} characters).`, source);
+  const chunk = md.slice(offset, offset + maxChars);
+  const end = offset + chunk.length;
+  const head = `${info.title} | ${info.url} | chars ${offset}-${end} of ${total}${end < total ? ` | more: call again with offset=${end}` : ""}`;
+  return ok(`${head}
+
+${chunk}
+
+${sourceLine(source)}`, {
+    ...info,
+    offset,
+    end,
+    total,
+    ...end < total ? { nextOffset: end } : {},
+    text: chunk,
+    source: sourceData(source)
+  }, source);
+};
+var readPlatform = async ({
+  route: input,
+  heading,
+  offset = 0,
+  maxChars = DEFAULT_PAGE_CHARS
+}) => {
+  const path = normalizePlatformPath(input);
+  if (!path)
+    return fail(`Invalid path "${input}". Use a path under docs/en/ such as "build-with-claude/overview" (letters, digits, "-", "_" and "/" only; English pages on ${platformBase()} only).`);
+  const r = await platform.readPage(path);
+  if (r.status === "notfound") {
+    const near = await platform.index().then((ix) => nearPlatform(path, ix.entries)).catch(() => "");
+    return fail(`No platform page "${path}" on ${r.origin}; any cached copy was removed.${near}`);
+  }
+  if (r.status === "error")
+    return fail(r.message);
+  const known = platform.known()?.find((e) => e.path === path);
+  const title = known?.title ?? /^title:\s*(.+)$/m.exec(r.body.slice(0, 1000))?.[1]?.trim() ?? path;
+  const url = `${platformBase()}/docs/en/${path}`;
+  return pageResult({ route: path, title, url }, r.body, heading, offset, maxChars, r.source);
+};
+var read = (args) => guarded(async () => {
+  if (args.source === "platform")
+    return await readPlatform(args);
+  const { route, heading, offset = 0, maxChars = DEFAULT_PAGE_CHARS } = args;
+  const entry = await content.find(route);
+  if (!entry)
+    return fail(`No page with route "${normalizeRoute(route)}". Routes look like "configure/status-line" (list the pages to see them).${nearList(normalizeRoute(route), (await content.manifest()).entries)}`);
+  const r = await content.readPage(entry);
+  if (r.status === "notfound")
+    return fail(`Page "${entry.route}" is listed but no longer exists on ${r.origin}; any cached copy was removed.${nearList(entry.route, (await content.manifest()).entries)}`);
+  if (r.status === "error")
+    return fail(r.message);
+  return pageResult({ route: entry.route, title: entry.title, url: entry.url }, r.body, heading, offset, maxChars, r.source);
+});
 // plugin/mcp/src/types.ts
 var HEAD = /^(\s*)(?:export )?(?:declare )?(?:type|interface|function|const|class|namespace) ([\w$]+)/;
 var MODULE = /^declare module '([^']+)' \{/;
@@ -22767,356 +22974,7 @@ ${parts.join(`
 `)}`;
 };
 
-// plugin/mcp/src/core.ts
-var DEFAULT_PAGE_CHARS = 20000;
-var MAX_PAGE_CHARS = 40000;
-var content = new Content;
-var platform = new Platform;
-var PARTIAL_INDEX_TTL_MS = 60 * 1000;
-var ok = (text, data, source, complete = false) => ({ ok: true, text, data, source, complete });
-var fail = (text, source) => ({
-  ok: false,
-  text,
-  data: { error: text },
-  source,
-  complete: false
-});
-var guarded = async (f) => {
-  try {
-    return await f();
-  } catch (e) {
-    if (e instanceof ContentError)
-      return fail(e.message);
-    throw e;
-  }
-};
-var heading = async () => {
-  const v = await content.claudeCode();
-  return v ? `Claude Code Docs (Claude Code ${v})
-
-` : "";
-};
-var index;
-var building;
-var buildIndex = () => {
-  building ??= (async () => {
-    const builtFor = content.version;
-    const { entries, source } = await content.manifest();
-    const got = await content.searchIndex();
-    const parsed = got.status === "ok" ? parseSearchIndex(got.body) : undefined;
-    if (got.status === "ok" && parsed) {
-      if (index?.hash === parsed.hash && index.builtFor === builtFor) {
-        index = { ...index, at: Date.now(), source: got.source };
-        return index;
-      }
-      const byRoute = new Map(parsed.pages.map((p) => [p.route, p]));
-      const have = entries.filter((e) => byRoute.has(e.route));
-      const idx = new SearchIndex({
-        entries: () => have,
-        text: (e) => byRoute.get(e.route)?.body,
-        extra: (e) => byRoute.get(e.route)?.extra
-      });
-      index = {
-        builtFor,
-        at: Date.now(),
-        idx,
-        source: got.source,
-        pages: have.length,
-        hash: parsed.hash
-      };
-      return index;
-    }
-    const load = await content.loadPages(entries);
-    const idx = new SearchIndex({
-      entries: () => entries,
-      text: (e) => load.texts.get(e.route)
-    });
-    index = {
-      builtFor,
-      at: Date.now(),
-      idx,
-      source,
-      pages: load.texts.size,
-      load,
-      fallback: got.status === "notfound" ? "no llms-search-index.json on the site" : "llms-search-index.json not available"
-    };
-    return index;
-  })().finally(() => {
-    building = undefined;
-  });
-  return building;
-};
-var searchIndex = async () => {
-  await content.manifest();
-  if (!index || index.builtFor !== content.version)
-    return await buildIndex();
-  const partial = index.load !== undefined && index.pages < index.load.total;
-  if (Date.now() - index.at > ttl(partial ? PARTIAL_INDEX_TTL_MS : INDEX_TTL_MS))
-    buildIndex().catch(() => {});
-  return index;
-};
-var indexSource = (b) => {
-  const { load } = b;
-  if (!load)
-    return {
-      ...b.source,
-      state: b.source.state === "live" && Date.now() - b.at >= 60000 ? "cached" : b.source.state
-    };
-  return {
-    origin: b.source.origin,
-    state: load.offline > 0 ? "stale-offline" : load.fromCache < load.texts.size && Date.now() - b.at < 60000 ? "live" : "cached",
-    fetchedAt: load.oldest ?? b.source.fetchedAt,
-    revalidated: false
-  };
-};
-var indexLine = (b) => {
-  const { load } = b;
-  if (!load)
-    return `${sourceLine(indexSource(b))}, search index of ${b.pages} pages`;
-  const cover = b.pages < load.total ? ` (${b.pages} of ${load.total} pages)` : "";
-  return `Source: ${b.source.origin}, index built from ${b.pages} pages${cover}, ${load.fromCache} from cache${load.offline > 0 ? " (offline)" : ""}; ${b.fallback}`;
-};
-var searchPlatform = async ({
-  query,
-  limit = 8,
-  section
-}) => {
-  const ix = await platform.index();
-  const hits = ix.search(query, limit, section).map((h) => ({
-    route: h.entry.path,
-    title: h.entry.title,
-    url: h.entry.url,
-    section: h.entry.group,
-    score: Math.round(h.score * 100) / 100,
-    snippet: h.snippet
-  }));
-  const line = sourceLine(ix.source);
-  const src = { ...sourceData(ix.source), line };
-  if (hits.length === 0)
-    return ok(`No platform pages match "${query}"${section ? ` in group "${section}"` : ""}. Try fewer or different keywords, drop the group filter, or browse the page list.
-
-${line}`, { query, hits, source: src }, ix.source);
-  const md = hits.map((h, i) => `${i + 1}. **${h.title}** (route \`${h.route}\`)
-   ${h.url}${h.snippet ? `
-   ${h.snippet}` : ""}`).join(`
-`);
-  return ok(`${hits.length} hit(s) for "${query}":
-
-${md}
-
-${line}`, { query, hits, source: src }, ix.source, true);
-};
-var search = (args) => guarded(async () => {
-  if (args.source === "platform")
-    return await searchPlatform(args);
-  const { query, limit = 8, section } = args;
-  const b = await searchIndex();
-  const hits = b.idx.search(query, limit, section).map((h) => ({
-    route: h.entry.route,
-    title: h.entry.title,
-    url: h.entry.url,
-    section: h.entry.section,
-    score: Math.round(h.score * 100) / 100,
-    snippet: h.snippet
-  }));
-  const head = await heading();
-  const line = indexLine(b);
-  const src = indexSource(b);
-  const version = await content.claudeCode();
-  const data = {
-    ...version ? { claudeCode: version } : {},
-    query,
-    hits,
-    source: { ...sourceData(src), line }
-  };
-  if (hits.length === 0)
-    return ok(`${head}No pages match "${query}"${section ? ` in section "${section}"` : ""}. Try fewer or different keywords, drop the section filter, or browse the page list.
-
-${line}`, data, src);
-  const md = hits.map((h, i) => `${i + 1}. **${h.title}** (route \`${h.route}\`)
-   ${h.url}
-   ${h.snippet}`).join(`
-`);
-  return ok(`${head}${hits.length} hit(s) for "${query}":
-
-${md}
-
-${line}`, data, src, true);
-});
-var sectionOf = (md, want0) => {
-  const want = want0.trim().toLowerCase().replace(/^#+\s*/, "");
-  const lines = md.split(`
-`);
-  const h2 = [];
-  let fence = false;
-  lines.forEach((line, at) => {
-    if (/^```/.test(line))
-      fence = !fence;
-    const m = !fence && /^##\s+(.*)$/.exec(line);
-    if (m)
-      h2.push({ at, title: (m[1] ?? "").trim().toLowerCase() });
-  });
-  const i = h2.findIndex((h) => h.title === want);
-  const k = i >= 0 ? i : h2.findIndex((h) => want.length > 2 && h.title.includes(want));
-  const from = h2[k];
-  if (!from)
-    return;
-  const to = h2[k + 1]?.at ?? lines.length;
-  return lines.slice(from.at, to).join(`
-`);
-};
-var nearList = (route, entries) => {
-  const want = new Set(tokenize(route.replace(/[/_-]+/g, " ")));
-  const near = entries.map((e) => ({
-    e,
-    n: tokenize(`${e.route.replace(/[/_-]+/g, " ")} ${e.title}`).filter((t) => want.has(t)).length
-  })).filter((x) => x.n > 0 && x.e.route !== route).sort((a, b) => b.n - a.n).slice(0, 5).map((x) => `  - ${x.e.route}`).join(`
-`);
-  return near ? `
-Closest matches:
-${near}` : "";
-};
-var pageResult = (info, md0, heading, offset, maxChars, source) => {
-  let md = md0;
-  if (heading) {
-    const sec = sectionOf(md, heading);
-    if (sec === undefined) {
-      const hs = headingsOf(md).map((h) => `  - ${h}`).join(`
-`);
-      return fail(`No H2 section "${heading}" on "${info.route}". Headings:
-${hs}`, source);
-    }
-    md = sec;
-  }
-  const total = md.length;
-  if (offset >= total && total > 0)
-    return fail(`offset ${offset} is past the end (${total} characters).`, source);
-  const chunk = md.slice(offset, offset + maxChars);
-  const end = offset + chunk.length;
-  const head = `${info.title} | ${info.url} | chars ${offset}-${end} of ${total}${end < total ? ` | more: call again with offset=${end}` : ""}`;
-  return ok(`${head}
-
-${chunk}
-
-${sourceLine(source)}`, {
-    ...info,
-    offset,
-    end,
-    total,
-    ...end < total ? { nextOffset: end } : {},
-    text: chunk,
-    source: sourceData(source)
-  }, source);
-};
-var readPlatform = async ({
-  route: input,
-  heading,
-  offset = 0,
-  maxChars = DEFAULT_PAGE_CHARS
-}) => {
-  const path = normalizePlatformPath(input);
-  if (!path)
-    return fail(`Invalid path "${input}". Use a path under docs/en/ such as "build-with-claude/overview" (letters, digits, "-", "_" and "/" only; English pages on ${platformBase()} only).`);
-  const r = await platform.readPage(path);
-  if (r.status === "notfound") {
-    const near = await platform.index().then((ix) => nearPlatform(path, ix.entries)).catch(() => "");
-    return fail(`No platform page "${path}" on ${r.origin}; any cached copy was removed.${near}`);
-  }
-  if (r.status === "error")
-    return fail(r.message);
-  const known = platform.known()?.find((e) => e.path === path);
-  const title = known?.title ?? /^title:\s*(.+)$/m.exec(r.body.slice(0, 1000))?.[1]?.trim() ?? path;
-  const url = `${platformBase()}/docs/en/${path}`;
-  return pageResult({ route: path, title, url }, r.body, heading, offset, maxChars, r.source);
-};
-var read = (args) => guarded(async () => {
-  if (args.source === "platform")
-    return await readPlatform(args);
-  const { route, heading, offset = 0, maxChars = DEFAULT_PAGE_CHARS } = args;
-  const entry = await content.find(route);
-  if (!entry)
-    return fail(`No page with route "${normalizeRoute(route)}". Routes look like "configure/status-line" (list the pages to see them).${nearList(normalizeRoute(route), (await content.manifest()).entries)}`);
-  const r = await content.readPage(entry);
-  if (r.status === "notfound")
-    return fail(`Page "${entry.route}" is listed but no longer exists on ${r.origin}; any cached copy was removed.${nearList(entry.route, (await content.manifest()).entries)}`);
-  if (r.status === "error")
-    return fail(r.message);
-  return pageResult({ route: entry.route, title: entry.title, url: entry.url }, r.body, heading, offset, maxChars, r.source);
-});
-var listPlatform = async ({ section }) => {
-  const { entries, source } = await platform.index();
-  const line = sourceLine(source);
-  const src = sourceData(source);
-  const groups = new Map;
-  for (const e of entries)
-    groups.set(e.group, (groups.get(e.group) ?? 0) + 1);
-  if (!section) {
-    const rows = [...groups].map(([g, n]) => `- ${g || "(none)"}: ${n}`);
-    return ok(`${entries.length} page(s) in ${groups.size} group(s). Pass a group to list its pages:
-
-${rows.join(`
-`)}
-
-${line}`, {
-      groups: [...groups].map(([group, count]) => ({ group, count })),
-      source: src
-    }, source, true);
-  }
-  const want = section.trim().toLowerCase();
-  const list = entries.filter((e) => e.group.toLowerCase() === want);
-  if (list.length === 0)
-    return fail(`No group "${section}". Groups: ${[...groups.keys()].join(", ")}`);
-  const rows = list.map((e) => `- \`${e.path}\`: ${e.title}${e.description ? `. ${e.description}` : ""}`);
-  return ok(`${list.length} page(s) in "${list[0]?.group}":
-
-${rows.join(`
-`)}
-
-${line}`, {
-    pages: list.map(({ path, title, group, description }) => ({
-      route: path,
-      title,
-      section: group,
-      description
-    })),
-    source: src
-  }, source, true);
-};
-var list = (args = {}) => guarded(async () => {
-  if (args.source === "platform")
-    return await listPlatform(args);
-  const { section } = args;
-  const { entries: all, source } = await content.manifest();
-  const pages = section ? all.filter((e) => matchesSection(e, section)) : all;
-  if (pages.length === 0) {
-    const secs = [...new Set(all.map((e) => e.section))].join(", ");
-    return fail(`No pages in section "${section}". Sections: ${secs}`);
-  }
-  const lines = [];
-  let current = "";
-  for (const e of pages) {
-    if (e.section !== current) {
-      current = e.section;
-      lines.push(`
-## ${current}`);
-    }
-    lines.push(section ? `- \`${e.route}\`: ${e.title}. ${e.description}` : `- \`${e.route}\`: ${e.title}`);
-  }
-  const version = await content.claudeCode();
-  return ok(`${await heading()}${pages.length} page(s):${lines.join(`
-`)}
-
-${sourceLine(source)}`, {
-    ...version ? { claudeCode: version } : {},
-    pages: pages.map(({ route, title, section: s, description }) => ({
-      route,
-      title,
-      section: s,
-      ...section ? { description } : {}
-    })),
-    source: sourceData(source)
-  }, source, true);
-});
+// plugin/mcp/src/core-schema.ts
 var isObj = (v) => typeof v === "object" && v !== null && !Array.isArray(v);
 var walk = (schema, path) => {
   let cur = schema;
@@ -23221,7 +23079,157 @@ ${rows.join(`
   }
   return schemaPage(name, property, out, offset, source);
 });
+// plugin/mcp/src/core-index.ts
+var PARTIAL_INDEX_TTL_MS = 60 * 1000;
+var index;
+var building;
+var buildIndex = () => {
+  building ??= (async () => {
+    const builtFor = content.version;
+    const { entries, source } = await content.manifest();
+    const got = await content.searchIndex();
+    const parsed = got.status === "ok" ? parseSearchIndex(got.body) : undefined;
+    if (got.status === "ok" && parsed) {
+      if (index?.hash === parsed.hash && index.builtFor === builtFor) {
+        index = { ...index, at: Date.now(), source: got.source };
+        return index;
+      }
+      const byRoute = new Map(parsed.pages.map((p) => [p.route, p]));
+      const have = entries.filter((e) => byRoute.has(e.route));
+      const idx = new SearchIndex({
+        entries: () => have,
+        text: (e) => byRoute.get(e.route)?.body,
+        extra: (e) => byRoute.get(e.route)?.extra
+      });
+      index = {
+        builtFor,
+        at: Date.now(),
+        idx,
+        source: got.source,
+        pages: have.length,
+        hash: parsed.hash
+      };
+      return index;
+    }
+    const load = await content.loadPages(entries);
+    const idx = new SearchIndex({
+      entries: () => entries,
+      text: (e) => load.texts.get(e.route)
+    });
+    index = {
+      builtFor,
+      at: Date.now(),
+      idx,
+      source,
+      pages: load.texts.size,
+      load,
+      fallback: got.status === "notfound" ? "no llms-search-index.json on the site" : "llms-search-index.json not available"
+    };
+    return index;
+  })().finally(() => {
+    building = undefined;
+  });
+  return building;
+};
+var searchIndex = async () => {
+  await content.manifest();
+  if (!index || index.builtFor !== content.version)
+    return await buildIndex();
+  const partial = index.load !== undefined && index.pages < index.load.total;
+  if (Date.now() - index.at > ttl(partial ? PARTIAL_INDEX_TTL_MS : INDEX_TTL_MS))
+    buildIndex().catch(() => {});
+  return index;
+};
+var indexSource = (b) => {
+  const { load } = b;
+  if (!load)
+    return {
+      ...b.source,
+      state: b.source.state === "live" && Date.now() - b.at >= 60000 ? "cached" : b.source.state
+    };
+  return {
+    origin: b.source.origin,
+    state: load.offline > 0 ? "stale-offline" : load.fromCache < load.texts.size && Date.now() - b.at < 60000 ? "live" : "cached",
+    fetchedAt: load.oldest ?? b.source.fetchedAt,
+    revalidated: false
+  };
+};
+var indexLine = (b) => {
+  const { load } = b;
+  if (!load)
+    return `${sourceLine(indexSource(b))}, search index of ${b.pages} pages`;
+  const cover = b.pages < load.total ? ` (${b.pages} of ${load.total} pages)` : "";
+  return `Source: ${b.source.origin}, index built from ${b.pages} pages${cover}, ${load.fromCache} from cache${load.offline > 0 ? " (offline)" : ""}; ${b.fallback}`;
+};
 
+// plugin/mcp/src/core-search.ts
+var searchPlatform = async ({
+  query,
+  limit = 8,
+  section
+}) => {
+  const ix = await platform.index();
+  const hits = ix.search(query, limit, section).map((h) => ({
+    route: h.entry.path,
+    title: h.entry.title,
+    url: h.entry.url,
+    section: h.entry.group,
+    score: Math.round(h.score * 100) / 100,
+    snippet: h.snippet
+  }));
+  const line = sourceLine(ix.source);
+  const src = { ...sourceData(ix.source), line };
+  if (hits.length === 0)
+    return ok(`No platform pages match "${query}"${section ? ` in group "${section}"` : ""}. Try fewer or different keywords, drop the group filter, or browse the page list.
+
+${line}`, { query, hits, source: src }, ix.source);
+  const md = hits.map((h, i) => `${i + 1}. **${h.title}** (route \`${h.route}\`)
+   ${h.url}${h.snippet ? `
+   ${h.snippet}` : ""}`).join(`
+`);
+  return ok(`${hits.length} hit(s) for "${query}":
+
+${md}
+
+${line}`, { query, hits, source: src }, ix.source, true);
+};
+var search = (args) => guarded(async () => {
+  if (args.source === "platform")
+    return await searchPlatform(args);
+  const { query, limit = 8, section } = args;
+  const b = await searchIndex();
+  const hits = b.idx.search(query, limit, section).map((h) => ({
+    route: h.entry.route,
+    title: h.entry.title,
+    url: h.entry.url,
+    section: h.entry.section,
+    score: Math.round(h.score * 100) / 100,
+    snippet: h.snippet
+  }));
+  const head = await heading();
+  const line = indexLine(b);
+  const src = indexSource(b);
+  const version = await content.claudeCode();
+  const data = {
+    ...version ? { claudeCode: version } : {},
+    query,
+    hits,
+    source: { ...sourceData(src), line }
+  };
+  if (hits.length === 0)
+    return ok(`${head}No pages match "${query}"${section ? ` in section "${section}"` : ""}. Try fewer or different keywords, drop the section filter, or browse the page list.
+
+${line}`, data, src);
+  const md = hits.map((h, i) => `${i + 1}. **${h.title}** (route \`${h.route}\`)
+   ${h.url}
+   ${h.snippet}`).join(`
+`);
+  return ok(`${head}${hits.length} hit(s) for "${query}":
+
+${md}
+
+${line}`, data, src, true);
+});
 // plugin/mcp/src/server.ts
 var READ_ONLY = {
   readOnlyHint: true,

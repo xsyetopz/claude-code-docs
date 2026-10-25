@@ -1,7 +1,7 @@
 {
   "$schema": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-plugin-manifest.json",
   "name": "cc-docs-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Claude Code Docs for version 2.1.309 as a cc-docs command (search, read, list, schema) that the Bash tool runs, plus a light skill. No MCP server, so it adds no tool list to the context. Works only in Claude Code, not in claude.ai or Cowork. Needs Bun.",
   "author": {
     "name": "xsyetopz"

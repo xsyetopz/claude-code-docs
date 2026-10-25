@@ -1,6 +1,6 @@
 // Small BM25 index over the pages: title, description, headings, and body, weighted.
 import { createHash } from "node:crypto";
-import type { Entry } from "./content.ts";
+import type { Entry } from "./manifest.ts";
 
 const W_TITLE = 5;
 const W_DESC = 3;

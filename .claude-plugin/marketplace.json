@@ -6,7 +6,7 @@
   },
   "description": "The Claude Code Docs as a plugin: an MCP server and a skill that answer questions about Claude Code 2.1.310.",
   "metadata": {
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   "plugins": [
     {

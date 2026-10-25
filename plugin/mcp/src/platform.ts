@@ -1,5 +1,5 @@
 // platform.claude.com docs as a model: the llms.txt index and the English pages. All I/O goes through fetcher.ts.
-import { ContentError, type Entry } from "./content.ts";
+import { ContentError } from "./content.ts";
 import {
   baseUrl,
   getResource,
@@ -8,6 +8,7 @@ import {
   type Source,
   ttl,
 } from "./fetcher.ts";
+import type { Entry } from "./manifest.ts";
 import { SearchIndex, tokenize } from "./search.ts";
 
 export const PLATFORM = "https://platform.claude.com";
