@@ -1038,50 +1038,6 @@
       "managed.true.classify-user-true-and-flag-false"
     ]
   },
-  "docs/reference/probes.md#managed-folder-probe:e39b7371": {
-    "kind": "behaviour",
-    "probes": [
-      "managed.baseline.agent-mcp",
-      "managed.baseline.auto-mode-config",
-      "managed.baseline.claudemd-order",
-      "managed.baseline.excludes-any-claude-md-project",
-      "managed.baseline.excludes-any-claude-md-user",
-      "managed.baseline.excludes-managed-abs-project",
-      "managed.baseline.excludes-managed-abs-user",
-      "managed.baseline.excludes-managed-glob-project",
-      "managed.baseline.excludes-managed-glob-user",
-      "managed.baseline.mcp-config-flag",
-      "managed.baseline.mcp-get-managed",
-      "managed.baseline.mcp-get-user",
-      "managed.baseline.mcp-list",
-      "managed.baseline.mcp-run",
-      "managed.baseline.outputstyle",
-      "managed.baseline.skill-default",
-      "managed.baseline.skill-disabled",
-      "managed.main.agent-mcp",
-      "managed.main.auto-mode-config",
-      "managed.main.claudemd-order",
-      "managed.main.excludes-any-claude-md-project",
-      "managed.main.excludes-any-claude-md-user",
-      "managed.main.excludes-managed-abs-project",
-      "managed.main.excludes-managed-abs-user",
-      "managed.main.excludes-managed-glob-project",
-      "managed.main.excludes-managed-glob-user",
-      "managed.main.mcp-config-flag",
-      "managed.main.mcp-get-managed",
-      "managed.main.mcp-get-user",
-      "managed.main.mcp-list",
-      "managed.main.mcp-run",
-      "managed.main.outputstyle",
-      "managed.main.skill-default",
-      "managed.main.skill-disabled"
-    ]
-  },
-  "docs/reference/probes.md#managed-folder-probe:0a62b96a": {
-    "kind": "static",
-    "probes": [],
-    "note": "record of the managed probe runs; release:probe:managed reruns them"
-  },
   "docs/extend/mod-api/session.md#members:5bea862d": {
     "kind": "manual",
     "probes": [],
