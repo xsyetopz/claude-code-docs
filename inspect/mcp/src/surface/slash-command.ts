@@ -16,9 +16,11 @@
 //   `/usage` and `/code-review`; `/vim` is not in 2.1.309.
 import type * as ES from "estree";
 import {
+  callsOf,
   children,
   constString,
   functionOf,
+  isFn,
   type Module,
   type Node,
 } from "../ast.ts";
@@ -76,6 +78,29 @@ const builderType = (m: Module, call: Node): string | undefined => {
 };
 const builders = new WeakMap<object, string>();
 
+/** The builder type of an object a factory returns, for `reg(make())` where `make` ends in `return (…, {name:"x"})`. */
+const factoryType = (m: Module, n: Node): string | undefined => {
+  let c = n;
+  let p = m.parent(c);
+  if (p?.type === "SequenceExpression" && p.expressions.at(-1) === c) {
+    c = p;
+    p = m.parent(c);
+  }
+  let f = p?.type === "ReturnStatement" ? m.parent(p) : undefined;
+  while (f && !isFn(f)) f = m.parent(f);
+  if (!f && isFn(p) && p.body === c) f = p; // `() => ({name:"x"})`
+  if (!isFn(f)) return undefined;
+  for (const k of callsOf(m, f)) {
+    if (!k) continue;
+    const outer = k.module.parent(k.call);
+    if (outer?.type === "CallExpression" && outer.arguments[0] === k.call) {
+      const t = builderType(k.module, outer);
+      if (t) return t;
+    }
+  }
+  return undefined;
+};
+
 export const extractSlashCommands: Extractor = (bundle) => {
   const out: SurfaceItem[] = [];
   scan(bundle, ["name:"], (m, n) => {
@@ -89,7 +114,7 @@ export const extractSlashCommands: Extractor = (bundle) => {
       (parent?.type === "CallExpression" &&
       parent.arguments[0] === (n as unknown)
         ? builderType(m, parent)
-        : undefined);
+        : factoryType(m, n));
     if (!type || !TYPES.has(type)) return;
     const desc = constString(
       m,

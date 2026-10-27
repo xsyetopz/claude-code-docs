@@ -239,6 +239,18 @@ build({name:"security-review",description:"Review"});
     expect(names("slash-command", src)).toContain("/security-review");
   });
 
+  // Claude Code 2.1.311 registers `/claude-api` as `reg(make(o))`, with the object returned by `make`.
+  test("a factory whose returned object a builder registers", () => {
+    const src = `
+function reg(p){return{type:"prompt",name:p.name,description:p.description}}
+function make({disabled:a=!1}={}){let m=new Map();return(m.clear(),{name:"claude-api",description:"d",isEnabled:()=>!a})}
+function register(o){reg(make(o))}
+`;
+    const by = new Map(items("slash-command", src).map((i) => [i.name, i]));
+    expect([...by.keys()]).toEqual(["/claude-api"]);
+    expect(by.get("/claude-api")?.detail).toBe("prompt | d");
+  });
+
   test("negatives: other types, run-time names, and bad names", () => {
     const src = `
 var a={type:"tool",name:"bash"};

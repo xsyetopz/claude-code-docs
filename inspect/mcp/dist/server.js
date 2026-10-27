@@ -25302,8 +25302,8 @@ import { basename, join } from "path";
 var claude_code_transcript_default = {
   $schema: "https://json-schema.org/draft/2020-12/schema",
   $id: "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-transcript.json",
-  title: "Claude Code transcript JSONL entry (Claude Code 2.1.310)",
-  $comment: `For one line of a session transcript (.jsonl). Generated from Claude Code 2.1.310 by tools/schemas/code.ts. Anchors: the entry type registry (an object literal whose first keys are user, assistant, system, attachment, mapped to "transcript"); the literal built in the writer's insertMessageChain (key logicalParentUuid) and its two spreads for the common fields of message lines; every object literal with a top-level type:"<entry type>" (non-message types need a sessionId key), with its spreads resolved in the module that declares each function (imports followed); and, for a key a probe saw that no such literal has, the later write: a copy of the line ({...line, key}), a function spread into one, or last a property assignment. Keys are the union over all write sites; a string value that differs between sites is an enum, and one that is a literal at one site and computed at another is x-unverified. Probe print/transcripts.lines.json marks the observed keys. Do not edit by hand. A field that is still x-unverified may carry x-observed-type: the JSON types that real payloads had there, from the fixtures in tools/schemas/observed/ (stub probes and local files, no value kept). It is a note, not a check.`,
+  title: "Claude Code transcript JSONL entry (Claude Code 2.1.311)",
+  $comment: `For one line of a session transcript (.jsonl). Generated from Claude Code 2.1.311 by tools/schemas/code.ts. Anchors: the entry type registry (an object literal whose first keys are user, assistant, system, attachment, mapped to "transcript"); the literal built in the writer's insertMessageChain (key logicalParentUuid) and its two spreads for the common fields of message lines; every object literal with a top-level type:"<entry type>" (non-message types need a sessionId key), with its spreads resolved in the module that declares each function (imports followed); and, for a key a probe saw that no such literal has, the later write: a copy of the line ({...line, key}), a function spread into one, or last a property assignment. Keys are the union over all write sites; a string value that differs between sites is an enum, and one that is a literal at one site and computed at another is x-unverified. Probe print/transcripts.lines.json marks the observed keys. Do not edit by hand. A field that is still x-unverified may carry x-observed-type: the JSON types that real payloads had there, from the fixtures in tools/schemas/observed/ (stub probes and local files, no value kept). It is a note, not a check.`,
   type: "object",
   oneOf: [
     {
@@ -25419,6 +25419,9 @@ var claude_code_transcript_default = {
     },
     {
       $ref: "#/$defs/tag"
+    },
+    {
+      $ref: "#/$defs/tools-used"
     },
     {
       $ref: "#/$defs/user"
@@ -26827,6 +26830,12 @@ var claude_code_transcript_default = {
               cacheCreationInputTokens: {
                 type: "number"
               },
+              cacheCreationEphemeral5mInputTokens: {
+                type: "number"
+              },
+              cacheCreationEphemeral1hInputTokens: {
+                type: "number"
+              },
               webSearchRequests: {
                 type: "number"
               },
@@ -28172,6 +28181,24 @@ var claude_code_transcript_default = {
         }
       },
       $comment: "Registry policy: last-wins. Code sites used: 1."
+    },
+    "tools-used": {
+      type: "object",
+      properties: {
+        type: {
+          const: "tools-used",
+          "x-observed": true
+        },
+        tools: {
+          "x-unverified": true,
+          "x-observed": true
+        },
+        sessionId: {
+          "x-unverified": true,
+          "x-observed": true
+        }
+      },
+      $comment: "Registry policy: last-wins. Code sites used: 4."
     },
     user: {
       type: "object",
@@ -40778,6 +40805,32 @@ var builderType = (m, call) => {
   return found || undefined;
 };
 var builders = new WeakMap;
+var factoryType = (m, n) => {
+  let c = n;
+  let p = m.parent(c);
+  if (p?.type === "SequenceExpression" && p.expressions.at(-1) === c) {
+    c = p;
+    p = m.parent(c);
+  }
+  let f = p?.type === "ReturnStatement" ? m.parent(p) : undefined;
+  while (f && !isFn(f))
+    f = m.parent(f);
+  if (!f && isFn(p) && p.body === c)
+    f = p;
+  if (!isFn(f))
+    return;
+  for (const k of callsOf(m, f)) {
+    if (!k)
+      continue;
+    const outer = k.module.parent(k.call);
+    if (outer?.type === "CallExpression" && outer.arguments[0] === k.call) {
+      const t = builderType(k.module, outer);
+      if (t)
+        return t;
+    }
+  }
+  return;
+};
 var extractSlashCommands = (bundle) => {
   const out = [];
   scan(bundle, ["name:"], (m, n) => {
@@ -40788,7 +40841,7 @@ var extractSlashCommands = (bundle) => {
     if (!name || !NAME3.test(name))
       return;
     const parent = m.parent(n);
-    const type = constString(m, prop(o, "type")?.value) ?? (parent?.type === "CallExpression" && parent.arguments[0] === n ? builderType(m, parent) : undefined);
+    const type = constString(m, prop(o, "type")?.value) ?? (parent?.type === "CallExpression" && parent.arguments[0] === n ? builderType(m, parent) : factoryType(m, n));
     if (!type || !TYPES2.has(type))
       return;
     const desc = constString(m, prop(o, "description")?.value);
