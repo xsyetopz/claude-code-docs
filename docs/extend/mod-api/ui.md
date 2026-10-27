@@ -9,7 +9,7 @@ Each method is also an event with the same name, such as `ui.log`, so a hook abo
 
 Close a pane with `$.ui.close`. A `deny` from a hook refuses a call.
 
-Official page: [Draw in the Interface](https://code.claude.com/docs/en/plugins/mods/interface), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the Mod API type file of the 2.1.310 program (`schemas/claude-code.d.ts`).
+Official page: [Draw in the Interface](https://code.claude.com/docs/en/plugins/mods/interface), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the Mod API type file of the 2.1.311 program (`schemas/claude-code.d.ts`).
 In a "Where it can be used" cell, "Run time" means in a hook, in a closure that a hook drew, or in a timer callback. It does not mean inside `register`.
 
 ## Example

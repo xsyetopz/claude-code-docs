@@ -128,7 +128,7 @@ The server has 4 tools. Each takes an `action` or a `kind` that picks what it do
 | `sessions` | `action: "list"` | Lists the transcripts in `projects/` of the config folder (`CLAUDE_CONFIG_DIR`, or `~/.claude`), newest first. Pass `project` to narrow it. |
 | `sessions` | `action: "read"` | Gives the lines of one `session`. Pass `type` to keep one line type, and `offset` to page. A session id prefix works. |
 | `sessions` | `action: "search"` | Finds a `query` (text, or a regular expression with `regex`) in one session or in all of them. |
-| `sessions` | `action: "validate"` | Checks each line against the [transcript schema](../reference/schemas.md) of its `type`, and lists the lines that do not fit. The schema is the one for Claude Code `2.1.310`. |
+| `sessions` | `action: "validate"` | Checks each line against the [transcript schema](../reference/schemas.md) of its `type`, and lists the lines that do not fit. The schema is the one for Claude Code `2.1.311`. |
 | `code` | `action: "installs"` | Lists the versions in `~/.local/share/claude/versions`, and marks the one that `~/.local/bin/claude` runs. |
 | `code` | `action: "modules"` | Lists the files inside a binary. |
 | `code` | `action: "search"` | Finds a `query` in the code of a binary, with the module and offset of each hit. |

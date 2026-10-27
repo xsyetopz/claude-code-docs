@@ -88,6 +88,18 @@ The inventory file does not list these tools, because their definitions do not u
 
 `Agent`, `Monitor`, `ScheduleWakeup`, `Workflow`, and `SubagentHandback` are on [Agents, Tasks, and Planning](agents-and-tasks.md) and [Shell, Web, and Background Tasks](shell-and-web.md).
 
+## Result Fields New in `2.1.311`
+
+Source: `AppifactReplResult`, `PollResult`, and `ProjectsResult` in [`claude-code-tools.json`](../schemas.md), and the program.
+
+| Field | Status | Tool and Result | Type | What It Means |
+| --- | --- | --- | --- | --- |
+| `toolsUsed` | <Undocumented /> | `AppifactRepl` | Array of strings | The tools that the calls of the script's artifact reached, whose names the prompt of this conversation did not yet carry. The `tool_result` text opens with a line that names them. The field is left out when the list is empty (`chunk-9ea8x39q.js:1778`, `chunk-9ea8x39q.js:1872`, `chunk-9ea8x39q.js:1991`). |
+| `toolsUsed` | <Undocumented /> | `Poll` | Array of strings | A list of tool names. The field is left out when the list is empty (`chunk-2ht8z368.js:161333`). The schema gives no description, so this page states only its name and type. |
+| `local_file` | <Undocumented /> | `Projects`, the `project_info` result | String | A path to a file that holds the project description and instructions in full, with long lines split. The program returns it when the two together are too long to return, and then `description` and `instructions` are empty strings. The file is for reading only, and edits to it do not change the project (`chunk-kg0z6tbm.js:1587`, `chunk-kg0z6tbm.js:1625`). |
+
+The `toolsUsed` list is empty while the server flag `tengu_silly_shore` is off (default on) (`chunk-35qty13k.js:101`, `chunk-2ht8z368.js:12649`).
+
 ## Example
 
 Turn on skill proposals for one session. The tool also needs a remote environment (see the `propose_skills` row), so in a local terminal this line alone does not turn it on.

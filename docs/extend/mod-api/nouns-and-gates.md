@@ -54,7 +54,7 @@ The calling hook alone is skipped, so a plugin does not trap itself.
 | `$.mcp` | <Documented /> | The engine's MCP servers: call a tool of a connected one, or connect one the plugin lists. | `call`, `connect` | [Model, Audio, and MCP](model-audio-mcp.md) |
 | `$.session` | <Documented /> | The running session as plain data, compacting it, and sending a message to another agent or session. | `messages`, `cwd`, `root`, `model`, `turns`, `id`, `repo`, `surfaces`, `surface`, `usage`, `version`, `compact`, `send`, `append`, `identity` | [Session](session.md) |
 | `$.turn` | <Documented /> | The running model turn: ending it. | `abort` | [Turn and Prompt](turn-prompt.md) |
-| `$.prompt` | <Documented /> | Submitting a prompt as a user turn, and the prompt box: read, write, or propose into. | `submit`, `read`, `media`, `fill`, `suggest`, `compose` | [Turn and Prompt](turn-prompt.md) |
+| `$.prompt` | <Documented /> | Submitting a prompt as a user turn, and the prompt box: read, write, paint, or propose into. | `submit`, `read`, `media`, `fill`, `paint`, `suggest`, `compose` | [Turn and Prompt](turn-prompt.md) |
 | `$.tool` | <Documented /> | The tools the model has in this session, and running one. | `list`, `call`, `check`, `register` | [Tool, Command, and Config](tool-command-config.md) |
 | `$.command` | <Documented /> | The slash commands the person can run, and running one. | `list`, `run`, `register` | [Tool, Command, and Config](tool-command-config.md) |
 | `$.config` | <Documented /> | Every row of the `/config` menu, including each enabled plugin's `userConfig` fields. | `list`, `set` | [Tool, Command, and Config](tool-command-config.md) |

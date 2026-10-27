@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-tools.json",
-  "title": "Claude Code built-in tool payloads (Claude Code 2.1.310)",
-  "$comment": "For the input and result of each built-in tool (definitions <Tool>Input and <Tool>Result). Generated from Claude Code 2.1.310 by calling the zod v4 toJSONSchema embedded in the binary on its own validator (method A, runtime export). Anchor: the tool factory that copies a tool definition's properties (getters included), read as inputSchema and outputSchema on each tool. Do not edit by hand: run \"bun run schemas\".",
-  "description": "The program did not give these definitions: TestingPermissionResult, ObserverReportResult, ArtifactInput, ArtifactCommentsInput, ArtifactDataInput, ArtifactCheckInput, SendMessageResult.",
+  "title": "Claude Code built-in tool payloads (Claude Code 2.1.311)",
+  "$comment": "For the input and result of each built-in tool (definitions <Tool>Input and <Tool>Result). Generated from Claude Code 2.1.311 by calling the zod v4 toJSONSchema embedded in the binary on its own validator (method A, runtime export). Anchor: the tool factory that copies a tool definition's properties (getters included), read as inputSchema and outputSchema on each tool. Do not edit by hand: run \"bun run schemas\".",
+  "description": "The program did not give these definitions: TestingPermissionResult, ObserverReportResult, SendMessageResult, ArtifactCommentsInput, ArtifactDataInput, ArtifactCheckInput, ArtifactInput.",
   "$defs": {
     "AgentInput": {
       "type": "object",
@@ -244,6 +244,12 @@
                 "cache_creation"
               ]
             },
+            "toolsUsed": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
             "toolStats": {
               "type": "object",
               "properties": {
@@ -481,6 +487,13 @@
               }
             },
             "required": ["text", "images"]
+          }
+        },
+        "toolsUsed": {
+          "description": "The tools the script's artifact calls reached whose names this conversation's prompt did not yet carry: the tool_result opens with a tools-used-before-summary line naming them",
+          "type": "array",
+          "items": {
+            "type": "string"
           }
         }
       },
@@ -13407,6 +13420,11 @@
           "description": "Set when the command hit its timeout and was auto-backgrounded; the timeout value in ms",
           "type": "number"
         },
+        "subagentCapApplied": {
+          "description": "@internal True if the async subagent foreground cap shortened the command's timeout",
+          "type": "boolean",
+          "const": true
+        },
         "backgroundCwdHint": {
           "description": "Model-facing note that the session cwd was not changed by a backgrounded command containing a directory-change builtin (cd/pushd/popd/chdir)",
           "type": "string"
@@ -15507,6 +15525,12 @@
             }
           }
         },
+        "toolsUsed": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
         "provenance": {
           "type": "array",
           "items": {
@@ -15648,6 +15672,11 @@
           "description": "Set when the command hit its timeout and was auto-backgrounded; the timeout value in ms",
           "type": "number"
         },
+        "subagentCapApplied": {
+          "description": "@internal True if the async subagent foreground cap shortened the command's timeout",
+          "type": "boolean",
+          "const": true
+        },
         "backgroundEndsWithFinalResponse": {
           "description": "True when this backgrounded command is terminated at its caller's final response, so no completion notification can follow (a synchronous subagent's command, or a headless session that takes no further input and is not waiting for background commands); absent when the command survives",
           "type": "boolean",
@@ -15786,6 +15815,9 @@
               "const": "project_info"
             },
             "notice": {
+              "type": "string"
+            },
+            "local_file": {
               "type": "string"
             },
             "name": {
@@ -17786,6 +17818,10 @@
             "background": {
               "description": "True when the sub-agent was launched in the background: `result` describes the launch, and the skill outcome arrives later as a task notification.",
               "type": "boolean"
+            },
+            "toolsUsedLine": {
+              "description": "The tools-used-before-summary line the tool_result opens with: the tools the sub-agent called that this conversation's requests did not yet name",
+              "type": "string"
             }
           },
           "required": ["success", "commandName", "status", "agentId", "result"]

@@ -69,6 +69,22 @@ These sources go in `extraKnownMarketplaces`, `strictKnownMarketplaces`, and `bl
 | `npm` | <Documented /> | `package` | Policy lists parse it, but loading fails with "NPM marketplace sources not yet implemented". |
 | `skills-dir`, `hostPattern`, `pathPattern` | <Documented /> | Policy-only values | `skills-dir` keeps skills-directory plugins loading under an allowlist. The patterns are regular expressions. |
 
+## Plugin Digests
+
+The `pluginDigests` field sits in an entry of `extraKnownMarketplaces` (and its alias `additionalMarketplaces`). The settings schema marks it as managed settings only. Source: the settings schema and the program (`chunk-h3fwwdey.js:134`, `chunk-2ht8z368.js:43946`, `2.1.311`).
+
+| Field | Status | What It Does | How It Works |
+| --- | --- | --- | --- |
+| `pluginDigests` | <Documented /> <ManagedOnly /> | Lists, by plugin name, the digests of the releases of a plugin that your organization delivers with its own tier. | Type: object of arrays of strings. A plugin that is enabled and listed in `prependPlugins` or `appendPlugins` loads its hooks module only from a folder that proves one of its digests. It is then seated in that tier. Any other copy does not load. |
+
+- A digest is `sha256-` and the base64 SHA-256 of the folder. For every regular file, in UTF-16 code unit order of its path, the hash takes `f PATH`, a NUL byte, the byte length, a NUL byte, and the bytes. Paths use `/`. At the root, `.git`, `.in_use`, `.orphaned_at`, `.claude-plugin-link`, and `.links_materialized` are left out.
+- The plugin keeps its manifest at `.claude-plugin/plugin.json` and names one module in `hooks/hooks.json`.
+- A string of any other form, or a list that is empty or of any other shape, matches no folder. A symbolic link, or a surface module, proves nothing.
+- A proved plugin ships bundled with no install step: the digest covers the whole folder, `node_modules` included. A checkout whose line endings were converted proves nothing.
+- The folder is read with a limit of 4096 files and 32 MiB in all, and one file may hold at most 32 MiB (`chunk-2ht8z368.js:43865`, `43890`, `43943`). A name that is not UTF-8, a file that is not regular, or a file that changed while it was read refuses the folder.
+- When a plugin is refused, Claude Code warns that the plugin "is not treated as the organization's, and does not load", with the reason (`chunk-2ht8z368.js:44009`).
+- A line that the program builds for a `pluginDigests` key reads "code from your organization will run" (`chunk-z1xn9dp7.js:10388`). No source states where Claude Code shows it.
+
 ## Settings Keys
 
 Source: [Manage Claude Code Plugins for Your Organization](https://code.claude.com/docs/en/plugins/org) and [Settings Reference](https://code.claude.com/docs/en/settings-reference).
@@ -148,6 +164,7 @@ Each row is a family of messages. The backticked text is the start that every me
 | --- | --- | --- | --- |
 | `Plugin source command` | <Undocumented /> | A plugin source command did not give a plugin directory. | The command could not start, timed out, was killed, or exited with an error code. It printed nothing, printed more than one line, printed too much, or printed a path that is not absolute. The path was a network location, the working directory or a parent of it, or a directory with no plugin content. |
 | `Plugin archive` | <Undocumented /> | A plugin archive was not installed. | The archive held no plugin files or no plugin content at its root. It lacked the component paths its entry declares, or declared unsafe ones. The sha256 check failed, a redirect left the allowed URLs, or the archive was too large. |
+| `${…} changed while it was read`, `${…} is not UTF-8`, `${…} is over the size a folder may hold`, `a name under ${…} is not UTF-8`, `it holds more than ${…} bytes`, `it holds more than ${…} files`, `this platform cannot open a file without following it`, `a plugin was placed with no declaration` | <Undocumented /> | The folder of a plugin with `pluginDigests` could not be read to compute its digest, or its tier could not be placed. | A file changed while it was read, is over 32 MiB, or is not UTF-8 where Claude Code reads its text. A name is not UTF-8. The folder holds more than 4096 files or more than 32 MiB. The platform cannot open a file without following links. The plugin has no declaration for its tier. See [Plugin Digests](#plugin-digests). |
 | `Plugin directory` | <Undocumented /> | A plugin directory was not loaded or installed. | The directory does not exist, was removed or replaced while it loaded, has too many entries, or is too large. |
 | `Marketplace` | <Undocumented /> | A marketplace was refused, not found, or not refreshed. | It is blocked by enterprise policy, was registered from an untrusted source, has a corrupted `installLocation`, or has a name that is not a plain directory name. A seed-managed marketplace does not auto-update. A name that is not registered gets a list of the available marketplaces. |
 | `The plugin archive` | <Undocumented /> | A plugin archive from claude.ai was not installed. | The archive has no plugin content at its root, carries a git repository layout, is not a safe, well-formed zip, or this claude.ai login has no plugin access yet. |

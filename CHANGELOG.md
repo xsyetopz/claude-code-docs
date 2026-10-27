@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-The site documents Claude Code `2.1.310`, the only release it tracks. The version of the site itself is set in `package.json`, and the tracked Claude Code version is set in `src/version.ts`.
+The site documents Claude Code `2.1.311`, the only release it tracks. The version of the site itself is set in `package.json`, and the tracked Claude Code version is set in `src/version.ts`.
 
 ## [Unreleased]
 
@@ -22,12 +22,13 @@ The site documents Claude Code `2.1.310`, the only release it tracks. The versio
 - Prompt pages that show what you can override and its default text: Tool Descriptions (every tool's description and input schema), Built-In Agents, and Built-In Skills.
 - Status labels (Managed Only, Experimental, Deprecated, Caution) in place of emoji markers, and screen-reader text for ✅ and ❌.
 - A `check:examples` gate that runs Biome on code examples, and `check-docs` rules for code spans in headings and admonition titles.
-- An unofficial docs site for Claude Code `2.1.310`, with pages for start, configure, extend, prompts, reference, and how it works.
+- An unofficial docs site for Claude Code `2.1.311`, with pages for start, configure, extend, prompts, reference, and how it works.
 - Provenance badges (Documented, Undocumented, Differs, and Gated) that mark each item.
 - A style guide for contributors in `docs/contributing/`.
 - Capture and check tools in `tools/`, and a GitHub Pages deploy workflow.
 - A third plugin, `cc-docs-cli` 1.0.0: a `cc-docs` command (`search`, `read`, `list`, `schema`, with `--source`, `--section`, `--limit`, and `--json`) that the Bash tool runs, plus a skill. It has no MCP server, so it adds no tool list to the context. It shares its code with the `cc-docs` server.
 - `cc-inspect` 0.4.0 reads a release from its code: `code` `prepare` cleans each module of a version (stable local names) into a cache, `release` `diff` lists the functions changed, added, and gone between two versions, `release` `notes` marks each release-notes line as matched, gated, or unmatched against that diff, `release` `explain` gives where a name's code is, who uses it, what guards it, and whether it is a no-op, a stub, or handled, and `code` `find` finds code by plain words. Two MCP prompts, `release_review` and `explain_change`, give an agent the steps. `release:all` runs the new `release:clean` step.
+- An Account and Access page: where Claude Code gets your plan, the profile request, where the login and account record are kept, when it asks again, and how the plan and the provider decide which models `/model` lists, including Fable and Mythos.
 - The site build writes `llms-search-index.json`, a prebuilt search index of every page. `cc-docs` and `cc-docs-cli` load it in one request in place of fetching each page.
 
 ### Changed
@@ -42,8 +43,9 @@ The site documents Claude Code `2.1.310`, the only release it tracks. The versio
 - Diagrams render after the fonts load, scroll sideways on small screens instead of shrinking, and keep lines out of labels.
 - Merged duplicated rows into one home per item, with links from other pages.
 - Code examples follow `biome.json`, including arrow functions.
+- `cc-inspect` 0.5.1 finds a slash command whose object a factory returns to a builder, such as `/claude-api` in `2.1.311`, which `release:diff` had listed as removed. `release:diff` finds the page of an error item mapped by a prefix key.
 - `cc-inspect` 0.5.1 uses `meriyah` 7.4.1. It keeps the `using as` patch, because 7.4.1 still rejects that code.
-- Updated to Claude Code `2.1.310`: `Monitor` and plugin monitors on every provider, the long `sleep` block, the effort retry, the sandbox warnings, the Mod `Image` in tmux, and three new environment variables. The `2.1.309` section of What Changed moved to the Release Archive.
+- Updated to Claude Code `2.1.311`: `ultrathink` at `xhigh` effort, the `[1m]` suffix, compaction on a 1M context refusal and a second summary ask, no retry when the API says so, shell output at a timeout, the `self-hosted-runner` hold flags, `$.prompt.paint`, `pluginDigests`, new result and stream-json fields, and 36 new environment variables. The `2.1.310` section of What Changed moved to the Release Archive.
 - `release:diff` compares the surface snapshots of both versions for all 17 kinds, in place of `strings` heuristics, and names the target page of each added item.
 - What Changed lists only the current release. Earlier sections moved to a new Release Archive page.
 - The schema generator follows a value through its variables, calls, and returns to find its type, so fewer generated fields carry `x-unverified`.

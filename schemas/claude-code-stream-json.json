@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-stream-json.json",
-  "title": "Claude Code stream-json messages (Claude Code 2.1.310)",
-  "$comment": "For each message type the CLI writes (<type>[_<subtype>]Output) and reads (<type>Input) in stream-json mode. Generated from Claude Code 2.1.310 by calling the zod v4 toJSONSchema embedded in the binary on its own validator (method A, runtime export). Anchor: the SDK schema module, unions described as \"Everything the CLI writes to its output stream\" and \"Everything a client may write to the CLI's input stream\". Do not edit by hand: run \"bun run schemas\".",
+  "title": "Claude Code stream-json messages (Claude Code 2.1.311)",
+  "$comment": "For each message type the CLI writes (<type>[_<subtype>]Output) and reads (<type>Input) in stream-json mode. Generated from Claude Code 2.1.311 by calling the zod v4 toJSONSchema embedded in the binary on its own validator (method A, runtime export). Anchor: the SDK schema module, unions described as \"Everything the CLI writes to its output stream\" and \"Everything a client may write to the CLI's input stream\". Do not edit by hand: run \"bun run schemas\".",
   "$defs": {
     "active_goalOutput": {
       "type": "object",
@@ -963,7 +963,7 @@
           "description": "@internal HTTP status code of the API error when is_api_error_message is true."
         },
         "api_error": {
-          "$ref": "#/$defs/out___schema156"
+          "$ref": "#/$defs/out___schema158"
         },
         "api_error_params": {
           "type": "object",
@@ -1003,7 +1003,7 @@
               "enum": ["unprocessable", "unsupported_by_model", "media_budget"]
             },
             "rate_limit_info": {
-              "$ref": "#/$defs/out___schema160"
+              "$ref": "#/$defs/out___schema162"
             }
           },
           "description": "@internal Parameters of api_error, present only for the kinds that have any. effort: the effort level the API refused (effort_requires_thinking). media (media_removed): the kind of block the API refused; absent for media_budget. media_reason (media_removed): unsupported_by_model — the API said that the model does not accept PDF documents; media_budget — the request's images and documents together exceed the API's limit, and the requests that follow may leave out blocks of either kind; unprocessable — every other refusal, a gateway's report of a model's refusal among them. provider: the API provider whose credentials failed (provider_credentials, gateway_session_expired). remedy (provider_credentials, gateway_session_expired): refresh_command — a configured refresh command (awsAuthRefresh / gcpAuthRefresh) refreshes the credentials; refresh_credentials — refresh the provider's credentials by hand, no command is configured; adc — refresh the Google application default credentials or the GOOGLE_APPLICATION_CREDENTIALS key file; gateway_token — replace the gateway token supplied through ANTHROPIC_AUTH_TOKEN or ANTHROPIC_CUSTOM_HEADERS; host_managed — the host application owns these credentials; model_access — the credentials work but the model is not enabled for this account and region (Amazon Bedrock). rate_limit_info (usage_limit_reached): what the refused request's own response said about the limit, in the shape rate_limit_event carries. It is read from the same values as the message text, so its status, limit and reset are the text's: status is rejected and isUsingOverage false, rateLimitType names the limit, resetsAt is when it resets, and overageStatus, overageResetsAt, overageDisabledReason and limitScope say whose spend cap it is (the person's own cap arrives as org_level_disabled_until, as on rate_limit_event); no other member is sent. It is that refusal's record and is never updated, so compare resetsAt with the clock before calling the limit current."
@@ -1744,6 +1744,18 @@
           "minimum": -9007199254740991,
           "maximum": 9007199254740991
         },
+        "cacheCreationEphemeral5mInputTokens": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991,
+          "description": "Cache writes with a 5-minute lifetime, already counted inside cacheCreationInputTokens. This and cacheCreationEphemeral1hInputTokens can add up to less than cacheCreationInputTokens, because a response that does not report how long its cache writes live adds to neither. costUSD prices those writes at the 5-minute rate. Counts only turns run on CLI versions that record this field: absent when none did, and an undercount when part of the session ran on an older version."
+        },
+        "cacheCreationEphemeral1hInputTokens": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991,
+          "description": "Cache writes with a 1-hour lifetime, already counted inside cacheCreationInputTokens. costUSD prices them at the 1-hour rate when the model's price table has one. The built-in list prices do. A managed-settings modelPricing row does not: its one cache-write rate applies to both lifetimes. costUSD never uses the 1-hour rate for a response that a fallback model served after a refusal. Absent or an undercount in the same cases as cacheCreationEphemeral5mInputTokens."
+        },
         "webSearchRequests": {
           "type": "integer",
           "minimum": -9007199254740991,
@@ -1787,7 +1799,7 @@
         "maxOutputTokens"
       ]
     },
-    "out___schema156": {
+    "out___schema158": {
       "type": "string",
       "enum": [
         "max_output_tokens",
@@ -1817,11 +1829,13 @@
         "model_substitution_disabled",
         "field_not_granted",
         "usage_limit_reached",
-        "empty_completion"
+        "empty_completion",
+        "unattended_start_limit",
+        "unattended_start_unconfirmed"
       ],
-      "description": "@internal Typed kind of the API error when is_api_error_message is true, for consumers that key on the cause instead of the message text (the text stays the fallback and may change). Absent when the error has no typed kind; new values are added over time, so treat an unknown value as absent. dlp_request_denied: the request was refused by the organization's data-loss-prevention policy — terminal for that request body; a consumer replaying history must not re-send it. claude_code_version_too_old: the API refused the request because this Claude Code build is below a required minimum version — the selected model's minimum, or an organization-policy floor; only the message text says which and names the versions, and the remedy is updating Claude Code. safety_monitor_blocked: a server-side safety monitor blocked the model's response for this turn; terminal for the turn, so a consumer replaying history must not re-send the prompt that led to it. effort_requires_thinking: the model refuses the requested effort level while thinking is off; api_error_params.effort names the level. advisor_incompatible: the configured advisor model cannot be paired with this request's model. tool_history_mismatch: the API rejected the conversation's tool_use/tool_result pairing (a tool_use without its result, an orphaned tool_result, a duplicate tool_use id); re-sending the same history fails the same way, and rewinding the conversation is the remedy. autocompact_thrashing: the context refilled to the limit right after each automatic compaction, repeatedly, so the turn stopped; something in context is too large for the window. pdf_too_large: a PDF is over the API's page or size limit. pdf_password_protected: a PDF is encrypted. media_removed: the API refused an image or a document in the conversation, so Claude Code leaves it out of the requests that follow. The frame comes either before the answer of a retry that already left it out, or as the error that ended the turn (the result then repeats this value). api_error_params.media_reason says why, and api_error_params.media which kind of block. Other kinds (pdf_too_large, pdf_password_protected) and some untyped errors also leave the block out, so the absence of this value does not mean that nothing was left out. no_response: no response arrived before the first-byte deadline on any attempt, usually a proxy or gateway that holds responses until they complete. tls_untrusted_ca: the API's TLS certificate comes from an authority this process does not trust, usually a TLS-inspecting proxy or a gateway signed by a private CA. gateway_content_type: a proxy between Claude Code and Amazon Bedrock rewrote Bedrock's event-stream response. provider_credentials: a third-party cloud provider (api_error_params.provider) refused the request's credentials or access; api_error_params.remedy says what fixes it. gateway_signin_required: the Cloud gateway provider is configured and nobody is signed in to it; no request was sent. gateway_session_expired: the Cloud gateway session expired; no request was sent; api_error_params.remedy is gateway_token when the token came from the environment, which signing in does not replace. api_key_auth_disabled: the organization turned off API key authentication and the active credential is an API key. org_disabled_credential: the ANTHROPIC_API_KEY environment variable belongs to a disabled organization and overrides the account sign-in. invalid_credential_header: a credential or header value (from the environment, a helper, or the saved sign-in) cannot be sent as an HTTP header; caught before the request was sent. model_requires_usage_credits: the model runs on usage credits for this account, and credits are off or the included allowance is used up. long_context_credits_required: a request over the 200K-token context boundary needs usage credits. consent_unanswered: the model now uses usage credits and the prompt to confirm went unanswered; nothing was sent. no_allowed_fallback: switching off the model was needed (the usage-credits prompt was declined) and the model policy allows no other model. model_substitution_disabled: switching off the model was needed and CLAUDE_CODE_NO_MODEL_FALLBACK forbids it. field_not_granted: the organization is not allowed to send a field in the request, and the message text says what to do. usage_limit_reached: the request was refused by the account's own usage limit, a plan limit (session, weekly or per-model) or a spend cap on usage credits; api_error_params.rate_limit_info says which and when it resets. The other refusals that share error rate_limit never carry it: an organization policy that turned the service off (no limit was reached, and no reset clears it), a temporary server throttle, a capacity switch-off, an entitlement refusal shown in the server's own words, or a 429 on an API key or a third-party cloud provider. empty_completion: the model ended its turn with no visible text, and its one retry had no content block, on a person's own prompt with no reply and no tool result after it; the turn ends as an error so that a host shows a failure and not a blank reply."
+      "description": "@internal Typed kind of the API error when is_api_error_message is true, for consumers that key on the cause instead of the message text (the text stays the fallback and may change). Absent when the error has no typed kind; new values are added over time, so treat an unknown value as absent. dlp_request_denied: the request was refused by the organization's data-loss-prevention policy — terminal for that request body; a consumer replaying history must not re-send it. claude_code_version_too_old: the API refused the request because this Claude Code build is below a required minimum version — the selected model's minimum, or an organization-policy floor; only the message text says which and names the versions, and the remedy is updating Claude Code. safety_monitor_blocked: a server-side safety monitor blocked the model's response for this turn; terminal for the turn, so a consumer replaying history must not re-send the prompt that led to it. effort_requires_thinking: the model refuses the requested effort level while thinking is off; api_error_params.effort names the level. advisor_incompatible: the configured advisor model cannot be paired with this request's model. tool_history_mismatch: the API rejected the conversation's tool_use/tool_result pairing (a tool_use without its result, an orphaned tool_result, a duplicate tool_use id); re-sending the same history fails the same way, and rewinding the conversation is the remedy. autocompact_thrashing: the context refilled to the limit right after each automatic compaction, repeatedly, so the turn stopped; something in context is too large for the window. pdf_too_large: a PDF is over the API's page or size limit. pdf_password_protected: a PDF is encrypted. media_removed: the API refused an image or a document in the conversation, so Claude Code leaves it out of the requests that follow. The frame comes either before the answer of a retry that already left it out, or as the error that ended the turn (the result then repeats this value). api_error_params.media_reason says why, and api_error_params.media which kind of block. Other kinds (pdf_too_large, pdf_password_protected) and some untyped errors also leave the block out, so the absence of this value does not mean that nothing was left out. no_response: no response arrived before the first-byte deadline on any attempt, usually a proxy or gateway that holds responses until they complete. tls_untrusted_ca: the API's TLS certificate comes from an authority this process does not trust, usually a TLS-inspecting proxy or a gateway signed by a private CA. gateway_content_type: a proxy between Claude Code and Amazon Bedrock rewrote Bedrock's event-stream response. provider_credentials: a third-party cloud provider (api_error_params.provider) refused the request's credentials or access; api_error_params.remedy says what fixes it. gateway_signin_required: the Cloud gateway provider is configured and nobody is signed in to it; no request was sent. gateway_session_expired: the Cloud gateway session expired; no request was sent; api_error_params.remedy is gateway_token when the token came from the environment, which signing in does not replace. api_key_auth_disabled: the organization turned off API key authentication and the active credential is an API key. org_disabled_credential: the ANTHROPIC_API_KEY environment variable belongs to a disabled organization and overrides the account sign-in. invalid_credential_header: a credential or header value (from the environment, a helper, or the saved sign-in) cannot be sent as an HTTP header; caught before the request was sent. model_requires_usage_credits: the model runs on usage credits for this account, and credits are off or the included allowance is used up. long_context_credits_required: a request over the 200K-token context boundary needs usage credits. consent_unanswered: the model now uses usage credits and the prompt to confirm went unanswered; nothing was sent. no_allowed_fallback: switching off the model was needed (the usage-credits prompt was declined) and the model policy allows no other model. model_substitution_disabled: switching off the model was needed and CLAUDE_CODE_NO_MODEL_FALLBACK forbids it. field_not_granted: the organization is not allowed to send a field in the request, and the message text says what to do. usage_limit_reached: the request was refused by the account's own usage limit, a plan limit (session, weekly or per-model) or a spend cap on usage credits; api_error_params.rate_limit_info says which and when it resets. The other refusals that share error rate_limit never carry it: an organization policy that turned the service off (no limit was reached, and no reset clears it), a temporary server throttle, a capacity switch-off, an entitlement refusal shown in the server's own words, or a 429 on an API key or a third-party cloud provider. empty_completion: the model ended its turn with no visible text, and its one retry had no content block, on a person's own prompt with no reply and no tool result after it; the turn ends as an error so that a host shows a failure and not a blank reply. unattended_start_limit: a cloud session's process that starts where an earlier one died carries on what that one left unfinished; by the session's record, as many processes as are allowed (a number that is configured; with none there is no limit) had already done so within 24 hours with no message from a person in between, and this one did not; no request was sent; terminal for the turn, so a consumer replaying history must not re-send the prompt that led to it; anything new sent to the session runs as usual; a person's message allows it again, and so does time, as earlier starts pass out of the 24 hours. unattended_start_unconfirmed: a cloud session's process did not carry on what an earlier one left unfinished, because it could not check whether it was allowed to: the session's record of such starts could not be read or written, or the check failed; no request was sent; not terminal: a later process may carry the turn on."
     },
-    "out___schema160": {
+    "out___schema162": {
       "type": "object",
       "properties": {
         "status": {
@@ -2059,21 +2073,21 @@
       "required": ["status"],
       "description": "Rate limit information for claude.ai subscription users."
     },
-    "out___schema262": {
+    "out___schema264": {
       "description": "Structured tool output — the tool's full Output object, not the string content sent to the model. The shape is per-tool, keyed by the matching tool_use block's name (see the *Output types in toolTypes); MCP and dynamic tools carry their own shapes, so the field stays unknown-typed. For the Agent/Task tool the completed shape is the subagent's final report without the model-directed agentId/usage trailer, plus run totals — render from it instead of parsing the tool_result text. A call that stepped aside for a message the user sent (today a WebFetch or WebSearch call) carries `{ detachedToolCall: true }` in place of its Output: the call is still running, and its result reaches the model in a later turn."
     },
-    "out___schema265": {
+    "out___schema267": {
       "type": "integer",
       "exclusiveMinimum": 0,
       "maximum": 9007199254740991,
       "description": "@internal Input only. Asks the CLI to put this prompt back in its queue, instead of losing it, when an interrupt crosses with a running turn taking the prompt in: the interrupt was sent while its sender still believed the prompt was waiting. The value says for how long an interrupt is taken to have been sent so: a whole number of milliseconds from 1, and above 10000 it counts as 10000. The time runs from the moment the turn announces the model request that carries the prompt (system/status 'requesting', which is on the wire only with partial messages); until then it has not begun. The prompt is put back when an interrupt control request without cancel_queued stops that turn within the time and before the model's next reply has begun to arrive. It goes back to the front of the queue under the same uuid and runs in a later turn of its own, after any queued prompt of higher priority; prompts queued behind it are not merged into that turn's prompt, though the turn can take them in as any turn does. The interrupt's response lists it under still_queued and under put_back, and from then on cancel_async_message can withdraw it. The stopped turn reports no 'cancelled' for it, counts it in its result's queued_turn_count (if its origin is stamped user-driven, as for any queued prompt) and leaves it out of that result's user_message_uuids (on an error result an empty list, with no user_message_uuid, if nothing else is listed). On stdout it reports command_lifecycle 'queued' a second time; over a remote transport its delivery is not reported 'processed' until its later turn ends. With cancel_queued:true it stays with the stopped turn and is not listed under the response's cancelled. The row the stopped turn wrote for it (a queued_command attachment) leaves the conversation and is never stored, so the model sees the prompt once; until the prompt can no longer be put back, that row and the rows after it are kept out of the stored transcript. UserPromptSubmit hooks run for it twice, and what they added to the stopped turn stays. If a compaction begins while that row is kept out, the row is stored at once and stays in the conversation, so the prompt, if an interrupt puts it back or has just done so, is seen twice. A prompt is put back at most once, and never after the host's own cancel_async_message for it answered cancelled:false. Of several prompts taken in since the model last spoke, only the last can be put back; the others stay with the stopped turn. The field is ignored when it is not such a number, when the message has no uuid or has shouldQuery:false, and when the message is not a person's own typing: a synthetic, hidden, client-composed, seeded, peer or relayed message, one that declares a non-human origin, or one whose client_platform names no app or keyboard that a person types in. claude-code-server also needs a client_platform, and one that names an app. A CLI that does not advertise interrupt_requeue_taken_v1 on system/init ignores the field too."
     },
-    "out___schema318": {
+    "out___schema320": {
       "type": "boolean",
       "const": true,
       "description": "@internal No person typed this message's text in this session (a server or an app composed it). The text is delivered as written and is not treated as typing: no slash-command dispatch, no at-mention expansion beyond the message's own uploaded files, no reminder or command from keywords in it, and a skill named in it does not count as typed by the user. Who sent the message, and whether a person is present, stays with its origin. The checks of whether a message's words are the user's own do not read this mark yet: they too go by the origin. Unlike client_composed, the turn-start attachment pass still runs. Any value other than false or null is read as true."
     },
-    "out___schema334": {
+    "out___schema336": {
       "type": "array",
       "items": {
         "type": "object",
@@ -2336,7 +2350,7 @@
         "service_tier"
       ]
     },
-    "out___schema415": {
+    "out___schema426": {
       "type": "object",
       "properties": {
         "spawned": {
@@ -2543,7 +2557,7 @@
           "const": "rate_limit_event"
         },
         "rate_limit_info": {
-          "$ref": "#/$defs/out___schema160"
+          "$ref": "#/$defs/out___schema162"
         },
         "uuid": {
           "type": "string"
@@ -2622,7 +2636,7 @@
         },
         "subagent_stats": {
           "description": "@internal Running totals of the subagents the Agent tool started this session; see SDKSubagentStats.",
-          "$ref": "#/$defs/out___schema415"
+          "$ref": "#/$defs/out___schema426"
         },
         "safety_stops": {
           "type": "integer",
@@ -2730,6 +2744,77 @@
         "resume_reason": {
           "type": "string",
           "description": "Why this turn continued one that a worker restart interrupted. Such a turn is the automatic re-run of the interrupted turn (CLAUDE_CODE_RESUME_INTERRUPTED_TURN), or one that goes on from the answer to the permission prompt the new worker took over, or from that turn's tool calls still in flight. The value is the host's CLAUDE_CODE_RESUME_REASON when it set one (host_draining, checkpoint_restore, container_recreated, …), else 'interrupted_turn'. Present on such a headless turn's result, success or error, with or without an echo (a turn whose opening user prompt could not be vouched for still carries the reason); absent on every other turn (also one that goes on from the answer to any other permission prompt), on the Remote Control bridge's per-turn synthetic results, and from older producers."
+        },
+        "process_start_tuning": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991,
+          "description": "@internal As process_start_tuning on the success result."
+        },
+        "process_start_purge_delay_ms": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991,
+          "description": "@internal As process_start_purge_delay_ms on the success result."
+        },
+        "process_garbage_collections": {
+          "type": "object",
+          "properties": {
+            "to_first_message": {
+              "type": "object",
+              "properties": {
+                "eden": {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                },
+                "full": {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                },
+                "wall_ms": {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                },
+                "heap_after_mib": {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": ["eden", "full", "wall_ms"]
+            },
+            "to_first_result": {
+              "type": "object",
+              "properties": {
+                "eden": {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                },
+                "full": {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                },
+                "wall_ms": {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                },
+                "heap_after_mib": {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": ["eden", "full", "wall_ms"]
+            }
+          },
+          "required": ["to_first_result"],
+          "description": "@internal As process_garbage_collections on the success result."
         },
         "terminal_reason": {
           "type": "string",
@@ -3084,7 +3169,7 @@
           "type": "integer",
           "minimum": -9007199254740991,
           "maximum": 9007199254740991,
-          "description": "@internal Number of earlier turns of this CLI process that sent a main-conversation model request: 0 is the process's first turn to reach the model, not the conversation's first. Turns stopped or failed after sending count but carry no value, so values can skip. Where one process hosts several sessions, each has its own count, from 0 each time the process starts hosting it. Present where time_to_request_phases_ms is."
+          "description": "@internal Number of earlier turns of this CLI process that sent a main-conversation model request: 0 is the process's first turn to reach the model, not the conversation's first. Turns that sent a request and then were stopped, deferred a tool or failed with an error subtype count but carry no value, so values can skip. Where one process hosts several sessions, each has its own count, from 0 each time the process starts hosting it. Present where time_to_request_phases_ms is. A worker that Anthropic hosts, with telemetry on, also sends it when a model turn ends in a result of this subtype with is_error true (an API error, a refused structured output). That result has none of the time_to_request_ or process_ fields beside it. If that turn sent no request, the value is the one its request would have had, so the next turn repeats it."
         },
         "time_to_request_cpu_ms": {
           "type": "integer",
@@ -3108,7 +3193,7 @@
           "type": "integer",
           "minimum": -9007199254740991,
           "maximum": 9007199254740991,
-          "description": "@internal Resident memory of the CLI process at turn start, in whole MiB, as its kernel counts it (VmRSS in /proc/self/status). From the process's second turn on, it shows what stayed resident through the idle time since the turn before. Child processes, such as a command a tool runs or an MCP server, are left out. On a virtual machine it is the guest kernel's count, not what the host holds for the machine. Sent only by a worker that Anthropic hosts (never by a self-hosted runner, a BYOC environment, a session that Claude Desktop starts or a local run), and only with telemetry on. On such a worker it is present, always with process_rss_mib_result, where process_turn_index is, on Linux (not WSL), unless /proc/self/status cannot be read or lacks VmRSS, or the process hosts other sessions too."
+          "description": "@internal Resident memory of the CLI process at turn start, in whole MiB, as its kernel counts it (VmRSS in /proc/self/status). From the process's second turn on, it shows what stayed resident through the idle time since the turn before. Child processes, such as a command a tool runs or an MCP server, are left out. On a virtual machine it is the guest kernel's count, not what the host holds for the machine. Sent only by a worker that Anthropic hosts (never by a self-hosted runner, a BYOC environment, a session that Claude Desktop starts or a local run), and only with telemetry on. On such a worker it is present, always with process_rss_mib_result, where time_to_request_loop_lag_ms is, on Linux (not WSL), unless /proc/self/status cannot be read or lacks VmRSS, or the process hosts other sessions too."
         },
         "process_anon_mib_turn_start": {
           "type": "integer",
@@ -3150,13 +3235,43 @@
           "type": "integer",
           "minimum": -9007199254740991,
           "maximum": 9007199254740991,
-          "description": "@internal CPU time, counted as in process_cpu_ms_between_turns, from this turn's start until just before this result is built, so what the turn does after that is in neither stretch. The stretch includes the waits for the model and for tools. It always comes with process_wall_ms_turn. Sent only by the workers named under process_rss_mib_turn_start. On them it is present where process_turn_index is, unless the runtime reports no resource usage or the process hosts other sessions too."
+          "description": "@internal CPU time, counted as in process_cpu_ms_between_turns, from this turn's start until just before this result is built, so what the turn does after that is in neither stretch. The stretch includes the waits for the model and for tools. It always comes with process_wall_ms_turn. Sent only by the workers named under process_rss_mib_turn_start. On them it is present where time_to_request_loop_lag_ms is, unless the runtime reports no resource usage or the process hosts other sessions too."
         },
         "process_wall_ms_turn": {
           "type": "integer",
           "minimum": -9007199254740991,
           "maximum": 9007199254740991,
           "description": "@internal The time that passed in the process_cpu_ms_turn stretch, by the same clock as process_wall_ms_between_turns."
+        },
+        "process_cpu_ms_streaming": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991,
+          "description": "@internal CPU time, counted as in process_cpu_ms_between_turns, that the process used inside process_wall_ms_streaming. It is part of process_cpu_ms_turn. It holds what handling the streamed replies cost while they streamed, but not what the CLI does with a reply once its stream has ended. It also holds whatever else the process did meanwhile, such as a tool that starts before the reply ends, a subagent, a side request, telemetry or garbage collection. It always comes with process_wall_ms_streaming, main_stream_count and main_stream_event_count; main_stream_chunk_count can be missing. Sent only by the workers named under process_rss_mib_turn_start. On them it is present where process_cpu_ms_turn is, if a stream opened on the turn and each of its windows could be measured."
+        },
+        "process_wall_ms_streaming": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991,
+          "description": "@internal How long, within the process_cpu_ms_turn stretch and by its clock, a response stream of a main-conversation model request was open: from the stream's first event until the CLI stopped reading it, whether it ended, failed or was aborted. The wait for the first event is not in it. Summed over the turn's requests; time in which two such streams were open counts once. The stream of a subagent, of a side request or of a compaction opens nothing."
+        },
+        "main_stream_count": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991,
+          "description": "@internal How many streams process_wall_ms_streaming covers: one for each attempt of a main-conversation model request that brought a first event, so a retry after that counts again."
+        },
+        "main_stream_event_count": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991,
+          "description": "@internal How many stream events the API sent on those streams, as tengu_api_success's streamEventCount counts them: keepalive pings that the CLI makes up itself are left out. A stream still open when this result is built adds none."
+        },
+        "main_stream_chunk_count": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991,
+          "description": "@internal In how many chunks the runtime's fetch handed over the bodies of those streams. It is not the number of socket reads, several of which can make one chunk. Against main_stream_event_count it shows how the API's events arrive grouped, though the two do not divide evenly: a chunk can end inside an event, keepalive comments and pings are chunks that bring no event, and a stream that failed or was aborted can count one chunk whose events were never read. Absent, never 0, when a stream's chunks were not counted, as on Bedrock, Vertex, Foundry and Mantle, with the byte watchdog off, or for a stream still open when this result is built."
         },
         "input_attachments_detail": {
           "type": "object",
@@ -3449,6 +3564,77 @@
         "time_origin_ms": {
           "type": "number"
         },
+        "process_start_tuning": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991,
+          "description": "@internal Which runtime tuning variables the CLI process was started with, one bit for each that was set and not empty: 1 BUN_GC_TIMER_INTERVAL, 2 MIMALLOC_PURGE_HOLES_MIN_INTERVAL, 4 BUN_IDLE_GC_SECONDS, 8 MIMALLOC_PURGE_DELAY, 16 BUN_JSC_useFTLJIT, 32 BUN_JSC_percentCPUPerMBForEdenTimer, 64 BUN_JSC_percentCPUPerMBForFullTimer. It says that a name was set, never to what. It is taken once, as the process starts, because that is when the runtime reads them: a worker adopted from a warm spare reports the spare's own variables, not the ones its claim brought. Sent only by the workers named under process_rss_mib_turn_start, unless the process hosts other sessions too. They put it on a session's results as they write them, whatever the subtype and whether or not the turn sent a request. A result that reports a failed start or a fatal error is written raw and has none."
+        },
+        "process_start_purge_delay_ms": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991,
+          "description": "@internal MIMALLOC_PURGE_DELAY, in milliseconds, as the CLI process was started with it. Taken with process_start_tuning and sent only beside it. Absent where the variable was unset or empty, and where its text is anything but one to seven digits, so no text can travel: bit 8 of process_start_tuning still says that it was set."
+        },
+        "process_garbage_collections": {
+          "type": "object",
+          "properties": {
+            "to_first_message": {
+              "type": "object",
+              "properties": {
+                "eden": {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                },
+                "full": {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                },
+                "wall_ms": {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                },
+                "heap_after_mib": {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": ["eden", "full", "wall_ms"]
+            },
+            "to_first_result": {
+              "type": "object",
+              "properties": {
+                "eden": {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                },
+                "full": {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                },
+                "wall_ms": {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                },
+                "heap_after_mib": {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": ["eden", "full", "wall_ms"]
+            }
+          },
+          "required": ["to_first_result"],
+          "description": "@internal Garbage collections on the CLI process's main thread, counted from early start-up, before its main modules load. to_first_message: up to the start of the process's first turn, whether a message or start-up itself (a resumed turn, say) began it; absent if no turn began first or its count failed. to_first_result: up to this result, including to_first_message's. A worker claimed from a warm spare counts from the spare's own start, so both include its wait for the claim. Each gives eden (collections of young objects only; under Bun the process's first also marks the whole heap), full (collections of the whole heap), wall_ms (their summed wall-clock time, not CPU time) and heap_after_mib (heap in use after the last one; absent if none ran). A collection still running at either moment is not in that count. Only on the process's first numbered result (result_index 0) within an hour of its start, only when the process, or the warm spare it was claimed from, started with CLAUDE_CODE_COUNT_GARBAGE_COLLECTIONS=1, and only from cloud workers that Anthropic hosts, with telemetry on, never from a process that hosts other sessions."
+        },
         "is_error": {
           "type": "boolean"
         },
@@ -3475,7 +3661,7 @@
         },
         "api_error": {
           "description": "@internal The api_error of the API error that ended the turn (see SDKAssistantMessage.api_error). Absent when the turn did not end on an API error or the error has no typed kind; treat an unknown value as absent.",
-          "$ref": "#/$defs/out___schema156"
+          "$ref": "#/$defs/out___schema158"
         },
         "num_turns": {
           "type": "integer",
@@ -3518,7 +3704,7 @@
         },
         "subagent_stats": {
           "description": "@internal Running totals of the subagents the Agent tool started this session; see SDKSubagentStats.",
-          "$ref": "#/$defs/out___schema415"
+          "$ref": "#/$defs/out___schema426"
         },
         "safety_stops": {
           "type": "integer",
@@ -3946,7 +4132,7 @@
             }
           },
           "required": ["api_message_id", "from_block_index"],
-          "description": "@internal Set on a `message_stop` that Claude Code produced itself, after it stopped reading the response that `message_stop` closes because the API's stream failed, stalled or ended early. That response's content blocks at index `from_block_index` and above have no assistant message and will never get one, so a consumer that drew or stored them from stream events, and holds no assistant message for them, can remove them, even a block that has had its `content_block_stop`. Nothing is stated about lower blocks: some may have no assistant message, and what follows may repeat or replace them. What follows can be, among others, a retry (a new `message_start`), the same request without streaming (assistant messages under another id, with no `message_start` before them), an assistant message that reports the error, or nothing. A plugin can add content blocks of its own to a response, and those do get assistant messages under the same id, emitted before this event. Absent on every other `message_stop` (the API's own, one produced for a response that had arrived whole, one where Claude Code cannot be sure), on Remote Control (interactive terminal) sessions and from older producers. An absent key states nothing: a block with no assistant message yet may still get one."
+          "description": "@internal Set on a `message_stop` that Claude Code produced itself, after it stopped reading the response that `message_stop` closes because the API's stream failed, stalled or ended early, or because the turn was interrupted. That response's content blocks at index `from_block_index` and above have no assistant message and will never get one, so a consumer that drew or stored them from stream events, and holds no assistant message for them, can remove them, even a block that has had its `content_block_stop`. Nothing is stated about lower blocks: some may have no assistant message, and what follows may repeat or replace them. What follows can be, among others, a retry (a new `message_start`), the same request without streaming (assistant messages under another id, with no `message_start` before them), an assistant message that reports the error, or nothing. A plugin can add content blocks of its own to a response, and those do get assistant messages under the same id, emitted before this event. Absent on every other `message_stop` (the API's own, one produced for a response that had arrived whole, one where Claude Code cannot be sure), on Remote Control (interactive terminal) sessions and from older producers. An absent key states nothing: a block with no assistant message yet may still get one."
         },
         "text_runs_joined": {
           "type": "boolean",
@@ -4920,7 +5106,7 @@
         "uuid",
         "session_id"
       ],
-      "description": "@internal Some files a user message sent by reference (file_attachments) did not arrive where Claude can read them, and Claude was told so in that message's text or in a later note; the turn runs on without them. A host can use it to tell the person who sent them; a session with Remote Control on also sends it to its Remote Control clients itself. Sent once the message is queued, or later when a download or a save that runs beside its turn fails, or both; only for a message that reached the session through Claude Code Remote or over Remote Control, never for input a local host writes; whenever Claude is told, and for the same files. Queued counts as told: a message that a Stop then clears from the queue, or that a UserPromptSubmit hook then blocks, still sends it, though Claude never reads that message. Nothing is sent when every file arrives, when the message is refused or has no uuid (over Remote Control, one not in UUID form counts as none), for another session's message that was first held for approval, when the only files lost are those over the count limit, or for a picture that reached Claude inside the message and whose saved copy alone was lost; on claude-code-server the same holds for a text file whose copy was to be written late, at a use of the tool container. A file whose entry carries a sha256 (another session's transfer) is reported to Claude by name instead, and is listed here only under 'not_finished'. Each event states the whole list for its message: a save lost after the message was queued, or a delivery to a new worker, states it again, so keep the last one per message_uuid. If its files all arrive that time nothing is sent, and the earlier event stands. One exception: a worker that takes over a turn already begun, or is sent again a message that its transcript already holds, may fetch and save the message's files again, except pictures and files with a sha256. Its event lists only those it could not fetch or save, so it can leave out a picture an earlier event listed, and can list a file the earlier worker did save."
+      "description": "@internal Some files a user message sent by reference (file_attachments) did not arrive where Claude can read them, and Claude was told so in that message's text or in a later note; the turn runs on without them. A host can use it to tell the person who sent them; a session with Remote Control on also sends it to its Remote Control clients itself. Sent once the message is queued, or later when a download or a save that runs beside its turn fails, or both; only for a message that reached the session through Claude Code Remote or over Remote Control, never for input a local host writes; whenever Claude is told, and for the same files. Queued counts as told: a message that a Stop then clears from the queue, or that a UserPromptSubmit hook then blocks, still sends it, though Claude never reads that message. Nothing is sent when every file arrives, when the message is refused or has no uuid (over Remote Control, one not in UUID form counts as none), for another session's message that was first held for approval, when the only files lost are those over the count limit of a message in which an entry carries a sha256 digest, or for a picture that reached Claude inside the message and whose saved copy alone was lost; on claude-code-server the same holds for a text file whose copy was to be written late, at a use of the tool container. A file whose entry carries a sha256 (another session's transfer) is reported to Claude by name instead, and is listed here only under 'not_finished'. Each event states the whole list for its message: a save lost after the message was queued, or a delivery to a new worker, states it again, so keep the last one per message_uuid. If its files all arrive that time nothing is sent, and the earlier event stands. One exception: a worker that takes over a turn already begun, or is sent again a message that its transcript already holds, may fetch and save the message's files again, except pictures and files with a sha256. Its event lists only those it could not fetch or save, so it can leave out a picture an earlier event listed, and can list a file the earlier worker did save."
     },
     "system_files_persistedOutput": {
       "type": "object",
@@ -5209,6 +5395,34 @@
       },
       "required": ["type", "subtype", "content", "level", "uuid", "session_id"],
       "description": "Generic text banner emitted by the loop — non-error status lines, hook feedback (e.g. a UserPromptSubmit hook's block reason), slash-command output. Hosts render `content` as plaintext at the given level."
+    },
+    "system_inherited_asks_settledOutput": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "system"
+        },
+        "subtype": {
+          "type": "string",
+          "const": "inherited_asks_settled"
+        },
+        "kept_request_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The request ids of the earlier worker's asks that this worker keeps answerable."
+        },
+        "uuid": {
+          "type": "string"
+        },
+        "session_id": {
+          "type": "string"
+        }
+      },
+      "required": ["type", "subtype", "kept_request_ids", "uuid", "session_id"],
+      "description": "@internal A cloud worker's report, before its first turn, of which asks it inherited and keeps. Any ask stored before this event that it does not name is over."
     },
     "system_initOutput": {
       "type": "object",
@@ -7050,6 +7264,11 @@
           "type": "boolean",
           "const": true,
           "description": "@internal Present, and true, only on a worker that rebuilt the conversation from the session's stored transcript before it read any request, and would not have started without it. A client may send this worker again a turn_handoff request that an earlier worker accepted, if the request names no calls (tool_use_ids empty), is not stopped, and its messages hold no tool call. A request whose turn had not ended when an earlier worker with this key stopped is left unacknowledged, so the session service sends it to this worker by itself; a second request for the same turn is answered \"duplicate\" while the first waits or runs. The worker appends only the messages of the turn that its conversation lacks and, once the store has confirmed every message of the turn, sends the turn's last message back as an assistant event (the echo); a turn it already holds whole is echoed on the same condition. The request can still be accepted, or refused (\"invalid_handoff:\"), with no echo, and the turn may then not be stored. That happens, for example, when the conversation has moved on past the part of the turn it holds, when a rewind has removed the turn, when a compaction has summarised part of it (or all of it, if the compaction was this worker's own), when a Stop clears the queue first, or when the store does not confirm the messages. A request sent again waits again for messages not yet confirmed. When a delivery finds that the store refused a message of the turn, it sends no echo and removes the turn from the conversation, and the same request sent again to that worker gets no echo. If another row has followed the turn, the turn stays, also with no echo. Exception: after 512 later refused rows the worker forgets a refusal and reads the message as confirmed. Confirmed means that the store answered the upload with success. A turn that an earlier worker's compaction summarised whole is appended a second time. The key promises nothing for a turn that holds a tool call, or whose first message is stored with no answer but with another row behind it (a hook's output, say): the worker may already have continued such a turn itself when it started. A worker without the key may have started with none of the turn's messages."
+        },
+        "requires_rewind_request_id": {
+          "type": "boolean",
+          "const": true,
+          "description": "@internal Present, and true, only on a worker that reads the requires_rewind_request_id member of a turn_handoff request; a worker without this key ignores the member and appends the turn whether or not the rewind was made."
         }
       },
       "required": [
@@ -7061,7 +7280,7 @@
         "uuid",
         "session_id"
       ],
-      "description": "@internal Emitted once by a cloud worker that accepts the turn_handoff control request, after it registers, carrying what it wrote to external_metadata.turn_handoff: the version, the tools whose calls it would accept, the worker life (worker_epoch) announcing it, whether handed-off calls wait for files still being staged (staged_files), whether user messages that make no model call are appended before a handed-off turn (no_query_first), whether two assistant messages of a turn may share a message id (shared_message_id), and relay_marker, home_files, file_names, carried_writes and hydrates_carried_lines when set. Lets a session client learn the capability from the event stream instead of reading worker state. Durable in the stream: a reader keeps the entry with the newest worker_epoch it has seen and ignores older ones; a worker life that does not accept turn_handoff emits nothing (its registration writes turn_handoff: null)."
+      "description": "@internal Emitted once by a cloud worker that accepts the turn_handoff control request, after it registers, carrying what it wrote to external_metadata.turn_handoff: the version, the tools whose calls it would accept, the worker life (worker_epoch) announcing it, whether handed-off calls wait for files still being staged (staged_files), whether user messages that make no model call are appended before a handed-off turn (no_query_first), whether two assistant messages of a turn may share a message id (shared_message_id), whether a turn_handoff request may name a rewind it depends on (requires_rewind_request_id), and relay_marker, home_files, file_names, carried_writes and hydrates_carried_lines when set. Lets a session client learn the capability from the event stream instead of reading worker state. Durable in the stream: a reader keeps the entry with the newest worker_epoch it has seen and ignores older ones; a worker life that does not accept turn_handoff emits nothing (its registration writes turn_handoff: null)."
     },
     "system_turn_preemptedOutput": {
       "type": "object",
@@ -7271,6 +7490,10 @@
                 "type": "boolean",
                 "const": true,
                 "description": "@internal The surface holds its transient toasts while this pane is the one shown, and shows them once it closes."
+              },
+              "background_color": {
+                "type": "string",
+                "description": "@internal What the surface paints under this pane's body while it is the one shown: a theme key, a raw color, or `transparent` for nothing; checked at open, yet parse it, never write it into a style. Absent, the surface's own look stands."
               },
               "rows": {
                 "type": "integer",
@@ -12381,14 +12604,14 @@
           "type": "boolean"
         },
         "tool_use_result": {
-          "$ref": "#/$defs/out___schema262"
+          "$ref": "#/$defs/out___schema264"
         },
         "priority": {
           "type": "string",
           "enum": ["now", "next", "later"]
         },
         "requeue_if_interrupted_within_ms": {
-          "$ref": "#/$defs/out___schema265"
+          "$ref": "#/$defs/out___schema267"
         },
         "origin": {
           "oneOf": [
@@ -12628,7 +12851,7 @@
           "description": "The client composed this turn from content the user did not type; the CLI delivers its text as written, with no `@path` file-mention expansion and no slash-command dispatch. On current CLIs the turn-start attachment pass is skipped as a whole: `@server:resource` MCP mentions are not expanded either, and the prompt is sent without the context the CLI normally attaches alongside it (nested `CLAUDE.md` and rules files, skill and tool listings, reminders); the pass the CLI runs between tool calls is unaffected."
         },
         "text_not_typed": {
-          "$ref": "#/$defs/out___schema318"
+          "$ref": "#/$defs/out___schema320"
         },
         "initiator": {
           "type": "string",
@@ -12724,7 +12947,7 @@
           "description": "@internal MCP protocol metadata passed through to SDK consumers, never sent to the model (from internal UserMessage.mcpMeta)."
         },
         "tool_result_meta": {
-          "$ref": "#/$defs/out___schema334"
+          "$ref": "#/$defs/out___schema336"
         },
         "source_tool_use_id": {
           "type": "string",
@@ -15539,14 +15762,14 @@
           "type": "boolean"
         },
         "tool_use_result": {
-          "$ref": "#/$defs/out___schema262"
+          "$ref": "#/$defs/out___schema264"
         },
         "priority": {
           "type": "string",
           "enum": ["now", "next", "later"]
         },
         "requeue_if_interrupted_within_ms": {
-          "$ref": "#/$defs/out___schema265"
+          "$ref": "#/$defs/out___schema267"
         },
         "origin": {
           "oneOf": [
@@ -15786,7 +16009,7 @@
           "description": "The client composed this turn from content the user did not type; the CLI delivers its text as written, with no `@path` file-mention expansion and no slash-command dispatch. On current CLIs the turn-start attachment pass is skipped as a whole: `@server:resource` MCP mentions are not expanded either, and the prompt is sent without the context the CLI normally attaches alongside it (nested `CLAUDE.md` and rules files, skill and tool listings, reminders); the pass the CLI runs between tool calls is unaffected."
         },
         "text_not_typed": {
-          "$ref": "#/$defs/out___schema318"
+          "$ref": "#/$defs/out___schema320"
         },
         "initiator": {
           "type": "string",
@@ -15882,7 +16105,7 @@
           "description": "@internal MCP protocol metadata passed through to SDK consumers, never sent to the model (from internal UserMessage.mcpMeta)."
         },
         "tool_result_meta": {
-          "$ref": "#/$defs/out___schema334"
+          "$ref": "#/$defs/out___schema336"
         },
         "source_tool_use_id": {
           "type": "string",

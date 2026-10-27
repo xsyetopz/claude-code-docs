@@ -60,6 +60,17 @@ Source: the program (the `Agent` input schema).
 
 `Agent` was `Task` before `2.1.63`. `Task(...)` still works as an alias in rules and agent files ([Create Custom Subagents](https://code.claude.com/docs/en/sub-agents)).
 
+## Result Fields New in `2.1.311`
+
+Two result fields are new in `2.1.311`. Source: `AgentResult` and `SkillResult` in [`claude-code-tools.json`](../schemas.md), and the program.
+
+| Field | Status | Tool and Result | Type | What It Means |
+| --- | --- | --- | --- | --- |
+| `toolsUsed` | <Undocumented /> | `Agent`, the completed result | Array of strings | A list of tool names built from the messages of the subagent. The field is left out when the list is empty (`chunk-hc20vcf0.js:8021`, `chunk-hc20vcf0.js:8286`). `Skill` turns the same list into `toolsUsedLine`. |
+| `toolsUsedLine` | <Undocumented /> | `Skill`, the forked result | String | The line that the `tool_result` text opens with. It names the tools that the subagent called and that the requests of this conversation did not yet name. The field is left out when there is no such tool (`chunk-sr9nzxgx.js:587`, `chunk-sr9nzxgx.js:1265`). |
+
+The program builds the list only while the server flag `tengu_silly_shore` is on (default on). When it is off, the list is empty (`chunk-35qty13k.js:101`, `chunk-2ht8z368.js:12649`).
+
 ## Example
 
 Stop Claude from running workflows, and use the old checklist tool.

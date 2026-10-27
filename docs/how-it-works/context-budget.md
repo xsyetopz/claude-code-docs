@@ -50,7 +50,7 @@ Your own prompt (`Reply with 'OK'.`) is a few tokens.
 See the captured [first-turn messages](../prompts/index.md).
 
 The real first request matched `/context` exactly: input 2, cache write 5,441, and cache read 10,834 make 16,277.
-Reruns on `2.1.306`, `2.1.307`, `2.1.308`, `2.1.309`, and `2.1.310` matched the same way: input, cache write, and cache read of the first reply added up to the `/context` total. Those runs used the default model, `claude-sonnet-5-5`, and a warm cache, so their counts are not shown here. They listed the same categories, no memory files, no agents, and no MCP tools. See [Probes](../reference/probes.md#context-budget).
+Reruns on `2.1.306`, `2.1.307`, `2.1.308`, `2.1.309`, `2.1.310`, and `2.1.311` matched the same way: input, cache write, and cache read of the first reply added up to the `/context` total. Those runs used the default model, `claude-sonnet-5-5`, and a warm cache, so their counts are not shown here. They listed the same categories, no memory files, no agents, and no MCP tools. See [Probes](../reference/probes.md#context-budget).
 The split between cache write and cache read depends on the cache, not on the request. A subscription login writes with a 1-hour lifetime, so another session on the account with the same tools and system prompt within the last hour lets this one read them. A cold first request wrote almost all of it and read nothing.
 `/context` itself only calls the token counting endpoint, so it does not run a model turn. We checked this: `claude -p "/context"` against the stub sent 24 requests to `/v1/messages/count_tokens` and none to `/v1/messages`.
 

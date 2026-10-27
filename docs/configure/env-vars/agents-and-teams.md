@@ -8,7 +8,7 @@ These variables control subagents, agent teams, background tasks, and workflows.
 They set limits, switch features on, and change how child agents behave.
 Several are experimental and may change without notice.
 
-This page lists 79 variables. Switch rows take `1` or `0`.
+This page lists 80 variables. Switch rows take `1` or `0`.
 
 ## Example
 
@@ -53,6 +53,7 @@ The table is sorted by name. See [Environment Variables](index.md#how-to-read-th
 | `CLAUDE_CODE_DISABLE_BG_STABLE_PATH` | <Undocumented /> <Gated note="Works only behind a feature flag or server gate" /> | Makes the background session pty host start from the running executable instead of a stable path lookup. | On or off. Removed from the child environment. Only used on macOS | MacOS background sessions |
 | `CLAUDE_CODE_DISABLE_CRON` | <Documented /> | Turns off scheduled tasks and the cron tools. | On or off. Gates a feature flag check | All sessions. Project `env` can set it before trust |
 | `CLAUDE_CODE_DISABLE_EXPLORE_PLAN_AGENTS` | <Documented /> | Turns off the built-in Explore and Plan subagents. | On or off. Claude Code reads it once and keeps the result for the session | All sessions. Project `env` can set it before trust |
+| `CLAUDE_CODE_DISABLE_QUIET_BACKGROUND_WAIT` | <Undocumented /> | Turns off the quiet wait of a headless session that waits only for background shell tasks. The session then checks again every 100 ms. Added in `2.1.311`. | On or off, off by default. Without it the session waits up to 1 second and wakes on a queue, store, or state change | Headless sessions with background shell tasks |
 | `CLAUDE_CODE_ENABLE_APPEND_SUBAGENT_PROMPT` | <Undocumented /> | Appends the `appendSubagentSystemPrompt` option text to the system prompt of every subagent. | On or off, off by default. Set to `1` by Claude Code when `--append-subagent-system-prompt` or the `-file` flag is used. The variable alone changes nothing; a probe saw the flag text as the last lines of the subagent prompt ([Probes](../../reference/probes.md#subagents-and-hooks)) | `--print` mode only |
 | `CLAUDE_CODE_ENABLE_TASKS` | <Documented /> | Selects the Task tools. Set to `0` to fall back to `TodoWrite`. | On, off, or unset, on by default. Only `false` disables | All sessions. Project `env` can set it before trust |
 | `CLAUDE_CODE_ENABLE_TODO_TOOLS` | <Documented /> | Gives the task tools to every model, not only the default list. | On or off, off by default. Only `true` counts | All sessions |
@@ -117,4 +118,4 @@ The Notes column says which when the code shows it.
 - [Subagents](../../extend/subagents/index.md)
 - [Undocumented Items](../../reference/undocumented.md): every item that only the program shows.
 
-Source: the program (variable names found in the `2.1.310` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
+Source: the program (variable names found in the `2.1.311` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.

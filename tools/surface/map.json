@@ -283,6 +283,10 @@
     "route": "/extend/plugins/cli",
     "anchor": "errors"
   },
+  "error:${…} changed while it was read": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
   "error:${…} could not be confirmed as a recognized Claude gateway host ${…}. Try again.": {
     "route": "/configure/settings/auth",
     "anchor": "errors"
@@ -407,6 +411,10 @@
     "route": "/extend/plugins/cli",
     "anchor": "errors"
   },
+  "error:${…} is not UTF-8": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
   "error:${…} is not a registry package at an exact version": {
     "route": "/extend/plugins/marketplace",
     "anchor": "errors"
@@ -439,6 +447,10 @@
     "route": "/extend/mcp/cli",
     "anchor": "errors"
   },
+  "error:${…} is over the size a folder may hold": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
   "error:${…} may only contain letters, digits, hyphens, and underscores — it is interpolated into the claude.googleapis.com request path, so URL metacharacters in its value would rewrite the project/workspace…": {
     "route": "/configure/settings/auth",
     "anchor": "errors"
@@ -469,6 +481,10 @@
   },
   "error:${…} requires \"${…}\"": {
     "route": "/reference/tools/gated-and-other",
+    "anchor": "errors"
+  },
+  "error:${…} requires a file path (a file your host keeps fresh while the session has processes left running), got: ${…}": {
+    "route": "/how-it-works/sessions-and-storage",
     "anchor": "errors"
   },
   "error:${…} requires a file path (the marker your host writes to announce a graceful drain), got: ${…}": {
@@ -672,6 +688,10 @@
     "anchor": "errors"
   },
   "error:${…}: $.prompt.compose: this process composes no system prompt": {
+    "route": "/extend/mod-api",
+    "anchor": "errors"
+  },
+  "error:${…}: $.prompt.paint ${…}": {
     "route": "/extend/mod-api",
     "anchor": "errors"
   },
@@ -1087,7 +1107,7 @@
     "route": "/extend/mod-api",
     "anchor": "errors"
   },
-  "error:${…}: next.to names \"${…}\", which is not a tier a dispatch continues at (append, builtin, core)": {
+  "error:${…}: next.to names \"${…}\", which is not a tier a dispatch continues at (user, append, builtin, core)": {
     "route": "/extend/mod-api",
     "anchor": "errors"
   },
@@ -1096,6 +1116,10 @@
     "anchor": "errors"
   },
   "error:${…}: next.to(\"${…}\") skips nothing from ${…}; a ${…} hook may continue at ${…}": {
+    "route": "/extend/mod-api",
+    "anchor": "errors"
+  },
+  "error:${…}: next.to(\"user\") refused: no hook of its module that spells it stands on this dispatch of ${…} (host rule)": {
     "route": "/extend/mod-api",
     "anchor": "errors"
   },
@@ -2563,6 +2587,10 @@
     "route": "/how-it-works/sessions-and-storage",
     "anchor": "errors"
   },
+  "error:No credential left to send a cloud-sessions request with": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
   "error:No environment secret provided. Use --environment-secret-file or set SELF_HOSTED_RUNNER_ENVIRONMENT_SECRET.": {
     "route": "/how-it-works/sessions-and-storage",
     "anchor": "errors"
@@ -3223,6 +3251,10 @@
     "route": "/extend/mcp/runtime",
     "anchor": "errors"
   },
+  "error:The working directory no longer leads where it did when this call was permission-checked (it was deleted, a part of its path was replaced, or it can't be examined), so the call was not run. Make the c…": {
+    "route": "/reference/tools/shell-and-web",
+    "anchor": "errors"
+  },
   "error:This agent has been stopped and its stop is still completing; it cannot *": {
     "route": "/reference/tools/agents-and-tasks",
     "anchor": "errors"
@@ -3547,6 +3579,10 @@
     "route": "/extend/mcp/auth",
     "anchor": "errors"
   },
+  "error:XAA: authorization server changed: signed in with ${…}, server now names [${…}]. If this move is expected, run `claude mcp remove` for this server and add it again with its client secret.": {
+    "route": "/extend/mcp/auth",
+    "anchor": "errors"
+  },
   "error:XAA: jwt-bearer *": {
     "route": "/extend/mcp/auth",
     "anchor": "errors"
@@ -3767,6 +3803,10 @@
     "route": "/reference/tools/files",
     "anchor": "errors"
   },
+  "error:a name under ${…} is not UTF-8": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
   "error:a newer turn began before the compaction could be applied": {
     "route": "/how-it-works/context-and-compaction",
     "anchor": "errors"
@@ -3777,6 +3817,10 @@
   },
   "error:a permission entry has an impossible size": {
     "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
+  "error:a plugin was placed with no declaration": {
+    "route": "/extend/plugins/marketplace",
     "anchor": "errors"
   },
   "error:a proxy helper set by this project is not run by this command": {
@@ -4495,6 +4539,10 @@
     "route": "/how-it-works/sessions-and-storage",
     "anchor": "errors"
   },
+  "error:internal event POST not sent": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
   "error:interrupt rejected": {
     "route": "/configure/cli/subcommands",
     "anchor": "errors"
@@ -4521,6 +4569,14 @@
   },
   "error:it answered about another hostname": {
     "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
+  "error:it holds more than ${…} bytes": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
+  "error:it holds more than ${…} files": {
+    "route": "/extend/plugins/marketplace",
     "anchor": "errors"
   },
   "error:it patches its dependencies (patchedDependencies), which this install does not apply": {
@@ -4793,10 +4849,6 @@
   },
   "error:oidc: the IdP discovery document has no token_endpoint, which private_key_jwt needs as the assertion audience": {
     "route": "/configure/cli/subcommands",
-    "anchor": "errors"
-  },
-  "error:one of the repo's settings files cannot be read for now": {
-    "route": "/extend/hooks/configuration",
     "anchor": "errors"
   },
   "error:only a command hook runs on this machine": {
@@ -5431,6 +5483,14 @@
     "route": "/reference/tools/gated-and-other",
     "anchor": "errors"
   },
+  "error:the path could not be checked for links to a network location: a folder or link on the way could not be read": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
+  "error:the path, or a link on the way to it, leads to a network location; point --hold-idle-file at a local file": {
+    "route": "/how-it-works/sessions-and-storage",
+    "anchor": "errors"
+  },
   "error:the permission check for these saves expired before they ran (too many concurrent file operations) — nothing was fetched; retry so it is checked again": {
     "route": "/reference/tools/gated-and-other",
     "anchor": "errors"
@@ -5525,6 +5585,10 @@
   },
   "error:this machine*": {
     "route": "/extend/hooks/configuration",
+    "anchor": "errors"
+  },
+  "error:this platform cannot open a file without following it": {
+    "route": "/extend/plugins/marketplace",
     "anchor": "errors"
   },
   "error:this read*": {

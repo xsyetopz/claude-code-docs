@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-control-protocol.json",
-  "title": "Claude Code control protocol (Claude Code 2.1.310)",
-  "$comment": "For the request and response of each control_request subtype in stream-json mode (definitions <subtype>Request and <subtype>Response, direction in x-direction). Generated from Claude Code 2.1.310 by calling the zod v4 toJSONSchema embedded in the binary on its own validator (method A, runtime export). Anchor: the SDK schema module, table of rows {request, originator, response}; the request union is described as \"Control requests a client sends to drive the loop\". Do not edit by hand: run \"bun run schemas\".",
+  "title": "Claude Code control protocol (Claude Code 2.1.311)",
+  "$comment": "For the request and response of each control_request subtype in stream-json mode (definitions <subtype>Request and <subtype>Response, direction in x-direction). Generated from Claude Code 2.1.311 by calling the zod v4 toJSONSchema embedded in the binary on its own validator (method A, runtime export). Anchor: the SDK schema module, table of rows {request, originator, response}; the request union is described as \"Control requests a client sends to drive the loop\". Do not edit by hand: run \"bun run schemas\".",
   "$defs": {
     "apply_flag_settingsRequest": {
       "type": "object",
@@ -1223,7 +1223,7 @@
         }
       },
       "required": ["subtype", "session_id"],
-      "description": "@internal Requests one page of the stored transcript of a cloud session that the signed-in account owns. Refused where list_cloud_sessions is.",
+      "description": "@internal Requests one page of the stored transcript of a cloud session that the signed-in account owns. Not always the whole transcript: for a compacted session the service serves the rows its last compaction kept, then its compact_boundary entry and what followed, so the messages that compaction summarized can be on no page. Refused where list_cloud_sessions is.",
       "x-direction": "client"
     },
     "get_cloud_session_transcriptResponse": {
@@ -2813,6 +2813,18 @@
                     "type": "integer",
                     "minimum": -9007199254740991,
                     "maximum": 9007199254740991
+                  },
+                  "cacheCreationEphemeral5mInputTokens": {
+                    "type": "integer",
+                    "minimum": -9007199254740991,
+                    "maximum": 9007199254740991,
+                    "description": "Cache writes with a 5-minute lifetime, already counted inside cacheCreationInputTokens. This and cacheCreationEphemeral1hInputTokens can add up to less than cacheCreationInputTokens, because a response that does not report how long its cache writes live adds to neither. costUSD prices those writes at the 5-minute rate. Counts only turns run on CLI versions that record this field: absent when none did, and an undercount when part of the session ran on an older version."
+                  },
+                  "cacheCreationEphemeral1hInputTokens": {
+                    "type": "integer",
+                    "minimum": -9007199254740991,
+                    "maximum": 9007199254740991,
+                    "description": "Cache writes with a 1-hour lifetime, already counted inside cacheCreationInputTokens. costUSD prices them at the 1-hour rate when the model's price table has one. The built-in list prices do. A managed-settings modelPricing row does not: its one cache-write rate applies to both lifetimes. costUSD never uses the 1-hour rate for a response that a fallback model served after a refusal. Absent or an undercount in the same cases as cacheCreationEphemeral5mInputTokens."
                   },
                   "webSearchRequests": {
                     "type": "integer",
@@ -7517,6 +7529,7 @@
                       "cliArg",
                       "command",
                       "session",
+                      "mcpMount",
                       "toolsNarrowing",
                       "mcpServerPolicy",
                       "hostCredential"
@@ -8653,10 +8666,15 @@
         "subtype": {
           "type": "string",
           "const": "oauth_token_refresh"
+        },
+        "kind": {
+          "type": "string",
+          "const": "sessions",
+          "description": "Which host-handed bearer the CLI asks for. Absent: the claude.ai sign-in token (the only meaning hosts that predate the field know). 'sessions': the second token that authorizes the cloud-sessions API, which a host that set CLAUDE_CODE_SDK_HAS_SESSIONS_OAUTH_REFRESH answers; it must belong to the same account and organization as the sign-in token."
         }
       },
       "required": ["subtype"],
-      "description": "@internal Request from the CLI subprocess to the SDK host for a fresh OAuth access token after a 401 with no local refresh token.",
+      "description": "@internal Request from the CLI subprocess to the SDK host for a fresh OAuth access token: after a 401 with no local refresh token, or, with kind, when the CLI first needs that bearer.",
       "x-direction": "agent"
     },
     "oauth_token_refreshResponse": {
@@ -10944,6 +10962,10 @@
           "const": true,
           "description": "@internal Only true, and only with an empty tool_use_ids: the user stopped this turn while its last message, an assistant message holding calls that have not run, was being handed over. The worker appends the turn, closes those calls and marks the turn exactly as when a turn of its own is stopped before a call runs, and ends it with the result a stopped turn ends with; when an earlier delivery already appended the turn, the calls are closed in place."
         },
+        "requires_rewind_request_id": {
+          "type": "string",
+          "description": "@internal The request_id of a rewind_conversation control request that the client sent ahead of this one, when the turn is meant only for the conversation as that rewind leaves it. A worker that advertises requires_rewind_request_id: true in turn_handoff_available reads it; a worker without that key ignores it and appends the turn whether or not the rewind was made, and the request may start a new worker whose build the client cannot know, so a client sends the member only once every worker that could read it has the key. A worker that reads it appends the turn only if that rewind is the last one it carried out (answered rewound: true), the last user or assistant message is still the one that rewind left at the end, and nothing it holds waits to be appended ahead of the turn (a turn in progress, or a message it received since). Otherwise it appends nothing and runs no call, and answers an error that starts \"invalid_handoff: required_rewind_\" and then one word: unknown, this worker has carried out no rewind (it replaced the worker that answered that request, or the request was refused or not read yet); other, its last rewind is a different request (the named one was refused here, not read yet, or followed by another); moved_on, it made that cut and the conversation has changed since; lines_waiting, it made that cut and something waits to be appended first. After unknown or other, go by the rewind's own answer where one was given, bearing in mind that a rewound: false of persist_failed or state_changed can still leave the cut for the next worker, and that the same rewind delivered again after its cut was stored answers target_not_found. A client that saw rewound: true and is then answered unknown may send the turn again without the member: the cut stands, though the new worker may have appended lines since, so the turn lands at the conversation's end, not necessarily right after the cut. After other, moved_on or lines_waiting do not send the turn again without the member: the conversation is not, or may no longer be, as that rewind left it. The check is skipped once any of the turn's messages is in the conversation or queued from an earlier delivery: a request sent again after that is answered as without the member. A value that is not a string is refused (invalid_handoff)."
+        },
         "relay_marker": {
           "type": "object",
           "properties": {
@@ -11065,7 +11087,7 @@
           "description": "@internal The size of the pane the surface draws the component in, in character cells of the surface's monospace font (its width and height over the code font's advance and line height), and whether its layout docks a pane; the hooks reached see it as `e.viewport` (src/plugins/functionHooks/types/render/render-viewport)."
         },
         "answers": {
-          "maxItems": 5,
+          "maxItems": 6,
           "type": "array",
           "items": {
             "type": "string",
@@ -11073,12 +11095,13 @@
               "ui_copy",
               "ui_prompt_read",
               "ui_prompt_fill",
+              "ui_prompt_paint",
               "ui_prompt_suggest",
               "ui_read_selection"
             ],
             "description": "@internal A request the engine may send a remote client on a plugin's behalf, which the client says it answers when it attaches."
           },
-          "description": "@internal The engine's requests this client answers on a plugin's behalf: `ui_copy` (its clipboard), `ui_prompt_read` / `ui_prompt_fill` / `ui_prompt_suggest` (its composer), `ui_read_selection` (what the person has selected in its page). The engine sends each only to a client that named it; a client that never names any (or names `[]`) is never asked, so `$.ui.copy` to its surface answers `no-clipboard`, the prompt calls the empty box / false and `$.ui.selection` nothing, as before. On a repeated ui_attach a given list (including `[]`) replaces the earlier one and an absent field keeps it: send `[]` to stop answering."
+          "description": "@internal The engine's requests this client answers on a plugin's behalf: `ui_copy` (its clipboard), `ui_prompt_read` / `ui_prompt_fill` / `ui_prompt_paint` / `ui_prompt_suggest` (its composer), `ui_read_selection` (what the person has selected in its page). The engine sends each only to a client that named it; a client that never names any (or names `[]`) is never asked, so `$.ui.copy` to its surface answers `no-clipboard`, the prompt calls the empty box / false and `$.ui.selection` nothing, as before. On a repeated ui_attach a given list (including `[]`) replaces the earlier one and an absent field keeps it: send `[]` to stop answering."
         }
       },
       "required": ["subtype", "surface", "client_id"],
@@ -11968,6 +11991,10 @@
                 "type": "boolean",
                 "const": true,
                 "description": "@internal The surface holds its transient toasts while this pane is the one shown, and shows them once it closes."
+              },
+              "background_color": {
+                "type": "string",
+                "description": "@internal What the surface paints under this pane's body while it is the one shown: a theme key, a raw color, or `transparent` for nothing; checked at open, yet parse it, never write it into a style. Absent, the surface's own look stands."
               },
               "rows": {
                 "type": "integer",
@@ -13105,6 +13132,101 @@
       },
       "required": ["filled"],
       "description": "@internal The answer to ui_prompt_fill.",
+      "x-direction": "agent"
+    },
+    "ui_prompt_paintRequest": {
+      "type": "object",
+      "properties": {
+        "subtype": {
+          "type": "string",
+          "const": "ui_prompt_paint"
+        },
+        "surface": {
+          "type": "string",
+          "enum": ["desktop", "mobile", "vscode"],
+          "description": "@internal A surface that draws over the wire: `desktop` (Claude Code Desktop), `mobile` (the Claude mobile app) or `vscode` (Claude Code for VS Code). What the client declared, a rendering fact and not a trust signal."
+        },
+        "client_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._-]{1,64}$",
+          "description": "@internal The asking client's id on the session's roster of attached surfaces: 1 to 64 of letters, digits, `.`, `_`, `-`. Two phones are two ids on one surface; a client that never attaches is the engine's `<surface>:default`, which no wire id can spell."
+        },
+        "layer": {
+          "type": "string",
+          "description": "@internal Whose runs these are: an opaque name, the same for every paint of one plugin. The app keeps one list of runs per layer, apart from the runs a fill or an edit answer paints, and draws those first, then the layers in the order each first painted, a later one winning per style key."
+        },
+        "text": {
+          "type": "string",
+          "maxLength": 1000000,
+          "description": "@internal The draft `decorations` were computed for. The app paints only when its composer reads exactly this, and answers `{painted: false}` otherwise. Omitted, the request clears the layer whatever the composer reads."
+        },
+        "decorations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "start": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991,
+                "description": "@internal Where the run starts, in UTF-16 code units into this frame's `text`."
+              },
+              "end": {
+                "type": "integer",
+                "minimum": -9007199254740991,
+                "maximum": 9007199254740991,
+                "description": "@internal Where the run ends, exclusive: past `start`, at most `text.length`."
+              },
+              "color": {
+                "type": "string",
+                "description": "@internal The text color."
+              },
+              "backgroundColor": {
+                "type": "string",
+                "description": "@internal The color behind the text."
+              },
+              "dimColor": {
+                "type": "boolean",
+                "description": "@internal Drawn dim."
+              },
+              "bold": {
+                "type": "boolean",
+                "description": "@internal Drawn bold."
+              },
+              "italic": {
+                "type": "boolean",
+                "description": "@internal Drawn italic."
+              },
+              "underline": {
+                "type": "boolean",
+                "description": "@internal Underlined."
+              },
+              "strikethrough": {
+                "type": "boolean",
+                "description": "@internal Struck through."
+              }
+            },
+            "required": ["start", "end"],
+            "additionalProperties": false,
+            "description": "@internal One painted run over the text a ui_prompt_fill carries, normalized by the engine: clamped to the text, grapheme-aligned, never empty."
+          },
+          "description": "@internal The layer's runs over `text`, disjoint and ascending by `start`, replacing the ones it had; the app paints them as given. Omitted when there are none, never empty."
+        }
+      },
+      "required": ["subtype", "surface", "client_id", "layer"],
+      "description": "@internal Agent-originated: `prompt.paint` reached its core in a headless session (a plugin's `$.prompt.paint`), or a plugin that painted was unloaded (no `text`). The app sets one layer's runs over its composer and changes nothing else: not the draft, the caret or its undo history. A change of the draft drops every layer. Answers `{painted}`. Sent only to a client whose ui_attach named `ui_prompt_paint`; unanswered within 5 s, or unparsable, resolves `{isPainted: false}`; an error-shaped reply does not settle it. Over a remote session transport it is sent only while the session service states that the owner's account alone writes to the session, an answer is taken only as a client's own write, at the floor the session's policy enforces, in the owner's own session, and a client that gives no answer in 5 s hands the request to the next attached client that named it.",
+      "x-direction": "agent"
+    },
+    "ui_prompt_paintResponse": {
+      "type": "object",
+      "properties": {
+        "painted": {
+          "type": "boolean",
+          "description": "@internal Whether the runs now stand over the draft, or the layer was cleared."
+        }
+      },
+      "required": ["painted"],
+      "description": "@internal The answer to ui_prompt_paint.",
       "x-direction": "agent"
     },
     "ui_prompt_readRequest": {

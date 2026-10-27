@@ -8,7 +8,7 @@ These variables control how Claude Code reaches the network.
 They set the API base URL, proxies, custom certificates, timeouts, and retry counts.
 Use them behind a company proxy or when you route traffic through a gateway.
 
-This page lists 65 variables. `HTTPS_PROXY`, `NO_PROXY`, and `ANTHROPIC_BASE_URL` are the usual ones. Project settings cannot set some endpoint variables before you trust the folder.
+This page lists 68 variables. `HTTPS_PROXY`, `NO_PROXY`, and `ANTHROPIC_BASE_URL` are the usual ones. Project settings cannot set some endpoint variables before you trust the folder.
 
 ## Example
 
@@ -60,6 +60,7 @@ The table is sorted by name. See [Environment Variables](index.md#how-to-read-th
 | `CLAUDE_CODE_GZIP_REQUEST_BODY_LEVEL` | <Undocumented /> <Gated note="Works only behind a feature flag or server gate" /> | Sets the gzip level for request bodies. | A number, `0` by default. Whole number from `0` to `9`, plain digits. Only `1` to `9` act | All API requests |
 | `CLAUDE_CODE_HTTP_PROXY` | <Undocumented /> | Fallback HTTP proxy. Used when `HTTP_PROXY` and `http_proxy` are empty to build the proxy vars of child tools. | Text. Fills `YARN_*`, `npm_config_*`, and `GLOBAL_AGENT_*` proxy vars that are unset | All sessions, child process env |
 | `CLAUDE_CODE_HTTPS_PROXY` | <Undocumented /> | Fallback HTTPS proxy. Used when `HTTPS_PROXY` and `https_proxy` are empty to build the proxy vars of child tools. | Text. Fills `YARN_*`, `npm_config_*`, and `GLOBAL_AGENT_*` proxy vars that are unset | All sessions, child process env |
+| `CLAUDE_CODE_INCREMENTAL_REQUEST_BODY` | <Undocumented /> <Gated note="Works only behind a feature flag or server gate" /> | Builds API request bodies step by step, from the body of an earlier request. Added in `2.1.311`. | A number, `0` by default. Needs the first-party provider and the feature flag `tengu_soft_kurzweil`. A request with `output_format` set is not built this way. A body that fails a check is not used | First-party API requests |
 | `CLAUDE_CODE_MAX_RETRIES` | <Documented /> | Sets how many times a failed API request is retried. | A number. Whole number, `0` or more. Above the cap it is clamped with a warning unless the retry watchdog is on | All sessions |
 | `CLAUDE_CODE_NONSTREAMING_TIMEOUT_RETRIES` | <Documented /> | Limits the re-sends of a non-streaming request that times out. `0` fails on the first timeout. | A number. Whole number min `0`, digits only. Unset uses a built-in count only when the retry watchdog is on | All sessions |
 | `CLAUDE_CODE_OVERLOADED_RETRY_BASE_DELAY_MS` | <Documented /> | Sets the first delay of the exponential backoff for retries of an overloaded API error. | A number of milliseconds. Whole number from `500` to `32000` in plain digits, else unset. Used only on the overloaded branch of the retry loop | All API requests |
@@ -70,6 +71,7 @@ The table is sorted by name. See [Environment Variables](index.md#how-to-read-th
 | `CLAUDE_CODE_RETRY_WATCHDOG_MAX_USAGE_LIMIT_WAIT_MS` | <Undocumented /> | Caps the total ms the retry watchdog waits out usage-limit `429` errors. When the wait is longer than what is left, the request fails. | A number of milliseconds. Integer 1 or more, digits only. Unset means no limit | Sessions with the retry watchdog on |
 | `CLAUDE_CODE_RETRY_WATCHDOG_MAX_WAIT_MS` | <Documented /> | Caps the ms each API request spends waiting out `429` and `529` errors under the watchdog. After that the next error ends the request. | A number of milliseconds. Integer 1 or more, digits only. Unset means no limit | Sessions with `CLAUDE_CODE_RETRY_WATCHDOG`. Docs say v2.1.295 or later |
 | `CLAUDE_CODE_RETRY_WATCHDOG_SCOPE` | <Undocumented /> | Narrows the retry watchdog to capacity errors. New in `2.1.310`. With `capacity`, the watchdog still retries `429` and `529` errors without end, but its other extensions are off: more retries after no response or a non-streaming timeout, keeping background requests on `529`, and the server-error model fallback. | Text. Only `capacity` has an effect | Sessions with `CLAUDE_CODE_RETRY_WATCHDOG` |
+| `CLAUDE_CODE_UNWATCHED_REPLY_HOLD_MS` | <Undocumented /> | Holds the streamed reply of a subagent, an auxiliary, or a compaction request for up to this many ms before it passes the data on. Added in `2.1.311`. | A number of ms, `0` by default (no hold). Applies to content block delta and ping events. Held data goes on at 262144 bytes | Streaming replies of subagent, auxiliary, and compaction requests |
 | `CLAUDE_ENABLE_BYTE_WATCHDOG` | <Documented /> | Forces the byte-level streaming idle watchdog on or off. | On, off, or unset, on by default. Unset uses a feature flag with default true. Direct, AWS, and gateway only | Anthropic API, AWS, gateway |
 | `CLAUDE_ENABLE_BYTE_WATCHDOG_BEDROCK` | <Documented /> | Enables the byte-level streaming idle watchdog for Bedrock event streams. | On or off. Off by default. Needs the main watchdog to be on | Amazon Bedrock |
 | `CLAUDE_ENABLE_STREAM_WATCHDOG` | <Documented /> | Forces the event-level streaming idle watchdog on or off. It also sets the async agent stall time. | On, off, or unset, on by default | All sessions |
@@ -107,4 +109,4 @@ Numeric variables such as timeouts accept forms like `2e3` and `64_000` in addit
 - [System and Third-Party](system-and-third-party.md): `ALL_PROXY` and CA bundle names owned by other tools.
 - [Undocumented Items](../../reference/undocumented.md): every item that only the program shows.
 
-Source: the program (variable names found in the `2.1.310` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
+Source: the program (variable names found in the `2.1.311` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.

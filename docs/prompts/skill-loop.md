@@ -5,7 +5,7 @@ sidebar_position: 74
 generated: false
 ---
 
-This is the verbatim text that Claude Code 2.1.310 uses for the built-in `/loop` skill.
+This is the verbatim text that Claude Code 2.1.311 uses for the built-in `/loop` skill.
 
 ## Where It Comes From
 

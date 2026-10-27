@@ -10,7 +10,7 @@ The events follow a turn from start to end, and they cover the system prompt, th
 
 Return `{ drop }`, `{ deny }`, or `{ text: null }` from the right hook to stop or remove something.
 
-Official pages: [React to Events](https://code.claude.com/docs/en/plugins/mods/events), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the Mod API type file of the 2.1.310 program (`schemas/claude-code.d.ts`).
+Official pages: [React to Events](https://code.claude.com/docs/en/plugins/mods/events), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the Mod API type file of the 2.1.311 program (`schemas/claude-code.d.ts`).
 In a "Where it can be used" cell, "Run time" means in a hook, in a closure that a hook drew, or in a timer callback. It does not mean inside `register`.
 
 ## Example
@@ -30,6 +30,7 @@ on("prompt.submit", async ($, e, next) => next({ ...e, text: e.text.trim() }));
 | `$.prompt.read` | <Documented /> | Returns the prompt box as it stands: the draft typed so far and the cursor offset. | `() => Promise<PromptBox>`. Never rejects. Gives `{ text: '', cursor: 0 }` where no box is drawn, such as a `-p` run. | Run time. |
 | `$.prompt.media` | <Documented /> | Returns one image or document of the prompt being submitted, by the `id` that `e.attachments` lists. Gives its bytes as base64, 4 MiB a call. | `(args: PromptMediaArgs) => Promise<PromptMedia>`. Works only in a `prompt.submit` hook of a mod that managed settings install. Otherwise `{ deny }`. | The `prompt.submit` hook of a mod that managed settings install. |
 | `$.prompt.fill` | <Documented /> | Puts `input.text` in the prompt box as the draft, by `mode`: `replace` (default), `append`, or `insert` at the cursor. An optional `cursor` places the caret afterwards. | `(input: PromptFillArgs) => Promise<PromptFilled>`. Gives `isFilled: false` under a dialog or when headless. | Run time. |
+| `$.prompt.paint` | <Documented /> | Sets this plugin's own decorations over the draft and nothing else: no text, caret, or undo entry, and no `prompt.change` or `prompt.edit`. It is the event `prompt.paint`. | `(input: PromptPaintArgs) => Promise<PromptPainted>`. Hooks may rewrite it or answer `{ deny }`. Gives `isPainted: false` when the draft no longer reads `text`, or another plugin hooks its read. Since `2.1.311`. | Run time. |
 | `$.prompt.suggest` | <Documented /> | Proposes `input.text` as the dim suggestion of the prompt box. Tab takes it. | `(input: PromptSuggestArgs) => Promise<PromptSuggestResult>`. Gives `{ isShown: false }` while the box has text or a turn runs. | Run time. |
 | `$.prompt.compose` | <Documented /> | Returns the sections of the system prompt. It is the event `prompt.compose`, the call the engine makes for every prompt it sends. | `(input?: PromptComposeArgs) => Promise<PromptComposeResult>`. Builds the sections without sending them. Example: `(await $.prompt.compose()).sections.map(s => s.id)`. | Run time. |
 
@@ -39,6 +40,7 @@ on("prompt.submit", async ($, e, next) => next({ ...e, text: e.text.trim() }));
 | --- | --- | --- | --- | --- |
 | `prompt.submit` | <Documented /> | Fires when a prompt is submitted, before the turn starts. `next(e)` runs the hooks beneath and the `UserPromptSubmit` settings hooks, then enters. | Input `PromptSubmitInput`. A hook returns `{ text, context? }` or `{ drop }`, rewrites with `next({ ...e, text })`, or stops the prompt with `{ drop: reason }`. A guard that fails lets the prompt through. | `on('prompt.submit', ...)`. Also `$.prompt.submit(...)`. |
 | `prompt.fill` | <Documented /> | Fires when a text is about to go into the prompt box as the draft. `next(e)` writes it by `e.mode`. | Input `PromptFillInput`. Result `{ isFilled }`. `mode` is `replace`, `append`, or `insert`. Answer `{ isFilled: false }` without `next` to keep the text out. | `on('prompt.fill', ...)`. Also `$.prompt.fill(...)`. |
+| `prompt.paint` | <Documented /> | Fires when a plugin calls `$.prompt.paint`, with the runs it wants painted over the draft. `next(e)` paints them. | Input `PromptPaintArgs`. Result `PromptPainted`. A hook may rewrite the argument or answer `{ deny }`. Since `2.1.311`. | `$.prompt.paint(...)`. |
 | `prompt.suggest` | <Documented /> | Fires when a text is proposed as the dim suggestion: the engine's guess after a turn, or a plugin's `$.prompt.suggest`. | Input `PromptSuggestInput`. Result `{ isShown }`. Rewrite with `next({ ...e, text })`, or answer `{ isShown: false }` to drop it. | `on('prompt.suggest', ...)`. Also `$.prompt.suggest(...)`. |
 | `prompt.edit` | <Documented /> | Fires when the person edits the main prompt box: a key the editor took as an edit, or a paste. `next(e)` resolves the box the editor shows. | Input `PromptEditInput`. Result `{ text, cursor }`. A burst of keys is one edit. Answering without `next` consumes the keys. This hook has a 50 millisecond budget. | `on('prompt.edit', ...)`. |
 | `prompt.change` | <Documented /> | Fires after the text of the main prompt box changed and no `prompt.edit` carried it: a recalled history entry, a clear, a plugin's fill. | Input `PromptChangeInput`. Result `{ text }`. Observe only. One call for each batch of changes. | `on('prompt.change', ...)`. |
@@ -62,6 +64,7 @@ For each call, a hook above the caller returns `next(e)`, `{ deny: reason }`, or
 | --- | --- | --- | --- |
 | `turn.abort` | <Documented /> | `$.turn.abort({ turnId })` | Input `{ turnId: string }`. Value `void`. |
 | `prompt.read` | <Documented /> | `$.prompt.read()` | Input `NoArgs`. Value `PromptBox`. |
+| `prompt.paint` | <Documented /> | `$.prompt.paint(args)` | Input `PromptPaintArgs`. Value `PromptPainted`. Since `2.1.311`. |
 
 ## Related Pages
 

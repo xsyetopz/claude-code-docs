@@ -488,10 +488,6 @@
     "kind": "behaviour",
     "probes": ["print.plugindata.bash-bin"]
   },
-  "docs/reference/tools/index.md#which-built-in-tools-are-deferred:5071153a": {
-    "kind": "behaviour",
-    "probes": ["print.hooks.posttooluse.glob", "print.hooks.posttooluse.grep"]
-  },
   "docs/reference/tools/shell-and-web.md#tools:1fb4f438": {
     "kind": "static",
     "probes": [],
@@ -601,7 +597,7 @@
       "live.usage.envelope"
     ]
   },
-  "docs/how-it-works/context-budget.md#what-an-empty-session-holds:b62adccc": {
+  "docs/how-it-works/context-budget.md#what-an-empty-session-holds:c0ef5ecc": {
     "kind": "behaviour",
     "probes": ["live.context-budget"]
   },
@@ -770,7 +766,7 @@
     "kind": "behaviour",
     "probes": ["live.context-budget"]
   },
-  "docs/reference/probes.md#live-login-probes:f3c21843": {
+  "docs/reference/probes.md#live-login-probes:9c1ad15e": {
     "kind": "behaviour",
     "probes": ["live.oauth-parity", "live.artifacts"]
   },
@@ -778,7 +774,7 @@
     "kind": "behaviour",
     "probes": ["live.oauth-parity"]
   },
-  "docs/reference/probes.md#live-login-probes:e686f459": {
+  "docs/reference/probes.md#live-login-probes:8e3a95a1": {
     "kind": "behaviour",
     "probes": ["live.artifacts"]
   },
@@ -940,6 +936,11 @@
     "kind": "behaviour",
     "probes": ["live.oauth-parity"]
   },
+  "docs/reference/transcript-format.md#line-types:09cfbabe": {
+    "kind": "schema",
+    "probes": [],
+    "note": "cost-state.modelUsage keys in schemas/claude-code-transcript.json"
+  },
   "docs/reference/transcript-format.md#line-types:f817762b": {
     "kind": "behaviour",
     "probes": ["print.transcripts.lines"]
@@ -954,11 +955,6 @@
     "note": "release history: when it started; recheck only if the feature is removed"
   },
   "docs/extend/headless/control-protocol.md#subtypes:94afba44": {
-    "kind": "static",
-    "probes": [],
-    "note": "release history: when it started; recheck only if the feature is removed"
-  },
-  "docs/extend/headless/control-protocol.md#subtypes:d5c7977f": {
     "kind": "static",
     "probes": [],
     "note": "release history: when it started; recheck only if the feature is removed"
@@ -1194,5 +1190,184 @@
   "docs/how-it-works/context-budget.md#what-else-changes-the-budget:251dc99e": {
     "kind": "behaviour",
     "probes": ["print.dsc.sizes"]
+  },
+  "docs/reference/tools/index.md#which-built-in-tools-are-deferred:5ab932bd": {
+    "kind": "behaviour",
+    "probes": ["print.hooks.posttooluse.glob", "print.hooks.posttooluse.grep"]
+  },
+  "docs/configure/cli/subcommands.md#commands:0c368a3a": {
+    "kind": "manual",
+    "probes": [],
+    "note": "purge plan text read in the program (2.1.311 chunk-p3tkb5qf.js:1432)"
+  },
+  "docs/configure/cli/subcommands.md#commands:e1a44892": {
+    "kind": "flag",
+    "probes": [],
+    "note": "runner flags --hold-idle-file and --max-hold-min, also in the release notes"
+  },
+  "docs/configure/cli/subcommands.md#self-hosted-runner-hold-flags:92ec7417": {
+    "kind": "flag",
+    "probes": [],
+    "note": "runner flags --hold-idle-file and --max-hold-min, help text read in the program (2.1.311 chunk-n23je8vg.js:11266)"
+  },
+  "docs/configure/models-and-providers.md#aliases:283669f9": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour (also in the release notes); [1m] label read in the program (2.1.311 chunk-r1ht672j.js:23699)"
+  },
+  "docs/configure/models-and-providers.md#catalog:47681d08": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour (also in the release notes); the signed catalog needs a cloud provider login"
+  },
+  "docs/configure/models-and-providers.md#effort:856cbc71": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour (also in the release notes); ultrathink needs the interactive terminal and the Anthropic API"
+  },
+  "docs/how-it-works/context-and-compaction.md#kinds-of-compaction:de126544": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour (also in the release notes); needs a server that refuses with the 1M context error"
+  },
+  "docs/how-it-works/context-and-compaction.md#kinds-of-compaction:9cd5a162": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour (also in the release notes); needs a compaction reply with no summary"
+  },
+  "docs/how-it-works/models.md#retries-and-timeouts:6772245d": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour (also in the release notes); needs a server that sends x-should-retry: false"
+  },
+  "docs/how-it-works/models.md#retries-and-timeouts:83d5f489": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour (also in the release notes); needs a server that refuses with the 1M context error"
+  },
+  "docs/how-it-works/permission-flow.md#step-by-step:16acecf5": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour (also in the release notes); seenSecurityWarnings read in the program (2.1.311 chunk-ytgxgfq5.js:1174)"
+  },
+  "docs/reference/tools/shell-and-web.md#how-it-works:cd9ccd01": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour (also in the release notes); needs a Bash command that reaches its timeout"
+  },
+  "docs/reference/tools/shell-and-web.md#how-it-works:e752c532": {
+    "kind": "schema",
+    "probes": [],
+    "note": "subagentCapApplied in schemas/claude-code-tools.json"
+  },
+  "docs/reference/tools/agents-and-tasks.md#result-fields-new-in-21311:c23fd723": {
+    "kind": "schema",
+    "probes": [],
+    "note": "toolsUsed in schemas/claude-code-tools.json"
+  },
+  "docs/reference/tools/agents-and-tasks.md#result-fields-new-in-21311:1b7e480d": {
+    "kind": "schema",
+    "probes": [],
+    "note": "toolsUsedLine in schemas/claude-code-tools.json"
+  },
+  "docs/reference/tools/gated-and-other.md#result-fields-new-in-21311:c23fd723": {
+    "kind": "schema",
+    "probes": [],
+    "note": "toolsUsed in schemas/claude-code-tools.json"
+  },
+  "docs/extend/headless/stream-json.md#undocumented-types:09776c4d": {
+    "kind": "schema",
+    "probes": [],
+    "note": "turn_handoff_available requires_rewind_request_id in schemas/claude-code-stream-json.json"
+  },
+  "docs/extend/headless/stream-json.md#undocumented-types:abcd80f3": {
+    "kind": "schema",
+    "probes": [],
+    "note": "inherited_asks_settled in schemas/claude-code-stream-json.json"
+  },
+  "docs/extend/headless/stream-json.md#fields-new-in-21311:c6722b21": {
+    "kind": "schema",
+    "probes": [],
+    "note": "fields new in 2.1.311 in schemas/claude-code-stream-json.json"
+  },
+  "docs/extend/mod-api/hooks.md#arguments-of-a-hook:cce16fea": {
+    "kind": "schema",
+    "probes": [],
+    "note": "next.to TargetTier in schemas/claude-code.d.ts"
+  },
+  "docs/extend/mod-api/turn-prompt.md#members:9d1a8578": {
+    "kind": "schema",
+    "probes": [],
+    "note": "$.prompt.paint in schemas/claude-code.d.ts"
+  },
+  "docs/extend/mod-api/turn-prompt.md#engine-events:8e3bd065": {
+    "kind": "schema",
+    "probes": [],
+    "note": "prompt.paint event in schemas/claude-code.d.ts"
+  },
+  "docs/extend/mod-api/turn-prompt.md#events-raised-by-these-calls:7b66be14": {
+    "kind": "schema",
+    "probes": [],
+    "note": "prompt.paint event in schemas/claude-code.d.ts"
+  },
+  "docs/extend/mod-api/types/hooks.md#types-without-fields:fcb37e54": {
+    "kind": "schema",
+    "probes": [],
+    "note": "TargetTier in schemas/claude-code.d.ts"
+  },
+  "docs/extend/mod-api/types/turn-prompt.md#promptpaintargs:1efe1de5": {
+    "kind": "schema",
+    "probes": [],
+    "note": "PromptPaintArgs in schemas/claude-code.d.ts"
+  },
+  "docs/extend/mod-api/types/turn-prompt.md#promptpainted:1efe1de5": {
+    "kind": "schema",
+    "probes": [],
+    "note": "PromptPainted in schemas/claude-code.d.ts"
+  },
+  "docs/extend/mod-api/types/ui.md#paneopenargs:8dcf3aaa": {
+    "kind": "schema",
+    "probes": [],
+    "note": "PaneOpenArgs backgroundColor in schemas/claude-code.d.ts"
+  },
+  "docs/extend/headless/control-protocol.md#subtypes:9de15a9d": {
+    "kind": "schema",
+    "probes": [],
+    "note": "control request fields in schemas/claude-code-control-protocol.json"
+  },
+  "docs/extend/headless/control-protocol.md#subtypes:77d7c5a1": {
+    "kind": "schema",
+    "probes": [],
+    "note": "control request fields in schemas/claude-code-control-protocol.json"
+  },
+  "docs/extend/headless/control-protocol.md#subtypes:381691c8": {
+    "kind": "schema",
+    "probes": [],
+    "note": "control request fields in schemas/claude-code-control-protocol.json"
+  },
+  "docs/extend/headless/control-protocol.md#subtypes:e9c487dd": {
+    "kind": "schema",
+    "probes": [],
+    "note": "control request fields in schemas/claude-code-control-protocol.json"
+  },
+  "docs/extend/headless/control-protocol.md#subtypes:702c1123": {
+    "kind": "schema",
+    "probes": [],
+    "note": "control request fields in schemas/claude-code-control-protocol.json"
+  },
+  "docs/extend/headless/control-protocol.md#subtypes:43c9bb5e": {
+    "kind": "schema",
+    "probes": [],
+    "note": "control request fields in schemas/claude-code-control-protocol.json"
+  },
+  "docs/extend/headless/control-protocol.md#subtypes:cf624cd6": {
+    "kind": "schema",
+    "probes": [],
+    "note": "control request fields in schemas/claude-code-control-protocol.json"
+  },
+  "docs/extend/headless/control-protocol.md#subtypes:d0382cbf": {
+    "kind": "schema",
+    "probes": [],
+    "note": "control request fields in schemas/claude-code-control-protocol.json"
   }
 }

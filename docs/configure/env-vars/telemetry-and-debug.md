@@ -8,7 +8,7 @@ These variables control what Claude Code reports and how much it logs.
 They turn telemetry on or off, configure OpenTelemetry (OTEL) exporters, and set debug output.
 Use them to opt out of reporting or to send metrics to your own collector.
 
-This page lists 139 variables. `DISABLE_TELEMETRY` opts out when it has any non-empty value, even `0` or `false`. Unset it to turn telemetry back on. `DO_NOT_TRACK=1` has the same effect. Set these in your shell or managed settings. OTEL exporter variables in project or local settings do not apply, apart from a few off values.
+This page lists 141 variables. `DISABLE_TELEMETRY` opts out when it has any non-empty value, even `0` or `false`. Unset it to turn telemetry back on. `DO_NOT_TRACK=1` has the same effect. Set these in your shell or managed settings. OTEL exporter variables in project or local settings do not apply, apart from a few off values.
 
 ## Example
 
@@ -33,6 +33,7 @@ The table is sorted by name. See [Environment Variables](index.md#how-to-read-th
 | `CCR_SPAWN_TIMESTAMP_MS` | <Undocumented /> <Gated note="Works only behind a feature flag or server gate" /> | Gives the spawn time in ms. Claude Code uses it to measure time from spawn to exec, first message read, and input ready. | A number of milliseconds. Integer parsed with `parseInt`, else ignored. Set by the self-hosted runner | Cloud remote and self-hosted runner sessions |
 | `CLAUDE_CODE_ACCOUNT_TAGGED_ID` | <Undocumented /> | Overrides the `user.account_id` metric attribute. | Text. Used only when `OTEL_METRICS_INCLUDE_ACCOUNT_UUID` is on and an account UUID exists. Else Claude Code derives a tagged id | OTEL metrics. Not set from project `env` before trust |
 | `CLAUDE_CODE_ACTION` | <Undocumented /> | Marks a run as launched by the Claude Code GitHub Action. Claude Code reports the flag in environment metadata. | On or off | GitHub Action runs. Not set from project `env` before trust |
+| `CLAUDE_CODE_AGENTS_MD_ROWS_EVERY_PROCESS` | <Undocumented /> | Makes every non-interactive process send the `AGENTS.md` usage rows. Without it a stored `usage-rows-queued` note for the session keeps them from going out twice. Added in `2.1.311`. | On or off, off by default. An interactive session always sends them. Read by the module that loads `AGENTS.md` files when a project has no `CLAUDE.md` | Non-interactive sessions |
 | `CLAUDE_CODE_BENCH_LIVE_COUNTS` | <Undocumented /> | Turns on live counts in the terminal renderer. No visible effect in a print-mode probe ([Probes](../../reference/probes.md)). | On or off. Sets `liveCountsEnabled` on the renderer | Interactive UI |
 | `CLAUDE_CODE_BYOC_ENABLE_DATADOG` | <Documented /> | Opts a BYOC environment in to a Datadog-related path. The BYOC runner passes it to the session. No visible effect in a print-mode probe ([Probes](../../reference/probes.md)). | On or off. A helper returns true when `CLAUDE_CODE_ENVIRONMENT_KIND` is `byoc` and this is unset | BYOC remote sessions |
 | `CLAUDE_CODE_CLASSIFIER_SUMMARY` | <Undocumented /> <Gated note="Works only behind a feature flag or server gate" /> | Picks `llm` or `heuristic` summaries for the session classifier. | On or off. Else a feature flag decides. A feature flag can force `heuristic` | All sessions, gated by a feature flag |
@@ -41,6 +42,7 @@ The table is sorted by name. See [Environment Variables](index.md#how-to-read-th
 | `CLAUDE_CODE_DEBUG_LOG_LEVEL` | <Documented /> | Sets the minimum level written to the debug log. | Text, `debug` by default. Valid levels only, default `debug` | All sessions |
 | `CLAUDE_CODE_DEBUG_LOGS_DIR` | <Documented /> | Sets the path of the debug log file. Despite the name it is a file path. One code branch adds `<session-id>.txt` to a learned directory. | Text. Default `~/.claude/debug/<session-id>.txt`. Debug mode must be on | All sessions |
 | `CLAUDE_CODE_DIAGNOSTICS_FILE` | <Undocumented /> | Sets a file that receives diagnostics events as JSON lines with a timestamp, level, event and data. Also enables extra diagnostics code. | Text. Other code tests only if it is set | All sessions, also forwarded to child processes |
+| `CLAUDE_CODE_DISABLE_OTEL_EVENT_SKIP` | <Undocumented /> | Turns off a shortcut that ends an event log call early. The shortcut applies when the program has already warned that no event logger is set up, and the session is idle and unwatched. Added in `2.1.311`. | On or off, off by default | All sessions |
 | `CLAUDE_CODE_DISABLE_VITALS_EMITTER` | <Undocumented /> | Kill switch for the guest vitals emitter helper. It is also off in essential-traffic-only mode. | On or off, off by default. The log says guest vitals are disabled | Guest and container sessions |
 | `CLAUDE_CODE_EMIT_STARTUP_TIMING` | <Undocumented /> | Turns on collection and reporting of startup timing phases, as `CLAUDE_CODE_REMOTE` does. | On or off, off by default. Reported fields include the `entrypoint` value | All sessions |
 | `CLAUDE_CODE_ENABLE_FEEDBACK_SURVEY_FOR_OTEL` | <Documented /> | Routes the session quality survey to your own OTEL collector when Anthropic-bound traffic is blocked. | On or off, off by default. When on, the survey gate no longer follows the nonessential-traffic check | All sessions. Project `env` can set it before trust |
@@ -192,4 +194,4 @@ It lists every field of this release, so build on the fields it names and look e
 - [Monitoring](https://code.claude.com/docs/en/monitoring-usage) (see the official docs)
 - [Undocumented Items](../../reference/undocumented.md): every item that only the program shows.
 
-Source: the program (variable names found in the `2.1.310` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
+Source: the program (variable names found in the `2.1.311` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.

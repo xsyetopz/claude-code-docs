@@ -96,7 +96,7 @@ The key lists come from transcripts that 2.1.305 wrote on a real machine and in 
 | `ai-title` | `aiTitle` | The title that the model made for the session. |
 | `mode` | `mode` | The mode of the session. Seen value: `normal`. |
 | `permission-mode` | `permissionMode` | The permission mode. Seen value: `auto`. |
-| `cost-state` | `totalCostUSD`, `totalAPIDuration`, `totalAPIDurationWithoutRetries`, `totalToolDuration`, `totalDuration`, `totalLinesAdded`, `totalLinesRemoved`, `modelUsage`, `hasUnknownModelCost`, `startTime` | Totals for cost and time. |
+| `cost-state` | `totalCostUSD`, `totalAPIDuration`, `totalAPIDurationWithoutRetries`, `totalToolDuration`, `totalDuration`, `totalLinesAdded`, `totalLinesRemoved`, `modelUsage`, `hasUnknownModelCost`, `startTime` | Totals for cost and time. Since `2.1.311`, each `modelUsage` entry also has `cacheCreationEphemeral5mInputTokens` and `cacheCreationEphemeral1hInputTokens` (see [Stream JSON Messages](../extend/headless/stream-json.md#fields-new-in-21311)). |
 | `atis-latch` | `atis` | The `atis` value of the session's feature-flag client, kept once per conversation so it stays the same, and sent as the `x-cc-atis` header. Empty without a flag value (it was empty in our stub run). |
 
 Lines of types `file-history-snapshot`, `file-history-delta`, `last-prompt`, `ai-title`, `mode`, `permission-mode`, `cost-state`, `atis-latch`, and `queue-operation` carry `sessionId` but not the chain fields.
@@ -115,7 +115,7 @@ These names are in the program next to the writer. The meanings come from the wr
 | `pr-link` | `prNumber`, `prUrl`, `prRepository`, `timestamp` | Ties the session to a pull request. |
 | `bridge-session` | `bridgeSessionId`, `lastSequenceNum`, `sessionGroupingId`, owner ids | The Remote Control link. |
 | `content-replacement` | `replacements`, `agentId` | Records which large tool results were replaced by a short stand-in, so a resume uses the same stand-ins. |
-| `attribution-snapshot` | `messageId` | A snapshot of file-contribution data for commits. On load the program keeps only the last one and trims a large one. In `2.1.310` the program exports its writer function and no code calls it, so only older sessions hold these lines (the program). |
+| `attribution-snapshot` | `messageId` | A snapshot of file-contribution data for commits. On load the program keeps only the last one and trims a large one. In `2.1.311` the program exports its writer function and no code calls it, so only older sessions hold these lines (the program). |
 | `fork-context-ref` | `agentId`, `parentSessionId`, `parentLastUuid`, `contextLength` | A forked agent's pointer to its parent. The fork reads the parent's lines and does not copy them. |
 | `observer-ref` | `observerTaskId`, `observerAgentType`, `agentId`, `timestamp` | An observer agent's pointer. |
 | `progress` | `toolUseID`, `parentToolUseID`, `data` | Progress of a running tool, hook, skill, or agent. `data.type` is `hook_progress`, `tool_heartbeat`, `bash_progress`, `powershell_progress`, `agent_progress`, `agent_api_retry`, `skill_progress`, `search_results_received`, `query_update`, `workflow_log`, `workflow_phase`, `workflow_agent`, or `artifact_publish_retry`. |
@@ -127,7 +127,7 @@ These names are in the program next to the writer. The meanings come from the wr
 | `line-withheld` | `bytes` | Not a stored type. A line that could not be read or was too large is swapped for `{"type":"line-withheld","bytes":N}` when a transcript is uploaded. |
 | `artifact-autoreact-ledger` | `artifacts`, `accountUuid`, `v` | Bookkeeping for automatic replies to artifact comments. |
 | `relocated` | `relocatedCwd` | The working folder was moved. |
-| `summary` | `leafUuid`, `summary` | A summary line. The program reads these lines on load, and no code in `2.1.310` writes them, so only older sessions hold them. |
+| `summary` | `leafUuid`, `summary` | A summary line. The program reads these lines on load, and no code in `2.1.311` writes them, so only older sessions hold them. |
 | `continued-in` | `continuedInSessionId` | Points to the session that continued this one. |
 | `history-suppression`, `artifact-comment-monitor` | | Also in the program's table. No further meaning was read. |
 

@@ -1,6 +1,6 @@
 ---
 title: Subcommands
-description: Every claude subcommand in 2.1.310, including background sessions, auth, plugins, and the hidden commands.
+description: Every claude subcommand in 2.1.311, including background sessions, auth, plugins, and the hidden commands.
 sidebar_position: 3
 ---
 
@@ -21,7 +21,7 @@ claude stop <id>                        # stop it, keep the conversation
 
 ## Commands
 
-Source: the text of `claude <command> --help` in `2.1.310`.
+Source: the text of `claude <command> --help` in `2.1.311`.
 
 | Command | Status | What it does |
 | --- | --- | --- |
@@ -43,10 +43,10 @@ Source: the text of `claude <command> --help` in `2.1.310`.
 | `claude mcp ...` | <Documented /> | Manages MCP servers (see [MCP](../../extend/mcp/cli.md)). |
 | `claude plugin ...` (alias `plugins`) | <Documented /> | Manages plugins (see [Plugins](../../extend/plugins/cli.md)). |
 | `claude plugin test [dir]` | <Documented /> | Runs the tests of a mod. |
-| `claude purge [path]` | <Documented /> <Caution note="Deletes the state of a project" /> | Deletes the state of a project, with `--all`, `--dry-run`, `-i/--interactive` (asks before each item), and `-y/--yes`. |
+| `claude purge [path]` | <Documented /> <Caution note="Deletes the state of a project" /> | Deletes the state of a project, with `--all`, `--dry-run`, `-i/--interactive` (asks before each item), and `-y/--yes`. Since `2.1.311`, the purge plan ends with "Purging deletes data only on this computer, not anything stored by Anthropic" (`chunk-p3tkb5qf.js:1432`). |
 | `claude remote-control` (alias `rc`) | <Documented /> | Lets you control local sessions from `claude.ai` or the mobile app. |
 | `claude ultrareview [target]` | <Documented /> | Starts a cloud review with many agents, with `--json`, `--post`, `--no-post` (the default), `--timeout`, and `--trust-workspace`. Since `2.1.309` it needs a trusted folder. It asks on a terminal. Without a terminal it may refuse, so scripts pass `--trust-workspace` after the target, or set `CLAUDE_CODE_DISABLE_ULTRAREVIEW_TRUST_CHECK=1`. |
-| `claude self-hosted-runner` | <Documented /> | Runs cloud sessions on your machine, and the root help does not list it. |
+| `claude self-hosted-runner` | <Documented /> | Runs cloud sessions on your machine, and the root help does not list it. Since `2.1.311` it takes `--hold-idle-file <path>` and `--max-hold-min <n>` (see below). |
 | `claude sandbox` | <Undocumented /> | A hidden command with three subcommands for the Windows sandbox: `install` adds the sandbox user and network filters and asks for elevation once, `status` prints the sandbox state and the Windows install state as one JSON line, and `uninstall` removes them and lists what stays behind, with `--json`. |
 | `claude edit-hook`, `edit-permission-rules`, `edit-memory-settings`, `edit-skill-overrides`, `edit-sandbox-settings`, `edit-chrome-settings`, `drop-worktree-registrations`, `design-login` | <Undocumented /> | Hidden commands that read one JSON edit from stdin with `--json`, and their text says they serve the VS Code extension. `design-login --status` reports whether design-system access is authorized and exits. |
 | `claude apply-project-settings` | <Undocumented /> | A hidden command that shows how your user and project settings differ from what you accepted for cloud sessions on this computer, and lets you accept them. It needs a terminal. |
@@ -57,6 +57,23 @@ Source: the text of `claude <command> --help` in `2.1.310`.
 The `edit-*` commands, `drop-worktree-registrations`, and `design-login` read one JSON edit from stdin.
 Their own text says they serve the VS Code extension. Do not build scripts on them.
 :::
+
+### `self-hosted-runner` Hold Flags
+
+Since `2.1.311`, the runner can keep an idle session while your host reports processes that the session left running, such as `nohup` or `tmux`.
+Source: the program (`chunk-n23je8vg.js:11266`, the help text, and `chunk-n23je8vg.js:10769`, the flag parser).
+
+| Flag | Status | What it does | Default |
+| --- | --- | --- | --- |
+| `--hold-idle-file <path>` | <Undocumented /> | Does not release an idle session (see `--release-idle-session-min`) while `<path>` is a regular file that changed in the last 180 seconds. Your host keeps the file fresh while the left-over process lives. The runner looks again every 30 seconds. The hold does not apply at startup, at `--retire-at`, at the `--defer-shutdown-max-min` ceiling, or at `--kill-session-after-min`. The variable is `SELF_HOSTED_RUNNER_HOLD_IDLE_FILE`. | Off |
+| `--max-hold-min <n>` | <Undocumented /> | With `--hold-idle-file`: releases the session anyway `n` minutes after it went idle. `0` turns the hold off. The maximum is 10080. The variable is `SELF_HOSTED_RUNNER_MAX_HOLD_MS`, in milliseconds. | 1440 minutes |
+
+The runner refuses these values, with these messages:
+
+- `--hold-idle-file requires a file path (a file your host keeps fresh while the session has processes left running)` when the path is missing, empty, or starts with `--` (`chunk-n23je8vg.js:10769`).
+- `--max-hold-min must be a non-negative number of minutes (0 disables, max 10080)` when the value is not a number in range (`chunk-n23je8vg.js:10779`).
+- `the path, or a link on the way to it, leads to a network location; point --hold-idle-file at a local file` when the path is on a network location (`chunk-n23je8vg.js:10360`).
+- `the path could not be checked for links to a network location: a folder or link on the way could not be read` when a folder on the way cannot be read (`chunk-n23je8vg.js:10356`).
 
 ## Errors
 

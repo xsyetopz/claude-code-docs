@@ -5,7 +5,7 @@ sidebar_position: 64
 generated: false
 ---
 
-This is the verbatim text that Claude Code 2.1.310 uses for subagents that a workflow orchestration script starts.
+This is the verbatim text that Claude Code 2.1.311 uses for subagents that a workflow orchestration script starts.
 
 ## Where It Comes From
 

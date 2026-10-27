@@ -5,7 +5,7 @@ sidebar_position: 87
 generated: false
 ---
 
-This is the verbatim text that Claude Code 2.1.310 uses for experimental observer agents.
+This is the verbatim text that Claude Code 2.1.311 uses for experimental observer agents.
 
 ## Where It Comes From
 

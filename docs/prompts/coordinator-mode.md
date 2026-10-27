@@ -5,7 +5,7 @@ sidebar_position: 83
 generated: false
 ---
 
-This is the verbatim text that Claude Code 2.1.310 uses for coordinator mode.
+This is the verbatim text that Claude Code 2.1.311 uses for coordinator mode.
 
 ## Where It Comes From
 

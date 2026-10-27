@@ -8,7 +8,7 @@ These variables flip one feature each.
 Some turn off a feature that is on by default. Others force on a feature that a server flag controls.
 A row with the Gated badge only works when a feature flag or server gate allows it, unless the variable overrides the gate.
 
-This page lists 66 variables. Most take `1` to turn on and `0` to turn off.
+This page lists 68 variables. Most take `1` to turn on and `0` to turn off.
 
 ## Example
 
@@ -106,4 +106,4 @@ Turning telemetry off also stops flag fetching, which turns off the features tha
 - [Telemetry and Debug](telemetry-and-debug.md)
 - [Undocumented Items](../../reference/undocumented.md): every item that only the program shows.
 
-Source: the program (variable names found in the `2.1.310` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
+Source: the program (variable names found in the `2.1.311` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.

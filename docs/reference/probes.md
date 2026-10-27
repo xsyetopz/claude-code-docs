@@ -174,12 +174,12 @@ These runs used a live subscription login on `2.1.305`, not the stub, with a fre
 
 ## Live Login Probes
 
-These runs used a live subscription login (`CLAUDE_CODE_OAUTH_TOKEN`) on `2.1.306`, and again on `2.1.307`, `2.1.308`, `2.1.309`, and `2.1.310` with the same results, with a fresh config folder and an empty project. The request runs went through a local proxy that kept only the paths and the `anthropic-beta` header.
+These runs used a live subscription login (`CLAUDE_CODE_OAUTH_TOKEN`) on `2.1.306`, and again on `2.1.307`, `2.1.308`, `2.1.309`, `2.1.310`, and `2.1.311` with the same results, with a fresh config folder and an empty project. The request runs went through a local proxy that kept only the paths and the `anthropic-beta` header.
 
 | What We Ran | Status | What We Saw |
 | --- | --- | --- |
 | `claude -p "Reply with 'OK'."` with the login, compared with the same run using a fake API key against the stub | <Undocumented /> | The main request (the first one with tools) had the same 11 body keys (`context_management`, `diagnostics`, `max_tokens`, `messages`, `metadata`, `model`, `output_config`, `stream`, `system`, `thinking`, `tools`), the same tool names, and 4 system blocks on both sides. On `2.1.307` the system text was also the same once model names, temp paths, and the per-run billing hash were masked. The login sent 15 betas and the key sent 13. Only the login sent `oauth-2025-04-20` and `extended-cache-ttl-2025-04-11`. The default model was `claude-sonnet-5-5` with the login and `claude-opus-5-5` with the key. The login run also called `GET /api/claude_code/policy_limits` (`200`) and `GET /api/claude_code/settings` (`404`). The cache was warm, so no token counts are quoted. See [Betas](api/betas.md#observed-request). |
-| `/artifacts` typed in the interactive screen with the login, then Esc | <Undocumented /> | The screen showed `Unknown command: /artifacts` and no panel opened. This differs from the `2.1.305` run, where the panel opened with the same kind of login. `2.1.307`, `2.1.308`, `2.1.309`, and `2.1.310` showed the same. The cause is not known. See [Version 2.1.306](../start/release-archive.md#version-21306). |
+| `/artifacts` typed in the interactive screen with the login, then Esc | <Undocumented /> | The screen showed `Unknown command: /artifacts` and no panel opened. This differs from the `2.1.305` run, where the panel opened with the same kind of login. `2.1.307`, `2.1.308`, `2.1.309`, `2.1.310`, and `2.1.311` showed the same. The cause is not known. See [Version 2.1.306](../start/release-archive.md#version-21306). |
 
 ## Static and Print Probes
 

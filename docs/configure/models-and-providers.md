@@ -63,9 +63,10 @@ The catalog holds `opus`, `sonnet`, `haiku`, and `fable`. The help text of `--mo
 | `fable` | <Documented /> | `claude-fable-5-1` | Gateways use `claude-fable-5`. In Claude apps gateway sessions, `fable` and `best` resolve to Fable 5. |
 | `best` | <Documented /> | The model `fable` resolves to, where you have Fable. Otherwise the same as `opus`. | |
 | `opusplan` | <Documented /> | `opus` in plan mode, then `sonnet` to run the plan. | |
-| `sonnet[1m]`, `opus[1m]`, `fable[1m]` | <Documented /> | The alias with a 1M window. | No effect when the alias already has a native 1M window. |
+| `sonnet[1m]`, `opus[1m]`, `fable[1m]` | <Documented /> | The alias with a 1M window. | No effect when the alias already has a native 1M window. Since `2.1.311`, Claude Code drops the suffix from the names and IDs it shows, and the `(1M context)` label, where the suffix has no effect. It still accepts the suffix. |
 
 Sources: [Model Configuration](https://code.claude.com/docs/en/model-config) for the aliases, and the program for the exceptions.
+The `[1m]` change is in the [Claude Code changelog](https://code.claude.com/docs/en/changelog). In the program, `chunk-r1ht672j.js:23699` removes the tag when the name without it has a known window on its own, and `chunk-r1ht672j.js:24801` and `:25045` add the `(1M context)` label only when the tag is left and the model allows the suffix.
 Opus 5.5 needs Claude Code v2.1.280 or later, Sonnet 5.5 needs v2.1.284, Haiku 5.5 needs v2.1.293, and Fable 5.1 needs v2.1.257.
 
 ### Pin the Models Behind an Alias
@@ -89,6 +90,7 @@ A native 1M model runs with 1M with no suffix when the pinned ID contains its An
 
 The catalog is a JavaScript object in the program with the comment `Hand-maintained baked-in model catalog`.
 It holds the provider names, the window, the output limits, the price, the default effort, and the capability flags of each model.
+Since `2.1.311`, on Bedrock, Mantle, Vertex, and Foundry, Claude Code can also load model settings from a signed file. `CLAUDE_CODE_MODEL_CATALOG` turns this off (see [Models and Effort](env-vars/models-and-effort.md)).
 A row is <Documented /> when an official docs page names the model. It is <Undocumented /> when no page names it.
 The docs do not list the catalog fields, so the window, the limits, and the prices are program facts for all rows.
 
@@ -176,8 +178,13 @@ It comes from the catalog (<Undocumented />). `claude-opus-4-7` has the default 
 | `effortLevel`, `maxEffortLevel`, `modelSettings` | <Documented /> | Settings for the default level and a cap. |
 | `output_config.effort` | <Documented /> | The request field that carries the level. Since `2.1.310`, when the server refuses it, the request goes again without it, and it stays off for that model until the process ends (the program). |
 | `per-turn-control-2026-07-01` | <Undocumented /> | A beta that lets some models take the effort with each message. |
-| `ultrathink` | <Documented /> | A word in a prompt that asks for deeper thinking on that turn only. |
+| `ultrathink` | <Documented /> | A word in a prompt that asks for deeper thinking on that turn only. Since `2.1.311`, in the interactive terminal on the Anthropic API, it runs the turn at `xhigh` effort on Opus 5.5, Sonnet 5.5, Haiku 5.5, and Fable 5.1. Typed while Claude is working, it raises the rest of that turn. The rainbow on the word shows only where it can raise effort (see the note below). |
 | Default effort | <Documented /> | `high`, except `medium` for Opus 5.5, Sonnet 5.5, and Haiku 5.5, and `xhigh` for Opus 4.7. |
+
+Source for `ultrathink`: the [Claude Code changelog](https://code.claude.com/docs/en/changelog) and the program.
+These four models are the ones whose catalog entry has the capability `per_turn_effort` (`chunk-dmakgjeg.js:207`, `:423`, `:712`, `:805`).
+At submit, `chunk-8qajn51r.js:4138` sets the turn effort to `xhigh`, and a prompt typed during a turn gets the same level (`chunk-qw7sm5zw.js:3626`).
+The gate that decides whether a model can take the boost is `chunk-r1ht672j.js:18693`, and the prompt colors the word only when it passes (`chunk-xnjmsx7r.js:54917`).
 
 | `id` | Default effort | Index (`low`, `medium`, `high`, `xhigh`, `max`) |
 | --- | --- | --- |
@@ -216,7 +223,7 @@ Sources: [Model Configuration](https://code.claude.com/docs/en/model-config) and
 | `--fallback-model <model...>`, `fallbackModel` | <Documented /> | A chain of up to three models for overload and server errors. |
 | `CLAUDE_CODE_NO_MODEL_FALLBACK` | <Undocumented /> | Forbids the substitution of a model. |
 | `CLAUDE_CODE_MAX_RETRIES` | <Documented /> | Number of retries. Default 10, up to 15. |
-| `CLAUDE_CODE_RETRY_WATCHDOG` | <Documented /> | Retries `429` and `529` errors without end and removes the cap. Off by default. Since `2.1.310`, `CLAUDE_CODE_RETRY_WATCHDOG_SCOPE=capacity` keeps only that part. |
+| `CLAUDE_CODE_RETRY_WATCHDOG` | <Documented /> | Retries `429` and `529` errors without end and removes the cap. Off by default. Since `2.1.310`, `CLAUDE_CODE_RETRY_WATCHDOG_SCOPE=capacity` keeps only that part. Since `2.1.311`, it no longer retries a `429` or `529` that the API marked not to retry with the header `x-should-retry: false` (`chunk-2ht8z368.js:131464`). This holds in watchdog mode too. A rate-limit header with the value `fetch_error` still allows a retry. |
 | `CLAUDE_CODE_OVERLOADED_RETRY_BASE_DELAY_MS`, `CLAUDE_CODE_OVERLOADED_RETRY_MAX_DELAY_MS` | <Documented /> | Start and longest wait after a `529`. Defaults 500 and 32000. |
 | `API_TIMEOUT_MS` | <Documented /> | Request timeout. Default 600000. |
 | `CLAUDE_STREAM_IDLE_TIMEOUT_MS`, `CLAUDE_STREAM_FIRST_BYTE_TIMEOUT_MS` | <Documented /> | Stream silence and first-byte deadlines. The program sets the defaults. A value below 5 minutes for `CLAUDE_STREAM_IDLE_TIMEOUT_MS` counts as 5 minutes. |

@@ -5,7 +5,7 @@ sidebar_position: 84
 generated: false
 ---
 
-This is the verbatim text that Claude Code 2.1.310 uses for a worker agent that the coordinator starts.
+This is the verbatim text that Claude Code 2.1.311 uses for a worker agent that the coordinator starts.
 
 ## Where It Comes From
 

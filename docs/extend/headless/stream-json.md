@@ -12,7 +12,7 @@ Flags add more lines: `--include-partial-messages`, `--include-hook-events`, `--
 
 ## Message Types
 
-The tables list the message types that the bundled schema of `2.1.310` defines.
+The tables list the message types that the bundled schema of `2.1.311` defines.
 Each row has a short form of the schema description. A row without a description says so.
 A type is marked <Documented /> when a docs page other than the [changelog](https://code.claude.com/docs/en/changelog) and the Agent SDK pages names it.
 Source: [Run Claude Code Programmatically](https://code.claude.com/docs/en/headless), [CLI Reference](https://code.claude.com/docs/en/cli-reference), and the program (the message schema).
@@ -78,7 +78,7 @@ Only the program shows these. They can change without notice.
 | `system` / `session_state_changed` | <Undocumented /> | The state of the session changed. |
 | `system` / `session_title_changed` | <Undocumented /> | No description in the program schema. |
 | `system` / `worker_shutting_down` | <Undocumented /> | No description in the program schema. |
-| `system` / `turn_handoff_available` | <Undocumented /> | No description in the program schema. |
+| `system` / `turn_handoff_available` | <Undocumented /> | Sent once by a cloud worker that accepts the `turn_handoff` control request. It carries what the worker wrote to `external_metadata.turn_handoff`. Since `2.1.311` it can have `requires_rewind_request_id` (see [Fields New in `2.1.311`](#fields-new-in-21311)). |
 | `system` / `ui_invalidate` | <Undocumented /> | No description in the program schema. |
 | `system` / `ui_log` | <Undocumented /> | A plugin called `$.ui.log(text)`, and the screen adds a dim notice under the name of the plugin. |
 | `system` / `ui_toast` | <Undocumented /> | A plugin called `$.ui.toast(text)`, and the screen shows a short note under the prompt. |
@@ -99,12 +99,31 @@ Only the program shows these. They can change without notice.
 | `system` / `turn_preempted` | <Undocumented /> | No description in the program schema. |
 | `system` / `per_turn_effort_changed` | <Undocumented /> | The conversation stopped sending the effort with each turn, because the server refused it. |
 | `system` / `file_attachments_missing` | <Undocumented /> | No description in the program schema. |
+| `system` / `inherited_asks_settled` | <Undocumented /> | New in `2.1.311`. A cloud worker reports, before its first turn, which asks it inherited and keeps. Any ask stored before this event that it does not name is over. The line has `kept_request_ids`, an array of the request IDs (strings) of the earlier worker's asks that stay answerable. Source: the program (`chunk-7ew55hkc.js:13519`, `chunk-btcwt27x.js:18124`). |
 | `system` / `cloud_session_delta` | <Undocumented /> | No description in the program schema. |
 | `control_request` | <Undocumented /> | A request of the control protocol, which either side can send on the same stream. |
 | `control_response` | <Undocumented /> | The single reply to a `control_request`. |
 | `control_cancel_request` | <Undocumented /> | The sender no longer needs the answer to one of its own control requests. |
 | `keep_alive` | <Undocumented /> | A heartbeat with no payload. |
 | `update_environment_variables` | <Undocumented /> | Updates env vars while the process runs. |
+
+## Fields New in `2.1.311`
+
+Each field below is in [`claude-code-stream-json.json`](../../reference/schemas.md) of `2.1.311`, and it was not in `2.1.310`.
+The schema marks the `system` and `result` fields as `@internal`, so they can change without notice.
+
+| Field | Status | Where | Type | What It Means |
+| --- | --- | --- | --- | --- |
+| `cacheCreationEphemeral5mInputTokens` | <Undocumented /> | Each per-model usage entry: `modelUsage` and `model_usage_since_last_result` of a `result` line, and `usage_report.session.model_usage` of an `assistant` line | Integer | Cache writes with a 5-minute lifetime. They are already counted inside `cacheCreationInputTokens`. This field and the 1-hour field can add up to less than `cacheCreationInputTokens`, because a response that does not report how long its cache writes live adds to neither. `costUSD` prices those writes at the 5-minute rate. It counts only turns run on versions that record it, so it is absent when none did and an undercount when part of the session ran on an older version. |
+| `cacheCreationEphemeral1hInputTokens` | <Undocumented /> | Same entries as above | Integer | Cache writes with a 1-hour lifetime, already counted inside `cacheCreationInputTokens`. `costUSD` prices them at the 1-hour rate when the price table of the model has one. A `modelPricing` row of managed settings does not, so its one cache-write rate applies to both lifetimes. |
+| `api_error` values `unattended_start_limit` and `unattended_start_unconfirmed` | <Undocumented /> | `assistant` and `result` lines | Two new values of an existing string field | Both describe a cloud session process that starts where an earlier one died and would carry on its unfinished work. `unattended_start_limit`: the session record shows that as many such starts as are allowed (a configured number) already happened within 24 hours with no message from a person in between, so the process sent no request. It ends the turn, so a consumer must not send the same prompt again. `unattended_start_unconfirmed`: the process could not check whether it was allowed, so it sent no request. It does not end the turn, and a later process may carry it on. |
+| `requires_rewind_request_id` | <Undocumented /> | `system` / `turn_handoff_available` | `true` | Present only on a worker that reads the `requires_rewind_request_id` member of a `turn_handoff` [control request](control-protocol.md). A worker without this key ignores the member. |
+| `background_color` | <Undocumented /> | Each pane of a `system` / `ui_panes` line | String | What the surface paints under the body of the pane while it is the one shown: a theme key, a raw color, or `transparent` for nothing. When absent, the look of the surface stands. |
+| `main_stream_count`, `main_stream_chunk_count`, `main_stream_event_count`, `process_wall_ms_streaming`, `process_cpu_ms_streaming` | <Undocumented /> | `result` line, success | Integer | Streaming counters and times of the process. This page gives only the names and types. |
+| `process_start_tuning`, `process_start_purge_delay_ms` | <Undocumented /> | `result` line, success and error | Integer | Start-up tuning data of the process. This page gives only the names and types. |
+| `process_garbage_collections` | <Undocumented /> | `result` line, success and error | Object | Has `to_first_message` and `to_first_result`. Each holds the integers `eden`, `full`, `wall_ms`, and `heap_after_mib`. This page gives only the names and types. |
+
+Source: the program (`chunk-7ew55hkc.js:9127` for the cache fields, `chunk-2ht8z368.js:53937` where the two counts add up, `chunk-7ew55hkc.js:11632` and `chunk-2ht8z368.js:96563` for the `api_error` values, `chunk-7ew55hkc.js:13578` and `chunk-143kpxm1.js:895` for `requires_rewind_request_id`, `chunk-7ew55hkc.js:13704` for `background_color`).
 
 ## Example
 

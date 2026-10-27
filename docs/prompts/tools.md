@@ -110,12 +110,12 @@ A fork keeps its tool output out of your context. If you are the fork, execute d
 
 ### `Bash`
 
-Sent in full by default: ✅ Yes. Description: 1,774 characters. Schema: 1,720 characters.
+Sent in full by default: ✅ Yes. Description: 1,934 characters. Schema: 1,720 characters.
 
 ```text
 Executes a bash command and returns its output.
 
-- Working directory persists between calls, but prefer absolute paths — `cd` in a compound command can trigger a permission prompt. Shell state (env vars, functions) does not persist; the shell is initialized from the user's profile.
+- `cd` carries to the next call only in the main session, if the command succeeds and ends inside the working directories. Outside them the shell returns to the start folder; otherwise it stays where it was. Prefer absolute paths — `cd` in a compound command can trigger a permission prompt. Shell state (env vars, functions) does not persist; the shell is initialized from the user's profile.
 - IMPORTANT: Avoid using this tool to run `cat`, `head`, `tail`, `sed`, `awk`, or `echo` commands, unless explicitly instructed or after you have verified that a dedicated tool cannot accomplish your task. Instead, use the appropriate dedicated tool as this will provide a much better experience for the user.
 - Command output is displayed to you, not reliably to the user.
 - `timeout` is in milliseconds: default 120000, max 600000 for a foreground command.

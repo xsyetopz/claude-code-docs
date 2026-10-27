@@ -18,7 +18,7 @@ Items that the docs name but describe wrongly are in [Behaves Differently From t
 | Group | Count |
 | --- | --- |
 | [Settings Keys](#settings-keys) | 25 |
-| [Environment Variables](#environment-variables) | 924 |
+| [Environment Variables](#environment-variables) | 944 |
 | [CLI Flags and Subcommands](#cli-flags-and-subcommands) | 52 |
 | [Permissions](#permissions) | 121 |
 | [Hooks](#hooks) | 15 |
@@ -31,10 +31,10 @@ Items that the docs name but describe wrongly are in [Behaves Differently From t
 | [API Endpoints and Betas](#api-endpoints-and-betas) | 97 |
 | [System Prompt](#system-prompt) | 34 |
 | [Transcript and Sessions](#transcript-and-sessions) | 13 |
-| [Headless Protocol](#headless-protocol) | 158 |
+| [Headless Protocol](#headless-protocol) | 168 |
 | [Mod API](#mod-api) | 0 |
 | [Other](#other) | 106 |
-| Total | 1632 |
+| Total | 1662 |
 
 ## Settings Keys
 
@@ -74,25 +74,25 @@ Count: 25.
 
 There are too many to list one by one. Each page below holds a table, and every undocumented variable in it has the Undocumented badge. The pages sort variables by what they do.
 
-Count: 924.
+Count: 944.
 
 | Page | Undocumented Rows |
 | --- | --- |
-| [Agents and Teams](../configure/env-vars/agents-and-teams.md) | 50 |
-| [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) | 48 |
+| [Agents and Teams](../configure/env-vars/agents-and-teams.md) | 51 |
+| [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) | 50 |
 | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) | 121 |
 | [Cloud Providers](../configure/env-vars/cloud-providers.md) | 30 |
 | [Context and Compaction](../configure/env-vars/context-and-compaction.md) | 30 |
 | [Features and Toggles](../configure/env-vars/features-and-toggles.md) | 56 |
 | [Models and Effort](../configure/env-vars/models-and-effort.md) | 31 |
-| [Network and Proxy](../configure/env-vars/network-and-proxy.md) | 23 |
-| [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) | 52 |
-| [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) | 136 |
-| [SDK and Automation](../configure/env-vars/sdk-and-automation.md) | 22 |
+| [Network and Proxy](../configure/env-vars/network-and-proxy.md) | 25 |
+| [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) | 55 |
+| [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) | 143 |
+| [SDK and Automation](../configure/env-vars/sdk-and-automation.md) | 24 |
 | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) | 48 |
 | [System and Third-Party](../configure/env-vars/system-and-third-party.md) | 104 |
-| [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) | 77 |
-| [Tools and Bash](../configure/env-vars/tools-and-bash.md) | 52 |
+| [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) | 79 |
+| [Tools and Bash](../configure/env-vars/tools-and-bash.md) | 53 |
 | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) | 44 |
 
 ## CLI Flags and Subcommands
@@ -543,12 +543,12 @@ Count: 13.
 
 Message types of `--output-format stream-json` and of the control protocol. Nearly every row is undocumented, so this page links to the two pages with counts.
 
-Count: 158.
+Count: 168.
 
 | Page | Undocumented Rows |
 | --- | --- |
-| [Control Protocol](../extend/headless/control-protocol.md) | 94 |
-| [Stream JSON Messages](../extend/headless/stream-json.md) | 64 |
+| [Control Protocol](../extend/headless/control-protocol.md) | 95 |
+| [Stream JSON Messages](../extend/headless/stream-json.md) | 73 |
 
 ## Mod API
 
@@ -722,21 +722,21 @@ These items exist in the official docs, but the program works in another way. Co
 
 ## In the Program
 
-The program of `2.1.310` holds 8927 items in 17 kinds, counted from `schemas/surface.json`.
+The program of `2.1.311` holds 9042 items in 17 kinds, counted from `schemas/surface.json`.
 [Surface Coverage](surface-coverage.md) lists each item with its page.
 
 | Kind | Items | Not on a Page Yet |
 | --- | --- | --- |
 | [Betas](surface-coverage.md#betas) | 50 | 0 |
-| [API Endpoints](surface-coverage.md#api-endpoints) | 431 | 0 |
-| [Environment Variables](surface-coverage.md#environment-variables) | 1852 | 0 |
-| [Error Texts](surface-coverage.md#error-texts) | 4026 | 0 |
+| [API Endpoints](surface-coverage.md#api-endpoints) | 433 | 0 |
+| [Environment Variables](surface-coverage.md#environment-variables) | 1887 | 0 |
+| [Error Texts](surface-coverage.md#error-texts) | 4054 | 0 |
 | [Files](surface-coverage.md#files) | 78 | 0 |
 | [CLI Flags](surface-coverage.md#cli-flags) | 303 | 0 |
-| [Gates](surface-coverage.md#gates) | 1117 | 0 |
+| [Gates](surface-coverage.md#gates) | 1165 | 0 |
 | [Hook Events](surface-coverage.md#hook-events) | 33 | 0 |
 | [Keybindings](surface-coverage.md#keybindings) | 204 | 0 |
-| [Mod API](surface-coverage.md#mod-api) | 229 | 0 |
+| [Mod API](surface-coverage.md#mod-api) | 231 | 0 |
 | [Models](surface-coverage.md#models) | 74 | 0 |
 | [OpenTelemetry Events](surface-coverage.md#opentelemetry-events) | 28 | 0 |
 | [Permission Rules](surface-coverage.md#permission-rules) | 6 | 0 |
@@ -744,7 +744,7 @@ The program of `2.1.310` holds 8927 items in 17 kinds, counted from `schemas/sur
 | [Slash Commands](surface-coverage.md#slash-commands) | 142 | 0 |
 | [Subcommands](surface-coverage.md#subcommands) | 71 | 0 |
 | [Tools](surface-coverage.md#tools) | 89 | 0 |
-| All kinds | 8927 | 0 |
+| All kinds | 9042 | 0 |
 
 ## Related Pages
 

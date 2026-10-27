@@ -8,7 +8,7 @@ These variables tell Claude Code who you are.
 They carry API keys, bearer tokens, OAuth data, and the commands that fetch credentials for you.
 Put secrets in your shell or a secrets manager, not in a file you commit.
 
-This page lists 77 variables. `ANTHROPIC_API_KEY` and `ANTHROPIC_AUTH_TOKEN` are the common ones. Run `/login` for a stored login. Project settings cannot set some of them before you trust the folder.
+This page lists 79 variables. `ANTHROPIC_API_KEY` and `ANTHROPIC_AUTH_TOKEN` are the common ones. Run `/login` for a stored login. Project settings cannot set some of them before you trust the folder.
 
 ## Example
 
@@ -80,6 +80,8 @@ The table is sorted by name. See [Environment Variables](index.md#how-to-read-th
 | `CLAUDE_CODE_RATE_LIMIT_TIER` | <Undocumented /> | Gives the rate limit tier for a token from `CLAUDE_CODE_OAUTH_TOKEN`. | Text. Set by Claude Code from a background auth snapshot. Used with `CLAUDE_CODE_SUBSCRIPTION_TYPE` | Sessions using an env OAuth token |
 | `CLAUDE_CODE_SDK_HAS_HOST_AUTH_REFRESH` | <Undocumented /> | Tells Claude Code that the SDK host can refresh host auth tokens. Claude Code then asks the host for a new token when needed. | Set by Claude Code in the SDK child env to `1` when the host supports it. The wait uses `CLAUDE_CODE_HOST_AUTH_REFRESH_TIMEOUT_MS` | SDK and print mode. Set by Claude Code |
 | `CLAUDE_CODE_SDK_HAS_OAUTH_REFRESH` | <Undocumented /> | Tells Claude Code that the SDK host can refresh the OAuth token. Claude Code then requests a refresh from the host. | Set by Claude Code in the SDK child env to `1` when the host supports it. It takes effect only for some entrypoints | SDK and print mode. Set by Claude Code |
+| `CLAUDE_CODE_SDK_HAS_SESSIONS_OAUTH_REFRESH` | <Undocumented /> | Tells Claude Code that the SDK host can hand it a second token for the cloud sessions API when asked. Added in `2.1.311`. | On or off. It takes effect only with `CLAUDE_CODE_SDK_HAS_OAUTH_REFRESH` and a supported entrypoint | SDK and print mode. Set by the SDK host |
+| `CLAUDE_CODE_SESSIONS_OAUTH_TOKEN` | <Undocumented /> | Holds a second token that authorizes the cloud sessions API. The host can set it while the process runs, with an `update_environment_variables` message. Added in `2.1.311`. | Text. The message accepts only `CLAUDE_CODE_SESSION_ACCESS_TOKEN`, `CLAUDE_CODE_OAUTH_TOKEN`, and this name. Claude Code drops it from the variables it copies to a new cloud session. A value that fails its check is refused | SDK and print mode. Set by a host |
 | `CLAUDE_CODE_SESSION_ACCESS_TOKEN` | <Documented /> | Holds the session access token for remote sessions. It is sent as `Authorization: Bearer`, or as a cookie when it starts with `sk-ant-sid`. | Text. Falls back to the token file | Remote and ingress sessions. Set by Claude Code on refresh |
 | `CLAUDE_CODE_SUBSCRIPTION_TYPE` | <Undocumented /> | Gives the subscription type for a token supplied through `CLAUDE_CODE_OAUTH_TOKEN`. Claude Code also sets it from a background auth snapshot. | Text. It is used with `CLAUDE_CODE_RATE_LIMIT_TIER` | OAuth token auth and background sessions |
 | `CLAUDE_CODE_USER_EMAIL` | <Undocumented /> | Supplies the account email when a host passes the account by env. It is also used as `user.email` in telemetry and in the user context. | Text. Account use needs `CLAUDE_CODE_ACCOUNT_UUID` and `CLAUDE_CODE_ORGANIZATION_UUID` too | SDK hosts and remote runs |
@@ -116,4 +118,4 @@ Some variables on this page are set by Claude Code for remote sessions and refre
 - [Settings: Auth Keys](../settings/auth.md)
 - [Undocumented Items](../../reference/undocumented.md): every item that only the program shows.
 
-Source: the program (variable names found in the `2.1.310` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
+Source: the program (variable names found in the `2.1.311` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.

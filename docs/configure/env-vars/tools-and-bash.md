@@ -8,7 +8,7 @@ These variables change how tools run.
 They set Bash time limits and output size, shell choice, search behavior, permission helpers, and the sandbox.
 Use them when long commands time out or when you need to limit what a tool can see.
 
-This page lists 100 variables. `BASH_DEFAULT_TIMEOUT_MS` and `BASH_MAX_OUTPUT_LENGTH` are common. Switch rows take `1` or `0`.
+This page lists 102 variables. `BASH_DEFAULT_TIMEOUT_MS` and `BASH_MAX_OUTPUT_LENGTH` are common. Switch rows take `1` or `0`.
 
 ## Example
 
@@ -68,6 +68,7 @@ The table is sorted by name. See [Environment Variables](index.md#how-to-read-th
 | `CLAUDE_CODE_DISABLE_WINDOWS_SHELL_LAUNCHER` | <Documented /> | Starts PowerShell commands on Windows directly, not through the `cmd.exe` launcher. | On or off. The launcher also depends on a flag and logs `env_opt_out` when this is set | Windows PowerShell tool |
 | `CLAUDE_CODE_DONT_INHERIT_ENV` | <Undocumented /> | Starts the shell snapshot and the spawn-env probe with an empty environment instead of the inherited one. | On or off, off by default | Bash tool shell snapshot setup |
 | `CLAUDE_CODE_EMIT_TOOL_USE_SUMMARIES` | <Undocumented /> | Sets the `emitToolUseSummaries` gate that the query loop reads. | On or off, off by default. Passed in the loop gates object next to `fastModeEnabled` | Query loop, all modes |
+| `CLAUDE_CODE_EVEN_MORE_DANGEROUSLY_SKIP_PERMISSIONS` | <Undocumented /> <Caution note="Lets dangerous rm commands run without a prompt in bypass permissions mode." /> | Lets dangerous `rm` commands run without a prompt in bypass permissions mode, once managed settings and plugin hooks have loaded. Claude Code warns about it when it is set. Added in `2.1.311`. | On or off, off by default. It has no effect in a child session (`CLAUDE_CODE_CHILD_SESSION`), when `blockReadsOutsideWorkingDirectories` is on, when some permission rules exist, or on Windows when the registry cannot be read for managed settings. The warning then says the usual checks stay | Bypass permissions mode |
 | `CLAUDE_CODE_EXECPATH` | <Undocumented /> | Gives the shell snapshot function for `claude` the path of the running binary. | Falls back to the computed install path | Bash tool shell snapshot |
 | `CLAUDE_CODE_FILE_READ_MAX_OUTPUT_TOKENS` | <Documented /> | Sets the token limit of a file read. | A number. Whole number above `0`. Else a built-in default | Read tool |
 | `CLAUDE_CODE_FILE_READ_MAX_PDF_PAGES_PER_MESSAGE` | <Undocumented /> <Gated note="A feature flag or server gate decides by default. This variable overrides it" /> | Caps the PDF pages that Read tool calls may use in one message. | A number. Whole number of at least `1`, plain digits. Active only when a flag enforces the limit | Read tool with PDF files |
@@ -157,4 +158,4 @@ While the scrub is on (`CLAUDE_CODE_SUBPROCESS_ENV_SCRUB` true, or `GITHUB_ACTIO
 - [Permissions](../permissions/index.md)
 - [Undocumented Items](../../reference/undocumented.md): every item that only the program shows.
 
-Source: the program (variable names found in the `2.1.310` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
+Source: the program (variable names found in the `2.1.311` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.

@@ -102,10 +102,16 @@ stateDiagram-v2
 | --- | --- | --- |
 | Automatic | <Documented /> | It starts at the compact threshold. The hooks `PreCompact` and `PostCompact` get `trigger: auto`. |
 | Manual | <Documented /> | It starts with `/compact`. The trigger is `manual`. |
-| Reactive | <Undocumented /> | The API refuses a request as too long, and Claude Code compacts and tries again. |
+| Reactive | <Undocumented /> | The API refuses a request as too long, and Claude Code compacts and tries again. Since `2.1.311`, this also covers a standard-window session that goes over 200K tokens and gets "Usage credits required for 1M context" (`chunk-8qajn51r.js:6009`). It compacts and continues. |
 | Precomputed | <Undocumented /> | A summary made ahead of time replaces the conversation. |
 | Larger-model retry | <Undocumented /> | A compaction that fails can try again on a model with a larger window. |
 | Server side | <Undocumented /> | The beta `context-management-2025-06-27` lets the API edit the context. |
+
+Since `2.1.311`, when the model's reply to a compaction request has no `<summary>` block, Claude Code usually asks once more for the summary before it replaces the conversation (`chunk-2ht8z368.js:108786`).
+The second request adds a short note that says the reply must hold the summary in `<summary>` tags (`chunk-2ht8z368.js:108553`).
+If the second reply has none either, the compaction fails with `no <summary> block in the second reply either` (`chunk-2ht8z368.js:108779`).
+A gate in the program decides whether the second ask runs, so "usually" is the right word (`chunk-2ht8z368.js:108784`).
+Source: the [Claude Code changelog](https://code.claude.com/docs/en/changelog) and the program.
 
 Auto compaction stops with an error when the context refills within 3 turns of the last compaction, 3 times in a row.
 The message starts `Autocompact is thrashing`.

@@ -9,7 +9,7 @@ The second table lists the events that the `$.ui` methods raise.
 
 A `deny` from a hook refuses a scroll, focus, or close. An invalid tree draws the engine's own drawing.
 
-Official pages: [Draw in the Interface](https://code.claude.com/docs/en/plugins/mods/interface), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the Mod API type file of the 2.1.310 program (`schemas/claude-code.d.ts`).
+Official pages: [Draw in the Interface](https://code.claude.com/docs/en/plugins/mods/interface), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the Mod API type file of the 2.1.311 program (`schemas/claude-code.d.ts`).
 
 ## Example
 

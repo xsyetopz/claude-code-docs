@@ -1,11 +1,28 @@
 ---
 title: Release Archive
-description: What changed in Claude Code 2.1.300 to 2.1.309, newest first, kept from the What Changed page.
+description: What changed in Claude Code 2.1.300 to 2.1.310, newest first, kept from the What Changed page.
 sidebar_position: 4.5
 ---
 
-This page keeps the sections that [What Changed](what-changed.md) had for `2.1.300` to `2.1.309`, newest first.
+This page keeps the sections that [What Changed](what-changed.md) had for `2.1.300` to `2.1.310`, newest first.
 Each section is kept as it was written for its release. The other pages of this site cover the current release, so a later release may have changed a row here.
+
+## Version 2.1.310
+
+Released October 23, 2026. Source: [release notes](https://github.com/anthropics/claude-code/releases/tag/v2.1.310).
+Rows marked with the program come from a comparison of the `2.1.309` and `2.1.310` programs. The flags, settings, hooks, and commands did not change.
+
+| Change | Status | What it means for you | Where to read more |
+| --- | --- | --- | --- |
+| `Monitor` and plugin monitors | <Documented /> | They no longer wait for a server flag, so they also work on Bedrock, Vertex, and Foundry, and with telemetry or nonessential traffic off (the program). | [Shell, Web, and Background Tasks](../reference/tools/shell-and-web.md#how-it-works), [Plugin Manifest](../extend/plugins/manifest.md#top-level-keys) |
+| Long leading `sleep` | <Undocumented /> | Where `Monitor` is newly on, `Bash` now also refuses a command that starts with a `sleep` of 25 seconds or more, and points Claude to `Monitor` (the program). | [Shell, Web, and Background Tasks](../reference/tools/shell-and-web.md#how-it-works) |
+| Effort refused | <Undocumented /> | When the server refuses the effort setting, the request goes again without it and without the `effort-2025-11-24` beta (the program). | [Betas](../reference/api/betas.md#registry), [Models and Providers](../configure/models-and-providers.md#effort) |
+| Sandbox warnings | <Documented /> | On Ubuntu, the warning names the AppArmor limit that stops bubblewrap. A new warning says when deny paths on another computer are not enforced (the program). | [Sandbox](../configure/permissions/sandbox.md#other-behavior) |
+| Mod `Image` in tmux | <Documented /> | An `Image` draws inside tmux when `allow-passthrough` and `focus-events` are on. `$.ui.blit` gives `fix: 'tmux-passthrough'` when they are off. | [UI Types](../extend/mod-api/types/ui.md#imageprops) |
+| `/claude-api` retired models | <Undocumented /> <Gated note="Server flags decide" /> | It can list the deprecated or retired model IDs that it finds in the project (the program). | [Bundled Skills](../extend/skills-and-commands/bundled-skills.md) |
+| New environment variables | <Undocumented /> | `CLAUDE_CODE_ARTIFACT_ASK_FIRST`, `CLAUDE_CODE_RETRY_WATCHDOG_SCOPE`, and `CLAUDE_CODE_DESKTOP_CONNECTOR_NAMES`. `CLAUDE_CODE_ARTIFACT_TYPES` is on by default now (the program). | [Features and Toggles](../configure/env-vars/features-and-toggles.md#variables), [Network and Proxy](../configure/env-vars/network-and-proxy.md#variables), [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md#variables) |
+
+The print and interactive probes matched `2.1.309`, apart from `Monitor` in the tool list and the sizes that follow from it, and run-to-run noise.
 
 ## Version 2.1.309
 

@@ -5,7 +5,7 @@ sidebar_position: 89
 generated: false
 ---
 
-This is the verbatim text that Claude Code 2.1.310 uses for the session title and branch name.
+This is the verbatim text that Claude Code 2.1.311 uses for the session title and branch name.
 
 ## Where It Comes From
 

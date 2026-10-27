@@ -337,6 +337,25 @@ What a `prompt.edit` hook returns and what `next(e)` resolves to: the box after 
 | `decorations` | <Documented /> | Runs to paint over `text` (PromptDecoration), offsets into `text` as given, the engine moves them to where it lands. None when absent. | Type: `PromptDecoration[]`. Optional. Replaced by the next `prompt.edit` answer. Gone at the draft's next change. |
 | `cursor` | <Documented /> | Where the caret stands after the write: an offset into the whole draft the box then holds. Left out: past the text for `insert`, else at the end. | Type: `number`. Optional. Clamped to the draft and moved to the start of a character it falls inside. A value that is not an integer is refused. Since `2.1.309`. |
 
+### `PromptPaintArgs`
+
+What a plugin's `$.prompt.paint(args)` takes, and a hook on `prompt.paint` sees as `e` and may rewrite. Whose runs they are is the caller's name, which no argument or hook sets. Used by `$.prompt.paint`, `prompt.paint`. Since `2.1.311`.
+
+| Field | Status | What it is for | Type and limits |
+| --- | --- | --- | --- |
+| `text` | <Documented /> | The draft that `decorations` were computed for: nothing paints unless the box reads exactly this. | Type: `string`. Optional. May be left out only with an empty list. |
+| `decorations` | <Documented /> | This plugin's runs over the draft (PromptDecoration), replacing those it painted before. An empty list clears them. | Type: `PromptDecoration[]`. Other plugins' runs stand, and a later one wins for each style key. The draft's next change drops them, but for a `prompt.edit` hook in the terminal. |
+
+### `PromptPainted`
+
+What `$.prompt.paint` resolves to: whether the runs were painted, and the box as it stands (PromptBox). A mod whose text went stale computes again from `text`. The box goes to a plugin whose module calls `$.prompt.read`, through the hooks on it. A plugin that never does, or is refused there, gets the empty box. Used by `$.prompt.paint`. Since `2.1.311`.
+
+| Field | Status | What it is for | Type and limits |
+| --- | --- | --- | --- |
+| `isPainted` | <Documented /> | True once the runs stand over the draft, or a clear took them off. False where the box does not read `text`, or no box can take them. | Type: `boolean`. |
+| `text` | <Documented /> | The draft as it stands, which the call did not change. `''` where no box is drawn or the caller may not read it (see above). | Type: `string`. |
+| `cursor` | <Documented /> | Where the person types next: an offset into `text`, which the call did not move. | Type: `number`. |
+
 ### `PromptFilled`
 
 What `$.prompt.fill` resolves to: whether the box took the text, and the box afterwards (PromptBox) as the caller's own `$.prompt.read()` reads it. The box goes to a plugin whose module calls `$.prompt.read`. A plugin that never does gets the empty box. Used by `$.prompt.fill`.

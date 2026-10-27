@@ -15,7 +15,7 @@ The protocol is on whenever you start `claude -p --input-format stream-json --ou
 
 The schema does not mark the direction of each request.
 Only the Agent SDK pages describe most of them, and no other docs page does, so every row is marked <Undocumented />.
-Source: the program (the bundled schema of `2.1.310`).
+Source: the program (the bundled schema of `2.1.311`; for the `2.1.311` additions, `chunk-7ew55hkc.js:19068` for `ui_prompt_paint`, `chunk-7ew55hkc.js:18942` for the `ui_attach` list, `chunk-7ew55hkc.js:17074` for `turn_handoff`, `chunk-7ew55hkc.js:17966` for `oauth_token_refresh`, `chunk-7ew55hkc.js:17747` for `mcpMount`, `chunk-7ew55hkc.js:13704` for `background_color`, and `chunk-7ew55hkc.js:15654` for the transcript note).
 
 | `subtype` | Status | What It Does |
 | --- | --- | --- |
@@ -32,12 +32,12 @@ Source: the program (the bundled schema of `2.1.310`).
 | `get_context_usage` | <Undocumented /> | Asks for the use of the context window by category. |
 | `get_session_cost` | <Undocumented /> | Asks for the cost summary that `/usage` prints in print mode. |
 | `list_models` | <Undocumented /> | Asks for the models that the worker lets you choose. |
-| `get_usage` | <Undocumented /> | Asks for the data of `/usage`, with plan limits when they are known. |
+| `get_usage` | <Undocumented /> | Asks for the data of `/usage`, with plan limits when they are known. Since `2.1.311`, each entry of `session.model_usage` in the reply also has `cacheCreationEphemeral5mInputTokens` and `cacheCreationEphemeral1hInputTokens` (integers, see [Stream JSON Messages](stream-json.md#fields-new-in-21311)). |
 | `get_status` | <Undocumented /> | Asks for the rows of the `/status` screen as text. |
 | `export_conversation` | <Undocumented /> | Asks for the conversation as the text that `/export` writes. |
 | `list_cloud_sessions` | <Undocumented /> | Asks for the cloud sessions of the signed-in account. The CLI reads them with its own sign-in. Refused in a cloud-hosted session. New in `2.1.307`. |
 | `get_cloud_session` | <Undocumented /> | Asks for the title, branch, and environment kind of one cloud session. Refused in a cloud-hosted session. New in `2.1.307`. |
-| `get_cloud_session_transcript` | <Undocumented /> | Asks for one page of the stored transcript of a cloud session that the account owns. Refused in a cloud-hosted session. New in `2.1.307`. |
+| `get_cloud_session_transcript` | <Undocumented /> | Asks for one page of the stored transcript of a cloud session that the account owns. Refused in a cloud-hosted session. New in `2.1.307`. Since `2.1.311` the schema warns that a page is not always the whole transcript: for a compacted session the service sends the rows its last compaction kept, then the `compact_boundary` entry and what followed, so the messages that the compaction summarized can be on no page. |
 | `get_memory_dialog` | <Undocumented /> | Asks for the rows and switches of the `/memory` dialog. |
 | `get_skills_dialog` | <Undocumented /> | Asks for the rows of the `/skills` menu. |
 | `get_chrome_dialog` | <Undocumented /> | Asks for the state of the `/chrome` dialog. |
@@ -61,7 +61,7 @@ Source: the program (the bundled schema of `2.1.310`).
 | `remote_plumbing_call` | <Undocumented /> | Calls a plumbing tool on the attached machine. |
 | `remote_tools_probe` | <Undocumented /> | Checks that an announced machine is still alive. |
 | `remote_tools_reannounce` | <Undocumented /> | A new worker asks the client to announce its tools again. |
-| `turn_handoff` | <Undocumented /> | No description in the program schema. |
+| `turn_handoff` | <Undocumented /> | Hands a turn to a cloud worker. Since `2.1.311` it can have `requires_rewind_request_id` (string): the `request_id` of a `rewind_conversation` request that the client sent first. A worker that reads it appends the turn only if that rewind was its last one, the last user or assistant message is still the one the rewind left at the end, and nothing waits to be appended ahead of the turn. Otherwise it appends nothing and answers an error that starts with `invalid_handoff: required_rewind_` and then `unknown`, `other`, `moved_on`, or `lines_waiting`. A worker announces that it reads the member with `requires_rewind_request_id: true` in `turn_handoff_available`. A worker without that key ignores the member, so send it only once every worker that could read it has the key. |
 | `mcp_message` | <Undocumented /> | Carries one MCP message for an MCP server that the SDK hosts. |
 | `mcp_set_servers` | <Undocumented /> | Replaces the set of MCP servers that the host manages. |
 | `reload_plugins` | <Undocumented /> | Reloads plugins from disk. |
@@ -83,22 +83,22 @@ Source: the program (the bundled schema of `2.1.310`).
 | `get_settings` | <Undocumented /> | Returns the merged settings and the settings of each source. |
 | `update_settings` | <Undocumented /> | Writes settings through the writer of Claude Code. |
 | `get_hooks_listing` | <Undocumented /> | Returns the hooks that the read-only `/hooks` menu shows. |
-| `list_permission_rules` | <Undocumented /> | Returns the permission rules and workspace folders that `/permissions` lists. |
+| `list_permission_rules` | <Undocumented /> | Returns the permission rules and workspace folders that `/permissions` lists. Since `2.1.311` the `source` of a rule can be `mcpMount` (string). |
 | `elicitation` | <Undocumented /> | Asks the SDK consumer to handle an MCP elicitation. |
 | `request_user_dialog` | <Undocumented /> | Asks the SDK consumer to show a dialog and return the choice. |
 | `submit_feedback` | <Undocumented /> | Sends a `/feedback` report with the transcript and a cleaned error log. |
 | `remote_control_work_secret` | <Undocumented /> | Asks the host for a fresh work secret for Remote Control. |
-| `oauth_token_refresh` | <Undocumented /> | Asks the host for a fresh OAuth token after a `401` error. |
+| `oauth_token_refresh` | <Undocumented /> | Asks the host for a fresh OAuth token after a `401` error. Since `2.1.311` the request can also have `kind: "sessions"`, and then the CLI asks for the second token that authorizes the cloud-sessions API. A host that set `CLAUDE_CODE_SDK_HAS_SESSIONS_OAUTH_REFRESH` answers it, and the token must belong to the same account and organization as the sign-in token. Without `kind`, the request is for the claude.ai sign-in token. |
 | `host_auth_token_refresh` | <Undocumented /> | Asks the host for a fresh provider credential after a credential failure. |
 | `message_rated` | <Undocumented /> | Records a thumbs up or down for a message. |
-| `ui_attach` | <Undocumented /> | A remote screen joins the session. |
+| `ui_attach` | <Undocumented /> | A remote screen joins the session. Since `2.1.311` its `answers` list can name `ui_prompt_paint` too, and holds up to 6 names (5 before). |
 | `ui_detach` | <Undocumented /> | A remote screen leaves the session. |
 | `ui_render` | <Undocumented /> | No description in the program schema. |
 | `ui_press` | <Undocumented /> | A press on a button or link that a plugin drew for a remote screen. |
 | `ui_client_module` | <Undocumented /> | Asks for the screen modules of a plugin. |
 | `ui_input` | <Undocumented /> | A change in an input that a plugin drew for a remote screen. |
 | `ui_select` | <Undocumented /> | A pick in a select that a plugin drew for a remote screen. |
-| `ui_panes` | <Undocumented /> | Asks for the list of open panes. |
+| `ui_panes` | <Undocumented /> | Asks for the list of open panes. Since `2.1.311` each pane in the reply can have `background_color` (string): what the surface paints under the body of the pane while it is shown. |
 | `ui_pane_show` | <Undocumented /> | The person chose which open pane the screen shows. |
 | `ui_pane_focus` | <Undocumented /> | The keyboard moved between the prompt box and a pane. |
 | `ui_close` | <Undocumented /> | The person closed a pane on a remote screen. |
@@ -107,6 +107,7 @@ Source: the program (the bundled schema of `2.1.310`).
 | `ui_copy` | <Undocumented /> | No description in the program schema. |
 | `ui_prompt_read` | <Undocumented /> | A plugin reads the draft and cursor of the prompt box. |
 | `ui_prompt_fill` | <Undocumented /> | A plugin puts text in the prompt box as a draft. |
+| `ui_prompt_paint` | <Undocumented /> | New in `2.1.311`. Sets one layer of styled runs over the draft in the prompt box and changes nothing else: not the draft, the caret, or its undo history. A change of the draft drops every layer. The request has `surface` (`desktop`, `mobile`, or `vscode`), `client_id`, `layer`, `text`, and `decorations`. Each decoration has `start`, `end`, and the optional `color`, `backgroundColor`, `dimColor`, `bold`, `italic`, `underline`, and `strikethrough`. Without `text`, the request clears the layer. The reply is `{painted: boolean}`. It goes only to a client whose `ui_attach` named `ui_prompt_paint`. If there is no answer in 5 seconds, the result is `isPainted: false`. |
 | `ui_prompt_suggest` | <Undocumented /> | A plugin or the engine shows a suggestion in the prompt box. |
 | `ui_read_selection` | <Undocumented /> | No description in the program schema. |
 | `ui_prompt_edit` | <Undocumented /> | An edit in the prompt box of a remote screen. |

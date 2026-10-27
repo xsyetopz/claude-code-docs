@@ -70,14 +70,14 @@ The table is sorted by name. See [Environment Variables](index.md#how-to-read-th
 | `CLAUDE_MEMORY_STORES` | <Undocumented /> | Takes a JSON list of `{"name","path"}` objects. The memory section stays, and each store is named as a shared `memory/team/<dir name>` folder with a 4 KB per-file note. A list of strings, `[]`, or non-JSON text changes nothing. | - | - |
 | `CLAUDE_PROJECT_UUID` | <Undocumented /> <Gated note="Works only behind a feature flag or server gate" /> | Names a Claude project. Claude Code fetches the project context block and the project memory index for it. | - | - |
 | `DISABLE_AUTO_COMPACT` | <Documented /> | Turns off automatic compaction. | On or off | - |
-| `DISABLE_COMPACT` | <Documented /> | Turns off all compaction. | On or off | - |
+| `DISABLE_COMPACT` | <Documented /> | Turns off all compaction. Since `2.1.311`, an `env` entry in a settings file and a mod's `$.env.set` can only turn compaction off. | On or off. In a settings file `env` entry or a mod's `$.env.set`, only a true value counts. Any other value is ignored | - |
 | `DISABLE_PROMPT_CACHING` | <Documented /> | Turns off prompt caching for all models. | On or off | - |
 | `DISABLE_PROMPT_CACHING_FABLE` | <Documented /> | Turns off prompt caching for Fable models. | On or off | - |
 | `DISABLE_PROMPT_CACHING_HAIKU` | <Documented /> | Turns off prompt caching for the default Haiku model. | On or off | - |
 | `DISABLE_PROMPT_CACHING_MYTHOS` | <Undocumented /> | Turns off prompt caching for models that the Mythos check matches. | On or off | - |
 | `MAX_MCP_OUTPUT_TOKENS` | <Documented /> | Sets the token limit for one MCP tool result. | A number. Default `25000`. The warning at `10000` is fixed | - |
 | `SLASH_COMMAND_TOOL_CHAR_BUDGET` | <Documented /> | Overrides the character budget for the skill listing shown to the model. | A number, 1 by default. Integer, min `1`. If set, it wins over the dynamic budget (context window times 4 times a fraction, default 1%) | All sessions |
-| `USE_API_CONTEXT_MANAGEMENT` | <Undocumented /> <Gated note="Works only behind a feature flag or server gate" /> | Would turn on the API context-management beta. It is inert in 2.1.310. | On or off. The code ANDs it with a constant false, so it has no effect | Inert, first-party models |
+| `USE_API_CONTEXT_MANAGEMENT` | <Undocumented /> <Gated note="Works only behind a feature flag or server gate" /> | Would turn on the API context-management beta. It is inert in 2.1.311. | On or off. The code ANDs it with a constant false, so it has no effect | Inert, first-party models |
 
 ## How It Works
 
@@ -93,4 +93,4 @@ See [Context and Compaction](../../how-it-works/context-and-compaction.md) for t
 - [Models and Effort](models-and-effort.md)
 - [Undocumented Items](../../reference/undocumented.md): every item that only the program shows.
 
-Source: the program (variable names found in the `2.1.310` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
+Source: the program (variable names found in the `2.1.311` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
