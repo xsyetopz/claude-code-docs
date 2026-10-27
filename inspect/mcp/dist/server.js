@@ -25211,7 +25211,7 @@ var EMPTY_COMPLETION_RESULT = {
 // inspect/mcp/package.json
 var package_default = {
   name: "cc-inspect-mcp",
-  version: "0.5.1",
+  version: "0.6.0",
   private: true,
   license: "MIT",
   type: "module",
@@ -39523,8 +39523,173 @@ var readable = async (binary, module) => {
   }
 };
 
+// inspect/mcp/src/run.ts
+import {
+  chmodSync,
+  mkdirSync as mkdirSync3,
+  mkdtempSync as mkdtempSync3,
+  realpathSync as realpathSync2,
+  rmSync as rmSync3,
+  writeFileSync as writeFileSync3
+} from "fs";
+import { tmpdir as tmpdir3 } from "os";
+import { join as join5 } from "path";
+var FAKE_KEY = "sk-ant-fake-probe";
+var sse = (ev, d) => `event: ${ev}
+data: ${JSON.stringify(d)}
+
+`;
+var MESSAGE = {
+  id: "msg_probe",
+  type: "message",
+  role: "assistant",
+  content: [{ type: "text", text: "OK" }],
+  stop_reason: "end_turn",
+  stop_sequence: null,
+  usage: { input_tokens: 10, output_tokens: 5 }
+};
+var STREAM = sse("message_start", {
+  type: "message_start",
+  message: { ...MESSAGE, content: [], stop_reason: null }
+}) + sse("content_block_start", {
+  type: "content_block_start",
+  index: 0,
+  content_block: { type: "text", text: "" }
+}) + sse("content_block_delta", {
+  type: "content_block_delta",
+  index: 0,
+  delta: { type: "text_delta", text: "OK" }
+}) + sse("content_block_stop", { type: "content_block_stop", index: 0 }) + sse("message_delta", {
+  type: "message_delta",
+  delta: { stop_reason: "end_turn", stop_sequence: null },
+  usage: { output_tokens: 5 }
+}) + sse("message_stop", { type: "message_stop" });
+var tempDir = (p) => realpathSync2(mkdtempSync3(join5(tmpdir3(), p)));
+var runPrompt = async (bin, prompt, model = "claude-opus-5-5", timeoutMs = 60000) => {
+  const made = [];
+  let stub;
+  try {
+    const mk = (p) => {
+      const d = tempDir(p);
+      made.push(d);
+      return d;
+    };
+    const dirs = {
+      home: mk("cc-run-home-"),
+      config: mk("cc-run-cfg-"),
+      project: mk("cc-run-proj-")
+    };
+    const shim = join5(dirs.home, ".probe-bin");
+    mkdirSync3(shim);
+    writeFileSync3(join5(shim, "security"), `#!/bin/sh
+[ "$1" = "-i" ] && cat >/dev/null
+exit 44
+`);
+    chmodSync(join5(shim, "security"), 493);
+    const requests = [];
+    stub = Bun.serve({
+      port: 0,
+      hostname: "127.0.0.1",
+      async fetch(req) {
+        const key = req.headers.get("x-api-key") ?? req.headers.get("authorization")?.replace(/^Bearer /, "");
+        const raw = await req.text();
+        let body = raw;
+        try {
+          body = JSON.parse(raw);
+        } catch {}
+        const url = new URL(req.url);
+        requests.push({
+          method: req.method,
+          path: url.pathname + url.search,
+          host: req.headers.get("host") ?? "",
+          fakeKey: key == null ? null : key === FAKE_KEY,
+          body
+        });
+        if (url.pathname === "/v1/messages" && req.method === "POST")
+          return body?.stream ? new Response(STREAM, {
+            headers: { "content-type": "text/event-stream" }
+          }) : Response.json(MESSAGE);
+        if (url.pathname === "/v1/messages/count_tokens")
+          return Response.json({ input_tokens: 10 });
+        return Response.json({}, { status: 404 });
+      }
+    });
+    const self = `127.0.0.1:${stub.port}`;
+    const p = Bun.spawn([
+      bin,
+      "-p",
+      prompt,
+      "--output-format",
+      "stream-json",
+      "--verbose",
+      "--model",
+      model
+    ], {
+      cwd: dirs.project,
+      stdin: "ignore",
+      stdout: "ignore",
+      stderr: "pipe",
+      env: {
+        PATH: `${shim}:${process.env["PATH"] ?? ""}`,
+        HOME: dirs.home,
+        TMPDIR: tmpdir3(),
+        CLAUDE_CONFIG_DIR: dirs.config,
+        ANTHROPIC_API_KEY: FAKE_KEY,
+        ANTHROPIC_BASE_URL: `http://${self}`,
+        CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: "1",
+        DISABLE_TELEMETRY: "1",
+        HTTPS_PROXY: "http://127.0.0.1:9",
+        HTTP_PROXY: "http://127.0.0.1:9",
+        NO_PROXY: "127.0.0.1,localhost"
+      }
+    });
+    const err = new Response(p.stderr).text();
+    let timedOut = false;
+    const t = setTimeout(() => {
+      timedOut = true;
+      p.kill("SIGKILL");
+    }, timeoutMs);
+    let exit;
+    try {
+      exit = await p.exited;
+    } finally {
+      clearTimeout(t);
+    }
+    if (timedOut)
+      throw new Error(`the program did not end in ${timeoutMs} ms`);
+    const stderr = await Promise.race([err, Bun.sleep(1000).then(() => "")]);
+    const bad = requests.filter((r) => r.fakeKey === false || r.host !== self);
+    if (bad.length)
+      throw new Error(`a request had another host or key: ${bad.map((r) => `${r.host}${r.path}`).join(", ")}`);
+    return { exit, requests, stderr, dirs };
+  } finally {
+    stub?.stop(true);
+    for (const d of made)
+      rmSync3(d, { recursive: true, force: true });
+  }
+};
+var textsOf = (m) => typeof m.content === "string" ? [m.content] : Array.isArray(m.content) ? m.content.filter((b) => b.type === "text" && typeof b.text === "string").map((b) => b.text) : [];
+var userText = (r, mark) => {
+  for (const q of r.requests) {
+    if (!q.path.startsWith("/v1/messages") || q.path.includes("count_tokens"))
+      continue;
+    for (const m of q.body?.messages ?? []) {
+      if (m.role !== "user")
+        continue;
+      const texts = textsOf(m);
+      const i = texts.findIndex((t) => t.includes(mark));
+      if (i < 0)
+        continue;
+      return texts.slice(i).map((t) => t.trimEnd()).join(`
+
+`).replaceAll(r.dirs.home, "<home>").replaceAll(r.dirs.config, "<config-dir>").replaceAll(r.dirs.project, "<project-dir>").replace(/\S*\/bundled-skills\/[^/\s]+\/[0-9a-f]+/g, "<bundled-skill-dir>").replaceAll(realpathSync2(tmpdir3()), "<temp-dir>").replaceAll(tmpdir3().replace(/\/$/, ""), "<temp-dir>");
+    }
+  }
+  return null;
+};
+
 // inspect/mcp/src/mcp/code.ts
-group("code", "Read the code inside a Claude Code binary: list installs or modules, search literal text, find code by plain words, read a module slice, or prepare a cleaned index for release diffs.", "action", {
+group("code", "Read the code inside a Claude Code binary: list installs or modules, search literal text, find code by plain words, read a module slice, prepare a cleaned index for release diffs, or run a prompt in an installed version against a local fake API to see the text it sends.", "action", {
   installs: () => {
     const installs = listInstalls();
     return text(installs.length ? installs.map((i) => `- ${i.version}${i.current ? " (current)" : ""}  ${i.path}`).join(`
@@ -39608,6 +39773,31 @@ ${excerpt.join(`
       }))
     });
   },
+  run: async ({ prompt, name, version, offset = 0, length = 4000 }) => {
+    const q = need(prompt, "prompt");
+    const cmd = /^\/([\w:-]+)/.exec(q)?.[1];
+    const mark = name ?? (cmd ? `<command-name>/${cmd}</command-name>` : q);
+    const all = listInstalls();
+    const bin = version ? all.find((i) => i.version === version) : all.find((i) => i.current) ?? all[0];
+    if (!bin)
+      throw new Error(`run takes an installed version; installed: ${all.map((i) => i.version).join(", ") || "none"}`);
+    const r = await runPrompt(bin.path, q);
+    const t = userText(r, mark);
+    const sent = r.requests.map((x) => `${x.method} ${x.path}`);
+    const head = `${bin.version}: exit ${r.exit}, ${sent.length} requests.${r.exit !== 0 || t === null ? `
+stderr: ${clip(r.stderr, 500)}` : ""}`;
+    if (t === null)
+      return text(`${head}
+No user turn holds "${clip(mark, 100)}".`, {
+        exit: r.exit,
+        requests: sent
+      });
+    const start = Math.min(offset, t.length);
+    const end = Math.min(t.length, start + length);
+    return text(`${head}
+User turn [${start}, ${end}) of ${t.length}
+${t.slice(start, end)}`, { exit: r.exit, requests: sent, offset: start, end, total: t.length });
+  },
   prepare: ({ version }) => {
     const r = prepared(version);
     const skipped = Object.keys(r.index.skipped);
@@ -39631,7 +39821,8 @@ Not JavaScript: ${skipped.join(", ")}` : ""}`, {
   limit: P.limit,
   context: number2().int().min(0).max(2000).optional().describe("Characters shown around a search hit (default 150)."),
   view: string2().optional().describe('With read: "readable" gives the module through Wakaru (the first call per module runs it, then it is cached).'),
-  length: number2().int().min(1).max(MAX_CHARS).optional().describe("Characters to read (default 4000).")
+  length: number2().int().min(1).max(MAX_CHARS).optional().describe("Characters to read (default 4000)."),
+  prompt: string2().min(1).optional().describe('With run: the prompt or slash command, such as "/verify ARG". `name` is the text that picks the user turn (default: the command tag).')
 }, { ...WRITES_CACHE, openWorldHint: true });
 
 // inspect/mcp/src/events.ts
@@ -41225,7 +41416,7 @@ ${Object.entries(r.functions).map(([n, s]) => `- ${n}: ${s}`).join(`
 
 // inspect/mcp/src/mcp/release.ts
 import { existsSync as existsSync6, readFileSync as readFileSync6 } from "fs";
-import { dirname as dirname2, join as join5 } from "path";
+import { dirname as dirname2, join as join6 } from "path";
 
 // inspect/mcp/src/explain.ts
 var CONST = String.raw`(?:!0|!1|null|void 0|""|-?\d+(?:\.\d+)?|\[\]|\{\}|"(?:[^"\\]|\\.)*")`;
@@ -41307,7 +41498,7 @@ var explain = (ix, name, cap = 40) => {
 };
 
 // inspect/mcp/src/notes.ts
-import { existsSync as existsSync5, mkdirSync as mkdirSync3, readFileSync as readFileSync5, writeFileSync as writeFileSync3 } from "fs";
+import { existsSync as existsSync5, mkdirSync as mkdirSync4, readFileSync as readFileSync5, writeFileSync as writeFileSync4 } from "fs";
 import { dirname } from "path";
 var STOP = new Set("added fixed improved changed which there their about after before being would could should these those where while other through without within instead claude still first every again showing shows error errors their".split(" "));
 var readNotes = (version, file) => {
@@ -41329,8 +41520,8 @@ var readNotes = (version, file) => {
     throw new Error(`gh release view v${version} failed: ${r.stderr.toString().slice(0, 200)}`);
   if (!r.stdout.toString().trim())
     throw new Error(`gh release view v${version} gave no notes`);
-  mkdirSync3(dirname(file), { recursive: true });
-  writeFileSync3(file, r.stdout.toString());
+  mkdirSync4(dirname(file), { recursive: true });
+  writeFileSync4(file, r.stdout.toString());
   return r.stdout.toString();
 };
 var keysOf = (line) => {
@@ -41481,10 +41672,10 @@ ${unitDiff(c, DIFF_LINES).join(`
       throw new Error(`no install older than ${b.index.version}; give from`);
     const a = prepared(older);
     const root = dirname2(b.dir);
-    const report = join5(root, "diff", "report.md");
+    const report = join6(root, "diff", "report.md");
     const items = existsSync6(report) ? readFileSync6(report, "utf8").split(`
 `).filter((l) => l.startsWith("- ")) : [];
-    const lines = checkNotes(readNotes(b.index.version, join5(root, "notes.md")), diffIndexes(a.index, b.index), items);
+    const lines = checkNotes(readNotes(b.index.version, join6(root, "notes.md")), diffIndexes(a.index, b.index), items);
     const count = (k) => lines.filter((l) => l.status === k).length;
     return text(`${b.index.version} notes against ${a.index.version}: ${lines.length} lines, ${count("matched")} matched, ${count("gated")} gated, ${count("unmatched")} unmatched. A match is a lead to read, not a proof.
 ${lines.map((l) => {

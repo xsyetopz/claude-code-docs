@@ -4,6 +4,7 @@ import { cut, lines as linesOf } from "../diff.ts";
 import { findUnits } from "../find.ts";
 import { prepared } from "../prepare.ts";
 import { readable } from "../readable.ts";
+import { runPrompt, userText } from "../run.ts";
 import {
   type Args,
   clip,
@@ -16,9 +17,11 @@ import {
   WRITES_CACHE,
 } from "./app.ts";
 
-group<Args & { context?: number; length?: number; view?: string }>(
+group<
+  Args & { context?: number; length?: number; view?: string; prompt?: string }
+>(
   "code",
-  "Read the code inside a Claude Code binary: list installs or modules, search literal text, find code by plain words, read a module slice, or prepare a cleaned index for release diffs.",
+  "Read the code inside a Claude Code binary: list installs or modules, search literal text, find code by plain words, read a module slice, prepare a cleaned index for release diffs, or run a prompt in an installed version against a local fake API to see the text it sends.",
   "action",
   {
     installs: () => {
@@ -130,6 +133,35 @@ group<Args & { context?: number; length?: number; view?: string }>(
         },
       );
     },
+    run: async ({ prompt, name, version, offset = 0, length = 4000 }) => {
+      const q = need(prompt, "prompt");
+      const cmd = /^\/([\w:-]+)/.exec(q)?.[1];
+      const mark = name ?? (cmd ? `<command-name>/${cmd}</command-name>` : q);
+      // Only an install: `run` executes the file, where the other actions only read it.
+      const all = listInstalls();
+      const bin = version
+        ? all.find((i) => i.version === version)
+        : (all.find((i) => i.current) ?? all[0]);
+      if (!bin)
+        throw new Error(
+          `run takes an installed version; installed: ${all.map((i) => i.version).join(", ") || "none"}`,
+        );
+      const r = await runPrompt(bin.path, q);
+      const t = userText(r, mark);
+      const sent = r.requests.map((x) => `${x.method} ${x.path}`);
+      const head = `${bin.version}: exit ${r.exit}, ${sent.length} requests.${r.exit !== 0 || t === null ? `\nstderr: ${clip(r.stderr, 500)}` : ""}`;
+      if (t === null)
+        return text(`${head}\nNo user turn holds "${clip(mark, 100)}".`, {
+          exit: r.exit,
+          requests: sent,
+        });
+      const start = Math.min(offset, t.length);
+      const end = Math.min(t.length, start + length);
+      return text(
+        `${head}\nUser turn [${start}, ${end}) of ${t.length}\n${t.slice(start, end)}`,
+        { exit: r.exit, requests: sent, offset: start, end, total: t.length },
+      );
+    },
     prepare: ({ version }) => {
       const r = prepared(version);
       const skipped = Object.keys(r.index.skipped);
@@ -174,6 +206,13 @@ group<Args & { context?: number; length?: number; view?: string }>(
       .max(MAX_CHARS)
       .optional()
       .describe("Characters to read (default 4000)."),
+    prompt: z
+      .string()
+      .min(1)
+      .optional()
+      .describe(
+        'With run: the prompt or slash command, such as "/verify ARG". `name` is the text that picks the user turn (default: the command tag).',
+      ),
   },
   { ...WRITES_CACHE, openWorldHint: true },
 );

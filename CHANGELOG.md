@@ -30,6 +30,7 @@ The site documents Claude Code `2.1.311`, the only release it tracks. The versio
 - `cc-inspect` 0.4.0 reads a release from its code: `code` `prepare` cleans each module of a version (stable local names) into a cache, `release` `diff` lists the functions changed, added, and gone between two versions, `release` `notes` marks each release-notes line as matched, gated, or unmatched against that diff, `release` `explain` gives where a name's code is, who uses it, what guards it, and whether it is a no-op, a stub, or handled, and `code` `find` finds code by plain words. Two MCP prompts, `release_review` and `explain_change`, give an agent the steps. `release:all` runs the new `release:clean` step.
 - An Account and Access page: where Claude Code gets your plan, the profile request, where the login and account record are kept, when it asks again, and how the plan and the provider decide which models `/model` lists, including Fable and Mythos.
 - The site build writes `llms-search-index.json`, a prebuilt search index of every page. `cc-docs` and `cc-docs-cli` load it in one request in place of fetching each page.
+- `cc-inspect` 0.6.0: `code` `run` runs a prompt or slash command with `claude -p` against a local fake API (a fake key, a dead proxy, temp folders it removes) and gives the user turn the program sends, such as the text of a bundled skill that the binary does not hold as plain text.
 
 ### Changed
 

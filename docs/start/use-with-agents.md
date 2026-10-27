@@ -115,6 +115,7 @@ The same marketplace has a second plugin, `cc-inspect`.
 It reads your session transcripts and the installed Claude Code binary.
 It makes two kinds of network request: `release` `notes` runs `gh release view` to get the release notes, once for each version, and `code` `read` with `view: "readable"` runs `bunx @wakaru/cli@1.14.0`, once for each module.
 It writes only its cache of cleaned code, under `CC_INSPECT_CACHE`, else `./captures` when that folder exists, else `~/.cache/cc-inspect`.
+`code` `run` also starts the program once, offline, with temp folders that it removes after the run.
 
 ```text
 /plugin install cc-inspect@claude-code-docs
@@ -135,6 +136,7 @@ The server has 4 tools. Each takes an `action` or a `kind` that picks what it do
 | `code` | `action: "read"` | Gives a slice of one `module`. With `view: "readable"`, it gives the module after [Wakaru](https://github.com/wakaru-dev/wakaru) rewrote it for reading. The first call for a module runs `bunx @wakaru/cli@1.14.0`, which needs a network and takes a few seconds on a large module. Later calls read the cache. |
 | `code` | `action: "find"` | Finds code by plain words in a `query`, such as "sleep Monitor until-loop". It ranks the functions of a prepared version by the words in their strings, property names, and labels, and gives the top 10 with module, offset, and first lines. |
 | `code` | `action: "prepare"` | Cleans each module of a version (stable local names, then `bun fmt`) and indexes its functions, into the cache. |
+| `code` | `action: "run"` | Runs a `prompt`, such as `/verify ARG`, with `claude -p` in an installed `version` against a local fake API, and gives the user turn the program sends, from the block that holds `name` (by default the command tag). It uses a fake key, a dead proxy, temp `HOME` and config folders, and a stub of the macOS `security` command on `PATH`. It fails when a request reaches the stub with another host or key, or when the program runs longer than 60 seconds. Temp paths come back as `<home>`, `<config-dir>`, `<project-dir>`, `<bundled-skill-dir>`, and `<temp-dir>`. Page with `offset` and `length`. |
 | `surface` | `kind: "env"`, `"setting"`, and the other surface kinds | Lists the items of one kind, each with its default, gate, module, and offset when the code shows them. With no `kind`, it gives each kind with its count. |
 | `surface` | `kind: "object-keys"` | Lists the keys of the object literal around an `offset` or an `anchor` text in a `module`, and follows spreads into the functions and modules they come from. |
 | `surface` | `kind: "event-keys"` | Lists the OpenTelemetry events of a binary. With `name`, it merges the attribute keys of every place the program emits that event. |

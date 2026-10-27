@@ -5,7 +5,7 @@ description: Look into the user's Claude Code sessions and into the installed Cl
 
 # Inspect Claude Code
 
-The `cc-inspect` MCP server reads local files, except `release` `notes` (`gh release view`) and `code` `read` with `view: "readable"` (`bunx @wakaru/cli`). It writes only its cache of cleaned code.
+The `cc-inspect` MCP server reads local files, except `release` `notes` (`gh release view`) and `code` `read` with `view: "readable"` (`bunx @wakaru/cli`). It writes only its cache of cleaned code, and the temp folders of `code` `run`, which it removes.
 It has 4 tools, `sessions`, `code`, `surface`, and `release`. Each takes an `action` (or, for `surface`, a `kind`), and the same parameter names: `version` (a version or a binary path), `query`, `name`, `offset`, and `limit`.
 
 ## Sessions
@@ -33,6 +33,7 @@ Transcripts can hold secrets and private text. Quote only what the user asks for
 7. `surface` `tool-gates` lists the built-in tools of a version, with the code that gates each one in the list, its own `isEnabled()` when it has one, and the source of the functions they call. The per-session filters are not in it, so a listed tool may still be off for a user: confirm with a probe before you say a tool is available.
 8. `release` `diff` with `from` and `to` lists the functions that changed between two versions, with the changed lines. Use `name` to keep the changes that hold a text, such as a tool name or a gate.
 9. `release` `explain` with `name` gives where a name's code is, who uses it, the gates and env reads that guard it, and whether each function is a no-op, a stub, or handled.
-10. `release` `notes` with `version` marks each release-notes line as matched, gated, or unmatched against the diff from the previous install. It runs `gh release view` once for each version. Read the code of each match before you state it.
+10. `code` `run` with a `prompt` such as `/verify ARG` runs an installed version once with `-p` against a local fake API (a fake key, a dead proxy, temp folders), and gives the user turn it sends. Use it for text the binary does not hold as plain text, such as a bundled skill.
+11. `release` `notes` with `version` marks each release-notes line as matched, gated, or unmatched against the diff from the previous install. It runs `gh release view` once for each version. Read the code of each match before you state it.
 
 When you report what the program does, call the source "the program" and name the version. A key ending in `?` is optional. A value shown as `unknown` is computed, so its type is unconfirmed.
