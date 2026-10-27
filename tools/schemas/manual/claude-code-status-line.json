@@ -13,7 +13,7 @@
       "schema": {
         "type": "string"
       },
-      "anchors": ["agent_type:«»,effort:H"],
+      "anchors": ["agent_type:«»,effort:«»"],
       "note": "ku sets agent_type:h with h=s?.agentType??qk(). qk() returns the main thread agent type from the hook registry, a string agent type name (undefined when none, which JSON drops)."
     },
     "subagentStatusLineInput.scratchpad_dir": {
@@ -27,7 +27,7 @@
       "schema": {
         "type": "string"
       },
-      "anchors": ["agent_type:«»,effort:H"],
+      "anchors": ["agent_type:«»,effort:«»"],
       "note": "ku sets agent_type:h with h=s?.agentType??qk(). qk() returns the main thread agent type from the hook registry, a string agent type name (undefined when none, which JSON drops)."
     },
     "cost.total_cost_usd": {

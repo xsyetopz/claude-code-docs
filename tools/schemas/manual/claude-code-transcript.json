@@ -35,7 +35,7 @@
         "type": "string"
       },
       "anchors": [
-        "K.push({type:\"agent-setting\",agentSetting:this.currentSessionAgentSetting,sessionId:«»})"
+        "«».push({type:\"agent-setting\",agentSetting:this.currentSessionAgentSetting,sessionId:«»})"
       ],
       "note": "currentSessionAgentSetting is set by the agent-setting setter from an agent definition's agentType string; the writer reappends it as agentSetting. sessionId is a string."
     },
@@ -44,7 +44,7 @@
         "type": "string"
       },
       "anchors": [
-        "K.push({type:\"agent-setting\",agentSetting:this.currentSessionAgentSetting,sessionId:«»})"
+        "«».push({type:\"agent-setting\",agentSetting:this.currentSessionAgentSetting,sessionId:«»})"
       ],
       "note": "currentSessionAgentSetting is set by the agent-setting setter from an agent definition's agentType string; the writer reappends it as agentSetting. sessionId is a string."
     },
@@ -164,7 +164,7 @@
         "enum": ["coordinator", "normal"]
       },
       "anchors": [
-        "K.push({type:\"mode\",mode:this.currentSessionMode,sessionId:«»})",
+        "«».push({type:\"mode\",mode:this.currentSessionMode,sessionId:«»})",
         "function «»(«»){«»().currentSessionMode=«»}",
         "«»(«»()?\"coordinator\":\"normal\");let «»=«»();if(«»)«»(«»,«»);",
         "«»(«»()?\"coordinator\":\"normal\"),«»(«»);",
@@ -177,7 +177,7 @@
         "type": "string"
       },
       "anchors": [
-        "K.push({type:\"mode\",mode:this.currentSessionMode,sessionId:«»})",
+        "«».push({type:\"mode\",mode:this.currentSessionMode,sessionId:«»})",
         "function «»(«»){«»().currentSessionMode=«»}",
         "«»(«»()?\"coordinator\":\"normal\");let «»=«»();if(«»)«»(«»,«»);",
         "«»(«»()?\"coordinator\":\"normal\"),«»(«»);",
@@ -703,9 +703,9 @@
       },
       "anchors": [
         "{type:\"cost-state\",sessionId:«»(),totalCostUSD:«»(),totalAPIDuration:«»()",
-        "modelUsage:«»(«»(),(«»)=>({inputTokens:«».inputTokens,outputTokens:«».outputTokens,thinkingTokens:«».thinkingTokens,cacheReadInputTokens:«».cacheReadInputTokens,cacheCreationInputTokens:«».cacheCreationInputTokens,webSearchRequests:«».webSearchRequests,costUSD:«».costUSD})),hasUnknownModelCost:«»()}}function «»("
+        "modelUsage:«»(«»(),(«»)=>({inputTokens:«».inputTokens,outputTokens:«».outputTokens,thinkingTokens:«».thinkingTokens,cacheReadInputTokens:«».cacheReadInputTokens,cacheCreationInputTokens:«».cacheCreationInputTokens,cacheCreationEphemeral5mInputTokens:«».cacheCreationEphemeral5mInputTokens,cacheCreationEphemeral1hInputTokens:«».cacheCreationEphemeral1hInputTokens,webSearchRequests:«».webSearchRequests,costUSD:«».costUSD})),hasUnknownModelCost:«»()}}function «»("
       ],
-      "note": "The cost snapshot builder fills every total from the cost tracker's getters (finite non-negative numbers; the reader's zod schema AZt requires nonnegative().finite() for each and a record of model name to usage for modelUsage). totalCostUSD is a float; the durations (ms), line counts and startTime (epoch ms) are integers in practice but the schema is number. hasUnknownModelCost is a boolean (optional in the reader schema). modelUsage maps a model name to {inputTokens, outputTokens, thinkingTokens (optional), cacheReadInputTokens, cacheCreationInputTokens, webSearchRequests, costUSD}."
+      "note": "The cost snapshot builder fills every total from the cost tracker's getters (finite non-negative numbers; the reader's zod schema AZt requires nonnegative().finite() for each and a record of model name to usage for modelUsage). totalCostUSD is a float; the durations (ms), line counts and startTime (epoch ms) are integers in practice but the schema is number. hasUnknownModelCost is a boolean (optional in the reader schema). modelUsage maps a model name to {inputTokens, outputTokens, thinkingTokens (optional), cacheReadInputTokens, cacheCreationInputTokens, cacheCreationEphemeral5mInputTokens, cacheCreationEphemeral1hInputTokens (both since 2.1.311), webSearchRequests, costUSD}."
     },
     "cost-state.totalCostUSD": {
       "schema": {
@@ -713,9 +713,9 @@
       },
       "anchors": [
         "{type:\"cost-state\",sessionId:«»(),totalCostUSD:«»(),totalAPIDuration:«»()",
-        "modelUsage:«»(«»(),(«»)=>({inputTokens:«».inputTokens,outputTokens:«».outputTokens,thinkingTokens:«».thinkingTokens,cacheReadInputTokens:«».cacheReadInputTokens,cacheCreationInputTokens:«».cacheCreationInputTokens,webSearchRequests:«».webSearchRequests,costUSD:«».costUSD})),hasUnknownModelCost:«»()}}function «»("
+        "modelUsage:«»(«»(),(«»)=>({inputTokens:«».inputTokens,outputTokens:«».outputTokens,thinkingTokens:«».thinkingTokens,cacheReadInputTokens:«».cacheReadInputTokens,cacheCreationInputTokens:«».cacheCreationInputTokens,cacheCreationEphemeral5mInputTokens:«».cacheCreationEphemeral5mInputTokens,cacheCreationEphemeral1hInputTokens:«».cacheCreationEphemeral1hInputTokens,webSearchRequests:«».webSearchRequests,costUSD:«».costUSD})),hasUnknownModelCost:«»()}}function «»("
       ],
-      "note": "The cost snapshot builder fills every total from the cost tracker's getters (finite non-negative numbers; the reader's zod schema AZt requires nonnegative().finite() for each and a record of model name to usage for modelUsage). totalCostUSD is a float; the durations (ms), line counts and startTime (epoch ms) are integers in practice but the schema is number. hasUnknownModelCost is a boolean (optional in the reader schema). modelUsage maps a model name to {inputTokens, outputTokens, thinkingTokens (optional), cacheReadInputTokens, cacheCreationInputTokens, webSearchRequests, costUSD}."
+      "note": "The cost snapshot builder fills every total from the cost tracker's getters (finite non-negative numbers; the reader's zod schema AZt requires nonnegative().finite() for each and a record of model name to usage for modelUsage). totalCostUSD is a float; the durations (ms), line counts and startTime (epoch ms) are integers in practice but the schema is number. hasUnknownModelCost is a boolean (optional in the reader schema). modelUsage maps a model name to {inputTokens, outputTokens, thinkingTokens (optional), cacheReadInputTokens, cacheCreationInputTokens, cacheCreationEphemeral5mInputTokens, cacheCreationEphemeral1hInputTokens (both since 2.1.311), webSearchRequests, costUSD}."
     },
     "cost-state.totalAPIDuration": {
       "schema": {
@@ -723,9 +723,9 @@
       },
       "anchors": [
         "{type:\"cost-state\",sessionId:«»(),totalCostUSD:«»(),totalAPIDuration:«»()",
-        "modelUsage:«»(«»(),(«»)=>({inputTokens:«».inputTokens,outputTokens:«».outputTokens,thinkingTokens:«».thinkingTokens,cacheReadInputTokens:«».cacheReadInputTokens,cacheCreationInputTokens:«».cacheCreationInputTokens,webSearchRequests:«».webSearchRequests,costUSD:«».costUSD})),hasUnknownModelCost:«»()}}function «»("
+        "modelUsage:«»(«»(),(«»)=>({inputTokens:«».inputTokens,outputTokens:«».outputTokens,thinkingTokens:«».thinkingTokens,cacheReadInputTokens:«».cacheReadInputTokens,cacheCreationInputTokens:«».cacheCreationInputTokens,cacheCreationEphemeral5mInputTokens:«».cacheCreationEphemeral5mInputTokens,cacheCreationEphemeral1hInputTokens:«».cacheCreationEphemeral1hInputTokens,webSearchRequests:«».webSearchRequests,costUSD:«».costUSD})),hasUnknownModelCost:«»()}}function «»("
       ],
-      "note": "The cost snapshot builder fills every total from the cost tracker's getters (finite non-negative numbers; the reader's zod schema AZt requires nonnegative().finite() for each and a record of model name to usage for modelUsage). totalCostUSD is a float; the durations (ms), line counts and startTime (epoch ms) are integers in practice but the schema is number. hasUnknownModelCost is a boolean (optional in the reader schema). modelUsage maps a model name to {inputTokens, outputTokens, thinkingTokens (optional), cacheReadInputTokens, cacheCreationInputTokens, webSearchRequests, costUSD}."
+      "note": "The cost snapshot builder fills every total from the cost tracker's getters (finite non-negative numbers; the reader's zod schema AZt requires nonnegative().finite() for each and a record of model name to usage for modelUsage). totalCostUSD is a float; the durations (ms), line counts and startTime (epoch ms) are integers in practice but the schema is number. hasUnknownModelCost is a boolean (optional in the reader schema). modelUsage maps a model name to {inputTokens, outputTokens, thinkingTokens (optional), cacheReadInputTokens, cacheCreationInputTokens, cacheCreationEphemeral5mInputTokens, cacheCreationEphemeral1hInputTokens (both since 2.1.311), webSearchRequests, costUSD}."
     },
     "cost-state.totalAPIDurationWithoutRetries": {
       "schema": {
@@ -733,9 +733,9 @@
       },
       "anchors": [
         "{type:\"cost-state\",sessionId:«»(),totalCostUSD:«»(),totalAPIDuration:«»()",
-        "modelUsage:«»(«»(),(«»)=>({inputTokens:«».inputTokens,outputTokens:«».outputTokens,thinkingTokens:«».thinkingTokens,cacheReadInputTokens:«».cacheReadInputTokens,cacheCreationInputTokens:«».cacheCreationInputTokens,webSearchRequests:«».webSearchRequests,costUSD:«».costUSD})),hasUnknownModelCost:«»()}}function «»("
+        "modelUsage:«»(«»(),(«»)=>({inputTokens:«».inputTokens,outputTokens:«».outputTokens,thinkingTokens:«».thinkingTokens,cacheReadInputTokens:«».cacheReadInputTokens,cacheCreationInputTokens:«».cacheCreationInputTokens,cacheCreationEphemeral5mInputTokens:«».cacheCreationEphemeral5mInputTokens,cacheCreationEphemeral1hInputTokens:«».cacheCreationEphemeral1hInputTokens,webSearchRequests:«».webSearchRequests,costUSD:«».costUSD})),hasUnknownModelCost:«»()}}function «»("
       ],
-      "note": "The cost snapshot builder fills every total from the cost tracker's getters (finite non-negative numbers; the reader's zod schema AZt requires nonnegative().finite() for each and a record of model name to usage for modelUsage). totalCostUSD is a float; the durations (ms), line counts and startTime (epoch ms) are integers in practice but the schema is number. hasUnknownModelCost is a boolean (optional in the reader schema). modelUsage maps a model name to {inputTokens, outputTokens, thinkingTokens (optional), cacheReadInputTokens, cacheCreationInputTokens, webSearchRequests, costUSD}."
+      "note": "The cost snapshot builder fills every total from the cost tracker's getters (finite non-negative numbers; the reader's zod schema AZt requires nonnegative().finite() for each and a record of model name to usage for modelUsage). totalCostUSD is a float; the durations (ms), line counts and startTime (epoch ms) are integers in practice but the schema is number. hasUnknownModelCost is a boolean (optional in the reader schema). modelUsage maps a model name to {inputTokens, outputTokens, thinkingTokens (optional), cacheReadInputTokens, cacheCreationInputTokens, cacheCreationEphemeral5mInputTokens, cacheCreationEphemeral1hInputTokens (both since 2.1.311), webSearchRequests, costUSD}."
     },
     "cost-state.totalToolDuration": {
       "schema": {
@@ -743,9 +743,9 @@
       },
       "anchors": [
         "{type:\"cost-state\",sessionId:«»(),totalCostUSD:«»(),totalAPIDuration:«»()",
-        "modelUsage:«»(«»(),(«»)=>({inputTokens:«».inputTokens,outputTokens:«».outputTokens,thinkingTokens:«».thinkingTokens,cacheReadInputTokens:«».cacheReadInputTokens,cacheCreationInputTokens:«».cacheCreationInputTokens,webSearchRequests:«».webSearchRequests,costUSD:«».costUSD})),hasUnknownModelCost:«»()}}function «»("
+        "modelUsage:«»(«»(),(«»)=>({inputTokens:«».inputTokens,outputTokens:«».outputTokens,thinkingTokens:«».thinkingTokens,cacheReadInputTokens:«».cacheReadInputTokens,cacheCreationInputTokens:«».cacheCreationInputTokens,cacheCreationEphemeral5mInputTokens:«».cacheCreationEphemeral5mInputTokens,cacheCreationEphemeral1hInputTokens:«».cacheCreationEphemeral1hInputTokens,webSearchRequests:«».webSearchRequests,costUSD:«».costUSD})),hasUnknownModelCost:«»()}}function «»("
       ],
-      "note": "The cost snapshot builder fills every total from the cost tracker's getters (finite non-negative numbers; the reader's zod schema AZt requires nonnegative().finite() for each and a record of model name to usage for modelUsage). totalCostUSD is a float; the durations (ms), line counts and startTime (epoch ms) are integers in practice but the schema is number. hasUnknownModelCost is a boolean (optional in the reader schema). modelUsage maps a model name to {inputTokens, outputTokens, thinkingTokens (optional), cacheReadInputTokens, cacheCreationInputTokens, webSearchRequests, costUSD}."
+      "note": "The cost snapshot builder fills every total from the cost tracker's getters (finite non-negative numbers; the reader's zod schema AZt requires nonnegative().finite() for each and a record of model name to usage for modelUsage). totalCostUSD is a float; the durations (ms), line counts and startTime (epoch ms) are integers in practice but the schema is number. hasUnknownModelCost is a boolean (optional in the reader schema). modelUsage maps a model name to {inputTokens, outputTokens, thinkingTokens (optional), cacheReadInputTokens, cacheCreationInputTokens, cacheCreationEphemeral5mInputTokens, cacheCreationEphemeral1hInputTokens (both since 2.1.311), webSearchRequests, costUSD}."
     },
     "cost-state.totalLinesAdded": {
       "schema": {
@@ -753,9 +753,9 @@
       },
       "anchors": [
         "{type:\"cost-state\",sessionId:«»(),totalCostUSD:«»(),totalAPIDuration:«»()",
-        "modelUsage:«»(«»(),(«»)=>({inputTokens:«».inputTokens,outputTokens:«».outputTokens,thinkingTokens:«».thinkingTokens,cacheReadInputTokens:«».cacheReadInputTokens,cacheCreationInputTokens:«».cacheCreationInputTokens,webSearchRequests:«».webSearchRequests,costUSD:«».costUSD})),hasUnknownModelCost:«»()}}function «»("
+        "modelUsage:«»(«»(),(«»)=>({inputTokens:«».inputTokens,outputTokens:«».outputTokens,thinkingTokens:«».thinkingTokens,cacheReadInputTokens:«».cacheReadInputTokens,cacheCreationInputTokens:«».cacheCreationInputTokens,cacheCreationEphemeral5mInputTokens:«».cacheCreationEphemeral5mInputTokens,cacheCreationEphemeral1hInputTokens:«».cacheCreationEphemeral1hInputTokens,webSearchRequests:«».webSearchRequests,costUSD:«».costUSD})),hasUnknownModelCost:«»()}}function «»("
       ],
-      "note": "The cost snapshot builder fills every total from the cost tracker's getters (finite non-negative numbers; the reader's zod schema AZt requires nonnegative().finite() for each and a record of model name to usage for modelUsage). totalCostUSD is a float; the durations (ms), line counts and startTime (epoch ms) are integers in practice but the schema is number. hasUnknownModelCost is a boolean (optional in the reader schema). modelUsage maps a model name to {inputTokens, outputTokens, thinkingTokens (optional), cacheReadInputTokens, cacheCreationInputTokens, webSearchRequests, costUSD}."
+      "note": "The cost snapshot builder fills every total from the cost tracker's getters (finite non-negative numbers; the reader's zod schema AZt requires nonnegative().finite() for each and a record of model name to usage for modelUsage). totalCostUSD is a float; the durations (ms), line counts and startTime (epoch ms) are integers in practice but the schema is number. hasUnknownModelCost is a boolean (optional in the reader schema). modelUsage maps a model name to {inputTokens, outputTokens, thinkingTokens (optional), cacheReadInputTokens, cacheCreationInputTokens, cacheCreationEphemeral5mInputTokens, cacheCreationEphemeral1hInputTokens (both since 2.1.311), webSearchRequests, costUSD}."
     },
     "cost-state.totalLinesRemoved": {
       "schema": {
@@ -763,9 +763,9 @@
       },
       "anchors": [
         "{type:\"cost-state\",sessionId:«»(),totalCostUSD:«»(),totalAPIDuration:«»()",
-        "modelUsage:«»(«»(),(«»)=>({inputTokens:«».inputTokens,outputTokens:«».outputTokens,thinkingTokens:«».thinkingTokens,cacheReadInputTokens:«».cacheReadInputTokens,cacheCreationInputTokens:«».cacheCreationInputTokens,webSearchRequests:«».webSearchRequests,costUSD:«».costUSD})),hasUnknownModelCost:«»()}}function «»("
+        "modelUsage:«»(«»(),(«»)=>({inputTokens:«».inputTokens,outputTokens:«».outputTokens,thinkingTokens:«».thinkingTokens,cacheReadInputTokens:«».cacheReadInputTokens,cacheCreationInputTokens:«».cacheCreationInputTokens,cacheCreationEphemeral5mInputTokens:«».cacheCreationEphemeral5mInputTokens,cacheCreationEphemeral1hInputTokens:«».cacheCreationEphemeral1hInputTokens,webSearchRequests:«».webSearchRequests,costUSD:«».costUSD})),hasUnknownModelCost:«»()}}function «»("
       ],
-      "note": "The cost snapshot builder fills every total from the cost tracker's getters (finite non-negative numbers; the reader's zod schema AZt requires nonnegative().finite() for each and a record of model name to usage for modelUsage). totalCostUSD is a float; the durations (ms), line counts and startTime (epoch ms) are integers in practice but the schema is number. hasUnknownModelCost is a boolean (optional in the reader schema). modelUsage maps a model name to {inputTokens, outputTokens, thinkingTokens (optional), cacheReadInputTokens, cacheCreationInputTokens, webSearchRequests, costUSD}."
+      "note": "The cost snapshot builder fills every total from the cost tracker's getters (finite non-negative numbers; the reader's zod schema AZt requires nonnegative().finite() for each and a record of model name to usage for modelUsage). totalCostUSD is a float; the durations (ms), line counts and startTime (epoch ms) are integers in practice but the schema is number. hasUnknownModelCost is a boolean (optional in the reader schema). modelUsage maps a model name to {inputTokens, outputTokens, thinkingTokens (optional), cacheReadInputTokens, cacheCreationInputTokens, cacheCreationEphemeral5mInputTokens, cacheCreationEphemeral1hInputTokens (both since 2.1.311), webSearchRequests, costUSD}."
     },
     "cost-state.totalDuration": {
       "schema": {
@@ -773,9 +773,9 @@
       },
       "anchors": [
         "{type:\"cost-state\",sessionId:«»(),totalCostUSD:«»(),totalAPIDuration:«»()",
-        "modelUsage:«»(«»(),(«»)=>({inputTokens:«».inputTokens,outputTokens:«».outputTokens,thinkingTokens:«».thinkingTokens,cacheReadInputTokens:«».cacheReadInputTokens,cacheCreationInputTokens:«».cacheCreationInputTokens,webSearchRequests:«».webSearchRequests,costUSD:«».costUSD})),hasUnknownModelCost:«»()}}function «»("
+        "modelUsage:«»(«»(),(«»)=>({inputTokens:«».inputTokens,outputTokens:«».outputTokens,thinkingTokens:«».thinkingTokens,cacheReadInputTokens:«».cacheReadInputTokens,cacheCreationInputTokens:«».cacheCreationInputTokens,cacheCreationEphemeral5mInputTokens:«».cacheCreationEphemeral5mInputTokens,cacheCreationEphemeral1hInputTokens:«».cacheCreationEphemeral1hInputTokens,webSearchRequests:«».webSearchRequests,costUSD:«».costUSD})),hasUnknownModelCost:«»()}}function «»("
       ],
-      "note": "The cost snapshot builder fills every total from the cost tracker's getters (finite non-negative numbers; the reader's zod schema AZt requires nonnegative().finite() for each and a record of model name to usage for modelUsage). totalCostUSD is a float; the durations (ms), line counts and startTime (epoch ms) are integers in practice but the schema is number. hasUnknownModelCost is a boolean (optional in the reader schema). modelUsage maps a model name to {inputTokens, outputTokens, thinkingTokens (optional), cacheReadInputTokens, cacheCreationInputTokens, webSearchRequests, costUSD}."
+      "note": "The cost snapshot builder fills every total from the cost tracker's getters (finite non-negative numbers; the reader's zod schema AZt requires nonnegative().finite() for each and a record of model name to usage for modelUsage). totalCostUSD is a float; the durations (ms), line counts and startTime (epoch ms) are integers in practice but the schema is number. hasUnknownModelCost is a boolean (optional in the reader schema). modelUsage maps a model name to {inputTokens, outputTokens, thinkingTokens (optional), cacheReadInputTokens, cacheCreationInputTokens, cacheCreationEphemeral5mInputTokens, cacheCreationEphemeral1hInputTokens (both since 2.1.311), webSearchRequests, costUSD}."
     },
     "cost-state.startTime": {
       "schema": {
@@ -783,9 +783,9 @@
       },
       "anchors": [
         "{type:\"cost-state\",sessionId:«»(),totalCostUSD:«»(),totalAPIDuration:«»()",
-        "modelUsage:«»(«»(),(«»)=>({inputTokens:«».inputTokens,outputTokens:«».outputTokens,thinkingTokens:«».thinkingTokens,cacheReadInputTokens:«».cacheReadInputTokens,cacheCreationInputTokens:«».cacheCreationInputTokens,webSearchRequests:«».webSearchRequests,costUSD:«».costUSD})),hasUnknownModelCost:«»()}}function «»("
+        "modelUsage:«»(«»(),(«»)=>({inputTokens:«».inputTokens,outputTokens:«».outputTokens,thinkingTokens:«».thinkingTokens,cacheReadInputTokens:«».cacheReadInputTokens,cacheCreationInputTokens:«».cacheCreationInputTokens,cacheCreationEphemeral5mInputTokens:«».cacheCreationEphemeral5mInputTokens,cacheCreationEphemeral1hInputTokens:«».cacheCreationEphemeral1hInputTokens,webSearchRequests:«».webSearchRequests,costUSD:«».costUSD})),hasUnknownModelCost:«»()}}function «»("
       ],
-      "note": "The cost snapshot builder fills every total from the cost tracker's getters (finite non-negative numbers; the reader's zod schema AZt requires nonnegative().finite() for each and a record of model name to usage for modelUsage). totalCostUSD is a float; the durations (ms), line counts and startTime (epoch ms) are integers in practice but the schema is number. hasUnknownModelCost is a boolean (optional in the reader schema). modelUsage maps a model name to {inputTokens, outputTokens, thinkingTokens (optional), cacheReadInputTokens, cacheCreationInputTokens, webSearchRequests, costUSD}."
+      "note": "The cost snapshot builder fills every total from the cost tracker's getters (finite non-negative numbers; the reader's zod schema AZt requires nonnegative().finite() for each and a record of model name to usage for modelUsage). totalCostUSD is a float; the durations (ms), line counts and startTime (epoch ms) are integers in practice but the schema is number. hasUnknownModelCost is a boolean (optional in the reader schema). modelUsage maps a model name to {inputTokens, outputTokens, thinkingTokens (optional), cacheReadInputTokens, cacheCreationInputTokens, cacheCreationEphemeral5mInputTokens, cacheCreationEphemeral1hInputTokens (both since 2.1.311), webSearchRequests, costUSD}."
     },
     "cost-state.hasUnknownModelCost": {
       "schema": {
@@ -793,9 +793,9 @@
       },
       "anchors": [
         "{type:\"cost-state\",sessionId:«»(),totalCostUSD:«»(),totalAPIDuration:«»()",
-        "modelUsage:«»(«»(),(«»)=>({inputTokens:«».inputTokens,outputTokens:«».outputTokens,thinkingTokens:«».thinkingTokens,cacheReadInputTokens:«».cacheReadInputTokens,cacheCreationInputTokens:«».cacheCreationInputTokens,webSearchRequests:«».webSearchRequests,costUSD:«».costUSD})),hasUnknownModelCost:«»()}}function «»("
+        "modelUsage:«»(«»(),(«»)=>({inputTokens:«».inputTokens,outputTokens:«».outputTokens,thinkingTokens:«».thinkingTokens,cacheReadInputTokens:«».cacheReadInputTokens,cacheCreationInputTokens:«».cacheCreationInputTokens,cacheCreationEphemeral5mInputTokens:«».cacheCreationEphemeral5mInputTokens,cacheCreationEphemeral1hInputTokens:«».cacheCreationEphemeral1hInputTokens,webSearchRequests:«».webSearchRequests,costUSD:«».costUSD})),hasUnknownModelCost:«»()}}function «»("
       ],
-      "note": "The cost snapshot builder fills every total from the cost tracker's getters (finite non-negative numbers; the reader's zod schema AZt requires nonnegative().finite() for each and a record of model name to usage for modelUsage). totalCostUSD is a float; the durations (ms), line counts and startTime (epoch ms) are integers in practice but the schema is number. hasUnknownModelCost is a boolean (optional in the reader schema). modelUsage maps a model name to {inputTokens, outputTokens, thinkingTokens (optional), cacheReadInputTokens, cacheCreationInputTokens, webSearchRequests, costUSD}."
+      "note": "The cost snapshot builder fills every total from the cost tracker's getters (finite non-negative numbers; the reader's zod schema AZt requires nonnegative().finite() for each and a record of model name to usage for modelUsage). totalCostUSD is a float; the durations (ms), line counts and startTime (epoch ms) are integers in practice but the schema is number. hasUnknownModelCost is a boolean (optional in the reader schema). modelUsage maps a model name to {inputTokens, outputTokens, thinkingTokens (optional), cacheReadInputTokens, cacheCreationInputTokens, cacheCreationEphemeral5mInputTokens, cacheCreationEphemeral1hInputTokens (both since 2.1.311), webSearchRequests, costUSD}."
     },
     "cost-state.modelUsage": {
       "schema": {
@@ -818,6 +818,12 @@
             "cacheCreationInputTokens": {
               "type": "number"
             },
+            "cacheCreationEphemeral5mInputTokens": {
+              "type": "number"
+            },
+            "cacheCreationEphemeral1hInputTokens": {
+              "type": "number"
+            },
             "webSearchRequests": {
               "type": "number"
             },
@@ -829,9 +835,9 @@
       },
       "anchors": [
         "{type:\"cost-state\",sessionId:«»(),totalCostUSD:«»(),totalAPIDuration:«»()",
-        "modelUsage:«»(«»(),(«»)=>({inputTokens:«».inputTokens,outputTokens:«».outputTokens,thinkingTokens:«».thinkingTokens,cacheReadInputTokens:«».cacheReadInputTokens,cacheCreationInputTokens:«».cacheCreationInputTokens,webSearchRequests:«».webSearchRequests,costUSD:«».costUSD})),hasUnknownModelCost:«»()}}function «»("
+        "modelUsage:«»(«»(),(«»)=>({inputTokens:«».inputTokens,outputTokens:«».outputTokens,thinkingTokens:«».thinkingTokens,cacheReadInputTokens:«».cacheReadInputTokens,cacheCreationInputTokens:«».cacheCreationInputTokens,cacheCreationEphemeral5mInputTokens:«».cacheCreationEphemeral5mInputTokens,cacheCreationEphemeral1hInputTokens:«».cacheCreationEphemeral1hInputTokens,webSearchRequests:«».webSearchRequests,costUSD:«».costUSD})),hasUnknownModelCost:«»()}}function «»("
       ],
-      "note": "The cost snapshot builder fills every total from the cost tracker's getters (finite non-negative numbers; the reader's zod schema AZt requires nonnegative().finite() for each and a record of model name to usage for modelUsage). totalCostUSD is a float; the durations (ms), line counts and startTime (epoch ms) are integers in practice but the schema is number. hasUnknownModelCost is a boolean (optional in the reader schema). modelUsage maps a model name to {inputTokens, outputTokens, thinkingTokens (optional), cacheReadInputTokens, cacheCreationInputTokens, webSearchRequests, costUSD}."
+      "note": "The cost snapshot builder fills every total from the cost tracker's getters (finite non-negative numbers; the reader's zod schema AZt requires nonnegative().finite() for each and a record of model name to usage for modelUsage). totalCostUSD is a float; the durations (ms), line counts and startTime (epoch ms) are integers in practice but the schema is number. hasUnknownModelCost is a boolean (optional in the reader schema). modelUsage maps a model name to {inputTokens, outputTokens, thinkingTokens (optional), cacheReadInputTokens, cacheCreationInputTokens, cacheCreationEphemeral5mInputTokens, cacheCreationEphemeral1hInputTokens (both since 2.1.311), webSearchRequests, costUSD}."
     },
     "file-history-delta.messageId": {
       "schema": {
@@ -2220,7 +2226,7 @@
       "anchors": [
         "subtype:\"local_command\",content:«»,level:\"info\",timestamp:new Date().toISOString(),uuid:«»(),isMeta:!1,...n?.contextUsage!==void 0&&{contextUsage:«».contextUsage},...n?.usageReport!==void 0&&{usageReport:«».usageReport},...n?.commandRun!==void 0&&{commandRun:«».commandRun},...n?.commandOutcome!==void 0&&{commandOutcome:«».commandOutcome},...n?.submitUuid&&{submitUuid:«».submitUuid}",
         "commandOutcome:«».outcome??(«».level===\"error\"?{kind:\"failed\"}:void 0)",
-        "«»(`<local-command-stdout>${ze}</local-command-stdout>`,{commandOutcome:{kind:\"unavailable_headless\"}})],shouldQuery:!1,resultText:«»})",
+        "«»(`<local-command-stdout>${«»}</local-command-stdout>`,{commandOutcome:{kind:\"unavailable_headless\"}})],shouldQuery:!1,resultText:«»})",
         "«»(`<local-command-stdout>${u}</local-command-stdout>`,{commandOutcome:{kind:\"unavailable_headless\"}})],shouldQuery:!1,command:«»,resultText:«»}"
       ],
       "note": "local_command: kind is a string: 'failed', 'unavailable_headless', 'unknown', or the outcome.kind a command result returns."
@@ -2231,7 +2237,7 @@
       },
       "anchors": [
         "subtype:\"local_command\",content:«»,level:\"info\",timestamp:new Date().toISOString(),uuid:«»(),isMeta:!1,...n?.contextUsage!==void 0&&{contextUsage:«».contextUsage},...n?.usageReport!==void 0&&{usageReport:«».usageReport},...n?.commandRun!==void 0&&{commandRun:«».commandRun},...n?.commandOutcome!==void 0&&{commandOutcome:«».commandOutcome},...n?.submitUuid&&{submitUuid:«».submitUuid}",
-        "{commandOutcome:{kind:\"unknown\",...je!==void 0&&{suggestion:«»}}}"
+        "{commandOutcome:{kind:\"unknown\",...«»!==void 0&&{suggestion:«»}}}"
       ],
       "note": "local_command: suggestion is the suggested command string, written only for kind 'unknown'."
     },
@@ -3605,7 +3611,7 @@
       "schema": {
         "type": "boolean"
       },
-      "anchors": ["apiErrorIsTransient:H"],
+      "anchors": ["apiErrorIsTransient:«»"],
       "note": "assistant top-level fields come from the object literals of the stream path, the error-message factory Ws/r7n and the stream-json rebuild; A boolean flag in the rate_limit branch (H comes from a condition on the response)."
     },
     "assistant.cloudMemoryToolUseIds": {
@@ -4462,7 +4468,7 @@
       },
       "anchors": [
         "type:\"agent_api_retry\",agentId:«»,agentType:«».agentType,attempt:«».retryAttempt,maxRetries:«».maxRetries,retryDelayMs:«».retryInMs,errorStatus:«».error.status,errorCategory:«»",
-        "type:\"workflow_agent\",index:«»,label:«»,phaseIndex:«»,phaseTitle:Re"
+        "type:\"workflow_agent\",index:«»,label:«»,phaseIndex:«»,phaseTitle:«»"
       ],
       "note": "The progress line is {type:'progress', data, toolUseID, parentToolUseID, uuid}; data is a different object per progress type (hook_progress, bash_progress, powershell_progress, tool_heartbeat, agent_progress, skill_progress, agent_api_retry, search_results_received, query_update, workflow_log, workflow_phase, workflow_agent, artifact_publish_retry, ...); the key below is the union over the literals of those types. attempt (agent_api_retry, workflow_agent, artifact_publish_retry) is the attempt number."
     },
@@ -4547,7 +4553,7 @@
         "type": "string"
       },
       "anchors": [
-        "type:\"workflow_agent\",index:«»,label:«»,phaseIndex:«»,phaseTitle:Re"
+        "type:\"workflow_agent\",index:«»,label:«»,phaseIndex:«»,phaseTitle:«»"
       ],
       "note": "The progress line is {type:'progress', data, toolUseID, parentToolUseID, uuid}; data is a different object per progress type (hook_progress, bash_progress, powershell_progress, tool_heartbeat, agent_progress, skill_progress, agent_api_retry, search_results_received, query_update, workflow_log, workflow_phase, workflow_agent, artifact_publish_retry, ...); the key below is the union over the literals of those types. label (workflow_agent) is the agent label string."
     },
@@ -4556,7 +4562,7 @@
         "type": "number"
       },
       "anchors": [
-        "type:\"workflow_agent\",index:«»,label:«»,phaseIndex:«»,phaseTitle:Re"
+        "type:\"workflow_agent\",index:«»,label:«»,phaseIndex:«»,phaseTitle:«»"
       ],
       "note": "The progress line is {type:'progress', data, toolUseID, parentToolUseID, uuid}; data is a different object per progress type (hook_progress, bash_progress, powershell_progress, tool_heartbeat, agent_progress, skill_progress, agent_api_retry, search_results_received, query_update, workflow_log, workflow_phase, workflow_agent, artifact_publish_retry, ...); the key below is the union over the literals of those types. phaseIndex (workflow_agent) is a phase index number."
     },
@@ -4565,7 +4571,7 @@
         "type": "string"
       },
       "anchors": [
-        "type:\"workflow_agent\",index:«»,label:«»,phaseIndex:«»,phaseTitle:Re"
+        "type:\"workflow_agent\",index:«»,label:«»,phaseIndex:«»,phaseTitle:«»"
       ],
       "note": "The progress line is {type:'progress', data, toolUseID, parentToolUseID, uuid}; data is a different object per progress type (hook_progress, bash_progress, powershell_progress, tool_heartbeat, agent_progress, skill_progress, agent_api_retry, search_results_received, query_update, workflow_log, workflow_phase, workflow_agent, artifact_publish_retry, ...); the key below is the union over the literals of those types. phaseTitle (workflow_agent) is the phase title string."
     },
@@ -4575,7 +4581,7 @@
       },
       "anchors": [
         "type:\"workflow_agent\",index:«»,label:«»,phaseIndex:«»,phaseTitle:«»,agentType:«»?.agentType!=null?String(«».agentType):void 0,isolation:«»?.isolation===\"worktree\"||«»?.isolation===\"remote\"?«».isolation:void 0,model:«»(«»?.model),state:\"start\",queuedAt:«»,promptPreview:«»,lastProgressAt:«»",
-        "isolation:\"remote\",remoteSessionId:Qe"
+        "isolation:\"remote\",remoteSessionId:«»"
       ],
       "note": "The progress line is {type:'progress', data, toolUseID, parentToolUseID, uuid}; data is a different object per progress type (hook_progress, bash_progress, powershell_progress, tool_heartbeat, agent_progress, skill_progress, agent_api_retry, search_results_received, query_update, workflow_log, workflow_phase, workflow_agent, artifact_publish_retry, ...); the key below is the union over the literals of those types. isolation (workflow_agent) is 'worktree' or 'remote'; not written otherwise."
     },
@@ -4589,10 +4595,10 @@
         "model:«»(«»?.model),state:\"start\",queuedAt:«»,promptPreview:«»,lastProgressAt:«»}",
         "model:«»(«»?.model),state:\"error\",error:«» instanceof Error?",
         "fallbackModel:«»,state:«»,startedAt:«»,queuedAt:«»,attempt:«»",
-        "Dt(\"start\",«»||«»?{tokens:«»,toolCalls:«»}:void 0)",
-        "Dt(\"progress\",{tokens:«»+«»,toolCalls:«»+«»})",
-        "Dt(\"done\",{tokens:",
-        "Dt(\"error\",{error:",
+        "«»(\"start\",«»||«»?{tokens:«»,toolCalls:«»}:void 0)",
+        "«»(\"progress\",{tokens:«»+«»,toolCalls:«»+«»})",
+        "«»(\"done\",{tokens:",
+        "«»(\"error\",{error:",
         "«»(«»,{state:\"start\"})",
         "«»(«»,{state:\"error\",error:«»,durationMs:",
         "isolation:\"remote\",remoteSessionId:«»,state:«»,startedAt:«»,queuedAt:«»,promptPreview:«»,lastProgressAt:Date.now(),...«»}",
@@ -4633,7 +4639,7 @@
         "type": "number"
       },
       "anchors": [
-        "type:\"workflow_agent\",index:«»,label:«»,phaseIndex:«»,phaseTitle:«»,agentId:«».agentId,model:«»(«»?.model),state:\"done\",startedAt:Date.now(),lastProgressAt:Date.now(),cached:!0,resultPreview:«»(«».result),promptPreview:Lt"
+        "type:\"workflow_agent\",index:«»,label:«»,phaseIndex:«»,phaseTitle:«»,agentId:«».agentId,model:«»(«»?.model),state:\"done\",startedAt:Date.now(),lastProgressAt:Date.now(),cached:!0,resultPreview:«»(«».result),promptPreview:«»"
       ],
       "note": "The progress line is {type:'progress', data, toolUseID, parentToolUseID, uuid}; data is a different object per progress type (hook_progress, bash_progress, powershell_progress, tool_heartbeat, agent_progress, skill_progress, agent_api_retry, search_results_received, query_update, workflow_log, workflow_phase, workflow_agent, artifact_publish_retry, ...); the key below is the union over the literals of those types. startedAt (workflow_agent) is a Date.now() millisecond timestamp."
     },
@@ -4643,7 +4649,7 @@
       },
       "anchors": [
         "state:\"error\",blocked:!0,error:«»,queuedAt:«»,promptPreview:«»(«»),lastProgressAt:Date.now()",
-        "type:\"workflow_agent\",index:«»,label:«»,phaseIndex:«»,phaseTitle:«»,agentId:«».agentId,model:«»(«»?.model),state:\"done\",startedAt:Date.now(),lastProgressAt:Date.now(),cached:!0,resultPreview:«»(«».result),promptPreview:Lt"
+        "type:\"workflow_agent\",index:«»,label:«»,phaseIndex:«»,phaseTitle:«»,agentId:«».agentId,model:«»(«»?.model),state:\"done\",startedAt:Date.now(),lastProgressAt:Date.now(),cached:!0,resultPreview:«»(«».result),promptPreview:«»"
       ],
       "note": "The progress line is {type:'progress', data, toolUseID, parentToolUseID, uuid}; data is a different object per progress type (hook_progress, bash_progress, powershell_progress, tool_heartbeat, agent_progress, skill_progress, agent_api_retry, search_results_received, query_update, workflow_log, workflow_phase, workflow_agent, artifact_publish_retry, ...); the key below is the union over the literals of those types. lastProgressAt (workflow_agent) is a Date.now() millisecond timestamp."
     },
@@ -4653,7 +4659,7 @@
       },
       "anchors": [
         "state:\"error\",blocked:!0,error:«»,queuedAt:«»,promptPreview:«»(«»),lastProgressAt:Date.now()",
-        "type:\"workflow_agent\",index:«»,label:«»,phaseIndex:«»,phaseTitle:«»,agentId:«».agentId,model:«»(«»?.model),state:\"done\",startedAt:Date.now(),lastProgressAt:Date.now(),cached:!0,resultPreview:«»(«».result),promptPreview:Lt",
+        "type:\"workflow_agent\",index:«»,label:«»,phaseIndex:«»,phaseTitle:«»,agentId:«».agentId,model:«»(«»?.model),state:\"done\",startedAt:Date.now(),lastProgressAt:Date.now(),cached:!0,resultPreview:«»(«».result),promptPreview:«»",
         "type:\"workflow_agent\",index:«»,label:«»,phaseIndex:«»,phaseTitle:«»,agentType:«»?.agentType!=null?String(«».agentType):void 0,isolation:«»?.isolation===\"worktree\"||«»?.isolation===\"remote\"?«».isolation:void 0,model:«»(«»?.model),state:\"start\",queuedAt:«»,promptPreview:«»,lastProgressAt:«»"
       ],
       "note": "The progress line is {type:'progress', data, toolUseID, parentToolUseID, uuid}; data is a different object per progress type (hook_progress, bash_progress, powershell_progress, tool_heartbeat, agent_progress, skill_progress, agent_api_retry, search_results_received, query_update, workflow_log, workflow_phase, workflow_agent, artifact_publish_retry, ...); the key below is the union over the literals of those types. promptPreview (workflow_agent) is a truncated prompt string."
@@ -4663,7 +4669,7 @@
         "type": "boolean"
       },
       "anchors": [
-        "type:\"workflow_agent\",index:«»,label:«»,phaseIndex:«»,phaseTitle:«»,agentId:«».agentId,model:«»(«»?.model),state:\"done\",startedAt:Date.now(),lastProgressAt:Date.now(),cached:!0,resultPreview:«»(«».result),promptPreview:Lt"
+        "type:\"workflow_agent\",index:«»,label:«»,phaseIndex:«»,phaseTitle:«»,agentId:«».agentId,model:«»(«»?.model),state:\"done\",startedAt:Date.now(),lastProgressAt:Date.now(),cached:!0,resultPreview:«»(«».result),promptPreview:«»"
       ],
       "note": "The progress line is {type:'progress', data, toolUseID, parentToolUseID, uuid}; data is a different object per progress type (hook_progress, bash_progress, powershell_progress, tool_heartbeat, agent_progress, skill_progress, agent_api_retry, search_results_received, query_update, workflow_log, workflow_phase, workflow_agent, artifact_publish_retry, ...); the key below is the union over the literals of those types. cached (workflow_agent) is true."
     },
@@ -4672,7 +4678,7 @@
         "type": "string"
       },
       "anchors": [
-        "type:\"workflow_agent\",index:«»,label:«»,phaseIndex:«»,phaseTitle:«»,agentId:«».agentId,model:«»(«»?.model),state:\"done\",startedAt:Date.now(),lastProgressAt:Date.now(),cached:!0,resultPreview:«»(«».result),promptPreview:Lt"
+        "type:\"workflow_agent\",index:«»,label:«»,phaseIndex:«»,phaseTitle:«»,agentId:«».agentId,model:«»(«»?.model),state:\"done\",startedAt:Date.now(),lastProgressAt:Date.now(),cached:!0,resultPreview:«»(«».result),promptPreview:«»"
       ],
       "note": "The progress line is {type:'progress', data, toolUseID, parentToolUseID, uuid}; data is a different object per progress type (hook_progress, bash_progress, powershell_progress, tool_heartbeat, agent_progress, skill_progress, agent_api_retry, search_results_received, query_update, workflow_log, workflow_phase, workflow_agent, artifact_publish_retry, ...); the key below is the union over the literals of those types. resultPreview (workflow_agent) is a truncated result string."
     },
@@ -4680,7 +4686,7 @@
       "schema": {
         "type": "string"
       },
-      "anchors": ["isolation:\"remote\",remoteSessionId:Qe"],
+      "anchors": ["isolation:\"remote\",remoteSessionId:«»"],
       "note": "The progress line is {type:'progress', data, toolUseID, parentToolUseID, uuid}; data is a different object per progress type (hook_progress, bash_progress, powershell_progress, tool_heartbeat, agent_progress, skill_progress, agent_api_retry, search_results_received, query_update, workflow_log, workflow_phase, workflow_agent, artifact_publish_retry, ...); the key below is the union over the literals of those types. remoteSessionId (workflow_agent) is the remote session id string."
     },
     "api-request.sessionId": {
@@ -5103,10 +5109,10 @@
         "type": "number"
       },
       "anchors": [
-        "Dt(\"done\",{tokens:«»,toolCalls:«»+«»,durationMs:«»+«»,resultPreview:«»(«»?«»:«»)})",
-        "Dt(\"error\",{error:«»,tokens:«»,toolCalls:«»+«»,durationMs:«»+«»})",
-        "Dt(\"error\",{error:«» instanceof Error?«».message:String(«»),tokens:«»+«»,toolCalls:«»+«»,durationMs:«»+(Date.now()-«»)})",
-        "Dt(\"error\",{error:\"skipped by user\",skipped:!0,tokens:«»+«»,toolCalls:«»+«»,durationMs:«»+(Date.now()-«»)})",
+        "«»(\"done\",{tokens:«»,toolCalls:«»+«»,durationMs:«»+«»,resultPreview:«»(«»?«»:«»)})",
+        "«»(\"error\",{error:«»,tokens:«»,toolCalls:«»+«»,durationMs:«»+«»})",
+        "«»(\"error\",{error:«» instanceof Error?«».message:String(«»),tokens:«»+«»,toolCalls:«»+«»,durationMs:«»+(Date.now()-«»)})",
+        "«»(\"error\",{error:\"skipped by user\",skipped:!0,tokens:«»+«»,toolCalls:«»+«»,durationMs:«»+(Date.now()-«»)})",
         "(«»,{state:\"error\",error:«»,durationMs:«»+«».durationMs})",
         "«»(\"error\",{error:\"skipped by user\",skipped:!0,durationMs:Date.now()-«»})",
         "«»(\"done\",{tokens:«»?«»(«»):0,toolCalls:«»,durationMs:Date.now()-«»,resultPreview:"
@@ -5261,7 +5267,7 @@
         "const": true
       },
       "anchors": [
-        "Dt(\"error\",{error:\"skipped by user\",skipped:!0,",
+        "«»(\"error\",{error:\"skipped by user\",skipped:!0,",
         "«»(\"error\",{error:\"skipped by user\",skipped:!0,durationMs:"
       ],
       "note": "workflow_agent (chunk-5vm6s6e2): skipped:!0 is written only with state 'error' and error 'skipped by user' (user-skip abort), by Dt and by the remote writer Ve. Only the value true is written; the key is absent otherwise."
