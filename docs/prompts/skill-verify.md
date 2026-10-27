@@ -5,7 +5,7 @@ sidebar_position: 80
 generated: false
 ---
 
-This is the verbatim text that Claude Code 2.1.310 uses for the built-in `/verify` skill. It was not checked again against 2.1.311.
+This is the verbatim text that Claude Code 2.1.311 uses for the built-in `/verify` skill.
 
 ## Where It Comes From
 

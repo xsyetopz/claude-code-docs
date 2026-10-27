@@ -56,6 +56,7 @@ The site documents Claude Code `2.1.311`, the only release it tracks. The versio
 
 ### Fixed
 
+- The `/claude-api` skill page showed the text of `2.1.308` under a newer label. It now shows the `2.1.311` text, and the `/verify`, `/run`, `/run-skill-generator`, and `/dataviz` pages were checked against `2.1.311` with `code` `run`.
 - `read_page`, `read_platform_page`, `get_schema` (`cc-docs`), and `read_session` (`cc-inspect`) return their text again. Claude Code `2.1.309` shows the model only `structuredContent` when a reply has it, so these tools no longer send it.
 - `cc-inspect` and the schema generator parse Claude Code `2.1.309`, which names a `using` variable `as` (a patch of the `meriyah` parser).
 - Schema anchors match a renamed minified name, so `bun run schemas` passes on `2.1.309`.

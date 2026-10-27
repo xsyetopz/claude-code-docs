@@ -5,7 +5,7 @@ sidebar_position: 66
 generated: false
 ---
 
-This is the verbatim text that Claude Code 2.1.310 uses for the built-in `/claude-api` skill. It was not checked again against 2.1.311.
+This is the verbatim text that Claude Code 2.1.311 uses for the built-in `/claude-api` skill.
 
 ## Where It Comes From
 
@@ -17,9 +17,9 @@ Create `.claude/skills/claude-api/SKILL.md` with the same name. The program then
 
 ## Full Text
 
-Only the instruction part is shown, up to the first Quick Reference section. The rest of the file, about 68 KB, is embedded reference docs: Quick Reference sections for each API area and a reading guide. They are not shown.
+Only the instruction part is shown, up to the first Quick Reference section. The rest of the file, about 69 KB, is embedded reference docs: Quick Reference sections for each API area and a reading guide. They are not shown.
 
-In 2.1.307 the subcommand table has a new `api-version` row, and the part that is not shown points to `shared/api-version-migration.md` in two more places.
+The text changed in 2.1.309, 2.1.310, and 2.1.311. In 2.1.311 the `upgrade` row of the subcommand table sends Python 0.x through the `api-version` row too, and keeps `python/claude-api/sdk-upgrade.md` for a move from 0.x to 1.x.
 
 Temp folder paths were replaced with `<temp-dir>` or `<bundled-skill-dir>`, and emoji not on the site's allow-list are shown in brackets. `PROBE-ARG` is the test's argument.
 
@@ -47,11 +47,11 @@ When the user asks you to add, modify, or implement a Claude feature, your code 
 
 Never mix the two - don't reach for `requests`/`fetch` in a Python or TypeScript project just because it feels lighter. Never fall back to OpenAI-compatible shims.
 
-**Never guess SDK usage.** Function names, class names, namespaces, method signatures, and import paths must come from explicit documentation - either the `{lang}/` files in this skill or the official SDK repositories or documentation links listed in `shared/live-sources.md`. If the binding you need is not explicitly documented in the skill files, WebFetch the relevant SDK repo from `shared/live-sources.md` before writing code. Do not infer Ruby/Java/Go/PHP/C# APIs from cURL shapes or from another language's SDK.
+**Never guess SDK usage.** Function names, class names, namespaces, method signatures, and import paths must come from explicit documentation - either the `{lang}/` files in this skill or the official SDK repositories or documentation links listed in `shared/live-sources.md`. If the binding you need is not explicitly documented in the skill files, fetch the relevant SDK repo from `shared/live-sources.md` before writing code. Do not infer Ruby/Java/Go/PHP/C# APIs from cURL shapes or from another language's SDK.
 
 If you cannot call WebFetch yet and ToolSearch is among your tools, call ToolSearch with `select:WebFetch` first; of the tools it loads, call only the one named exactly `WebFetch`.
 
-**If WebFetch or repository access fails** (network restricted, timeouts, clone blocked): do not keep retrying - write code from the patterns and namespace/package tables in the `{lang}/` file, run the compiler or interpreter on it, and iterate on the error output. For statically-typed SDKs (C#, Java, Go) a compile-fix loop against local errors reaches working code faster than blocked network research.
+**If fetching or repository access fails** (network restricted, timeouts, clone blocked): do not keep retrying - write code from the patterns and namespace/package tables in the `{lang}/` file, run the compiler or interpreter on it, and iterate on the error output. For statically-typed SDKs (C#, Java, Go) a compile-fix loop against local errors reaches working code faster than blocked network research.
 
 ## Defaults
 
@@ -71,8 +71,6 @@ Several common Claude API shapes changed in 2025-2026. If you recall a pattern f
 | Managed Agents credentials | Keep secrets host-side via custom tools (the only option before vaults shipped) | Vault `environment_variable` credentials - stored by Anthropic, substituted at egress, never visible in the sandbox (`shared/managed-agents-tools.md` -> Vaults). Host-side custom tools remain the fallback for self-hosted sandboxes. |
 | Files API / Skills | `client.beta.files.*` / `client.beta.skills.*` with beta `files-api-2025-04-14` / `skills-2025-10-02` | Out of beta: `client.files.*` / `client.skills.*`, no beta header. In current SDKs `client.beta.files` / `client.beta.skills` have breaking shape changes from previous versions, matching the stable namespaces - migrate per `shared/live-sources.md` -> Files API / Skills Guide. |
 
-The `{lang}/` files in this skill are authoritative over recalled patterns.
-
 ---
 
 ## Subcommands
@@ -83,7 +81,7 @@ If the User Request at the bottom of this prompt is a bare subcommand string (no
 |---|---|
 | `migrate` | Migrate existing Claude API code to a newer model. **Read `shared/model-migration.md` immediately** and follow it in order: Step 0 (confirm scope - ask which files/directories before any edit), Step 1 (classify each file), then the per-target breaking-changes section. Do not summarize the guide - execute it. If the user did not name a target model, ask which model to migrate to in the same turn as the scope question. After the per-target changes are applied, audit the in-scope prompt text, tool descriptions, and request code against `shared/prompt-audit.md` - prompting written for the source model is part of every migration, and it does not announce itself. |
 | `prompt-audit` | Audit existing prompts, tool descriptions, skills, and agent configuration files (`CLAUDE.md`, rule files, commands, subagents) for dated patterns ("cruft"): text written for older models, and instructions the repository has outgrown or that contradict each other. **Read `shared/prompt-audit.md` immediately** and follow it in order: Step 0 (establish scope and target model from the request and the repository - state the assumptions in the report, do not stop to ask), inventory, provenance, then the pattern scan. Produce both deliverables in full - the audit report (findings with `file:line`, pattern, why it's obsolete, confidence) and a proposed diff - without pausing for confirmation; apply edits only if the request explicitly asked for them. Do not summarize the guide - execute it. |
-| `upgrade` | Upgrade the project's Anthropic SDK dependency across a major version - currently the Python SDK, `anthropic` 0.x -> 1.x. Trailing words may name the language and/or a scope (`upgrade python`, `upgrade python sdk src/`). **Read `python/claude-api/sdk-upgrade.md` immediately** and follow it in order: Step 0 (confirm scope, then establish the current and target versions - a published 1.x must exist before you write a pin), the Step 1 inventory, each numbered section, then verification and the report. Do not summarize the guide - execute it. If the detected or named language has no `sdk-upgrade.md` in this skill, say that no major-version upgrade guide is bundled for that SDK yet and point the user at that SDK's CHANGELOG (repositories in `shared/live-sources.md`); do not improvise one from the Python guide. This is not model migration - to move code to a newer Claude model, use `migrate`. |
+| `upgrade` | Upgrade the project's Anthropic SDK dependency across a major version. Trailing words may name the language and/or a scope (`upgrade python`, `upgrade python sdk src/`). Read the declared version first. Every SDK, Python 0.x included, and the `ant` CLI: follow the `api-version` row if the upgrade reaches or passes the release in its guide's "Set the version" table (an upgrade to the newest release does); if not, point the user at that SDK's CHANGELOG (repositories in `shared/live-sources.md`), except Python 0.x to 1.x, below. Don't improvise from the Python guide. Python 0.x to 1.x (the user's choice, or where `shared/api-version-migration.md` sends you): **read `python/claude-api/sdk-upgrade.md` immediately** and follow it in order: Step 0 (confirm scope, then establish the current and target versions - a published 1.x must exist before you write a pin), the Step 1 inventory, each numbered section, then verification and the report. Do not summarize the guide - execute it. This is not model migration - to move code to a newer Claude model, use `migrate`. |
 | `api-version` | Move code to a newer API version (`anthropic-version` header). **Read `shared/api-version-migration.md` immediately** and follow it in order. |
 | `cost-optimize` | Reduce what existing Claude API code costs to run, without sacrificing output quality. **Read `shared/cost-optimization.md` immediately** and follow it in order: Step 0 (establish scope, quality bar, and baseline), the token profile - measured through the Usage and Cost Admin API when the user has an Admin API key, from the app's own `response.usage` logs when it has those (ask), or estimated from the code otherwise - then a savings-ranked shortlist of levers (quoted in dollars, % of bill, or relative buckets depending on which of those data sources you have), free wins (caching, input-token hygiene, loop hygiene, output-token hygiene, batch) before tradeoffs (budgets, effort, model choice, multi-model); any lever that earns a place becomes its own diff - proposed by default, applied and measured against the eval covering the traffic it touches when the user asks and approves - and "no changes recommended" is a valid outcome. Two standing rules: every run that exercises the model spends real money, so get the user's approval first; and when context for a lever is missing, work through it interactively with the user - this workflow is not expected to one-shot the audit. Do not summarize the guide - execute it; presenting the profile and the ranked plan to the user is part of executing it. |
 | `build-eval` | Help the user build an eval set for their Claude-powered app. **Read `shared/evals/build-eval.md` immediately** and run its interview: Step 0 (what's being evaluated), Step 1 (source the prompts - existing eval / transcripts / synthesized), Step 2 (grading method), Step 3 (runnable script + measured cost). Get the user's explicit sign-off on the inputs, the grading method, and the cost before producing the eval. |
@@ -130,8 +128,6 @@ Before reading code examples, determine which language the user is working in (e
 
 Every SDK language above supports both the beta Tool Runner and Managed Agents (beta) - Python (`@beta_tool` decorator), TypeScript (`betaZodTool` + Zod), Java (annotated classes), Go (`BetaToolRunner` in the `toolrunner` pkg), Ruby (`BaseTool` + `tool_runner`), C# (`BetaToolRunner` + raw JSON schema), PHP (`BetaRunnableTool` + `toolRunner()`); code entry points are in the Tool Use Patterns quick reference below. cURL is raw HTTP (no SDK features) and supports Managed Agents.
 
-> **Managed Agents code examples**: see the reading guide in the `## Managed Agents (Beta)` section below.
-
 ---
 
 ## Which Surface Should I Use?
@@ -149,11 +145,11 @@ Every SDK language above supports both the beta Tool Runner and Managed Agents (
 | Long-running multi-turn agent with file mounts  | Agent           | **Managed Agents**        | Per-session containers, SSE event stream, Skills + MCP       |
 | Agent that runs on a schedule (cron, "every night") | Agent       | **Managed Agents** - scheduled deployments | Deployments fire sessions autonomously; no client-side scheduler |
 | One deliverable that must meet a quality bar ("until it's right") | Agent | **Managed Agents** - outcomes | A separate grader iterates the agent against your rubric until it passes |
-| Agent work too big to hand out one task at a time | Agent | **Managed Agents** - dynamic workflows | Many agents in phases |
+| Agent work split across several agents | Agent | **Managed Agents** - dynamic workflows | Many agents in phases |
 
 > **Note:** Managed Agents is the right choice when you want Anthropic to run the agent loop *and* host the container where tools execute - file ops, bash, code execution all run in the per-session workspace. If you want to host the compute yourself or run your own custom tool runtime, Claude API + tool use is the right choice - use the tool runner for the agentic loop - its per-turn hooks still give you approval gates, logging, error interception, and conditional execution (see `shared/tool-use-concepts.md`) - or the manual loop when you want to own the entire loop yourself.
 
-> **Cloud-provider access.** **Claude Platform on AWS** is Anthropic-operated with same-day API parity - see `shared/claude-platform-on-aws.md` for client setup. For per-feature availability on **Claude Platform on AWS**, **Amazon Bedrock**, **Google Vertex AI**, and **Microsoft Foundry**, see `shared/platform-availability.md` - that table is the single source of truth in this skill; do not infer availability from anywhere else.
+> **Cloud-provider access.** **Claude Platform on AWS** is Anthropic-operated with same-day API parity - see `shared/claude-platform-on-aws.md` for client setup. **Claude Models on Google Cloud (Anthropic managed)** is Anthropic-operated too (`shared/google-cloud-anthropic-managed.md`); elsewhere in this skill, "Google Cloud" and "Vertex" as platform names mean Google's Vertex AI. If a user says only "Google Cloud" and the code doesn't settle it, ask which they use. For availability on each of these, **Amazon Bedrock**, and **Microsoft Foundry**, see `shared/platform-availability.md` - that table is the single source of truth in this skill; do not infer availability from anywhere else.
 
 ### Building an Agent: Four Approaches
 
@@ -165,8 +161,6 @@ Once you've decided you actually need an agent (open-ended, model-driven tool us
 | 2 | **Claude API - Tool Runner** (`client.beta.messages.tool_runner` + `@beta_tool` / `betaZodTool`) | Just the tool functions | SDK supplies the loop (**harness only**); you host | Only tools you define | A custom-tool agent without hand-writing the loop (most cases). Per-turn hooks still give you approval gates, error interception, result modification (e.g. `cache_control`), retries, streaming, and compaction |
 | 3 | **Managed Agents** (REST, beta) | Agent config + your tool results | Anthropic supplies the harness **and** hosts a per-session sandbox (**harness + deployment**) | Anthropic-hosted sandbox (bash, files, code exec) + Skills/MCP + your tools | You want Anthropic to run the loop *and* host the per-session workspace; persisted/versioned configs; long-running sessions |
 | 4 | **Claude Agent SDK** - *separate product* (`claude-agent-sdk` / `@anthropic-ai/claude-agent-sdk`) | A prompt + options | SDK supplies the Claude Code harness + built-in tools (**harness only**); you host | Built-in Read/Write/Edit/Bash/Glob/Grep/WebSearch/WebFetch + MCP + subagents | You want a batteries-included coding/filesystem agent running on your own infra |
-
-The harness/deployment split is the key mental model: options 1, 2, and 4 all **leave deployment to you**; only option 3 (CMA) adds managed deployment. Options 1-3 are what this skill generates; option 4 is a different library with its own docs - see the disambiguation below.
 
 > **Tool Runner != Claude Agent SDK.** These sound alike but are different packages:
 > - **Tool Runner** is part of the regular Anthropic API SDK (`anthropic` / `@anthropic-ai/sdk`), reached via `client.beta.messages.tool_runner`. It automates the request -> execute -> loop cycle *for tools you define*. No built-in tools, no filesystem access, no sandbox - you supply every tool and host the compute. It is option 2 above, a thin helper over `POST /v1/messages`.
@@ -221,7 +215,7 @@ Everything goes through `POST /v1/messages`. Tools and output constraints are fe
 | Claude Haiku 5.5 | `claude-haiku-5-5` | 1M | $0.10 | $0.50 |
 | Claude Haiku 4.5  | `claude-haiku-4-5`  | 200K           | $1.00      | $5.00       |
 
-**Partner pricing:** The prices above are Anthropic first-party API rates - they also apply to Claude on Microsoft Foundry, which is billed through the Microsoft Marketplace at standard API rates. Claude on Amazon Bedrock and Vertex AI is partner-operated with separate pricing - see [Bedrock](https://aws.amazon.com/bedrock/pricing/) or [Vertex AI](https://cloud.google.com/vertex-ai/generative-ai/pricing#claude-models). For WebFetch, use the Pricing row in `shared/live-sources.md`.
+**Partner pricing:** The prices above are Anthropic first-party API rates - they also apply to Claude on Microsoft Foundry, which is billed through the Microsoft Marketplace at standard API rates. Claude on Amazon Bedrock and Vertex AI is partner-operated with separate pricing - see [Bedrock](https://aws.amazon.com/bedrock/pricing/) or [Vertex AI](https://cloud.google.com/vertex-ai/generative-ai/pricing#claude-models). For current prices, use the Pricing row in `shared/live-sources.md`.
 
 **ALWAYS use `claude-opus-5-5` unless the user explicitly names a different model.** This is non-negotiable. Do not use `claude-sonnet-5-5`, `claude-sonnet-5`, or any other model unless the user literally says "use sonnet" or "use haiku". Never downgrade for cost - that's the user's decision, not yours. A request that describes a Sonnet by attribute ("cheapest Sonnet", "cheaper Sonnet", "newest Sonnet", "latest Sonnet") resolves to `claude-sonnet-5-5`. Where a second, cheaper model is in play alongside the main one (worker or sub-agent threads, bulk extractors, LLM judges, the executor under an advisor) - because the user asked for one or a guide in this skill calls for it - or the user says "sonnet" or "haiku" without a version, that means the current generation from the table above (`claude-sonnet-5-5`, `claude-haiku-5-5`); previous-generation IDs such as `claude-sonnet-5` are only for users who name that version. Use `claude-fable-5-1` only when the user explicitly asks for Claude Fable 5.1, "fable", or Anthropic's most capable model - it has different API behavior than the Opus family (see below) and pricing that exceeds Opus-tier. **Use only the exact model ID strings from the table - they are complete as-is; never append date suffixes** (`claude-opus-5-5`, never `claude-opus-5-5-20260401` or any other date-suffixed variant you might recall from training data). If the user requests an older model not in the table (e.g., "opus 4.5", "sonnet 3.7"), read `shared/models.md` for the exact ID - do not construct one yourself.
 
