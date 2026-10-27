@@ -24483,6 +24483,15 @@ class McpServer {
     this._promptHandlersInitialized = false;
     this.server = new Server(serverInfo, options);
     this._maxToolInputElements = resolveMaxToolInputElements(options?.maxToolInputElements);
+    if (options?.capabilities?.tools) {
+      this.setToolRequestHandlers();
+    }
+    if (options?.capabilities?.resources) {
+      this.setResourceRequestHandlers();
+    }
+    if (options?.capabilities?.prompts) {
+      this.setPromptRequestHandlers();
+    }
   }
   get experimental() {
     if (!this._experimental) {
@@ -25202,7 +25211,7 @@ var EMPTY_COMPLETION_RESULT = {
 // inspect/mcp/package.json
 var package_default = {
   name: "cc-inspect-mcp",
-  version: "0.5.0",
+  version: "0.5.1",
   private: true,
   license: "MIT",
   type: "module",
@@ -25213,14 +25222,14 @@ var package_default = {
   dependencies: {
     "@modelcontextprotocol/sdk": "^1.32.2",
     "eslint-scope": "^9.1.2",
-    meriyah: "7.4.0",
+    meriyah: "7.4.1",
     zod: "^4.6.7"
   },
   devDependencies: {
     "@types/estree": "^1.0.9"
   },
   patchedDependencies: {
-    "meriyah@7.4.0": "../../patches/meriyah@7.4.0.patch"
+    "meriyah@7.4.1": "../../patches/meriyah@7.4.1.patch"
   }
 };
 
@@ -30328,7 +30337,7 @@ function analyze(tree, providedOptions) {
 }
 
 // inspect/mcp/node_modules/meriyah/dist/meriyah.mjs
-var version$1 = "7.4.0";
+var version$1 = "7.4.1";
 var packageJson = {
   version: version$1
 };
@@ -32691,6 +32700,9 @@ function classifyIdentifier(parser, context, t) {
       parser.report(121);
     parser.flags |= 512;
   }
+  if (context & 1 && (t & 255) === (241737 & 255)) {
+    parser.report(99);
+  }
   if (!isValidIdentifier(context, t))
     parser.report(0);
 }
@@ -34626,22 +34638,26 @@ function parseExportDeclaration(parser, context, scope) {
         const { tokenStart } = parser;
         declaration = parseIdentifier(parser, context);
         const { flags } = parser;
-        if ((flags & 1) === 0) {
-          if (parser.getToken() === 86104) {
-            declaration = parseFunctionDeclaration(parser, context, scope, undefined, 1, 1, 1, tokenStart, 4);
-          } else {
-            if (parser.getToken() === 67174411) {
-              declaration = parseAsyncArrowOrCallExpression(parser, context, undefined, declaration, 1, 1, flags, tokenStart);
-              declaration = parseMemberOrUpdateExpression(parser, context, undefined, declaration, 0, 0, tokenStart);
-              declaration = parseAssignmentExpression(parser, context, undefined, 0, 0, tokenStart, declaration);
-            } else if (parser.getToken() & 143360) {
-              if (scope)
-                scope = createArrowHeadParsingScope(parser, context, parser.tokenValue, parser.tokenStart, parser.currentLocation);
-              declaration = parseIdentifier(parser, context);
-              declaration = parseArrowFunctionExpression(parser, context, scope, undefined, [declaration], 1, tokenStart);
-            }
-          }
+        if ((flags & 1) === 0 && parser.getToken() === 86104) {
+          declaration = parseFunctionDeclaration(parser, context, scope, undefined, 1, 1, 1, tokenStart, 4);
+          break;
         }
+        if (parser.getToken() === 10) {
+          declaration = parseArrowFromIdentifier(parser, context & -9, undefined, "async", declaration, 0, 1, 0, tokenStart);
+        } else if ((flags & 1) === 0 && parser.getToken() === 67174411) {
+          declaration = parseAsyncArrowOrCallExpression(parser, context, undefined, declaration, 1, 1, flags, tokenStart);
+          declaration = parseMemberOrUpdateExpression(parser, context, undefined, declaration, 0, 0, tokenStart);
+          declaration = parseAssignmentExpression(parser, context, undefined, 0, 0, tokenStart, declaration);
+        } else if ((flags & 1) === 0 && parser.getToken() & 143360) {
+          if (scope)
+            scope = createArrowHeadParsingScope(parser, context, parser.tokenValue, parser.tokenStart, parser.currentLocation);
+          declaration = parseIdentifier(parser, context);
+          declaration = parseArrowFunctionExpression(parser, context, scope, undefined, [declaration], 1, tokenStart);
+        } else {
+          declaration = parseMemberOrUpdateExpression(parser, context, undefined, declaration, 0, 0, tokenStart);
+          declaration = parseAssignmentExpression(parser, context, undefined, 0, 0, tokenStart, declaration);
+        }
+        matchOrInsertSemicolon(parser, context | 32);
         break;
       }
       default:
@@ -34858,6 +34874,10 @@ function parseConditionalExpression(parser, context, privateScope, test, start) 
   }, start);
 }
 function parseBinaryExpression(parser, context, privateScope, inGroup, start, minPrecedence, operator, left) {
+  if ((parser.flags & 16384) === 16384) {
+    parser.flags = (parser.flags | 16384) ^ 16384;
+    return left;
+  }
   const bit = -((context & 131072) > 0) & 8673330;
   let t;
   let precedence;
@@ -34962,6 +34982,12 @@ function parseYieldExpressionOrIdentifier(parser, context, privateScope, inGroup
       }
     } else if (parser.getToken() === 8391476) {
       parser.report(30, KeywordDescTable[parser.getToken() & 255]);
+    }
+    if (parser.getToken() & (67108864 | 8388608)) {
+      if (argument === null && (parser.flags & 1) === 0) {
+        parser.report(30, KeywordDescTable[parser.getToken() & 255]);
+      }
+      parser.flags |= 16384;
     }
     parser.assignable = 2;
     return parser.finishNode({
@@ -35119,6 +35145,10 @@ function parseMemberOrUpdateExpression(parser, context, privateScope, expr, inGr
   if ((parser.getToken() & 33619968) === 33619968 && (parser.flags & 1) === 0) {
     expr = parseUpdateExpression(parser, context, expr, start);
   } else if ((parser.getToken() & 67108864) === 67108864) {
+    if ((parser.flags & 16384) === 16384) {
+      parser.flags = (parser.flags | 16384) ^ 16384;
+      return expr;
+    }
     context = (context | 131072) ^ 131072;
     switch (parser.getToken()) {
       case 67108877: {
@@ -35946,7 +35976,6 @@ function parseSpreadOrRestElement(parser, context, scope, privateScope, closingT
   } else {
     destructible |= 32;
     argument = parseLeftHandSideExpression(parser, context, privateScope, 1, inGroup, 1);
-    const { tokenStart } = parser;
     const token = parser.getToken();
     if (token === 1077936155) {
       if (parser.assignable & 2)

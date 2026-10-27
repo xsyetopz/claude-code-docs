@@ -42,6 +42,7 @@ The site documents Claude Code `2.1.310`, the only release it tracks. The versio
 - Diagrams render after the fonts load, scroll sideways on small screens instead of shrinking, and keep lines out of labels.
 - Merged duplicated rows into one home per item, with links from other pages.
 - Code examples follow `biome.json`, including arrow functions.
+- `cc-inspect` 0.5.1 uses `meriyah` 7.4.1. It keeps the `using as` patch, because 7.4.1 still rejects that code.
 - Updated to Claude Code `2.1.310`: `Monitor` and plugin monitors on every provider, the long `sleep` block, the effort retry, the sandbox warnings, the Mod `Image` in tmux, and three new environment variables. The `2.1.309` section of What Changed moved to the Release Archive.
 - `release:diff` compares the surface snapshots of both versions for all 17 kinds, in place of `strings` heuristics, and names the target page of each added item.
 - What Changed lists only the current release. Earlier sections moved to a new Release Archive page.
