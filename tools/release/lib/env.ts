@@ -66,6 +66,8 @@ export const childEnv = (o: ChildEnvOpts): Record<string, string> => {
     HTTPS_PROXY: "http://127.0.0.1:9",
     HTTP_PROXY: "http://127.0.0.1:9",
     NO_PROXY: "127.0.0.1,localhost",
+    // The AWS SDK reaches 169.254.169.254 directly, not through the proxy.
+    AWS_EC2_METADATA_DISABLED: "true",
     GIT_CONFIG_GLOBAL: join(o.home, ".gitconfig"),
     GIT_CONFIG_NOSYSTEM: "1", // git's osxkeychain helper must not run
   };

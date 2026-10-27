@@ -10,6 +10,7 @@ import { dispose, runCase, selected } from "./run.ts";
 import {
   baselineA,
   baselineB,
+  diffSample,
   diffSig,
   type Sig,
   sig,
@@ -125,13 +126,7 @@ const run = async (ctx: PrintCtx): Promise<CaseResult[]> => {
             diff,
             code: r.code,
             vals: Object.fromEntries(
-              diff.map((x) => [
-                x,
-                [
-                  (b.sig[x] ?? "").slice(0, 400),
-                  (s[x] ?? "").slice(0, 400),
-                ] as [string, string],
-              ]),
+              diff.map((x) => [x, diffSample(b.sig[x] ?? "", s[x] ?? "")]),
             ),
           };
         } catch (e) {

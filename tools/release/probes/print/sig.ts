@@ -184,6 +184,21 @@ export const diffSig = (a: Sig, b: Sig): string[] =>
     (k) => a[k] !== b[k],
   );
 
+/** A `cap`-long window of each value from just before their first difference, so a shared prefix does not hide it. */
+export const diffSample = (
+  a: string,
+  b: string,
+  cap = 400,
+): [string, string] => {
+  if (a.length <= cap && b.length <= cap) return [a, b];
+  let i = 0;
+  while (i < a.length && i < b.length && a[i] === b[i]) i++;
+  const start = Math.max(0, i - Math.floor(cap / 4));
+  const cut = (s: string) =>
+    (start ? "…" : "") + s.slice(start, start + cap - (start ? 1 : 0));
+  return [cut(a), cut(b)];
+};
+
 export type Baseline = {
   sig: Sig;
   noise: string[]; // keys that differ between two identical runs
