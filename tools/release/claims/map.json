@@ -1,4 +1,18 @@
 {
+  "docs/reference/probes.md#managed-folder-probe:dc4731d1": {
+    "kind": "behaviour",
+    "probes": ["managed.baseline.mcp-run"]
+  },
+  "docs/how-it-works/account-and-access.md#when-it-asks-again:7d66fe76": {
+    "kind": "manual",
+    "probes": [],
+    "note": "groveChoiceSeenAt 1 h window read in the cleaned 2.1.311 code"
+  },
+  "docs/how-it-works/account-and-access.md#what-a-refusal-says:64ecc432": {
+    "kind": "external",
+    "probes": [],
+    "note": "cites the official release notes"
+  },
   "docs/configure/env-vars/context-and-compaction.md#variables:ff4e5b79": {
     "kind": "env",
     "probes": ["print.sweep"]
@@ -964,7 +978,7 @@
     "probes": [],
     "note": "program behaviour (approver set next to tool.check); no probe checks it yet"
   },
-  "docs/reference/probes.md#managed-folder-probe:bab8af87": {
+  "docs/reference/probes.md#managed-folder-probe:ae13d6a6": {
     "kind": "behaviour",
     "probes": [
       "managed.baseline.agent-mcp",

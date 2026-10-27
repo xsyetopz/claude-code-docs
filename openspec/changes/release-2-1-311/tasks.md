@@ -37,10 +37,10 @@
 
 ## 5. Probes and Release
 
-- [ ] 5.1 Live probes (approved by the user, 2026-10-27) and managed probes (the user runs `sudo`). Verify: `compare.md` has no changed case left unexplained.
+- [x] 5.1 Live probes (approved by the user, 2026-10-27) and managed probes (the user runs `sudo`). Verify: `compare.md` has no changed case left unexplained.
   - Live: 6 cases ok (`context-budget` and `oauth-parity` on a warm cache). Only `live.context-budget` changed: Skills 2093 to 2159 tokens (the `/code-review` listing); the first request still adds up to the `/context` total. Labels in `probes.md` and `context-budget.md` now name `2.1.311`.
   - Open: `CLAUDE_CODE_USE_BEDROCK` gives no `init` event, and the `CLAUDE_CODE_DISABLE_1M_CONTEXT` sample is cut, so the change does not show. What Changed says the cause is not known.
-  - Managed: baseline 17 cases ok; the variants wait for the user's `sudo`.
-- [ ] 5.2 Bump `src/version.ts`, run `schemas`, `surface`, and `version:bump`, then review, commit, and push. Verify: `bun run verify:locked`.
+  - Managed: 55 cases ok, 0 invalid. The only change is the start order of the baseline servers in `mcp-run`, which no row depends on; `probes.md` now names `2.1.311`. A new compare gives 221 cases in both, 17 changed, 0 invalid.
+- [x] 5.2 Bump `src/version.ts`, run `schemas`, `surface`, and `version:bump`, then review, commit, and push. Verify: `bun run verify:locked`.
   - So far: `src/version.ts` is `2.1.311`. `schemas` needed `«»` in place of the minified names in the broken anchors (each with the same count in `2.1.310` and `2.1.311`), and the `modelUsage` anchor follows the new code. `surface`, `version:bump cc-docs patch` (1.0.3), `plugin:build`, `plugin:check`, `schemas:check`, and `format:check` pass. `verify:locked` passed after a `typecheck` fix in `slash-command.ts` (`k` possibly undefined).
   - Prompt pages: 23 hand-kept pages now say `2.1.311`, after a check that their sampled lines are found the same number of times in both builds. 5 skill pages (`claude-api`, `dataviz`, `run-skill-generator`, `run`, `verify`) are not in either binary as plain text, so they keep `2.1.310` and say they were not checked again.
