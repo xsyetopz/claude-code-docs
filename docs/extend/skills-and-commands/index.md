@@ -76,7 +76,7 @@ When two skills share a name, the one in the higher place wins.
 | Item | Status | What it does | Notes |
 | --- | --- | --- | --- |
 | Live change detection | <Documented /> | Reloads `SKILL.md` text when it changes. | Not in bare mode. A new top-level skills folder needs `/reload-skills`. Changes to `hooks/`, `.mcp.json`, `agents/`, and `output-styles/` need `/reload-plugins`. |
-| Skill listing budget | <Documented /> | Caps how much skill text goes into context. | 1 percent of the window (`skillListingBudgetFraction`). Each entry is cut at 1,536 characters (`skillListingMaxDescChars`). The env var `SLASH_COMMAND_TOOL_CHAR_BUDGET` sets a fixed count. |
+| Skill listing budget | <Documented /> | Caps how much skill text goes into context. | 1 percent of the window (`skillListingBudgetFraction`), counted at 4 characters per token for Claude 3 to 4.6 models and 3 for newer ones (the program). So Opus 5.5 with a 200,000-token window gets 6,000 characters. Each entry is cut at 1,536 characters (`skillListingMaxDescChars`). When the listing is over the budget, the program drops descriptions and leaves only the names. The env var `SLASH_COMMAND_TOOL_CHAR_BUDGET` sets a fixed count. |
 | `--disable-slash-commands` | <Documented /> | Turns off all skills and commands. | A CLI flag. Its help text is "Disable all skills and commands" since `2.1.304`. |
 | Setting `skillOverrides` | <Documented /> | Sets the visibility of each skill. | Values: `on`, `name-only`, `user-invocable-only`, `off`. Plugin skills are not affected. |
 | Setting `disableBundledSkills` | <Documented /> | Removes bundled skills. | Same as `CLAUDE_CODE_DISABLE_BUNDLED_SKILLS=1`. Built-in commands stay. See [Bundled Skills](bundled-skills.md#controls). |

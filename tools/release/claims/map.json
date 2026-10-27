@@ -1383,5 +1383,10 @@
     "kind": "schema",
     "probes": [],
     "note": "control request fields in schemas/claude-code-control-protocol.json"
+  },
+  "docs/prompts/skill-claude-api.md#full-text:f6fd98e8": {
+    "kind": "manual",
+    "probes": [],
+    "note": "cc-inspect code run of /claude-api PROBE-ARG on 2.1.308 to 2.1.311"
   }
 }

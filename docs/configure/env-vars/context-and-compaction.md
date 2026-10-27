@@ -76,7 +76,7 @@ The table is sorted by name. See [Environment Variables](index.md#how-to-read-th
 | `DISABLE_PROMPT_CACHING_HAIKU` | <Documented /> | Turns off prompt caching for the default Haiku model. | On or off | - |
 | `DISABLE_PROMPT_CACHING_MYTHOS` | <Undocumented /> | Turns off prompt caching for models that the Mythos check matches. | On or off | - |
 | `MAX_MCP_OUTPUT_TOKENS` | <Documented /> | Sets the token limit for one MCP tool result. | A number. Default `25000`. The warning at `10000` is fixed | - |
-| `SLASH_COMMAND_TOOL_CHAR_BUDGET` | <Documented /> | Overrides the character budget for the skill listing shown to the model. | A number, 1 by default. Integer, min `1`. If set, it wins over the dynamic budget (context window times 4 times a fraction, default 1%) | All sessions |
+| `SLASH_COMMAND_TOOL_CHAR_BUDGET` | <Documented /> | Overrides the character budget for the skill listing shown to the model. | Unset by default. Integer, min `1`. If set, it wins over the dynamic budget (context window times 4 characters per token for Claude 3 to 4.6 models, or 3 for newer ones, times a fraction, default 1%) | All sessions |
 | `USE_API_CONTEXT_MANAGEMENT` | <Undocumented /> <Gated note="Works only behind a feature flag or server gate" /> | Would turn on the API context-management beta. It is inert in 2.1.311. | On or off. The code ANDs it with a constant false, so it has no effect | Inert, first-party models |
 
 ## How It Works

@@ -31,6 +31,7 @@ The site documents Claude Code `2.1.311`, the only release it tracks. The versio
 - An Account and Access page: where Claude Code gets your plan, the profile request, where the login and account record are kept, when it asks again, and how the plan and the provider decide which models `/model` lists, including Fable and Mythos.
 - The site build writes `llms-search-index.json`, a prebuilt search index of every page. `cc-docs` and `cc-docs-cli` load it in one request in place of fetching each page.
 - `cc-inspect` 0.6.0: `code` `run` runs a prompt or slash command with `claude -p` against a local fake API (a fake key, a dead proxy, temp folders it removes) and gives the user turn the program sends, such as the text of a bundled skill that the binary does not hold as plain text.
+- `cc-inspect` 0.7.0: `code` `run` takes `env`, extra environment variables for the run (it refuses the names it sets itself, and names or values that could carry a credential or send a request past the fake API, such as a proxy, a base URL, or `NODE_OPTIONS`). A run that times out now reports the stream-json events and the stderr from before the hang.
 
 ### Changed
 
@@ -56,6 +57,8 @@ The site documents Claude Code `2.1.311`, the only release it tracks. The versio
 
 ### Fixed
 
+- The skill listing budget is counted at 3 characters per token for models newer than Claude 4.6, not 4, and `SLASH_COMMAND_TOOL_CHAR_BUDGET` is unset by default, not `1`. What Changed now gives the cause of the two `2.1.311` sweep changes it had left open.
+- The probes and `code` `run` set `AWS_EC2_METADATA_DISABLED`, because the AWS SDK reaches the instance metadata address directly, past the dead proxy. A sweep sample now shows where the two values differ, not just their shared start.
 - The `/claude-api` skill page showed the text of `2.1.308` under a newer label. It now shows the `2.1.311` text, and the `/verify`, `/run`, `/run-skill-generator`, and `/dataviz` pages were checked against `2.1.311` with `code` `run`.
 - `read_page`, `read_platform_page`, `get_schema` (`cc-docs`), and `read_session` (`cc-inspect`) return their text again. Claude Code `2.1.309` shows the model only `structuredContent` when a reply has it, so these tools no longer send it.
 - `cc-inspect` and the schema generator parse Claude Code `2.1.309`, which names a `using` variable `as` (a patch of the `meriyah` parser).
