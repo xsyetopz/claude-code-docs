@@ -13,6 +13,7 @@ import {
   docsNames,
   exclusionOf,
   type MapEntry,
+  mapOf,
   PAGES,
   status,
 } from "../../surface/coverage.ts";
@@ -127,7 +128,7 @@ export const pageOf = (
     case "docs":
       return relative(ROOT, docs.get(name) as string);
     case "mapped": {
-      const m = map[key] as MapEntry;
+      const m = mapOf(key, map) as MapEntry;
       return m.anchor ? `${m.route}#${m.anchor}` : m.route;
     }
     case "excluded":

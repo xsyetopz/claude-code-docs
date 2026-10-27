@@ -83,6 +83,11 @@ test("the page of an item: docs file, map route, exclusion, or the page of its k
   expect(pageOf("error", "Some text", docs, map, ex)).toBe("no page yet");
 });
 
+test("the page of an error item mapped by a prefix key is the prefix's route", () => {
+  const map = { "error:$.ui.*": { route: "/ui", anchor: "errors" } };
+  expect(pageOf("error", "$.ui.x: bad", new Map(), map, {})).toBe("/ui#errors");
+});
+
 test("a new minified name or chunk hash is no change, a new default is", () => {
   const a = new Map([
     [
