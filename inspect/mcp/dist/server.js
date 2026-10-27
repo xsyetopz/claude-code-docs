@@ -25211,7 +25211,7 @@ var EMPTY_COMPLETION_RESULT = {
 // inspect/mcp/package.json
 var package_default = {
   name: "cc-inspect-mcp",
-  version: "0.6.0",
+  version: "0.7.0",
   private: true,
   license: "MIT",
   type: "module",
@@ -39564,8 +39564,9 @@ var STREAM = sse("message_start", {
   delta: { stop_reason: "end_turn", stop_sequence: null },
   usage: { output_tokens: 5 }
 }) + sse("message_stop", { type: "message_stop" });
+var UNSAFE = /KEY|TOKEN|SECRET|PASSWORD|CREDENTIAL|SESSION|PROXY|BASE_URL|ENDPOINT|HEADERS|^(NODE|BUN)_OPTIONS$|^(LD|DYLD)_/i;
 var tempDir = (p) => realpathSync2(mkdtempSync3(join5(tmpdir3(), p)));
-var runPrompt = async (bin, prompt, model = "claude-opus-5-5", timeoutMs = 60000) => {
+var runPrompt = async (bin, prompt, model = "claude-opus-5-5", timeoutMs = 60000, env = {}) => {
   const made = [];
   let stub;
   try {
@@ -39615,6 +39616,23 @@ exit 44
       }
     });
     const self = `127.0.0.1:${stub.port}`;
+    const fixed = {
+      PATH: `${shim}:${process.env["PATH"] ?? ""}`,
+      HOME: dirs.home,
+      TMPDIR: tmpdir3(),
+      CLAUDE_CONFIG_DIR: dirs.config,
+      ANTHROPIC_API_KEY: FAKE_KEY,
+      ANTHROPIC_BASE_URL: `http://${self}`,
+      CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: "1",
+      DISABLE_TELEMETRY: "1",
+      HTTPS_PROXY: "http://127.0.0.1:9",
+      HTTP_PROXY: "http://127.0.0.1:9",
+      NO_PROXY: "127.0.0.1,localhost",
+      AWS_EC2_METADATA_DISABLED: "true"
+    };
+    for (const [k, v] of Object.entries(env))
+      if (k.toUpperCase() in fixed || UNSAFE.test(k) || v.includes("sk-ant-"))
+        throw new Error(`env ${k} is not allowed: run fixes it, or it could carry a credential or route a request`);
     const p = Bun.spawn([
       bin,
       "-p",
@@ -39627,23 +39645,17 @@ exit 44
     ], {
       cwd: dirs.project,
       stdin: "ignore",
-      stdout: "ignore",
+      stdout: "pipe",
       stderr: "pipe",
-      env: {
-        PATH: `${shim}:${process.env["PATH"] ?? ""}`,
-        HOME: dirs.home,
-        TMPDIR: tmpdir3(),
-        CLAUDE_CONFIG_DIR: dirs.config,
-        ANTHROPIC_API_KEY: FAKE_KEY,
-        ANTHROPIC_BASE_URL: `http://${self}`,
-        CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: "1",
-        DISABLE_TELEMETRY: "1",
-        HTTPS_PROXY: "http://127.0.0.1:9",
-        HTTP_PROXY: "http://127.0.0.1:9",
-        NO_PROXY: "127.0.0.1,localhost"
-      }
+      env: { ...fixed, ...env }
     });
     const err = new Response(p.stderr).text();
+    let out = "";
+    const dec = new TextDecoder;
+    const read = (async () => {
+      for await (const c of p.stdout)
+        out += dec.decode(c, { stream: true });
+    })().catch(() => {});
     let timedOut = false;
     const t = setTimeout(() => {
       timedOut = true;
@@ -39655,13 +39667,25 @@ exit 44
     } finally {
       clearTimeout(t);
     }
+    const [stderr] = await Promise.all([
+      Promise.race([err, Bun.sleep(1000).then(() => "")]),
+      Promise.race([read, Bun.sleep(1000)])
+    ]);
+    const events = out.split(`
+`).flatMap((l) => {
+      try {
+        const e = JSON.parse(l);
+        return e && typeof e === "object" ? [e] : [];
+      } catch {
+        return [];
+      }
+    });
     if (timedOut)
-      throw new Error(`the program did not end in ${timeoutMs} ms`);
-    const stderr = await Promise.race([err, Bun.sleep(1000).then(() => "")]);
+      throw new Error(`the program did not end in ${timeoutMs} ms; events: ${events.map((e) => `${e["type"]}/${e["subtype"] ?? ""}`).join(" ") || "none"}; stderr: ${stderr.slice(-2000)}`);
     const bad = requests.filter((r) => r.fakeKey === false || r.host !== self);
     if (bad.length)
       throw new Error(`a request had another host or key: ${bad.map((r) => `${r.host}${r.path}`).join(", ")}`);
-    return { exit, requests, stderr, dirs };
+    return { exit, requests, stderr, events, dirs };
   } finally {
     stub?.stop(true);
     for (const d of made)
@@ -39773,7 +39797,7 @@ ${excerpt.join(`
       }))
     });
   },
-  run: async ({ prompt, name, version, offset = 0, length = 4000 }) => {
+  run: async ({ prompt, name, version, offset = 0, length = 4000, env }) => {
     const q = need(prompt, "prompt");
     const cmd = /^\/([\w:-]+)/.exec(q)?.[1];
     const mark = name ?? (cmd ? `<command-name>/${cmd}</command-name>` : q);
@@ -39781,7 +39805,7 @@ ${excerpt.join(`
     const bin = version ? all.find((i) => i.version === version) : all.find((i) => i.current) ?? all[0];
     if (!bin)
       throw new Error(`run takes an installed version; installed: ${all.map((i) => i.version).join(", ") || "none"}`);
-    const r = await runPrompt(bin.path, q);
+    const r = await runPrompt(bin.path, q, undefined, undefined, env);
     const t = userText(r, mark);
     const sent = r.requests.map((x) => `${x.method} ${x.path}`);
     const head = `${bin.version}: exit ${r.exit}, ${sent.length} requests.${r.exit !== 0 || t === null ? `
@@ -39822,7 +39846,8 @@ Not JavaScript: ${skipped.join(", ")}` : ""}`, {
   context: number2().int().min(0).max(2000).optional().describe("Characters shown around a search hit (default 150)."),
   view: string2().optional().describe('With read: "readable" gives the module through Wakaru (the first call per module runs it, then it is cached).'),
   length: number2().int().min(1).max(MAX_CHARS).optional().describe("Characters to read (default 4000)."),
-  prompt: string2().min(1).optional().describe('With run: the prompt or slash command, such as "/verify ARG". `name` is the text that picks the user turn (default: the command tag).')
+  prompt: string2().min(1).optional().describe('With run: the prompt or slash command, such as "/verify ARG". `name` is the text that picks the user turn (default: the command tag).'),
+  env: record(string2(), string2()).optional().describe('With run: extra environment variables, such as {"CLAUDE_CODE_USE_BEDROCK": "1"}. Names that run fixes (key, base URL, proxies, folders), and names or values that could carry a credential or route a request, are refused.')
 }, { ...WRITES_CACHE, openWorldHint: true });
 
 // inspect/mcp/src/events.ts

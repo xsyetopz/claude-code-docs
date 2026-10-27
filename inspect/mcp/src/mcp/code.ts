@@ -18,7 +18,13 @@ import {
 } from "./app.ts";
 
 group<
-  Args & { context?: number; length?: number; view?: string; prompt?: string }
+  Args & {
+    context?: number;
+    length?: number;
+    view?: string;
+    prompt?: string;
+    env?: Record<string, string>;
+  }
 >(
   "code",
   "Read the code inside a Claude Code binary: list installs or modules, search literal text, find code by plain words, read a module slice, prepare a cleaned index for release diffs, or run a prompt in an installed version against a local fake API to see the text it sends.",
@@ -133,7 +139,7 @@ group<
         },
       );
     },
-    run: async ({ prompt, name, version, offset = 0, length = 4000 }) => {
+    run: async ({ prompt, name, version, offset = 0, length = 4000, env }) => {
       const q = need(prompt, "prompt");
       const cmd = /^\/([\w:-]+)/.exec(q)?.[1];
       const mark = name ?? (cmd ? `<command-name>/${cmd}</command-name>` : q);
@@ -146,7 +152,7 @@ group<
         throw new Error(
           `run takes an installed version; installed: ${all.map((i) => i.version).join(", ") || "none"}`,
         );
-      const r = await runPrompt(bin.path, q);
+      const r = await runPrompt(bin.path, q, undefined, undefined, env);
       const t = userText(r, mark);
       const sent = r.requests.map((x) => `${x.method} ${x.path}`);
       const head = `${bin.version}: exit ${r.exit}, ${sent.length} requests.${r.exit !== 0 || t === null ? `\nstderr: ${clip(r.stderr, 500)}` : ""}`;
@@ -212,6 +218,12 @@ group<
       .optional()
       .describe(
         'With run: the prompt or slash command, such as "/verify ARG". `name` is the text that picks the user turn (default: the command tag).',
+      ),
+    env: z
+      .record(z.string(), z.string())
+      .optional()
+      .describe(
+        'With run: extra environment variables, such as {"CLAUDE_CODE_USE_BEDROCK": "1"}. Names that run fixes (key, base URL, proxies, folders), and names or values that could carry a credential or route a request, are refused.',
       ),
   },
   { ...WRITES_CACHE, openWorldHint: true },

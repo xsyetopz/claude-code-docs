@@ -18,17 +18,26 @@ afterAll(() => rmSync(tmp, { recursive: true, force: true }));
 
 let n = 0;
 const fakeProgram = (
-  o: { key?: string; host?: string; hang?: boolean } = {},
+  o: {
+    key?: string;
+    host?: string;
+    hang?: boolean;
+    say?: string;
+    big?: boolean;
+  } = {},
 ) => {
   const bin = join(tmp, `claude-${n++}`);
   writeFileSync(
     bin,
     `#!/usr/bin/env bun
+${o.say ? `process.stderr.write(${JSON.stringify(o.say)});` : ""}
 ${o.hang ? 'process.on("SIGTERM", () => {}); setInterval(() => {}, 1000);' : ""}
+console.log(JSON.stringify({ type: "system", subtype: "init" }));
+${o.big ? 'const b = Buffer.from(JSON.stringify({ type: "assistant", text: "é".repeat(300000) }) + "\\n" + JSON.stringify({ type: "result" }) + "\\n"); await Bun.write(Bun.stdout, b.subarray(0, 1001)); await Bun.sleep(300); await Bun.write(Bun.stdout, b.subarray(1001));' : ""}
 const prompt = process.argv[process.argv.indexOf("-p") + 1];
 const sec = Bun.spawnSync(["security", "find-generic-password"]).exitCode;
 const skill = process.env.TMPDIR.replace(/\\/$/, "") + "/bundled-skills/9.9.9/abc123/x";
-const env = Object.keys(process.env).filter((k) => k.startsWith("ANTHROPIC_")).sort().join(",");
+const env = Object.keys(process.env).filter((k) => /^(ANTHROPIC|PROBE|AWS)_/.test(k)).sort().join(",");
 await fetch(process.env.ANTHROPIC_BASE_URL + "/v1/messages?beta=true", {
   method: "POST",
   headers: { "x-api-key": ${JSON.stringify(o.key ?? "sk-ant-fake-probe")}, "content-type": "application/json"${o.host ? `, host: ${JSON.stringify(o.host)}` : ""} },
@@ -52,8 +61,9 @@ test("run keeps the user turn from the marked block, with temp folders as placeh
     const r = await runPrompt(fakeProgram(), "/x ARG");
     expect(r.exit).toBe(0);
     expect(r.requests.map((q) => q.path)).toEqual(["/v1/messages?beta=true"]);
+    expect(r.events).toEqual([{ type: "system", subtype: "init" }]);
     expect(userText(r, "<command-name>/x</command-name>")).toBe(
-      "<command-name>/x</command-name>\n/x ARG\n\nBase: <bundled-skill-dir>/x cwd: <project-dir> home: <home> security: 44 env: ANTHROPIC_API_KEY,ANTHROPIC_BASE_URL",
+      "<command-name>/x</command-name>\n/x ARG\n\nBase: <bundled-skill-dir>/x cwd: <project-dir> home: <home> security: 44 env: ANTHROPIC_API_KEY,ANTHROPIC_BASE_URL,AWS_EC2_METADATA_DISABLED",
     );
     for (const d of Object.values(r.dirs)) expect(existsSync(d)).toBe(false);
   } finally {
@@ -77,8 +87,63 @@ test("run fails on another key or host, and removes its folders", async () => {
   expect(runDirs()).toEqual(before);
 });
 
-test("run kills a program that ignores SIGTERM and reports the timeout", async () => {
+test("run kills a program that ignores SIGTERM and reports the timeout with its stderr", async () => {
   await expect(
-    runPrompt(fakeProgram({ hang: true }), "/x ARG", undefined, 1500),
-  ).rejects.toThrow("did not end in 1500 ms");
+    runPrompt(
+      fakeProgram({ hang: true, say: "stuck at step 3" }),
+      "/x ARG",
+      undefined,
+      1500,
+    ),
+  ).rejects.toThrow(
+    /did not end in 1500 ms; events: system\/init.*stuck at step 3/s,
+  );
+});
+
+test("run passes extra env to the program", async () => {
+  const r = await runPrompt(fakeProgram(), "/x ARG", undefined, undefined, {
+    PROBE_FLAG: "1",
+  });
+  expect(userText(r, "<command-name>/x</command-name>")).toContain(
+    "env: ANTHROPIC_API_KEY,ANTHROPIC_BASE_URL,AWS_EC2_METADATA_DISABLED,PROBE_FLAG",
+  );
+});
+
+test("run refuses extra env that would undo the safety setup or carry a credential", async () => {
+  for (const k of [
+    "ANTHROPIC_BASE_URL",
+    "ANTHROPIC_BEDROCK_BASE_URL",
+    "ANTHROPIC_CUSTOM_HEADERS",
+    "AWS_ENDPOINT_URL",
+    "HTTPS_PROXY",
+    "https_proxy",
+    "ALL_PROXY",
+    "NODE_OPTIONS",
+    "BUN_OPTIONS",
+    "DYLD_INSERT_LIBRARIES",
+    "HOME",
+    "AWS_SECRET_ACCESS_KEY",
+    "CLAUDE_CODE_OAUTH_TOKEN",
+  ])
+    await expect(
+      runPrompt(fakeProgram(), "/x ARG", undefined, undefined, { [k]: "1" }),
+    ).rejects.toThrow(`env ${k}`);
+});
+
+test("run refuses an env value shaped like an Anthropic key", async () => {
+  await expect(
+    runPrompt(fakeProgram(), "/x ARG", undefined, undefined, {
+      PROBE_X: "sk-ant-api03-zzz",
+    }),
+  ).rejects.toThrow("env PROBE_X");
+});
+
+test("run keeps every stdout event, with multibyte text split across chunks intact", async () => {
+  const r = await runPrompt(fakeProgram({ big: true }), "/x ARG");
+  expect(r.events.map((e) => e["type"])).toEqual([
+    "system",
+    "assistant",
+    "result",
+  ]);
+  expect(r.events[1]?.["text"]).toBe("é".repeat(300000));
 });

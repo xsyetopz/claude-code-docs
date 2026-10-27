@@ -25,6 +25,8 @@ export type RunResult = {
   exit: number;
   requests: Sent[];
   stderr: string;
+  /** The stream-json events the program wrote to stdout. */
+  events: Record<string, unknown>[];
   dirs: Dirs;
 };
 
@@ -62,6 +64,9 @@ const STREAM =
   }) +
   sse("message_stop", { type: "message_stop" });
 
+// Names that name a credential, or that could send a request past the stub and the dead proxy.
+const UNSAFE =
+  /KEY|TOKEN|SECRET|PASSWORD|CREDENTIAL|SESSION|PROXY|BASE_URL|ENDPOINT|HEADERS|^(NODE|BUN)_OPTIONS$|^(LD|DYLD)_/i;
 const tempDir = (p: string) => realpathSync(mkdtempSync(join(tmpdir(), p)));
 
 /**
@@ -74,6 +79,7 @@ export const runPrompt = async (
   prompt: string,
   model = "claude-opus-5-5",
   timeoutMs = 60000,
+  env: Record<string, string> = {},
 ): Promise<RunResult> => {
   const made: string[] = [];
   let stub: ReturnType<typeof Bun.serve> | undefined;
@@ -128,6 +134,27 @@ export const runPrompt = async (
       },
     });
     const self = `127.0.0.1:${stub.port}`;
+    const fixed: Record<string, string> = {
+      PATH: `${shim}:${process.env["PATH"] ?? ""}`,
+      HOME: dirs.home,
+      TMPDIR: tmpdir(),
+      CLAUDE_CONFIG_DIR: dirs.config,
+      ANTHROPIC_API_KEY: FAKE_KEY,
+      ANTHROPIC_BASE_URL: `http://${self}`,
+      CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: "1",
+      DISABLE_TELEMETRY: "1",
+      // Fail closed: a request that skips the stub goes to a dead proxy.
+      HTTPS_PROXY: "http://127.0.0.1:9",
+      HTTP_PROXY: "http://127.0.0.1:9",
+      NO_PROXY: "127.0.0.1,localhost",
+      // The AWS SDK reaches 169.254.169.254 directly, not through the proxy.
+      AWS_EC2_METADATA_DISABLED: "true",
+    };
+    for (const [k, v] of Object.entries(env))
+      if (k.toUpperCase() in fixed || UNSAFE.test(k) || v.includes("sk-ant-"))
+        throw new Error(
+          `env ${k} is not allowed: run fixes it, or it could carry a credential or route a request`,
+        );
     const p = Bun.spawn(
       [
         bin,
@@ -142,25 +169,18 @@ export const runPrompt = async (
       {
         cwd: dirs.project,
         stdin: "ignore",
-        stdout: "ignore",
+        stdout: "pipe",
         stderr: "pipe",
-        env: {
-          PATH: `${shim}:${process.env["PATH"] ?? ""}`,
-          HOME: dirs.home,
-          TMPDIR: tmpdir(),
-          CLAUDE_CONFIG_DIR: dirs.config,
-          ANTHROPIC_API_KEY: FAKE_KEY,
-          ANTHROPIC_BASE_URL: `http://${self}`,
-          CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: "1",
-          DISABLE_TELEMETRY: "1",
-          // Fail closed: a request that skips the stub goes to a dead proxy.
-          HTTPS_PROXY: "http://127.0.0.1:9",
-          HTTP_PROXY: "http://127.0.0.1:9",
-          NO_PROXY: "127.0.0.1,localhost",
-        },
+        env: { ...fixed, ...env },
       },
     );
     const err = new Response(p.stderr).text();
+    // Read stdout as it comes, so a killed run still shows the events before the hang.
+    let out = "";
+    const dec = new TextDecoder();
+    const read = (async () => {
+      for await (const c of p.stdout) out += dec.decode(c, { stream: true });
+    })().catch(() => {});
     let timedOut = false;
     const t = setTimeout(() => {
       timedOut = true;
@@ -172,15 +192,29 @@ export const runPrompt = async (
     } finally {
       clearTimeout(t);
     }
-    if (timedOut) throw new Error(`the program did not end in ${timeoutMs} ms`);
     // A child the program left running can hold stderr open.
-    const stderr = await Promise.race([err, Bun.sleep(1000).then(() => "")]);
+    const [stderr] = await Promise.all([
+      Promise.race([err, Bun.sleep(1000).then(() => "")]),
+      Promise.race([read, Bun.sleep(1000)]),
+    ]);
+    const events = out.split("\n").flatMap((l) => {
+      try {
+        const e = JSON.parse(l);
+        return e && typeof e === "object" ? [e as Record<string, unknown>] : [];
+      } catch {
+        return [];
+      }
+    });
+    if (timedOut)
+      throw new Error(
+        `the program did not end in ${timeoutMs} ms; events: ${events.map((e) => `${e["type"]}/${e["subtype"] ?? ""}`).join(" ") || "none"}; stderr: ${stderr.slice(-2000)}`,
+      );
     const bad = requests.filter((r) => r.fakeKey === false || r.host !== self);
     if (bad.length)
       throw new Error(
         `a request had another host or key: ${bad.map((r) => `${r.host}${r.path}`).join(", ")}`,
       );
-    return { exit, requests, stderr, dirs };
+    return { exit, requests, stderr, events, dirs };
   } finally {
     stub?.stop(true);
     for (const d of made) rmSync(d, { recursive: true, force: true });
