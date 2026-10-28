@@ -192,4 +192,6 @@ or a count that no other line holds.
 - [x] 7.2 `CHANGELOG.md` holds every entry under `## [Unreleased]`. No `version:bump`: the repository
   has no tag, so the `0.2.0` in `package.json` is the release in progress and `[Unreleased]` is its
   notes. `bun run verify:locked` runs on each push, through the lefthook `pre-push` job.
-- [ ] 7.3 Tell the user to rename the GitHub repository to `clawdipedia`.
+- [x] 7.3 The owner renamed the repository. The push to the old name replied `This repository moved.
+  Please use the new location: https://github.com/xsyetopz/clawdipedia.git`, so `origin` now points
+  there.
