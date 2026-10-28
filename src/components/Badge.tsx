@@ -1,3 +1,4 @@
+import { Badge as MantineBadge, Tooltip, VisuallyHidden } from "@mantine/core";
 import type React from "react";
 
 type Kind =
@@ -42,17 +43,49 @@ const META: Record<Kind, { label: string; tip: string }> = {
   },
 };
 
+// Label badges are outlined. The others have no border.
+const OUTLINED = new Set<Kind>([
+  "managed-only",
+  "experimental",
+  "deprecated",
+  "caution",
+]);
+
 type Props = { note?: string };
 
 const Badge = ({ kind, note }: Props & { kind: Kind }): React.JSX.Element => {
   const { label, tip } = META[kind];
+  const text = note ? `${tip} ${note}` : tip;
+  // The color variables switch with the theme in custom.css.
+  const style = {
+    "--badge-bg": `var(--cc-badge-${kind}-bg)`,
+    "--badge-color": `var(--cc-badge-${kind}-fg)`,
+    "--badge-bd": OUTLINED.has(kind)
+      ? "1px solid currentColor"
+      : "1px solid transparent",
+  } as React.CSSProperties;
   return (
-    <span
-      className={`cc-badge cc-badge--${kind}`}
-      title={note ? `${tip} ${note}` : tip}
+    <Tooltip
+      label={text}
+      multiline
+      maw={320}
+      withArrow
+      events={{ hover: true, focus: true, touch: true }}
     >
-      {label}
-    </span>
+      <MantineBadge
+        // The tip must show on keyboard focus, so the badge takes focus.
+        tabIndex={0}
+        className={`cc-badge cc-badge--${kind}`}
+        style={style}
+        radius={3}
+        tt="none"
+        leftSection={<span aria-hidden="true" className="cc-badge__glyph" />}
+      >
+        {label}
+        {/* A Mantine tooltip shows on hover only, so a screen reader reads the tip here. */}
+        <VisuallyHidden>{`: ${text}`}</VisuallyHidden>
+      </MantineBadge>
+    </Tooltip>
   );
 };
 

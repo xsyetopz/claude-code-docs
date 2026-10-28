@@ -1,27 +1,28 @@
+import { List, Paper } from "@mantine/core";
 import React from "react";
 
-// Marks every inline code item that ends in "/" as a folder, so CSS can set
-// folders apart from files without color.
+type ElementProps = { children?: React.ReactNode; className?: string };
+
+const typeName = (type: unknown): string =>
+  typeof type === "function" ? type.name : "";
+
+// Rebuilds the MDX list on Mantine List. It also marks every inline code item
+// that ends in "/" as a folder, so CSS can set folders apart without color.
 const mark = (node: React.ReactNode): React.ReactNode => {
   return React.Children.map(node, (child) => {
-    if (
-      !React.isValidElement<{ children?: React.ReactNode; className?: string }>(
-        child,
-      )
-    )
-      return child;
+    if (!React.isValidElement<ElementProps>(child)) return child;
     const { children, className } = child.props;
-    // list-style: none makes VoiceOver drop the list role, so restore it.
-    const isList =
-      child.type === "ul" ||
-      (typeof child.type === "function" &&
-        /^MDXUl$|^Ul$/i.test(child.type.name));
-    if (isList)
-      return React.cloneElement(
-        child,
-        { role: "list" } as Record<string, unknown>,
-        mark(children),
+    if (child.type === "ul" || /^MDXUl$|^Ul$/i.test(typeName(child.type))) {
+      // list-style: none makes VoiceOver drop the list role, so restore it.
+      return (
+        <List type="unordered" listStyleType="none" role="list">
+          {mark(children)}
+        </List>
       );
+    }
+    if (child.type === "li" || /^MDXLi$|^Li$/i.test(typeName(child.type))) {
+      return <List.Item>{mark(children)}</List.Item>;
+    }
     if (typeof children === "string") {
       return children.endsWith("/")
         ? React.cloneElement(child, {
@@ -40,7 +41,11 @@ const FileTree = ({
 }: {
   children?: React.ReactNode;
 }): React.JSX.Element => {
-  return <div className="cc-filetree">{mark(children)}</div>;
+  return (
+    <Paper className="cc-filetree" component="div" withBorder={false}>
+      {mark(children)}
+    </Paper>
+  );
 };
 
 export default FileTree;
