@@ -8,7 +8,7 @@ import { join, relative } from "node:path";
 
 const ROOT = join(import.meta.dir, "..", "..");
 const BUILD = join(ROOT, "build");
-const BASE = "https://xsyetopz.github.io/claude-code-docs/";
+const BASE = "https://xsyetopz.github.io/clawdipedia/";
 const problems: string[] = [];
 const fail = (m: string) => problems.push(m);
 

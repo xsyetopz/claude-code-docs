@@ -1,13 +1,38 @@
 {
-  "$schema": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-plugin-manifest.json",
-  "name": "cc-docs",
-  "version": "1.0.3",
-  "description": "Claude Code Docs for version 2.1.309 as an MCP server (search_docs, read_page, list_pages, get_schema) and a lightweight skill. The first three also read the Claude API and platform docs (source \"platform\"). Fetches live with a disk cache and falls back to it offline.",
+  "$schema": "https://xsyetopz.github.io/clawdipedia/schemas/claude-code-plugin-manifest.json",
+  "name": "clawdipedia-docs",
+  "displayName": "Anthropic Docs",
+  "version": "2.0.0",
+  "description": "MCP server and skill for four doc sources: clawdipedia (the unofficial Claude Code Wikipedia), platform.claude.com, code.claude.com, and anthropic.com. Searches, reads pages, serves schemas.",
   "author": {
     "name": "xsyetopz"
   },
-  "homepage": "https://xsyetopz.github.io/claude-code-docs/",
-  "repository": "https://github.com/xsyetopz/claude-code-docs",
+  "homepage": "https://xsyetopz.github.io/clawdipedia/",
+  "repository": "https://github.com/xsyetopz/clawdipedia",
   "license": "MIT",
-  "keywords": ["claude-code", "docs", "mcp", "settings", "hooks"]
+  "keywords": [
+    "anthropic",
+    "anthropic-docs",
+    "clawdipedia",
+    "clawdipedia-docs",
+    "claude",
+    "claude-api",
+    "claude-api-docs",
+    "claude-code",
+    "claude-code-docs",
+    "claude-docs",
+    "claude-mcp",
+    "claude-mcp-server",
+    "claude-api-mcp",
+    "claude-api-mcp-server",
+    "claude-code-mcp",
+    "claude-code-mcp-server",
+    "claude-docs-mcp",
+    "claude-docs-mcp-server",
+    "docs",
+    "docs-mcp",
+    "docs-mcp-server",
+    "mcp",
+    "mcp-server"
+  ]
 }

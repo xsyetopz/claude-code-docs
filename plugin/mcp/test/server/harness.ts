@@ -1,4 +1,4 @@
-// Shared helpers for the server tests: a mock docs site, a mock platform site, and a client for dist/server.js.
+// Shared helpers for the server tests: a mock docs site, mock platform, code, and anthropic sites, and a client for dist/server.js.
 import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -63,7 +63,7 @@ export const mockSite = (state: SiteState = newState(), port = 0) => {
       if (path === "/llms-manifest.json")
         return new Response(
           readFileSync(join(SITE, "manifest.json"), "utf8").replaceAll(
-            "https://xsyetopz.github.io/claude-code-docs",
+            "https://xsyetopz.github.io/clawdipedia",
             base,
           ),
         );
@@ -140,6 +140,87 @@ export const mockPlatform = (rewrite = true) => {
   };
 };
 
+const LM = "Wed, 21 Oct 2026 07:28:00 GMT";
+
+/** Mock code.claude.com: /docs/llms.txt (Last-Modified) and /docs/en/<slug>.md pages. Records every request. */
+export const mockCode = () => {
+  const dir = join(import.meta.dir, "..", "fixtures", "code");
+  const hits: PHit[] = [];
+  const srv = Bun.serve({
+    port: 0,
+    hostname: "127.0.0.1",
+    fetch(req) {
+      const path = new URL(req.url).pathname;
+      const base = new URL(req.url).origin;
+      const ims = req.headers.get("if-modified-since");
+      hits.push({ path, ims });
+      if (path === "/docs/llms.txt") {
+        if (ims === LM) return new Response(null, { status: 304 });
+        return new Response(
+          readFileSync(join(dir, "llms.txt"), "utf8").replaceAll(
+            "https://code.claude.com",
+            base,
+          ),
+          { headers: { "last-modified": LM } },
+        );
+      }
+      // The bare path (no .md) is HTML on the real host; the mock has none.
+      const m = /^\/docs\/en\/([a-z0-9/-]+)\.md$/.exec(path);
+      const file = m
+        ? join(dir, "pages", `${m[1]?.replaceAll("/", "__")}.md`)
+        : "";
+      return m && existsSync(file)
+        ? new Response(readFileSync(file))
+        : new Response("no", { status: 404 });
+    },
+  });
+  return {
+    url: `http://127.0.0.1:${srv.port}`,
+    hits,
+    stop: () => srv.stop(true),
+  };
+};
+
+/** Mock www.anthropic.com: /sitemap.xml (Last-Modified) and HTML pages at /<path>. Records every request. */
+export const mockAnthropic = () => {
+  const dir = join(import.meta.dir, "..", "fixtures", "anthropic");
+  const hits: PHit[] = [];
+  const srv = Bun.serve({
+    port: 0,
+    hostname: "127.0.0.1",
+    fetch(req) {
+      const path = new URL(req.url).pathname;
+      const base = new URL(req.url).origin;
+      const ims = req.headers.get("if-modified-since");
+      hits.push({ path, ims });
+      if (path === "/sitemap.xml") {
+        if (ims === LM) return new Response(null, { status: 304 });
+        return new Response(
+          readFileSync(join(dir, "sitemap.xml"), "utf8").replaceAll(
+            "https://www.anthropic.com",
+            base,
+          ),
+          { headers: { "last-modified": LM } },
+        );
+      }
+      const m = /^\/([a-z0-9/-]+)$/.exec(path);
+      const file = m
+        ? join(dir, "pages", `${m[1]?.replaceAll("/", "__")}.html`)
+        : "";
+      return m && existsSync(file)
+        ? new Response(readFileSync(file), {
+            headers: { "content-type": "text/html" },
+          })
+        : new Response("no", { status: 404 });
+    },
+  });
+  return {
+    url: `http://127.0.0.1:${srv.port}`,
+    hits,
+    stop: () => srv.stop(true),
+  };
+};
+
 export const connect = async (env: Record<string, string> = {}) => {
   const c = new Client({ name: "test", version: "0" });
   const clean = Object.fromEntries(
@@ -147,14 +228,14 @@ export const connect = async (env: Record<string, string> = {}) => {
       (e): e is [string, string] => typeof e[1] === "string",
     ),
   );
-  const site = env["CC_DOCS_BASE_URL"] ? undefined : mockSite();
+  const site = env["CLAWDIPEDIA_BASE_URL"] ? undefined : mockSite();
   // Own the dir only when the test did not bring one; the test cleans up its own.
-  const own = !env["CC_DOCS_CACHE_DIR"] && !env["CLAUDE_PLUGIN_DATA"];
+  const own = !env["CLAWDIPEDIA_CACHE_DIR"] && !env["CLAUDE_PLUGIN_DATA"];
   const cache =
-    env["CC_DOCS_CACHE_DIR"] ?? mkdtempSync(join(tmpdir(), "ccdocs-test-"));
+    env["CLAWDIPEDIA_CACHE_DIR"] ?? mkdtempSync(join(tmpdir(), "ccdocs-test-"));
   stops.push(() => {
     site?.stop();
-    if (own || !env["CC_DOCS_CACHE_DIR"])
+    if (own || !env["CLAWDIPEDIA_CACHE_DIR"])
       rmSync(cache, { recursive: true, force: true });
   });
   await c.connect(
@@ -163,8 +244,8 @@ export const connect = async (env: Record<string, string> = {}) => {
       args: [SERVER],
       env: {
         ...clean,
-        ...(env["CLAUDE_PLUGIN_DATA"] ? {} : { CC_DOCS_CACHE_DIR: cache }),
-        ...(site ? { CC_DOCS_BASE_URL: site.url } : {}),
+        ...(env["CLAUDE_PLUGIN_DATA"] ? {} : { CLAWDIPEDIA_CACHE_DIR: cache }),
+        ...(site ? { CLAWDIPEDIA_BASE_URL: site.url } : {}),
         ...env,
       },
     }),

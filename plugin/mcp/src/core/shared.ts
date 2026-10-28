@@ -1,11 +1,24 @@
 // Types and helpers shared by the core/*.ts files: the result shape, the singletons, and the guard.
+
+import { Anthropic } from "../anthropic.ts";
+import { Code } from "../code.ts";
 import { Content, ContentError } from "../content.ts";
 import type { Source } from "../fetcher.ts";
 import { Platform } from "../platform.ts";
 
 export const DEFAULT_PAGE_CHARS = 20000;
 export const MAX_PAGE_CHARS = 40000;
-export type DocSourceName = "docs" | "platform";
+
+/** The one list of source names. The server enum, the CLI flag, and the type all read it. */
+export const DOC_SOURCES = [
+  "clawdipedia",
+  "platform",
+  "code",
+  "anthropic",
+] as const;
+export type DocSourceName = (typeof DOC_SOURCES)[number];
+export const isDocSource = (s: string): s is DocSourceName =>
+  (DOC_SOURCES as readonly string[]).includes(s);
 
 export type Result = {
   ok: boolean;
@@ -21,6 +34,8 @@ export type Result = {
 
 export const content = new Content();
 export const platform = new Platform();
+export const code = new Code();
+export const anthropic = new Anthropic();
 
 export const ok = (
   text: string,

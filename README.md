@@ -1,4 +1,4 @@
-# Claude Code Community Docs
+# Clawdipedia
 
 An unofficial, community-run documentation site for Claude Code.
 It is not made by or tied to Anthropic. "Claude" and "Claude Code" name the product the site describes.
@@ -7,7 +7,7 @@ The site covers every surface of Claude Code that you can use, change, or turn o
 That includes items the official docs never name. They carry an Undocumented badge.
 It tracks one release only: `2.1.309` (see `src/version.ts`). There are no versioned docs.
 
-Live site: <https://xsyetopz.github.io/claude-code-docs/>
+Live site: <https://xsyetopz.github.io/clawdipedia/>
 
 ## Run It
 
@@ -23,15 +23,15 @@ bun run verify    # typecheck + format + lint + checks + build, run this before 
 
 ## Plugins
 
-The repo is also a Claude Code plugin marketplace, `claude-code-docs`, with three plugins:
+The repo is also a Claude Code plugin marketplace, `clawdipedia`, with three plugins:
 
-- `cc-docs`: an MCP server with four tools (`search_docs`, `read_page`, `list_pages`, `get_schema`) and a skill. Pass `source: "platform"` to search, read, or list the Claude API and platform docs.
-- `cc-docs-cli`: the same lookups as a `cc-docs` command that the Bash tool runs, plus a skill. It has no MCP server, so it adds no tool list to the context. It works only in Claude Code and needs Bun.
+- `clawdipedia-docs`: an MCP server with four tools (`search_docs`, `read_page`, `list_pages`, `get_schema`) and a skill. It reads four sources, picked with `source`: `clawdipedia` (this site, the default), `platform` (platform.claude.com/docs), `code` (code.claude.com/docs), and `anthropic` (www.anthropic.com).
+- `clawdipedia-docs-cli`: the same lookups as an `clawdipedia-docs` command that the Bash tool runs, plus a skill. It has no MCP server, so it adds no tool list to the context. It works only in Claude Code and needs Bun.
 - `cc-inspect`: an MCP server and a skill that read your session transcripts and the installed Claude Code program.
 
 ```sh
-claude plugin marketplace add xsyetopz/claude-code-docs
-claude plugin install cc-docs@claude-code-docs   # or cc-docs-cli, or cc-inspect
+claude plugin marketplace add xsyetopz/clawdipedia
+claude plugin install clawdipedia-docs@clawdipedia   # or clawdipedia-docs-cli, or cc-inspect
 ```
 
 ## Contribute

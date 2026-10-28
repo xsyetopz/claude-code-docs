@@ -40,7 +40,7 @@ describe("tool list", () => {
       new StdioClientTransport({
         command: "bun",
         args: [SERVER],
-        env: { ...process.env, CC_DOCS_CACHE_DIR: cache } as Record<
+        env: { ...process.env, CLAWDIPEDIA_CACHE_DIR: cache } as Record<
           string,
           string
         >,
@@ -72,7 +72,7 @@ describe("prebuilt search index", () => {
     const state = newState();
     const site = mockSite(state);
     stops.push(site.stop);
-    const { call } = await connect({ CC_DOCS_BASE_URL: site.url });
+    const { call } = await connect({ CLAWDIPEDIA_BASE_URL: site.url });
     const s = await call("search_docs", { query: "PreToolUse" });
     expect(s.error).toBe(false);
     expect(s.text).toContain("configure/hooks");
@@ -94,7 +94,7 @@ describe("prebuilt search index", () => {
     state.noIndex = true;
     const site = mockSite(state);
     stops.push(site.stop);
-    const { call } = await connect({ CC_DOCS_BASE_URL: site.url });
+    const { call } = await connect({ CLAWDIPEDIA_BASE_URL: site.url });
     const s = await call("search_docs", { query: "PreToolUse" });
     expect(s.error).toBe(false);
     expect(s.text).toContain("configure/hooks");
@@ -111,9 +111,9 @@ describe("prebuilt search index", () => {
     const cache = mkdtempSync(join(tmpdir(), "ccdocs-test-"));
     stops.push(() => rmSync(cache, { recursive: true, force: true }));
     const env = {
-      CC_DOCS_BASE_URL: site.url,
-      CC_DOCS_CACHE_DIR: cache,
-      CC_DOCS_TTL_SCALE: "0",
+      CLAWDIPEDIA_BASE_URL: site.url,
+      CLAWDIPEDIA_CACHE_DIR: cache,
+      CLAWDIPEDIA_TTL_SCALE: "0",
     };
     await (await connect(env)).call("search_docs", { query: "hook" });
     state.hits.length = 0;
@@ -129,9 +129,9 @@ describe("prebuilt search index", () => {
     const cache = mkdtempSync(join(tmpdir(), "ccdocs-test-"));
     stops.push(() => rmSync(cache, { recursive: true, force: true }));
     const env = {
-      CC_DOCS_BASE_URL: site.url,
-      CC_DOCS_CACHE_DIR: cache,
-      CC_DOCS_TTL_SCALE: "0",
+      CLAWDIPEDIA_BASE_URL: site.url,
+      CLAWDIPEDIA_CACHE_DIR: cache,
+      CLAWDIPEDIA_TTL_SCALE: "0",
     };
     await (await connect(env)).call("search_docs", { query: "hook" });
     site.stop();
@@ -147,9 +147,9 @@ describe("offline read", () => {
     const cache = mkdtempSync(join(tmpdir(), "ccdocs-test-"));
     stops.push(() => rmSync(cache, { recursive: true, force: true }));
     const env = {
-      CC_DOCS_BASE_URL: site.url,
-      CC_DOCS_CACHE_DIR: cache,
-      CC_DOCS_TTL_SCALE: "0",
+      CLAWDIPEDIA_BASE_URL: site.url,
+      CLAWDIPEDIA_CACHE_DIR: cache,
+      CLAWDIPEDIA_TTL_SCALE: "0",
     };
     const first = await (await connect(env)).call("read_page", {
       route: "configure/hooks",

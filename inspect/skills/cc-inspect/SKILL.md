@@ -1,6 +1,6 @@
 ---
 name: cc-inspect
-description: Look into the user's Claude Code sessions and into the installed Claude Code program. Use this when the user asks what happened in a past session, wants to find something they or Claude said or ran, wants to check a transcript file, or asks what the program really does (a setting key, an environment variable, an event, a payload field) in the version they run.
+description: Look into the user's Claude Code sessions and the installed program: what happened in a past session, what a transcript holds, and what the program really does in the version they run.
 ---
 
 # Inspect Claude Code

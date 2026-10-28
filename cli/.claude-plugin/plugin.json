@@ -1,13 +1,21 @@
 {
-  "$schema": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-plugin-manifest.json",
-  "name": "cc-docs-cli",
-  "version": "1.0.1",
-  "description": "Claude Code Docs for version 2.1.309 as a cc-docs command (search, read, list, schema) that the Bash tool runs, plus a light skill. No MCP server, so it adds no tool list to the context. Works only in Claude Code, not in claude.ai or Cowork. Needs Bun.",
+  "$schema": "https://xsyetopz.github.io/clawdipedia/schemas/claude-code-plugin-manifest.json",
+  "name": "clawdipedia-docs-cli",
+  "displayName": "Anthropic Docs CLI",
+  "version": "2.0.0",
+  "description": "Anthropic docs from four sources as a clawdipedia command for the Bash tool, plus a light skill. No MCP server, so it adds no tool list. Needs Bun. Claude Code only. Tracks 2.1.312.",
   "author": {
     "name": "xsyetopz"
   },
-  "homepage": "https://xsyetopz.github.io/claude-code-docs/",
-  "repository": "https://github.com/xsyetopz/claude-code-docs",
+  "homepage": "https://xsyetopz.github.io/clawdipedia/",
+  "repository": "https://github.com/xsyetopz/clawdipedia",
   "license": "MIT",
-  "keywords": ["claude-code", "docs", "cli", "settings", "hooks"]
+  "keywords": [
+    "anthropic",
+    "claude-code",
+    "claude-api",
+    "docs",
+    "cli",
+    "clawdipedia"
+  ]
 }

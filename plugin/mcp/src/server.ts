@@ -1,11 +1,12 @@
-// claude-code-docs MCP server (stdio). Read-only. No telemetry.
-// A thin front end on core.ts, which reads the published docs site live and caches every fetch on disk for offline use.
+// clawdipedia-docs MCP server (stdio). Read-only. No telemetry.
+// A thin front end on core.ts, which reads four sources live (clawdipedia, platform, code, anthropic) and caches every fetch on disk for offline use.
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 import pkg from "../package.json" with { type: "json" };
 import {
   DEFAULT_PAGE_CHARS,
+  DOC_SOURCES,
   list,
   MAX_PAGE_CHARS,
   type Result,
@@ -32,12 +33,16 @@ const reply = (r: Result) =>
     : { isError: true, content: [{ type: "text" as const, text: r.text }] };
 
 const source = z
-  .enum(["docs", "platform"])
-  .default("docs")
-  .describe("docs: Claude Code Docs. platform: platform.claude.com/docs");
+  .enum(DOC_SOURCES)
+  .default("clawdipedia")
+  .describe(
+    "clawdipedia: these unofficial Claude Code docs. platform: platform.claude.com/docs. code: code.claude.com/docs (official Claude Code docs). anthropic: www.anthropic.com (news, research, legal).",
+  );
+
+const SECTION = "Top-level section (clawdipedia) or group/section (others)";
 
 const server = new McpServer({
-  name: "claude-code-docs",
+  name: "clawdipedia-docs",
   version: pkg.version,
 });
 
@@ -45,15 +50,12 @@ server.registerTool(
   "search_docs",
   {
     description:
-      "Full-text search over the docs. Returns routes, titles, and snippets.",
+      "Full-text search over one docs source (see source). Returns routes, titles, and snippets.",
     inputSchema: {
       query: z.string().min(1).max(200).describe("Keywords or an identifier"),
       source,
       limit: z.number().int().min(1).max(25).default(8),
-      section: z
-        .string()
-        .optional()
-        .describe("Top-level section (docs) or group (platform)"),
+      section: z.string().optional().describe(SECTION),
     },
     annotations: READ_ONLY,
   },
@@ -63,7 +65,8 @@ server.registerTool(
 server.registerTool(
   "read_page",
   {
-    description: "Read one page as markdown.",
+    description:
+      "Read one page of a docs source as markdown (anthropic pages are converted from HTML).",
     inputSchema: {
       route: z.string().min(1).describe("Route from search_docs or list_pages"),
       source,
@@ -91,13 +94,11 @@ server.registerTool(
 server.registerTool(
   "list_pages",
   {
-    description: "List pages with routes and titles, in sidebar order.",
+    description:
+      "List the pages of one docs source (see source) with routes and titles. Without a section, remote sources list their groups.",
     inputSchema: {
       source,
-      section: z
-        .string()
-        .optional()
-        .describe("Top-level section (docs) or group (platform)"),
+      section: z.string().optional().describe(SECTION),
     },
     annotations: READ_ONLY,
   },

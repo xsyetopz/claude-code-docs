@@ -37,7 +37,7 @@ type Page = {
   repoPath: string;
 };
 
-const TITLE = "Claude Code Community Docs";
+const TITLE = "Clawdipedia";
 const OPTIONAL_SECTION = "System Prompts";
 const oneLine = (s: string) => s.replace(/\s+/g, " ").trim();
 const yaml = (s: string) => JSON.stringify(oneLine(s));

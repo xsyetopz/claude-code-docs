@@ -1,5 +1,5 @@
 {
-  "$schema": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-plugin-manifest.json",
+  "$schema": "https://xsyetopz.github.io/clawdipedia/schemas/claude-code-plugin-manifest.json",
   "name": "claudetto-browser",
   "version": "0.2.0",
   "description": "Drives a browser with `agent-browser`, or with CloakBrowser on sites with bot detection when the user chooses it. With the `cloakbrowser` backend, answers each `WebSearch` call that the permission rules allow with a search in CloakBrowser, and needs its binary.",

@@ -10,7 +10,7 @@ import {
 export type Json = { [key: string]: unknown };
 export type RawSchemas = Record<string, Json>;
 
-export const BASE_URL = "https://xsyetopz.github.io/claude-code-docs/schemas";
+export const BASE_URL = "https://xsyetopz.github.io/clawdipedia/schemas";
 
 export const FILES = {
   "claude-code-settings.json": {

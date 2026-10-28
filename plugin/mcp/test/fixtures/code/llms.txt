@@ -1,0 +1,53 @@
+# Claude Code Docs
+
+> Official documentation for Claude Code.
+
+## Getting started
+
+### Overview
+
+#### Getting started
+
+- [Overview](https://code.claude.com/docs/en/overview.md): Claude Code is an agentic coding tool that reads your codebase.
+- [Quickstart](https://code.claude.com/docs/en/quickstart.md): Install Claude Code in your terminal and make your first change.
+
+#### Core concepts
+
+- [How Claude Code works](https://code.claude.com/docs/en/how-claude-code-works.md): Understand the agentic loop and built-in tools.
+
+##### Claude Code in the cloud
+
+- [Use Claude Code in the cloud](https://code.claude.com/docs/en/claude-code-on-the-web.md): Run sessions in the cloud from your browser.
+
+## Build with Claude Code
+
+### Plugins
+
+#### Plugins
+
+- [Create plugins](https://code.claude.com/docs/en/plugins/create.md): Build a plugin with skills, hooks, and MCP servers.
+- [Plugins reference](https://code.claude.com/docs/en/plugins-reference.md): Manifest schema and component reference for plugins.
+
+### Create plugins
+
+- [Create plugins](https://code.claude.com/docs/en/plugins/create.md): Repeated entry. This copy is dropped.
+
+#### Agent SDK
+
+- [Agent SDK overview](https://code.claude.com/docs/en/agent-sdk/overview.md): Build agents with the Claude Agent SDK.
+- [Hooks guide](https://code.claude.com/docs/en/hooks-guide.md): Run shell commands on lifecycle events.
+- [Foreign host](https://evil.example/docs/en/evil.md): Dropped, other host.
+- [Other language](https://code.claude.com/docs/de/overview.md): Dropped, not English.
+
+## Resources
+
+### Resources
+
+- [Legal and compliance](https://code.claude.com/docs/en/legal-and-compliance.md): Legal agreements and compliance certifications.
+
+> The links below point to documentation indexes. Follow each `/_llms/` index recursively until you reach documentation pages.
+
+## Indexes
+
+- [French (228 pages)](https://code.claude.com/docs/_llms/fr.txt): Documentation for French.
+- [German (228 pages)](https://code.claude.com/docs/_llms/de.txt): Documentation for German.

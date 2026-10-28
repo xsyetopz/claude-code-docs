@@ -1,64 +1,30 @@
-// search_docs: BM25 search of the docs site or the platform docs.
+// search_docs: BM25 search of the docs site or a remote source (platform, code, anthropic).
 
-import { sourceData, sourceLine } from "../fetcher.ts";
+import { sourceData } from "../fetcher.ts";
+import { searchRemote } from "./remote.ts";
 import {
   content,
   type DocSourceName,
   guarded,
   heading,
   ok,
-  platform,
   type Result,
 } from "./shared.ts";
 import { indexLine, indexSource, searchIndex } from "./site-index.ts";
+import { remoteOf } from "./sources.ts";
 
 export type SearchArgs = {
   query: string;
   source?: DocSourceName;
   limit?: number;
-  /** A top-level section of the docs, or a group of the platform docs. */
+  /** A top-level section of the docs, or a group of a remote source. */
   section?: string | undefined;
-};
-
-const searchPlatform = async ({
-  query,
-  limit = 8,
-  section,
-}: SearchArgs): Promise<Result> => {
-  const ix = await platform.index();
-  const hits = ix.search(query, limit, section).map((h) => ({
-    route: h.entry.path,
-    title: h.entry.title,
-    url: h.entry.url,
-    section: h.entry.group,
-    score: Math.round(h.score * 100) / 100,
-    snippet: h.snippet,
-  }));
-  const line = sourceLine(ix.source);
-  const src = { ...sourceData(ix.source), line };
-  if (hits.length === 0)
-    return ok(
-      `No platform pages match "${query}"${section ? ` in group "${section}"` : ""}. Try fewer or different keywords, drop the group filter, or browse the page list.\n\n${line}`,
-      { query, hits, source: src },
-      ix.source,
-    );
-  const md = hits
-    .map(
-      (h, i) =>
-        `${i + 1}. **${h.title}** (route \`${h.route}\`)\n   ${h.url}${h.snippet ? `\n   ${h.snippet}` : ""}`,
-    )
-    .join("\n");
-  return ok(
-    `${hits.length} hit(s) for "${query}":\n\n${md}\n\n${line}`,
-    { query, hits, source: src },
-    ix.source,
-    true,
-  );
 };
 
 export const search = (args: SearchArgs): Promise<Result> =>
   guarded(async () => {
-    if (args.source === "platform") return await searchPlatform(args);
+    const remote = remoteOf(args.source);
+    if (remote) return await searchRemote(remote, args);
     const { query, limit = 8, section } = args;
     const b = await searchIndex();
     const hits = b.idx.search(query, limit, section).map((h) => ({

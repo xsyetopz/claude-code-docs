@@ -1,6 +1,6 @@
 {
   "mcpServers": {
-    "claude-code-docs": {
+    "docs": {
       "command": "bun",
       "args": ["${CLAUDE_PLUGIN_ROOT}/mcp/dist/server.js"]
     }

@@ -131,7 +131,7 @@ describe("platform tools", () => {
     stops.push(p.stop);
     const { call } = await connect({
       PLATFORM_DOCS_BASE_URL: p.url,
-      CC_DOCS_TTL_SCALE: "0",
+      CLAWDIPEDIA_TTL_SCALE: "0",
     });
     await call("search_docs", { source: "platform", query: "streaming" });
     await call("read_page", {
@@ -188,7 +188,7 @@ describe("platform tools", () => {
     const p = mockPlatform();
     const { call } = await connect({
       PLATFORM_DOCS_BASE_URL: p.url,
-      CC_DOCS_TTL_SCALE: "0",
+      CLAWDIPEDIA_TTL_SCALE: "0",
     });
     await call("read_page", {
       source: "platform",

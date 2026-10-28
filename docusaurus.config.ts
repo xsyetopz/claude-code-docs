@@ -8,7 +8,7 @@ import rehypeCodeWbr from "./src/plugins/rehype/code-wbr";
 import rehypeTableMarks from "./src/plugins/rehype/table-marks";
 import { CLAUDE_CODE_VERSION } from "./src/version";
 
-const REPO = "https://github.com/xsyetopz/claude-code-docs";
+const REPO = "https://github.com/xsyetopz/clawdipedia";
 const DISCLAIMER = "Unofficial. Not made by or tied to Anthropic.";
 
 // Serves schemas/ at <baseUrl>schemas/ so the $id and $schema URLs resolve after deploy.
@@ -22,13 +22,13 @@ const schemasPlugin = (): Plugin => ({
 });
 
 const config: Config = {
-  title: "Claude Code Community Docs",
+  title: "Clawdipedia",
   tagline: DISCLAIMER,
   favicon: "img/logo.svg",
   url: "https://xsyetopz.github.io",
-  baseUrl: "/claude-code-docs/",
+  baseUrl: "/clawdipedia/",
   organizationName: "xsyetopz",
-  projectName: "claude-code-docs",
+  projectName: "clawdipedia",
   trailingSlash: false,
 
   onBrokenLinks: "throw",
@@ -87,7 +87,7 @@ const config: Config = {
       textColor: "#faf9f5",
     },
     navbar: {
-      title: "Claude Code Community Docs",
+      title: "Clawdipedia",
       logo: { alt: "Docs icon", src: "img/logo.svg" },
       items: [
         {

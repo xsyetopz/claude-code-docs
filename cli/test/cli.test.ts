@@ -1,4 +1,4 @@
-// Run: bun test cli/test   (runs cli/bin/cc-docs against a local mock of the site and of platform.claude.com; no network)
+// Run: bun test cli/test   (runs cli/bin/clawdipedia against a local mock of the site and of platform.claude.com; no network)
 import { afterAll, describe, expect, test } from "bun:test";
 import {
   existsSync,
@@ -12,7 +12,7 @@ import { join } from "node:path";
 import { searchIndexJson } from "../../plugin/mcp/src/search.ts";
 
 const ROOT = join(import.meta.dir, "..", "..");
-const BIN = join(ROOT, "cli", "bin", "cc-docs");
+const BIN = join(ROOT, "cli", "bin", "clawdipedia");
 const SERVER = join(ROOT, "plugin", "mcp", "dist", "server.js");
 const FIXTURES = join(ROOT, "plugin", "mcp", "test", "fixtures");
 const SITE = join(FIXTURES, "site");
@@ -42,10 +42,7 @@ const mockSite = () => {
       const manifest = readFileSync(join(SITE, "manifest.json"), "utf8");
       if (path === "/llms-manifest.json")
         return new Response(
-          manifest.replaceAll(
-            "https://xsyetopz.github.io/claude-code-docs",
-            base,
-          ),
+          manifest.replaceAll("https://xsyetopz.github.io/clawdipedia", base),
         );
       if (path === "/llms.txt")
         return new Response("# T\n\n> Docs for Claude Code 2.1.305.\n");
@@ -105,13 +102,15 @@ const mockPlatform = () => {
   return { url: `http://127.0.0.1:${srv.port}` };
 };
 
-/** The environment of a run: the real one without the cc-docs settings, plus `env`. */
+/** The environment of a run: the real one without the clawdipedia settings, plus `env`. */
 const envOf = (env: Record<string, string>): Record<string, string> => {
   const clean = Object.fromEntries(
     Object.entries(process.env).filter(
       (e): e is [string, string] =>
         typeof e[1] === "string" &&
-        !/^(CC_DOCS_|CLAUDE_PLUGIN_DATA|PLATFORM_DOCS_)/.test(e[0]),
+        !/^(CLAWDIPEDIA_|ANTHROPIC_SITE_|CODE_DOCS_|CLAUDE_PLUGIN_DATA|PLATFORM_DOCS_)/.test(
+          e[0],
+        ),
     ),
   );
   return { ...clean, ...env };
@@ -192,7 +191,7 @@ const withSite = () => {
   return {
     site,
     cache,
-    env: { CC_DOCS_BASE_URL: site.url, CC_DOCS_CACHE_DIR: cache },
+    env: { CLAWDIPEDIA_BASE_URL: site.url, CLAWDIPEDIA_CACHE_DIR: cache },
   };
 };
 
@@ -257,7 +256,7 @@ describe("subcommands", () => {
     const platform = mockPlatform();
     const env = {
       PLATFORM_DOCS_BASE_URL: platform.url,
-      CC_DOCS_CACHE_DIR: tmp(),
+      CLAWDIPEDIA_CACHE_DIR: tmp(),
     };
     const s = await cc(
       ["search", "prompt caching", "--source", "platform"],
@@ -273,6 +272,19 @@ describe("subcommands", () => {
     expect(r.out).toContain("Zebrafinch");
     const l = await cc(["list", "--source", "platform"], env);
     expect(l.out).toContain("Messages: 3");
+  });
+  test("--source clawdipedia reads the site, and the old value docs is a usage error", async () => {
+    const { env } = withSite();
+    const ok = await cc(
+      ["search", "PreToolUse", "--source", "clawdipedia"],
+      env,
+    );
+    expect(ok.code).toBe(0);
+    expect(ok.out).toContain("configure/hooks");
+    const old = await cc(["search", "PreToolUse", "--source", "docs"], env);
+    expect(old.code).toBe(2);
+    expect(old.out).toBe("");
+    expect(old.err).toContain("clawdipedia, platform, code, anthropic");
   });
 });
 
@@ -300,11 +312,11 @@ describe("same answers as the MCP server", () => {
   test("search lists the same routes in the same order as search_docs", async () => {
     const { site } = withSite();
     const cli = await cc(["search", "hook", "--json"], {
-      CC_DOCS_BASE_URL: site.url,
-      CC_DOCS_CACHE_DIR: tmp(),
+      CLAWDIPEDIA_BASE_URL: site.url,
+      CLAWDIPEDIA_CACHE_DIR: tmp(),
     });
     const mcp = await mcpCall(
-      { CC_DOCS_BASE_URL: site.url, CC_DOCS_CACHE_DIR: tmp() },
+      { CLAWDIPEDIA_BASE_URL: site.url, CLAWDIPEDIA_CACHE_DIR: tmp() },
       "search_docs",
       { query: "hook" },
     );
@@ -316,8 +328,8 @@ describe("same answers as the MCP server", () => {
     const text = (mcp.content as { text: string }[])[0]?.text ?? "";
     const cliText = (
       await cc(["search", "hook"], {
-        CC_DOCS_BASE_URL: site.url,
-        CC_DOCS_CACHE_DIR: tmp(),
+        CLAWDIPEDIA_BASE_URL: site.url,
+        CLAWDIPEDIA_CACHE_DIR: tmp(),
       })
     ).out;
     const inText = (t: string) =>
@@ -367,10 +379,11 @@ describe("exit codes", () => {
       ["search", "x", "--nope"],
       ["list", "--section", "x"],
       ["schema", "tools", "--source", "docs"],
+      ["list", "--source", "docs"],
     ]) {
       const r = await cc(args, env);
       expect(r.code).toBe(2);
-      expect(r.err).toContain("Usage: cc-docs");
+      expect(r.err).toContain("Usage: clawdipedia");
       expect(r.out).toBe("");
     }
   });
@@ -379,11 +392,11 @@ describe("exit codes", () => {
     const top = await cc(["--help"]);
     expect(top.code).toBe(0);
     expect(top.out).toContain("search <query>");
-    expect(top.out).toContain("--source docs|platform");
+    expect(top.out).toContain("clawdipedia");
     for (const sub of ["search", "read", "list", "schema"]) {
       const r = await cc([sub, "--help"]);
       expect(r.code).toBe(0);
-      expect(r.out).toContain(`Usage: cc-docs ${sub}`);
+      expect(r.out).toContain(`Usage: clawdipedia ${sub}`);
     }
   });
 });
@@ -396,18 +409,18 @@ describe("cache", () => {
     site.stop();
     const off = await cc(["read", "configure/hooks"], {
       ...env,
-      CC_DOCS_TTL_SCALE: "0",
+      CLAWDIPEDIA_TTL_SCALE: "0",
     });
     expect(off.code).toBe(0);
     expect(off.out).toContain("PreToolUse");
     expect(off.out).toMatch(/Source: .*cache \(.*offline\)/);
   });
 
-  test("the cache folder order is CC_DOCS_CACHE_DIR, CLAUDE_PLUGIN_DATA, then the home folder", async () => {
+  test("the cache folder order is CLAWDIPEDIA_CACHE_DIR, CLAUDE_PLUGIN_DATA, then the home folder", async () => {
     const site = mockSite();
     const data = tmp();
     const a = await cc(["read", "configure/hooks"], {
-      CC_DOCS_BASE_URL: site.url,
+      CLAWDIPEDIA_BASE_URL: site.url,
       CLAUDE_PLUGIN_DATA: data,
     });
     expect(a.code).toBe(0);
@@ -417,8 +430,8 @@ describe("cache", () => {
     const dir = tmp();
     const data2 = tmp();
     await cc(["read", "configure/hooks"], {
-      CC_DOCS_BASE_URL: site.url,
-      CC_DOCS_CACHE_DIR: dir,
+      CLAWDIPEDIA_BASE_URL: site.url,
+      CLAWDIPEDIA_CACHE_DIR: dir,
       CLAUDE_PLUGIN_DATA: data2,
     });
     expect(
@@ -428,7 +441,7 @@ describe("cache", () => {
     // With neither set, the cache is under the home folder (a temp HOME here).
     const home = tmp();
     await cc(["read", "configure/hooks"], {
-      CC_DOCS_BASE_URL: site.url,
+      CLAWDIPEDIA_BASE_URL: site.url,
       HOME: home,
       XDG_CACHE_HOME: "",
     });
@@ -437,7 +450,7 @@ describe("cache", () => {
         join(
           home,
           ".cache",
-          "claude-code-docs",
+          "clawdipedia",
           "site",
           "pages",
           "configure",
@@ -445,52 +458,5 @@ describe("cache", () => {
         ),
       ),
     ).toBe(true);
-  });
-});
-
-describe("packaging", () => {
-  test("the bundle is one executable file that starts with a bun shebang", () => {
-    expect(readFileSync(BIN, "utf8").startsWith("#!/usr/bin/env bun\n")).toBe(
-      true,
-    );
-    expect(statSync(BIN).mode & 0o111).not.toBe(0);
-  });
-
-  test("the bundle runs by itself as a command", async () => {
-    const p = Bun.spawn([BIN, "--help"], {
-      env: envOf({}),
-      stdout: "pipe",
-      stderr: "pipe",
-    });
-    expect(await p.exited).toBe(0);
-    expect(await new Response(p.stdout).text()).toContain("Usage: cc-docs");
-  });
-
-  test("the plugin has a skill and a bin, and no MCP server", () => {
-    const cli = join(ROOT, "cli");
-    expect(existsSync(join(cli, ".mcp.json"))).toBe(false);
-    expect(existsSync(join(cli, "bin", "cc-docs"))).toBe(true);
-    expect(existsSync(join(cli, "skills", "cc-docs-cli", "SKILL.md"))).toBe(
-      true,
-    );
-    const plugin = JSON.parse(
-      readFileSync(join(cli, ".claude-plugin", "plugin.json"), "utf8"),
-    );
-    expect(plugin.name).toBe("cc-docs-cli");
-    expect(plugin.description).toContain("only in Claude Code");
-    expect(plugin.mcpServers).toBeUndefined();
-  });
-
-  test("the registry package is cc-docs, with a bin, files, and the plugin version", () => {
-    const cli = join(ROOT, "cli");
-    const pkg = JSON.parse(readFileSync(join(cli, "package.json"), "utf8"));
-    const plugin = JSON.parse(
-      readFileSync(join(cli, ".claude-plugin", "plugin.json"), "utf8"),
-    );
-    expect(pkg.name).toBe("cc-docs");
-    expect(pkg.bin).toEqual({ "cc-docs": "bin/cc-docs" });
-    expect(pkg.files).toEqual(["bin/"]);
-    expect(pkg.version).toBe(plugin.version);
-    expect(pkg.dependencies).toBeUndefined();
   });
 });

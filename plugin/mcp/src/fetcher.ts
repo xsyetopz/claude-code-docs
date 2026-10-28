@@ -8,15 +8,15 @@ import { DiskCache } from "./cache.ts";
 export const FETCH_TIMEOUT_MS = 8000;
 export const MAX_REDIRECTS = 3;
 const MAX_CONCURRENT = 6;
-const UA = `claude-code-docs-mcp/${pkg.version} (+https://github.com/xsyetopz/claude-code-docs)`;
+const UA = `clawdipedia-docs-mcp/${pkg.version} (+https://github.com/xsyetopz/clawdipedia)`;
 const ACCEPT = "text/markdown, text/plain, application/json;q=0.9";
 
 export const MB = 1024 * 1024;
 
-/** TTL multiplier. Test-only: CC_DOCS_TTL_SCALE=0 makes every cached file stale at once. */
+/** TTL multiplier. Test-only: CLAWDIPEDIA_TTL_SCALE=0 makes every cached file stale at once. */
 const ttlScale = (): number => {
-  const n = Number(process.env["CC_DOCS_TTL_SCALE"]);
-  return process.env["CC_DOCS_TTL_SCALE"] !== undefined &&
+  const n = Number(process.env["CLAWDIPEDIA_TTL_SCALE"]);
+  return process.env["CLAWDIPEDIA_TTL_SCALE"] !== undefined &&
     Number.isFinite(n) &&
     n >= 0
     ? n
@@ -36,7 +36,7 @@ export const baseUrl = (envName: string, fallback: string): string => {
   } catch {
     // Fall through to the default.
   }
-  console.error(`claude-code-docs: ignoring ${envName} (needs https)`);
+  console.error(`clawdipedia-docs: ignoring ${envName} (needs https)`);
   return fallback;
 };
 

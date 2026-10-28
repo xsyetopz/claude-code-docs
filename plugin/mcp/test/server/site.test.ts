@@ -45,8 +45,8 @@ describe("search and offline", () => {
   test("offline: cached pages, the index, and the list are served", async () => {
     const site = mockSite();
     const { call } = await connect({
-      CC_DOCS_BASE_URL: site.url,
-      CC_DOCS_TTL_SCALE: "0",
+      CLAWDIPEDIA_BASE_URL: site.url,
+      CLAWDIPEDIA_TTL_SCALE: "0",
     });
     const live = await call("read_page", { route: "configure/hooks" });
     expect(live.error).toBe(false);
@@ -71,8 +71,8 @@ describe("search and offline", () => {
   test("a stale-offline page list recovers soon after the network returns", async () => {
     const site = mockSite();
     const { call } = await connect({
-      CC_DOCS_BASE_URL: site.url,
-      CC_DOCS_TTL_SCALE: "0.001",
+      CLAWDIPEDIA_BASE_URL: site.url,
+      CLAWDIPEDIA_TTL_SCALE: "0.001",
     });
     expect((await call("list_pages", {})).text).not.toContain("offline");
     site.stop();
@@ -94,8 +94,8 @@ describe("search and offline", () => {
     const site = mockSite(state);
     stops.push(site.stop);
     const { call } = await connect({
-      CC_DOCS_BASE_URL: site.url,
-      CC_DOCS_TTL_SCALE: "0.001",
+      CLAWDIPEDIA_BASE_URL: site.url,
+      CLAWDIPEDIA_TTL_SCALE: "0.001",
     });
     const first = await call("search_docs", { query: "hook" });
     expect(first.text).toContain("index built from 2 pages");
@@ -111,7 +111,7 @@ describe("search and offline", () => {
   test("offline with nothing cached is an error", async () => {
     const site = mockSite();
     site.stop();
-    const { call } = await connect({ CC_DOCS_BASE_URL: site.url });
+    const { call } = await connect({ CLAWDIPEDIA_BASE_URL: site.url });
     const r = await call("list_pages", {});
     expect(r.error).toBe(true);
     expect(r.text).toContain("could not reach");
@@ -128,9 +128,9 @@ describe("search and offline", () => {
       rmSync(bareCache, { recursive: true, force: true });
     });
     const env = {
-      CC_DOCS_BASE_URL: site.url,
-      CC_DOCS_CACHE_DIR: cache,
-      CC_DOCS_TTL_SCALE: "0",
+      CLAWDIPEDIA_BASE_URL: site.url,
+      CLAWDIPEDIA_CACHE_DIR: cache,
+      CLAWDIPEDIA_TTL_SCALE: "0",
     };
     const first = await connect(env);
     expect((await first.call("list_pages", {})).text).toContain(
@@ -144,7 +144,7 @@ describe("search and offline", () => {
     expect(l.text).toContain("Claude Code 2.1.305");
     expect(existsSync(join(cache, "site", "llms.txt"))).toBe(true);
     // With no cached copy the 404 only drops the version line; tools still work.
-    const bare = await connect({ ...env, CC_DOCS_CACHE_DIR: bareCache });
+    const bare = await connect({ ...env, CLAWDIPEDIA_CACHE_DIR: bareCache });
     const b = await bare.call("list_pages", {});
     expect(b.error).toBe(false);
     expect(b.text).not.toContain("Claude Code 2.1.305");
@@ -158,8 +158,8 @@ describe("site cache rules", () => {
     const site = mockSite(state);
     stops.push(site.stop);
     const { call } = await connect({
-      CC_DOCS_BASE_URL: site.url,
-      CC_DOCS_TTL_SCALE: "0",
+      CLAWDIPEDIA_BASE_URL: site.url,
+      CLAWDIPEDIA_TTL_SCALE: "0",
     });
     const a = await call("read_page", { route: "configure/hooks" });
     expect(a.text).toContain("live");
@@ -178,8 +178,8 @@ describe("site cache rules", () => {
     const site = mockSite(state);
     stops.push(site.stop);
     const { call, cache } = await connect({
-      CC_DOCS_BASE_URL: site.url,
-      CC_DOCS_TTL_SCALE: "0",
+      CLAWDIPEDIA_BASE_URL: site.url,
+      CLAWDIPEDIA_TTL_SCALE: "0",
     });
     expect((await call("read_page", { route: "configure/hooks" })).error).toBe(
       false,
@@ -199,7 +199,7 @@ describe("site cache rules", () => {
     const state = newState();
     const site = mockSite(state);
     stops.push(site.stop);
-    const { call, cache } = await connect({ CC_DOCS_BASE_URL: site.url });
+    const { call, cache } = await connect({ CLAWDIPEDIA_BASE_URL: site.url });
     await call("read_page", { route: "configure/hooks" });
     const file = join(cache, "site", "pages", "configure", "hooks.md");
     writeFileSync(file, "---\ntitle: Hook");
@@ -216,7 +216,7 @@ describe("site cache rules", () => {
     state.huge.add("/configure/hooks.md");
     const site = mockSite(state);
     stops.push(site.stop);
-    const { call } = await connect({ CC_DOCS_BASE_URL: site.url });
+    const { call } = await connect({ CLAWDIPEDIA_BASE_URL: site.url });
     const r = await call("read_page", { route: "configure/hooks" });
     expect(r.error).toBe(true);
     expect(r.text).toContain("could not reach");
@@ -272,8 +272,8 @@ describe("hostile site", () => {
     try {
       const base = `http://127.0.0.1:${(srv.address() as AddressInfo).port}`;
       const { call } = await connect({
-        CC_DOCS_CACHE_DIR: cache,
-        CC_DOCS_BASE_URL: base,
+        CLAWDIPEDIA_CACHE_DIR: cache,
+        CLAWDIPEDIA_BASE_URL: base,
       });
       const list = await call("list_pages", {});
       expect(list.text).toContain("zzfreshpage");

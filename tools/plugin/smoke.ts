@@ -1,6 +1,6 @@
 // Usage: bun tools/plugin/smoke.ts   (also: bun run plugin:smoke)
 // Opt-in, needs network. Runs plugin/mcp/dist/server.js against the real sites with a temp cache:
-// one search_docs, one read_page, one platform search_docs, and one cc-docs search. Exits non-zero on any failure.
+// one search_docs, one read_page, one platform search_docs, one code search_docs, one anthropic search_docs, and one clawdipedia search. Exits non-zero on any failure.
 // Not part of verify. Run it after a deploy.
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -12,14 +12,15 @@ const sdk = (p: string) =>
 const { Client } = await import(sdk("client/index.js"));
 const { StdioClientTransport } = await import(sdk("client/stdio.js"));
 
-const cache = mkdtempSync(join(tmpdir(), "ccdocs-smoke-"));
+const cache = mkdtempSync(join(tmpdir(), "clawdipedia-docs-smoke-"));
 const env = Object.fromEntries(
   Object.entries(process.env).filter(
     (e): e is [string, string] => typeof e[1] === "string",
   ),
 );
-for (const k of ["CC_DOCS_BASE_URL", "PLATFORM_DOCS_BASE_URL"]) delete env[k];
-env["CC_DOCS_CACHE_DIR"] = cache;
+for (const k of ["CLAWDIPEDIA_BASE_URL", "PLATFORM_DOCS_BASE_URL"])
+  delete env[k];
+env["CLAWDIPEDIA_CACHE_DIR"] = cache;
 delete env["CLAUDE_PLUGIN_DATA"];
 
 const client = new Client({ name: "plugin-smoke", version: "0" });
@@ -64,16 +65,35 @@ try {
     { query: "messages api", source: "platform" },
     /Source:/,
   );
+  await step(
+    "search_docs code",
+    "search_docs",
+    { query: "hooks", source: "code" },
+    /Source:/,
+  );
+  await step(
+    "search_docs anthropic",
+    "search_docs",
+    { query: "responsible scaling", source: "anthropic" },
+    /Source:/,
+  );
   const t0 = Date.now();
   const cli = Bun.spawnSync(
-    ["bun", join(MCP, "..", "..", "cli", "bin", "cc-docs"), "search", "hooks"],
+    [
+      "bun",
+      join(MCP, "..", "..", "cli", "bin", "clawdipedia"),
+      "search",
+      "hooks",
+    ],
     { env },
   );
   const ok = cli.exitCode === 0 && /Source:/.test(cli.stdout.toString());
-  console.log(`${ok ? "ok  " : "FAIL"} cc-docs search (${Date.now() - t0} ms)`);
+  console.log(
+    `${ok ? "ok  " : "FAIL"} clawdipedia search (${Date.now() - t0} ms)`,
+  );
   if (!ok)
     failures.push(
-      `cc-docs search: ${(cli.stdout.toString() + cli.stderr.toString()).slice(0, 300)}`,
+      `clawdipedia search: ${(cli.stdout.toString() + cli.stderr.toString()).slice(0, 300)}`,
     );
 } catch (e) {
   failures.push(`connect: ${String(e)}`);

@@ -8,7 +8,7 @@ import { DiskCache } from "../src/cache.ts";
 const V = { url: "http://x/" };
 const dirs: string[] = [];
 afterEach(() => {
-  delete process.env["CC_DOCS_CACHE_CAP_BYTES"];
+  delete process.env["CLAWDIPEDIA_CACHE_CAP_BYTES"];
   for (const d of dirs.splice(0)) rmSync(d, { recursive: true, force: true });
 });
 
@@ -43,11 +43,11 @@ describe("cache cap", () => {
   test("disk: oldest platform pages go first, index files stay", () => {
     const root = mkdtempSync(join(tmpdir(), "ccdocs-cache-"));
     dirs.push(root);
-    process.env["CC_DOCS_CACHE_CAP_BYTES"] = "350";
+    process.env["CLAWDIPEDIA_CACHE_CAP_BYTES"] = "350";
     scenario(new DiskCache(root));
   });
   test("memory fallback follows the same order", () => {
-    process.env["CC_DOCS_CACHE_CAP_BYTES"] = "350";
+    process.env["CLAWDIPEDIA_CACHE_CAP_BYTES"] = "350";
     scenario(new DiskCache("/proc/nonexistent/cache"));
   });
 });

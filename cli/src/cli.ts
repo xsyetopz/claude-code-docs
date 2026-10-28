@@ -1,9 +1,11 @@
 #!/usr/bin/env bun
-// cc-docs: the Claude Code Docs from a shell. A front end on the same core as the MCP server.
+// clawdipedia: four doc sources (clawdipedia, platform, code, anthropic) from a shell. A front end on the same core as the MCP server.
 // Exit codes: 0 a result, 1 no result (no hit, unknown page, unknown schema property), 2 a usage error.
 import { parseArgs } from "node:util";
 import {
+  DOC_SOURCES,
   type DocSourceName,
+  isDocSource,
   list,
   type Result,
   read,
@@ -11,7 +13,7 @@ import {
   search,
 } from "../../plugin/mcp/src/core.ts";
 
-const USAGE = `Usage: cc-docs <command> [options]
+const USAGE = `Usage: clawdipedia <command> [options]
 
 Commands:
   search <query>             Rank pages for keywords or an identifier
@@ -20,12 +22,13 @@ Commands:
   schema <name> [property]   Print a JSON Schema outline, one property, or a Mod API type
 
 Options:
-  --source docs|platform     docs (default): Claude Code Docs. platform: platform.claude.com/docs
+  --source <name>            clawdipedia (default): unofficial Claude Code Docs. platform: platform.claude.com/docs.
+                             code: code.claude.com/docs. anthropic: www.anthropic.com (news, research, legal)
   --section <heading>        read: print only the H2 section with this heading
   --limit <n>                search: most hits, 1 to 25 (default 8)
   --offset <n>               read, schema: character offset to continue a long output
   --json                     Print JSON in place of text
-  --help                     Print this help (also: cc-docs <command> --help)
+  --help                     Print this help (also: clawdipedia <command> --help)
 
 Each text output ends with a "Source:" line (live, cache, or offline cache).
 Exit codes: 0 a result, 1 no result, 2 usage error.
@@ -33,11 +36,11 @@ Exit codes: 0 a result, 1 no result, 2 usage error.
 
 const COMMANDS = {
   search:
-    "Usage: cc-docs search <query> [--source docs|platform] [--limit <n>] [--json]\n\nRanks pages for keywords or an identifier (cc-docs search PreToolUse).\nPrints the route, title, URL, and a snippet for each hit.\nThe first search reads one prebuilt index file and caches it.\n",
-  read: "Usage: cc-docs read <route> [--source docs|platform] [--section <heading>] [--offset <n>] [--json]\n\nPrints one page as markdown. A route comes from search or list, for example configure/status-line.\n--section prints only the H2 section with that heading.\nA long page ends its header line with the offset for --offset.\n",
-  list: "Usage: cc-docs list [prefix] [--source docs|platform] [--json]\n\nLists pages in sidebar order. A prefix is a top-level section (docs) or a group (platform), for example configure.\n",
+    "Usage: clawdipedia search <query> [--source clawdipedia|platform|code|anthropic] [--limit <n>] [--json]\n\nRanks pages for keywords or an identifier (clawdipedia search PreToolUse).\nPrints the route, title, URL, and a snippet for each hit.\nThe first search reads one prebuilt index file and caches it.\n",
+  read: "Usage: clawdipedia read <route> [--source clawdipedia|platform|code|anthropic] [--section <heading>] [--offset <n>] [--json]\n\nPrints one page as markdown. A route comes from search or list, for example configure/status-line.\n--section prints only the H2 section with that heading.\nA long page ends its header line with the offset for --offset.\n",
+  list: "Usage: clawdipedia list [prefix] [--source clawdipedia|platform|code|anthropic] [--json]\n\nLists pages in sidebar order. A prefix is a top-level section (clawdipedia) or a group or section (the other sources), for example configure.\n",
   schema:
-    "Usage: cc-docs schema <name> [property] [--offset <n>] [--json]\n\nPrints the outline of a JSON Schema (settings, tools, hook-output, ...), one property of it (hooks.PreToolUse), or a definition (BashInput.command).\nWith the name types, prints names of the Mod API type file, or the type, member, call, or event that the property names.\n",
+    "Usage: clawdipedia schema <name> [property] [--offset <n>] [--json]\n\nPrints the outline of a JSON Schema (settings, tools, hook-output, ...), one property of it (hooks.PreToolUse), or a definition (BashInput.command).\nWith the name types, prints names of the Mod API type file, or the type, member, call, or event that the property names.\n",
 } as const;
 type Command = keyof typeof COMMANDS;
 const isCommand = (s: string | undefined): s is Command =>
@@ -98,9 +101,11 @@ const run = async (argv: string[]): Promise<number> => {
   only("section", "read");
   only("limit", "search");
   only("offset", "read", "schema");
-  const source = values.source ?? "docs";
-  if (source !== "docs" && source !== "platform")
-    throw new UsageError(`--source needs docs or platform, not "${source}"`);
+  const source = values.source ?? "clawdipedia";
+  if (!isDocSource(source))
+    throw new UsageError(
+      `--source needs one of ${DOC_SOURCES.join(", ")}, not "${source}"`,
+    );
   const src: DocSourceName = source;
   const need = (min: number, max: number, what: string) => {
     if (args.length < min || args.length > max)
@@ -161,6 +166,6 @@ try {
   process.exitCode = await run(process.argv.slice(2));
 } catch (e) {
   if (!(e instanceof UsageError)) throw e;
-  process.stderr.write(`cc-docs: ${e.message}\n\n${USAGE}`);
+  process.stderr.write(`clawdipedia: ${e.message}\n\n${USAGE}`);
   process.exitCode = 2;
 }

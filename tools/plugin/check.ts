@@ -13,7 +13,8 @@ import { join } from "node:path";
 import Ajv2020 from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
 import { SCHEMA_NAMES, TYPE_FILE } from "../../plugin/mcp/src/content.ts";
-import { versionProblems } from "../version/bump.ts";
+import { CLAUDE_CODE_VERSION } from "../../src/version.ts";
+import { MARKETPLACE, SKILL_FILES, versionProblems } from "../version/bump.ts";
 
 const ROOT = join(import.meta.dir, "..", "..");
 const ajv = new Ajv2020({ strict: true, strictTypes: false, allErrors: true });
@@ -26,7 +27,7 @@ const problems: string[] = [];
 const PLUGINS = [
   {
     dir: "plugin",
-    skill: "claude-code-docs",
+    skill: "clawdipedia-docs",
     src: "plugin/mcp/src/server.ts",
     out: "plugin/mcp/dist/server.js",
     test: "plugin/mcp/test",
@@ -42,9 +43,9 @@ const PLUGINS = [
   },
   {
     dir: "cli",
-    skill: "cc-docs-cli",
+    skill: "clawdipedia-docs-cli",
     src: "cli/src/cli.ts",
-    out: "cli/bin/cc-docs",
+    out: "cli/bin/clawdipedia",
     test: "cli/test",
     mcp: false,
   },
@@ -55,10 +56,10 @@ const targets: [string, string][] = [
     `${p.dir}/.claude-plugin/plugin.json`,
     "claude-code-plugin-manifest",
   ]),
-  [".claude-plugin/marketplace.json", "claude-code-marketplace"],
+  [MARKETPLACE, "claude-code-marketplace"],
 ];
 for (const [file, kind] of targets) {
-  const want = `https://xsyetopz.github.io/claude-code-docs/schemas/${kind}.json`;
+  const want = `https://xsyetopz.github.io/clawdipedia/schemas/${kind}.json`;
   const check =
     ajv.getSchema(want) ?? ajv.compile(read(`schemas/${kind}.json`));
   const doc = read(file);
@@ -73,9 +74,7 @@ const RESERVED =
   /^(claude-|anthropic-|anthropics-|cc-plugin-)|^(claude|anthropic|claude-code|claude-mods)$/;
 const names = [
   ...PLUGINS.map((p) => read(`${p.dir}/.claude-plugin/plugin.json`).name),
-  ...(
-    read(".claude-plugin/marketplace.json").plugins as { name: string }[]
-  ).map((p) => p.name),
+  ...(read(MARKETPLACE).plugins as { name: string }[]).map((p) => p.name),
 ];
 for (const n of names)
   if (typeof n !== "string" || !n || /\s/.test(n) || RESERVED.test(n))
@@ -84,6 +83,56 @@ for (const n of names)
     );
 
 problems.push(...versionProblems(read));
+
+// A manifest description must not name a Claude Code version other than src/version.ts.
+for (const p of PLUGINS) {
+  const file = `${p.dir}/.claude-plugin/plugin.json`;
+  const text = String(read(file).description ?? "");
+  for (const v of new Set(text.match(/\b2\.\d+\.\d+\b/g) ?? []))
+    if (v !== CLAUDE_CODE_VERSION)
+      problems.push(
+        `${file}: description names Claude Code ${v}, but src/version.ts has ${CLAUDE_CODE_VERSION}: run "bun run version:bump"`,
+      );
+}
+// A skill body tells the model which version the `clawdipedia` source covers, so it must match too.
+for (const file of SKILL_FILES) {
+  const text = readFileSync(join(ROOT, file), "utf8");
+  for (const v of new Set(text.match(/\b2\.\d+\.\d+\b/g) ?? []))
+    if (v !== CLAUDE_CODE_VERSION)
+      problems.push(
+        `${file}: names Claude Code ${v}, but src/version.ts has ${CLAUDE_CODE_VERSION}: run "bun run version:bump"`,
+      );
+}
+
+// Every description goes into the model's context on each session, so each one stays short.
+const DESCRIPTION_MAX = 200;
+const market = read(MARKETPLACE) as {
+  description?: unknown;
+  plugins?: { name?: string; description?: unknown }[];
+};
+const descriptions: [where: string, text: string][] = [
+  [MARKETPLACE, String(market.description ?? "")],
+  ...(market.plugins ?? []).map((p): [string, string] => [
+    `${MARKETPLACE} ${String(p.name)}`,
+    String(p.description ?? ""),
+  ]),
+  ...PLUGINS.map((p): [string, string] => [
+    `${p.dir}/.claude-plugin/plugin.json`,
+    String(read(`${p.dir}/.claude-plugin/plugin.json`).description ?? ""),
+  ]),
+  ...PLUGINS.map((p): [string, string] => {
+    const file = `${p.dir}/skills/${p.skill}/SKILL.md`;
+    const body = existsSync(join(ROOT, file))
+      ? readFileSync(join(ROOT, file), "utf8")
+      : "";
+    return [file, /^description:[ \t]*(.*)$/m.exec(body)?.[1]?.trim() ?? ""];
+  }),
+];
+for (const [where, text] of descriptions)
+  if (text.length > DESCRIPTION_MAX)
+    problems.push(
+      `${where}: description is ${text.length} characters, over ${DESCRIPTION_MAX}`,
+    );
 
 for (const p of PLUGINS) {
   for (const f of [`${p.dir}/skills/${p.skill}/SKILL.md`, p.out])

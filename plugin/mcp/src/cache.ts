@@ -1,6 +1,8 @@
 // Disk cache for fetched files. Layout under the root:
 //   site/llms-manifest.json, site/llms.txt, site/pages/<route>.md, site/schemas/<name>.json
 //   platform/llms.txt, platform/pages/<path>.md
+//   code/llms.txt, code/pages/<path>.md
+//   anthropic/sitemap.xml, anthropic/pages/<path>.html
 // Every body file has a sibling <file>.meta.json. Writes are atomic (temp file, then rename).
 // If the folder cannot be written, the cache lives in memory only.
 import { createHash } from "node:crypto";
@@ -30,25 +32,26 @@ export type Cached = { body: string; meta: Meta | undefined };
 
 export const CACHE_CAP_BYTES = 60 * 1024 * 1024;
 
-/** Total cache cap. CC_DOCS_CACHE_CAP_BYTES overrides it (a user setting; tests also use it). */
+/** Total cache cap. CLAWDIPEDIA_CACHE_CAP_BYTES overrides it (a user setting; tests also use it). */
 const capBytes = (): number => {
-  const n = Number(process.env["CC_DOCS_CACHE_CAP_BYTES"]);
-  return process.env["CC_DOCS_CACHE_CAP_BYTES"] !== undefined &&
+  const n = Number(process.env["CLAWDIPEDIA_CACHE_CAP_BYTES"]);
+  return process.env["CLAWDIPEDIA_CACHE_CAP_BYTES"] !== undefined &&
     Number.isFinite(n) &&
     n >= 0
     ? n
     : CACHE_CAP_BYTES;
 };
 
-/** Cache root, first match wins: CC_DOCS_CACHE_DIR, ${CLAUDE_PLUGIN_DATA}/cache, then the XDG cache dir. */
+/** Cache root, first match wins: CLAWDIPEDIA_CACHE_DIR, ${CLAUDE_PLUGIN_DATA}/cache, then the XDG cache dir. */
 export const cacheRoot = (): string => {
   const env = process.env;
-  if (env["CC_DOCS_CACHE_DIR"]) return resolve(env["CC_DOCS_CACHE_DIR"]);
+  if (env["CLAWDIPEDIA_CACHE_DIR"])
+    return resolve(env["CLAWDIPEDIA_CACHE_DIR"]);
   if (env["CLAUDE_PLUGIN_DATA"])
     return resolve(env["CLAUDE_PLUGIN_DATA"], "cache");
   return join(
     env["XDG_CACHE_HOME"] || join(homedir(), ".cache"),
-    "claude-code-docs",
+    "clawdipedia",
   );
 };
 
@@ -79,7 +82,12 @@ const isMeta = (m: unknown): m is Meta => {
 /** Files pruned first to last when the cache is over the cap. Index files are never pruned. */
 const pruneRank = (relPath: string): number => {
   const rel = relPath.replaceAll("\\", "/");
-  if (rel.startsWith("platform/pages/")) return 0;
+  if (
+    rel.startsWith("platform/pages/") ||
+    rel.startsWith("code/pages/") ||
+    rel.startsWith("anthropic/pages/")
+  )
+    return 0;
   if (rel.startsWith("site/pages/") || rel.startsWith("site/schemas/"))
     return 1;
   return 2;
@@ -275,7 +283,7 @@ export class DiskCache {
     }
   }
 
-  /** Deletes the least recently fetched files (platform pages first, then site pages) until under the cap. */
+  /** Deletes the least recently fetched files (pages of platform, code, and anthropic first, then site pages) until under the cap. */
   private prune(keep: string): void {
     const all = this.files();
     let size = all.reduce((n, f) => n + f.size, 0);
