@@ -23,33 +23,34 @@ bun run verify    # typecheck + format + lint + checks + build, run this before 
 
 ## Deploy
 
-A Cloudflare Worker serves <https://clawdipedia.cc/> as static assets. Workers Builds watches `main`
-through its own Git integration, runs the build command, and then runs the deploy command. No
-Cloudflare credential lives in this repository or in GitHub Actions. `wrangler.jsonc` holds the
-Worker name, the assets directory, and the routing. The dashboard needs these settings:
+A Cloudflare Worker serves <https://clawdipedia.cc/> as static assets. GitHub Actions deploys it, so
+Cloudflare Workers Builds is not connected to this repository. `.github/workflows/ci.yml` runs every
+check and the build on each push and pull request. On a push to `main` it then runs
+`bunx wrangler deploy`, which uploads `build/`. Every check runs before that step, so a failed check
+stops the deploy. A pull request never reaches it.
 
-| Setting | Value |
+`wrangler.jsonc` holds the Worker name, the assets directory, and the routing. It needs no change
+for a deploy. Deploys need two repository secrets:
+
+| Secret | Value |
 | --- | --- |
-| Build command | `bun install && bun run build` |
-| Deploy command | `bunx wrangler deploy` |
-| Preview command | `bunx wrangler preview` |
-| Path (root directory) | empty |
-| Production branch | `main` |
-| API token | the one Workers Builds creates |
+| `CLOUDFLARE_API_TOKEN` | a token from the "Edit Cloudflare Workers" template, scoped to the one account |
+| `CLOUDFLARE_ACCOUNT_ID` | the account that holds the Worker |
 
-Use `bunx`, not the `npx wrangler deploy` default, because `wrangler` is a pinned devDependency.
-`bunx wrangler preview --help` marks the preview command as open beta.
-Workers Builds creates the API token itself. Set your own only if you need one token for every
-upload. Set `BUN_VERSION` to `1.4.4` only if the build image default changes.
+Wrangler reads both from the environment, which its System Environment Variables page documents. No
+Cloudflare credential is in this repository. The token is a GitHub Actions secret, and the deploy
+step is the only step that reads it. Set both with the GitHub CLI:
+
+```sh
+gh secret set CLOUDFLARE_API_TOKEN     # paste the token, then press Ctrl-D
+gh secret set CLOUDFLARE_ACCOUNT_ID
+```
 
 `wrangler.jsonc` sets no route, so add `clawdipedia.cc` to the Worker as a custom domain in the
-dashboard. The first deploy without it answers on the `workers.dev` address only.
+dashboard. Until then the Worker answers on the `workers.dev` address only.
 
 `bun run deploy:check` validates `wrangler.jsonc` against `build/` and deploys nothing. It needs no
-Cloudflare login. `bun run verify` runs it last, after the build.
-
-`.github/workflows/checks.yml` runs every check and the build on each push and pull request. It does
-not deploy. A failed check does not stop a Cloudflare build, so read the check result before you merge.
+Cloudflare login. `bun run verify` runs it last, after the build, and so does the workflow.
 
 The site publishes absolute URLs under `https://clawdipedia.cc/`. `docusaurus.config.ts` holds `url`
 and `baseUrl`, and `tools/schemas/build.ts` holds the `$id` base of every JSON Schema. Change both
