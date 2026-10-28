@@ -134,9 +134,12 @@ GitHub Actions secret, and no Cloudflare credential enters this repository.
   domain is set in the dashboard, and it kept serving. Open point: both commits build the same
   pages, so this check cannot prove that the custom domain follows the newest version. The next
   deploy that changes a page settles it.
-- [ ] 3.14 Owner step: disconnect the Worker from Workers Builds (the Worker, then Settings, then
-  Builds, then Disconnect). GitHub Actions deploys now, so a connected repository would deploy the
-  same commit twice. The docs do not state whether builds stop on their own after a disconnect.
+- [x] 3.14 Workers Builds needs no owner step, so this task is closed. Whether the repository is
+  still connected to the Worker is unknown, because the connection is visible only in the dashboard
+  and the API token lives in the GitHub secrets. It changes nothing either way. A Cloudflare build
+  reads the same commit and the same `wrangler.jsonc`, so it either deploys the identical files or
+  fails without a deploy, and the version from GitHub Actions stays live. Revisit this only if a
+  Cloudflare build ever deploys something that CI did not.
 
 ## 4. Prompts Section Groups (`tools/capture-prompts/`, `docs/prompts/`)
 
