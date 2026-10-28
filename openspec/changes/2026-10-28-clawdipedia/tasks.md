@@ -63,10 +63,11 @@ So the manifest `name` is `clawdipedia-docs`, and the `displayName` keeps the wo
 
 ## 3. Site Name and URL (`docusaurus.config.ts`, `schemas/`, `src/`, `.github/`, `README.md`)
 
-The owner registered `clawdipedia.cc` on Cloudflare, so the site moves to Cloudflare Pages and the
-host changes as well as the name. The owner chose the Cloudflare Pages Git integration over a Wrangler
-step in Actions, so no Cloudflare credential enters this repository. The owner also chose a clean break
-for the schema `$id` addresses: the old ones are not served.
+The owner registered `clawdipedia.cc` on Cloudflare, so the site moves to Cloudflare and the host
+changes as well as the name. The owner chose a Cloudflare Git integration over a Wrangler step in
+Actions, so no Cloudflare credential enters this repository. The owner also chose a clean break for
+the schema `$id` addresses: the old ones are not served. The owner then chose Workers Builds over
+Pages, because the dashboard had the Workers form open, so the site is a static-assets Worker.
 
 - [x] 3.1 `docusaurus.config.ts`: `title` and the navbar title to `Clawdipedia`, `projectName` to
   `clawdipedia`, `url` to `https://clawdipedia.cc`, `baseUrl` to `/`, and the footer and announcement text.
@@ -78,15 +79,34 @@ for the schema `$id` addresses: the old ones are not served.
 - [x] 3.4 Every `https://xsyetopz.github.io/clawdipedia/` URL in `docs/` (31 pages), the manifests,
   `plugin/skills/clawdipedia-docs/SKILL.md`, `plugin/mcp/src/manifest.ts`, `cli/package.json`,
   `plugin/mcp/test/fixtures/site/`, and `tools/schemas/fixtures/` moves to `https://clawdipedia.cc/`.
-- [x] 3.5 `.github/workflows/deploy.yml` is now `.github/workflows/checks.yml`. Cloudflare Pages
-  deploys, so the `upload-pages-artifact` step, the `deploy` job, and both repository checks are gone.
+- [x] 3.5 `.github/workflows/deploy.yml` is now `.github/workflows/checks.yml`. Cloudflare deploys,
+  so the `upload-pages-artifact` step, the `deploy` job, and both repository checks are gone.
   The job keeps every check and the build.
 - [x] 3.6 `README.md`: the name, the URL, the plugin names, the tracked version, and a Deploy section
-  with the Cloudflare project settings.
+  with the Cloudflare dashboard settings.
 - [x] 3.7 Check: `bun run verify` passed every step, which chains `schemas:check` (17 schemas valid)
   and `build` (`[SUCCESS] Generated static files in "build"`).
-- [ ] 3.8 Owner step: connect the repository in the Cloudflare Pages dashboard, set the build command,
-  the output directory `build`, and `BUN_VERSION`, then point `clawdipedia.cc` at the project.
+- [x] 3.8 `wrangler.jsonc` for a static-assets Worker, and `wrangler` 4.154.0 as a pinned
+  devDependency. `name` is `clawdipedia`, `assets.directory` is `./build`, `html_handling` is
+  `drop-trailing-slash`, and `not_found_handling` is `404-page`. There is no `main` key, because the
+  Worker runs no code. The docs conflict on `main`: the Wrangler configuration page says "The `main`
+  key is optional for assets-only Workers", and its keys table still calls `main` required.
+  `bunx wrangler deploy --dry-run` settled it. It exited 0 and read 1017 files from `build/`.
+  `send_metrics` is `false`, which the `config-schema.json` of `wrangler` 4.154.0 documents as
+  "Whether Wrangler should send usage metrics to Cloudflare for this project", so a local run of the
+  new `deploy:check` script sends nothing. `verify` runs `deploy:check` last, after `build`, because
+  the dry run needs `build/`.
+- [x] 3.9 Check: `bunx wrangler dev` served the build at `127.0.0.1:8799`, and every route answered
+  as the `html_handling` table of the Cloudflare routing docs states. `/` 200, `/configure` 200,
+  `/configure.html` 307 to `/configure`, `/configure/` 307 to `/configure`, `/configure/cli` 200,
+  `/schemas/claude-code-settings.json` 200 `application/json` with the `https://clawdipedia.cc/`
+  `$id`, `/llms.txt` 200, and a missing path 404 with the Docusaurus Page Not Found body.
+  `/search-index.json` served all 17,393,952 bytes, under the 25 MiB per-file limit. The build has
+  1017 files, under the 20,000 per version limit of the free plan.
+- [ ] 3.10 Owner step: connect the repository in the Cloudflare dashboard with the Workers Builds
+  form, set the build command `bun install && bun run build`, the deploy command
+  `bunx wrangler deploy`, the preview command `bunx wrangler preview`, and an empty Path, then add
+  `clawdipedia.cc` to the Worker as a custom domain.
 
 ## 4. Prompts Section Groups (`tools/capture-prompts/`, `docs/prompts/`)
 

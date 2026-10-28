@@ -23,16 +23,30 @@ bun run verify    # typecheck + format + lint + checks + build, run this before 
 
 ## Deploy
 
-Cloudflare Pages serves <https://clawdipedia.cc/> from its own Git integration. It watches `main`,
-runs `bun run build`, and publishes `build/`. No Cloudflare credential lives in this repository or in
-GitHub Actions. The Cloudflare project needs these settings:
+A Cloudflare Worker serves <https://clawdipedia.cc/> as static assets. Workers Builds watches `main`
+through its own Git integration, runs the build command, and then runs the deploy command. No
+Cloudflare credential lives in this repository or in GitHub Actions. `wrangler.jsonc` holds the
+Worker name, the assets directory, and the routing. The dashboard needs these settings:
 
 | Setting | Value |
 | --- | --- |
 | Build command | `bun install && bun run build` |
-| Build output directory | `build` |
+| Deploy command | `bunx wrangler deploy` |
+| Preview command | `bunx wrangler preview` |
+| Path (root directory) | empty |
 | Production branch | `main` |
-| `BUN_VERSION` | `1.4.4` |
+| API token | the one Workers Builds creates |
+
+Use `bunx`, not the `npx wrangler deploy` default, because `wrangler` is a pinned devDependency.
+`bunx wrangler preview --help` marks the preview command as open beta.
+Workers Builds creates the API token itself. Set your own only if you need one token for every
+upload. Set `BUN_VERSION` to `1.4.4` only if the build image default changes.
+
+`wrangler.jsonc` sets no route, so add `clawdipedia.cc` to the Worker as a custom domain in the
+dashboard. The first deploy without it answers on the `workers.dev` address only.
+
+`bun run deploy:check` validates `wrangler.jsonc` against `build/` and deploys nothing. It needs no
+Cloudflare login. `bun run verify` runs it last, after the build.
 
 `.github/workflows/checks.yml` runs every check and the build on each push and pull request. It does
 not deploy. A failed check does not stop a Cloudflare build, so read the check result before you merge.

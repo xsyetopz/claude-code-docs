@@ -14,5 +14,8 @@ __pycache__/
 
 .claudetto/
 
+# Wrangler's local cache and dev state
+.wrangler/
+
 # Agent worktrees of Claude Code (each has its own biome.json)
 .claude/worktrees/

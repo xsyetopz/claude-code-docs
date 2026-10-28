@@ -72,5 +72,5 @@ jobs:
         run: bun run llms:check
       - name: Plugin check
         run: bun run plugin:check
-      # Cloudflare Pages deploys clawdipedia.cc from its own Git integration, so this job
+      # Cloudflare Workers Builds deploys clawdipedia.cc from its own Git integration, so this job
       # only proves that the checks and the build pass. See the Deploy section of README.md.

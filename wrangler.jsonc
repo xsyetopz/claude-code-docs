@@ -1,0 +1,18 @@
+{
+  // Cloudflare Workers config for the static site. Workers Builds runs the build command, then
+  // `bunx wrangler deploy`, which uploads build/ as static assets. The Worker has no code, so
+  // there is no `main` key. See the Deploy section of README.md.
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "clawdipedia",
+  "compatibility_date": "2026-10-28",
+  // No usage metrics from this project, so a local `deploy:check` sends nothing.
+  "send_metrics": false,
+  "assets": {
+    "directory": "./build",
+    // docusaurus.config.ts sets `trailingSlash: false`, so /configure serves configure.html and
+    // /configure/ redirects to /configure. Every content folder has a twin .html file.
+    "html_handling": "drop-trailing-slash",
+    // build/404.html is the Docusaurus not-found page.
+    "not_found_handling": "404-page"
+  }
+}
