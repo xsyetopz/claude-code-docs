@@ -1,7 +1,14 @@
 // Run: bun test tools/version
 import { describe, expect, test } from "bun:test";
 import { CLAUDE_CODE_VERSION } from "../../src/version.ts";
-import { bumpVersion, MARKETPLACE, TARGETS, versionProblems } from "./bump.ts";
+import {
+  bumpVersion,
+  MARKETPLACE,
+  syncDescriptions,
+  syncVersions,
+  TARGETS,
+  versionProblems,
+} from "./bump.ts";
 
 describe("bumpVersion", () => {
   test("bumps each level and resets the lower parts", () => {
@@ -11,6 +18,29 @@ describe("bumpVersion", () => {
   });
   test("rejects a version that is no x.y.z", () => {
     expect(() => bumpVersion("1.2", "patch")).toThrow();
+  });
+});
+
+describe("syncDescriptions", () => {
+  test("sets the Claude Code version on a description line", () => {
+    const text = '  "description": "Docs for Claude Code 2.1.1."\n';
+    expect(syncDescriptions(text)).toBe(
+      `  "description": "Docs for Claude Code ${CLAUDE_CODE_VERSION}."\n`,
+    );
+  });
+  test("leaves a plugin version that looks like a Claude Code version", () => {
+    const text = '  "version": "2.0.0",\n  "description": "Tracks 2.1.1."\n';
+    expect(syncDescriptions(text)).toBe(
+      `  "version": "2.0.0",\n  "description": "Tracks ${CLAUDE_CODE_VERSION}."\n`,
+    );
+  });
+});
+
+describe("syncVersions", () => {
+  test("sets every Claude Code version in a skill body", () => {
+    expect(syncVersions("Covers 2.1.1. Probed on 2.1.1.")).toBe(
+      `Covers ${CLAUDE_CODE_VERSION}. Probed on ${CLAUDE_CODE_VERSION}.`,
+    );
   });
 });
 

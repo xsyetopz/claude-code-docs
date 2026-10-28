@@ -1,4 +1,4 @@
-// Usage: bun tools/version/bump.ts <site|cc-docs|cc-docs-cli|cc-inspect|all> <patch|minor|major>
+// Usage: bun tools/version/bump.ts <site|clawdipedia-docs|clawdipedia-docs-cli|cc-inspect|all> <patch|minor|major>
 //        (also: bun run version:bump -- <target> <level>, or: just bump <target> <level>)
 // Bumps the version in every file of a target, and sets the Claude Code version that the marketplace
 // texts name to CLAUDE_CODE_VERSION. plugin:check runs versionProblems, so a missed file fails verify.
@@ -12,14 +12,24 @@ type Json = Record<string, unknown>;
 type Slot = { file: string; path: string[] };
 
 export const MARKETPLACE = ".claude-plugin/marketplace.json";
+/** Plugin manifests whose description names the Claude Code version. */
+const PLUGIN_MANIFESTS = [
+  "plugin/.claude-plugin/plugin.json",
+  "cli/.claude-plugin/plugin.json",
+];
+/** Skill bodies that tell the model which Claude Code version the `clawdipedia` source covers. */
+export const SKILL_FILES = [
+  "plugin/skills/clawdipedia-docs/SKILL.md",
+  "cli/skills/clawdipedia-docs-cli/SKILL.md",
+];
 export const TARGETS: Record<string, Slot[]> = {
   site: [{ file: "package.json", path: ["version"] }],
-  "cc-docs": [
+  "clawdipedia-docs": [
     { file: "plugin/.claude-plugin/plugin.json", path: ["version"] },
     { file: "plugin/mcp/package.json", path: ["version"] },
     { file: MARKETPLACE, path: ["metadata", "version"] },
   ],
-  "cc-docs-cli": [
+  "clawdipedia-docs-cli": [
     { file: "cli/.claude-plugin/plugin.json", path: ["version"] },
     { file: "cli/package.json", path: ["version"] },
   ],
@@ -48,6 +58,21 @@ const ccVersions = (market: Json): string[] =>
   JSON.stringify([market["description"], market["plugins"]]).match(
     /\b2\.\d+\.\d+\b/g,
   ) ?? [];
+
+const CC_VERSION_RE = /\b2\.\d+\.\d+\b/g;
+
+/**
+ * The text with the Claude Code version of every `"description"` line set to `CLAUDE_CODE_VERSION`.
+ * Only those lines, because a plugin version such as `2.0.0` looks the same to the pattern.
+ */
+export const syncDescriptions = (text: string): string =>
+  text.replace(/^.*"description".*$/gm, (line) =>
+    line.replace(CC_VERSION_RE, CLAUDE_CODE_VERSION),
+  );
+
+/** The text with every Claude Code version set to `CLAUDE_CODE_VERSION`. For a skill body, which holds no plugin version. */
+export const syncVersions = (text: string): string =>
+  text.replace(CC_VERSION_RE, CLAUDE_CODE_VERSION);
 
 /** Each target whose files hold different versions, and each marketplace text with an old Claude Code version. */
 export const versionProblems = (read: (file: string) => Json): string[] => {
@@ -95,16 +120,21 @@ if (import.meta.main) {
       texts.set(s.file, t.replace(re, `$1"${next}"`));
       console.log(`${s.file}: ${old} -> ${next}`);
     }
-  const market = text(MARKETPLACE).replace(
-    /\b2\.\d+\.\d+\b/g,
-    CLAUDE_CODE_VERSION,
-  );
-  if (market !== text(MARKETPLACE)) {
-    texts.set(MARKETPLACE, market);
-    console.log(
-      `${MARKETPLACE}: Claude Code version -> ${CLAUDE_CODE_VERSION}`,
-    );
-  }
+  // The marketplace and the plugin manifests name the Claude Code version in their descriptions.
+  // A skill body names it in prose, and the model repeats it to the user.
+  const sync: [files: string[], fn: (t: string) => string][] = [
+    [[MARKETPLACE, ...PLUGIN_MANIFESTS], syncDescriptions],
+    [SKILL_FILES, syncVersions],
+  ];
+  for (const [files, fn] of sync)
+    for (const f of files) {
+      const t = text(f);
+      const next = fn(t);
+      if (next !== t) {
+        texts.set(f, next);
+        console.log(`${f}: Claude Code version -> ${CLAUDE_CODE_VERSION}`);
+      }
+    }
   for (const [f, t] of texts) writeFileSync(join(ROOT, f), t);
   const left = versionProblems((f) => JSON.parse(text(f)));
   for (const p of left) console.error(p);
