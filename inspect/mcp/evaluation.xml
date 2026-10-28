@@ -1,0 +1,66 @@
+<evaluation>
+  <qa_pair>
+    <question>The cc-inspect server exposes four tools. Name them, sorted alphabetically and separated by comma and space.</question>
+    <answer>code, release, sessions, surface</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Use code with action "modules" and version "2.1.312". How many modules does that install hold?</question>
+    <answer>2831</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Use code with action "search", query "CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT", module "chunk-017gw5jn.js", context 0, limit 1, and version "2.1.312". At which offset is the hit?</question>
+    <answer>33863</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Use code with action "read", module "chunk-017gw5jn.js", offset 33863, length 40, and version "2.1.312". Which minified name does CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT map to?</question>
+    <answer>oS</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Use surface with kind "env" (the key is kind, not action), name "CLAUDE_CODE_SIMPLE", and version "2.1.312". How many env variables match?</question>
+    <answer>2</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Use surface with kind "setting" (singular, not "settings"), name "autoMode", and version "2.1.312". How many settings match?</question>
+    <answer>3</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Use surface with kind "mod-api", name "prompt.fill", and version "2.1.312". How many items match?</question>
+    <answer>2</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Use surface with kind "hook-event" and version "2.1.312". How many hook events does it list?</question>
+    <answer>33</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Use surface with no kind (surface has no list action or argument) and version "2.1.312" to list the kinds with their counts. How many env items are there?</question>
+    <answer>1887</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Use sessions with action "tool-calls" and session "inspect/mcp/test/fixtures/sessions/docs-lookup.jsonl" from the repository root. How many read_page calls does it hold?</question>
+    <answer>2</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Use sessions with action "tool-calls", session "inspect/mcp/test/fixtures/sessions/docs-lookup.jsonl", and query "search_docs". How many calls match?</question>
+    <answer>1</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Use sessions with action "search", session "inspect/mcp/test/fixtures/sessions/docs-lookup.jsonl", and query "Budgets". On which line is the match?</question>
+    <answer>3</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Use sessions with action "read", session "inspect/mcp/test/fixtures/sessions/docs-lookup.jsonl", type "assistant", offset 1, and limit 1. Which route does the line read?</question>
+    <answer>extend/mod-api/events/hooks</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Use sessions with action "validate" and session "inspect/mcp/test/fixtures/sessions/docs-lookup.jsonl". How many lines fail the transcript schema?</question>
+    <answer>0</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Use release with action "diff", from "2.1.311", to "2.1.312", and limit 1. How many functions changed?</question>
+    <answer>1623</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Use release with action "explain", name "CLAUDE_CODE_SIMPLE", and version "2.1.312". In which module and at which offset does the name live?</question>
+    <answer>chunk-b9rj0bam.js:18563</answer>
+  </qa_pair>
+</evaluation>

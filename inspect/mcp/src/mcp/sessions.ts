@@ -3,9 +3,12 @@ import {
   checkLine,
   configDir,
   listSessions,
+  listTranscripts,
   readLines,
   SCHEMA_VERSION,
+  scanToolCalls,
   sessionPath,
+  type ToolCalls,
 } from "../sessions.ts";
 import {
   type Args,
@@ -27,7 +30,7 @@ group<
   }
 >(
   "sessions",
-  "Read Claude Code session transcripts: list, read, search, or validate them against the transcript schema.",
+  "Read Claude Code session transcripts: list, read, search, or validate them against the transcript schema, or count tool calls by name.",
   "action",
   {
     list: ({ project, limit = 20 }) => {
@@ -136,6 +139,40 @@ group<
           byType,
           failures: shown,
         },
+      );
+    },
+    "tool-calls": ({
+      query,
+      regex: isRegex = false,
+      session,
+      project,
+      limit = 20,
+      max_line_chars = 2000,
+    }) => {
+      const match = query ? regex(query, isRegex) : undefined;
+      const files = session
+        ? [{ id: session, path: sessionPath(session) }]
+        : listTranscripts(project);
+      const tools: ToolCalls = {};
+      for (const f of files)
+        scanToolCalls(
+          readLines(f.path),
+          { match, samples: limit, maxChars: max_line_chars },
+          tools,
+        );
+      const rows = Object.entries(tools).sort(
+        (a, b) => b[1].count - a[1].count,
+      );
+      return text(
+        rows.length
+          ? rows
+              .map(
+                ([name, c]) =>
+                  `${c.count} ${name}${c.samples.map((s) => `\n    ${s}`).join("")}`,
+              )
+              .join("\n")
+          : `No tool calls${match ? ` matching ${match}` : ""} in ${files.length} sessions.`,
+        { tools },
       );
     },
   },

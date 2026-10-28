@@ -2,7 +2,7 @@
 // CLAUDE_CONFIG_DIR or ~/.claude. Each line is checked against the transcript JSON Schema of its `type`.
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { homedir } from "node:os";
-import { basename, join } from "node:path";
+import { basename, dirname, join } from "node:path";
 import { z } from "zod";
 import transcript from "../../../schemas/claude-code-transcript.json" with {
   type: "json",
@@ -44,6 +44,22 @@ export const listSessions = (project?: string): SessionFile[] => {
   }
   return out.sort((a, b) => b.modified.localeCompare(a.modified));
 };
+
+/** Every session file plus the subagent transcripts under <session>/subagents/, where the tool calls of subagents are. */
+export const listTranscripts = (project?: string): SessionFile[] =>
+  listSessions(project).flatMap((s) => {
+    const dir = join(dirname(s.path), s.id, "subagents");
+    const subs = existsSync(dir)
+      ? readdirSync(dir)
+          .filter((f) => f.endsWith(".jsonl"))
+          .map((f) => ({
+            ...s,
+            id: `${s.id}/${basename(f, ".jsonl")}`,
+            path: join(dir, f),
+          }))
+      : [];
+    return [s, ...subs];
+  });
 
 /** The file of a session: a path to a .jsonl file, or a session id (a prefix works when it is unique). */
 export const sessionPath = (session: string): string => {
@@ -115,4 +131,41 @@ export const checkLine = (line: Line): string[] => {
     : r.error.issues.map(
         (i) => `${i.path.join(".") || "(root)"}: ${i.message}`,
       );
+};
+
+export type ToolCalls = Record<string, { count: number; samples: string[] }>;
+
+/** Count the `tool_use` blocks of assistant lines by tool name, adding to `into`. A name that `match`
+ * accepts keeps up to `samples` inputs as JSON, each cut to `maxChars`. */
+export const scanToolCalls = (
+  lines: Line[],
+  opts: {
+    match?: RegExp | undefined;
+    samples?: number;
+    maxChars?: number;
+  } = {},
+  into: ToolCalls = {},
+): ToolCalls => {
+  const { match, samples = 0, maxChars = 2000 } = opts;
+  for (const l of lines) {
+    if (l.json?.type !== "assistant") continue;
+    const content = (l.json["message"] as { content?: unknown } | undefined)
+      ?.content;
+    if (!Array.isArray(content)) continue;
+    for (const b of content) {
+      if (b?.type !== "tool_use" || typeof b.name !== "string") continue;
+      if (match && !match.test(b.name)) continue;
+      into[b.name] ??= { count: 0, samples: [] };
+      const c = into[b.name];
+      c.count++;
+      if (!match || c.samples.length >= samples) continue;
+      const s = JSON.stringify(b.input ?? null);
+      c.samples.push(
+        s.length > maxChars
+          ? `${s.slice(0, maxChars)}… (${s.length - maxChars} more chars)`
+          : s,
+      );
+    }
+  }
+  return into;
 };

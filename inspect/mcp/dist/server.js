@@ -25211,7 +25211,7 @@ var EMPTY_COMPLETION_RESULT = {
 // inspect/mcp/package.json
 var package_default = {
   name: "cc-inspect-mcp",
-  version: "0.7.1",
+  version: "0.8.0",
   private: true,
   license: "MIT",
   type: "module",
@@ -25297,11 +25297,11 @@ var need = (v, what) => {
 // inspect/mcp/src/sessions.ts
 import { existsSync, readdirSync, readFileSync, statSync } from "fs";
 import { homedir } from "os";
-import { basename, join } from "path";
+import { basename, dirname, join } from "path";
 // schemas/claude-code-transcript.json
 var claude_code_transcript_default = {
   $schema: "https://json-schema.org/draft/2020-12/schema",
-  $id: "https://xsyetopz.github.io/clawdipedia/schemas/claude-code-transcript.json",
+  $id: "https://clawdipedia.cc/schemas/claude-code-transcript.json",
   title: "Claude Code transcript JSONL entry (Claude Code 2.1.312)",
   $comment: `For one line of a session transcript (.jsonl). Generated from Claude Code 2.1.312 by tools/schemas/code.ts. Anchors: the entry type registry (an object literal whose first keys are user, assistant, system, attachment, mapped to "transcript"); the literal built in the writer's insertMessageChain (key logicalParentUuid) and its two spreads for the common fields of message lines; every object literal with a top-level type:"<entry type>" (non-message types need a sessionId key), with its spreads resolved in the module that declares each function (imports followed); and, for a key a probe saw that no such literal has, the later write: a copy of the line ({...line, key}), a function spread into one, or last a property assignment. Keys are the union over all write sites; a string value that differs between sites is an enum, and one that is a literal at one site and computed at another is x-unverified. Probe print/transcripts.lines.json marks the observed keys. Do not edit by hand. A field that is still x-unverified may carry x-observed-type: the JSON types that real payloads had there, from the fixtures in tools/schemas/observed/ (stub probes and local files, no value kept). It is a note, not a check.`,
   type: "object",
@@ -29055,6 +29055,15 @@ var listSessions = (project) => {
   }
   return out.sort((a, b) => b.modified.localeCompare(a.modified));
 };
+var listTranscripts = (project) => listSessions(project).flatMap((s) => {
+  const dir = join(dirname(s.path), s.id, "subagents");
+  const subs = existsSync(dir) ? readdirSync(dir).filter((f) => f.endsWith(".jsonl")).map((f) => ({
+    ...s,
+    id: `${s.id}/${basename(f, ".jsonl")}`,
+    path: join(dir, f)
+  })) : [];
+  return [s, ...subs];
+});
 var sessionPath = (session) => {
   if (session.endsWith(".jsonl") && existsSync(session))
     return session;
@@ -29103,9 +29112,33 @@ var checkLine = (line) => {
   const r = validator(def).safeParse(line.json);
   return r.success ? [] : r.error.issues.map((i) => `${i.path.join(".") || "(root)"}: ${i.message}`);
 };
+var scanToolCalls = (lines, opts = {}, into = {}) => {
+  const { match, samples = 0, maxChars = 2000 } = opts;
+  for (const l of lines) {
+    if (l.json?.type !== "assistant")
+      continue;
+    const content = l.json["message"]?.content;
+    if (!Array.isArray(content))
+      continue;
+    for (const b of content) {
+      if (b?.type !== "tool_use" || typeof b.name !== "string")
+        continue;
+      if (match && !match.test(b.name))
+        continue;
+      into[b.name] ??= { count: 0, samples: [] };
+      const c = into[b.name];
+      c.count++;
+      if (!match || c.samples.length >= samples)
+        continue;
+      const s = JSON.stringify(b.input ?? null);
+      c.samples.push(s.length > maxChars ? `${s.slice(0, maxChars)}\u2026 (${s.length - maxChars} more chars)` : s);
+    }
+  }
+  return into;
+};
 
 // inspect/mcp/src/mcp/sessions.ts
-group("sessions", "Read Claude Code session transcripts: list, read, search, or validate them against the transcript schema.", "action", {
+group("sessions", "Read Claude Code session transcripts: list, read, search, or validate them against the transcript schema, or count tool calls by name.", "action", {
   list: ({ project, limit = 20 }) => {
     const all = listSessions(project);
     const sessions = all.slice(0, limit);
@@ -29188,6 +29221,24 @@ ${shown.map((f) => `- line ${f.line} [${f.type}]: ${f.problems.slice(0, 5).join(
       byType,
       failures: shown
     });
+  },
+  "tool-calls": ({
+    query,
+    regex: isRegex = false,
+    session,
+    project,
+    limit = 20,
+    max_line_chars = 2000
+  }) => {
+    const match = query ? regex(query, isRegex) : undefined;
+    const files = session ? [{ id: session, path: sessionPath(session) }] : listTranscripts(project);
+    const tools = {};
+    for (const f of files)
+      scanToolCalls(readLines(f.path), { match, samples: limit, maxChars: max_line_chars }, tools);
+    const rows = Object.entries(tools).sort((a, b) => b[1].count - a[1].count);
+    return text(rows.length ? rows.map(([name, c]) => `${c.count} ${name}${c.samples.map((s) => `
+    ${s}`).join("")}`).join(`
+`) : `No tool calls${match ? ` matching ${match}` : ""} in ${files.length} sessions.`, { tools });
   }
 }, {
   session: string2().optional().describe("Session id, unique prefix, or .jsonl path."),
@@ -41444,7 +41495,7 @@ ${Object.entries(r.functions).map(([n, s]) => `- ${n}: ${s}`).join(`
 
 // inspect/mcp/src/mcp/release.ts
 import { existsSync as existsSync6, readFileSync as readFileSync6 } from "fs";
-import { dirname as dirname2, join as join6 } from "path";
+import { dirname as dirname3, join as join6 } from "path";
 
 // inspect/mcp/src/explain.ts
 var CONST = String.raw`(?:!0|!1|null|void 0|""|-?\d+(?:\.\d+)?|\[\]|\{\}|"(?:[^"\\]|\\.)*")`;
@@ -41527,7 +41578,7 @@ var explain = (ix, name, cap = 40) => {
 
 // inspect/mcp/src/notes.ts
 import { existsSync as existsSync5, mkdirSync as mkdirSync4, readFileSync as readFileSync5, writeFileSync as writeFileSync4 } from "fs";
-import { dirname } from "path";
+import { dirname as dirname2 } from "path";
 var STOP = new Set("added fixed improved changed which there their about after before being would could should these those where while other through without within instead claude still first every again showing shows error errors their".split(" "));
 var readNotes = (version, file) => {
   if (existsSync5(file))
@@ -41548,7 +41599,7 @@ var readNotes = (version, file) => {
     throw new Error(`gh release view v${version} failed: ${r.stderr.toString().slice(0, 200)}`);
   if (!r.stdout.toString().trim())
     throw new Error(`gh release view v${version} gave no notes`);
-  mkdirSync4(dirname(file), { recursive: true });
+  mkdirSync4(dirname2(file), { recursive: true });
   writeFileSync4(file, r.stdout.toString());
   return r.stdout.toString();
 };
@@ -41699,7 +41750,7 @@ ${unitDiff(c, DIFF_LINES).join(`
     if (!older)
       throw new Error(`no install older than ${b.index.version}; give from`);
     const a = prepared(older);
-    const root = dirname2(b.dir);
+    const root = dirname3(b.dir);
     const report = join6(root, "diff", "report.md");
     const items = existsSync6(report) ? readFileSync6(report, "utf8").split(`
 `).filter((l) => l.startsWith("- ")) : [];

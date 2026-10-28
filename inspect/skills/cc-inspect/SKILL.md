@@ -16,6 +16,7 @@ Transcripts live in `<config dir>/projects/<project>/<session>.jsonl`. The confi
 2. `sessions` `search` with a `query` to find a word, a file path, or a command across sessions.
 3. `sessions` `read` with `session`, `type` (`user`, `assistant`, `system`, ...), and `offset` to page through one.
 4. `sessions` `validate` to check each line against the transcript schema of the version the plugin was built for. A failing line means a field that version does not write: a newer version, a hand-edited file, or a gap in the schema. Say which version the schema is for.
+5. `sessions` `tool-calls` to count the tool calls by name. With a `query` it also gives sample inputs, which shows how a tool is really called.
 
 Transcripts can hold secrets and private text. Quote only what the user asks for.
 

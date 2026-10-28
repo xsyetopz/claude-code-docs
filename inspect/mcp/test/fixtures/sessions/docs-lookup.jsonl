@@ -1,0 +1,5 @@
+{"type":"user","message":{"role":"user","content":"What does the budget of a Mod API hook allow?"}}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01","name":"mcp__plugin_cc-docs_claude-code-docs__search_docs","input":{"query":"hook time budget","limit":3}}]}}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"tool_use","id":"toolu_02","name":"mcp__plugin_cc-docs_claude-code-docs__read_page","input":{"route":"extend/mod-api/events/hooks","section_heading":"Budgets"}}]}}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"tool_use","id":"toolu_03","name":"mcp__plugin_cc-docs_claude-code-docs__read_page","input":{"route":"how-it-works/permission-flow"}}]}}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":"A hook gets 10 seconds of its own code."}]}}
