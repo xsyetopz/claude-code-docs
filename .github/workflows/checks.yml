@@ -1,4 +1,4 @@
-name: Deploy Docs
+name: Checks
 
 on:
   push:
@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: pages-${{ github.ref }}
+  group: checks-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -72,22 +72,5 @@ jobs:
         run: bun run llms:check
       - name: Plugin check
         run: bun run plugin:check
-      # Deploy only from main in this repo: never from forks, PRs, or other branches.
-      - uses: actions/upload-pages-artifact@v5
-        if: github.event_name != 'pull_request' && github.repository == 'xsyetopz/clawdipedia' && github.ref == 'refs/heads/main'
-        with:
-          path: build
-
-  deploy:
-    if: github.event_name != 'pull_request' && github.repository == 'xsyetopz/clawdipedia' && github.ref == 'refs/heads/main'
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v5.0.1
+      # Cloudflare Pages deploys clawdipedia.cc from its own Git integration, so this job
+      # only proves that the checks and the build pass. See the Deploy section of README.md.

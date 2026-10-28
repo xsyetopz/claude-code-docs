@@ -5,9 +5,9 @@ It is not made by or tied to Anthropic. "Claude" and "Claude Code" name the prod
 
 The site covers every surface of Claude Code that you can use, change, or turn on and off.
 That includes items the official docs never name. They carry an Undocumented badge.
-It tracks one release only: `2.1.309` (see `src/version.ts`). There are no versioned docs.
+It tracks one release only: `2.1.312` (see `src/version.ts`). There are no versioned docs.
 
-Live site: <https://xsyetopz.github.io/clawdipedia/>
+Live site: <https://clawdipedia.cc/>
 
 ## Run It
 
@@ -20,6 +20,26 @@ bun run build     # production build into build/
 bun run serve     # serve the build
 bun run verify    # typecheck + format + lint + checks + build, run this before a pull request
 ```
+
+## Deploy
+
+Cloudflare Pages serves <https://clawdipedia.cc/> from its own Git integration. It watches `main`,
+runs `bun run build`, and publishes `build/`. No Cloudflare credential lives in this repository or in
+GitHub Actions. The Cloudflare project needs these settings:
+
+| Setting | Value |
+| --- | --- |
+| Build command | `bun install && bun run build` |
+| Build output directory | `build` |
+| Production branch | `main` |
+| `BUN_VERSION` | `1.4.4` |
+
+`.github/workflows/checks.yml` runs every check and the build on each push and pull request. It does
+not deploy. A failed check does not stop a Cloudflare build, so read the check result before you merge.
+
+The site publishes absolute URLs under `https://clawdipedia.cc/`. `docusaurus.config.ts` holds `url`
+and `baseUrl`, and `tools/schemas/build.ts` holds the `$id` base of every JSON Schema. Change both
+together, then run `bun run schemas`.
 
 ## Plugins
 
