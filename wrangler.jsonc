@@ -7,6 +7,10 @@
   "compatibility_date": "2026-10-28",
   // No usage metrics from this project, so a local `deploy:check` sends nothing.
   "send_metrics": false,
+  // `clawdipedia.cc` is a custom domain on the Worker, so the site needs no second public address.
+  // Both keys are off on purpose. Wrangler turns each one on when the config leaves it out.
+  "workers_dev": false,
+  "preview_urls": false,
   "assets": {
     "directory": "./build",
     // docusaurus.config.ts sets `trailingSlash: false`, so /configure serves configure.html and

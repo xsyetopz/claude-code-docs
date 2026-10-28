@@ -92,7 +92,9 @@ GitHub Actions secret, and no Cloudflare credential enters this repository.
   `drop-trailing-slash`, and `not_found_handling` is `404-page`. There is no `main` key, because the
   Worker runs no code. The docs conflict on `main`: the Wrangler configuration page says "The `main`
   key is optional for assets-only Workers", and its keys table still calls `main` required.
-  `bunx wrangler deploy --dry-run` settled it. It exited 0 and read 1017 files from `build/`.
+  `bunx wrangler deploy --dry-run` settled it. It exited 0 and read `build/`. It prints
+  "Read 1017 files from the assets directory", which counts folders as well: the build holds 968
+  files and 49 folders under `build/`.
   `send_metrics` is `false`, which the `config-schema.json` of `wrangler` 4.154.0 documents as
   "Whether Wrangler should send usage metrics to Cloudflare for this project", so a local run of the
   new `deploy:check` script sends nothing. `verify` runs `deploy:check` last, after `build`, because
@@ -103,7 +105,7 @@ GitHub Actions secret, and no Cloudflare credential enters this repository.
   `/schemas/claude-code-settings.json` 200 `application/json` with the `https://clawdipedia.cc/`
   `$id`, `/llms.txt` 200, and a missing path 404 with the Docusaurus Page Not Found body.
   `/search-index.json` served all 17,393,952 bytes, under the 25 MiB per-file limit. The build has
-  1017 files, under the 20,000 per version limit of the free plan.
+  968 files, 967 of them unique by content hash, under the 20,000 per version limit of the free plan.
 - [x] 3.10 `.github/workflows/ci.yml` deploys. The `Deploy to Cloudflare Workers` step runs
   `bunx wrangler deploy` with `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` from the repository
   secrets, which the Wrangler System Environment Variables page documents. It is the last step, so
@@ -113,10 +115,19 @@ GitHub Actions secret, and no Cloudflare credential enters this repository.
   middle of a deploy is worse than a queued run. The workflow also runs the new `deploy:check`.
   The `main` branch has no required status check: its only ruleset (`master`, id 25438577) holds the
   `deletion` and `non_fast_forward` rules, so the rename of the workflow file breaks no merge gate.
-- [ ] 3.11 Owner step: create a Cloudflare API token from the "Edit Cloudflare Workers" template,
-  set `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` as repository secrets, disconnect the
-  Worker from Workers Builds (Worker, then Settings, then Builds, then Disconnect), and add
-  `clawdipedia.cc` to the Worker as a custom domain.
+- [x] 3.11 Owner step, done: the owner created a Cloudflare API token from the "Edit Cloudflare
+  Workers" policy, set `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` as repository secrets
+  (`gh secret list` shows both), and attached `clawdipedia.cc` to the Worker as a custom domain.
+- [x] 3.12 Check: the first CI deploy passed. Run 40709042024 on `9d8090e` is `success`. The deploy
+  step uploaded 967 files (1 was already uploaded) in 19.20 seconds, then printed
+  "Uploaded clawdipedia" and `Current Version ID: fc1aaa29-37ed-4ed6-8f8b-f7b1fbab5c48`.
+  <https://clawdipedia.cc/> answers for the Worker: `/` 200, `/configure` 200, `/configure.html` and
+  `/configure/` 307 to `/configure`, `/schemas/claude-code-settings.json` 200, `/llms.txt` 200, and
+  a missing path 404. The same paths answer the same way on the `workers.dev` address, and both
+  serve the `assets/js/b432f8a5.f253f2ce.js` of this deploy, so the domain is on this Worker.
+- [ ] 3.13 Owner step: disconnect the Worker from Workers Builds (the Worker, then Settings, then
+  Builds, then Disconnect). GitHub Actions deploys now, so a connected repository would deploy the
+  same commit twice. The docs do not state whether builds stop on their own after a disconnect.
 
 ## 4. Prompts Section Groups (`tools/capture-prompts/`, `docs/prompts/`)
 

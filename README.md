@@ -46,8 +46,8 @@ gh secret set CLOUDFLARE_API_TOKEN     # paste the token, then press Ctrl-D
 gh secret set CLOUDFLARE_ACCOUNT_ID
 ```
 
-`wrangler.jsonc` sets no route, so add `clawdipedia.cc` to the Worker as a custom domain in the
-dashboard. Until then the Worker answers on the `workers.dev` address only.
+`wrangler.jsonc` sets no route. `clawdipedia.cc` is a custom domain on the Worker, set in the
+dashboard, so a deploy does not change it.
 
 `bun run deploy:check` validates `wrangler.jsonc` against `build/` and deploys nothing. It needs no
 Cloudflare login. `bun run verify` runs it last, after the build, and so does the workflow.
