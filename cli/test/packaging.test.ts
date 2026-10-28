@@ -21,7 +21,8 @@ describe("packaging", () => {
       stderr: "pipe",
     });
     expect(await p.exited).toBe(0);
-    expect(await new Response(p.stdout).text()).toContain("Usage: clawdipedia");
+    // The help text names the command; its wording is not pinned.
+    expect(await new Response(p.stdout).text()).toContain("clawdipedia");
   });
 
   test("the plugin has a skill and a bin, and no MCP server", () => {

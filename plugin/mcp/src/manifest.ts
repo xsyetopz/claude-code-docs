@@ -2,7 +2,7 @@
 import { baseUrl } from "./fetcher.ts";
 import type { IndexPage } from "./search.ts";
 
-export const SITE = "https://xsyetopz.github.io/clawdipedia";
+export const SITE = "https://clawdipedia.cc";
 // Override for mirrors and tests: CLAWDIPEDIA_BASE_URL (https; http only for localhost and 127.0.0.1).
 export const siteBase = (): string => baseUrl("CLAWDIPEDIA_BASE_URL", SITE);
 export type Entry = {

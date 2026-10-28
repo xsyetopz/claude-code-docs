@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://xsyetopz.github.io/clawdipedia/schemas/claude-code-tools.json",
+  "$id": "https://clawdipedia.cc/schemas/claude-code-tools.json",
   "title": "Claude Code built-in tool inputs and results (Claude Code 2.1.307)",
   "$defs": {
     "BashInput": {

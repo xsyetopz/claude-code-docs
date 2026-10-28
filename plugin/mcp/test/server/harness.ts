@@ -63,7 +63,7 @@ export const mockSite = (state: SiteState = newState(), port = 0) => {
       if (path === "/llms-manifest.json")
         return new Response(
           readFileSync(join(SITE, "manifest.json"), "utf8").replaceAll(
-            "https://xsyetopz.github.io/clawdipedia",
+            "https://clawdipedia.cc",
             base,
           ),
         );
@@ -265,6 +265,20 @@ export const connect = async (env: Record<string, string> = {}) => {
     };
   };
   return { call, cache };
+};
+
+type Called = Awaited<ReturnType<Awaited<ReturnType<typeof connect>>["call"]>>;
+type SourceData = { origin: string; state: string; line?: string };
+
+/** The structured `source` of a search or list answer: origin and state (live, cached, stale-offline). */
+export const sourceOf = (r: Called): SourceData =>
+  r.structured?.["source"] as SourceData;
+
+/** Integers in the structured Source line, without the origin and the first parenthesized state. Pins counts only, not wording. */
+export const sourceNumbers = (r: Called): number[] => {
+  const { origin, line = "" } = sourceOf(r);
+  const bare = line.replace(origin, "").replace(/\([^)]*\)/, "");
+  return (bare.match(/\b\d+\b/g) ?? []).map(Number);
 };
 
 export const cleanup = async (): Promise<void> => {

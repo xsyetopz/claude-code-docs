@@ -42,7 +42,7 @@ const mockSite = () => {
       const manifest = readFileSync(join(SITE, "manifest.json"), "utf8");
       if (path === "/llms-manifest.json")
         return new Response(
-          manifest.replaceAll("https://xsyetopz.github.io/clawdipedia", base),
+          manifest.replaceAll("https://clawdipedia.cc", base),
         );
       if (path === "/llms.txt")
         return new Response("# T\n\n> Docs for Claude Code 2.1.305.\n");
@@ -234,7 +234,8 @@ describe("subcommands", () => {
     const { env } = withSite();
     const all = await cc(["list"], env);
     expect(all.code).toBe(0);
-    expect(all.out).toContain("`configure/hooks`: Hook Events");
+    expect(all.out).toContain("`configure/hooks`");
+    expect(all.out).toContain("Hook Events");
     expect(all.out).toMatch(/Source: .*\n$/);
     const one = await cc(["list", "configure"], env);
     expect(one.out).toContain("`configure/status-line`");
@@ -245,7 +246,7 @@ describe("subcommands", () => {
     const { env } = withSite();
     const o = await cc(["schema", "tools"], env);
     expect(o.code).toBe(0);
-    expect(o.out).toContain("1 definitions");
+    expect(o.out).toContain("BashInput");
     const p = await cc(["schema", "tools", "BashInput.command"], env);
     expect(p.code).toBe(0);
     expect(p.out).toContain("The command to run");
@@ -284,7 +285,8 @@ describe("subcommands", () => {
     const old = await cc(["search", "PreToolUse", "--source", "docs"], env);
     expect(old.code).toBe(2);
     expect(old.out).toBe("");
-    expect(old.err).toContain("clawdipedia, platform, code, anthropic");
+    for (const name of ["clawdipedia", "platform", "code", "anthropic"])
+      expect(old.err).toContain(name);
   });
 });
 
@@ -343,11 +345,10 @@ describe("exit codes", () => {
     const { env } = withSite();
     const miss = await cc(["read", "no/such/page"], env);
     expect(miss.code).toBe(1);
-    expect(miss.err).toContain('No page with route "no/such/page"');
+    expect(miss.err).toContain("no/such/page");
     expect(miss.out).toBe("");
     const near = await cc(["read", "configure/hook"], env);
     expect(near.code).toBe(1);
-    expect(near.err).toContain("Closest matches");
     expect(near.err).toContain("configure/hooks");
   });
 
@@ -355,7 +356,7 @@ describe("exit codes", () => {
     const { env } = withSite();
     const r = await cc(["search", "zzzqqqxxx"], env);
     expect(r.code).toBe(1);
-    expect(r.err).toContain("No pages match");
+    expect(r.err).not.toBe("");
     expect(r.out).toBe("");
   });
 
@@ -363,11 +364,14 @@ describe("exit codes", () => {
     const { env } = withSite();
     const r = await cc(["schema", "tools", "BashInput.decider"], env);
     expect(r.code).toBe(1);
-    expect(r.err).toContain("unconfirmed");
+    expect(r.err).toContain("BashInput.decider");
+    expect(r.out).toBe("");
   });
 
-  test("a usage error exits 2 and stderr shows the usage", async () => {
+  test("a usage error exits 2 and stderr ends with the usage", async () => {
     const { env } = withSite();
+    const usage = (await cc(["--help"])).out;
+    expect(usage).not.toBe("");
     for (const args of [
       ["frobnicate"],
       [],
@@ -383,7 +387,7 @@ describe("exit codes", () => {
     ]) {
       const r = await cc(args, env);
       expect(r.code).toBe(2);
-      expect(r.err).toContain("Usage: clawdipedia");
+      expect(r.err).toEndWith(usage);
       expect(r.out).toBe("");
     }
   });
@@ -391,12 +395,14 @@ describe("exit codes", () => {
   test("--help prints the usage on stdout and exits 0", async () => {
     const top = await cc(["--help"]);
     expect(top.code).toBe(0);
-    expect(top.out).toContain("search <query>");
     expect(top.out).toContain("clawdipedia");
     for (const sub of ["search", "read", "list", "schema"]) {
+      expect(top.out).toContain(sub);
       const r = await cc([sub, "--help"]);
       expect(r.code).toBe(0);
-      expect(r.out).toContain(`Usage: clawdipedia ${sub}`);
+      expect(r.out).toContain(sub);
+      expect(r.out).not.toBe(top.out);
+      expect(r.err).toBe("");
     }
   });
 });

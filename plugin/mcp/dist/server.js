@@ -29663,7 +29663,7 @@ function parseXml(xml, options) {
 }
 
 // plugin/mcp/src/manifest.ts
-var SITE = "https://xsyetopz.github.io/clawdipedia";
+var SITE = "https://clawdipedia.cc";
 var siteBase = () => baseUrl("CLAWDIPEDIA_BASE_URL", SITE);
 var normalizeRoute = (input) => {
   let r = input.trim();

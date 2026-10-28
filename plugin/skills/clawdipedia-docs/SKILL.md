@@ -24,17 +24,17 @@ Only `clawdipedia` has badges and schemas. `get_schema` reads `clawdipedia` only
 
 1. If the tools `search_docs`, `read_page`, `list_pages`, and `get_schema` are available (the `clawdipedia-docs` MCP server; the tool names are `mcp__plugin_clawdipedia-docs_docs__search_docs` and so on), use them:
    - `search_docs` with an exact identifier or short keywords (`PreToolUse timeout`, `CLAUDE_CODE_USE_BEDROCK`), not a whole question. Then `read_page` on the best route. `limit` (1 to 25, default 8) caps the hits, and `section` limits them to a top-level section such as `configure`.
-   - `read_page` with `section_heading` (for example `At a Glance`) when a page is long. For a long page, call again with `offset` set to the `offset` in the "more" note.
+   - `read_page` with `section_heading` (for example `Related Pages`) when a page is long. For a long page, call again with `offset` set to the `offset` in the "more" note.
    - `list_pages` to browse the sections and find routes.
    - `get_schema` for the exact fields of a config file or a payload: `settings`, `managed-settings`, `plugin-manifest`, `plugin-hooks`, `marketplace`, `keybindings`, `mcp`, `agents-json`, `hook-output`, `tools`, `control-protocol`, `stream-json`, `frontmatter`, `status-line`, `transcript`, `otel`, or `claude-json`. Without `property` it gives an outline. Pass `property` to get one key or one definition, such as `BashInput`.
    - `get_schema` with `name: "types"` for the Mod API type file: pass `property` as a type (`ToolCheckResult`), a member (`ToolCheckResult.plugin`), a call (`$.tool.check`), or an event (`tool.check`).
    - Pass `source` to `search_docs`, `read_page`, or `list_pages` to read another source (see "Pick the source"). Pages of `platform`, `code`, and `anthropic` are not covered by the badges. For `list_pages`, `section` is a top-level section for `clawdipedia` and a group or section name (such as `Messages`) for the others. `anthropic` pages are converted from HTML.
    - Each result ends with a `Source:` line. If it says offline, the text comes from the disk cache and may be old: say so.
 2. If the tools are not available, fetch plain text from the `clawdipedia` site (the other sources have no plain-text fallback here; fetch their pages by URL):
-   - `https://xsyetopz.github.io/clawdipedia/llms.txt` is the index with one line per page.
-   - Add `.md` to a page URL for its markdown, for example `https://xsyetopz.github.io/clawdipedia/configure/status-line.md`.
-   - `https://xsyetopz.github.io/clawdipedia/llms-full.txt` holds every page. It is large: fetch it only when you must search across pages.
-   - The JSON Schemas and the Mod API type file (`claude-code.d.ts`) live under `https://xsyetopz.github.io/clawdipedia/schemas/`.
+   - `https://clawdipedia.cc/llms.txt` is the index with one line per page.
+   - Add `.md` to a page URL for its markdown, for example `https://clawdipedia.cc/configure/status-line.md`.
+   - `https://clawdipedia.cc/llms-full.txt` holds every page. It is large: fetch it only when you must search across pages.
+   - The JSON Schemas and the Mod API type file (`claude-code.d.ts`) live under `https://clawdipedia.cc/schemas/`.
 
 ## Read the Badges
 

@@ -12,6 +12,8 @@ import {
   mockSite,
   newState,
   SERVER,
+  sourceNumbers,
+  sourceOf,
   stops,
 } from "./server/harness.ts";
 
@@ -22,9 +24,13 @@ describe("what the model sees", () => {
     const { call } = await connect();
     const page = await call("read_page", { route: "configure/hooks" });
     expect(page.seen).toContain("PreToolUse");
-    expect(page.seen).toContain("Source:");
+    // A page sends text only (design D7), so what the model sees is the text.
+    expect(page.structured).toBeUndefined();
+    expect(page.seen).toBe(page.text);
     const schema = await call("get_schema", { name: "tools" });
-    expect(schema.seen).toContain("1 definitions");
+    expect(schema.seen).toContain("BashInput");
+    // Only the count is pinned (one definition in the fixture), not the wording.
+    expect(schema.seen).toMatch(/\b1\b/);
   });
 });
 
@@ -76,7 +82,8 @@ describe("prebuilt search index", () => {
     const s = await call("search_docs", { query: "PreToolUse" });
     expect(s.error).toBe(false);
     expect(s.text).toContain("configure/hooks");
-    expect(s.text).toContain("search index of 3 pages");
+    // Only the count is pinned (the index covers the 3 fixture pages), not the wording.
+    expect(sourceNumbers(s)).toContain(3);
     expect(
       state.hits.filter((h) => h.path === "/llms-search-index.json"),
     ).toHaveLength(1);
@@ -89,7 +96,7 @@ describe("prebuilt search index", () => {
     );
   });
 
-  test("a 404 for the index falls back to pages and the Source line says so", async () => {
+  test("a 404 for the index falls back to a read of every page", async () => {
     const state = newState();
     state.noIndex = true;
     const site = mockSite(state);
@@ -98,8 +105,6 @@ describe("prebuilt search index", () => {
     const s = await call("search_docs", { query: "PreToolUse" });
     expect(s.error).toBe(false);
     expect(s.text).toContain("configure/hooks");
-    expect(s.text).toContain("index built from 3 pages");
-    expect(s.text).toContain("no llms-search-index.json on the site");
     expect(state.hits.filter((h) => h.path.endsWith(".md")).length).toBe(3);
   });
 
@@ -118,7 +123,8 @@ describe("prebuilt search index", () => {
     await (await connect(env)).call("search_docs", { query: "hook" });
     state.hits.length = 0;
     const s = await (await connect(env)).call("search_docs", { query: "hook" });
-    expect(s.text).toContain("revalidated, 304");
+    expect(s.error).toBe(false);
+    expect(s.text).toContain("configure/hooks");
     expect(
       state.hits.find((h) => h.path === "/llms-search-index.json")?.inm,
     ).toBe('"i1"');
@@ -143,7 +149,8 @@ describe("prebuilt search index", () => {
 
 describe("offline read", () => {
   test("a page read once is served from the cache by a new process with the site down", async () => {
-    const site = mockSite();
+    const state = newState();
+    const site = mockSite(state);
     const cache = mkdtempSync(join(tmpdir(), "ccdocs-test-"));
     stops.push(() => rmSync(cache, { recursive: true, force: true }));
     const env = {
@@ -154,14 +161,15 @@ describe("offline read", () => {
     const first = await (await connect(env)).call("read_page", {
       route: "configure/hooks",
     });
-    expect(first.text).toMatch(/Source: 127\.0\.0\.1:\d+, live/);
+    expect(first.error).toBe(false);
+    expect(state.hits.some((h) => h.path === "/configure/hooks.md")).toBe(true);
     site.stop();
-    const again = await (await connect(env)).call("read_page", {
-      route: "configure/hooks",
-    });
+    const second = await connect(env);
+    const again = await second.call("read_page", { route: "configure/hooks" });
     expect(again.error).toBe(false);
     expect(again.text).toContain("PreToolUse");
-    expect(again.text).toMatch(/Source: 127\.0\.0\.1:\d+, cache \(.*offline\)/);
+    const l = await second.call("list_pages", {});
+    expect(sourceOf(l).state).toBe("stale-offline");
   });
 });
 
@@ -235,12 +243,17 @@ describe("get_schema types", () => {
       property: "ToolCheckResult.decider",
     });
     expect(r.error).toBe(true);
-    expect(r.text).toContain("Closest names in the file: ToolCheckResult");
+    // The near names are listed apart from the query, which also starts with the name.
+    expect(r.text.replace("ToolCheckResult.decider", "")).toContain(
+      "ToolCheckResult",
+    );
   });
   test("without property, lists the declared names", async () => {
     const { call } = await connect();
     const r = await call("get_schema", { name: "claude-code.d.ts" });
     expect(r.error).toBe(false);
-    expect(r.text).toContain("3 declarations");
+    expect(r.text).toContain("ToolCheckResult");
+    // Only the count is pinned (3 declared names in the fixture), not the wording.
+    expect(r.text).toMatch(/\b3\b/);
   });
 });

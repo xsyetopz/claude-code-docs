@@ -7,7 +7,7 @@ description: Look up Claude Code behavior, settings, env vars, flags, hooks, plu
 
 The `clawdipedia` source describes what Claude Code 2.1.312 does, checked against the program and not only against the official docs. Use them instead of memory for any detail that the user may act on: a key name, a default, an environment variable, a hook field. Memory of these details is often stale or wrong. The other three sources cover official docs and Anthropic pages.
 
-This plugin works only in Claude Code. It has no MCP server: you call the `clawdipedia` command with the Bash tool. It needs Bun. If `clawdipedia` is not found, run it with `bunx clawdipedia-docs` in its place.
+This plugin works only in Claude Code. It has no MCP server: you call the `clawdipedia` command with the Bash tool. It needs Bun. If `clawdipedia` is not found, run `"$CLAUDE_PLUGIN_ROOT/bin/clawdipedia"` in its place, because the plugin ships that file.
 
 ## Pick the Source
 
@@ -25,7 +25,7 @@ Only `clawdipedia` has badges and schemas. `schema` reads `clawdipedia` only.
 ## Find the Answer
 
 - `clawdipedia search "PreToolUse timeout"`: ranked hits with a route, a title, a URL, and a snippet. Search an exact identifier (`CLAUDE_CODE_USE_BEDROCK`) or short keywords, not a whole question. `--limit <n>` (1 to 25, default 8) caps the hits.
-- `clawdipedia read configure/status-line`: the page as markdown. `--section "At a Glance"` prints only that H2 section. A long page ends its header line with `more: call again with offset=N`: pass `--offset N`.
+- `clawdipedia read configure/status-line`: the page as markdown. `--section "Example"` prints only that H2 section. A long page ends its header line with `more: call again with offset=N`: pass `--offset N`.
 - `clawdipedia list` shows every section and its pages. `clawdipedia list configure` shows one section with the description of each page.
 - `clawdipedia schema settings` prints the outline of a JSON Schema. `clawdipedia schema settings hooks.PreToolUse` or `clawdipedia schema tools BashInput.command` prints one property or definition. The names are `settings`, `managed-settings`, `plugin-manifest`, `plugin-hooks`, `marketplace`, `keybindings`, `mcp`, `agents-json`, `hook-output`, `tools`, `control-protocol`, `stream-json`, `frontmatter`, `status-line`, `transcript`, `otel`, and `claude-json`.
 - `clawdipedia schema types ToolCheckResult` prints the Mod API type file entry for a type, a member (`ToolCheckResult.plugin`), a call (`'$.tool.check'`), or an event (`tool.check`). `clawdipedia schema types` lists the names.

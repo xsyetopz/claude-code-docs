@@ -63,4 +63,96 @@
     <question>Use the tools with source "platform": first search_docs the platform docs for the Claude API rate limits page, then read_page it. Which algorithm does the API use for rate limiting?</question>
     <answer>token bucket</answer>
   </qa_pair>
+  <qa_pair>
+    <question>The server exposes four tools. Name them, sorted alphabetically and separated by comma and space.</question>
+    <answer>get_schema, list_pages, read_page, search_docs</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Which four values does the source argument of search_docs, read_page and list_pages accept? Give them in the order of the tool schema, separated by comma and space.</question>
+    <answer>clawdipedia, platform, code, anthropic</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>These Claude Code docs are the default source. A call that passes source "docs" is rejected as an unknown value. Which source value selects these docs when you name it?</question>
+    <answer>clawdipedia</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>A call to search_docs with max_results fails because that argument does not exist. Which argument name caps the number of hits, and what is its largest value? Answer as name and number.</question>
+    <answer>limit 25</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Use read_page on route extend/mod-api/events/hooks with section_heading "Budgets". What is HookBudget.lingerMs, the time a hook may keep running after an abort, in milliseconds?</question>
+    <answer>5000</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Use read_page on route extend/mod-api/events/hooks with section_heading "Failure Behavior". What happens when a tool.call hook fails?</question>
+    <answer>The tool runs.</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Use read_page on route extend/mod-api/calls/turn-prompt with section_heading "Members". Which mode does $.prompt.fill use by default?</question>
+    <answer>replace</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Use read_page on route configure/permissions/auto-mode with section_heading "How the Classifier Decides". Which rule list holds the security boundaries that user intent does not clear?</question>
+    <answer>hard_deny</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Use read_page on route how-it-works/request-and-cache with section_heading "Cache Lifetime". Which environment variable forces a five minute cache and wins over the other items?</question>
+    <answer>FORCE_PROMPT_CACHING_5M</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Use read_page on route how-it-works/system-prompt with section_heading "Bare Mode". With --bare, how many tools does the request carry?</question>
+    <answer>3</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Use read_page on route prompts/defaults/default-lean with section_heading "Size". How many tools does that capture send?</question>
+    <answer>12</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Use read_page on route prompts/tools with section_heading "How to Override". Which environment variable limits the length of an MCP tool description?</question>
+    <answer>CLAUDE_CODE_MAX_MCP_DESCRIPTION_LENGTH</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Use read_page on route extend/mod-api/types/session with offset 0 and max_chars 1000. The example shows $.session.send. Which two fields does its result destructure? Answer as the two names, separated by comma and space.</question>
+    <answer>isDelivered, reason</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Use read_page on route extend/mod-api/types/session with offset 1000 and max_chars 2000, the second window of the page. Which ContextWindowSource value means the model's own limit?</question>
+    <answer>auto</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Use search_docs with query "circuit breaker" and limit 1. What is the route of the single hit?</question>
+    <answer>configure/permissions/auto-mode</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Use search_docs with source "clawdipedia", query "PermissionDenied hook", and limit 2. What is the route of the first hit?</question>
+    <answer>extend/hooks/input-and-output</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Use search_docs with source "code", query "status line refreshInterval", and limit 1. What is the route of the single hit on code.claude.com?</question>
+    <answer>statusline</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Use search_docs with source "anthropic", query "Responsible Scaling Policy", and limit 2. What is the route of the first hit on www.anthropic.com?</question>
+    <answer>responsible-scaling-policy</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Use list_pages with section "how-it-works". Which route covers how Claude Code saves a session and where every file lives on disk?</question>
+    <answer>how-it-works/sessions-and-storage</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Use list_pages with source "code" and section "Reference". Which route is the Tools reference page?</question>
+    <answer>tools-reference</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Use list_pages with source "anthropic" and section "legal". Which route is the Commercial Terms page?</question>
+    <answer>legal/commercial-terms</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Use get_schema with name "types" and property "HookBudget". What is the value of catchMs, the grace of a .catch handler, in milliseconds?</question>
+    <answer>1000</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Use get_schema with name "status-line" and property "context_window.context_window_size". Which example number does its description give?</question>
+    <answer>200000</answer>
+  </qa_pair>
 </evaluation>

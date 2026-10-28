@@ -4,23 +4,23 @@
     "title": "Overview",
     "description": "What Claude Code is.",
     "section": "Overview",
-    "md": "https://xsyetopz.github.io/clawdipedia/index.md",
-    "url": "https://xsyetopz.github.io/clawdipedia/"
+    "md": "https://clawdipedia.cc/index.md",
+    "url": "https://clawdipedia.cc/"
   },
   {
     "route": "/configure/hooks",
     "title": "Hook Events",
     "description": "Run commands on events such as PreToolUse.",
     "section": "Configure",
-    "md": "https://xsyetopz.github.io/clawdipedia/configure/hooks.md",
-    "url": "https://xsyetopz.github.io/clawdipedia/configure/hooks"
+    "md": "https://clawdipedia.cc/configure/hooks.md",
+    "url": "https://clawdipedia.cc/configure/hooks"
   },
   {
     "route": "/configure/status-line",
     "title": "Status Line",
     "description": "Show a custom line below the prompt.",
     "section": "Configure",
-    "md": "https://xsyetopz.github.io/clawdipedia/configure/status-line.md",
-    "url": "https://xsyetopz.github.io/clawdipedia/configure/status-line"
+    "md": "https://clawdipedia.cc/configure/status-line.md",
+    "url": "https://clawdipedia.cc/configure/status-line"
   }
 ]

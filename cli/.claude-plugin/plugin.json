@@ -1,5 +1,5 @@
 {
-  "$schema": "https://xsyetopz.github.io/clawdipedia/schemas/claude-code-plugin-manifest.json",
+  "$schema": "https://clawdipedia.cc/schemas/claude-code-plugin-manifest.json",
   "name": "clawdipedia-docs-cli",
   "displayName": "Anthropic Docs CLI",
   "version": "2.0.0",
@@ -7,7 +7,7 @@
   "author": {
     "name": "xsyetopz"
   },
-  "homepage": "https://xsyetopz.github.io/clawdipedia/",
+  "homepage": "https://clawdipedia.cc/",
   "repository": "https://github.com/xsyetopz/clawdipedia",
   "license": "MIT",
   "keywords": [

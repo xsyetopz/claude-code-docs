@@ -43,7 +43,7 @@ export const baseUrl = (envName: string, fallback: string): string => {
 export type SourceState = "live" | "cached" | "stale-offline";
 
 export type Source = {
-  /** Host, e.g. "xsyetopz.github.io". */
+  /** Host, e.g. "clawdipedia.cc". */
   origin: string;
   state: SourceState;
   fetchedAt: string;

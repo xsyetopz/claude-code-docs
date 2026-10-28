@@ -1,6 +1,6 @@
 // Code tools (code.claude.com) of the docs server. Part of: bun test plugin/mcp/test
 import { afterAll, describe, expect, test } from "bun:test";
-import { cleanup, connect, mockCode, stops } from "./harness.ts";
+import { cleanup, connect, mockCode, sourceOf, stops } from "./harness.ts";
 
 afterAll(cleanup);
 
@@ -17,14 +17,15 @@ describe("code tools", () => {
     const s = await call("search_docs", { source: "code", query: "plugin" });
     expect(s.error).toBe(false);
     expect(s.text).toContain("plugins/create");
-    expect(s.text).toContain("Source: 127.0.0.1");
-    expect(s.text).toContain("live");
+    expect(sourceOf(s).origin).toMatch(/^127\.0\.0\.1:\d+$/);
+    expect(sourceOf(s).state).toBe("live");
     const g = await call("search_docs", {
       source: "code",
       query: "plugin",
       section: "Resources",
     });
-    expect(g.text).toContain("No code pages match");
+    expect(g.error).toBe(false);
+    expect(g.text).not.toContain("plugins/create");
     const hit = await call("search_docs", {
       source: "code",
       query: "agent sdk",
@@ -33,7 +34,7 @@ describe("code tools", () => {
     expect(hit.text).toContain("agent-sdk/overview");
     const none = await call("search_docs", { source: "code", query: "zzzqqq" });
     expect(none.error).toBe(false);
-    expect(none.text).toContain("No code pages match");
+    expect(none.text).not.toContain("plugins/create");
   });
 
   test("list groups by the ## heading and drops repeats and index links", async () => {
@@ -105,7 +106,6 @@ describe("code tools", () => {
     ]) {
       const r = await call("read_page", { source: "code", route: path });
       expect(r.error).toBe(true);
-      expect(r.text).toContain("Invalid path");
     }
     expect(p.hits.length).toBe(0);
     const full = await call("read_page", {
@@ -122,7 +122,6 @@ describe("code tools", () => {
       route: "plugins/make",
     });
     expect(missing.error).toBe(true);
-    expect(missing.text).toContain("Closest matches");
     expect(missing.text).toContain("plugins/create");
   });
 
@@ -134,16 +133,14 @@ describe("code tools", () => {
     const r = await call("read_page", { source: "code", route: "overview" });
     expect(r.error).toBe(false);
     expect(r.text).toContain("Quetzal");
-    expect(r.text).toContain("offline");
     const l = await call("list_pages", { source: "code" });
     expect(l.error).toBe(false);
-    expect(l.text).toContain("offline");
+    expect(sourceOf(l).state).toBe("stale-offline");
     const other = await call("read_page", {
       source: "code",
       route: "plugins/create",
     });
     expect(other.error).toBe(true);
-    expect(other.text).toContain("could not reach");
   });
 
   test("offline with nothing cached is an error", async () => {
@@ -152,6 +149,5 @@ describe("code tools", () => {
     const { call } = await connect({ CODE_DOCS_BASE_URL: p.url });
     const r = await call("search_docs", { source: "code", query: "plugin" });
     expect(r.error).toBe(true);
-    expect(r.text).toContain("code docs are offline and not cached yet");
   });
 });

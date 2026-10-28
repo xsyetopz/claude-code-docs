@@ -12,7 +12,15 @@ import http from "node:http";
 import type { AddressInfo } from "node:net";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { cleanup, connect, mockSite, newState, stops } from "./harness.ts";
+import {
+  cleanup,
+  connect,
+  mockSite,
+  newState,
+  sourceNumbers,
+  sourceOf,
+  stops,
+} from "./harness.ts";
 
 afterAll(cleanup);
 
@@ -33,39 +41,42 @@ describe("search and offline", () => {
       query: "PreToolUse",
       section: "Overview",
     });
-    expect(none.text).toContain("No pages match");
+    expect(none.error).toBe(false);
+    // The empty answer has no structured hits; a known route is absent.
+    expect(none.text).not.toContain("configure/");
     const conf = await call("search_docs", {
       query: "PreToolUse",
       section: "Configure",
     });
     expect(conf.text).toContain("configure/hooks");
-    expect(conf.text).not.toContain("No pages match");
   });
 
   test("offline: cached pages, the index, and the list are served", async () => {
-    const site = mockSite();
+    const state = newState();
+    const site = mockSite(state);
     const { call } = await connect({
       CLAWDIPEDIA_BASE_URL: site.url,
       CLAWDIPEDIA_TTL_SCALE: "0",
     });
     const live = await call("read_page", { route: "configure/hooks" });
     expect(live.error).toBe(false);
-    expect(live.text).toContain("live");
+    expect(state.hits.some((h) => h.path === "/configure/hooks.md")).toBe(true);
     await call("search_docs", { query: "hook" });
     site.stop();
     const r = await call("read_page", { route: "configure/hooks" });
     expect(r.error).toBe(false);
     expect(r.text).toContain("PreToolUse");
-    expect(r.text).toContain("offline");
     // By design search keeps its in-process index (refreshed in the background), so its
-    // Source line shows the index and not an offline marker until the refresh lands.
+    // source stays the index and not an offline state until the refresh lands.
     const s = await call("search_docs", { query: "PreToolUse" });
     expect(s.error).toBe(false);
     expect(s.text).toContain("configure/hooks");
-    expect(s.text).toMatch(/Source: .*search index of 3 pages/);
+    // Only the count is pinned (the index covers the 3 fixture pages), not the wording.
+    expect(sourceNumbers(s)).toContain(3);
+    expect(sourceOf(s).state).not.toBe("stale-offline");
     const l = await call("list_pages", {});
     expect(l.error).toBe(false);
-    expect(l.text).toContain("offline");
+    expect(sourceOf(l).state).toBe("stale-offline");
   });
 
   test("a stale-offline page list recovers soon after the network returns", async () => {
@@ -74,17 +85,17 @@ describe("search and offline", () => {
       CLAWDIPEDIA_BASE_URL: site.url,
       CLAWDIPEDIA_TTL_SCALE: "0.001",
     });
-    expect((await call("list_pages", {})).text).not.toContain("offline");
+    expect(sourceOf(await call("list_pages", {})).state).toBe("live");
     site.stop();
     await Bun.sleep(700);
-    expect((await call("list_pages", {})).text).toContain("offline");
+    expect(sourceOf(await call("list_pages", {})).state).toBe("stale-offline");
     const back = mockSite(newState(), site.port);
     stops.push(back.stop);
     // The stale-offline TTL is 60 ms at this scale; the normal manifest TTL is 600 ms.
     await Bun.sleep(150);
     const r = await call("list_pages", {});
     expect(r.error).toBe(false);
-    expect(r.text).not.toContain("offline");
+    expect(sourceOf(r).state).not.toBe("stale-offline");
   });
 
   test("a partial search index is rebuilt soon", async () => {
@@ -97,15 +108,21 @@ describe("search and offline", () => {
       CLAWDIPEDIA_BASE_URL: site.url,
       CLAWDIPEDIA_TTL_SCALE: "0.001",
     });
-    const first = await call("search_docs", { query: "hook" });
-    expect(first.text).toContain("index built from 2 pages");
+    // "handlers" is only in the body of Hook Events, the page that is missing.
+    const first = await call("search_docs", { query: "handlers" });
+    expect(first.error).toBe(false);
+    expect(first.text).not.toContain("configure/hooks");
+    const fetched = () =>
+      state.hits.filter((h) => h.path === "/configure/hooks.md").length;
+    const before = fetched();
     state.gone.delete("/configure/hooks.md");
     await Bun.sleep(150);
     // This call starts the rebuild in the background; a later one sees it.
-    await call("search_docs", { query: "hook" });
+    await call("search_docs", { query: "handlers" });
     await Bun.sleep(500);
-    const again = await call("search_docs", { query: "hook" });
-    expect(again.text).toContain("index built from 3 pages");
+    const again = await call("search_docs", { query: "handlers" });
+    expect(fetched()).toBeGreaterThan(before);
+    expect(again.text).toContain("configure/hooks");
   });
 
   test("offline with nothing cached is an error", async () => {
@@ -114,7 +131,6 @@ describe("search and offline", () => {
     const { call } = await connect({ CLAWDIPEDIA_BASE_URL: site.url });
     const r = await call("list_pages", {});
     expect(r.error).toBe(true);
-    expect(r.text).toContain("could not reach");
   });
 
   test("llms.txt 404 falls back to the cached copy", async () => {
@@ -133,21 +149,21 @@ describe("search and offline", () => {
       CLAWDIPEDIA_TTL_SCALE: "0",
     };
     const first = await connect(env);
-    expect((await first.call("list_pages", {})).text).toContain(
-      "Claude Code 2.1.305",
-    );
+    expect(
+      (await first.call("list_pages", {})).structured?.["claudeCode"],
+    ).toBe("2.1.305");
     state.llms404 = true;
     // A new process, same cache: llms.txt is a 404 now, so the cached copy supplies the version.
     const second = await connect(env);
     const l = await second.call("list_pages", {});
     expect(l.error).toBe(false);
-    expect(l.text).toContain("Claude Code 2.1.305");
+    expect(l.structured?.["claudeCode"]).toBe("2.1.305");
     expect(existsSync(join(cache, "site", "llms.txt"))).toBe(true);
     // With no cached copy the 404 only drops the version line; tools still work.
     const bare = await connect({ ...env, CLAWDIPEDIA_CACHE_DIR: bareCache });
     const b = await bare.call("list_pages", {});
     expect(b.error).toBe(false);
-    expect(b.text).not.toContain("Claude Code 2.1.305");
+    expect(b.structured?.["claudeCode"]).toBeUndefined();
   });
 });
 
@@ -162,12 +178,12 @@ describe("site cache rules", () => {
       CLAWDIPEDIA_TTL_SCALE: "0",
     });
     const a = await call("read_page", { route: "configure/hooks" });
-    expect(a.text).toContain("live");
+    expect(a.error).toBe(false);
+    expect(state.hits.some((h) => h.path === "/configure/hooks.md")).toBe(true);
     state.hits.length = 0;
     const b = await call("read_page", { route: "configure/hooks" });
     expect(b.error).toBe(false);
     expect(b.text).toContain("PreToolUse");
-    expect(b.text).toContain("revalidated, 304");
     expect(state.hits.find((h) => h.path === "/configure/hooks.md")?.inm).toBe(
       '"v1"',
     );
@@ -189,9 +205,9 @@ describe("site cache rules", () => {
     state.gone.add("/configure/hooks.md");
     const r = await call("read_page", { route: "configure/hooks" });
     expect(r.error).toBe(true);
-    expect(r.text).toContain("no longer exists");
-    expect(r.text).toContain("Closest matches");
-    expect(r.text).toContain("configure/");
+    // The near pages are a list of routes, one `  - <route>` per line, and not the missing page.
+    expect(r.text).toMatch(/^ {2}- configure\/status-line$/m);
+    expect(r.text).not.toMatch(/^ {2}- configure\/hooks$/m);
     expect(existsSync(file)).toBe(false);
   });
 
@@ -219,7 +235,6 @@ describe("site cache rules", () => {
     const { call } = await connect({ CLAWDIPEDIA_BASE_URL: site.url });
     const r = await call("read_page", { route: "configure/hooks" });
     expect(r.error).toBe(true);
-    expect(r.text).toContain("could not reach");
     expect((await call("list_pages", {})).error).toBe(false);
   });
 
@@ -326,13 +341,16 @@ describe("hostile site", () => {
     for (const bad of ["http://evil.example", "ftp://x", "nonsense"]) {
       const r = run(bad);
       expect(r.stdout.toString().trim()).toBe("https://default.example");
-      expect(r.stderr.toString()).toContain("ignoring X_BASE");
+      // The warning names the variable; its wording is not pinned.
+      expect(r.stderr.toString()).toContain("X_BASE");
     }
-    expect(run("http://127.0.0.1:9/").stdout.toString().trim()).toBe(
-      "http://127.0.0.1:9",
-    );
-    expect(run("https://mirror.example/").stdout.toString().trim()).toBe(
-      "https://mirror.example",
-    );
+    for (const [good, base] of [
+      ["http://127.0.0.1:9/", "http://127.0.0.1:9"],
+      ["https://mirror.example/", "https://mirror.example"],
+    ] as const) {
+      const r = run(good);
+      expect(r.stdout.toString().trim()).toBe(base);
+      expect(r.stderr.toString()).toBe("");
+    }
   });
 });

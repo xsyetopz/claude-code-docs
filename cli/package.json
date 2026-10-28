@@ -4,7 +4,7 @@
   "license": "MIT",
   "type": "module",
   "description": "Four doc sources (clawdipedia, platform, code, anthropic) from a shell: search, read, list, and schema. Runs on Bun with no install step.",
-  "homepage": "https://xsyetopz.github.io/clawdipedia/",
+  "homepage": "https://clawdipedia.cc/",
   "repository": "https://github.com/xsyetopz/clawdipedia",
   "bin": {
     "clawdipedia": "bin/clawdipedia"

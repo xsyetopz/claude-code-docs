@@ -1,5 +1,5 @@
 {
-  "$schema": "https://xsyetopz.github.io/clawdipedia/schemas/claude-code-marketplace.json",
+  "$schema": "https://clawdipedia.cc/schemas/claude-code-marketplace.json",
   "name": "clawdipedia",
   "owner": {
     "name": "xsyetopz"
