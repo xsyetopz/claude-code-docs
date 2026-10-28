@@ -18,7 +18,7 @@ export type Json = Record<string, unknown>;
 export type Src = Module;
 
 export const ROOT = resolve(import.meta.dir, "../../..");
-const BASE_URL = "https://xsyetopz.github.io/clawdipedia/schemas";
+const BASE_URL = "https://clawdipedia.cc/schemas";
 
 export const argv = process.argv.slice(2);
 const arg = (name: string): string | undefined => {

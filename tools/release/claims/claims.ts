@@ -134,11 +134,15 @@ export const claimsFromFile = (
   return out;
 };
 
-/** `git grep -n -E '2\.1\.[0-9]+' -- docs` as file -> lines. */
-const grepHits = (): Map<string, number[]> => {
+/**
+ * `git grep -n --untracked -E '2\.1\.[0-9]+' -- docs` as file -> lines.
+ * `--untracked` covers a page that a split or a new page created and nobody staged yet,
+ * because without it the claims of that page never reach the gate.
+ */
+export const grepHits = (root = ROOT): Map<string, number[]> => {
   const r = Bun.spawnSync(
-    ["git", "grep", "-n", "-E", "2\\.1\\.[0-9]+", "--", "docs"],
-    { cwd: ROOT, env: toolEnv() },
+    ["git", "grep", "-n", "--untracked", "-E", "2\\.1\\.[0-9]+", "--", "docs"],
+    { cwd: root, env: toolEnv() },
   );
   const hits = new Map<string, number[]>();
   for (const l of r.stdout.toString().split("\n")) {

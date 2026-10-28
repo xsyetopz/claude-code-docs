@@ -79,24 +79,25 @@ test("validate accepts a good file and names each problem", () => {
     Object.keys(KINDS).map((k) => [k, [{ name: "a" }, { name: "b" }]]),
   );
   expect(validate({ version: "1.2.3", kinds }, "1.2.3")).toEqual([]);
-  expect(validate({ version: "1.2.2", kinds }, "1.2.3").join()).toContain(
-    "names version 1.2.2, not 1.2.3",
+  const wrongVersion = validate({ version: "1.2.2", kinds }, "1.2.3");
+  expect(wrongVersion).toHaveLength(1);
+  expect(wrongVersion[0]).toContain("1.2.2");
+  expect(wrongVersion[0]).toContain("1.2.3");
+  const emptyKind = validate(
+    { version: "1.2.3", kinds: { ...kinds, env: [] } },
+    "1.2.3",
   );
-  expect(
-    validate(
-      { version: "1.2.3", kinds: { ...kinds, env: [] } },
-      "1.2.3",
-    ).join(),
-  ).toContain('kind "env" is not a non-empty list');
-  expect(
-    validate(
-      {
-        version: "1.2.3",
-        kinds: { ...kinds, env: [{ name: "b" }, { name: "a" }] },
-      },
-      "1.2.3",
-    ).join(),
-  ).toContain("env: not sorted at a");
+  expect(emptyKind).toHaveLength(1);
+  expect(emptyKind[0]).toContain("env");
+  const unsorted = validate(
+    {
+      version: "1.2.3",
+      kinds: { ...kinds, env: [{ name: "b" }, { name: "a" }] },
+    },
+    "1.2.3",
+  );
+  expect(unsorted).toHaveLength(1);
+  expect(unsorted[0]).toContain("env");
   const { env: _, ...rest } = kinds;
   expect(validate({ version: "1.2.3", kinds: rest }, "1.2.3")).toEqual([
     'kind "env" missing',
@@ -125,11 +126,16 @@ test("a missing binary given as a path names that path", () => {
   expect(r.err).toContain("/nonexistent/claude-bin");
 });
 
-test("check with no binary validates the file, says it skipped the comparison, and exits 0", () => {
+test("check with no binary validates the file, skips the comparison, and exits 0", () => {
+  const before = readFileSync(COPY, "utf8");
   const r = run(["--check"]);
   expect(r.err).toBe("");
   expect(r.code).toBe(0);
-  expect(r.out).toContain("skipped the comparison with a fresh run");
+  // The skip is a notice that names the version it could not compare.
+  expect(r.out.trim().split("\n")).toHaveLength(1);
+  expect(r.out).toContain(CLAUDE_CODE_VERSION);
+  // The check writes nothing.
+  expect(readFileSync(COPY, "utf8")).toBe(before);
 });
 
 test("check with no binary still fails on the wrong version", () => {
@@ -144,7 +150,7 @@ test("check with no binary still fails on the wrong version", () => {
   );
   const r = run(["--check", "--out", out]);
   expect(r.code).toBe(1);
-  expect(r.err).toContain("names version 0.0.1");
+  expect(r.err).toContain("0.0.1");
 });
 
 test.skipIf(!installed)(

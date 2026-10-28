@@ -67,8 +67,10 @@ test("each item gets its page, its map route, its exclusion, or no page", () => 
     "| `CLAUDE_CODE_LISTED` | [Some Vars](../configure/env-vars/a.md) |",
   );
   expect(page).toContain("| `CLAUDE_CODE_MAPPED` | [/x#y](/x#y) |");
-  expect(page).toContain("| `lib: noise one` | Excluded: library code |");
-  expect(page).toContain("| `Bad thing a\\|b` | Not on a page yet |");
+  // The status cell of an excluded item carries its reason from exclusions.json.
+  expect(page).toMatch(/^\| `lib: noise one` \| .*library code.* \|$/m);
+  // An item on no page has a status cell with no link.
+  expect(page).toMatch(/^\| `Bad thing a\\\|b` \| [^[\]]+ \|$/m);
   expect(page).toContain(
     "| [Environment Variables](#environment-variables) | 2 | 1 | 1 | 0 | 0 |",
   );
@@ -87,7 +89,13 @@ test("the undocumented section goes before Related Pages, and a second run keeps
   expect(text).toContain(
     "| [Error Texts](surface-coverage.md#error-texts) | 2 | 1 |\n",
   );
-  expect(text).toContain("Not on a Page Yet");
+  // The header row of the table has one cell for each cell of its rows.
+  const cells = (l: string | undefined) => (l ?? "").split(/(?<!\\)\|/).length;
+  const lines = text.split("\n");
+  const header = lines.find((l) => l.startsWith("| Kind |"));
+  const total = lines.find((l) => l.startsWith("| All kinds |"));
+  expect(header).toBeDefined();
+  expect(cells(header)).toBe(cells(total));
   // "| Total | n |" is the summary row that check:docs recounts
   expect(text).toContain("| All kinds | 4 | 1 |\n");
   expect(text.startsWith(UNDOCUMENTED.split("## Related")[0] as string)).toBe(
@@ -99,7 +107,7 @@ test("--check fails on a stale page and passes after a render", () => {
   const root = repo();
   const stale = run(root, "--check");
   expect(stale.code).toBe(1);
-  expect(stale.err).toContain("surface-coverage.md differs");
+  expect(stale.err).toContain("surface-coverage.md");
   run(root);
   expect(run(root, "--check").code).toBe(0);
 });

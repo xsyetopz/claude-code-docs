@@ -31,10 +31,10 @@ export const PAGES: Record<string, string[]> = {
   tool: ["docs/reference/tools"],
   "otel-event": ["docs/reference/opentelemetry.md"],
   gate: ["docs"],
-  model: ["docs/configure/models-and-providers.md"],
+  model: ["docs/configure/models-and-providers"],
   beta: ["docs/reference/api/betas.md"],
   endpoint: ["docs/reference/api/endpoints.md"],
-  keybinding: ["docs/configure/keybindings.md"],
+  keybinding: ["docs/configure/keybindings"],
   file: ["docs/start/files-on-disk.md"],
   error: ["docs"],
 };

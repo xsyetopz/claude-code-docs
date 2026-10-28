@@ -3,7 +3,7 @@ import { join } from "node:path";
 import { CLAUDE_CODE_VERSION } from "../../../src/version.ts";
 import { INDEX_FACTS } from "../notes.ts";
 import { ctx, DOCS } from "./ctx.ts";
-import { handGlance, handLink, handRows } from "./hand.ts";
+import { handIndexRow, handLink, handRows } from "./hand.ts";
 import { pageLink, relink } from "./link.ts";
 import { badge, fmt, para, stripTrailing } from "./text.ts";
 import type { HandPage } from "./types.ts";
@@ -19,9 +19,9 @@ export const indexPage = () => {
     "",
     ...facts(INDEX_FACTS.intro),
     "",
-    "## At a Glance",
+    "## Every Prompt and How to Change It",
     "",
-    'You can use every prompt here: the answer to "Can you use it?" is ✅ Yes for all of them. Where a page adds a condition, it is in parentheses after the name.',
+    "A condition in parentheses after a prompt name is the condition that makes the prompt apply.",
     "",
     "| Prompt | Can You Change It? | Turn On or Off | Where It Lives | Status |",
     "| --- | --- | --- | --- | --- |",
@@ -33,10 +33,10 @@ export const indexPage = () => {
       );
       return [
         `| ${name} | ${ch} | ${c.v.can.toggle} | ${c.v.can.where} | ${badge(c.v)} |`,
-        ...handRows(id).map((h) => handGlance(h, "root")),
+        ...handRows(id).map((h) => handIndexRow(h, "root")),
       ];
     }),
-    ...handRows().map((h) => handGlance(h, "root")),
+    ...handRows().map((h) => handIndexRow(h, "root")),
     relink(
       "root",
       "| [Tool Descriptions](./tools.md) (Every request carries them) | ✅ Yes. A Mod API `tool.describe` hook replaces a description. | `ENABLE_TOOL_SEARCH`, `--tools`, `--disallowedTools`. | Built into the program. | <Undocumented /> |",

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://xsyetopz.github.io/clawdipedia/schemas/claude-code-settings.json",
+  "$schema": "https://clawdipedia.cc/schemas/claude-code-settings.json",
   "env": { "FOO": "1" },
   "permissions": {
     "allow": ["Bash(npm test)"],

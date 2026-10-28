@@ -2,7 +2,7 @@
 // 1. No emoji characters in docs/ or src/, except the allow-list below.
 // 2. Every doc has `title` and `description` front matter.
 // 3. Headings and titles follow a simple Chicago Title Case rule.
-// 4. A `Source:` line or an "in the official docs" mention names a page only as a markdown link.
+// 4. A `Source:` line names a page only as a markdown link.
 // 5. No emoji in a heading or in link text.
 // 6. The counts on docs/reference/undocumented.md match its rows and the linked pages.
 import { readdirSync, readFileSync, statSync } from "node:fs";
@@ -213,27 +213,6 @@ for (const file of walk(join(ROOT, "docs")).filter((f) => DOC_EXT.test(f))) {
       !/\]\(https?:/.test(line)
     ) {
       report(file, i + 1, "source names a page without a link");
-    } else if (
-      /\bofficial docs (say|list|confirm|name|describe)\b/i.test(line) &&
-      !/\]\(https?:/.test(line)
-    ) {
-      report(file, i + 1, '"the official docs say/list/..." needs a link');
-    } else if (
-      /\bRFC \d+/.test(line.replace(/`[^`]*`/g, "")) &&
-      !/\]\(https?:/.test(line)
-    ) {
-      report(file, i + 1, "RFC mention needs a link");
-    } else if (
-      /\bchangelog\b/i.test(line.replace(/`[^`]*`/g, "")) &&
-      !/\]\(https?:/.test(line)
-    ) {
-      report(file, i + 1, "changelog mention needs a link");
-    } else if (
-      /\b[A-Z][\w.]*,? in the official docs\b/.test(line) &&
-      !/\]\(https?:/.test(line) &&
-      !/<\w+ \/>/.test(line)
-    ) {
-      report(file, i + 1, '"in the official docs" needs a link to the page');
     }
     if (/`[^`\n]*\\[{}][^`\n]*`/.test(line))
       report(

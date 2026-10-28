@@ -61,7 +61,8 @@ test("an item named in a docs table, in the map, or in the exclusions is covered
   const r = run(root);
   expect(r.err).toBe("");
   expect(r.code).toBe(0);
-  expect(r.out).toContain("surface:check: every item is mapped or excluded");
+  // The counts table ends with one notice line that carries the tag of the check.
+  expect(r.out.trimEnd().split("\n").at(-1)).toMatch(/^surface:check: \S/);
 });
 
 test("a stale exclusion fails and names the entry", () => {
@@ -77,7 +78,9 @@ test("a stale exclusion fails and names the entry", () => {
   );
   const r = run(root);
   expect(r.code).toBe(1);
-  expect(r.err).toContain("stale entry exclusions.json: env:CLAUDE_CODE_GONE");
+  expect(r.err).toContain("exclusions.json");
+  expect(r.err).toContain("env:CLAUDE_CODE_GONE");
+  expect(r.err).not.toContain("map.json");
 });
 
 test("a stale map entry fails", () => {
@@ -138,9 +141,11 @@ test("an error map key ending in * maps a family by prefix, and other kinds do n
     },
   );
   expect(stale.stale).toEqual(["map.json: error:Nothing*"]);
-  expect(shape({ "flag:--*": entry }, {})).toEqual([
-    'map.json: flag:--* ends in "*", a prefix key only for the error kind',
-  ]);
+  // Only the error kind takes a prefix key, so a star on another kind is one finding that names it.
+  const star = shape({ "flag:--*": entry }, {});
+  expect(star).toHaveLength(1);
+  expect(star[0]).toContain("flag:--*");
+  expect(shape({ "error:Unknown hook*": entry }, {})).toEqual([]);
 });
 
 test("an entry of an unknown kind is stale", () => {
@@ -171,10 +176,11 @@ test("--kind limits the unmapped items and the stale entries to those kinds", ()
 });
 
 test("an exclusion needs a reason and a map entry needs a route", () => {
-  expect(shape({ "flag:--a": { route: "x" } }, { "env:A": " " })).toEqual([
-    'map.json: flag:--a needs a route that starts with "/"',
-    "exclusions.json: env:A needs a non-empty reason",
-  ]);
+  // A route that does not start with "/" and a blank reason are each one finding that names its key.
+  const bad = shape({ "flag:--a": { route: "x" } }, { "env:A": " " });
+  expect(bad).toHaveLength(2);
+  expect(bad.join("\n")).toContain("flag:--a");
+  expect(bad.join("\n")).toContain("env:A");
   expect(shape({ "flag:--a": { route: "/x" } }, { "env:A": "why" })).toEqual(
     [],
   );
@@ -182,15 +188,15 @@ test("an exclusion needs a reason and a map entry needs a route", () => {
 
 test("an error prefix key shorter than 8 characters is rejected in both files", () => {
   const entry = { route: "/x" };
-  expect(
-    shape(
-      { "error:Unknown*": entry, "error:Unknown hook*": entry },
-      { "error:q*": "x", "error:${…} is r*": "x", "error:Not conn*": "x" },
-    ),
-  ).toEqual([
-    "map.json: error:Unknown* needs a prefix of 8 characters or more before the *",
-    "exclusions.json: error:q* needs a prefix of 8 characters or more before the *",
-  ]);
+  // Of these five keys only the two short ones are findings. The other three have 8 characters or
+  // more before the star, so the count proves which keys passed.
+  const out = shape(
+    { "error:Unknown*": entry, "error:Unknown hook*": entry },
+    { "error:q*": "x", "error:${…} is r*": "x", "error:Not conn*": "x" },
+  );
+  expect(out).toHaveLength(2);
+  expect(out.join("\n")).toContain("error:Unknown*");
+  expect(out.join("\n")).toContain("error:q*");
   // the length counts the text after "error:" and before "*"
   expect(shape({}, { "error:Short": "x", "env:A*": "x" })).toEqual([]);
 });

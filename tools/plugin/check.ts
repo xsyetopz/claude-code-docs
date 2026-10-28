@@ -59,7 +59,7 @@ const targets: [string, string][] = [
   [MARKETPLACE, "claude-code-marketplace"],
 ];
 for (const [file, kind] of targets) {
-  const want = `https://xsyetopz.github.io/clawdipedia/schemas/${kind}.json`;
+  const want = `https://clawdipedia.cc/schemas/${kind}.json`;
   const check =
     ajv.getSchema(want) ?? ajv.compile(read(`schemas/${kind}.json`));
   const doc = read(file);

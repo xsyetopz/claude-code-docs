@@ -88,7 +88,7 @@ export const toolsPage = () => {
     "",
     "| What | How | Where to read more |",
     "| --- | --- | --- |",
-    "| A tool's description | A Mod API `tool.describe` hook gets the description and returns a new one. It works for built-in and MCP tools. | [Mod API Tools, Commands, and Config](../extend/mod-api/tool-command-config.md) |",
+    "| A tool's description | A Mod API `tool.describe` hook gets the description and returns a new one. It works for built-in and MCP tools. | [Mod API Tools, Commands, and Config](../extend/mod-api/calls/tool-command-config.md) |",
     "| Deferred or sent upfront | `ENABLE_TOOL_SEARCH`, or `isDeferred` from a `tool.describe` hook. | [Tools and Bash Variables](../configure/env-vars/tools-and-bash.md) |",
     "| MCP tool description length | `CLAUDE_CODE_MAX_MCP_DESCRIPTION_LENGTH` | [Plugins and MCP Variables](../configure/env-vars/plugins-and-mcp.md) |",
     "| Which tools are sent | `--tools`, `--disallowedTools`, or a deny rule removes a tool. | [Tools](../reference/tools/index.md) |",

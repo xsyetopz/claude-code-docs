@@ -96,11 +96,11 @@
     "probes": [],
     "note": "release history: when it started; recheck only if the feature is removed"
   },
-  "docs/configure/models-and-providers.md#choose-a-model:37f6c029": {
+  "docs/configure/models-and-providers/model-catalog.md#choose-a-model:37f6c029": {
     "kind": "setting",
     "probes": []
   },
-  "docs/configure/models-and-providers.md#aliases:9f9af634": {
+  "docs/configure/models-and-providers/model-catalog.md#aliases:9f9af634": {
     "kind": "static",
     "probes": [],
     "note": "release history: when it started; recheck only if the feature is removed"
@@ -188,7 +188,7 @@
     "kind": "env",
     "probes": ["print.sweep"]
   },
-  "docs/extend/hooks/events.md#elicitation-and-elicitationresult:aac08a8b": {
+  "docs/extend/hooks/agent-events.md#elicitation-and-elicitationresult:aac08a8b": {
     "kind": "static",
     "probes": [],
     "note": "release history: when it started; recheck only if the feature is removed"
@@ -242,82 +242,82 @@
     "probes": [],
     "note": "release history: when it started; recheck only if the feature is removed"
   },
-  "docs/extend/mod-api/clock-http-process-env-settings.md#members:4aa0ff1a": {
+  "docs/extend/mod-api/calls/clock-http-process-env-settings.md#members:4aa0ff1a": {
     "kind": "manual",
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
   },
-  "docs/extend/mod-api/clock-http-process-env-settings.md#events-raised-by-these-calls:53bdc14e": {
+  "docs/extend/mod-api/calls/clock-http-process-env-settings.md#events-raised-by-these-calls:53bdc14e": {
     "kind": "manual",
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
   },
-  "docs/extend/mod-api/hooks.md#failure-behavior:313afbf3": {
+  "docs/extend/mod-api/events/hooks.md#failure-behavior:313afbf3": {
     "kind": "manual",
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
   },
-  "docs/extend/mod-api/index.md#at-a-glance:1325b7a6": {
+  "docs/extend/mod-api/index.md#known-gaps:313a0dba": {
+    "kind": "external",
+    "probes": [],
+    "note": "compares the published type file with the official mods docs; no probe checks it"
+  },
+  "docs/extend/mod-api/calls/tool-command-config.md#engine-events:1091aee3": {
     "kind": "manual",
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
   },
-  "docs/extend/mod-api/tool-command-config.md#engine-events:1091aee3": {
+  "docs/extend/mod-api/calls/turn-prompt.md#engine-events:5a8a6a40": {
     "kind": "manual",
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
   },
-  "docs/extend/mod-api/turn-prompt.md#engine-events:c2dec4d1": {
+  "docs/extend/mod-api/types/infra/index.md#types-without-fields:9ff82136": {
     "kind": "manual",
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
   },
-  "docs/extend/mod-api/types/infra.md#types-without-fields:9ff82136": {
+  "docs/extend/mod-api/types/tool-command-config/tool-calls.md#toolcheckinput:88ec56be": {
     "kind": "manual",
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
   },
-  "docs/extend/mod-api/types/tool-command-config.md#toolcheckinput:88ec56be": {
+  "docs/extend/mod-api/types/tool-command-config/tool-calls.md#toolcheckresult:368947cc": {
     "kind": "manual",
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
   },
-  "docs/extend/mod-api/types/tool-command-config.md#toolcheckresult:368947cc": {
-    "kind": "manual",
-    "probes": [],
-    "note": "program behaviour; no probe checks it yet"
-  },
-  "docs/extend/mod-api/types/tool-command-config.md#toolcheckresult:06a4112b": {
+  "docs/extend/mod-api/types/tool-command-config/tool-calls.md#toolcheckresult:06a4112b": {
     "kind": "manual",
     "probes": [],
     "note": "program behaviour; no probe checks it yet; the decider code reads the same in 2.1.307, 2.1.308, and 2.1.309"
   },
-  "docs/extend/mod-api/types/turn-prompt.md#example:c79d0a53": {
+  "docs/extend/mod-api/types/turn-prompt/index.md#example:c79d0a53": {
     "kind": "manual",
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
   },
-  "docs/extend/mod-api/types/turn-prompt.md#promptsectioninput:c79d0a53": {
+  "docs/extend/mod-api/types/turn-prompt/edit-fill-submit.md#promptsectioninput:c79d0a53": {
     "kind": "manual",
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
   },
-  "docs/extend/mod-api/types/turn-prompt.md#promptsectioninput:5fcdbdfc": {
+  "docs/extend/mod-api/types/turn-prompt/edit-fill-submit.md#promptsectioninput:5fcdbdfc": {
     "kind": "manual",
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
   },
-  "docs/extend/mod-api/types/ui.md#imageprops:09ae9a1f": {
+  "docs/extend/mod-api/types/ui/element-props.md#imageprops:09ae9a1f": {
     "kind": "manual",
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
   },
-  "docs/extend/mod-api/types/ui.md#paneopenargs:62d7a428": {
+  "docs/extend/mod-api/types/ui/input-pane-render.md#paneopenargs:62d7a428": {
     "kind": "manual",
     "probes": [],
     "note": "program behaviour (also in the release notes); no probe checks it yet"
   },
-  "docs/extend/mod-api/ui-elements.md#surfaces:ce5563fb": {
+  "docs/extend/mod-api/ui/ui-elements.md#surfaces:ce5563fb": {
     "kind": "manual",
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
@@ -437,6 +437,11 @@
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
   },
+  "docs/extend/skills-and-commands/slash-commands.md#how-usage-and-artifacts-work:08f56e6b": {
+    "kind": "static",
+    "probes": [],
+    "note": "reading only: captures/2.1.312/strings.txt holds the two new texts and captures/2.1.311/strings.txt holds the two old ones. No 2.1.312 run reached the usage endpoint"
+  },
   "docs/extend/subagents/frontmatter.md#the---agents-json:df1ddbef": {
     "kind": "static",
     "probes": [],
@@ -527,18 +532,18 @@
       "pty.statusline.subagent-tick"
     ]
   },
-  "docs/extend/hooks/events.md#notification:1b152f75": {
+  "docs/extend/hooks/session-events.md#notification:1b152f75": {
     "kind": "behaviour",
     "probes": ["pty.notifications.agent-needs-input"]
   },
-  "docs/extend/hooks/events.md#notification:2d26f7b1": {
+  "docs/extend/hooks/session-events.md#notification:2d26f7b1": {
     "kind": "behaviour",
     "probes": [
       "pty.hooks.notification.permission-prompt",
       "pty.hooks.notification.continue-false"
     ]
   },
-  "docs/extend/hooks/events.md#posttooluse-tool_response-shapes:02779c22": {
+  "docs/extend/hooks/tool-events.md#posttooluse-tool_response-shapes:02779c22": {
     "kind": "behaviour",
     "probes": [
       "print.hooks.posttooluse.agent",
@@ -563,7 +568,7 @@
     ],
     "note": "croncreate, cronlist, glob, grep, notebookedit, webfetch, websearch: not offered in -p since 2.1.306; the CronCreate and CronList rows are from 2.1.305"
   },
-  "docs/extend/hooks/events.md#posttooluse-tool_response-shapes:eab8eda3": {
+  "docs/extend/hooks/tool-events.md#posttooluse-tool_response-shapes:eab8eda3": {
     "kind": "behaviour",
     "probes": ["print.hooks.posttooluse.edit-no-read"]
   },
@@ -780,7 +785,7 @@
     "kind": "behaviour",
     "probes": ["live.context-budget"]
   },
-  "docs/reference/probes.md#live-login-probes:9c1ad15e": {
+  "docs/reference/probes.md#live-login-probes:21e6589e": {
     "kind": "behaviour",
     "probes": ["live.oauth-parity", "live.artifacts"]
   },
@@ -788,7 +793,7 @@
     "kind": "behaviour",
     "probes": ["live.oauth-parity"]
   },
-  "docs/reference/probes.md#live-login-probes:8e3a95a1": {
+  "docs/reference/probes.md#live-login-probes:82b311c0": {
     "kind": "behaviour",
     "probes": ["live.artifacts"]
   },
@@ -875,7 +880,7 @@
     "kind": "behaviour",
     "probes": ["pty.captures.guide"]
   },
-  "docs/reference/probes.md#interactive-probes:deadca8f": {
+  "docs/reference/probes.md#interactive-probes:c0b46e97": {
     "kind": "behaviour",
     "probes": [
       "live.usage.429",
@@ -973,7 +978,7 @@
     "probes": [],
     "note": "release history: when it started; recheck only if the feature is removed"
   },
-  "docs/extend/mod-api/types/tool-command-config.md#toolcheckinput:1d637a36": {
+  "docs/extend/mod-api/types/tool-command-config/tool-calls.md#toolcheckinput:1d637a36": {
     "kind": "manual",
     "probes": [],
     "note": "program behaviour (approver set next to tool.check); no probe checks it yet"
@@ -1038,32 +1043,32 @@
       "managed.true.classify-user-true-and-flag-false"
     ]
   },
-  "docs/extend/mod-api/session.md#members:5bea862d": {
+  "docs/extend/mod-api/calls/session.md#members:5bea862d": {
     "kind": "manual",
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
   },
-  "docs/extend/mod-api/session.md#events-raised-by-session-calls:99a6b941": {
+  "docs/extend/mod-api/calls/session.md#events-raised-by-session-calls:99a6b941": {
     "kind": "manual",
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
   },
-  "docs/extend/mod-api/testing.md#exports:8f8b57a8": {
+  "docs/extend/mod-api/calls/testing.md#exports:8f8b57a8": {
     "kind": "manual",
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
   },
-  "docs/extend/mod-api/types/testing.md#types-without-fields:e66d89ad": {
+  "docs/extend/mod-api/types/testing/index.md#types-without-fields:e66d89ad": {
     "kind": "manual",
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
   },
-  "docs/extend/mod-api/types/tool-command-config.md#types-without-fields:41f72ee2": {
+  "docs/extend/mod-api/types/tool-command-config/index.md#types-without-fields:41f72ee2": {
     "kind": "manual",
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
   },
-  "docs/extend/mod-api/types/ui.md#renderelement:2503ee1f": {
+  "docs/extend/mod-api/types/ui/input-pane-render.md#renderelement:2503ee1f": {
     "kind": "manual",
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
@@ -1093,17 +1098,17 @@
     "probes": [],
     "note": "mcp_status liveReply in schemas/claude-code-control-protocol.json"
   },
-  "docs/extend/mod-api/types/turn-prompt.md#promptfillargs:2847c0a4": {
+  "docs/extend/mod-api/types/turn-prompt/edit-fill-submit.md#promptfillargs:2847c0a4": {
     "kind": "schema",
     "probes": [],
     "note": "PromptFillArgs cursor in schemas/claude-code.d.ts"
   },
-  "docs/extend/mod-api/types/turn-prompt.md#promptfillinput:fbddf98e": {
+  "docs/extend/mod-api/types/turn-prompt/edit-fill-submit.md#promptfillinput:fbddf98e": {
     "kind": "schema",
     "probes": [],
     "note": "PromptFillInput cursor in schemas/claude-code.d.ts"
   },
-  "docs/configure/models-and-providers.md#effort:65f09f9d": {
+  "docs/configure/models-and-providers/effort-thinking-and-fallback.md#effort:65f09f9d": {
     "kind": "manual",
     "probes": [],
     "note": "effort retry read in the program (2.1.310 chunk-31gxg38t.js:2834376); needs a server that refuses effort"
@@ -1123,12 +1128,12 @@
     "probes": [],
     "note": "the ui.resolve error text names a vm context in the 2.1.310 program strings"
   },
-  "docs/extend/mod-api/types/ui.md#imageprops:9c581f61": {
+  "docs/extend/mod-api/types/ui/element-props.md#imageprops:9c581f61": {
     "kind": "schema",
     "probes": [],
     "note": "ImageProps doc in schemas/claude-code.d.ts"
   },
-  "docs/extend/mod-api/types/ui.md#uiblitresult:dcf78d34": {
+  "docs/extend/mod-api/types/ui/select-text-focus.md#uiblitresult:dcf78d34": {
     "kind": "schema",
     "probes": [],
     "note": "UiBlitResult.fix in schemas/claude-code.d.ts"
@@ -1180,17 +1185,17 @@
     "probes": [],
     "note": "runner flags --hold-idle-file and --max-hold-min, help text read in the program (2.1.311 chunk-n23je8vg.js:11266)"
   },
-  "docs/configure/models-and-providers.md#aliases:283669f9": {
+  "docs/configure/models-and-providers/model-catalog.md#aliases:283669f9": {
     "kind": "manual",
     "probes": [],
     "note": "program behaviour (also in the release notes); [1m] label read in the program (2.1.311 chunk-r1ht672j.js:23699)"
   },
-  "docs/configure/models-and-providers.md#catalog:47681d08": {
+  "docs/configure/models-and-providers/model-catalog.md#catalog:47681d08": {
     "kind": "manual",
     "probes": [],
     "note": "program behaviour (also in the release notes); the signed catalog needs a cloud provider login"
   },
-  "docs/configure/models-and-providers.md#effort:856cbc71": {
+  "docs/configure/models-and-providers/effort-thinking-and-fallback.md#effort:856cbc71": {
     "kind": "manual",
     "probes": [],
     "note": "program behaviour (also in the release notes); ultrathink needs the interactive terminal and the Anthropic API"
@@ -1260,22 +1265,27 @@
     "probes": [],
     "note": "fields new in 2.1.311 in schemas/claude-code-stream-json.json"
   },
-  "docs/extend/mod-api/hooks.md#arguments-of-a-hook:cce16fea": {
+  "docs/extend/headless/stream-json.md#capabilities-of-the-init-line:1caf39c2": {
+    "kind": "schema",
+    "probes": [],
+    "note": "ask_user_question_unanswered_v1 in schemas/claude-code-stream-json.json"
+  },
+  "docs/extend/mod-api/events/hooks.md#arguments-of-a-hook:cce16fea": {
     "kind": "schema",
     "probes": [],
     "note": "next.to TargetTier in schemas/claude-code.d.ts"
   },
-  "docs/extend/mod-api/turn-prompt.md#members:9d1a8578": {
+  "docs/extend/mod-api/calls/turn-prompt.md#members:9d1a8578": {
     "kind": "schema",
     "probes": [],
     "note": "$.prompt.paint in schemas/claude-code.d.ts"
   },
-  "docs/extend/mod-api/turn-prompt.md#engine-events:8e3bd065": {
+  "docs/extend/mod-api/calls/turn-prompt.md#engine-events:8e3bd065": {
     "kind": "schema",
     "probes": [],
     "note": "prompt.paint event in schemas/claude-code.d.ts"
   },
-  "docs/extend/mod-api/turn-prompt.md#events-raised-by-these-calls:7b66be14": {
+  "docs/extend/mod-api/calls/turn-prompt.md#events-raised-by-these-calls:7b66be14": {
     "kind": "schema",
     "probes": [],
     "note": "prompt.paint event in schemas/claude-code.d.ts"
@@ -1285,17 +1295,17 @@
     "probes": [],
     "note": "TargetTier in schemas/claude-code.d.ts"
   },
-  "docs/extend/mod-api/types/turn-prompt.md#promptpaintargs:1efe1de5": {
+  "docs/extend/mod-api/types/turn-prompt/edit-fill-submit.md#promptpaintargs:1efe1de5": {
     "kind": "schema",
     "probes": [],
     "note": "PromptPaintArgs in schemas/claude-code.d.ts"
   },
-  "docs/extend/mod-api/types/turn-prompt.md#promptpainted:1efe1de5": {
+  "docs/extend/mod-api/types/turn-prompt/edit-fill-submit.md#promptpainted:1efe1de5": {
     "kind": "schema",
     "probes": [],
     "note": "PromptPainted in schemas/claude-code.d.ts"
   },
-  "docs/extend/mod-api/types/ui.md#paneopenargs:8dcf3aaa": {
+  "docs/extend/mod-api/types/ui/input-pane-render.md#paneopenargs:8dcf3aaa": {
     "kind": "schema",
     "probes": [],
     "note": "PaneOpenArgs backgroundColor in schemas/claude-code.d.ts"
@@ -1345,37 +1355,37 @@
     "probes": [],
     "note": "cc-inspect code run of /claude-api PROBE-ARG on 2.1.308 to 2.1.311"
   },
-  "docs/configure/keybindings.md#click-to-send-a-queued-message:b1f3f04e": {
+  "docs/configure/keybindings/unbound-and-reserved.md#click-to-send-a-queued-message:b1f3f04e": {
     "kind": "manual",
     "probes": [],
     "note": "chat:sendNowHintPress and the mouse-mode test read in the cleaned 2.1.312 code (chunk-7ss0ryz6.js:8976, :9363-9396)"
   },
-  "docs/configure/keybindings.md#click-to-send-a-queued-message:872ca5a8": {
+  "docs/configure/keybindings/unbound-and-reserved.md#click-to-send-a-queued-message:872ca5a8": {
     "kind": "manual",
     "probes": [],
     "note": "hint text and its no-key branch read in the cleaned 2.1.312 code (chunk-7ss0ryz6.js:9370-9394)"
   },
-  "docs/configure/keybindings.md#vim-mode-operators-with-gj-and-gk:ac3ccbab": {
+  "docs/configure/keybindings/unbound-and-reserved.md#vim-mode-operators-with-gj-and-gk:ac3ccbab": {
     "kind": "manual",
     "probes": [],
     "note": "the gj/gk count clamp read in the cleaned 2.1.312 code (chunk-hz2c9q6k.js:316-321, :784)"
   },
-  "docs/configure/models-and-providers.md#effort:2891b1b0": {
+  "docs/configure/models-and-providers/effort-thinking-and-fallback.md#effort:2891b1b0": {
     "kind": "manual",
     "probes": [],
     "note": "the cache warning text read in the cleaned 2.1.312 code (chunk-7ss0ryz6.js:58010, :58046-58051)"
   },
-  "docs/configure/models-and-providers.md#effort:7469c572": {
+  "docs/configure/models-and-providers/effort-thinking-and-fallback.md#effort:7469c572": {
     "kind": "manual",
     "probes": [],
     "note": "the prompt effort note and its flag read in the cleaned 2.1.312 code (chunk-7ss0ryz6.js:11353, :60684, :60697)"
   },
-  "docs/configure/models-and-providers.md#effort:8f3b2c97": {
+  "docs/configure/models-and-providers/effort-thinking-and-fallback.md#effort:8f3b2c97": {
     "kind": "manual",
     "probes": [],
     "note": "the spinner reads the sent level first in the cleaned 2.1.312 code (chunk-zgj89n5s.js:1465, chunk-8h49xv0g.js:1512-1516)"
   },
-  "docs/configure/models-and-providers.md#effort:5e598493": {
+  "docs/configure/models-and-providers/effort-thinking-and-fallback.md#effort:5e598493": {
     "kind": "manual",
     "probes": [],
     "note": "the four conditions of the prompt-note flag read in the cleaned 2.1.312 code (chunk-7ss0ryz6.js:60684), against 2.1.311 (chunk-xnjmsx7r.js:57759, :57763, :59815, :60285)"

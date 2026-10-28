@@ -144,7 +144,7 @@
     "anchor": "errors"
   },
   "error:$.${…} i*": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:$.${…}: *": {
@@ -156,7 +156,7 @@
     "anchor": "errors"
   },
   "error:$.classic.PreToolUse is no call on the engine's $: the engine raises it inside tool.call, so a test calls $.tool.call": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:$.session.append: *": {
@@ -172,15 +172,15 @@
     "anchor": "errors"
   },
   "error:$.ui.${…}: *": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:$.ui.mount: *": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…} ${…} could not be resolved (${…}) — refusing to write there": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…} ${…} has ${…} components; at most ${…} are allowed. Send one key, with its modifiers, per action.": {
@@ -192,7 +192,7 @@
     "anchor": "errors"
   },
   "error:${…} ${…} resolves to ${…}, outside ${…} — refusing to write there (is it a symlink?)": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…} ${…}; not sent": {
@@ -572,23 +572,23 @@
     "anchor": "errors"
   },
   "error:${…}: \"${…}\" must be a real directory inside the case, not a symbolic link": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: \"${…}\" under a plugin or eval directory is not a valid UTF-8 name (or imitates one that is not) — rename or remove it": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: \"${…}\" under the eval directory is a symbolic link to a directory — case definitions must be plain files and directories": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: \"${…}\" under the eval directory is a symbolic link whose target cannot be resolved — remove it or point it at an existing file": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: \"${…}\" under the eval directory links to a file with ${…} names — case definitions must not be reachable by another name": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: $.${…} must be an object of methods, not ${…}": {
@@ -800,15 +800,15 @@
     "anchor": "errors"
   },
   "error:${…}: ${…} is a network-reaching path (UNC / automount) — refusing it": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: ${…} is an automounter path (macOS /Network, or the bare /net root) — refusing it (a lookup there is a network request)": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: ${…} is an eval-directory link that points outside the plugin — remove it": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: ${…} is not a PEM ${…}": {
@@ -816,15 +816,15 @@
     "anchor": "errors"
   },
   "error:${…}: ${…} leads to an automounter map directory (/net, /net/<host>; macOS /Network, /home) — refusing it (naming anything in it asks the automounter or a host)": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: ${…} passes through a component that cannot be examined (unreadable, a link or junction whose target does not exist, or a symlink chain too long to follow) — refusing it (it could not be vetted)": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: ${…} passes through a symlink to a network-reaching path (or a dotted one that cannot be vetted) — refusing it": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: ${…} — send only this Artifact's own files": {
@@ -928,35 +928,35 @@
     "anchor": "errors"
   },
   "error:${…}: `abort_when:` needs `type: agent`; a fixed responder guards its input with `expect:`": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: `error:` applies to fixed responders only": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: `tools:` belongs in ${…} (a <tool>.md answers the tool it is named after)": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: a baseline grader's baseline_file must be a relative path inside the suite or the plugin under test": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: a baseline grader's baseline_file must name a regular file": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: a baseline grader's reference file is hard-linked (has another name) — keep a single copy": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: a file in the plugin has more than one name (a hard link) — case definitions must not be reachable by another name; replace it with a copy": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: a git directory of the plugin registers more linked worktrees than can be screened": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: a hop member is not one of these handlers": {
@@ -964,15 +964,15 @@
     "anchor": "errors"
   },
   "error:${…}: a plugin listed by the case lies inside an eval suite or another fenced directory — move it out of the suite": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: a plugin, case or add_dirs path could not be resolved (${…}) — make it readable or remove it": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: a plugins entry names the case directory, its graders or mocks, or a directory covering them — a plugin shipped with a case must sit in its own subdirectory": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: a tool server doesn't run a marketplace's headersHelper on its own: the command was not run and the marketplace was not fetched.": {
@@ -980,35 +980,35 @@
     "anchor": "errors"
   },
   "error:${…}: a version-control directory or one of its pointers could not be resolved (${…}) — make it readable or remove it": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: a version-control store holds too many top-level entries to examine — refusing to run": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: an add_dir may only name fixture directories inside this case — not the case directory itself, its graders, a sibling case, an eval directory, or the plugin root": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: an add_dir must name a directory, not a file": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: an add_dirs entry points inside a directory that holds case definitions or version-control data of a plugin under test — point it at the fixtures themselves": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: an add_dirs entry points into version-control metadata — point it at the fixtures themselves": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: an agent responder needs a description of the server it plays as its body${…}": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: cannot list \"${…}\" under a plugin or eval directory — make it readable or remove it": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: cannot read ${…} (${…})": {
@@ -1016,7 +1016,7 @@
     "anchor": "errors"
   },
   "error:${…}: cannot tell what \"${…}\" under the eval directory is — make it readable or remove it": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: collection must be an odd-depth path of 1-15 segments and doc_id one segment, within the path byte cap, after permission or hook rewrites": {
@@ -1024,7 +1024,7 @@
     "anchor": "errors"
   },
   "error:${…}: disappeared while loading": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: engine.create must return $ ({ ...await next(e), <noun>: { <event>() {} } }), not ${…}": {
@@ -1036,11 +1036,11 @@
     "anchor": "errors"
   },
   "error:${…}: expected a saved tools/list response ({\"tools\": [{\"name\", \"description\", \"inputSchema\"}]})": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: file identity cannot be verified on this filesystem; use a local volume": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: frontmatter must be a YAML object": {
@@ -1128,7 +1128,7 @@
     "anchor": "errors"
   },
   "error:${…}: not valid JSON (${…})": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: on(\"${…}\") ${…}": {
@@ -1152,7 +1152,7 @@
     "anchor": "errors"
   },
   "error:${…}: path \"${…}\" escapes the ${…} (`..` or an absolute path) — it must name something inside it": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: read_file saves only to local directories — out_dir names a network path or cannot be resolved": {
@@ -1220,7 +1220,7 @@
     "anchor": "errors"
   },
   "error:${…}: still holds the scaffolded placeholder — write the tool's canned answer as the body": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: still running — couldn't confirm restart, retry in a moment": {
@@ -1240,19 +1240,19 @@
     "anchor": "errors"
   },
   "error:${…}: the case directory has more than one entry named \"${…}\" up to letter case — keep exactly one": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: the eval directory holds more than ${…} entries — move large fixtures out of it": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: the repository layout keeps revealing further working trees — refusing to run": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: too many directories to examine for eval manifests — refusing to run": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:${…}: unknown frontmatter key \"${…}\" (expected one of: ${…})": {
@@ -3100,15 +3100,15 @@
     "anchor": "errors"
   },
   "error:TODO: gradeCase": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:TODO: loadCases": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:TODO: runCase": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:Takes `servers`: http or sse entries with an https URL, each under a name that starts with org-connector-, has only letters, digits, . _ and -, has no two of . and _ in a row, ends in a letter or a di…": {
@@ -3848,7 +3848,7 @@
     "anchor": "errors"
   },
   "error:advance(${…}): ${…} timer ticks fired and more were due; advance in smaller steps, or check for an `every` the module re-arms on each tick": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:after must be the next value from a previous list_assets result": {
@@ -4024,7 +4024,7 @@
     "anchor": "errors"
   },
   "error:claude p*": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:claude plugin e*": {
@@ -4132,7 +4132,7 @@
     "anchor": "errors"
   },
   "error:could not w*": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:couldn't check whether ${…} was created from an Artifact type (*": {
@@ -4272,7 +4272,7 @@
     "anchor": "errors"
   },
   "error:eval mock stand-in: *": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:expected a*": {
@@ -4688,7 +4688,7 @@
     "anchor": "errors"
   },
   "error:missing s*": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:mocks is not a directory": {
@@ -5068,7 +5068,7 @@
     "anchor": "errors"
   },
   "error:refusing to $*": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:refusing to *": {
@@ -5268,11 +5268,11 @@
     "anchor": "errors"
   },
   "error:spec file *": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:spec path is not a regular file — refusing to read it": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:spread not allowed in meta": {
@@ -5336,7 +5336,7 @@
     "anchor": "errors"
   },
   "error:test(name, { plugins }): *": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:text contains invisible or control characters, or a run of exotic blanks (non-breaking/ideographic spaces, braille blanks), that consent surfaces cannot display faithfully — note this includes the joi…": {
@@ -5440,7 +5440,7 @@
     "anchor": "errors"
   },
   "error:the kit'*": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:the measurement returned *": {
@@ -5772,7 +5772,7 @@
     "anchor": "errors"
   },
   "error:writeRunMocks: agent responders need the agent service": {
-    "route": "/extend/mod-api/testing",
+    "route": "/extend/mod-api/calls/testing",
     "anchor": "errors"
   },
   "error:write_files*": {
@@ -6576,639 +6576,639 @@
     "anchor": "subcommands"
   },
   "keybinding:abovePrompt:focus": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "chat"
   },
   "keybinding:abovePrompt:highlightNext": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "abovepromptselect"
   },
   "keybinding:abovePrompt:highlightPrevious": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "abovepromptselect"
   },
   "keybinding:abovePrompt:leave": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "aboveprompt"
   },
   "keybinding:abovePrompt:next": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "aboveprompt"
   },
   "keybinding:abovePrompt:press": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "aboveprompt"
   },
   "keybinding:abovePrompt:previous": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "aboveprompt"
   },
   "keybinding:abovePrompt:toggle": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "chat"
   },
   "keybinding:agents:find": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "agents"
   },
   "keybinding:agents:nextGroup": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "agents"
   },
   "keybinding:agents:previousGroup": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "agents"
   },
   "keybinding:agents:rename": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "agents"
   },
   "keybinding:agents:switchView": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "agents"
   },
   "keybinding:agents:togglePin": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "agents"
   },
   "keybinding:app:cycleDiffBase": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "diffpanel"
   },
   "keybinding:app:diffFileListDown": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "global"
   },
   "keybinding:app:diffFileListUp": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "global"
   },
   "keybinding:app:exit": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "global"
   },
   "keybinding:app:interrupt": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "global"
   },
   "keybinding:app:openArtifact": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "global"
   },
   "keybinding:app:toggleBrief": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "global"
   },
   "keybinding:app:toggleTodos": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "global"
   },
   "keybinding:app:toggleTranscript": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "global"
   },
   "keybinding:attachments:exit": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "attachments"
   },
   "keybinding:attachments:next": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "attachments"
   },
   "keybinding:attachments:previous": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "attachments"
   },
   "keybinding:attachments:remove": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "attachments"
   },
   "keybinding:autocomplete:accept": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "autocomplete"
   },
   "keybinding:autocomplete:dismiss": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "autocomplete"
   },
   "keybinding:autocomplete:next": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "autocomplete"
   },
   "keybinding:autocomplete:previous": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "autocomplete"
   },
   "keybinding:chat:cancel": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "chat"
   },
   "keybinding:chat:clearInput": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "chat"
   },
   "keybinding:chat:clearScreen": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "chat"
   },
   "keybinding:chat:cycleMode": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "chat"
   },
   "keybinding:chat:defaultToNewerModel": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "chat"
   },
   "keybinding:chat:externalEditor": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "chat"
   },
   "keybinding:chat:fastMode": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "chat"
   },
   "keybinding:chat:imagePaste": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "chat"
   },
   "keybinding:chat:killAgents": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "chat"
   },
   "keybinding:chat:modelPicker": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "chat"
   },
   "keybinding:chat:newline": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "chat"
   },
   "keybinding:chat:queueSubmit": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "chat"
   },
   "keybinding:chat:sendNow": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "chat"
   },
   "keybinding:chat:stash": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "chat"
   },
   "keybinding:chat:submit": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "chat"
   },
   "keybinding:chat:thinkingToggle": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "chat"
   },
   "keybinding:chat:undo": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "chat"
   },
   "keybinding:chat:workflowKeywordToggle": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "chat"
   },
   "keybinding:confirm:cycleMode": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "confirmation"
   },
   "keybinding:confirm:next": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "confirmation"
   },
   "keybinding:confirm:nextField": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "confirmation"
   },
   "keybinding:confirm:no": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "confirmation"
   },
   "keybinding:confirm:previous": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "confirmation"
   },
   "keybinding:confirm:toggle": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "confirmation"
   },
   "keybinding:confirm:yes": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "confirmation"
   },
   "keybinding:diff:dismiss": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "diffdialog"
   },
   "keybinding:diff:nextFile": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "diffdialog"
   },
   "keybinding:diff:nextSource": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "diffdialog"
   },
   "keybinding:diff:previousFile": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "diffdialog"
   },
   "keybinding:diff:previousSource": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "diffdialog"
   },
   "keybinding:effortSlider:decreaseEffort": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "effortslider"
   },
   "keybinding:effortSlider:increaseEffort": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "effortslider"
   },
   "keybinding:effortSlider:thisSessionOnly": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "effortslider"
   },
   "keybinding:effortSlider:toggleUltracode": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "effortslider"
   },
   "keybinding:feedbackSurvey:bad": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "feedbacksurvey"
   },
   "keybinding:feedbackSurvey:fine": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "feedbacksurvey"
   },
   "keybinding:feedbackSurvey:good": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "feedbacksurvey"
   },
   "keybinding:footer:clearSelection": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "footer"
   },
   "keybinding:footer:close": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "footer"
   },
   "keybinding:footer:down": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "footer"
   },
   "keybinding:footer:next": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "footer"
   },
   "keybinding:footer:openSelected": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "footer"
   },
   "keybinding:footer:previous": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "footer"
   },
   "keybinding:footer:up": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "footer"
   },
   "keybinding:help:dismiss": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "help"
   },
   "keybinding:history:next": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "chat"
   },
   "keybinding:history:previous": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "chat"
   },
   "keybinding:history:search": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "global"
   },
   "keybinding:historySearch:accept": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "historysearch"
   },
   "keybinding:historySearch:cancel": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "historysearch"
   },
   "keybinding:historySearch:cycleScope": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "historysearch"
   },
   "keybinding:historySearch:execute": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "historysearch"
   },
   "keybinding:historySearch:next": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "historysearch"
   },
   "keybinding:modelPicker:decreaseEffort": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "modelpicker"
   },
   "keybinding:modelPicker:increaseEffort": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "modelpicker"
   },
   "keybinding:modelPicker:thisSessionOnly": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "modelpicker"
   },
   "keybinding:pane:bottom": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "aboveprompt"
   },
   "keybinding:pane:close": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "pane"
   },
   "keybinding:pane:grow": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "pane"
   },
   "keybinding:pane:pageDown": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "aboveprompt"
   },
   "keybinding:pane:pageUp": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "aboveprompt"
   },
   "keybinding:pane:scrollDown": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "aboveprompt"
   },
   "keybinding:pane:scrollUp": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "aboveprompt"
   },
   "keybinding:pane:shrink": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "pane"
   },
   "keybinding:pane:top": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "aboveprompt"
   },
   "keybinding:plugin:cycleMarketplace": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "plugin"
   },
   "keybinding:plugin:favorite": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "plugin"
   },
   "keybinding:plugin:install": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "plugin"
   },
   "keybinding:plugin:toggle": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "plugin"
   },
   "keybinding:scroll:bottom": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "transcript"
   },
   "keybinding:scroll:fullPageDown": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "transcript"
   },
   "keybinding:scroll:fullPageUp": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "transcript"
   },
   "keybinding:scroll:halfPageDown": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "transcript"
   },
   "keybinding:scroll:halfPageUp": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "transcript"
   },
   "keybinding:scroll:lineDown": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "transcript"
   },
   "keybinding:scroll:lineUp": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "transcript"
   },
   "keybinding:scroll:pageDown": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "diffdialog"
   },
   "keybinding:scroll:pageUp": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "diffdialog"
   },
   "keybinding:scroll:top": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "transcript"
   },
   "keybinding:select:accept": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "settings"
   },
   "keybinding:select:cancel": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "select"
   },
   "keybinding:select:first": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "settings"
   },
   "keybinding:select:last": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "settings"
   },
   "keybinding:select:next": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "settings"
   },
   "keybinding:select:pageDown": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "settings"
   },
   "keybinding:select:pageUp": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "settings"
   },
   "keybinding:select:previous": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "settings"
   },
   "keybinding:selection:copy": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "scroll"
   },
   "keybinding:selection:extendDown": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "scroll"
   },
   "keybinding:selection:extendLeft": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "scroll"
   },
   "keybinding:selection:extendLineEnd": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "scroll"
   },
   "keybinding:selection:extendLineStart": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "scroll"
   },
   "keybinding:selection:extendRight": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "scroll"
   },
   "keybinding:selection:extendUp": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/panels-and-dialogs",
     "anchor": "scroll"
   },
   "keybinding:settings:fixUsage": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "settings"
   },
   "keybinding:settings:periodDay": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "settings"
   },
   "keybinding:settings:periodWeek": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "settings"
   },
   "keybinding:settings:retry": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "settings"
   },
   "keybinding:settings:search": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "settings"
   },
   "keybinding:settings:sortByTokens": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "settings"
   },
   "keybinding:tabs:next": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "tabs"
   },
   "keybinding:tabs:previous": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "tabs"
   },
   "keybinding:task:background": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "task"
   },
   "keybinding:theme:editCustom": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "themepicker"
   },
   "keybinding:theme:toggleSyntaxHighlighting": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "themepicker"
   },
   "keybinding:transcript:exit": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "transcript"
   },
   "keybinding:transcript:toggleShowAll": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "transcript"
   },
   "keybinding:voice:pushToTalk": {
-    "route": "/configure/keybindings",
+    "route": "/configure/keybindings/default-keys",
     "anchor": "chat"
   },
   "model:claude-3-5-haiku-20241022": {
-    "route": "/configure/models-and-providers",
+    "route": "/configure/models-and-providers/providers",
     "anchor": "provider-names"
   },
   "model:claude-3-5-haiku@20241022": {
-    "route": "/configure/models-and-providers",
+    "route": "/configure/models-and-providers/providers",
     "anchor": "provider-names"
   },
   "model:claude-3-5-sonnet-20241022": {
-    "route": "/configure/models-and-providers",
+    "route": "/configure/models-and-providers/providers",
     "anchor": "provider-names"
   },
   "model:claude-3-5-sonnet-v2@20241022": {
-    "route": "/configure/models-and-providers",
+    "route": "/configure/models-and-providers/providers",
     "anchor": "provider-names"
   },
   "model:claude-3-7-sonnet-20250219": {
-    "route": "/configure/models-and-providers",
+    "route": "/configure/models-and-providers/providers",
     "anchor": "provider-names"
   },
   "model:claude-3-7-sonnet@20250219": {
-    "route": "/configure/models-and-providers",
+    "route": "/configure/models-and-providers/providers",
     "anchor": "provider-names"
   },
   "model:claude-haiku-4-5-20251001": {
-    "route": "/configure/models-and-providers",
+    "route": "/configure/models-and-providers/providers",
     "anchor": "provider-names"
   },
   "model:claude-haiku-4-5@20251001": {
-    "route": "/configure/models-and-providers",
+    "route": "/configure/models-and-providers/providers",
     "anchor": "provider-names"
   },
   "model:claude-opus-4": {
-    "route": "/configure/models-and-providers",
+    "route": "/configure/models-and-providers/providers",
     "anchor": "provider-names"
   },
   "model:claude-opus-4-1-20250805": {
-    "route": "/configure/models-and-providers",
+    "route": "/configure/models-and-providers/providers",
     "anchor": "provider-names"
   },
   "model:claude-opus-4-1@20250805": {
-    "route": "/configure/models-and-providers",
+    "route": "/configure/models-and-providers/providers",
     "anchor": "provider-names"
   },
   "model:claude-opus-4-20250514": {
-    "route": "/configure/models-and-providers",
+    "route": "/configure/models-and-providers/providers",
     "anchor": "provider-names"
   },
   "model:claude-opus-4-5-20251101": {
-    "route": "/configure/models-and-providers",
+    "route": "/configure/models-and-providers/providers",
     "anchor": "provider-names"
   },
   "model:claude-opus-4-5@20251101": {
-    "route": "/configure/models-and-providers",
+    "route": "/configure/models-and-providers/providers",
     "anchor": "provider-names"
   },
   "model:claude-opus-4@20250514": {
-    "route": "/configure/models-and-providers",
+    "route": "/configure/models-and-providers/providers",
     "anchor": "provider-names"
   },
   "model:claude-sonnet-4": {
-    "route": "/configure/models-and-providers",
+    "route": "/configure/models-and-providers/providers",
     "anchor": "provider-names"
   },
   "model:claude-sonnet-4-20250514": {
-    "route": "/configure/models-and-providers",
+    "route": "/configure/models-and-providers/providers",
     "anchor": "provider-names"
   },
   "model:claude-sonnet-4-5-20250929": {
-    "route": "/configure/models-and-providers",
+    "route": "/configure/models-and-providers/providers",
     "anchor": "provider-names"
   },
   "model:claude-sonnet-4-5@20250929": {
-    "route": "/configure/models-and-providers",
+    "route": "/configure/models-and-providers/providers",
     "anchor": "provider-names"
   },
   "model:claude-sonnet-4@20250514": {
-    "route": "/configure/models-and-providers",
+    "route": "/configure/models-and-providers/providers",
     "anchor": "provider-names"
   },
   "slash-command:/artifact-capabilities": {

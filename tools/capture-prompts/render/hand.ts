@@ -55,5 +55,5 @@ export const handRows = (afterId?: string) =>
   );
 export const handLink = (h: HandPage, from: Place) =>
   pageLink(from, h.id, h.title);
-export const handGlance = (h: HandPage, from: Place) =>
+export const handIndexRow = (h: HandPage, from: Place) =>
   `| ${handLink(h, from)} | ${h.row?.change} | ${h.row?.toggle} | ${h.row?.where} | <${h.row?.status} /> |`;
