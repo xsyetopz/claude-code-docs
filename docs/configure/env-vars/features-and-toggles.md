@@ -8,7 +8,7 @@ These variables flip one feature each.
 Some turn off a feature that is on by default. Others force on a feature that a server flag controls.
 A row with the Gated badge only works when a feature flag or server gate allows it, unless the variable overrides the gate.
 
-This page lists 68 variables. Most take `1` to turn on and `0` to turn off.
+This page lists 67 variables. Most take `1` to turn on and `0` to turn off.
 
 ## Example
 
@@ -79,7 +79,6 @@ The table is sorted by name. The Gated badge tells you a flag or gate is involve
 | `CLAUDE_CODE_SUPPRESS_SESSION_ATTRIBUTION` | <Undocumented /> | Leaves the session URL out of attribution text such as commit and PR footers. | On or off. The `attribution.sessionUrl` setting set to false has the same effect | All sessions |
 | `CLAUDE_CODE_TODO_REMINDER_MODE` | <Undocumented /> | Selects the todo reminder mode. Env wins over the feature flag. | One of a fixed set of values, `baseline` by default. Enum `baseline` or `off` | All sessions |
 | `CLAUDE_WORKFLOW_NAME_ONLY` | <Undocumented /> | When on, workflow discovery returns only the built-in workflow list and scans no files. | - | - |
-| `CLAUDE_WORKSHOP_PROGRESS` | <Undocumented /> | Turns the workshop authoring-progress hook off when set to a false value. | - | - |
 | `DISABLE_BRIEF_MODE_STOP_HOOK` | <Undocumented /> | Stops the brief-mode check at the end of a turn. That check adds a reminder when the turn used no brief tool. No visible effect in a print-mode probe ([Probes](../../reference/probes.md)). | On or off | - |
 | `DISABLE_BUG_COMMAND` | <Documented /> | Disables the bug report command. The message names this var. | On or off | - |
 | `DISABLE_DOCTOR_COMMAND` | <Documented /> | Hides the `/doctor` command and its `/checkup` alias. | On or off | - |
@@ -106,4 +105,4 @@ Turning telemetry off also stops flag fetching, which turns off the features tha
 - [Telemetry and Debug](telemetry-and-debug.md)
 - [Undocumented Items](../../reference/undocumented.md): every item that only the program shows.
 
-Source: the program (variable names found in the `2.1.311` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
+Source: the program (variable names found in the `2.1.312` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.

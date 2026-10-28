@@ -158,7 +158,7 @@ Mirror lines (`transcript_mirror`) follow each local transcript write. For the f
 
 ## Exact Fields
 
-The exact fields: `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-stream-json.json`, made from the program's own validators. It has a definition for each output and input message type.
+The exact fields: `https://xsyetopz.github.io/clawdipedia/schemas/claude-code-stream-json.json`, made from the program's own validators. It has a definition for each output and input message type.
 It lists every field of this release, so build on the fields it names and look each one up there before you rely on it.
 
 ## Related Pages

@@ -14,7 +14,7 @@ Pick `auto` as the permission mode. `permissions.disableAutoMode: "disable"` tur
 
 ```json title="~/.claude/settings.json"
 {
-  "$schema": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-settings.json",
+  "$schema": "https://xsyetopz.github.io/clawdipedia/schemas/claude-code-settings.json",
   "autoMode": {
     "environment": [
       "$defaults",

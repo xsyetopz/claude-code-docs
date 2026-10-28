@@ -1,7 +1,8 @@
 import { writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { NOTES } from "../notes.ts";
-import { ctx, DOCS } from "./ctx.ts";
+import { ctx, groupDir, nextPos } from "./ctx.ts";
+import { pageLink, relink } from "./link.ts";
 import { fence, fmt, stripTrailing, toolDiff, udiff, yaml } from "./text.ts";
 export const variantPages = () => {
   for (const [id, c] of ctx.caps) {
@@ -13,7 +14,7 @@ export const variantPages = () => {
       "---",
       `title: ${yaml(v.title)}`,
       `description: ${yaml(v.summary.replace(/`/g, ""))}`,
-      `sidebar_position: ${ctx.pos++}`,
+      `sidebar_position: ${nextPos(v.group)}`,
       "---",
       "",
     );
@@ -40,13 +41,18 @@ export const variantPages = () => {
     );
     const notes = NOTES[id];
     if (notes?.length) {
-      lines.push("## What to Notice", "", ...notes.map((x) => `- ${x}`), "");
+      lines.push(
+        "## What to Notice",
+        "",
+        ...notes.map((x) => `- ${relink(v.group, x)}`),
+        "",
+      );
     }
     if (dup) {
       lines.push(
         "## Full Text",
         "",
-        `This variant sends exactly the same text and tools as [${ctx.caps.get(dup)?.v.title ?? dup}](./${dup}.md). The page for that variant has the full text.`,
+        `This variant sends exactly the same text and tools as ${pageLink(v.group, dup, ctx.caps.get(dup)?.v.title ?? dup)}. The page for that variant has the full text.`,
         "",
       );
     } else {
@@ -64,7 +70,7 @@ export const variantPages = () => {
       lines.push(
         "## Compared to the Default",
         "",
-        `The diff below starts from [${base.v.title}](./${base.v.id}.md). Lines that start with \`-\` are only in the baseline. Lines that start with \`+\` are only here.`,
+        `The diff below starts from ${pageLink(v.group, base.v.id, base.v.title)}. Lines that start with \`-\` are only in the baseline. Lines that start with \`+\` are only here.`,
         "",
       );
       if (!d) lines.push("There are no differences in the text.", "");
@@ -85,7 +91,7 @@ export const variantPages = () => {
       const td = toolDiff(base.tools, c.tools);
       lines.push(
         td
-          ? `Tool list: ${td} See [Tools per Variant](./tools-per-variant.md).`
+          ? `Tool list: ${td} See ${pageLink(v.group, "tools-per-variant", "Tools per Variant")}.`
           : "The tool list is the same as the baseline.",
         "",
       );
@@ -97,6 +103,9 @@ export const variantPages = () => {
         "",
       );
     }
-    writeFileSync(join(DOCS, `${id}.md`), stripTrailing(lines.join("\n")));
+    writeFileSync(
+      join(groupDir(v.group), `${id}.md`),
+      stripTrailing(lines.join("\n")),
+    );
   }
 };

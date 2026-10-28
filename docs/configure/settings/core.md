@@ -17,7 +17,7 @@ Where to Set It tells you which files may set the key. See [Settings Files and S
 
 | Key | Status | Type | Default | What It Does | Where to Set It |
 | --- | --- | --- | --- | --- | --- |
-| `$schema` | <Documented /> | string | - | Point your editor at the published JSON schema for autocomplete and checks. Use `https://github.com/xsyetopz/claude-code-docs/blob/main/schemas/claude-code-settings.json`. | Settings files |
+| `$schema` | <Documented /> | string | - | Point your editor at the published JSON schema for autocomplete and checks. Use `https://github.com/xsyetopz/clawdipedia/blob/main/schemas/claude-code-settings.json`. | Settings files |
 | `attribution` | <Documented /> | boolean or object | Standard attribution | Customize the attribution Claude Code adds to commits and pull requests. `false` hides all attribution. | Any settings file |
 | `autoCompactEnabled` | <Documented /> | boolean | - | Turn automatic compaction off or on. | Any settings file |
 | `autoCompactWindow` | <Documented /> | number or `"auto"` | - | Set how full the context gets before Claude Code compacts. A number from `100000` to `1000000` tokens, or `"auto"` for the window tuned for the model. | Any settings file |
@@ -62,7 +62,7 @@ This file deletes transcripts after 7 days, keeps auto memory on, lets Claude se
 
 ```json title="~/.claude/settings.json"
 {
-  "$schema": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-settings.json",
+  "$schema": "https://xsyetopz.github.io/clawdipedia/schemas/claude-code-settings.json",
   "cleanupPeriodDays": 7,
   "autoMemoryEnabled": true,
   "bashOutputMaxChars": 50000,

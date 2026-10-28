@@ -9,6 +9,7 @@ import {
 export const HOOK_VARIANTS: Variant[] = [
   {
     id: "hook-prompt",
+    group: "hooks",
     title: "Prompt Hook Request",
     model: LEAN_MODEL,
     tool: bashTool,
@@ -29,6 +30,7 @@ export const HOOK_VARIANTS: Variant[] = [
   },
   {
     id: "hook-agent",
+    group: "hooks",
     title: "Agent Hook Request",
     model: LEAN_MODEL,
     tool: bashTool,

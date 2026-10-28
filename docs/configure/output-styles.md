@@ -42,7 +42,7 @@ Restart `claude` so it finds the new file. Then Claude answers as a terse review
 Each non-default style keeps the standard coding instructions and adds its own.
 Source: the program sets `keepCodingInstructions: true` and `source: "built-in"` for the four styles.
 Official page: [Output Styles](https://code.claude.com/docs/en/output-styles).
-The captured prompts are on these pages: [Proactive](../prompts/style-proactive.md), [Concise](../prompts/style-concise.md), [Explanatory](../prompts/style-explanatory.md), and [Learning](../prompts/style-learning.md).
+The captured prompts are on these pages: [Proactive](../prompts/output-styles/style-proactive.md), [Concise](../prompts/output-styles/style-concise.md), [Explanatory](../prompts/output-styles/style-explanatory.md), and [Learning](../prompts/output-styles/style-learning.md).
 
 | Item | Status | What it does | How it works | Where to set it |
 | --- | --- | --- | --- | --- |
@@ -87,7 +87,7 @@ All keys are optional. A misspelled key is ignored. Bad YAML loads the style und
 | `keep-coding-instructions` | <Documented /> | Keeps the built-in software engineering section | Default `false`. Works only on the full system prompt | Style file |
 | `force-for-plugin` | <Documented /> | Applies the style when the plugin is enabled | Overrides `outputStyle`. The first loaded plugin wins and a warning names the others. On a non-plugin style the key is ignored with a warning | Plugin styles |
 
-Captured prompts for custom styles: [Custom Style](../prompts/style-custom.md), [Custom Style on the Full Prompt](../prompts/style-custom-full.md), and [Custom Style with Keep Coding Instructions](../prompts/style-custom-keep.md).
+Captured prompts for custom styles: [Custom Style](../prompts/output-styles/style-custom.md), [Custom Style on the Full Prompt](../prompts/output-styles/style-custom-full.md), and [Custom Style with Keep Coding Instructions](../prompts/output-styles/style-custom-keep.md).
 
 ## How It Works
 
@@ -114,7 +114,7 @@ The captures linked above hold the full text of each built-in style prompt. We c
 
 ## Exact Fields
 
-The exact fields: the `output-style` definition in `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-frontmatter.json`, made from the program's frontmatter validators.
+The exact fields: the `output-style` definition in `https://xsyetopz.github.io/clawdipedia/schemas/claude-code-frontmatter.json`, made from the program's frontmatter validators.
 It lists every field of this release, so build on the fields it names and look each one up there before you rely on it.
 
 ## Related Pages

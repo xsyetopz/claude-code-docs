@@ -100,6 +100,21 @@ A Team or Enterprise plan gets other wording only when Claude Code runs with no 
 
 Since `2.1.311`, Pro and Max subscribers get the billing settings link in place of "ask your admin" ([release notes](https://github.com/anthropics/claude-code/releases/tag/v2.1.311)).
 
+## What the Usage Limits Are Called
+
+The program names each rate limit window in its usage limit messages (`chunk-3tr21yqt.js:1106`).
+
+| Window | Name in Messages |
+| --- | --- |
+| `five_hour` | "5-hour limit" |
+| `seven_day` | "weekly limit" |
+| `seven_day_opus` | "Opus limit" |
+| `seven_day_sonnet` | "Sonnet limit" |
+| `seven_day_overage_included` | "Fable limit" |
+| `overage` | "usage credit limit" |
+
+Since `2.1.312`, the program calls the five-hour window the "5-hour limit". Earlier it said "session limit" (`2.1.311`, `chunk-ntqtfy8b.js:1107`). The same change reaches the reset messages, such as "Resetting your 5-hour limit… this usually takes a few seconds" (`chunk-srq4mvaf.js:595`) and "Couldn't reset your 5-hour limit with this login · run /login, then try again" (`chunk-vwa2y0xv.js:2546`). Source: the [release notes](https://github.com/anthropics/claude-code/releases/tag/v2.1.312) and the program.
+
 ## What Others Can See
 
 - An SDK host gets the account from the control protocol: `email`, `organization`, `subscriptionType`, `tokenSource`, `apiKeySource`, and `apiProvider` (`schemas/claude-code-control-protocol.json`).

@@ -161,5 +161,5 @@ Each row is a family of messages. The backticked text is the start that every me
 - [Environment Variables](env-vars/index.md) for the memory variables.
 - [Output Styles](output-styles.md) for answer style, which is separate from project facts.
 - [The System Prompt](../how-it-works/system-prompt.md)
-- [Captured CLAUDE.md Prompt](../prompts/claude-md.md)
+- [Captured CLAUDE.md Prompt](../prompts/context-and-memory/claude-md.md)
 - [Hook Events](../extend/hooks/events.md) for the `InstructionsLoaded` event and [Subagent Frontmatter](../extend/subagents/frontmatter.md) for the subagent `memory` field.

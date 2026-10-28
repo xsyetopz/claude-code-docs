@@ -47,7 +47,7 @@ flowchart TD
 ### Step by Step
 
 1. **Explicit `deny` and `ask` rules** apply first, before workspace trust. Source: the official [Settings Reference](https://code.claude.com/docs/en/settings-reference).
-2. **`PreToolUse` hooks** can allow, deny, or ask. A hook `allow` does not override a `deny` or `ask` rule. Source: the Mod API type file of the 2.1.311 program (`schemas/claude-code.d.ts`) and the program text `hook allows approve the command`.
+2. **`PreToolUse` hooks** can allow, deny, or ask. A hook `allow` does not override a `deny` or `ask` rule. Source: the Mod API type file of the 2.1.312 program (`schemas/claude-code.d.ts`) and the program text `hook allows approve the command`.
 3. **Allow sources** let the call run: `allow` rules, the rules of `acceptEdits`, and read-only command lists.
    Program texts: `Read-only command is allowed` and `Auto-allowed with sandbox (autoAllowBashIfSandboxed enabled)`.
 4. **The mode decides the rest.** `default` prompts. `dontAsk` denies. `auto` asks the classifier. `bypassPermissions` allows. The other modes follow the rules on [Permission Modes](../configure/permissions/modes.md).
@@ -89,4 +89,4 @@ See [The Agent Loop](agent-loop.md) for the stages around it and [Architecture](
 - [Permission Rules](../configure/permissions/rules.md)
 - [Sandbox](../configure/permissions/sandbox.md)
 - [Auto Mode](../configure/permissions/auto-mode.md)
-- [Captured Plan Mode Prompt](../prompts/mode-plan.md)
+- [Captured Plan Mode Prompt](../prompts/modes/mode-plan.md)

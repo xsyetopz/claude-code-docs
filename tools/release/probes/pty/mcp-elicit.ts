@@ -62,7 +62,9 @@ const handle = (m: Msg) => {
         params: {
           mode: "url",
           message: "PROBE-URL: sign in",
-          url: "https://example.com/auth",
+          // `.invalid` never resolves (RFC 2606 section 2), so accepting the dialog cannot reach a
+          // third-party host. IANA says not to rely on example.com for testing.
+          url: "https://probe.invalid/auth",
           elicitationId: "el-1",
         },
       });

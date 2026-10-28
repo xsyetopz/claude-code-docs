@@ -115,7 +115,7 @@ These names are in the program next to the writer. The meanings come from the wr
 | `pr-link` | `prNumber`, `prUrl`, `prRepository`, `timestamp` | Ties the session to a pull request. |
 | `bridge-session` | `bridgeSessionId`, `lastSequenceNum`, `sessionGroupingId`, owner ids | The Remote Control link. |
 | `content-replacement` | `replacements`, `agentId` | Records which large tool results were replaced by a short stand-in, so a resume uses the same stand-ins. |
-| `attribution-snapshot` | `messageId` | A snapshot of file-contribution data for commits. On load the program keeps only the last one and trims a large one. In `2.1.311` the program exports its writer function and no code calls it, so only older sessions hold these lines (the program). |
+| `attribution-snapshot` | `messageId` | A snapshot of file-contribution data for commits. On load the program keeps only the last one and trims a large one. In `2.1.312` the program exports its writer function and no code calls it, so only older sessions hold these lines (the program). |
 | `fork-context-ref` | `agentId`, `parentSessionId`, `parentLastUuid`, `contextLength` | A forked agent's pointer to its parent. The fork reads the parent's lines and does not copy them. |
 | `observer-ref` | `observerTaskId`, `observerAgentType`, `agentId`, `timestamp` | An observer agent's pointer. |
 | `progress` | `toolUseID`, `parentToolUseID`, `data` | Progress of a running tool, hook, skill, or agent. `data.type` is `hook_progress`, `tool_heartbeat`, `bash_progress`, `powershell_progress`, `agent_progress`, `agent_api_retry`, `skill_progress`, `search_results_received`, `query_update`, `workflow_log`, `workflow_phase`, `workflow_agent`, or `artifact_publish_retry`. |
@@ -127,7 +127,7 @@ These names are in the program next to the writer. The meanings come from the wr
 | `line-withheld` | `bytes` | Not a stored type. A line that could not be read or was too large is swapped for `{"type":"line-withheld","bytes":N}` when a transcript is uploaded. |
 | `artifact-autoreact-ledger` | `artifacts`, `accountUuid`, `v` | Bookkeeping for automatic replies to artifact comments. |
 | `relocated` | `relocatedCwd` | The working folder was moved. |
-| `summary` | `leafUuid`, `summary` | A summary line. The program reads these lines on load, and no code in `2.1.311` writes them, so only older sessions hold them. |
+| `summary` | `leafUuid`, `summary` | A summary line. The program reads these lines on load, and no code in `2.1.312` writes them, so only older sessions hold them. |
 | `continued-in` | `continuedInSessionId` | Points to the session that continued this one. |
 | `history-suppression`, `artifact-comment-monitor` | | Also in the program's table. No further meaning was read. |
 
@@ -187,7 +187,7 @@ Content block types seen: `text`, `thinking`, `tool_use` (in `assistant` lines),
 | `requestId` | The request ID from the API. |
 | `requestRef` | A reference to the matching `api-request` line. |
 | `requestedModel` | The model Claude Code asked for. The `message.model` field shows the model that answered. |
-| `effort`, `perTurnEffort` | The effort level of the call. |
+| `effort`, `perTurnEffort` | The effort level of the call. Since `2.1.312`, `effort` is the level in force: if the conversation already holds an effort change that the model applied, the request uses that level, not a newly picked one. The program reads `effort` from `output_config.effort` of the request it built (`chunk-r5cyd28m.js` lines 135670 and 136924). In `2.1.311` it was built from the new pick (`chunk-2ht8z368.js` line 134537). |
 | `advisorModel` | The advisor model, if the advisor tool was on. |
 | `apiBlockIndex` | The index of this block in the API reply. One reply can produce several lines. |
 | `thinkingDisplay`, `thinkingDurationMs` | How the thinking text was shown, and how long it took. |
@@ -260,7 +260,7 @@ Set `cleanupPeriodDays` low, or `CLAUDE_CODE_SKIP_PROMPT_HISTORY`, if that matte
 
 ## Exact Fields
 
-The exact fields: `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-transcript.json`, with one definition for each line `type`. The program builds this payload in code, not with a validator, so the schema is read from that code: a field marked `x-unverified` has a type the code does not show, and `x-observed` marks a field that a probe saw.
+The exact fields: `https://xsyetopz.github.io/clawdipedia/schemas/claude-code-transcript.json`, with one definition for each line `type`. The program builds this payload in code, not with a validator, so the schema is read from that code: a field marked `x-unverified` has a type the code does not show, and `x-observed` marks a field that a probe saw.
 It lists every field of this release, so build on the fields it names and look each one up there before you rely on it.
 
 ## Related Pages

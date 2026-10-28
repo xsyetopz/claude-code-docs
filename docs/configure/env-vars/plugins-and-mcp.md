@@ -14,7 +14,7 @@ This page lists 102 variables. `MCP_TIMEOUT` and `MCP_TOOL_TIMEOUT` are common. 
 
 ```json title="~/.claude/settings.json"
 {
-  "$schema": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-settings.json",
+  "$schema": "https://xsyetopz.github.io/clawdipedia/schemas/claude-code-settings.json",
   "env": {
     "MCP_TIMEOUT": "30000",
     "MCP_TOOL_TIMEOUT": "120000"
@@ -52,6 +52,7 @@ The table is sorted by name. See [Environment Variables](index.md#how-to-read-th
 | `CLAUDE_CODE_ENABLE_REFRESH_MCP_TOOLS` | <Undocumented /> | Adds the `RefreshMcpTools` tool, which re-queries connected MCP servers for their tools. | On or off, off by default. Read when the tool list is built | All sessions |
 | `CLAUDE_CODE_HIDE_REPLY_SERVER_NAME` | <Undocumented /> | Tells the model not to name the app's own reply tool server or its failure, and not to ask the user to reconnect it. | On or off. Counts only when the MCP server is the built-in app server. Changes the status text sent to the model | Desktop or host apps with a built-in reply server |
 | `CLAUDE_CODE_HOOKS_SAME_THREAD` | <Undocumented /> | Runs plugin hooks modules on the main thread instead of a worker thread. | On or off. Unset uses a `worker`. The test harness for hooks modules also sets it | All sessions, plugin hooks modules |
+| `CLAUDE_CODE_HOST_GUARDS_ARTIFACTS_MCP` | <Undocumented /> | Lets Claude Code add its Artifacts MCP entry in a desktop host session. Without it, the program skips that entry with the reason `desktop_host`. Added in `2.1.312`. | On or off, off by default. A true value is the only one that lifts the skip. Other checks still apply | Desktop host sessions |
 | `CLAUDE_CODE_HOST_SKILL_CATALOG` | <Undocumented /> | Gives the host skill catalog as JSON with a `skills` list of 1 to 64 folder names. A bad value is ignored with a warning. | Text. Read only with `CLAUDE_CODE_REMOTE_SESSION_ID` and then removed from the env | Remote sessions with a host |
 | `CLAUDE_CODE_LANTERN_PRISM` | <Undocumented /> <Gated note="Works only behind a feature flag or server gate" /> | Turns on a feature flag path by env. Probe: Adds the `skill-doctor` skill to the `init` event. See Probes. | On or off. The name sits next to the `claude plugin eval` text | All sessions |
 | `CLAUDE_CODE_MARKETPLACE_NAME` | <Undocumented /> | Claude Code sets it in the environment of a marketplace `headersHelper` command. It holds the name of the marketplace. | Text. Set by Claude Code for the helper, only when the name is known | Marketplace headers helper only |
@@ -62,7 +63,6 @@ The table is sorted by name. See [Environment Variables](index.md#how-to-read-th
 | `CLAUDE_CODE_MCP_APPS_HOST` | <Undocumented /> | Declares MCP Apps support to MCP servers by adding the `io.modelcontextprotocol/ui` extension and the `text/html` MIME type with the `mcp-app` profile. | On or off. Also on the list of vars that force a copy of the env | MCP client, host apps |
 | `CLAUDE_CODE_MCP_AUTO_BACKGROUND_MS` | <Documented /> <Differs note="The official docs and the program disagree. The row says how." /> <Gated note="Works only behind a feature flag or server gate" /> | Sets the time before a running MCP tool call moves to the background. Docs omit the gates below. | A number of milliseconds. Whole number, `0` turns it off, capped at a max. Unset follows a feature flag. Default `120000`. Since `2.1.212` | All sessions, MCP tool calls |
 | `CLAUDE_CODE_MCP_CONNECTOR_PREWAIT_MS` | <Undocumented /> | Sets how long the first turn waits for claude.ai connectors, capped at a built-in max. | A number of milliseconds. Whole number min `1`. Read only for sessions with an SDK URL that are not under the `CLAUDE_CODE_ENVIRONMENT_KIND` is `bridge` check. Capped at `2147483647` | Remote SDK-URL sessions |
-| `CLAUDE_CODE_MCP_HANDED_LISTINGS` | <Undocumented /> | Set to `0` to stop Claude Code from using a tool list that the host hands over for one dynamic HTTP MCP server. Added in `2.1.311`. | Only the text `0` turns it off. A handed list that is invalid, or older than 600 seconds, is ignored | MCP servers that a host hands over |
 | `CLAUDE_CODE_MCP_MEMORY_CGROUP` | <Undocumented /> <Gated note="Works only behind a feature flag or server gate" /> | Turns off the memory cgroup limit for MCP server processes when set to a false value or to `none`. | Text. Otherwise a feature flag set to `false` also turns it off. Linked to the Linux tool memory cap. Sets the memory cap class of MCP processes | Linux |
 | `CLAUDE_CODE_MCP_PREWAIT_SERVERS` | <Undocumented /> | Names MCP servers to wait for at start-up. Servers with no `--mcp-config` row are listed and not waited for. | Text. Read only for sessions with an SDK URL. Works with `CLAUDE_CODE_MCP_PREWAIT_SERVERS_MS` | Remote SDK-URL sessions |
 | `CLAUDE_CODE_MCP_PREWAIT_SERVERS_MS` | <Undocumented /> | Sets how long to wait for the servers in `CLAUDE_CODE_MCP_PREWAIT_SERVERS`. | A number of milliseconds. Whole number min `0`, digits only. Read only for sessions with an SDK URL | Remote SDK-URL sessions |
@@ -146,4 +146,4 @@ Some variables are passed to MCP server and hook processes. Claude Code can stri
 - [Hooks](../../extend/hooks/index.md)
 - [Undocumented Items](../../reference/undocumented.md): every item that only the program shows.
 
-Source: the program (variable names found in the `2.1.311` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
+Source: the program (variable names found in the `2.1.312` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.

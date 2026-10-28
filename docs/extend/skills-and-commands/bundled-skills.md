@@ -36,7 +36,7 @@ claude -p "/debug the login test fails on CI"
 | `/batch` `<instruction>` | <Documented /> | Plans a large change and runs 5 to 30 worktree agents that open pull requests. | `disableModelInvocation`. |
 | `/run` | <Documented /> | Launches your app so you can see a change work. | Reads a recorded `run-<name>` skill if one exists. |
 | `/run-skill-generator` | <Documented /> | Records how to run the project as `.claude/skills/run-<name>/`. | `disableModelInvocation`. |
-| `/verify` | <Documented /> | Builds and runs the app to check a change. | Records its recipe in `.claude/skills/verify/SKILL.md`. |
+| `/verify` | <Documented /> | Tries your change and reports if it works. | Records its recipe in `.claude/skills/verify/SKILL.md`. Since `2.1.312`, `/help` and the `/` command menu show the short text "Try your change and report if it works" (`chunk-ktc61wsq.js:5169`). Claude gets the long description (`chunk-ktc61wsq.js:5163`). In `2.1.311` the menu showed the long description (`chunk-nxczhwwr.js:5393`). Source: the [release notes](https://github.com/anthropics/claude-code/releases/tag/v2.1.312) and the program. |
 | `/code-review` (alias `/review`), `/loop`, `/simplify`, `/workflow-authoring` | <Documented /> | Named in the docs. | `/workflow-authoring` needs dynamic workflows. |
 | `/plugin-authoring` | <Documented /> | Helps you write and share a mod or plugin. | Since `2.1.304`, sharing no longer stops at the secret scan on machines with managed settings or on Team and Enterprise plans. Source: the [release notes](https://github.com/anthropics/claude-code/releases/tag/v2.1.304). |
 | `/update-config` | <Documented /> | Edits `settings.json`: hooks, permissions, environment variables. | Registered as a bundled skill. |
@@ -46,15 +46,12 @@ claude -p "/debug the login test fails on CI"
 | `/keybindings-help` | <Undocumented /> | Helps you edit `~/.claude/keybindings.json`. | `userInvocable:false`, so only Claude runs it. Allowed tool: `Read`. |
 | `/claude-in-chrome` | <Gated note="Needs the Chrome extension, or a check passing." /> | Browser automation through the Chrome extension. | No allowed tools. |
 | `/design-sync` `[<project hint>]` | <Gated note="Policy allow_design_sync." /> | Pushes design-system components to claude.ai/design. | `disableModelInvocation`. |
-| `/artifact-components` | <Gated note="An isEnabled check decides." /> | Reusable components in an Artifact. | |
 | `/commit` | <Undocumented /> <Gated note="An isEnabled check decides." /> | Creates a git commit. It gathers git context first. | A `prompt` command. |
 | `/pr` | <Undocumented /> <Gated note="An isEnabled check decides." /> | Creates a GitHub pull request. It gathers branch context first. | A `prompt` command. |
 | `/commit-push-pr` | <Undocumented /> | Commits, pushes, and opens a pull request. | A `prompt` command. |
 | `/dataviz` | <Undocumented /> | Guides Claude when it makes a chart, graph, plot, dashboard, or other data visualization. | A `prompt` command. |
 | `/explain-usage` | <Undocumented /> <Gated note="An isEnabled check decides." /> | Explains where the tokens of this session went, with one simple chart. | A `prompt` command. |
 | `/memory-types` | <Undocumented /> <Gated note="An isEnabled check decides." /> | A full reference for the memory types: what each captures, when to save it, and how to write the body. | A `prompt` command. |
-| `/prototype` | <Undocumented /> <Gated note="An isEnabled check decides." /> | Turns an idea into a working proof of concept and publishes it as an Artifact. | A `prompt` command. It runs a short intake first. |
-| `/workshop` | <Undocumented /> <Gated note="An isEnabled check decides." /> | Builds a design with you, one decision at a time, on an evolving plan document published as an Artifact. | A `prompt` command. |
 | `/artifact-capabilities` | <Undocumented /> <Gated note="An isEnabled check decides." /> | A guide for Artifacts. The program gives no description. | A `prompt` command. |
 | `/artifact-design` | <Undocumented /> <Gated note="An isEnabled check decides." /> | Design guidance and fundamentals for Artifacts. | A `prompt` command. |
 | `/artifact-diagramming` | <Undocumented /> <Gated note="An isEnabled check decides." /> | Diagramming guidance for Artifacts: when a picture helps, and how to draw it with inline SVG in both themes. | A `prompt` command. |

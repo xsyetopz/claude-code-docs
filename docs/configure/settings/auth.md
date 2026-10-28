@@ -38,7 +38,7 @@ The first key runs `~/bin/get-key.sh` to get the API key. The second limits sign
 
 ```json title="~/.claude/settings.json"
 {
-  "$schema": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-settings.json",
+  "$schema": "https://xsyetopz.github.io/clawdipedia/schemas/claude-code-settings.json",
   "apiKeyHelper": "~/bin/get-key.sh",
   "forceLoginMethod": "console"
 }
@@ -54,6 +54,15 @@ Each row is a family of messages. The backticked text is the start that every me
 | Various | <Undocumented /> | **Grove settings.** A Grove setting or notice could not be read or changed. | The request failed or the answer has no `grove_enabled` value. |
 | Various | <Undocumented /> | **Billing and usage requests.** A billing, usage, or metrics request failed. | The text names the request (for example `prepaid/credits`, `payment_method`, `auto_reload_settings`, `metrics_enabled`) and says it is unavailable, with the reason. |
 | Various | <Undocumented /> | **Provider and model setup.** A provider or model setting is not valid. | A project or region value has characters that the request path does not allow, a Foundry resource name is not valid, a model catalog entry or alias is not valid, or a fallback model cannot be used. |
+
+## Claude Apps Gateway Server Key
+
+The key `oidc.user_id_claim` belongs to the server configuration of the Claude apps gateway, not to a Claude Code settings file.
+No file under `schemas/` holds it, so its status is unconfirmed. The program defines it as an optional non-empty string.
+
+| Key | Status | What it does | Notes |
+| --- | --- | --- | --- |
+| `oidc.user_id_claim` | <Undocumented /> | Names the `id_token` claim that identifies a person. Default `sub`. | New in `2.1.312`. The token must still carry a non-empty `sub`. If the named claim is not a non-empty string, sign-in fails with `USER_ID_CLAIM_MISSING` and the message says to check `oidc.scopes`. Source: `chunk-gs1pnh66.js` lines 57717, 61506, and 61545. |
 
 ## Related Pages
 

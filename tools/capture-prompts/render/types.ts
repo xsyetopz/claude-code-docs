@@ -1,4 +1,4 @@
-import type { Variant } from "../variants.ts";
+import type { PromptGroup, Variant } from "../variants.ts";
 
 export type ApiBlock = {
   type: string;
@@ -38,10 +38,12 @@ export type IndexRow = {
 export type HandPage = {
   id: string;
   title: string;
+  group: PromptGroup;
   row?: IndexRow | undefined;
 };
 export type FrontMatter = {
   title?: string;
+  group?: string;
   generated?: boolean;
   index?: IndexRow;
 };

@@ -45,6 +45,7 @@ A level that the model does not accept runs as the highest accepted level below 
 Source: [Model Configuration](https://code.claude.com/docs/en/model-config).
 
 The flags, variables, settings, request field, and default level for each model are in [Effort](../configure/models-and-providers.md#effort).
+The cache warning, the prompt note, and the spinner text for an effort change are in the same section.
 
 ## Thinking
 

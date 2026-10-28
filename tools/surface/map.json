@@ -1451,10 +1451,6 @@
     "route": "/extend/plugins/marketplace",
     "anchor": "errors"
   },
-  "error:A read earlier in this same turn recorded this artifact's newer live version but returned only ${…}, not its source, so nothing was published. ${…}": {
-    "route": "/reference/tools/gated-and-other",
-    "anchor": "errors"
-  },
   "error:A shell tool was granted, but ${…}, so the Windows side could not be put out of the sandboxed shell's reach — the run was refused.": {
     "route": "/extend/plugins/cli",
     "anchor": "errors"
@@ -3153,10 +3149,6 @@
   },
   "error:The \"${…}\" connector *": {
     "route": "/extend/mcp/runtime",
-    "anchor": "errors"
-  },
-  "error:The \"${…}\" d*": {
-    "route": "/reference/tools/gated-and-other",
     "anchor": "errors"
   },
   "error:The Cloud gateway session that named this collector ended — dropping this telemetry batch": {
@@ -5051,10 +5043,6 @@
     "route": "/reference/tools/gated-and-other",
     "anchor": "errors"
   },
-  "error:read_page_data*": {
-    "route": "/reference/tools/gated-and-other",
-    "anchor": "errors"
-  },
   "error:reading *": {
     "route": "/reference/tools/gated-and-other",
     "anchor": "errors"
@@ -5576,10 +5564,6 @@
     "anchor": "errors"
   },
   "error:this input was approved as a create from an Artifact type and no longer names one — nothing was published; retry so it is checked again": {
-    "route": "/reference/tools/gated-and-other",
-    "anchor": "errors"
-  },
-  "error:this is a public artifact from outside your organization; its page data is not readable here — read the page or its files instead": {
     "route": "/reference/tools/gated-and-other",
     "anchor": "errors"
   },
@@ -7231,10 +7215,6 @@
     "route": "/extend/skills-and-commands/bundled-skills",
     "anchor": "skills"
   },
-  "slash-command:/artifact-components": {
-    "route": "/extend/skills-and-commands/bundled-skills",
-    "anchor": "skills"
-  },
   "slash-command:/artifact-design": {
     "route": "/extend/skills-and-commands/bundled-skills",
     "anchor": "skills"
@@ -7319,10 +7299,6 @@
     "route": "/extend/skills-and-commands/bundled-skills",
     "anchor": "skills"
   },
-  "slash-command:/prototype": {
-    "route": "/extend/skills-and-commands/bundled-skills",
-    "anchor": "skills"
-  },
   "slash-command:/run": {
     "route": "/extend/skills-and-commands/bundled-skills",
     "anchor": "skills"
@@ -7356,10 +7332,6 @@
     "anchor": "skills"
   },
   "slash-command:/workflow-authoring": {
-    "route": "/extend/skills-and-commands/bundled-skills",
-    "anchor": "skills"
-  },
-  "slash-command:/workshop": {
     "route": "/extend/skills-and-commands/bundled-skills",
     "anchor": "skills"
   },

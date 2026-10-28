@@ -113,6 +113,20 @@ On observer events, it does not wait.
 | `reason` (model reply) | <Documented /> | Why the model blocked. | Required when `ok` is `false`. |
 | `impossible` (model reply) | <Documented /> | The condition can never be met. | On `Stop` and `SubagentStop` the turn ends. Agents ignore it. `prompt` only. |
 
+## Prompt and Agent Concurrency
+
+Since `2.1.312`, the program limits how many `prompt` and `agent` hooks run at the same time.
+The limits do not cover `command`, `http`, or `mcp_tool` hooks.
+
+| Limit | Status | What it does | Notes |
+| --- | --- | --- | --- |
+| 24 at a time | <Documented /> | At most 24 `prompt` and `agent` hooks run at once. | The program counts them per session host, not per agent. A hook over the limit waits for a free place. |
+| 12 overdue | <Documented /> | At most 12 more run when they waited longer than the timeout of their event. | These hooks use a second count of 12, kept apart from the first. |
+| 12 per event | <Undocumented /> | When one event starts several of these hooks, at most 12 start together. | The program also uses this number to size the time budget of the event. |
+
+Source: the program (`chunk-r5cyd28m.js`, the `model hooks` and `overdue model hooks` counts).
+We did not trace that a subagent shares the session host of its parent.
+
 ## Related Pages
 
 - [Hooks](index.md): the overview.

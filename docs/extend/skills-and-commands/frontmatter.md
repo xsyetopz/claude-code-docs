@@ -68,6 +68,21 @@ Review the changes under $ARGUMENTS and list the bugs you find.
 | `created_by`, `improved_by` | <Undocumented /> | Mark a skill as made by the `dream-proposal` flow. | Only the value `dream-proposal` counts. The env var `CLAUDE_CODE_SKILL_PROPOSALS` exists. |
 | `experimental` | <Documented /> <Experimental /> | A map whose key names are recorded. | Only the key names go into `declaredFields`. |
 
+## Skill Discovery with Bash `cd`
+
+Since `2.1.312`, Claude Code finds per-directory skills and `paths` skills after a Bash command moves the working directory deeper into the same git repository.
+When a file is read or written, the program walks up from the file to a base directory and looks for `.claude/skills` on the way.
+It also tests the `paths` globs of conditional skills against the file path, relative to that base.
+The base is now the directory where the session started, when all of these are true:
+
+- The working directory is not the directory where the session started.
+- The working directory is inside that directory.
+- Both directories are in the same git repository.
+
+In any other case, the base is the working directory.
+For a file outside the working directory, the program skips a `.claude/skills` folder that git ignores or that it cannot confirm.
+Source: the program (`chunk-r5cyd28m.js` lines 156298 to 156312 and 156113 to 156170).
+
 ## Outside Claude Code
 
 claude.ai uploads and the Skills API accept only `name`, `description`, `license`, `compatibility`, `metadata`, and `allowed-tools`.
@@ -75,7 +90,7 @@ Other keys fail the upload.
 
 ## Exact Fields
 
-The exact fields: the `skill` definition in `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-frontmatter.json`, made from the program's frontmatter validators.
+The exact fields: the `skill` definition in `https://xsyetopz.github.io/clawdipedia/schemas/claude-code-frontmatter.json`, made from the program's frontmatter validators.
 It lists every field of this release, so build on the fields it names and look each one up there before you rely on it.
 
 ## Related Pages

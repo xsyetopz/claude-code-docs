@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-control-protocol.json",
-  "title": "Claude Code control protocol (Claude Code 2.1.311)",
-  "$comment": "For the request and response of each control_request subtype in stream-json mode (definitions <subtype>Request and <subtype>Response, direction in x-direction). Generated from Claude Code 2.1.311 by calling the zod v4 toJSONSchema embedded in the binary on its own validator (method A, runtime export). Anchor: the SDK schema module, table of rows {request, originator, response}; the request union is described as \"Control requests a client sends to drive the loop\". Do not edit by hand: run \"bun run schemas\".",
+  "$id": "https://xsyetopz.github.io/clawdipedia/schemas/claude-code-control-protocol.json",
+  "title": "Claude Code control protocol (Claude Code 2.1.312)",
+  "$comment": "For the request and response of each control_request subtype in stream-json mode (definitions <subtype>Request and <subtype>Response, direction in x-direction). Generated from Claude Code 2.1.312 by calling the zod v4 toJSONSchema embedded in the binary on its own validator (method A, runtime export). Anchor: the SDK schema module, table of rows {request, originator, response}; the request union is described as \"Control requests a client sends to drive the loop\". Do not edit by hand: run \"bun run schemas\".",
   "$defs": {
     "apply_flag_settingsRequest": {
       "type": "object",
@@ -796,7 +796,7 @@
         }
       },
       "required": ["subtype", "cwd"],
-      "description": "@internal Binds a parked spare (a process started with --await-claim in a neutral directory with the host-level options) to its session: relocates it to cwd as if it had been spawned there, applies the per-session prompt options and in-process MCP server set, starts the SessionStart hooks, and registers the session. Model, thinking budget and flag-settings overlays are not claim fields: send set_model / set_max_thinking_tokens / apply_flag_settings right behind the claim; the control loop applies them in order before it reads the first message. A set_model that arrives before the first message is applied the way --model is at start-up: it writes no /model entries to the transcript and makes no extra API call to confirm a model id the local checks accept. Accepted once, only on a parked spare, only before any turn. A request that fails validation is refused before anything is touched and leaves the spare parked; a failure after that point leaves the spare unusable (discard it).",
+      "description": "@internal Binds a parked spare (a process started with --await-claim in a neutral directory with the host-level options) to its session: relocates it to cwd as if it had been spawned there, applies the per-session prompt options and in-process MCP server set, starts the SessionStart hooks, and registers the session. Model, thinking budget and flag-settings overlays are not claim fields: send an apply_flag_settings that decides what the claim starts (its MCP and plugin keys) ahead of the claim, where a refusal also refuses the claim, and set_model / set_max_thinking_tokens / the other keys of an overlay right behind it; the control loop applies them in order before it reads the first message. A set_model that arrives before the first message is applied the way --model is at start-up: it writes no /model entries to the transcript and makes no extra API call to confirm a model id the local checks accept. Accepted once, only on a parked spare, only before any turn. A request that fails validation is refused before anything is touched and leaves the spare parked; a failure after that point leaves the spare unusable (discard it).",
       "x-direction": "client"
     },
     "claim_sessionResponse": {
@@ -2525,7 +2525,7 @@
             }
           },
           "required": ["model", "effort"],
-          "description": "Runtime-resolved values after env overrides, session state, and model-specific defaults are applied. Unlike `effective` (disk merge), these reflect what will actually be sent to the API."
+          "description": "Runtime-resolved values after env overrides, session state, and model-specific defaults are applied. Unlike `effective` (disk merge), these reflect what the next message will use."
         },
         "errors": {
           "type": "array",
@@ -10759,6 +10759,85 @@
       },
       "required": ["subtype", "paused"],
       "description": "@internal Pauses (true) or un-pauses (false) the session's prompt suggestions at runtime, for a host whose composer is not on screen: while paused, no turn end starts a suggestion, and the first turn end after paused is set back to false does. The state is one boolean in this CLI process, on top of the initialize request's promptSuggestions option and the user's own setting, neither of which it changes: a respawned or resumed session starts unpaused, so the host must send it again, and with two clients attached one client's pause applies to both. Acknowledged with an empty success; a CLI build where this is not yet enabled acknowledges and keeps generating, and an older CLI answers an unknown-subtype error.",
+      "x-direction": "client"
+    },
+    "start_shell_taskRequest": {
+      "type": "object",
+      "properties": {
+        "subtype": {
+          "type": "string",
+          "const": "start_shell_task"
+        },
+        "command": {
+          "type": "string",
+          "description": "The program to run: one word of the shell command."
+        },
+        "args": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Its arguments. Each reaches the program as one argument, and the shell expands nothing in it."
+        },
+        "cwd": {
+          "type": "string",
+          "description": "The directory to run it in. The default is the session's current directory."
+        },
+        "env": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Environment variables for this command alone."
+        },
+        "timeout_ms": {
+          "type": "number",
+          "description": "How long the task may run, as the Bash tool's `timeout`."
+        },
+        "description": {
+          "type": "string",
+          "description": "What the task is, as the Bash tool's `description`."
+        }
+      },
+      "required": ["subtype", "command"],
+      "description": "@internal Starts a long-running command, such as a dev server, as a background shell task of a cloud session. It is one call of the session's Bash tool, decided as the same call by Claude would be. The answer can wait on a person; `control_cancel_request` gives it up. A request_id seen before starts nothing and gets the first answer. A request stored before this worker joined or held over 90 seconds is refused. Only a cloud worker on Linux with Bash answers, and says `start_shell_task_v1` in its capabilities.",
+      "x-direction": "client"
+    },
+    "start_shell_taskResponse": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "const": "started"
+            },
+            "task_id": {
+              "type": "string",
+              "description": "The background shell task, as stop_task and get_task_output name it."
+            }
+          },
+          "required": ["status", "task_id"]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "const": "denied"
+            },
+            "message": {
+              "type": "string",
+              "description": "What Claude would have read as the result of the denied Bash call."
+            }
+          },
+          "required": ["status", "message"]
+        }
+      ],
+      "description": "@internal Success payload answering start_shell_task.",
       "x-direction": "client"
     },
     "stop_taskRequest": {

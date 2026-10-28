@@ -1,6 +1,6 @@
 ---
 title: Slash Commands
-description: Every built-in slash command in Claude Code 2.1.311, grouped by job, with aliases, arguments, and gates.
+description: Every built-in slash command in Claude Code 2.1.312, grouped by job, with aliases, arguments, and gates.
 sidebar_position: 5
 ---
 
@@ -141,7 +141,7 @@ Each line is a separate command. The text after the name is the argument.
 | `/radio` | <Documented /> | Plays a lo-fi radio station. | Text command. |
 | `/team-onboarding` | <Gated note="Policy allow_team_onboarding, and needs a workspace." /> | Builds a guide that helps teammates learn Claude Code from your usage. | A prompt command. |
 | `/claim-credit` | <Undocumented /> <Gated note="Hidden. An isEnabled check decides." /> | Opens the page of the offer shown at start-up. | Hidden text command. |
-| `/low-priority` | <Undocumented /> <Gated note="Hidden. An isEnabled check decides." /> | Continues now at lower priority after you reach your session limit. Run it again to stop. | Hidden text command. |
+| `/low-priority` | <Undocumented /> <Gated note="Hidden. An isEnabled check decides." /> | Continues now at lower priority after you reach your 5-hour limit. Run it again to stop. | Hidden text command. |
 | `/workflow-launch-exec` | <Undocumented /> <Gated note="Hidden." /> | Runs a workflow handoff that the server launched. | Hidden text command. Only for sessions that a `workflow_launch` event starts. |
 | `/heapdump` | <Gated note="Policy allow_heap_dump." /> | Writes the JavaScript heap to your Desktop (home folder on Linux without a Desktop). | Hidden text command. |
 | `/mcp__<server>__<prompt>` `prompt arguments` | <Documented /> | MCP prompts become commands. Missing required arguments give "Missing required argument". | Made on the fly with `source:"mcp"`. The alias form is `<server>:<prompt> (MCP)`. |
@@ -152,6 +152,16 @@ Each command is an object with a kind: panel, text, or prompt.
 A command can have two objects, one for interactive use and a text one for non-interactive use. The second one is picked when the session is not interactive.
 Aliases come from an `aliases` list on the object.
 A skill or custom command with the same name replaces a built-in command, but not its aliases (see [Skills and Commands](index.md#name-resolution)).
+
+## When a Command Name Is Not Valid
+
+The program loads custom commands from `.claude/commands/` and skills together. A command that fails a check does not stop the others from loading.
+
+- **Name rule.** A name may not hold hidden, direction-changing, or blank-like characters, `<` or `>`. It may not be over 256 characters (`chunk-r5cyd28m.js:54682`). When a name fails, the program does not offer the command. It writes a warning to the debug log: `[names] <name> is not offered: a name may not hold hidden, direction-changing or blank-like characters, < or >, or be over 256 characters` (`chunk-r5cyd28m.js:54686`, `:155024`). Rename the file to fix it.
+- **Name type.** Since `2.1.312`, the program skips a command whose name or display name is not a string. It reports an error that starts "Command not listed: its name or display name is not a string" and keeps the other commands (`chunk-r5cyd28m.js:53519`). In `2.1.311` the same loop made no such check (`chunk-2ht8z368.js:53427`).
+- **File errors.** If one file in `.claude/commands/` cannot load, the program logs `[skills] failed to load command from <path>: <error>` at the error level and loads the other files (`chunk-r5cyd28m.js:155696`).
+
+The release note says that one bad command name could leave `claude -p` with no output ([release notes](https://github.com/anthropics/claude-code/releases/tag/v2.1.312)). The program code does not show that link.
 
 ## How `/restart` Works
 

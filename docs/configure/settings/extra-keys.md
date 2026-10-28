@@ -8,7 +8,7 @@ Some keys are not in the settings schema, or they live in another file.
 This page covers the auto mode and display keys, the keys that only the desktop app reads, and the global config keys of `~/.claude.json`.
 The global config file is not a settings file. Claude Code writes it, and `/config` changes some of its keys.
 
-All keys here work in `2.1.311`. Edit a settings file for the first two tables. Use `/config` or edit `~/.claude.json` for the global config keys in the last table. Most keys are booleans.
+All keys here work in `2.1.312`. Edit a settings file for the first two tables. Use `/config` or edit `~/.claude.json` for the global config keys in the last table. Most keys are booleans.
 
 ## Auto Mode, Voice, and Display Keys
 
@@ -78,7 +78,7 @@ Source: the program.
 
 ```json title="~/.claude/settings.json"
 {
-  "$schema": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-settings.json",
+  "$schema": "https://xsyetopz.github.io/clawdipedia/schemas/claude-code-settings.json",
   "autoMode": {
     "classifyAllShell": true
   },

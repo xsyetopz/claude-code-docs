@@ -1,5 +1,18 @@
+export type PromptGroup =
+  | "defaults"
+  | "output-styles"
+  | "context-and-memory"
+  | "agents"
+  | "commands"
+  | "hooks"
+  | "modes"
+  | "skills"
+  | "tools"
+  | "other";
+
 export type Variant = {
   id: string; // folder and page name
+  group: PromptGroup; // sidebar folder under docs/prompts/
   title: string; // Title Case page title
   summary: string; // one sentence for the index table
   how: string; // how a user gets it (shown on the page)
@@ -54,8 +67,10 @@ export const cmdVariant = (
   cmd: string,
   title: string,
   status: "Documented" | "Undocumented",
+  group: PromptGroup = "commands",
 ): Variant => ({
   id: `command-${cmd}`,
+  group,
   title,
   model: LEAN_MODEL,
   prompt: `/${cmd}`,

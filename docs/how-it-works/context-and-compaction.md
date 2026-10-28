@@ -60,6 +60,10 @@ Claude Code finds the window in this order:
 5. The default of the model
 
 The accepted window is from 100K to 1M tokens.
+
+Since `2.1.312`, the `autoCompactWindow` of a subagent also lowers a window that `CLAUDE_CODE_AUTO_COMPACT_WINDOW` sets. Before, the variable ended the search and the subagent value had no effect.
+The subagent value is a ceiling. If the window found is larger than the ceiling, Claude Code uses the ceiling (limited by the model window). It never raises the window.
+Source: the program (`chunk-r5cyd28m.js` line 83915 and `chunk-1wgxyh0t.js` line 6088).
 Sources: [Model Configuration: Context Window and Auto-Compaction](https://code.claude.com/docs/en/model-config#context-window-and-auto-compaction) and the program.
 
 ## Controls
@@ -134,7 +138,7 @@ Source: the program (<Undocumented />).
 
 The prompt has a short form ("in 2000 words or fewer"), a form that asks for an `<analysis>` first, and a form that covers only the recent messages.
 The request uses the thinking setting of the session (v2.1.198 or later).
-See the captured [compaction prompt](../prompts/compact.md).
+See the captured [compaction prompt](../prompts/context-and-memory/compact.md).
 
 ## What Survives
 
@@ -163,7 +167,7 @@ claude --autocompact 500000
 
 ```json title="~/.claude/settings.json"
 {
-  "$schema": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-settings.json",
+  "$schema": "https://xsyetopz.github.io/clawdipedia/schemas/claude-code-settings.json",
   "autoCompactWindow": 500000
 }
 ```

@@ -1,6 +1,6 @@
 ---
 title: OpenTelemetry Events
-description: The log events that Claude Code 2.1.311 emits through OpenTelemetry, with the attributes of each, read from the program.
+description: The log events that Claude Code 2.1.312 emits through OpenTelemetry, with the attributes of each, read from the program.
 sidebar_position: 7
 ---
 
@@ -37,7 +37,7 @@ Only `tool_decision` is marked <Documented />, because earlier pages of this sit
 | `plugin_installed` | <Undocumented /> | A plugin was installed. | `plugin.name`, `plugin.version`, `marketplace.name`, `marketplace.is_official`, `install.trigger`, `install.disabled_by_default` |
 | `plugin_loaded` | <Undocumented /> | A plugin was loaded. | `plugin.name`, `marketplace.name`, `plugin.version`, `plugin.scope`, `enabled_via`, `plugin_id_hash`, `has_hooks`, `has_mcp`, `host_owned_mcp`, `skill_path_count`, `command_path_count`, `agent_path_count`, `safe_mode` |
 | `retention_sweep` | <Undocumented /> | A cleanup of old session data ran, with counts. | `result`, `period_days`, `used_default`, `skip_reason`, `transcripts_deleted`, `transcripts_exempted_desktop`, `session_files_deleted`, `artifacts_deleted`, `files_retained_fresh`, `files_past_cutoff`, `error_count`, `history_entries_pruned` |
-| `safety_event` | <Undocumented /> | A permission or safety decision. | `category`, `decision`, `decision_source`, `reason_type`, `reason_code`, `rule_source`, `grant_scope`, `circuit_breaker`, `classifier_category`, `hook_event`, `tool_class`, `tool_name`, `tool_source`, `permission_mode`, `tool_use_id`, `sandbox_violation_count`, `sandbox_enabled` |
+| `safety_event` | <Gated note="Server flag tengu_snoopy_creek, off by default since 2.1.312" /> | A permission or safety decision. Off by default since `2.1.312`, because the server-side gate `tengu_snoopy_creek` now defaults to `false`. In `2.1.311` it defaulted to `true`. The code that sends the event is still in the program, and both of its call sites test the gate, so a server-side flag can turn the event on again. | `category`, `decision`, `decision_source`, `reason_type`, `reason_code`, `rule_source`, `grant_scope`, `circuit_breaker`, `classifier_category`, `hook_event`, `tool_class`, `tool_name`, `tool_source`, `permission_mode`, `tool_use_id`, `sandbox_violation_count`, `sandbox_enabled` |
 | `skill_activated` | <Undocumented /> | A skill was activated. | `skill.name`, `invocation_trigger`, `skill.source`, `skill.kind`, `plugin.name`, `marketplace.name` |
 | `subagent_completed` | <Undocumented /> | A subagent finished, with token and tool-use counts. | `agent_type`, `agent.source`, `is_built_in`, `is_async`, `total_tokens`, `total_tool_uses`, `duration_ms`, `model`, `final_model`, `model_swapped`, `plugin_id_hash`, `plugin.name` |
 | `system_prompt` | <Undocumented /> | The system prompt, or its hash. | `system_prompt_hash`, `system_prompt`, `system_prompt_length`, `system_prompt_truncated` |
@@ -45,6 +45,15 @@ Only `tool_decision` is marked <Documented />, because earlier pages of this sit
 | `tool_decision` | <Documented /> | A tool use was accepted or rejected. `OTEL_LOG_TOOL_DETAILS` adds `classifier_category`. | `decision`, `source`, `tool_name`, `tool_use_id`, `tool_source`, `tool_parameters`, `classifier_verdict`, `classifier_category`, `permission_mode` |
 | `tool_result` | <Undocumented /> | A tool call finished. After a git commit it also carries the `vcs.ref.head.*` fields. | `tool_name`, `tool_use_id`, `success`, `duration_ms`, `tool_parameters`, `tool_input`, `tool_input_size_bytes`, `tool_result_size_bytes`, `decision_source`, `decision_type`, `mcp_server_scope`, `vcs.ref.head.revision`, `vcs.ref.head.name`, `vcs.ref.head.type`, `error_type`, `error` |
 | `user_prompt` | <Undocumented /> | A user prompt. The text is in `prompt` only when `OTEL_LOG_USER_PROMPTS` is on. | `prompt_length`, `prompt`, `prompt_text` |
+
+## What Two Attributes Report
+
+| Attribute | Status | What It Reports | Notes |
+| --- | --- | --- | --- |
+| `effort` | <Undocumented /> | The effort level in force for the request. | Since `2.1.312`. Before, it could name a newly picked level before the model applied it. The program takes the level from the last effort change that the conversation holds, and uses the new pick only when there is none. The `api_request` event reads it from `output_config.effort` of the request, and the refusal path passes the same level. We did not trace `api_error` and `api_retries_exhausted` one by one. |
+| `mcp_server.name` | <Undocumented /> | The server name. For most servers that a plugin declares it reports `custom`. | Since `2.1.312`, it reports the real name for a remote MCP server with a fixed URL of type `http`, `sse`, or `ws` that a plugin declares, when the plugin comes from an official marketplace that the program vouches for. A server whose endpoint is a template still reports `custom`. |
+
+Source: the program. The level in force is in `chunk-r5cyd28m.js` lines 135670, 136924, and 141434. The server name is in `chunk-3xe0k172.js` lines 44518 to 44531 and 48503 to 48514, with `custom` at line 42524. The `safety_event` gate is in `chunk-r5cyd28m.js` lines 186177, 186258, 186295, and 186356, and in `chunk-2ht8z368.js` line 184333 of `2.1.311`.
 
 ## Attributes on Every Event
 

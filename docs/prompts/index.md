@@ -1,6 +1,6 @@
 ---
 title: "Captured System Prompts"
-description: "Every system prompt variant you can pick in Claude Code 2.1.311, captured offline and compared."
+description: "Every system prompt variant you can pick in Claude Code 2.1.312, captured offline and compared."
 sidebar_position: 1
 ---
 
@@ -18,78 +18,78 @@ You can use every prompt here: the answer to "Can you use it?" is ✅ Yes for al
 
 | Prompt | Can You Change It? | Turn On or Off | Where It Lives | Status |
 | --- | --- | --- | --- | --- |
-| [Default, Lean Prompt](./default-lean.md) (Every session on a lean model gets it) | ✅ Yes. Use the flags and settings on the other pages. | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=0` switches to the full prompt. | Built into the program. Nothing on disk. | <Undocumented /> |
-| [Default, Sonnet 5.5](./default-sonnet.md) (Every Sonnet 5.5 session gets it) | ✅ Yes. Use the flags and settings on the other pages. | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=0` switches to the full prompt. | Built into the program. Nothing on disk. | <Documented /> |
-| [Default, Haiku 5.5](./default-haiku.md) (Every Haiku 5.5 session gets it) | ✅ Yes. Use the flags and settings on the other pages. | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=0` switches to the full prompt. | Built into the program. Nothing on disk. | <Undocumented /> |
-| [Full Prompt](./full-prompt.md) | ✅ Yes. Set or unset the env var. | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=0` (also `false`, `no`, `off`). | Environment variable. Put it under `env` in `settings.json` to keep it. | <Documented /> |
-| [Simple Prompt Switch on Sonnet](./simple-prompt-sonnet.md) | ✅ Yes. Set or unset the env var. | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1`. | Environment variable. | <Documented /> |
-| [Simple Prompt Switch on Haiku](./simple-prompt-haiku.md) | ✅ Yes. Set or unset the env var. | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1`. | Environment variable. | <Documented /> |
-| [Simple Prompt Switch on Opus](./simple-prompt-opus.md) | ✅ Yes. Set or unset the env var. | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1`. | Environment variable. | <Documented /> |
-| [Bare Mode](./bare.md) | ❌ No. The two lines are fixed. | `--bare` or `CLAUDE_CODE_SIMPLE=1`. | Command-line flag. | <Documented /> |
-| [Simple Mode Env Var](./simple-env.md) | ❌ No. The two lines are fixed. | `CLAUDE_CODE_SIMPLE=1`. | Environment variable. | <Documented /> |
-| [Exclude Dynamic Sections](./exclude-dynamic.md) | ❌ No. It only moves text. | `--exclude-dynamic-system-prompt-sections`. | Command-line flag. | <Documented /> |
-| [Exclude Dynamic Sections, Full Prompt](./exclude-dynamic-full.md) | ❌ No. It only moves text. | `--exclude-dynamic-system-prompt-sections`. | Command-line flag. | <Documented /> |
-| [Output Style, Explanatory](./style-explanatory.md) | Not the built-in text. You can write a custom style. | `/output-style` or the `outputStyle` setting. | `outputStyle` in any settings scope. | <Documented /> |
-| [Output Style, Learning](./style-learning.md) | Not the built-in text. You can write a custom style. | `/output-style` or the `outputStyle` setting. | `outputStyle` in any settings scope. | <Documented /> |
-| [Output Style, Proactive](./style-proactive.md) | Not the built-in text. You can write a custom style. | `/output-style` or the `outputStyle` setting. | `outputStyle` in any settings scope. | <Documented /> |
-| [Output Style, Concise](./style-concise.md) | Not the built-in text. You can write a custom style. | `/output-style` or the `outputStyle` setting. | `outputStyle` in any settings scope. | <Documented /> |
-| [Custom Output Style](./style-custom.md) | ✅ Yes. You write the file. | `/output-style` or the `outputStyle` setting. | `~/.claude/output-styles/*.md` or `.claude/output-styles/*.md`. | <Documented /> |
-| [Custom Output Style on the Full Prompt](./style-custom-full.md) | ✅ Yes. You write the file. | `/output-style` or the `outputStyle` setting. | `~/.claude/output-styles/*.md` or `.claude/output-styles/*.md`. | <Documented /> |
-| [Custom Output Style with Keep Coding Instructions](./style-custom-keep.md) | ✅ Yes. You write the file. | `keep-coding-instructions` in the style's front matter. | `~/.claude/output-styles/*.md` or `.claude/output-styles/*.md`. | <Documented /> |
-| [Custom Output Style with Keep Coding Instructions, Lean Prompt](./style-custom-keep-lean.md) | ✅ Yes. You write the file. | `keep-coding-instructions` in the style's front matter. | `~/.claude/output-styles/*.md` or `.claude/output-styles/*.md`. | <Documented /> |
-| [Append System Prompt](./append-system-prompt.md) | ✅ Yes. You give the text. | `--append-system-prompt` or `--append-system-prompt-file`. | Command-line flags. | <Documented /> |
-| [Replace System Prompt](./system-prompt.md) | ✅ Yes. You give the text. | `--system-prompt` or `--system-prompt-file`. | Command-line flags. | <Documented /> |
-| [Replace and Append Together](./system-prompt-append.md) | ✅ Yes. You give the text. | The two flags. | Command-line flags. | <Documented /> |
-| [With a CLAUDE.md File](./claude-md.md) | ✅ Yes. You write the file. | Add or remove the file. `CLAUDE_CODE_DISABLE_CLAUDE_MDS=1` skips them. | `CLAUDE.md`, `.claude/CLAUDE.md`, `~/.claude/CLAUDE.md`. | <Documented /> |
-| [Inside a Git Repository](./git-repo.md) (It happens on its own) | ❌ No. | `includeGitInstructions` in settings controls the git rules. The status text always appears in a repo. | Built into the program. | <Undocumented /> |
-| [Main Thread Custom Agent](./agent-main.md) | ✅ Yes. You write the agent file. | `--agent` or the `agent` setting. | `.claude/agents/*.md` or `~/.claude/agents/*.md`. | <Documented /> |
-| [Permission Mode, Plan](./mode-plan.md) | ❌ No. | `--permission-mode` or `defaultMode` in settings. | Flag or settings. | <Documented /> |
-| [Permission Mode, Accept Edits](./mode-acceptEdits.md) | ❌ No. | `--permission-mode` or `defaultMode` in settings. | Flag or settings. | <Documented /> |
-| [Permission Mode, Don't Ask](./mode-dontAsk.md) | ❌ No. | `--permission-mode` or `defaultMode` in settings. | Flag or settings. | <Documented /> |
-| [Brief Mode](./brief.md) | ❌ No. | `--brief`. | Command-line flag. | <Undocumented /> |
-| [Compaction Prompt](./compact.md) | Partly. You can add focus text after `/compact`. | `/compact`, or automatic when the context fills. | Built into the program. | <Undocumented /> |
-| [Subagent, General Purpose](./subagent-general-purpose.md) (The model starts subagents) | Not the built-in text. You can write custom agents. | `--disallowedTools Agent` stops all subagents. | Built into the program. | <Undocumented /> |
-| [Subagent, Explore](./subagent-explore.md) (The model starts subagents) | Not the built-in text. You can write custom agents. | `--disallowedTools Agent` stops all subagents. | Built into the program. | <Undocumented /> |
-| [Subagent, Plan](./subagent-plan.md) (The model starts subagents) | Not the built-in text. You can write custom agents. | `--disallowedTools Agent` stops all subagents. | Built into the program. | <Undocumented /> |
-| [Subagent, Custom Agent](./subagent-custom.md) | ✅ Yes. You write the agent file. | Add or remove the file. | `.claude/agents/*.md` or `~/.claude/agents/*.md`. | <Documented /> |
-| [Subagent, Statusline Setup](./subagent-statusline-setup.md) | ✅ Yes. A user agent file with the same name replaces it. | `--disallowedTools Agent` stops all subagents. | Built into the program. Override in `.claude/agents/<name>.md`. | <Undocumented /> |
-| [Subagent, Claude (FleetView)](./subagent-claude.md) | ✅ Yes. A user agent file with the same name replaces it. | `--disallowedTools Agent` stops all subagents. | Built into the program. Override in `.claude/agents/<name>.md`. | <Undocumented /> |
-| [Subagent, Web Fetch](./subagent-web-fetch.md) | ✅ Yes. A user agent file with the same name replaces it. | `CLAUDE_CODE_WEB_FETCH_AGENT=1` adds it. `CLAUDE_CODE_DISABLE_WEB_FETCH` removes it. | Built into the program. Override in `.claude/agents/web-fetch.md`. | <Undocumented /> |
-| [Subagent, Claude Code Guide](./subagent-claude-code-guide.md) | ✅ Yes. A user agent file with the same name replaces it. | Not offered in `-p` or the SDK entry points. `--disallowedTools Agent` stops all subagents. | Built into the program. Override in `.claude/agents/claude-code-guide.md`. | <Undocumented /> |
-| [Override a Built-in Agent with a File](./override-agent-file.md) | ✅ Yes. You write the agent file. | Add or remove the file. | `.claude/agents/*.md` or `~/.claude/agents/*.md`. | <Undocumented /> |
-| [Override a Built-in Agent with --agents](./override-agents-flag.md) | ✅ Yes. You give the JSON. | `--agents`. | Command-line flag. | <Documented /> |
-| [Append to Every Subagent Prompt](./override-append-subagent.md) | ✅ Yes. You give the text. | `--append-subagent-system-prompt` or `--append-subagent-system-prompt-file` (print mode only). | Command-line flags. | <Undocumented /> |
-| [Turn Off the Explore and Plan Agents](./disable-explore-plan.md) | ✅ Yes. It removes text. | `CLAUDE_CODE_DISABLE_EXPLORE_PLAN_AGENTS=1`. | Environment variable. | <Undocumented /> |
-| [Turn Off All Built-in Agents](./disable-builtin-agents.md) | ✅ Yes. It removes text. | `CLAUDE_AGENT_SDK_DISABLE_BUILTIN_AGENTS=1`. | Environment variable. | <Undocumented /> |
-| [Command, /init](./command-init.md) | ✅ Yes. A command or skill file with the same name may replace it. | Type `/init`. | Built into the program. | <Documented /> |
-| [Command, /security-review](./command-security-review.md) | ✅ Yes. A command or skill file with the same name may replace it. | Type `/security-review`. | Built into the program. | <Documented /> |
-| [Skill, /simplify](./command-simplify.md) | ✅ Yes. A command or skill file with the same name may replace it. | Type `/simplify`. | Built into the program. | <Undocumented /> |
-| [Skill, /debug](./command-debug.md) | ✅ Yes. A command or skill file with the same name may replace it. | Type `/debug`. | Built into the program. | <Undocumented /> |
-| [Override /init with a Command File](./override-command-init.md) | ✅ Yes. A command or skill file with the same name may replace it. | Type `/init`. | Built into the program. | <Undocumented /> |
-| [Override /simplify with a Skill File](./override-skill-simplify.md) | ✅ Yes. A command or skill file with the same name may replace it. | Type `/simplify`. | Built into the program. | <Undocumented /> |
-| [Prompt Hook Request](./hook-prompt.md) | Partly. You write the prompt and pick the model. The system text is fixed. | Add or remove the hook. | `hooks` in any settings scope. | <Documented /> |
-| [Agent Hook Request](./hook-agent.md) | Partly. You write the prompt and pick the model. The system text is fixed. | Add or remove the hook. | `hooks` in any settings scope. | <Documented /> |
-| [Auto Mode Classifier](./auto-classifier.md) | Partly. The `autoMode` setting edits the rule lists. | `--permission-mode auto` or `defaultMode: "auto"`. | `autoMode` in user, flag, or managed settings. | <Documented /> |
-| [Auto Mode Classifier, Custom Rules](./auto-classifier-custom.md) | ✅ Yes. You write the rules. | `autoMode` setting. | `autoMode` in user, flag, or managed settings. | <Documented /> |
-| [Compaction Prompt, Custom Instructions](./compact-custom.md) | ✅ Yes. You add focus text. The base summary rules stay. | `/compact <text>`. | The command line, `CLAUDE.md`, or a `PreCompact` hook. | <Documented /> |
-| [Plan Mode, Custom Workflow](./plan-mode-instructions.md) | ✅ Yes. You give the workflow text. The read-only rules and the `ExitPlanMode` rule stay. | `--plan-mode-instructions`. | Command-line flag. | <Undocumented /> |
-| [Git Instructions Turned Off](./git-instructions-off.md) | ✅ Yes. It removes text. | `includeGitInstructions` or `CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS=1`. | Any settings scope, or an environment variable. | <Documented /> |
-| [Auto Memory Turned Off](./memory-off.md) | ✅ Yes. It removes text. | `CLAUDE_CODE_DISABLE_AUTO_MEMORY=1` or `autoMemoryEnabled`. | Environment variable or any settings scope. | <Documented /> |
-| [Custom Output Style with a Built-in Name](./style-override-builtin.md) | ✅ Yes. You write the file. | `/output-style` or the `outputStyle` setting. | `~/.claude/output-styles/*.md` or `.claude/output-styles/*.md`. | <Undocumented /> |
-| [Subagent with --system-prompt and --append-system-prompt](./subagent-with-prompt-flags.md) | Not for the subagent. Use `--append-subagent-system-prompt`. | The flags. | Command-line flags. | <Undocumented /> |
-| [Prompt Hook on Stop](./hook-prompt-stop.md) | Partly. You write the prompt and pick the model. The system text is fixed. | Add or remove the hook. | `hooks` in any settings scope. | <Documented /> |
-| [All Tools Sent Upfront](./tools-upfront.md) | ✅ Yes. It adds the deferred tools to the request. | `ENABLE_TOOL_SEARCH`. | Environment variable, or `env` in any settings scope. | <Documented /> |
-| [Override a Prompt](./override.md) | ✅ Yes. The page lists each prompt you can replace, append to, or turn off. | Per prompt. See the page. | Flags, env vars, settings, and files. | <Undocumented /> |
-| [Tool Descriptions](./tools.md) (Every request carries them) | ✅ Yes. A Mod API `tool.describe` hook replaces a description. | `ENABLE_TOOL_SEARCH`, `--tools`, `--disallowedTools`. | Built into the program. | <Undocumented /> |
-| [Built-In Skills](./built-in-skills.md) (The main agent reads one line for each) | ✅ Yes. A skill or command with the same name replaces one. | `--disable-slash-commands`. | Built into the program. Override in `.claude/skills/<name>/SKILL.md`. | <Documented /> |
-| [Built-In Agents](./built-in-agents.md) (The main agent reads one line for each) | ✅ Yes. An agent with the same name replaces one. | `CLAUDE_CODE_DISABLE_EXPLORE_PLAN_AGENTS`, `CLAUDE_AGENT_SDK_DISABLE_BUILTIN_AGENTS`. | Built into the program. Override in `.claude/agents/<name>.md`. | <Documented /> |
-| [Tools per Variant](./tools-per-variant.md) (Every request carries the list) | ✅ Yes. Use `--tools`, `--allowedTools`, `--disallowedTools`, or settings. | `--bare` and `CLAUDE_CODE_SIMPLE=1` cut the list to three tools. | Built into the program. | <Undocumented /> |
+| [Default, Lean Prompt](./defaults/default-lean.md) (Every session on a lean model gets it) | ✅ Yes. Use the flags and settings on the other pages. | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=0` switches to the full prompt. | Built into the program. Nothing on disk. | <Undocumented /> |
+| [Default, Sonnet 5.5](./defaults/default-sonnet.md) (Every Sonnet 5.5 session gets it) | ✅ Yes. Use the flags and settings on the other pages. | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=0` switches to the full prompt. | Built into the program. Nothing on disk. | <Documented /> |
+| [Default, Haiku 5.5](./defaults/default-haiku.md) (Every Haiku 5.5 session gets it) | ✅ Yes. Use the flags and settings on the other pages. | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=0` switches to the full prompt. | Built into the program. Nothing on disk. | <Undocumented /> |
+| [Full Prompt](./defaults/full-prompt.md) | ✅ Yes. Set or unset the env var. | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=0` (also `false`, `no`, `off`). | Environment variable. Put it under `env` in `settings.json` to keep it. | <Documented /> |
+| [Simple Prompt Switch on Sonnet](./defaults/simple-prompt-sonnet.md) | ✅ Yes. Set or unset the env var. | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1`. | Environment variable. | <Documented /> |
+| [Simple Prompt Switch on Haiku](./defaults/simple-prompt-haiku.md) | ✅ Yes. Set or unset the env var. | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1`. | Environment variable. | <Documented /> |
+| [Simple Prompt Switch on Opus](./defaults/simple-prompt-opus.md) | ✅ Yes. Set or unset the env var. | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1`. | Environment variable. | <Documented /> |
+| [Bare Mode](./defaults/bare.md) | ❌ No. The two lines are fixed. | `--bare` or `CLAUDE_CODE_SIMPLE=1`. | Command-line flag. | <Documented /> |
+| [Simple Mode Env Var](./defaults/simple-env.md) | ❌ No. The two lines are fixed. | `CLAUDE_CODE_SIMPLE=1`. | Environment variable. | <Documented /> |
+| [Exclude Dynamic Sections](./defaults/exclude-dynamic.md) | ❌ No. It only moves text. | `--exclude-dynamic-system-prompt-sections`. | Command-line flag. | <Documented /> |
+| [Exclude Dynamic Sections, Full Prompt](./defaults/exclude-dynamic-full.md) | ❌ No. It only moves text. | `--exclude-dynamic-system-prompt-sections`. | Command-line flag. | <Documented /> |
+| [Output Style, Explanatory](./output-styles/style-explanatory.md) | Not the built-in text. You can write a custom style. | `/output-style` or the `outputStyle` setting. | `outputStyle` in any settings scope. | <Documented /> |
+| [Output Style, Learning](./output-styles/style-learning.md) | Not the built-in text. You can write a custom style. | `/output-style` or the `outputStyle` setting. | `outputStyle` in any settings scope. | <Documented /> |
+| [Output Style, Proactive](./output-styles/style-proactive.md) | Not the built-in text. You can write a custom style. | `/output-style` or the `outputStyle` setting. | `outputStyle` in any settings scope. | <Documented /> |
+| [Output Style, Concise](./output-styles/style-concise.md) | Not the built-in text. You can write a custom style. | `/output-style` or the `outputStyle` setting. | `outputStyle` in any settings scope. | <Documented /> |
+| [Custom Output Style](./output-styles/style-custom.md) | ✅ Yes. You write the file. | `/output-style` or the `outputStyle` setting. | `~/.claude/output-styles/*.md` or `.claude/output-styles/*.md`. | <Documented /> |
+| [Custom Output Style on the Full Prompt](./output-styles/style-custom-full.md) | ✅ Yes. You write the file. | `/output-style` or the `outputStyle` setting. | `~/.claude/output-styles/*.md` or `.claude/output-styles/*.md`. | <Documented /> |
+| [Custom Output Style with Keep Coding Instructions](./output-styles/style-custom-keep.md) | ✅ Yes. You write the file. | `keep-coding-instructions` in the style's front matter. | `~/.claude/output-styles/*.md` or `.claude/output-styles/*.md`. | <Documented /> |
+| [Custom Output Style with Keep Coding Instructions, Lean Prompt](./output-styles/style-custom-keep-lean.md) | ✅ Yes. You write the file. | `keep-coding-instructions` in the style's front matter. | `~/.claude/output-styles/*.md` or `.claude/output-styles/*.md`. | <Documented /> |
+| [Append System Prompt](./defaults/append-system-prompt.md) | ✅ Yes. You give the text. | `--append-system-prompt` or `--append-system-prompt-file`. | Command-line flags. | <Documented /> |
+| [Replace System Prompt](./defaults/system-prompt.md) | ✅ Yes. You give the text. | `--system-prompt` or `--system-prompt-file`. | Command-line flags. | <Documented /> |
+| [Replace and Append Together](./defaults/system-prompt-append.md) | ✅ Yes. You give the text. | The two flags. | Command-line flags. | <Documented /> |
+| [With a CLAUDE.md File](./context-and-memory/claude-md.md) | ✅ Yes. You write the file. | Add or remove the file. `CLAUDE_CODE_DISABLE_CLAUDE_MDS=1` skips them. | `CLAUDE.md`, `.claude/CLAUDE.md`, `~/.claude/CLAUDE.md`. | <Documented /> |
+| [Inside a Git Repository](./context-and-memory/git-repo.md) (It happens on its own) | ❌ No. | `includeGitInstructions` in settings controls the git rules. The status text always appears in a repo. | Built into the program. | <Undocumented /> |
+| [Main Thread Custom Agent](./agents/agent-main.md) | ✅ Yes. You write the agent file. | `--agent` or the `agent` setting. | `.claude/agents/*.md` or `~/.claude/agents/*.md`. | <Documented /> |
+| [Permission Mode, Plan](./modes/mode-plan.md) | ❌ No. | `--permission-mode` or `defaultMode` in settings. | Flag or settings. | <Documented /> |
+| [Permission Mode, Accept Edits](./modes/mode-acceptEdits.md) | ❌ No. | `--permission-mode` or `defaultMode` in settings. | Flag or settings. | <Documented /> |
+| [Permission Mode, Don't Ask](./modes/mode-dontAsk.md) | ❌ No. | `--permission-mode` or `defaultMode` in settings. | Flag or settings. | <Documented /> |
+| [Brief Mode](./defaults/brief.md) | ❌ No. | `--brief`. | Command-line flag. | <Undocumented /> |
+| [Compaction Prompt](./context-and-memory/compact.md) | Partly. You can add focus text after `/compact`. | `/compact`, or automatic when the context fills. | Built into the program. | <Undocumented /> |
+| [Subagent, General Purpose](./agents/subagent-general-purpose.md) (The model starts subagents) | Not the built-in text. You can write custom agents. | `--disallowedTools Agent` stops all subagents. | Built into the program. | <Undocumented /> |
+| [Subagent, Explore](./agents/subagent-explore.md) (The model starts subagents) | Not the built-in text. You can write custom agents. | `--disallowedTools Agent` stops all subagents. | Built into the program. | <Undocumented /> |
+| [Subagent, Plan](./agents/subagent-plan.md) (The model starts subagents) | Not the built-in text. You can write custom agents. | `--disallowedTools Agent` stops all subagents. | Built into the program. | <Undocumented /> |
+| [Subagent, Custom Agent](./agents/subagent-custom.md) | ✅ Yes. You write the agent file. | Add or remove the file. | `.claude/agents/*.md` or `~/.claude/agents/*.md`. | <Documented /> |
+| [Subagent, Statusline Setup](./agents/subagent-statusline-setup.md) | ✅ Yes. A user agent file with the same name replaces it. | `--disallowedTools Agent` stops all subagents. | Built into the program. Override in `.claude/agents/<name>.md`. | <Undocumented /> |
+| [Subagent, Claude (FleetView)](./agents/subagent-claude.md) | ✅ Yes. A user agent file with the same name replaces it. | `--disallowedTools Agent` stops all subagents. | Built into the program. Override in `.claude/agents/<name>.md`. | <Undocumented /> |
+| [Subagent, Web Fetch](./agents/subagent-web-fetch.md) | ✅ Yes. A user agent file with the same name replaces it. | `CLAUDE_CODE_WEB_FETCH_AGENT=1` adds it. `CLAUDE_CODE_DISABLE_WEB_FETCH` removes it. | Built into the program. Override in `.claude/agents/web-fetch.md`. | <Undocumented /> |
+| [Subagent, Claude Code Guide](./agents/subagent-claude-code-guide.md) | ✅ Yes. A user agent file with the same name replaces it. | Not offered in `-p` or the SDK entry points. `--disallowedTools Agent` stops all subagents. | Built into the program. Override in `.claude/agents/claude-code-guide.md`. | <Undocumented /> |
+| [Override a Built-in Agent with a File](./agents/override-agent-file.md) | ✅ Yes. You write the agent file. | Add or remove the file. | `.claude/agents/*.md` or `~/.claude/agents/*.md`. | <Undocumented /> |
+| [Override a Built-in Agent with --agents](./agents/override-agents-flag.md) | ✅ Yes. You give the JSON. | `--agents`. | Command-line flag. | <Documented /> |
+| [Append to Every Subagent Prompt](./agents/override-append-subagent.md) | ✅ Yes. You give the text. | `--append-subagent-system-prompt` or `--append-subagent-system-prompt-file` (print mode only). | Command-line flags. | <Undocumented /> |
+| [Turn Off the Explore and Plan Agents](./agents/disable-explore-plan.md) | ✅ Yes. It removes text. | `CLAUDE_CODE_DISABLE_EXPLORE_PLAN_AGENTS=1`. | Environment variable. | <Undocumented /> |
+| [Turn Off All Built-in Agents](./agents/disable-builtin-agents.md) | ✅ Yes. It removes text. | `CLAUDE_AGENT_SDK_DISABLE_BUILTIN_AGENTS=1`. | Environment variable. | <Undocumented /> |
+| [Command, /init](./commands/command-init.md) | ✅ Yes. A command or skill file with the same name may replace it. | Type `/init`. | Built into the program. | <Documented /> |
+| [Command, /security-review](./commands/command-security-review.md) | ✅ Yes. A command or skill file with the same name may replace it. | Type `/security-review`. | Built into the program. | <Documented /> |
+| [Skill, /simplify](./skills/command-simplify.md) | ✅ Yes. A command or skill file with the same name may replace it. | Type `/simplify`. | Built into the program. | <Undocumented /> |
+| [Skill, /debug](./skills/command-debug.md) | ✅ Yes. A command or skill file with the same name may replace it. | Type `/debug`. | Built into the program. | <Undocumented /> |
+| [Override /init with a Command File](./commands/override-command-init.md) | ✅ Yes. A command or skill file with the same name may replace it. | Type `/init`. | Built into the program. | <Undocumented /> |
+| [Override /simplify with a Skill File](./other/override-skill-simplify.md) | ✅ Yes. A command or skill file with the same name may replace it. | Type `/simplify`. | Built into the program. | <Undocumented /> |
+| [Prompt Hook Request](./hooks/hook-prompt.md) | Partly. You write the prompt and pick the model. The system text is fixed. | Add or remove the hook. | `hooks` in any settings scope. | <Documented /> |
+| [Agent Hook Request](./hooks/hook-agent.md) | Partly. You write the prompt and pick the model. The system text is fixed. | Add or remove the hook. | `hooks` in any settings scope. | <Documented /> |
+| [Auto Mode Classifier](./modes/auto-classifier.md) | Partly. The `autoMode` setting edits the rule lists. | `--permission-mode auto` or `defaultMode: "auto"`. | `autoMode` in user, flag, or managed settings. | <Documented /> |
+| [Auto Mode Classifier, Custom Rules](./modes/auto-classifier-custom.md) | ✅ Yes. You write the rules. | `autoMode` setting. | `autoMode` in user, flag, or managed settings. | <Documented /> |
+| [Compaction Prompt, Custom Instructions](./context-and-memory/compact-custom.md) | ✅ Yes. You add focus text. The base summary rules stay. | `/compact <text>`. | The command line, `CLAUDE.md`, or a `PreCompact` hook. | <Documented /> |
+| [Plan Mode, Custom Workflow](./modes/plan-mode-instructions.md) | ✅ Yes. You give the workflow text. The read-only rules and the `ExitPlanMode` rule stay. | `--plan-mode-instructions`. | Command-line flag. | <Undocumented /> |
+| [Git Instructions Turned Off](./context-and-memory/git-instructions-off.md) | ✅ Yes. It removes text. | `includeGitInstructions` or `CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS=1`. | Any settings scope, or an environment variable. | <Documented /> |
+| [Auto Memory Turned Off](./context-and-memory/memory-off.md) | ✅ Yes. It removes text. | `CLAUDE_CODE_DISABLE_AUTO_MEMORY=1` or `autoMemoryEnabled`. | Environment variable or any settings scope. | <Documented /> |
+| [Custom Output Style with a Built-in Name](./output-styles/style-override-builtin.md) | ✅ Yes. You write the file. | `/output-style` or the `outputStyle` setting. | `~/.claude/output-styles/*.md` or `.claude/output-styles/*.md`. | <Undocumented /> |
+| [Subagent with --system-prompt and --append-system-prompt](./agents/subagent-with-prompt-flags.md) | Not for the subagent. Use `--append-subagent-system-prompt`. | The flags. | Command-line flags. | <Undocumented /> |
+| [Prompt Hook on Stop](./hooks/hook-prompt-stop.md) | Partly. You write the prompt and pick the model. The system text is fixed. | Add or remove the hook. | `hooks` in any settings scope. | <Documented /> |
+| [All Tools Sent Upfront](./defaults/tools-upfront.md) | ✅ Yes. It adds the deferred tools to the request. | `ENABLE_TOOL_SEARCH`. | Environment variable, or `env` in any settings scope. | <Documented /> |
+| [Override a Prompt](./other/override.md) | ✅ Yes. The page lists each prompt you can replace, append to, or turn off. | Per prompt. See the page. | Flags, env vars, settings, and files. | <Undocumented /> |
+| [Tool Descriptions](./tools/tools.md) (Every request carries them) | ✅ Yes. A Mod API `tool.describe` hook replaces a description. | `ENABLE_TOOL_SEARCH`, `--tools`, `--disallowedTools`. | Built into the program. | <Undocumented /> |
+| [Built-In Skills](./skills/built-in-skills.md) (The main agent reads one line for each) | ✅ Yes. A skill or command with the same name replaces one. | `--disable-slash-commands`. | Built into the program. Override in `.claude/skills/<name>/SKILL.md`. | <Documented /> |
+| [Built-In Agents](./agents/built-in-agents.md) (The main agent reads one line for each) | ✅ Yes. An agent with the same name replaces one. | `CLAUDE_CODE_DISABLE_EXPLORE_PLAN_AGENTS`, `CLAUDE_AGENT_SDK_DISABLE_BUILTIN_AGENTS`. | Built into the program. Override in `.claude/agents/<name>.md`. | <Documented /> |
+| [Tools per Variant](./tools/tools-per-variant.md) (Every request carries the list) | ✅ Yes. Use `--tools`, `--allowedTools`, `--disallowedTools`, or settings. | `--bare` and `CLAUDE_CODE_SIMPLE=1` cut the list to three tools. | Built into the program. | <Undocumented /> |
 
 ## How the Captures Were Made
 
 Every prompt on these pages was captured offline, with no model call and no cost.
 
-1. A script starts the installed program (version 2.1.311) in print mode (`-p`) once per variant.
+1. A script starts the installed program (version 2.1.312) in print mode (`-p`) once per variant.
 2. The program talks to a small fake Messages API on `127.0.0.1`. The fake server writes each request body to a file and sends back a canned reply.
 3. The run uses a fake API key, a dead proxy (`HTTPS_PROXY` and `HTTP_PROXY` point to a closed port), `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1`, `DISABLE_TELEMETRY=1`, and a temporary home, config folder, and project folder. No login token is used. The script checks that every request went to the local server.
 4. A second script reads the saved request bodies, replaces machine-specific values with placeholders, and writes these pages. It makes the diffs with `diff -u`, not by hand.
@@ -123,7 +123,7 @@ In `-p` mode the identity line is the SDK line: `You are a Claude agent, built o
 The program has three identity lines. Two more appear in its text:
 
 - `You are Claude Code, Anthropic's official CLI for Claude.` This is the line for the interactive terminal app. It could not be captured offline: the full-screen app did not accept typed input in the test harness, so no request was sent. Setting `CLAUDE_CODE_ENTRYPOINT=cli` in `-p` mode does not change the line.
-- `You are Claude Code, Anthropic's official CLI for Claude, running within the Claude Agent SDK.` Print mode sends this one when you use `--append-system-prompt`. See [Append System Prompt](./append-system-prompt.md).
+- `You are Claude Code, Anthropic's official CLI for Claude, running within the Claude Agent SDK.` Print mode sends this one when you use `--append-system-prompt`. See [Append System Prompt](./defaults/append-system-prompt.md).
 
 ## How Claude Code Picks the Variant
 
@@ -158,9 +158,9 @@ flowchart TD
   C --> R
 ```
 
-Subagents skip this chart. They get their own body and notes (see [Subagent, general-purpose](./subagent-general-purpose.md)).
+Subagents skip this chart. They get their own body and notes (see [Subagent, general-purpose](./agents/subagent-general-purpose.md)).
 
-Captures disagree with the old wiki in one place: the wiki says models with `sonnet` or `haiku` in the name get the full prompt. In 2.1.311 they get the lean prompt, and only `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=0` gives the full one.
+Captures disagree with the old wiki in one place: the wiki says models with `sonnet` or `haiku` in the name get the full prompt. In 2.1.312 they get the lean prompt, and only `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=0` gives the full one.
 
 ## All Variants
 
@@ -168,69 +168,69 @@ Size is the number of characters in everything shown on the variant page, after 
 
 | Variant | How to select it | Characters | Tools | Sections |
 | --- | --- | --- | --- | --- |
-| [Default, Lean Prompt](./default-lean.md) | Default on Opus 5.5 | 15,721 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
-| [Default, Sonnet 5.5](./default-sonnet.md) | Default on Sonnet 5.5 | 15,727 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
-| [Default, Haiku 5.5](./default-haiku.md) | Default on Haiku 5.5 | 18,516 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
-| [Full Prompt](./full-prompt.md) | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=0` | 37,105 | 12 | `System`, `Doing tasks`, `Executing actions with care`, `Using your tools`, `Tone and style`, `Text output (does not apply to tool calls)`, `Session-specific guidance`, `auto memory`, `Environment`, `Context management` |
-| [Simple Prompt Switch on Sonnet](./simple-prompt-sonnet.md) (same text as default-sonnet) | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1` on Sonnet | 15,727 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
-| [Simple Prompt Switch on Haiku](./simple-prompt-haiku.md) (same text as default-haiku) | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1` on Haiku | 18,516 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
-| [Simple Prompt Switch on Opus](./simple-prompt-opus.md) (same text as default-lean) | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1` on Opus | 15,721 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
-| [Bare Mode](./bare.md) | `--bare` | 376 | 3 | none |
-| [Simple Mode Env Var](./simple-env.md) (same text as bare) | `CLAUDE_CODE_SIMPLE=1` | 376 | 3 | none |
-| [Exclude Dynamic Sections](./exclude-dynamic.md) | `--exclude-dynamic-system-prompt-sections` | 15,616 | 12 | `Harness`, `Environment`, `Context management` |
-| [Exclude Dynamic Sections, Full Prompt](./exclude-dynamic-full.md) | `--exclude-dynamic-system-prompt-sections` plus the full prompt | 37,115 | 12 | `System`, `Doing tasks`, `Executing actions with care`, `Using your tools`, `Tone and style`, `auto memory`, `Text output (does not apply to tool calls)`, `Session-specific guidance`, `Environment`, `Context management` |
-| [Output Style, Explanatory](./style-explanatory.md) | Output style `Explanatory` | 16,908 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
-| [Output Style, Learning](./style-learning.md) | Output style `Learning` | 20,767 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
-| [Output Style, Proactive](./style-proactive.md) | Output style `Proactive` | 17,227 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
-| [Output Style, Concise](./style-concise.md) | Output style `Concise` | 17,261 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
-| [Custom Output Style](./style-custom.md) | Custom style file | 15,939 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
-| [Custom Output Style on the Full Prompt](./style-custom-full.md) | Custom style, full prompt | 34,002 | 12 | `System`, `Executing actions with care`, `Using your tools`, `Tone and style`, `Text output (does not apply to tool calls)`, `Session-specific guidance`, `auto memory`, `Environment`, `Context management` |
-| [Custom Output Style with Keep Coding Instructions](./style-custom-keep.md) | Custom style with `keep-coding-instructions` | 37,323 | 12 | `System`, `Doing tasks`, `Executing actions with care`, `Using your tools`, `Tone and style`, `Text output (does not apply to tool calls)`, `Session-specific guidance`, `auto memory`, `Environment`, `Context management` |
-| [Custom Output Style with Keep Coding Instructions, Lean Prompt](./style-custom-keep-lean.md) (same text as style-custom) | Custom style with `keep-coding-instructions`, lean | 15,939 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
-| [Append System Prompt](./append-system-prompt.md) | `--append-system-prompt` | 15,778 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
-| [Replace System Prompt](./system-prompt.md) | `--system-prompt` | 10,120 | 12 | none |
-| [Replace and Append Together](./system-prompt-append.md) | `--system-prompt` plus `--append-system-prompt` | 10,177 | 12 | none |
-| [With a CLAUDE.md File](./claude-md.md) | A `CLAUDE.md` file | 16,110 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
-| [Inside a Git Repository](./git-repo.md) | A git repository | 16,337 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
-| [Main Thread Custom Agent](./agent-main.md) | `--agent <name>` | 10,222 | 12 | none |
-| [Permission Mode, Plan](./mode-plan.md) | `--permission-mode plan` | 20,600 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
-| [Permission Mode, Accept Edits](./mode-acceptEdits.md) (same text as default-lean) | `--permission-mode acceptEdits` | 15,721 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
-| [Permission Mode, Don't Ask](./mode-dontAsk.md) (same text as default-lean) | `--permission-mode dontAsk` | 15,721 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
-| [Brief Mode](./brief.md) (same text as default-lean) | `--brief` | 15,721 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
-| [Compaction Prompt](./compact.md) | `/compact` | 22,575 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
-| [Subagent, General Purpose](./subagent-general-purpose.md) | `Agent` tool, `general-purpose` | 11,135 | 8 | none |
-| [Subagent, Explore](./subagent-explore.md) | `Agent` tool, `Explore` | 11,665 | 5 | none |
-| [Subagent, Plan](./subagent-plan.md) | `Agent` tool, `Plan` | 11,972 | 5 | none |
-| [Subagent, Custom Agent](./subagent-custom.md) | Custom agent file | 9,759 | 8 | none |
-| [Subagent, Statusline Setup](./subagent-statusline-setup.md) | `Agent` tool, `statusline-setup` | 15,551 | 2 | none |
-| [Subagent, Claude (FleetView)](./subagent-claude.md) | `Agent` tool, `claude` | 11,534 | 8 | none |
-| [Subagent, Web Fetch](./subagent-web-fetch.md) | `CLAUDE_CODE_WEB_FETCH_AGENT=1`, `Agent` tool, `web-fetch` | 5,525 | 1 | none |
-| [Subagent, Claude Code Guide](./subagent-claude-code-guide.md) | Interactive session, `Agent` tool, `claude-code-guide` | 29,062 | 4 | none |
-| [Override a Built-in Agent with a File](./override-agent-file.md) | Agent file with a built-in name | 9,772 | 8 | none |
-| [Override a Built-in Agent with --agents](./override-agents-flag.md) | `--agents` with a built-in name | 9,753 | 8 | none |
-| [Append to Every Subagent Prompt](./override-append-subagent.md) | `--append-subagent-system-prompt` | 11,693 | 5 | none |
-| [Turn Off the Explore and Plan Agents](./disable-explore-plan.md) | `CLAUDE_CODE_DISABLE_EXPLORE_PLAN_AGENTS=1` | 14,816 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
-| [Turn Off All Built-in Agents](./disable-builtin-agents.md) | `CLAUDE_AGENT_SDK_DISABLE_BUILTIN_AGENTS=1` | 14,083 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
-| [Command, /init](./command-init.md) | `/init` | 17,366 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
-| [Command, /security-review](./command-security-review.md) | `/security-review` | 16,246 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
-| [Skill, /simplify](./command-simplify.md) | `/simplify` | 18,598 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
-| [Skill, /debug](./command-debug.md) | `/debug` | 17,368 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
-| [Override /init with a Command File](./override-command-init.md) | `/init` | 15,830 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
-| [Override /simplify with a Skill File](./override-skill-simplify.md) | `/simplify` | 15,783 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
-| [Prompt Hook Request](./hook-prompt.md) | Hook `type: prompt` | 1,478 | 0 | none |
-| [Agent Hook Request](./hook-agent.md) | Hook `type: agent` | 2,362 | 10 | none |
-| [Auto Mode Classifier](./auto-classifier.md) | `--permission-mode auto` | 140,718 | 0 | none |
-| [Auto Mode Classifier, Custom Rules](./auto-classifier-custom.md) | `autoMode` setting | 76,028 | 0 | none |
-| [Compaction Prompt, Custom Instructions](./compact-custom.md) | `/compact <text>`, CLAUDE.md, or `PreCompact` hook | 23,085 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
-| [Plan Mode, Custom Workflow](./plan-mode-instructions.md) | `--plan-mode-instructions` | 17,217 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
-| [Git Instructions Turned Off](./git-instructions-off.md) | `includeGitInstructions: false` | 15,083 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
-| [Auto Memory Turned Off](./memory-off.md) | `CLAUDE_CODE_DISABLE_AUTO_MEMORY=1` | 13,658 | 12 | `Harness`, `Session-specific guidance`, `Environment`, `Context management` |
-| [Custom Output Style with a Built-in Name](./style-override-builtin.md) | Style file with a built-in name | 15,936 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
-| [Subagent with --system-prompt and --append-system-prompt](./subagent-with-prompt-flags.md) | Prompt flags plus a subagent | 11,697 | 5 | none |
-| [Prompt Hook on Stop](./hook-prompt-stop.md) | Hook `type: prompt` on `Stop` | 12,622 | 0 | none |
-| [All Tools Sent Upfront](./tools-upfront.md) | `ENABLE_TOOL_SEARCH=false` | 15,352 | 21 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Default, Lean Prompt](./defaults/default-lean.md) | Default on Opus 5.5 | 15,721 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Default, Sonnet 5.5](./defaults/default-sonnet.md) | Default on Sonnet 5.5 | 15,727 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Default, Haiku 5.5](./defaults/default-haiku.md) | Default on Haiku 5.5 | 18,516 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Full Prompt](./defaults/full-prompt.md) | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=0` | 37,105 | 12 | `System`, `Doing tasks`, `Executing actions with care`, `Using your tools`, `Tone and style`, `Text output (does not apply to tool calls)`, `Session-specific guidance`, `auto memory`, `Environment`, `Context management` |
+| [Simple Prompt Switch on Sonnet](./defaults/simple-prompt-sonnet.md) (same text as default-sonnet) | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1` on Sonnet | 15,727 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Simple Prompt Switch on Haiku](./defaults/simple-prompt-haiku.md) (same text as default-haiku) | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1` on Haiku | 18,516 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Simple Prompt Switch on Opus](./defaults/simple-prompt-opus.md) (same text as default-lean) | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1` on Opus | 15,721 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Bare Mode](./defaults/bare.md) | `--bare` | 376 | 3 | none |
+| [Simple Mode Env Var](./defaults/simple-env.md) (same text as bare) | `CLAUDE_CODE_SIMPLE=1` | 376 | 3 | none |
+| [Exclude Dynamic Sections](./defaults/exclude-dynamic.md) | `--exclude-dynamic-system-prompt-sections` | 15,616 | 12 | `Harness`, `Environment`, `Context management` |
+| [Exclude Dynamic Sections, Full Prompt](./defaults/exclude-dynamic-full.md) | `--exclude-dynamic-system-prompt-sections` plus the full prompt | 37,115 | 12 | `System`, `Doing tasks`, `Executing actions with care`, `Using your tools`, `Tone and style`, `auto memory`, `Text output (does not apply to tool calls)`, `Session-specific guidance`, `Environment`, `Context management` |
+| [Output Style, Explanatory](./output-styles/style-explanatory.md) | Output style `Explanatory` | 16,908 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Output Style, Learning](./output-styles/style-learning.md) | Output style `Learning` | 20,767 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Output Style, Proactive](./output-styles/style-proactive.md) | Output style `Proactive` | 17,227 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Output Style, Concise](./output-styles/style-concise.md) | Output style `Concise` | 17,261 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Custom Output Style](./output-styles/style-custom.md) | Custom style file | 15,939 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Custom Output Style on the Full Prompt](./output-styles/style-custom-full.md) | Custom style, full prompt | 34,002 | 12 | `System`, `Executing actions with care`, `Using your tools`, `Tone and style`, `Text output (does not apply to tool calls)`, `Session-specific guidance`, `auto memory`, `Environment`, `Context management` |
+| [Custom Output Style with Keep Coding Instructions](./output-styles/style-custom-keep.md) | Custom style with `keep-coding-instructions` | 37,323 | 12 | `System`, `Doing tasks`, `Executing actions with care`, `Using your tools`, `Tone and style`, `Text output (does not apply to tool calls)`, `Session-specific guidance`, `auto memory`, `Environment`, `Context management` |
+| [Custom Output Style with Keep Coding Instructions, Lean Prompt](./output-styles/style-custom-keep-lean.md) (same text as style-custom) | Custom style with `keep-coding-instructions`, lean | 15,939 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Append System Prompt](./defaults/append-system-prompt.md) | `--append-system-prompt` | 15,778 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Replace System Prompt](./defaults/system-prompt.md) | `--system-prompt` | 10,120 | 12 | none |
+| [Replace and Append Together](./defaults/system-prompt-append.md) | `--system-prompt` plus `--append-system-prompt` | 10,177 | 12 | none |
+| [With a CLAUDE.md File](./context-and-memory/claude-md.md) | A `CLAUDE.md` file | 16,110 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Inside a Git Repository](./context-and-memory/git-repo.md) | A git repository | 16,337 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Main Thread Custom Agent](./agents/agent-main.md) | `--agent <name>` | 10,222 | 12 | none |
+| [Permission Mode, Plan](./modes/mode-plan.md) | `--permission-mode plan` | 20,600 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Permission Mode, Accept Edits](./modes/mode-acceptEdits.md) (same text as default-lean) | `--permission-mode acceptEdits` | 15,721 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Permission Mode, Don't Ask](./modes/mode-dontAsk.md) (same text as default-lean) | `--permission-mode dontAsk` | 15,721 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Brief Mode](./defaults/brief.md) (same text as default-lean) | `--brief` | 15,721 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Compaction Prompt](./context-and-memory/compact.md) | `/compact` | 22,575 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Subagent, General Purpose](./agents/subagent-general-purpose.md) | `Agent` tool, `general-purpose` | 11,135 | 8 | none |
+| [Subagent, Explore](./agents/subagent-explore.md) | `Agent` tool, `Explore` | 11,665 | 5 | none |
+| [Subagent, Plan](./agents/subagent-plan.md) | `Agent` tool, `Plan` | 11,972 | 5 | none |
+| [Subagent, Custom Agent](./agents/subagent-custom.md) | Custom agent file | 9,759 | 8 | none |
+| [Subagent, Statusline Setup](./agents/subagent-statusline-setup.md) | `Agent` tool, `statusline-setup` | 15,535 | 2 | none |
+| [Subagent, Claude (FleetView)](./agents/subagent-claude.md) | `Agent` tool, `claude` | 11,534 | 8 | none |
+| [Subagent, Web Fetch](./agents/subagent-web-fetch.md) | `CLAUDE_CODE_WEB_FETCH_AGENT=1`, `Agent` tool, `web-fetch` | 5,525 | 1 | none |
+| [Subagent, Claude Code Guide](./agents/subagent-claude-code-guide.md) | Interactive session, `Agent` tool, `claude-code-guide` | 29,062 | 4 | none |
+| [Override a Built-in Agent with a File](./agents/override-agent-file.md) | Agent file with a built-in name | 9,772 | 8 | none |
+| [Override a Built-in Agent with --agents](./agents/override-agents-flag.md) | `--agents` with a built-in name | 9,753 | 8 | none |
+| [Append to Every Subagent Prompt](./agents/override-append-subagent.md) | `--append-subagent-system-prompt` | 11,693 | 5 | none |
+| [Turn Off the Explore and Plan Agents](./agents/disable-explore-plan.md) | `CLAUDE_CODE_DISABLE_EXPLORE_PLAN_AGENTS=1` | 14,816 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Turn Off All Built-in Agents](./agents/disable-builtin-agents.md) | `CLAUDE_AGENT_SDK_DISABLE_BUILTIN_AGENTS=1` | 14,083 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Command, /init](./commands/command-init.md) | `/init` | 17,366 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Command, /security-review](./commands/command-security-review.md) | `/security-review` | 16,246 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Skill, /simplify](./skills/command-simplify.md) | `/simplify` | 18,598 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Skill, /debug](./skills/command-debug.md) | `/debug` | 17,368 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Override /init with a Command File](./commands/override-command-init.md) | `/init` | 15,830 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Override /simplify with a Skill File](./other/override-skill-simplify.md) | `/simplify` | 15,783 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Prompt Hook Request](./hooks/hook-prompt.md) | Hook `type: prompt` | 1,478 | 0 | none |
+| [Agent Hook Request](./hooks/hook-agent.md) | Hook `type: agent` | 2,362 | 10 | none |
+| [Auto Mode Classifier](./modes/auto-classifier.md) | `--permission-mode auto` | 140,718 | 0 | none |
+| [Auto Mode Classifier, Custom Rules](./modes/auto-classifier-custom.md) | `autoMode` setting | 76,028 | 0 | none |
+| [Compaction Prompt, Custom Instructions](./context-and-memory/compact-custom.md) | `/compact <text>`, CLAUDE.md, or `PreCompact` hook | 23,085 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Plan Mode, Custom Workflow](./modes/plan-mode-instructions.md) | `--plan-mode-instructions` | 17,217 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Git Instructions Turned Off](./context-and-memory/git-instructions-off.md) | `includeGitInstructions: false` | 15,083 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Auto Memory Turned Off](./context-and-memory/memory-off.md) | `CLAUDE_CODE_DISABLE_AUTO_MEMORY=1` | 13,658 | 12 | `Harness`, `Session-specific guidance`, `Environment`, `Context management` |
+| [Custom Output Style with a Built-in Name](./output-styles/style-override-builtin.md) | Style file with a built-in name | 15,936 | 12 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
+| [Subagent with --system-prompt and --append-system-prompt](./agents/subagent-with-prompt-flags.md) | Prompt flags plus a subagent | 11,697 | 5 | none |
+| [Prompt Hook on Stop](./hooks/hook-prompt-stop.md) | Hook `type: prompt` on `Stop` | 12,622 | 0 | none |
+| [All Tools Sent Upfront](./defaults/tools-upfront.md) | `ENABLE_TOOL_SEARCH=false` | 15,352 | 21 | `Harness`, `Session-specific guidance`, `Memory`, `Environment`, `Context management` |
 
-See also [Tools per Variant](./tools-per-variant.md).
+See also [Tools per Variant](./tools/tools-per-variant.md).
 
 ## Placeholders
 

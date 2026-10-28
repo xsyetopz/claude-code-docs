@@ -1,11 +1,12 @@
 import { writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { ctx, DOCS } from "./ctx.ts";
+import { ctx, groupDir, nextPos } from "./ctx.ts";
+import { pageLink, pagePath, relink } from "./link.ts";
 import { fence, fmt, stripTrailing, toolDiff } from "./text.ts";
 
 // tools-per-variant
 const toolLink = (name: string) =>
-  `[\`${name}\`](./tools.md#${name.toLowerCase()})`;
+  `[\`${name}\`](${pagePath("tools", "tools")}#${name.toLowerCase()})`;
 export const toolsPerVariantPage = () => {
   const def = ctx.caps.get("default-lean");
   if (!def) throw new Error("missing default-lean capture");
@@ -13,7 +14,7 @@ export const toolsPerVariantPage = () => {
     "---",
     `title: "Tools per Variant"`,
     `description: "Which tools each system prompt variant sends, and how the tool text differs."`,
-    `sidebar_position: ${ctx.pos++}`,
+    `sidebar_position: ${nextPos("tools")}`,
     "---",
     "",
     "Tools are part of what the model reads. Each request carries a list of tools, and each tool has a name, a description, and a schema. This page compares the lists across variants.",
@@ -39,8 +40,11 @@ export const toolsPerVariantPage = () => {
   for (const [id, c] of ctx.caps) {
     if (id === "default-lean") continue;
     const d = toolDiff(def.tools, c.tools);
-    if (!d) same.push(`[${c.v.title}](./${id}.md)`);
-    else L.push(`| [${c.v.title}](./${id}.md) | ${c.tools.length} | ${d} |`);
+    if (!d) same.push(pageLink("tools", id, c.v.title));
+    else
+      L.push(
+        `| ${pageLink("tools", id, c.v.title)} | ${c.tools.length} | ${d} |`,
+      );
   }
   L.push("", "## Same Tools as the Default", "", `${same.join(", ")}.`, "");
   const bare = ctx.caps.get("bare");
@@ -56,7 +60,7 @@ export const toolsPerVariantPage = () => {
       "",
     );
   writeFileSync(
-    join(DOCS, "tools-per-variant.md"),
+    join(groupDir("tools"), "tools-per-variant.md"),
     stripTrailing(L.join("\n")),
   );
 };
@@ -73,7 +77,7 @@ export const toolsPage = () => {
     "---",
     `title: "Tool Descriptions"`,
     `description: "The default description and input schema of every tool Claude Code sends, and how to override them."`,
-    `sidebar_position: ${ctx.pos++}`,
+    `sidebar_position: ${nextPos("tools")}`,
     "---",
     "",
     `This page shows the text the model reads for each tool: the description and the JSON input schema. The text comes from [${all.v.title}](./${all.v.id}.md), which sends ${all.tools.length} tools with their full text, and from the default request, which sends ${def.tools.length} tools in full. It lists the rest only by name, and \`ToolSearch\` loads their text when the model asks for it.`,
@@ -91,7 +95,7 @@ export const toolsPage = () => {
     "",
     "## Tools",
     "",
-  ];
+  ].map((s) => relink("tools", s));
   for (const t of list) {
     L.push(
       `### \`${t.name}\``,
@@ -104,5 +108,8 @@ export const toolsPage = () => {
       "",
     );
   }
-  writeFileSync(join(DOCS, "tools.md"), stripTrailing(L.join("\n")));
+  writeFileSync(
+    join(groupDir("tools"), "tools.md"),
+    stripTrailing(L.join("\n")),
+  );
 };

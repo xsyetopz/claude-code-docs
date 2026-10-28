@@ -4,6 +4,7 @@ export const STYLE_VARIANTS: Variant[] = [
   ...(["Explanatory", "Learning", "Proactive", "Concise"] as const).map(
     (s) => ({
       id: `style-${s.toLowerCase()}`,
+      group: "output-styles" as const,
       title: `Output Style, ${s}`,
       model: LEAN_MODEL,
       args: settings({ outputStyle: s }),
@@ -22,6 +23,7 @@ export const STYLE_VARIANTS: Variant[] = [
   ),
   {
     id: "style-custom",
+    group: "output-styles",
     title: "Custom Output Style",
     model: LEAN_MODEL,
     args: settings({ outputStyle: "Probe Style" }),
@@ -41,6 +43,7 @@ export const STYLE_VARIANTS: Variant[] = [
   },
   {
     id: "style-custom-full",
+    group: "output-styles",
     title: "Custom Output Style on the Full Prompt",
     model: LEAN_MODEL,
     env: { CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT: "0" },
@@ -61,6 +64,7 @@ export const STYLE_VARIANTS: Variant[] = [
   },
   {
     id: "style-custom-keep",
+    group: "output-styles",
     title: "Custom Output Style with Keep Coding Instructions",
     model: LEAN_MODEL,
     env: { CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT: "0" },
@@ -81,6 +85,7 @@ export const STYLE_VARIANTS: Variant[] = [
   },
   {
     id: "style-custom-keep-lean",
+    group: "output-styles",
     title: "Custom Output Style with Keep Coding Instructions, Lean Prompt",
     model: LEAN_MODEL,
     args: settings({ outputStyle: "Probe Style" }),

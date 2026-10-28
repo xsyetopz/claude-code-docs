@@ -1,10 +1,10 @@
 ---
 title: JSON Schemas
-description: JSON Schemas and the Mod API type file for every Claude Code 2.1.311 payload and config file, made from the program, and how they differ from the SchemaStore copies.
+description: JSON Schemas and the Mod API type file for every Claude Code 2.1.312 payload and config file, made from the program, and how they differ from the SchemaStore copies.
 sidebar_position: 6
 ---
 
-This site publishes the exact fields of every Claude Code `2.1.311` payload and config file: 17 JSON Schemas and the Mod API type file.
+This site publishes the exact fields of every Claude Code `2.1.312` payload and config file: 17 JSON Schemas and the Mod API type file.
 Most are made by running the program's own validators, so they list every key that this release knows.
 Paste a config file's `$schema` URL into the file and your editor can suggest keys and flag mistakes.
 
@@ -14,14 +14,14 @@ They list every field of this release. Look a field up in them before you rely o
 
 | File kind | Where the file lives | `$schema` URL |
 | --- | --- | --- |
-| Settings | `~/.claude/settings.json`, `.claude/settings.json`, `.claude/settings.local.json` | `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-settings.json` |
-| Managed settings | The managed settings file of your system | `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-managed-settings.json` |
-| Plugin manifest | `.claude-plugin/plugin.json` | `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-plugin-manifest.json` |
-| Marketplace | `.claude-plugin/marketplace.json` | `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-marketplace.json` |
-| Plugin hooks | `hooks/hooks.json` in a plugin | `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-plugin-hooks.json` |
-| Keybindings | `~/.claude/keybindings.json` | `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-keybindings.json` |
-| MCP servers | `.mcp.json` | `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-mcp.json` |
-| Custom agents | The JSON of `claude --agents` | `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-agents-json.json` |
+| Settings | `~/.claude/settings.json`, `.claude/settings.json`, `.claude/settings.local.json` | `https://xsyetopz.github.io/clawdipedia/schemas/claude-code-settings.json` |
+| Managed settings | The managed settings file of your system | `https://xsyetopz.github.io/clawdipedia/schemas/claude-code-managed-settings.json` |
+| Plugin manifest | `.claude-plugin/plugin.json` | `https://xsyetopz.github.io/clawdipedia/schemas/claude-code-plugin-manifest.json` |
+| Marketplace | `.claude-plugin/marketplace.json` | `https://xsyetopz.github.io/clawdipedia/schemas/claude-code-marketplace.json` |
+| Plugin hooks | `hooks/hooks.json` in a plugin | `https://xsyetopz.github.io/clawdipedia/schemas/claude-code-plugin-hooks.json` |
+| Keybindings | `~/.claude/keybindings.json` | `https://xsyetopz.github.io/clawdipedia/schemas/claude-code-keybindings.json` |
+| MCP servers | `.mcp.json` | `https://xsyetopz.github.io/clawdipedia/schemas/claude-code-mcp.json` |
+| Custom agents | The JSON of `claude --agents` | `https://xsyetopz.github.io/clawdipedia/schemas/claude-code-agents-json.json` |
 
 ### Payloads
 
@@ -30,16 +30,16 @@ Files made only of definitions have no root: pick the definition by name, such a
 
 | Payload | Made from | URL |
 | --- | --- | --- |
-| Hook output (stdout JSON of a settings hook) | The program's validator | `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-hook-output.json` |
-| Built-in tool inputs and results | Each tool's validator | `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-tools.json` |
-| Headless control protocol | The program's validators | `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-control-protocol.json` |
-| `stream-json` messages | The program's validators | `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-stream-json.json` |
-| Frontmatter of skills, subagents, and output styles | The program's validators | `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-frontmatter.json` |
-| Status line input | The program's code | `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-status-line.json` |
-| Transcript lines | The program's code | `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-transcript.json` |
-| OpenTelemetry metrics, spans, and events | The program's code | `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-otel.json` |
-| `~/.claude.json` | The program's code | `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-claude-json.json` |
-| Mod API calls, events, types, and hook input | The program's type file, unchanged | `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code.d.ts` |
+| Hook output (stdout JSON of a settings hook) | The program's validator | `https://xsyetopz.github.io/clawdipedia/schemas/claude-code-hook-output.json` |
+| Built-in tool inputs and results | Each tool's validator | `https://xsyetopz.github.io/clawdipedia/schemas/claude-code-tools.json` |
+| Headless control protocol | The program's validators | `https://xsyetopz.github.io/clawdipedia/schemas/claude-code-control-protocol.json` |
+| `stream-json` messages | The program's validators | `https://xsyetopz.github.io/clawdipedia/schemas/claude-code-stream-json.json` |
+| Frontmatter of skills, subagents, and output styles | The program's validators | `https://xsyetopz.github.io/clawdipedia/schemas/claude-code-frontmatter.json` |
+| Status line input | The program's code | `https://xsyetopz.github.io/clawdipedia/schemas/claude-code-status-line.json` |
+| Transcript lines | The program's code | `https://xsyetopz.github.io/clawdipedia/schemas/claude-code-transcript.json` |
+| OpenTelemetry metrics, spans, and events | The program's code | `https://xsyetopz.github.io/clawdipedia/schemas/claude-code-otel.json` |
+| `~/.claude.json` | The program's code | `https://xsyetopz.github.io/clawdipedia/schemas/claude-code-claude-json.json` |
+| Mod API calls, events, types, and hook input | The program's type file, unchanged | `https://xsyetopz.github.io/clawdipedia/schemas/claude-code.d.ts` |
 
 A file made from the program's code reads the object literals and key lists that build the payload.
 In it, `x-unverified` marks a field whose type the code does not show, and `x-observed` marks a field that a probe saw.
@@ -54,7 +54,7 @@ Those keys carry `"x-managed-only": true`.
 
 ```json
 {
-  "$schema": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-settings.json",
+  "$schema": "https://xsyetopz.github.io/clawdipedia/schemas/claude-code-settings.json",
   "permissions": { "allow": ["Bash(bun test)"] },
   "syncClaudeAiSkills": true
 }
@@ -62,7 +62,7 @@ Those keys carry `"x-managed-only": true`.
 
 ## The Mod API Type File
 
-`https://xsyetopz.github.io/claude-code-docs/schemas/claude-code.d.ts` is the Mod API type file that the `2.1.311` program carries, copied unchanged with a short header.
+`https://xsyetopz.github.io/clawdipedia/schemas/claude-code.d.ts` is the Mod API type file that the `2.1.312` program carries, copied unchanged with a short header.
 It declares every `$` call, every event, and their types, with their doc comments.
 It does not hold the fields of the built-in tools: `BuiltinToolInputs` and `BuiltinToolResults` are empty in it, and the program writes them beside each mod it loads as `claude-code-tools/index.d.ts`.
 Read it for the exact fields of a payload: it names every one.
@@ -86,7 +86,7 @@ Two parts need extra steps:
 ## Regenerate
 
 ```sh
-bun run schemas        # rewrite schemas/ from the installed 2.1.311 program
+bun run schemas        # rewrite schemas/ from the installed 2.1.312 program
 bun run schemas:check  # check the files, and check the good and bad examples in tools/schemas/fixtures
 ```
 
@@ -114,7 +114,7 @@ We compared the files with the copies on [SchemaStore](https://json.schemastore.
 | Plugin hooks | none | 5 | SchemaStore has no schema for this file. |
 
 SchemaStore has 25 settings keys that this site's settings schema does not. 12 of them are managed-only keys, such as `policyHelper` and `allowManagedHooksOnly`, which this site's managed schema has.
-The other 13 are not in the `2.1.311` validator at all, for example `autoConnectIde`, `diffTool`, `skippedPlugins`, and `sshHostAllowlist`. Four are keys of the global config file `~/.claude.json`: `autoConnectIde`, `autoInstallIdeExtension`, `diffTool`, and `externalEditorContext`. Five are desktop-app fields that the program carries: `browserExternalPageTools`, `disableBrowserExternalNavigation`, `disableMobileSimulatorTools`, `requireCoworkFullVmSandbox`, and `sshHostAllowlist`. Four have no string in the 2.1.307 program: `permissionExplainerEnabled`, `skippedMarketplaces`, `skippedPlugins`, and `teammateDefaultModel`.
+The other 13 are not in the `2.1.312` validator at all, for example `autoConnectIde`, `diffTool`, `skippedPlugins`, and `sshHostAllowlist`. Four are keys of the global config file `~/.claude.json`: `autoConnectIde`, `autoInstallIdeExtension`, `diffTool`, and `externalEditorContext`. Five are desktop-app fields that the program carries: `browserExternalPageTools`, `disableBrowserExternalNavigation`, `disableMobileSimulatorTools`, `requireCoworkFullVmSandbox`, and `sshHostAllowlist`. Four have no string in the 2.1.307 program: `permissionExplainerEnabled`, `skippedMarketplaces`, `skippedPlugins`, and `teammateDefaultModel`.
 
 SchemaStore also has [`claude-code-launch.json`](https://json.schemastore.org/claude-code-launch.json), the Launch Preview file for preview servers in Claude Code Desktop.
 This site has no copy of it. We found no validator for that file in the `claude` program, and it belongs to the Desktop app, so there is nothing to export from the binary.

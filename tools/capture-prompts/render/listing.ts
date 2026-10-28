@@ -1,10 +1,13 @@
 import { writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { ctx, DOCS } from "./ctx.ts";
+import type { PromptGroup } from "../variants.ts";
+import { ctx, groupDir, nextPos } from "./ctx.ts";
+import { pageLink, relink } from "./link.ts";
 import { fence, stripTrailing, yaml } from "./text.ts";
 
 // built-in agents and skills: the listing line each one gets in the default request
 const listingPage = (o: {
+  group: PromptGroup;
   file: string;
   title: string;
   description: string;
@@ -31,16 +34,19 @@ const listingPage = (o: {
     "---",
     `title: ${yaml(o.title)}`,
     `description: ${yaml(o.description)}`,
-    `sidebar_position: ${ctx.pos++}`,
+    `sidebar_position: ${nextPos(o.group)}`,
     "---",
     "",
-    o.intro.replace("<source>", `[${def.v.title}](./${def.v.id}.md)`),
+    relink(o.group, o.intro).replace(
+      "<source>",
+      pageLink(o.group, def.v.id, def.v.title),
+    ),
     "",
     "## How to Override",
     "",
     "| What | How | Where to read more |",
     "| --- | --- | --- |",
-    ...o.override,
+    ...o.override.map((r) => relink(o.group, r)),
     "",
     `## Default Text (${items.length})`,
     "",
@@ -52,11 +58,13 @@ const listingPage = (o: {
       "",
       fence(text, "text"),
       "",
-      page ? `Prompt: [${page.title}](./${page.id}.md).` : "No prompt page.",
+      page
+        ? `Prompt: ${pageLink(o.group, page.id, page.title)}.`
+        : "No prompt page.",
       "",
     );
   }
-  writeFileSync(join(DOCS, o.file), stripTrailing(L.join("\n")));
+  writeFileSync(join(groupDir(o.group), o.file), stripTrailing(L.join("\n")));
 };
 const titled = (id: string) => {
   const title =
@@ -65,6 +73,7 @@ const titled = (id: string) => {
 };
 export const listingPages = () => {
   listingPage({
+    group: "agents",
     file: "built-in-agents.md",
     title: "Built-In Agents",
     description:
@@ -81,6 +90,7 @@ export const listingPages = () => {
     page: (n) => titled(`subagent-${n.toLowerCase()}`),
   });
   listingPage({
+    group: "skills",
     file: "built-in-skills.md",
     title: "Built-In Skills",
     description:

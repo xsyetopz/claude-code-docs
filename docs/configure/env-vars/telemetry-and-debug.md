@@ -184,7 +184,7 @@ When the output of a command shows a git commit, the `tool_result` event for tha
 
 ## Exact Fields
 
-The exact fields of each OpenTelemetry metric, span, and event: `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-otel.json`. The program builds this payload in code, not with a validator, so the schema is read from that code: a field marked `x-unverified` has a type the code does not show, and `x-observed` marks a field that a probe saw.
+The exact fields of each OpenTelemetry metric, span, and event: `https://xsyetopz.github.io/clawdipedia/schemas/claude-code-otel.json`. The program builds this payload in code, not with a validator, so the schema is read from that code: a field marked `x-unverified` has a type the code does not show, and `x-observed` marks a field that a probe saw.
 It lists every field of this release, so build on the fields it names and look each one up there before you rely on it.
 
 ## Related Pages
@@ -194,4 +194,4 @@ It lists every field of this release, so build on the fields it names and look e
 - [Monitoring](https://code.claude.com/docs/en/monitoring-usage) (see the official docs)
 - [Undocumented Items](../../reference/undocumented.md): every item that only the program shows.
 
-Source: the program (variable names found in the `2.1.311` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
+Source: the program (variable names found in the `2.1.312` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.

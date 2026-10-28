@@ -1,0 +1,10 @@
+{
+  "label": "Modes",
+  "position": 8,
+  "link": {
+    "type": "generated-index",
+    "slug": "/prompts/modes",
+    "title": "Modes",
+    "description": "The prompts for the permission modes, plan mode, and the auto mode classifier."
+  }
+}

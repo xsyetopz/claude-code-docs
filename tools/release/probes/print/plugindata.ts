@@ -1,5 +1,5 @@
 // Design D9 of release-2-1-309-full-surface: when a plugin `bin/` program runs from the Bash tool, is
-// CLAUDE_PLUGIN_DATA set? Decides which cache folder the cc-docs CLI uses there.
+// CLAUDE_PLUGIN_DATA set? Decides which cache folder the clawdipedia CLI uses there.
 import { chmodSync, mkdirSync, writeFileSync } from "node:fs";
 import type { CaseResult } from "../../lib/results.ts";
 import {

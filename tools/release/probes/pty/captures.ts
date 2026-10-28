@@ -24,7 +24,7 @@ const guide: PtyCase = agentCase(
     prompt: PROMPT,
     subagent_type: "claude-code-guide",
   },
-  "The claude-code-guide subagent: system text length and hash (docs/prompts/subagent-claude-code-guide.md). Text kept as .system.txt.",
+  "The claude-code-guide subagent: system text length and hash (docs/prompts/agents/subagent-claude-code-guide.md). Text kept as .system.txt.",
   {
     claims: ["prompts.subagent-claude-code-guide"],
     facts: (x) => {

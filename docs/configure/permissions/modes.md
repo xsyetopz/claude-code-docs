@@ -14,7 +14,7 @@ Run `/permissions` in the chat, or start with `--permission-mode`, which wins fo
 
 ```json title="~/.claude/settings.json"
 {
-  "$schema": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-settings.json",
+  "$schema": "https://xsyetopz.github.io/clawdipedia/schemas/claude-code-settings.json",
   "permissions": {
     "defaultMode": "acceptEdits",
     "disableBypassPermissionsMode": "disable"
@@ -40,7 +40,7 @@ Official pages: [Configure Permissions](https://code.claude.com/docs/en/permissi
 | `dontAsk` | <Documented /> | Denies what would prompt | Picker text: `don't ask (auto-deny anything that would prompt)`. The deny reason says `Claude Code is running in don't ask mode` | Same |
 | `bypassPermissions` | <Documented /> <Caution /> | Skips permission checks | Picker text: `BYPASS PERMISSIONS (no further prompts)`. Explicit `deny` rules still apply. Safety checks marked bypass-immune still ask | Needs `--dangerously-skip-permissions` or `--allow-dangerously-skip-permissions`. Not from project or local `defaultMode` |
 
-Captured system prompts for some modes: [Plan](../../prompts/mode-plan.md), [Accept Edits](../../prompts/mode-acceptEdits.md), and [Don't Ask](../../prompts/mode-dontAsk.md).
+Captured system prompts for some modes: [Plan](../../prompts/modes/mode-plan.md), [Accept Edits](../../prompts/modes/mode-acceptEdits.md), and [Don't Ask](../../prompts/modes/mode-dontAsk.md).
 
 ## Choosing and Cycling a Mode
 

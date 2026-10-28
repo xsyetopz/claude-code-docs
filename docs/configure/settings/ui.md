@@ -59,7 +59,7 @@ This file hides spinner tips, reduces animation, starts every session in focus v
 
 ```json title="~/.claude/settings.json"
 {
-  "$schema": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-settings.json",
+  "$schema": "https://xsyetopz.github.io/clawdipedia/schemas/claude-code-settings.json",
   "spinnerTipsEnabled": false,
   "prefersReducedMotion": true,
   "viewMode": "focus",

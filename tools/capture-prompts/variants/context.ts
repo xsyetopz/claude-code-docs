@@ -3,6 +3,7 @@ import { AGENT_FILE, LEAN_MODEL, type Variant } from "./base.ts";
 export const CONTEXT_VARIANTS: Variant[] = [
   {
     id: "append-system-prompt",
+    group: "defaults",
     title: "Append System Prompt",
     model: LEAN_MODEL,
     args: ["--append-system-prompt", "APPENDED-TEXT-FROM-FLAG"],
@@ -20,6 +21,7 @@ export const CONTEXT_VARIANTS: Variant[] = [
   },
   {
     id: "system-prompt",
+    group: "defaults",
     title: "Replace System Prompt",
     model: LEAN_MODEL,
     args: ["--system-prompt", "REPLACEMENT-TEXT-FROM-FLAG"],
@@ -37,6 +39,7 @@ export const CONTEXT_VARIANTS: Variant[] = [
   },
   {
     id: "system-prompt-append",
+    group: "defaults",
     title: "Replace and Append Together",
     model: LEAN_MODEL,
     args: [
@@ -59,6 +62,7 @@ export const CONTEXT_VARIANTS: Variant[] = [
   },
   {
     id: "claude-md",
+    group: "context-and-memory",
     title: "With a CLAUDE.md File",
     model: LEAN_MODEL,
     projFiles: { "CLAUDE.md": "PROBE-CLAUDE-MD-LINE: use tabs.\n" },
@@ -77,6 +81,7 @@ export const CONTEXT_VARIANTS: Variant[] = [
   },
   {
     id: "git-repo",
+    group: "context-and-memory",
     title: "Inside a Git Repository",
     model: LEAN_MODEL,
     git: true,
@@ -95,6 +100,7 @@ export const CONTEXT_VARIANTS: Variant[] = [
   },
   {
     id: "agent-main",
+    group: "agents",
     title: "Main Thread Custom Agent",
     model: LEAN_MODEL,
     args: ["--agent", "probe-agent"],
@@ -113,6 +119,7 @@ export const CONTEXT_VARIANTS: Variant[] = [
   },
   ...(["plan", "acceptEdits", "dontAsk"] as const).map((m) => ({
     id: `mode-${m}`,
+    group: "modes" as const,
     title: `Permission Mode, ${({ plan: "Plan", acceptEdits: "Accept Edits", dontAsk: "Don't Ask" } as Record<string, string>)[m]}`,
     model: LEAN_MODEL,
     args: ["--permission-mode", m],
@@ -130,6 +137,7 @@ export const CONTEXT_VARIANTS: Variant[] = [
   })),
   {
     id: "brief",
+    group: "defaults",
     title: "Brief Mode",
     model: LEAN_MODEL,
     args: ["--brief"],
@@ -147,6 +155,7 @@ export const CONTEXT_VARIANTS: Variant[] = [
   },
   {
     id: "compact",
+    group: "context-and-memory",
     title: "Compaction Prompt",
     model: LEAN_MODEL,
     followUp: "/compact",

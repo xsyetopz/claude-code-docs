@@ -83,6 +83,19 @@ flowchart TD
 | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=0` | The full prompt. This is the only way to get it on these models. | <Documented /> |
 | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=1` | The short prompt. On the three 5.5 models it changes nothing, because they already get it. | <Documented /> |
 
+### Names That Claude Code Does Not Recognize
+
+Since `2.1.312`, a model name that Claude Code does not recognize gets the short prompt, and `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT=0` keeps the full prompt.
+This covers custom deployment names and inference profile ARNs. The test in the program has no check for the provider.
+The program decides in this order:
+
+1. `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT` set to a true value gives the short prompt. A false value, such as `0`, gives the full prompt.
+2. If the variable is not set, a name that is not a known one gives the short prompt. A known name has `claude-3-` or `haiku` or `sonnet` in it, or is `claude-opus-4-0`, `-4-1`, `-4-5`, `-4-6`, or `-4-7`. A server-side catalog flag `lean_prompt` for the model comes first.
+3. For a known name, the gate `tengu_velvet_tide` gives the short prompt when on. Otherwise the server setting `simple_system_prompt` for the model decides.
+
+The program now canonicalizes the name for this test with the option `deterministic`. The option skips the lookup that turns an `application-inference-profile` ARN into the model behind it. So an ARN no longer counts as the Sonnet or Haiku model that it fronts, unless `modelOverrides` maps it.
+Source: the program (`chunk-9wgj206m.js` lines 334 to 363, `chunk-3xe0k172.js` lines 24698 to 24717, and `chunk-rww18cjm.js` of `2.1.311`, where the same test used no `deterministic` option).
+
 ## Prompt by Model
 
 We ran the default prompt for every model in the program's catalog, plus names that end in `-eap` and an unknown name (see [Probes](../reference/probes.md#static-and-print-probes)). The stub accepted every name. The real API may refuse retired models.
@@ -109,7 +122,7 @@ The 3.5 and 3.7 Haiku and Sonnet models also get 25 tools and not 12, because th
 The [official docs](https://code.claude.com/docs/en/env-vars) say that Haiku 4.5, Sonnet 5, Opus 4.7, and earlier models get the full prompt, and newer models get the short one.
 The captures match this for Sonnet 5.5, Opus 5.5, and Haiku 5.5. The old wiki said Sonnet gets the full prompt, and that is wrong.
 
-Captured texts: [lean prompt](../prompts/default-lean.md), [Sonnet 5.5](../prompts/default-sonnet.md), [Haiku 5.5](../prompts/default-haiku.md), and the [full prompt](../prompts/full-prompt.md).
+Captured texts: [lean prompt](../prompts/defaults/default-lean.md), [Sonnet 5.5](../prompts/defaults/default-sonnet.md), [Haiku 5.5](../prompts/defaults/default-haiku.md), and the [full prompt](../prompts/defaults/full-prompt.md).
 
 ## Where Each Part Goes in the Request
 
@@ -200,7 +213,7 @@ You cannot set an experiment, but the env vars in the table switch some of the s
 
 `--bare` and `CLAUDE_CODE_SIMPLE=1` give the same result: a two-line body (`CWD: <path>` and `Date: <date>`), 3 tools, and an empty environment message.
 Source: [Run Claude Code Programmatically: Start Faster with Bare Mode](https://code.claude.com/docs/en/headless#start-faster-with-bare-mode) for the flag. The body comes from the captures (<Undocumented />).
-See the captured [bare mode prompt](../prompts/bare.md) and [simple mode env var](../prompts/simple-env.md).
+See the captured [bare mode prompt](../prompts/defaults/bare.md) and [simple mode env var](../prompts/defaults/simple-env.md).
 
 ## Subagent Prompt
 
@@ -208,7 +221,7 @@ A subagent gets its own agent text plus short notes.
 The default agent text starts with `You are an agent for Claude Code, Anthropic's official CLI for Claude.`
 The notes say to share absolute paths, to avoid emojis, to avoid a colon before tool calls, and not to write report files.
 Source: the program (<Undocumented />).
-See the captured prompts for [general-purpose](../prompts/subagent-general-purpose.md), [explore](../prompts/subagent-explore.md), [plan](../prompts/subagent-plan.md), and [custom](../prompts/subagent-custom.md) subagents.
+See the captured prompts for [general-purpose](../prompts/agents/subagent-general-purpose.md), [explore](../prompts/agents/subagent-explore.md), [plan](../prompts/agents/subagent-plan.md), and [custom](../prompts/agents/subagent-custom.md) subagents.
 
 ## Example
 

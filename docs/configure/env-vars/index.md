@@ -5,7 +5,7 @@ sidebar_position: 1
 ---
 
 An environment variable is a named setting that a program reads when it starts.
-Claude Code `2.1.311` reads well over a thousand of them.
+Claude Code `2.1.312` reads well over a thousand of them.
 This section lists 1458 that you can use, split into groups so you can find them.
 A few are in the official docs. Most are found only in the program.
 
@@ -61,7 +61,7 @@ Put variables under the `env` key. Claude Code copies the values as written. No 
 
 ```json title="~/.claude/settings.json"
 {
-  "$schema": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-settings.json",
+  "$schema": "https://xsyetopz.github.io/clawdipedia/schemas/claude-code-settings.json",
   "env": {
     "API_TIMEOUT_MS": "1200000",
     "BASH_DEFAULT_TIMEOUT_MS": "300000",
@@ -122,8 +122,8 @@ Numeric variables, such as timeouts and token budgets, accept forms like `2e3` (
 | [Telemetry and Debug](telemetry-and-debug.md) | Environment variables for usage data, OpenTelemetry, debug logs, and error reports | 141 |
 | [Plugins and MCP](plugins-and-mcp.md) | Environment variables for plugins, MCP servers, skills, hooks, and marketplaces | 102 |
 | [Agents and Teams](agents-and-teams.md) | Environment variables for subagents, agent teams, background tasks, and workers | 80 |
-| [Features and Toggles](features-and-toggles.md) | Environment variables that turn single features on or off, including server-gated features | 68 |
-| [Remote and Cloud Sessions](remote-and-cloud-sessions.md) | Environment variables for cloud sessions, the bridge, the desktop app, Chrome, Cowork, and Slack | 185 |
+| [Features and Toggles](features-and-toggles.md) | Environment variables that turn single features on or off, including server-gated features | 67 |
+| [Remote and Cloud Sessions](remote-and-cloud-sessions.md) | Environment variables for cloud sessions, the bridge, the desktop app, Chrome, Cowork, and Slack | 186 |
 | [SDK and Automation](sdk-and-automation.md) | Environment variables for programs that host Claude Code, the Agent SDK, and automation | 25 |
 | [System and Third-Party](system-and-third-party.md) | Environment variables owned by your system or other tools that Claude Code reads, such as HOME, TERM, and ALL_PROXY | 130 |
 | [Bundled Libraries](bundled-libraries.md) | Environment variables read only by libraries bundled inside Claude Code, such as the AWS SDK, gRPC, and cloud detectors | 126 |
@@ -142,7 +142,7 @@ Every group page has the same columns.
 
 :::warning
 Treat <Undocumented /> and <Gated /> rows with care.
-They work in `2.1.311`, but nothing promises they will work in the next release.
+They work in `2.1.312`, but nothing promises they will work in the next release.
 :::
 
 Some rows mention a probe. That means a run of the real binary against a local stub showed what the variable changed in the request. No model call leaves the machine in a probe. A run with no visible effect does not prove that a variable does nothing.

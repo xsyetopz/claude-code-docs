@@ -28,13 +28,13 @@ Items that the docs name but describe wrongly are in [Behaves Differently From t
 | [Plugins](#plugins) | 9 |
 | [MCP](#mcp) | 32 |
 | [Tools](#tools) | 30 |
-| [API Endpoints and Betas](#api-endpoints-and-betas) | 97 |
+| [API Endpoints and Betas](#api-endpoints-and-betas) | 98 |
 | [System Prompt](#system-prompt) | 34 |
 | [Transcript and Sessions](#transcript-and-sessions) | 13 |
 | [Headless Protocol](#headless-protocol) | 168 |
 | [Mod API](#mod-api) | 0 |
 | [Other](#other) | 106 |
-| Total | 1662 |
+| Total | 1663 |
 
 ## Settings Keys
 
@@ -83,11 +83,11 @@ Count: 944.
 | [Bundled Libraries](../configure/env-vars/bundled-libraries.md) | 121 |
 | [Cloud Providers](../configure/env-vars/cloud-providers.md) | 30 |
 | [Context and Compaction](../configure/env-vars/context-and-compaction.md) | 30 |
-| [Features and Toggles](../configure/env-vars/features-and-toggles.md) | 56 |
+| [Features and Toggles](../configure/env-vars/features-and-toggles.md) | 55 |
 | [Models and Effort](../configure/env-vars/models-and-effort.md) | 31 |
 | [Network and Proxy](../configure/env-vars/network-and-proxy.md) | 25 |
 | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) | 55 |
-| [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) | 143 |
+| [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) | 144 |
 | [SDK and Automation](../configure/env-vars/sdk-and-automation.md) | 24 |
 | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) | 48 |
 | [System and Third-Party](../configure/env-vars/system-and-third-party.md) | 104 |
@@ -372,7 +372,7 @@ Count: 30.
 
 Endpoints that Claude Code calls and the beta headers it sends.
 
-Count: 97.
+Count: 98.
 
 | Item | Where |
 | --- | --- |
@@ -416,6 +416,7 @@ Count: 97.
 | `mid-conversation-system-clear-at-2026-08-21` | [Betas](api/betas.md#registry) (Registry) |
 | `/v1/messages/cache_touch` | [Endpoints and Headers](api/endpoints.md#model-endpoints) (Model Endpoints) |
 | `/v1/oauth/token`, `/api/oauth/profile`, `/api/oauth/usage`, `/api/oauth/account/settings` | [Endpoints and Headers](api/endpoints.md#account-and-service-endpoints) (Account and Service Endpoints) |
+| `/api/oauth/account/settings?opt_in_only_if_unset=grove_enabled` | [Endpoints and Headers](api/endpoints.md#account-and-service-endpoints) (Account and Service Endpoints) |
 | `/api/claude_code/policy_limits` | [Endpoints and Headers](api/endpoints.md#account-and-service-endpoints) (Account and Service Endpoints) |
 | `/api/claude_code/organizations/metrics_enabled`, `/api/claude_code/notification/preferences`, `/api/claude_code/skills` | [Endpoints and Headers](api/endpoints.md#account-and-service-endpoints) (Account and Service Endpoints) |
 | `/api/event_logging/v2/batch` | [Endpoints and Headers](api/endpoints.md#account-and-service-endpoints) (Account and Service Endpoints) |
@@ -722,18 +723,18 @@ These items exist in the official docs, but the program works in another way. Co
 
 ## In the Program
 
-The program of `2.1.311` holds 9042 items in 17 kinds, counted from `schemas/surface.json`.
+The program of `2.1.312` holds 9052 items in 17 kinds, counted from `schemas/surface.json`.
 [Surface Coverage](surface-coverage.md) lists each item with its page.
 
 | Kind | Items | Not on a Page Yet |
 | --- | --- | --- |
 | [Betas](surface-coverage.md#betas) | 50 | 0 |
-| [API Endpoints](surface-coverage.md#api-endpoints) | 433 | 0 |
+| [API Endpoints](surface-coverage.md#api-endpoints) | 436 | 0 |
 | [Environment Variables](surface-coverage.md#environment-variables) | 1887 | 0 |
-| [Error Texts](surface-coverage.md#error-texts) | 4054 | 0 |
+| [Error Texts](surface-coverage.md#error-texts) | 4049 | 0 |
 | [Files](surface-coverage.md#files) | 78 | 0 |
 | [CLI Flags](surface-coverage.md#cli-flags) | 303 | 0 |
-| [Gates](surface-coverage.md#gates) | 1165 | 0 |
+| [Gates](surface-coverage.md#gates) | 1180 | 0 |
 | [Hook Events](surface-coverage.md#hook-events) | 33 | 0 |
 | [Keybindings](surface-coverage.md#keybindings) | 204 | 0 |
 | [Mod API](surface-coverage.md#mod-api) | 231 | 0 |
@@ -741,10 +742,10 @@ The program of `2.1.311` holds 9042 items in 17 kinds, counted from `schemas/sur
 | [OpenTelemetry Events](surface-coverage.md#opentelemetry-events) | 28 | 0 |
 | [Permission Rules](surface-coverage.md#permission-rules) | 6 | 0 |
 | [Settings](surface-coverage.md#settings) | 194 | 0 |
-| [Slash Commands](surface-coverage.md#slash-commands) | 142 | 0 |
+| [Slash Commands](surface-coverage.md#slash-commands) | 139 | 0 |
 | [Subcommands](surface-coverage.md#subcommands) | 71 | 0 |
 | [Tools](surface-coverage.md#tools) | 89 | 0 |
-| All kinds | 9042 | 0 |
+| All kinds | 9052 | 0 |
 
 ## Related Pages
 

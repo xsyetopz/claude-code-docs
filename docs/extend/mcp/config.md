@@ -119,7 +119,7 @@ flowchart TD
 
 ## Exact Fields
 
-The exact fields: `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-mcp.json`, made from the program's own validator for `.mcp.json`.
+The exact fields: `https://xsyetopz.github.io/clawdipedia/schemas/claude-code-mcp.json`, made from the program's own validator for `.mcp.json`.
 It lists every field of this release, so build on the fields it names and look each one up there before you rely on it.
 
 ## Related Pages

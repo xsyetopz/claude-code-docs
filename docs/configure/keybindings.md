@@ -28,7 +28,7 @@ This file binds `ctrl+k` in the chat input to the stash action, frees `ctrl+s` t
 
 ```json title="~/.claude/keybindings.json"
 {
-  "$schema": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-keybindings.json",
+  "$schema": "https://xsyetopz.github.io/clawdipedia/schemas/claude-code-keybindings.json",
   "bindings": [
     {
       "context": "Chat",
@@ -44,7 +44,7 @@ This file binds `ctrl+k` in the chat input to the stash action, frees `ctrl+s` t
 
 A binding value is one of three things: an action name, `command:<name>` (it runs the slash command as if you typed it), or `null` (it removes a default key).
 The `command:` name may use letters, digits, `:`, `-`, and `_`.
-The schema is [claude-code-keybindings.json](https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-keybindings.json).
+The schema is [claude-code-keybindings.json](https://xsyetopz.github.io/clawdipedia/schemas/claude-code-keybindings.json).
 
 ## Contexts
 
@@ -510,6 +510,23 @@ The program refuses some keys and warns about others.
 | `ctrl+\` | Error | Terminal quit signal (SIGQUIT). |
 | `ctrl+z` | Warning | Unix process suspend (SIGTSTP). |
 | `cmd+c`, `cmd+v`, `cmd+x`, `cmd+q`, `cmd+w`, `cmd+tab`, `cmd+space` | Error on macOS | Used by macOS. |
+
+## Click to Send a Queued Message
+
+A queued message shows a hint under the prompt. In fullscreen rendering with mouse mode `full`, a click on that hint sends the message at once, as the `chat:sendNow` key does.
+
+| Input | Status | What it does | Notes |
+| --- | --- | --- | --- |
+| Click on the "send now" hint | <Undocumented /> | Sends the queued message at once. | Since `2.1.312`. The program needs mouse mode `full`, so `CLAUDE_CODE_DISABLE_MOUSE` and `CLAUDE_CODE_DISABLE_MOUSE_CLICKS` both stop the click. The program reports the click as `chat:sendNowHintPress`. Source: `chunk-7ss0ryz6.js` lines 8976 and 9363 to 9396. |
+| Hint text | <Undocumented /> | Names the key for `chat:sendNow`, or reads "click to send now" when no key is bound to it. | Since `2.1.312`. With no key bound, the hint shows only in mouse mode `full`. Source: `chunk-7ss0ryz6.js` lines 9370 to 9394. |
+
+## Vim Mode Operators with `gj` and `gk`
+
+Vim keys of the input prompt are not in `keybindings.json`. The setting `editorMode` turns them on. See [Interface Settings](settings/ui.md).
+
+| Input | Status | What it does | Notes |
+| --- | --- | --- | --- |
+| `d`, `c`, or `y` with `gj` or `gk` and a count | <Undocumented /> | When the count is larger than the display lines left, the keys only move the cursor. | Since `2.1.312`. Before, the keys could delete or copy text. The program tests the count against the wrapped lines below the cursor for `gj` and above it for `gk`. Source: `chunk-hz2c9q6k.js` lines 316 to 321 and 784. |
 
 ## Related Pages
 

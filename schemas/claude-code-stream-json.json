@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-stream-json.json",
-  "title": "Claude Code stream-json messages (Claude Code 2.1.311)",
-  "$comment": "For each message type the CLI writes (<type>[_<subtype>]Output) and reads (<type>Input) in stream-json mode. Generated from Claude Code 2.1.311 by calling the zod v4 toJSONSchema embedded in the binary on its own validator (method A, runtime export). Anchor: the SDK schema module, unions described as \"Everything the CLI writes to its output stream\" and \"Everything a client may write to the CLI's input stream\". Do not edit by hand: run \"bun run schemas\".",
+  "$id": "https://xsyetopz.github.io/clawdipedia/schemas/claude-code-stream-json.json",
+  "title": "Claude Code stream-json messages (Claude Code 2.1.312)",
+  "$comment": "For each message type the CLI writes (<type>[_<subtype>]Output) and reads (<type>Input) in stream-json mode. Generated from Claude Code 2.1.312 by calling the zod v4 toJSONSchema embedded in the binary on its own validator (method A, runtime export). Anchor: the SDK schema module, unions described as \"Everything the CLI writes to its output stream\" and \"Everything a client may write to the CLI's input stream\". Do not edit by hand: run \"bun run schemas\".",
   "$defs": {
     "active_goalOutput": {
       "type": "object",
@@ -2350,7 +2350,7 @@
         "service_tier"
       ]
     },
-    "out___schema426": {
+    "out___schema429": {
       "type": "object",
       "properties": {
         "spawned": {
@@ -2636,7 +2636,7 @@
         },
         "subagent_stats": {
           "description": "@internal Running totals of the subagents the Agent tool started this session; see SDKSubagentStats.",
-          "$ref": "#/$defs/out___schema426"
+          "$ref": "#/$defs/out___schema429"
         },
         "safety_stops": {
           "type": "integer",
@@ -3243,6 +3243,24 @@
           "maximum": 9007199254740991,
           "description": "@internal The time that passed in the process_cpu_ms_turn stretch, by the same clock as process_wall_ms_between_turns."
         },
+        "shell_cpu_ms_turn": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991,
+          "description": "@internal How far the counter of a CPU accounting group moved in the process_cpu_ms_turn stretch: CPU time (user plus system) of the programs in that group. The shells of the Bash and Monitor tools join the group just before each command runs, so it holds those shells, everything they start, and any program that an earlier command, or an earlier Claude Code process that used the same group, left running there. It is not part of process_cpu_ms_turn, which leaves out child processes. A shell's own start-up is not counted. Nor is a command whose shell could not join the group, as can happen under Claude Code's command sandbox or CLAUDE_CODE_SHELL_PREFIX: the figure then reads lower, or 0, rather than being absent. Programs the CLI starts itself, such as hooks, MCP and LSP servers and plugin monitors, and a ! command that a person sends from the client, do not join the group. A command that the session sends to another machine, such as a linked computer, is in no field. Present where process_cpu_ms_turn is, if the CLI could make the group when its process started and could read its counter at the start and the end of the stretch, the second reading not lower than the first. The CLI makes the group only on Linux, where its process has a CPU accounting group of its own on a cgroup v1 hierarchy that carries cpuacct alone. Absent, never 0, otherwise."
+        },
+        "shell_cpu_ms_since_last_result": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991,
+          "description": "@internal CPU time, counted as in shell_cpu_ms_turn, from just before the previous result of this process that carried shell_cpu_ms_turn was built until this turn's start, so it includes any turn in between that gave no result or a result without shell_cpu_ms_turn. process_cpu_ms_between_turns starts later, at the end of the previous turn. Added up over a process's results, shell_cpu_ms_turn and this field never count a millisecond twice. It always comes with shell_wall_ms_since_last_result. Present where shell_cpu_ms_turn is, except on the process's first such result, and on any other where, since the one before it, a result had time_to_request_phases_ms but not process_cpu_ms_turn (as when telemetry was off), a turn began while the process's figures were withheld (this result's own turn included), or the group's counter read lower at the end of a stretch than at its start. Where a result has shell_cpu_ms_turn but not this field, what ran from the previous result that carried shell_cpu_ms_turn to this turn's start is in neither field."
+        },
+        "shell_wall_ms_since_last_result": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991,
+          "description": "@internal The time that passed in the shell_cpu_ms_since_last_result stretch, by the same clock as process_wall_ms_turn. Present exactly where shell_cpu_ms_since_last_result is."
+        },
         "process_cpu_ms_streaming": {
           "type": "integer",
           "minimum": -9007199254740991,
@@ -3704,7 +3722,7 @@
         },
         "subagent_stats": {
           "description": "@internal Running totals of the subagents the Agent tool started this session; see SDKSubagentStats.",
-          "$ref": "#/$defs/out___schema426"
+          "$ref": "#/$defs/out___schema429"
         },
         "safety_stops": {
           "type": "integer",
@@ -5664,7 +5682,7 @@
               "type": "null"
             }
           ],
-          "description": "The effort level the session will send on its next request — after env overrides, session state, org caps and model-support downgrades; the same value get_settings reports as applied.effort. null when no effort parameter will be sent (a model without effort, CLAUDE_CODE_EFFORT_LEVEL=unset, or an internal numeric budget). Present on Remote Control bridge init frames (terminal- and Desktop/VS Code-hosted sessions); absent on hosts that do not publish it and on CLIs that predate the field. Re-emitted inits carry the current value — the newest frame wins."
+          "description": "The effort level set for the session's next message — after env overrides, session state, org caps and model-support downgrades; the same value get_settings reports as applied.effort. null when no effort parameter will be sent (a model without effort, CLAUDE_CODE_EFFORT_LEVEL=unset, or an internal numeric budget). Present on Remote Control bridge init frames (terminal- and Desktop/VS Code-hosted sessions); absent on hosts that do not publish it and on CLIs that predate the field. Re-emitted inits carry the current value — the newest frame wins."
         },
         "per_turn_effort_active": {
           "type": "boolean",
@@ -5680,7 +5698,7 @@
           "items": {
             "type": "string"
           },
-          "description": "Protocol capabilities this CLI supports, so SDK consumers can feature-detect instead of version-sniffing. Open set — ignore unknown values; check each capability for exactly the behavior you use. 'interrupt_receipt_v1' = the interrupt control_response success payload carries still_queued (uuids of async user messages that survive the interrupt). 'interrupt_cancel_queued_v1' = the interrupt control_request honors cancel_queued:true (queued and pending-dispatch commands are cancelled alongside the abort, listed on the response's cancelled field; still_queued is then empty — including any uuid that was mid-fold at the interrupt instant, since this request also aborts and the fold never delivers it — except that a client driving a hosted session lists there what it can no longer recall: a send already in flight to that session, or the first prompt the session was created with). 'queued_notifications' = the CLI accepts inbound queued_notification stream messages and drains them via ReadNotifications (the cloud session backend reads this from the persisted init event to decide whether it may send them). Absent on older CLIs."
+          "description": "Protocol capabilities this CLI supports, so SDK consumers can feature-detect instead of version-sniffing. Open set — ignore unknown values; check each capability for exactly the behavior you use. 'interrupt_receipt_v1' = the interrupt control_response success payload carries still_queued (uuids of async user messages that survive the interrupt). 'interrupt_cancel_queued_v1' = the interrupt control_request honors cancel_queued:true (queued and pending-dispatch commands are cancelled alongside the abort, listed on the response's cancelled field; still_queued is then empty — including any uuid that was mid-fold at the interrupt instant, since this request also aborts and the fold never delivers it — except that a client driving a hosted session lists there what it can no longer recall: a send already in flight to that session, or the first prompt the session was created with). 'queued_notifications' = the CLI accepts inbound queued_notification stream messages and drains them via ReadNotifications (the cloud session backend reads this from the persisted init event to decide whether it may send them). 'ask_user_question_unanswered_v1' = an AskUserQuestion answer may set annotations[question].unanswered ('skipped' | 'replied_in_chat' | 'dismissed'), which the tool result echoes; send it only to a session that advertises this, since an older CLI on a strict host refuses the whole answer. A strict host also refuses an answer with a value outside these three; a new value will come with a new capability. Absent on older CLIs."
         },
         "analytics_disabled": {
           "type": "boolean",

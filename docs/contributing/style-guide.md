@@ -239,6 +239,16 @@ Every surface page has at least one worked example.
 
 Examples in `ts`, `tsx`, `js`, `jsx`, `json`, and `jsonc` blocks follow `biome.json`: formatting, lint rules, and typed const arrows instead of `function` declarations. Run `bun run check:examples` (add `--fix` for safe fixes). To skip a block that must stay verbatim, such as program output or a wire format, add `skip-lint` to its fence: ` ```json skip-lint title="..." `. Blocks in `docs/prompts/` are skipped.
 
+### Example Hosts
+
+Use `example.com` for a host in a page example. [IANA](https://www.iana.org/help/example-domains) reserves it for this use, and it needs no permission.
+
+Do not use `example.com` in a test or a probe. The same IANA page states that `example.com` "is not a service" and that you must "avoid relying on it for testing and monitoring purposes". A test that reaches it depends on a host that nobody promises to keep.
+
+In a test or a probe, use a name under `.invalid`, such as `probe.invalid`. [RFC 2606 section 2](https://www.rfc-editor.org/rfc/rfc2606#section-2) reserves `.invalid` for a name that never resolves, so the request stays on the machine. Use `127.0.0.1` with a port when the test needs a server that answers.
+
+An email address in a test, such as a git author, may keep `example.com`. Git never resolves an email address, so no request leaves the machine.
+
 ## MDX Gotchas
 
 Pages are MDX, not plain Markdown. These characters break the build when they sit in prose.

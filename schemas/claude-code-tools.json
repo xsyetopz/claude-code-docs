@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-tools.json",
-  "title": "Claude Code built-in tool payloads (Claude Code 2.1.311)",
-  "$comment": "For the input and result of each built-in tool (definitions <Tool>Input and <Tool>Result). Generated from Claude Code 2.1.311 by calling the zod v4 toJSONSchema embedded in the binary on its own validator (method A, runtime export). Anchor: the tool factory that copies a tool definition's properties (getters included), read as inputSchema and outputSchema on each tool. Do not edit by hand: run \"bun run schemas\".",
-  "description": "The program did not give these definitions: TestingPermissionResult, ObserverReportResult, SendMessageResult, ArtifactCommentsInput, ArtifactDataInput, ArtifactCheckInput, ArtifactInput.",
+  "$id": "https://xsyetopz.github.io/clawdipedia/schemas/claude-code-tools.json",
+  "title": "Claude Code built-in tool payloads (Claude Code 2.1.312)",
+  "$comment": "For the input and result of each built-in tool (definitions <Tool>Input and <Tool>Result). Generated from Claude Code 2.1.312 by calling the zod v4 toJSONSchema embedded in the binary on its own validator (method A, runtime export). Anchor: the tool factory that copies a tool definition's properties (getters included), read as inputSchema and outputSchema on each tool. Do not edit by hand: run \"bun run schemas\".",
+  "description": "The program did not give these definitions: ObserverReportResult, TestingPermissionResult, SendMessageResult, ArtifactCommentsInput, ArtifactDataInput, ArtifactCheckInput, ArtifactInput.",
   "$defs": {
     "AgentInput": {
       "type": "object",
@@ -13329,6 +13329,11 @@
               "notes": {
                 "description": "Free-text notes the user added to their selection.",
                 "type": "string"
+              },
+              "unanswered": {
+                "description": "How the question went unanswered: 'skipped' (the user skipped it), 'replied_in_chat' (the user sent a chat message instead), or 'dismissed' (the user closed the card). The model does not see this field; put the text it should read in `answers`. Absent when the question was answered, and also when the answering client did not report it (in a session that does not advertise ask_user_question_unanswered_v1, from an older client, or in an older transcript): then only the text in `answers` says how it ended. Treat any other value as absent.",
+                "type": "string",
+                "enum": ["skipped", "replied_in_chat", "dismissed"]
               }
             }
           }

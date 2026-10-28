@@ -35,7 +35,7 @@ claude --agents '{
 | `model` | <Documented /> | The model of the agent. | `sonnet`, `opus`, `haiku`, `fable`, a full model ID, or `inherit`. Order of choice: the per-call `model`, this field, `CLAUDE_CODE_SUBAGENT_MODEL`, the main model. `CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1` forces one model. See [Models](../../how-it-works/models.md). |
 | `permissionMode` | <Documented /> | The permission mode of the agent. | `default`, `acceptEdits`, `auto`, `dontAsk`, `bypassPermissions`, `plan`, or `manual` (same as `default`). `bypassPermissions` applies only when the main session has it. Ignored for plugin agents. |
 | `maxTurns` | <Documented /> | The most agentic turns before the agent stops. | A positive integer. At the limit the output returns marked partial, and you can resume the agent. The program accepts a number or a string. |
-| `autoCompactWindow` | <Documented /> | Lowers the auto-compact window for this agent. | An integer from `100000` to `1000000`. Needs 2.1.296. |
+| `autoCompactWindow` | <Documented /> | Lowers the auto-compact window for this agent. | An integer from `100000` to `1000000`. Needs 2.1.296. Since `2.1.312`, it also lowers the window that `CLAUDE_CODE_AUTO_COMPACT_WINDOW` sets. It never raises a window. See [Context and Compaction](../../how-it-works/context-and-compaction.md). |
 | `skills` | <Documented /> | Skills preloaded into the agent context. | Claude Code injects the full skill text, for at most 32 names. A skill with `disable-model-invocation: true` cannot be preloaded. A missing skill is skipped and logged. |
 | `mcpServers` | <Documented /> | MCP servers for this agent. | A list of server names, or inline `{name: config}` objects. Inline servers connect at start and disconnect at the end. Ignored for plugin agents. |
 | `hooks` | <Documented /> | Hooks scoped to this agent. | Events: `PreToolUse`, `PostToolUse`, `Stop` (becomes `SubagentStop`). Ignored for plugin agents. See [Hooks](../hooks/index.md). |
@@ -74,7 +74,7 @@ The plugin mod call `$.agent.register` uses the same schema.
 
 ## Exact Fields
 
-The exact fields: the `--agents` JSON: `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-agents-json.json`, made from the program's own validator. The frontmatter: the `agent` definition in `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-frontmatter.json`, made from the program's frontmatter validators.
+The exact fields: the `--agents` JSON: `https://xsyetopz.github.io/clawdipedia/schemas/claude-code-agents-json.json`, made from the program's own validator. The frontmatter: the `agent` definition in `https://xsyetopz.github.io/clawdipedia/schemas/claude-code-frontmatter.json`, made from the program's frontmatter validators.
 It lists every field of this release, so build on the fields it names and look each one up there before you rely on it.
 
 ## Related Pages

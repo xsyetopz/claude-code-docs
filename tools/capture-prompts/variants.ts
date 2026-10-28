@@ -9,7 +9,12 @@ import { HOOK_VARIANTS } from "./variants/hooks.ts";
 import { MISC_VARIANTS } from "./variants/misc.ts";
 import { STYLE_VARIANTS } from "./variants/style.ts";
 
-export { LEAN_MODEL, SUB_MARK, type Variant } from "./variants/base.ts";
+export {
+  LEAN_MODEL,
+  type PromptGroup,
+  SUB_MARK,
+  type Variant,
+} from "./variants/base.ts";
 
 export const VARIANTS: Variant[] = [
   ...DEFAULT_VARIANTS,

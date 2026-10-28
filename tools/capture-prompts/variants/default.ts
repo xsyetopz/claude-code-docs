@@ -3,6 +3,7 @@ import { LEAN_MODEL, type Variant } from "./base.ts";
 export const DEFAULT_VARIANTS: Variant[] = [
   {
     id: "default-lean",
+    group: "defaults",
     title: "Default, Lean Prompt",
     model: LEAN_MODEL,
     summary: "The prompt that Opus 5.5 gets with no flags.",
@@ -19,6 +20,7 @@ export const DEFAULT_VARIANTS: Variant[] = [
   },
   {
     id: "default-sonnet",
+    group: "defaults",
     title: "Default, Sonnet 5.5",
     model: "claude-sonnet-5-5",
     baseline: "default-lean",
@@ -36,6 +38,7 @@ export const DEFAULT_VARIANTS: Variant[] = [
   },
   {
     id: "default-haiku",
+    group: "defaults",
     title: "Default, Haiku 5.5",
     model: "claude-haiku-5-5",
     baseline: "default-lean",
@@ -53,6 +56,7 @@ export const DEFAULT_VARIANTS: Variant[] = [
   },
   {
     id: "full-prompt",
+    group: "defaults",
     title: "Full Prompt",
     model: LEAN_MODEL,
     env: { CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT: "0" },
@@ -72,6 +76,7 @@ export const DEFAULT_VARIANTS: Variant[] = [
   },
   {
     id: "simple-prompt-sonnet",
+    group: "defaults",
     title: "Simple Prompt Switch on Sonnet",
     model: "claude-sonnet-5-5",
     env: { CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT: "1" },
@@ -89,6 +94,7 @@ export const DEFAULT_VARIANTS: Variant[] = [
   },
   {
     id: "simple-prompt-haiku",
+    group: "defaults",
     title: "Simple Prompt Switch on Haiku",
     model: "claude-haiku-5-5",
     env: { CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT: "1" },
@@ -106,6 +112,7 @@ export const DEFAULT_VARIANTS: Variant[] = [
   },
   {
     id: "simple-prompt-opus",
+    group: "defaults",
     title: "Simple Prompt Switch on Opus",
     model: LEAN_MODEL,
     env: { CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT: "1" },
@@ -123,6 +130,7 @@ export const DEFAULT_VARIANTS: Variant[] = [
   },
   {
     id: "bare",
+    group: "defaults",
     title: "Bare Mode",
     model: LEAN_MODEL,
     args: ["--bare"],
@@ -140,6 +148,7 @@ export const DEFAULT_VARIANTS: Variant[] = [
   },
   {
     id: "simple-env",
+    group: "defaults",
     title: "Simple Mode Env Var",
     model: LEAN_MODEL,
     env: { CLAUDE_CODE_SIMPLE: "1" },
@@ -158,6 +167,7 @@ export const DEFAULT_VARIANTS: Variant[] = [
   },
   {
     id: "exclude-dynamic",
+    group: "defaults",
     title: "Exclude Dynamic Sections",
     model: LEAN_MODEL,
     args: ["--exclude-dynamic-system-prompt-sections"],
@@ -176,6 +186,7 @@ export const DEFAULT_VARIANTS: Variant[] = [
   },
   {
     id: "exclude-dynamic-full",
+    group: "defaults",
     title: "Exclude Dynamic Sections, Full Prompt",
     model: LEAN_MODEL,
     env: { CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT: "0" },

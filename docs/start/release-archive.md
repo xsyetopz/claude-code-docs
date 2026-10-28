@@ -1,11 +1,36 @@
 ---
 title: Release Archive
-description: What changed in Claude Code 2.1.300 to 2.1.310, newest first, kept from the What Changed page.
+description: What changed in Claude Code 2.1.300 to 2.1.311, newest first, kept from the What Changed page.
 sidebar_position: 4.5
 ---
 
-This page keeps the sections that [What Changed](what-changed.md) had for `2.1.300` to `2.1.310`, newest first.
+This page keeps the sections that [What Changed](what-changed.md) had for `2.1.300` to `2.1.311`, newest first.
 Each section is kept as it was written for its release. The other pages of this site cover the current release, so a later release may have changed a row here.
+
+## Version 2.1.311
+
+Released October 26, 2026. Source: [release notes](https://github.com/anthropics/claude-code/releases/tag/v2.1.311).
+Rows marked with the program come from a comparison of the `2.1.310` and `2.1.311` programs. The flags, settings, hooks, and commands did not change.
+
+| Change | Status | What it means for you | Where to read more |
+| --- | --- | --- | --- |
+| `ultrathink` | <Documented /> | In the interactive terminal on the Anthropic API, the word runs its turn at `xhigh` effort on Opus 5.5, Sonnet 5.5, Haiku 5.5, and Fable 5.1. Typed during a turn, it raises the rest of that turn (the program). | [Models and Providers](../configure/models-and-providers.md#effort) |
+| `[1m]` suffix | <Documented /> | Names and IDs drop the suffix and the `(1M context)` label where the suffix has no effect. The suffix is still accepted (the program). | [Models and Providers](../configure/models-and-providers.md#aliases) |
+| Compact and continue | <Undocumented /> | A standard-window session that goes over 200K tokens and gets "Usage credits required for 1M context" now compacts and goes on (the program). | [Context and Compaction](../how-it-works/context-and-compaction.md#kinds-of-compaction) |
+| Summary asked again | <Undocumented /> | When a compaction reply has no summary, Claude Code usually asks once more before it replaces the conversation (the program). | [Context and Compaction](../how-it-works/context-and-compaction.md#kinds-of-compaction) |
+| No retry when the API says so | <Undocumented /> | A `429` or `529` marked `x-should-retry: false` is not retried, also with `CLAUDE_CODE_RETRY_WATCHDOG` (the program). | [Models](../how-it-works/models.md#retries-and-timeouts) |
+| Shell timeout output | <Undocumented /> | A `Bash` command that reaches its timeout returns the output so far, and keeps running in the background (the program). | [Shell, Web, and Background Tasks](../reference/tools/shell-and-web.md#how-it-works) |
+| `self-hosted-runner` hold flags | <Undocumented /> | `--hold-idle-file` and `--max-hold-min` keep an idle session while your host reports processes it left running (the program). | [Subcommands](../configure/cli/subcommands.md#self-hosted-runner-hold-flags) |
+| Permission rule warnings | <Undocumented /> | A startup warning about a rule in a settings file shows once per user until the rule changes (the program). | [Permission Flow](../how-it-works/permission-flow.md#step-by-step) |
+| Pro and Max startup | <Undocumented /> | Within an hour of the last Consumer Terms check, startup skips two requests. A refused subscription now points to billing settings (the program). | [Account and Access](../how-it-works/account-and-access.md#when-it-asks-again) |
+| Model catalog on cloud providers | <Undocumented /> | On Bedrock, Mantle, Vertex, and Foundry, Claude Code can load model settings from a signed file. `CLAUDE_CODE_MODEL_CATALOG=off` turns this off (the program). | [Models and Effort](../configure/env-vars/models-and-effort.md#variables) |
+| `DISABLE_COMPACT` in settings | <Documented /> | Set in a settings file or by a mod's `$.env.set`, it can only turn compaction off (the program). | [Context and Compaction Variables](../configure/env-vars/context-and-compaction.md#variables) |
+| `$.prompt.paint` | <Documented /> | A mod can paint styled runs over the draft in the prompt box without changing it (the program). | [Turn and Prompt](../extend/mod-api/turn-prompt.md#members) |
+| `pluginDigests` | <Documented /> <ManagedOnly /> | Managed settings can name the digests of the plugin releases that the organization delivers (the program). | [Marketplaces](../extend/plugins/marketplace.md#plugin-digests) |
+| New result fields | <Undocumented /> | `Agent` results can carry `toolsUsed`, and `Bash` and `PowerShell` results can carry `subagentCapApplied` (the program). | [Agents and Tasks](../reference/tools/agents-and-tasks.md#result-fields-new-in-21311), [Shell, Web, and Background Tasks](../reference/tools/shell-and-web.md#how-it-works) |
+| New environment variables | <Undocumented /> | 36 names are new, such as `CLAUDE_CODE_SESSIONS_OAUTH_TOKEN` and `CLAUDE_CODE_MCP_REGISTRY_FETCH_AT_STARTUP`. `CLAUDE_CODE_TOOL_CONTAINER_PLUGINS_NAMED` is gone (the program). | [Environment Variables](../configure/env-vars/index.md) |
+
+The print and interactive probes matched `2.1.310`, apart from these: the longer `/code-review` listing, the shell name in the environment block, the new result fields, a new store file of the built-in `cc-plugin-agents-md` plugin, and a new order of the same beta headers. With `CLAUDE_CODE_DISABLE_1M_CONTEXT` set, the skill listing in the first request now gives skill names without their descriptions. With 1M off, Opus 5.5 gets a 6,000-character listing budget (200,000 tokens × 3 characters × 1%, the program), and the longer `2.1.311` listing no longer fits; `2.1.310`'s still did. See [Skill Listing Budget](../extend/skills-and-commands/index.md#loading-and-controls). The `CLAUDE_CODE_USE_BEDROCK` sweep case changed only because the probe could reach the AWS instance metadata address on that network. With that lookup off, both versions retry twice and stop with "Could not load AWS credentials".
 
 ## Version 2.1.310
 
@@ -40,7 +65,7 @@ Rows marked with the program come from a comparison of the `2.1.308` and `2.1.30
 | `mcp_status` `liveReply` | <Undocumented /> | A control request can ask for a reply sent only to the clients attached at that moment (the program). | [Control Protocol](../extend/headless/control-protocol.md) |
 | `result` `model_usage_since_last_result` | <Undocumented /> | Each `result` line of `stream-json` output also gives the usage and cost of only the calls since the previous result, per model and shaped like `modelUsage`. Add it up over the results instead of subtracting `modelUsage` totals (the program). | [Stream JSON](../extend/headless/stream-json.md#exact-fields) |
 | Bedrock tool streaming | <Documented /> | A Bedrock base URL on Amazon's own `bedrock-runtime` host no longer counts as custom, so fine-grained tool streaming works with it (the program). | [Network and Proxy](../configure/env-vars/network-and-proxy.md#variables) |
-| `Bash` tool text | <Undocumented /> | The description grew from 1,406 to 1,688 characters, with a new line on GitHub `@name` mentions (the program). | [Tool Descriptions](../prompts/tools.md#bash) |
+| `Bash` tool text | <Undocumented /> | The description grew from 1,406 to 1,688 characters, with a new line on GitHub `@name` mentions (the program). | [Tool Descriptions](../prompts/tools/tools.md#bash) |
 | New environment variables | <Undocumented /> | Six more new variables for cloud sessions, the self-hosted runner, resumed sessions, plugin sync, and artifact sharing (the program). | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md#variables), [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md#variables), [Features and Toggles](../configure/env-vars/features-and-toggles.md#variables) |
 
 The print and interactive probes matched `2.1.308`, apart from the Bash text, the new environment variables, and the new `result` field above, and run-to-run noise.
@@ -63,8 +88,8 @@ Rows marked with the program come from a comparison of the `2.1.306` and `2.1.30
 | `prompt-caching-scope` beta | <Documented /> | Not sent behind a custom `ANTHROPIC_BASE_URL` gateway or on Foundry. A stub run sent 9 betas, not 10. | [Betas](../reference/api/betas.md) |
 | Bad tool calls | <Documented /> | Claude Code retries a tool call it cannot parse up to twice before it ends the turn. | [Agent Loop](../how-it-works/agent-loop.md) |
 | Fork subagents | <Documented /> | Forks started together are each told which launch is their own. | [Subagent Runtime](../extend/subagents/runtime.md) |
-| `Agent` tool text | <Undocumented /> | The description grew from 1,989 to 3,227 characters. It now lists the costs of a subagent and how to brief one (the program). | [Tool Descriptions](../prompts/tools.md#agent) |
-| Web-reading agent | <Undocumented /> | Its prompt has one new line: give the date of a stored copy of a page, and do not fetch it again (the program). | [Subagent, Web Fetch](../prompts/subagent-web-fetch.md) |
+| `Agent` tool text | <Undocumented /> | The description grew from 1,989 to 3,227 characters. It now lists the costs of a subagent and how to brief one (the program). | [Tool Descriptions](../prompts/tools/tools.md#agent) |
+| Web-reading agent | <Undocumented /> | Its prompt has one new line: give the date of a stored copy of a page, and do not fetch it again (the program). | [Subagent, Web Fetch](../prompts/agents/subagent-web-fetch.md) |
 | Transcript `sandboxed` key | <Undocumented /> | A shell tool result line can carry `sandboxed` (the program). | [Transcript Format](../reference/transcript-format.md) |
 | `/claude-api api-version` | <Documented /> | Moves Claude API code to API version `2026-10-21`. | [Bundled Skills](../extend/skills-and-commands/bundled-skills.md) |
 | `claude_code.safety_event` | <Documented /> | A new OpenTelemetry event for each tool call that a rule, auto mode, a safety check, a hook, or the sandbox stopped, prompted, or sent back. | [Telemetry and Debug Variables](../configure/env-vars/telemetry-and-debug.md#how-it-works) |
@@ -124,7 +149,7 @@ Rows marked with the program come from a comparison of the `2.1.303` and `2.1.30
 
 | Change | Status | What it means for you | Where to read more |
 | --- | --- | --- | --- |
-| Tool search on by default | <Documented /> | Tool search is on behind a custom `ANTHROPIC_BASE_URL`. A 400 or 422 from the gateway is retried without it. The site's captures use a local stub as `ANTHROPIC_BASE_URL`, so the main prompt there now lists 12 tools, not 20. | [Tools Reference](../reference/tools/index.md) and [Tools per Variant](../prompts/tools-per-variant.md) |
+| Tool search on by default | <Documented /> | Tool search is on behind a custom `ANTHROPIC_BASE_URL`. A 400 or 422 from the gateway is retried without it. The site's captures use a local stub as `ANTHROPIC_BASE_URL`, so the main prompt there now lists 12 tools, not 20. | [Tools Reference](../reference/tools/index.md) and [Tools per Variant](../prompts/tools/tools-per-variant.md) |
 | `/auto-mode-setup` | <Documented /> | A guided setup that reads your project and recent sessions. It is now on Bedrock, Vertex, Foundry, a Claude apps gateway, and with telemetry off. | [Auto Mode](../configure/permissions/auto-mode.md) |
 | `/claude-api managed-agents-secure` | <Documented /> | Compares a Managed Agents agent's settings with Anthropic's security guide. It changes nothing. | [Bundled Skills](../extend/skills-and-commands/bundled-skills.md) |
 | `/artifacts` delete | <Documented /> | The confirmation shows numbered choices: 1 or Enter keeps, 2 deletes. | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |

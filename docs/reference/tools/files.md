@@ -89,6 +89,19 @@ Block reads of secret files and all edits to lock files.
 - `Read`, `Glob`, `Grep`, `Write`, and `Edit` carry `remoteExecution` metadata in the program. It marks them as runnable on a remote host.
 - `Read` has no result size cap, so use `offset` and `limit` for large files.
 
+## Write on a File That Claude Read Only in Part
+
+Since `2.1.312`, `Write` refuses to overwrite some very large instruction files.
+The files are a `CLAUDE.md` file, a rules file, or an `@`-included file that Claude Code loads for a subdirectory.
+
+| Item | Status | What it does | Notes |
+| --- | --- | --- | --- |
+| Size test | <Gated note="Server flag tengu_quizzical_mango, on by default" /> | Claude Code cuts a loaded file when its text is longer than a limit. It adds the line `Only the start of this file is shown.` and marks the file as read in part. | The limit is the larger of 40,000 characters and 5% of the model context window, scaled by the bytes per token of the model. A managed file is never cut. |
+| `Write` refusal | <Undocumented /> | While the mark holds, `Write` on the file fails with error code 19. | The message says that Claude has only the start of the file. A `Write` could lose the rest. It tells Claude to use `Edit` to change part of it. To replace the file, Claude must first `Read` it in one call with no `offset` or `limit`. |
+| Clear the mark | <Undocumented /> | A `Read` of the whole file removes the refusal. | The program tests that the stored view holds the whole file and began at line 1. |
+
+Source: the program (`chunk-r5cyd28m.js` lines 164229 to 164274, 73050 to 73054, 9596 to 9609, and 77622; `chunk-s2tghjwy.js` line 4530; `chunk-b09ckz08.js` line 8515).
+
 ## Errors
 
 Each row is a family of messages. The backticked text is the start that every message in the family shares. A row marked `Various` gathers the messages of one feature that do not share one start.

@@ -11,6 +11,7 @@ import {
 export const MISC_VARIANTS: Variant[] = [
   {
     id: "auto-classifier",
+    group: "modes",
     title: "Auto Mode Classifier",
     model: LEAN_MODEL,
     tool: riskyTool,
@@ -30,6 +31,7 @@ export const MISC_VARIANTS: Variant[] = [
   },
   {
     id: "auto-classifier-custom",
+    group: "modes",
     title: "Auto Mode Classifier, Custom Rules",
     model: LEAN_MODEL,
     tool: riskyTool,
@@ -55,6 +57,7 @@ export const MISC_VARIANTS: Variant[] = [
   },
   {
     id: "compact-custom",
+    group: "context-and-memory",
     title: "Compaction Prompt, Custom Instructions",
     model: LEAN_MODEL,
     followUp: "/compact PROBE-COMPACT-ARG keep the file names",
@@ -86,6 +89,7 @@ export const MISC_VARIANTS: Variant[] = [
   },
   {
     id: "plan-mode-instructions",
+    group: "modes",
     title: "Plan Mode, Custom Workflow",
     model: LEAN_MODEL,
     args: [
@@ -108,6 +112,7 @@ export const MISC_VARIANTS: Variant[] = [
   },
   {
     id: "git-instructions-off",
+    group: "context-and-memory",
     title: "Git Instructions Turned Off",
     model: LEAN_MODEL,
     git: true,
@@ -126,6 +131,7 @@ export const MISC_VARIANTS: Variant[] = [
   },
   {
     id: "memory-off",
+    group: "context-and-memory",
     title: "Auto Memory Turned Off",
     model: LEAN_MODEL,
     env: { CLAUDE_CODE_DISABLE_AUTO_MEMORY: "1" },
@@ -142,6 +148,7 @@ export const MISC_VARIANTS: Variant[] = [
   },
   {
     id: "style-override-builtin",
+    group: "output-styles",
     title: "Custom Output Style with a Built-in Name",
     model: LEAN_MODEL,
     args: settings({ outputStyle: "Explanatory" }),
@@ -163,6 +170,7 @@ export const MISC_VARIANTS: Variant[] = [
   },
   {
     id: "subagent-with-prompt-flags",
+    group: "agents",
     title: "Subagent with --system-prompt and --append-system-prompt",
     model: LEAN_MODEL,
     args: [
@@ -187,6 +195,7 @@ export const MISC_VARIANTS: Variant[] = [
   },
   {
     id: "hook-prompt-stop",
+    group: "hooks",
     title: "Prompt Hook on Stop",
     model: LEAN_MODEL,
     args: settings({
@@ -216,6 +225,7 @@ export const MISC_VARIANTS: Variant[] = [
   },
   {
     id: "tools-upfront",
+    group: "defaults",
     title: "All Tools Sent Upfront",
     model: LEAN_MODEL,
     env: { ENABLE_TOOL_SEARCH: "false" },

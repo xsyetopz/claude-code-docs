@@ -179,7 +179,7 @@ Long requests send `control_request_progress` lines first.
 
 ## Exact Fields
 
-The exact fields: `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-control-protocol.json`, made from the program's own validators. It has a `Request` and a `Response` definition for each subtype.
+The exact fields: `https://xsyetopz.github.io/clawdipedia/schemas/claude-code-control-protocol.json`, made from the program's own validators. It has a `Request` and a `Response` definition for each subtype.
 It lists every field of this release, so build on the fields it names and look each one up there before you rely on it.
 
 ## Related Pages

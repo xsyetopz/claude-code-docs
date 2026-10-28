@@ -10,6 +10,7 @@ import {
 export const AGENT_VARIANTS: Variant[] = [
   ...(["general-purpose", "Explore", "Plan"] as const).map((t) => ({
     id: `subagent-${t.toLowerCase()}`,
+    group: "agents" as const,
     title: `Subagent, ${t === "general-purpose" ? "General Purpose" : t}`,
     model: LEAN_MODEL,
     tool: subTool(t),
@@ -28,6 +29,7 @@ export const AGENT_VARIANTS: Variant[] = [
   })),
   {
     id: "subagent-custom",
+    group: "agents",
     title: "Subagent, Custom Agent",
     model: LEAN_MODEL,
     tool: subTool("probe-agent"),
@@ -47,6 +49,7 @@ export const AGENT_VARIANTS: Variant[] = [
   },
   ...(["statusline-setup", "claude"] as const).map((t) => ({
     id: `subagent-${t}`,
+    group: "agents" as const,
     title: `Subagent, ${t === "claude" ? "Claude (FleetView)" : "Statusline Setup"}`,
     model: LEAN_MODEL,
     tool: subTool(t),
@@ -64,6 +67,7 @@ export const AGENT_VARIANTS: Variant[] = [
   })),
   {
     id: "subagent-web-fetch",
+    group: "agents",
     title: "Subagent, Web Fetch",
     model: LEAN_MODEL,
     env: { CLAUDE_CODE_WEB_FETCH_AGENT: "1" },
@@ -82,6 +86,7 @@ export const AGENT_VARIANTS: Variant[] = [
   },
   {
     id: "override-agent-file",
+    group: "agents",
     title: "Override a Built-in Agent with a File",
     model: LEAN_MODEL,
     tool: subTool("Explore"),
@@ -103,6 +108,7 @@ export const AGENT_VARIANTS: Variant[] = [
   },
   {
     id: "override-agents-flag",
+    group: "agents",
     title: "Override a Built-in Agent with --agents",
     model: LEAN_MODEL,
     tool: subTool("general-purpose"),
@@ -126,6 +132,7 @@ export const AGENT_VARIANTS: Variant[] = [
   },
   {
     id: "override-append-subagent",
+    group: "agents",
     title: "Append to Every Subagent Prompt",
     model: LEAN_MODEL,
     tool: subTool("Explore"),
@@ -144,6 +151,7 @@ export const AGENT_VARIANTS: Variant[] = [
   },
   {
     id: "disable-explore-plan",
+    group: "agents",
     title: "Turn Off the Explore and Plan Agents",
     model: LEAN_MODEL,
     env: { CLAUDE_CODE_DISABLE_EXPLORE_PLAN_AGENTS: "1" },
@@ -161,6 +169,7 @@ export const AGENT_VARIANTS: Variant[] = [
   },
   {
     id: "disable-builtin-agents",
+    group: "agents",
     title: "Turn Off All Built-in Agents",
     model: LEAN_MODEL,
     env: { CLAUDE_AGENT_SDK_DISABLE_BUILTIN_AGENTS: "1" },

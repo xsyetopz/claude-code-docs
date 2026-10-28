@@ -248,7 +248,7 @@ The second shows what `claude purge` would delete, without deleting it.
 
 ## Exact Fields
 
-The exact fields of `~/.claude.json`: `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-claude-json.json`. The program builds this payload in code, not with a validator, so the schema is read from that code: a field marked `x-unverified` has a type the code does not show, and `x-observed` marks a field that a probe saw.
+The exact fields of `~/.claude.json`: `https://xsyetopz.github.io/clawdipedia/schemas/claude-code-claude-json.json`. The program builds this payload in code, not with a validator, so the schema is read from that code: a field marked `x-unverified` has a type the code does not show, and `x-observed` marks a field that a probe saw.
 It lists every field of this release, so build on the fields it names and look each one up there before you rely on it.
 
 ## Related Pages

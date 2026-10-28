@@ -121,7 +121,7 @@ Source: [Connect Claude Code to Tools via MCP](https://code.claude.com/docs/en/m
 - Not deferred: `Read`, `Write`, `Edit`, `Glob`, `Grep`, `Bash`, `PowerShell`, `Agent`, `Skill`, `AskUserQuestion`, `ListAgents`, `Workflow`, `ReportFindings`, `ToolSearch`, `StructuredOutput`, `SubagentHandback`, `ScheduleWakeup`, `memory_*`, and the rest of the gated tools.
 - The old capture of `2.1.296` lacked `Glob` and `Grep`. In `2.1.305` they are not deferred.
 - From `2.1.306` to `2.1.311`, our `-p` stub runs offered neither `Glob` nor `Grep`, not even behind `ToolSearch`. In this build, the `Bash` tool runs `find` and `grep` as the embedded `bfs` and `ugrep`, and the prompts point Claude to them (the program).
-- In the `2.1.305` capture, the main prompt lists 12 tools (the site's captures use a local stub as `ANTHROPIC_BASE_URL`, and tool search is on behind a custom base URL, so it is not 20 as before). `CronCreate`, `CronDelete`, `CronList`, `EnterWorktree`, `ExitWorktree`, `NotebookEdit`, `SendMessage`, `TaskStop`, `WebFetch`, and `WebSearch` sit behind `ToolSearch`. See [Tools per Variant](../../prompts/tools-per-variant.md).
+- In the `2.1.305` capture, the main prompt lists 12 tools (the site's captures use a local stub as `ANTHROPIC_BASE_URL`, and tool search is on behind a custom base URL, so it is not 20 as before). `CronCreate`, `CronDelete`, `CronList`, `EnterWorktree`, `ExitWorktree`, `NotebookEdit`, `SendMessage`, `TaskStop`, `WebFetch`, and `WebSearch` sit behind `ToolSearch`. See [Tools per Variant](../../prompts/tools/tools-per-variant.md).
 
 ## Example
 
@@ -146,7 +146,7 @@ Permission rules run when a tool is called, not when it is listed.
 
 ## Exact Fields
 
-The exact fields: `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-tools.json`, made from each built-in tool's own input and output validator. It has an `<Tool>Input` and an `<Tool>Result` definition for each tool the program could export; its `description` names the few it lacks.
+The exact fields: `https://xsyetopz.github.io/clawdipedia/schemas/claude-code-tools.json`, made from each built-in tool's own input and output validator. It has an `<Tool>Input` and an `<Tool>Result` definition for each tool the program could export; its `description` names the few it lacks.
 It lists every field of this release, so build on the fields it names and look each one up there before you rely on it.
 
 ## Related Pages

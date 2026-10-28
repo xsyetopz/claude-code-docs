@@ -91,6 +91,7 @@ A hook that times out is canceled and its output is dropped.
 | --- | --- | --- | --- |
 | Default `timeout` | <Documented /> | 600 seconds for `command`, `http`, `mcp_tool`. 30 for `prompt`. 60 for `agent`. | The program was not searched for each default. They come from the docs. |
 | Lower defaults | <Documented /> | 30 seconds on `UserPromptSubmit`, `PreModelSwitch`, `PostModelSwitch`. 10 seconds on `MessageDisplay`. | For `command`, `http`, `mcp_tool`. |
+| `timeout` under 1 second | <Documented /> | On a `prompt` or `agent` hook, a `timeout` under 1 counts as 1 second. | Since `2.1.312`. The program takes the larger of `timeout` and 1. Other types are not changed. See [Handlers](handlers.md#prompt-and-agent-concurrency). |
 | `SessionEnd` budget | <Documented /> | 1.5 seconds shared by all hooks. | Raised to the largest per-hook `timeout` in settings, up to 60 seconds. Plugin timeouts do not raise it. |
 | `PreModelSwitch` timeout | <Documented /> | A hook that times out blocks the switch. | |
 | `PreToolUse` timeout | <Documented /> | A `command`, `http`, or `mcp_tool` hook that times out does not block. | Use `onFailure: "block"` to block. An SDK callback that times out does block. |

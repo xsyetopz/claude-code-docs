@@ -615,19 +615,19 @@
     "kind": "behaviour",
     "probes": ["live.context-budget"]
   },
-  "docs/prompts/override.md#:15eac422": {
+  "docs/prompts/other/override.md#:15eac422": {
     "kind": "behaviour",
     "probes": ["live.oauth-parity"]
   },
-  "docs/prompts/skill-insights.md#where-it-comes-from:b79f0f67": {
+  "docs/prompts/skills/skill-insights.md#where-it-comes-from:b79f0f67": {
     "kind": "behaviour",
     "probes": ["pty.captures.skill-insights"]
   },
-  "docs/prompts/subagent-claude-code-guide.md#where-it-comes-from:aa19dfb2": {
+  "docs/prompts/agents/subagent-claude-code-guide.md#where-it-comes-from:aa19dfb2": {
     "kind": "behaviour",
     "probes": ["pty.captures.guide"]
   },
-  "docs/prompts/subagent-claude-code-guide.md#where-it-comes-from:aa587d4d": {
+  "docs/prompts/agents/subagent-claude-code-guide.md#where-it-comes-from:ee124afa": {
     "kind": "behaviour",
     "probes": ["pty.captures.guide"]
   },
@@ -871,7 +871,7 @@
       "pty.captures.guide"
     ]
   },
-  "docs/reference/probes.md#interactive-probes:17999660": {
+  "docs/reference/probes.md#interactive-probes:87f7640b": {
     "kind": "behaviour",
     "probes": ["pty.captures.guide"]
   },
@@ -1340,9 +1340,109 @@
     "probes": [],
     "note": "control request fields in schemas/claude-code-control-protocol.json"
   },
-  "docs/prompts/skill-claude-api.md#full-text:f6fd98e8": {
+  "docs/prompts/skills/skill-claude-api.md#full-text:f6fd98e8": {
     "kind": "manual",
     "probes": [],
     "note": "cc-inspect code run of /claude-api PROBE-ARG on 2.1.308 to 2.1.311"
+  },
+  "docs/configure/keybindings.md#click-to-send-a-queued-message:b1f3f04e": {
+    "kind": "manual",
+    "probes": [],
+    "note": "chat:sendNowHintPress and the mouse-mode test read in the cleaned 2.1.312 code (chunk-7ss0ryz6.js:8976, :9363-9396)"
+  },
+  "docs/configure/keybindings.md#click-to-send-a-queued-message:872ca5a8": {
+    "kind": "manual",
+    "probes": [],
+    "note": "hint text and its no-key branch read in the cleaned 2.1.312 code (chunk-7ss0ryz6.js:9370-9394)"
+  },
+  "docs/configure/keybindings.md#vim-mode-operators-with-gj-and-gk:ac3ccbab": {
+    "kind": "manual",
+    "probes": [],
+    "note": "the gj/gk count clamp read in the cleaned 2.1.312 code (chunk-hz2c9q6k.js:316-321, :784)"
+  },
+  "docs/configure/models-and-providers.md#effort:2891b1b0": {
+    "kind": "manual",
+    "probes": [],
+    "note": "the cache warning text read in the cleaned 2.1.312 code (chunk-7ss0ryz6.js:58010, :58046-58051)"
+  },
+  "docs/configure/models-and-providers.md#effort:7469c572": {
+    "kind": "manual",
+    "probes": [],
+    "note": "the prompt effort note and its flag read in the cleaned 2.1.312 code (chunk-7ss0ryz6.js:11353, :60684, :60697)"
+  },
+  "docs/configure/models-and-providers.md#effort:8f3b2c97": {
+    "kind": "manual",
+    "probes": [],
+    "note": "the spinner reads the sent level first in the cleaned 2.1.312 code (chunk-zgj89n5s.js:1465, chunk-8h49xv0g.js:1512-1516)"
+  },
+  "docs/configure/models-and-providers.md#effort:5e598493": {
+    "kind": "manual",
+    "probes": [],
+    "note": "the four conditions of the prompt-note flag read in the cleaned 2.1.312 code (chunk-7ss0ryz6.js:60684), against 2.1.311 (chunk-xnjmsx7r.js:57759, :57763, :59815, :60285)"
+  },
+  "docs/configure/settings/auth.md#claude-apps-gateway-server-key:cbc3b683": {
+    "kind": "manual",
+    "probes": [],
+    "note": "oidc.user_id_claim and its sub fallback read in the cleaned 2.1.312 code (chunk-gs1pnh66.js:57717, :61506, :61545)"
+  },
+  "docs/extend/hooks/configuration.md#timeouts:8c674c0f": {
+    "kind": "manual",
+    "probes": [],
+    "note": "the larger of timeout and 1 second for prompt and agent hooks, read in the cleaned 2.1.312 code (chunk-r5cyd28m.js, the model hooks timeout)"
+  },
+  "docs/extend/hooks/handlers.md#prompt-and-agent-concurrency:823090f7": {
+    "kind": "manual",
+    "probes": [],
+    "note": "the 24, 12, and 12 limits read in the cleaned 2.1.312 code (chunk-r5cyd28m.js, the model hooks and overdue model hooks counts)"
+  },
+  "docs/extend/skills-and-commands/frontmatter.md#skill-discovery-with-bash-cd:a4b976c0": {
+    "kind": "manual",
+    "probes": [],
+    "note": "the deeper-directory skill search read in the cleaned 2.1.312 code (chunk-r5cyd28m.js:156298-156312, :156113-156170)"
+  },
+  "docs/extend/skills-and-commands/slash-commands.md#when-a-command-name-is-not-valid:c73580ac": {
+    "kind": "manual",
+    "probes": [],
+    "note": "the name-type check read in the cleaned 2.1.312 code (chunk-r5cyd28m.js:53519), absent in 2.1.311 (chunk-2ht8z368.js:53427)"
+  },
+  "docs/how-it-works/account-and-access.md#what-the-usage-limits-are-called:b7ddbb93": {
+    "kind": "manual",
+    "probes": [],
+    "note": "the 5-hour limit wording read in the cleaned 2.1.312 code (chunk-srq4mvaf.js:595, chunk-vwa2y0xv.js:2546), against session limit in 2.1.311 (chunk-ntqtfy8b.js:1107)"
+  },
+  "docs/how-it-works/context-and-compaction.md#when-compaction-runs:4aa0724e": {
+    "kind": "manual",
+    "probes": [],
+    "note": "the subagent autoCompactWindow lowering the env window, read in the cleaned 2.1.312 code (chunk-r5cyd28m.js:83915, chunk-1wgxyh0t.js:6088)"
+  },
+  "docs/how-it-works/system-prompt.md#names-that-claude-code-does-not-recognize:e18e165c": {
+    "kind": "manual",
+    "probes": [],
+    "note": "the unknown-model branch read in the cleaned 2.1.312 code (chunk-9wgj206m.js:334-363, chunk-3xe0k172.js:24698-24717), against 2.1.311 (chunk-rww18cjm.js, no deterministic option)"
+  },
+  "docs/reference/opentelemetry.md#events:e3080430": {
+    "kind": "manual",
+    "probes": [],
+    "note": "the tengu_snoopy_creek default false and its two call sites read in the cleaned 2.1.312 code (chunk-r5cyd28m.js:186177, :186258, :186295, :186356)"
+  },
+  "docs/reference/opentelemetry.md#what-two-attributes-report:498bfcde": {
+    "kind": "manual",
+    "probes": [],
+    "note": "the effort attribute taken from the level in force, read in the cleaned 2.1.312 code (chunk-r5cyd28m.js:135670, :136924, :141434)"
+  },
+  "docs/reference/opentelemetry.md#what-two-attributes-report:c99c0c1f": {
+    "kind": "manual",
+    "probes": [],
+    "note": "the mcp_server.name branches read in the cleaned 2.1.312 code (chunk-3xe0k172.js:44518-44531, :48503-48514, custom at :42524)"
+  },
+  "docs/reference/tools/files.md#write-on-a-file-that-claude-read-only-in-part:99fb7bcb": {
+    "kind": "manual",
+    "probes": [],
+    "note": "the partial-read refusal of Write read in the cleaned 2.1.312 code (chunk-r5cyd28m.js:164229-164274, :73050-73054, :9596-9609, :77622; chunk-s2tghjwy.js:4530; chunk-b09ckz08.js:8515)"
+  },
+  "docs/reference/transcript-format.md#assistant-line-fields:8da0a637": {
+    "kind": "manual",
+    "probes": [],
+    "note": "effort read from output_config.effort of the built request in the cleaned 2.1.312 code (chunk-r5cyd28m.js:135670, :136924), against 2.1.311 (chunk-2ht8z368.js:134537)"
   }
 }

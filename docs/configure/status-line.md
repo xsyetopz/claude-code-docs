@@ -30,7 +30,7 @@ echo "$model | context ${used}%"
 
 ```json title="~/.claude/settings.json"
 {
-  "$schema": "https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-settings.json",
+  "$schema": "https://xsyetopz.github.io/clawdipedia/schemas/claude-code-settings.json",
   "statusLine": {
     "type": "command",
     "command": "~/.claude/statusline.sh",
@@ -105,7 +105,7 @@ Always read optional fields with a default, for example `jq -r '.vim.mode // emp
 | `prompt_id` | <Documented /> | UUID of the prompt in work | May be absent before the first input | Status line |
 | `transcript_path` | <Documented /> | Transcript file path | String | Status line |
 | `cwd` | <Documented /> | Working directory | Same value as `workspace.current_dir` | Status line |
-| `version` | <Documented /> | Claude Code version | `2.1.311` here | Status line |
+| `version` | <Documented /> | Claude Code version | `2.1.312` here | Status line |
 | `model.id`, `model.display_name` | <Documented /> | Model id and name | Strings | Status line |
 | `output_style.name` | <Documented /> | Active style name | `default` when none. See [Output Styles](output-styles.md) | Status line |
 | `fast_mode` | <Documented /> | Fast mode on | Boolean | Status line |
@@ -214,7 +214,7 @@ Checked in the interactive screen (2.1.305, local stub, fake key, clean environm
 
 ## Exact Fields
 
-The exact fields: `https://xsyetopz.github.io/claude-code-docs/schemas/claude-code-status-line.json`. The program builds this payload in code, not with a validator, so the schema is read from that code: a field marked `x-unverified` has a type the code does not show, and `x-observed` marks a field that a probe saw.
+The exact fields: `https://xsyetopz.github.io/clawdipedia/schemas/claude-code-status-line.json`. The program builds this payload in code, not with a validator, so the schema is read from that code: a field marked `x-unverified` has a type the code does not show, and `x-observed` marks a field that a probe saw.
 It lists every field of this release, so build on the fields it names and look each one up there before you rely on it.
 
 ## Related Pages
