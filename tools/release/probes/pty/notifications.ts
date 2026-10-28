@@ -48,10 +48,10 @@ const elicitationDialog: PtyCase = {
     ESC(18, "cancel"),
   ],
   secs: 21,
-  claims: ["notifications.types"],
+  facts: ["notifications.types"],
   notes:
     "Form elicitation with no hook answer: the dialog opens, then is cancelled.",
-  facts: (x) => {
+  data: (x) => {
     const t = types(x);
     const res = x.hook("ElicitationResult")[0]?.json ?? {};
     return {
@@ -77,10 +77,10 @@ const elicitationUrl: PtyCase = {
     { t: 18, send: "\r", label: "accept" },
   ],
   secs: 24,
-  claims: ["notifications.types"],
+  facts: ["notifications.types"],
   notes:
     "URL-mode elicitation; the first option is chosen with Enter after the 6 s notification delay.",
-  facts: (x) => ({
+  data: (x) => ({
     ...pre(x.hook("Elicitation").length > 0, "Elicitation hook never fired"),
     notificationTypes: types(x),
     urlDialogMessage: messageOf(x, "elicitation_url_dialog"),
@@ -95,10 +95,10 @@ const idle: PtyCase = {
   settings: hooks(["Notification"]),
   schedule: [READY, ASK("prompt")],
   secs: 85,
-  claims: ["notifications.types"],
+  facts: ["notifications.types"],
   notes:
     "One reply, then idle. Records how long after the prompt idle_prompt fires.",
-  facts: (x) => {
+  data: (x) => {
     const n = x
       .hook("Notification")
       .find((k) => k.json["notification_type"] === "idle_prompt");
@@ -132,10 +132,10 @@ const autoMode: PtyCase = {
     ESC(14),
   ],
   secs: 16,
-  claims: ["notifications.types"],
+  facts: ["notifications.types"],
   notes:
     "Auto mode with a custom base URL: a classifier billing notice fires agent_needs_input.",
-  facts: (x) => ({
+  data: (x) => ({
     ...pre(
       x.hook("Notification").length > 0,
       "no Notification hook fired in auto mode",

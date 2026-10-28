@@ -1,29 +1,29 @@
-// Per-claim results and doc tokens of release:compare. The case diff functions come in as `deps`: they use NOISY,
+// Compares the version-labelled facts of release:compare: per-fact results and doc tokens. The case diff functions come in as `deps`: they use NOISY,
 // which stays in ../compare.ts, and a leaf never imports its facade at runtime.
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import type { CaseResult } from "../../lib/results.ts";
 import type { diffCase } from "../compare.ts";
-import { invalidDetail, isEmpty } from "./facts.ts";
-import type { ClaimResult, ClaimRow } from "./types.ts";
+import { invalidDetail, isEmpty } from "./data.ts";
+import type { FactResult, FactRow } from "./types.ts";
 
-export type ClaimDeps = {
+export type FactDeps = {
   diffCase: typeof diffCase;
 };
 
-/** `result` per claim from the mapped probes (or, for diff kinds, from diff/*.json of `to`). */
-export const claimResultsWith = (
-  { diffCase }: ClaimDeps,
-  claims: ClaimRow[],
+/** `result` per fact from the mapped probes (or, for diff kinds, from diff/*.json of `to`). */
+export const factResultsWith = (
+  { diffCase }: FactDeps,
+  facts: FactRow[],
   a: CaseResult[],
   b: CaseResult[],
   diffChanged: Set<string> | null,
   schemaText: string | null = null,
   versions?: [string, string],
-): ClaimResult[] => {
+): FactResult[] => {
   const am = new Map(a.map((r) => [r.id, r]));
   const bm = new Map(b.map((r) => [r.id, r]));
-  return claims.map((c) => {
+  return facts.map((c) => {
     if (c.status === "static" || c.kind === "static" || c.kind === "external")
       return c;
     if (c.probes.length) {
@@ -51,7 +51,7 @@ export const claimResultsWith = (
           why.push(`${p}: ${bad}`);
           continue;
         }
-        // the sweep holds every env name: look at the facts of the claim's names only
+        // the sweep holds every env name: look at the data of the fact's names only
         const only =
           p.endsWith("sweep") && c.diffNames?.length
             ? (k: string) =>
@@ -95,7 +95,7 @@ export const claimResultsWith = (
         ...(noted.length ? { noise } : {}),
       };
     }
-    const notRun = (why: string): ClaimResult => ({
+    const notRun = (why: string): FactResult => ({
       ...c,
       result: "not-run",
       why,

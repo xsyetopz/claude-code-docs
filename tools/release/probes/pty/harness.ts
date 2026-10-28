@@ -13,7 +13,7 @@ import { binaryPath, childEnv, PROMPT } from "../../lib/env.ts";
 import { runPty } from "../../lib/pty/driver.ts";
 import {
   type CaseResult,
-  type Fact,
+  type Data,
   normalise,
   openRun,
   writeCase,
@@ -60,12 +60,12 @@ const parseLog = (file: string): { t: number; json: Obj; line: string }[] =>
 const runOnce = async (ctx: PtyCtx, c: PtyCase): Promise<CaseResult[]> => {
   const id = `pty.${c.id}`;
   if (!selected(ctx.only, id)) return [];
-  if (ctx.dry) return [baseResult(ctx, c, { facts: {} })];
+  if (ctx.dry) return [baseResult(ctx, c, { data: {} })];
   const prompt = c.prompt ?? PROMPT;
   if (prompt !== PROMPT && !c.promptReason)
     return [
       baseResult(ctx, c, {
-        facts: { precondition: false, error: "prompt needs promptReason" },
+        data: { precondition: false, error: "prompt needs promptReason" },
       }),
     ];
   // every typed line that is not a /command or a key must be the standard prompt
@@ -80,7 +80,7 @@ const runOnce = async (ctx: PtyCtx, c: PtyCase): Promise<CaseResult[]> => {
   if (stray && !c.promptReason)
     return [
       baseResult(ctx, c, {
-        facts: {
+        data: {
           precondition: false,
           error: `schedule sends a non-standard prompt (${JSON.stringify(stray.send)}) without promptReason`,
         },
@@ -199,8 +199,8 @@ const runOnce = async (ctx: PtyCtx, c: PtyCase): Promise<CaseResult[]> => {
       readyAt !== null && firstRead !== undefined
         ? Math.round((readyAt - firstRead) * 10) / 10
         : null;
-    const facts = {
-      ...c.facts(run),
+    const data = {
+      ...c.data(run),
       ...(startLagS !== null ? { startLagS } : {}),
       stepTimeouts,
       ...(stepTimeouts.length
@@ -217,7 +217,7 @@ const runOnce = async (ctx: PtyCtx, c: PtyCase): Promise<CaseResult[]> => {
         envSet: Object.keys(extra),
         exit: null, // the exit code goes to samples.exitCode (it varies with timing)
         timedOut: false,
-        facts: normalise(bad ? { ...facts, badAuth: true } : facts),
+        data: normalise(bad ? { ...data, badAuth: true } : data),
         samples: normalise({
           ...(samples ?? {}),
           exitCode: String(pty.exit),
@@ -233,8 +233,8 @@ const runOnce = async (ctx: PtyCtx, c: PtyCase): Promise<CaseResult[]> => {
   } catch (e) {
     return [
       baseResult(ctx, c, {
-        facts: { precondition: false, error: (e as Error).message },
-        notes: "probe invalid: threw before producing facts",
+        data: { precondition: false, error: (e as Error).message },
+        notes: "probe invalid: threw before producing data",
       }),
     ];
   } finally {
@@ -249,17 +249,17 @@ export const runPtyCase = async (
 ): Promise<CaseResult[]> => {
   const one = await runTimed(ctx, c);
   const f = one[0];
-  if (!f || ctx.dry || f.facts["precondition"] !== false) return one;
+  if (!f || ctx.dry || f.data["precondition"] !== false) return one;
   // An invalid run (a step timed out, or the case threw) is often a loaded machine: run it once more.
   // runOnce, not runTimed: an invalid first run never reaches the timing rerun, so one launch here keeps
   // the total at 2 launches per case (runTimed here could make it 3).
   const again = await runOnce(ctx, c);
   const s = again[0];
   if (!s) return one;
-  s.facts["retried"] = true;
+  s.data["retried"] = true;
   s.attempts = [
     ...(f.attempts ?? []),
-    { facts: f.facts, ...(f.samples ? { samples: f.samples } : {}) },
+    { data: f.data, ...(f.samples ? { samples: f.samples } : {}) },
   ];
   return [s];
 };
@@ -267,22 +267,20 @@ export const runPtyCase = async (
 const runTimed = async (ctx: PtyCtx, c: PtyCase): Promise<CaseResult[]> => {
   const first = await runOnce(ctx, c);
   const f = first[0];
-  if (!f || ctx.dry || !c.retryIf || f.facts["precondition"] === false)
+  if (!f || ctx.dry || !c.retryIf || f.data["precondition"] === false)
     return first;
-  if (!c.retryIf(f.facts)) return first;
+  if (!c.retryIf(f.data)) return first;
   const second = await runOnce(ctx, c);
   const s = second[0];
-  if (!s || s.facts["precondition"] === false) return first;
-  const agree = !c.retryIf(s.facts);
-  s.facts["rerun"] = true;
-  s.facts["flaky"] = agree; // the first run was out of tolerance; true when the rerun disagrees
-  s.facts["firstOutOfTolerance"] = true;
-  s.attempts = [
-    { facts: f.facts, ...(f.samples ? { samples: f.samples } : {}) },
-  ];
+  if (!s || s.data["precondition"] === false) return first;
+  const agree = !c.retryIf(s.data);
+  s.data["rerun"] = true;
+  s.data["flaky"] = agree; // the first run was out of tolerance; true when the rerun disagrees
+  s.data["firstOutOfTolerance"] = true;
+  s.attempts = [{ data: f.data, ...(f.samples ? { samples: f.samples } : {}) }];
   return [s];
 };
 
 export const runDirFor = (ctx: Ctx): string => openRun(ctx.to);
-export type { Fact };
+export type { Data };
 export { binaryPath, writeCase };

@@ -42,7 +42,7 @@ const notification = (cont: boolean): PtyCase => ({
     cont ? { t: 14, send: "\r", label: "accept" } : ESC(14),
   ],
   secs: 17,
-  claims: ["hooks.notification"],
+  facts: ["hooks.notification"],
   notes: cont
     ? "Notification reply continue:false plus systemMessage; the dialog is accepted after the hook ran."
     : "The dialog is held open for about 12 s, then cancelled.",
@@ -53,7 +53,7 @@ const notification = (cont: boolean): PtyCase => ({
       delaySinceRequestS: first && pr ? String(round(first.t - pr.t, 2)) : "",
     };
   },
-  facts: (x) => {
+  data: (x) => {
     const n = x.hook("Notification");
     const pr = x.hook("PermissionRequest")[0];
     const first = n[0];
@@ -92,10 +92,10 @@ const preCompact = (p: (typeof PRECOMPACT)[number]): PtyCase => ({
     { t: 12, send: "/compact\r", label: "compact" },
   ],
   secs: 22,
-  claims: ["hooks.precompact"],
+  facts: ["hooks.precompact"],
   notes:
     "Two standard prompts, then the /compact slash command (a command, not a model prompt).",
-  facts: (x) => {
+  data: (x) => {
     const pc = x.hook("PreCompact");
     const first = pc[0]?.json ?? {};
     return {
@@ -136,10 +136,10 @@ const elicitHook: PtyCase = {
   },
   schedule: [READY, ASK("prompt", 6)],
   secs: 18,
-  claims: ["hooks.elicitation"],
+  facts: ["hooks.elicitation"],
   notes:
     "A local MCP server asks a form question; the Elicitation hook answers accept, so no dialog opens.",
-  facts: (x) => {
+  data: (x) => {
     const e = x.hook("Elicitation");
     const first = e[0]?.json ?? {};
     const mcp = x.file("mcp.log");

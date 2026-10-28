@@ -1,5 +1,5 @@
 // `type: "script"` hook entries (ported from p305-print/script.ts): does the program accept them, and which hooks still run?
-import type { CaseResult, Fact } from "../../../lib/results.ts";
+import type { CaseResult, Data } from "../../../lib/results.ts";
 import {
   baseResult,
   dispose,
@@ -54,7 +54,7 @@ const runOne = (ctx: PrintCtx, name: string, hooks: Record<string, unknown>) =>
           ),
         )
         .slice(0, 4);
-      const facts: Record<string, Fact> = {
+      const data: Record<string, Data> = {
         precondition:
           r.code === 0 &&
           dbg !== "" &&
@@ -67,7 +67,7 @@ const runOne = (ctx: PrintCtx, name: string, hooks: Record<string, unknown>) =>
         "settings.skipped": /Invalid setting skipped/.test(dbg),
       };
       return baseResult(ctx, `print.hooks.script.${name}`, r, {
-        facts,
+        data,
         samples: { debug_lines: lines.map((l) => l.slice(0, 300)).join("\n") },
       });
     } finally {

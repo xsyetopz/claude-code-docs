@@ -11,7 +11,7 @@ import {
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { runClaimsSelftest } from "./claims/selftest.ts";
+import { runFactsSelftest } from "./facts/selftest.ts";
 import { assertSafeEnv, childEnv, FAKE_KEY, PROMPT } from "./lib/env.ts";
 import { runLiveSelftest } from "./lib/live/selftest.ts";
 import { allocPort } from "./lib/ports.ts";
@@ -154,7 +154,7 @@ export const runSelftest = async (ctx: Ctx): Promise<number> => {
     const childTmp = tmp.stdout.toString().trim();
     step("toolEnv: child keeps the parent TMPDIR", childTmp === out, childTmp);
 
-    runClaimsSelftest(step);
+    runFactsSelftest(step);
     await runPtySelftest(step);
     await runLiveSelftest(step);
 
@@ -251,12 +251,12 @@ export const runSelftest = async (ctx: Ctx): Promise<number> => {
       envSet: [],
       exit: res.code,
       timedOut: res.timedOut,
-      facts: { requests: reqs.length, envNames: names.length },
+      data: { requests: reqs.length, envNames: names.length },
       requests: {
         count: reqs.length,
         paths: [...new Set(reqs.map((r) => r.path))],
       },
-      claims: [],
+      facts: [],
     });
     const back = readRun("0.0.0", out);
     step(

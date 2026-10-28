@@ -1,6 +1,6 @@
 // PostToolUse / PostToolUseFailure hook input shapes per tool (ported from p305-print/ptu.ts).
-// The stub asks for the tool(s); a command hook logs its stdin JSON; facts are the key sets.
-import type { CaseResult, Fact } from "../../../lib/results.ts";
+// The stub asks for the tool(s); a command hook logs its stdin JSON; the data is the key sets.
+import type { CaseResult, Data } from "../../../lib/results.ts";
 import {
   arr,
   baseResult,
@@ -153,7 +153,7 @@ const runOne = async (ctx: PrintCtx, name: string, seq: Seq) =>
         : results >= seq.length
           ? "ran"
           : "no-result";
-      const facts: Record<string, Fact> = {
+      const data: Record<string, Data> = {
         precondition:
           r.code === 0 && msgs(r).length > 0 && outcome !== "no-result",
         outcome,
@@ -161,7 +161,7 @@ const runOne = async (ctx: PrintCtx, name: string, seq: Seq) =>
         "tool.results": results,
       };
       const lines = readIf(`${r.sb.cfg}/ptu.log`).split("\n").filter(Boolean);
-      facts["hook.calls"] = lines.length;
+      data["hook.calls"] = lines.length;
       const seen = new Map<string, number>();
       for (const l of lines) {
         const j = obj(JSON.parse(l));
@@ -171,32 +171,32 @@ const runOne = async (ctx: PrintCtx, name: string, seq: Seq) =>
         const p = n > 1 ? `${tn}#${n}` : tn;
         const resp = j["tool_response"];
         const ro = obj(resp);
-        facts[`${p}.hook_keys`] = Object.keys(j);
-        facts[`${p}.input_keys`] = keys(j["tool_input"]);
-        facts[`${p}.response`] =
+        data[`${p}.hook_keys`] = Object.keys(j);
+        data[`${p}.input_keys`] = keys(j["tool_input"]);
+        data[`${p}.response`] =
           resp && typeof resp === "object"
             ? Object.keys(ro)
             : (JSON.stringify(resp) ?? "").slice(0, 100);
-        if (ro["file"]) facts[`${p}.file_keys`] = keys(ro["file"]);
-        if (ro["type"] !== undefined) facts[`${p}.type`] = String(ro["type"]);
+        if (ro["file"]) data[`${p}.file_keys`] = keys(ro["file"]);
+        if (ro["type"] !== undefined) data[`${p}.type`] = String(ro["type"]);
         if (ro["status"] !== undefined)
-          facts[`${p}.status`] = String(ro["status"]);
+          data[`${p}.status`] = String(ro["status"]);
         if (ro["structuredPatch"] !== undefined)
-          facts[`${p}.patch`] = (
+          data[`${p}.patch`] = (
             JSON.stringify(ro["structuredPatch"]) ?? ""
           ).slice(0, 60);
         if ("originalFile" in ro)
-          facts[`${p}.original_file_null`] = ro["originalFile"] === null;
+          data[`${p}.original_file_null`] = ro["originalFile"] === null;
       }
       const fail = readIf(`${r.sb.cfg}/ptuf.log`);
-      facts["failure_hook.fired"] = fail !== "";
+      data["failure_hook.fired"] = fail !== "";
       if (fail) {
         const j = obj(JSON.parse(fail.split("\n").filter(Boolean)[0] ?? "{}"));
-        facts["failure_hook.keys"] = Object.keys(j);
-        facts["failure_hook.error"] = String(j["error"] ?? "").slice(0, 120);
+        data["failure_hook.keys"] = Object.keys(j);
+        data["failure_hook.error"] = String(j["error"] ?? "").slice(0, 120);
       }
       return baseResult(ctx, `print.hooks.posttooluse.${name}`, r, {
-        facts,
+        data,
         samples: fail ? { failure_hook: fail } : undefined,
         notes: "Stub requests the tool; the hook logs its stdin.",
       });

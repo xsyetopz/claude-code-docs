@@ -57,7 +57,7 @@ const ckCase = (name: string, env: Record<string, string>): CaseDef => {
           const q = msgs(r)[0];
           return {
             from: r,
-            facts: {
+            data: {
               precondition:
                 !!q && d.length > 0 && (!overridden || readsOverride(ctx.bin)),
               binaryReadsOverride: readsOverride(ctx.bin),

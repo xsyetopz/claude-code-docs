@@ -7,11 +7,11 @@ import {
   writeFileSync,
 } from "node:fs";
 import { join } from "node:path";
-import { claimsForProbe } from "../claims/map.ts";
+import { factsForProbe } from "../facts/map.ts";
 import { versionDir } from "../util.ts";
 import { FAKE_KEY } from "./env.ts";
 
-export type Fact = string | number | boolean | null | string[];
+export type Data = string | number | boolean | null | string[];
 export type CaseResult = {
   schema: 1;
   id: string; // stable across versions, e.g. "print.hooks.posttooluse.edit"
@@ -22,11 +22,11 @@ export type CaseResult = {
   envSet: string[]; // names only
   exit: number | null;
   timedOut: boolean;
-  facts: Record<string, Fact>;
+  data: Record<string, Data>;
   samples?: Record<string, string>;
-  /** Earlier program launches of a case that was rerun (timing rerun, or retry of an invalid run), oldest first. The case's own facts are the last launch. */
+  /** Earlier program launches of a case that was rerun (timing rerun, or retry of an invalid run), oldest first. The case's own data is the last launch. */
   attempts?: {
-    facts: Record<string, Fact>;
+    data: Record<string, Data>;
     samples?: Record<string, string>;
   }[];
   requests?: {
@@ -36,7 +36,7 @@ export type CaseResult = {
     bodyKeys?: string[];
   };
   cacheWarm?: boolean;
-  claims: string[];
+  facts: string[];
   notes?: string;
 };
 
@@ -125,7 +125,7 @@ const ID_RE = /^[A-Za-z0-9][A-Za-z0-9._-]*$/;
 const caseFile = (r: CaseResult): string =>
   `${r.id.startsWith(`${r.group}.`) ? r.id.slice(r.group.length + 1) : r.id}.json`;
 
-/** Adds the map.json claims of the case, normalises samples, then fails the write if any secret-shaped string remains. */
+/** Adds the map.json facts of the case, normalises samples, then fails the write if any secret-shaped string remains. */
 export const writeCase = (runDir: string, r: CaseResult): string => {
   if (!ID_RE.test(r.id) || r.id.includes(".."))
     throw new Error(`bad case id: ${r.id}`);
@@ -142,8 +142,8 @@ export const writeCase = (runDir: string, r: CaseResult): string => {
         ]),
       )
     : undefined;
-  const claims = [...new Set([...r.claims, ...claimsForProbe(r.id)])];
-  const out: CaseResult = { ...r, claims, ...(samples ? { samples } : {}) };
+  const facts = [...new Set([...r.facts, ...factsForProbe(r.id)])];
+  const out: CaseResult = { ...r, facts, ...(samples ? { samples } : {}) };
   const hit = findSecret(out);
   if (hit)
     throw new Error(

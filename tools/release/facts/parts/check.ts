@@ -1,15 +1,15 @@
-// release:claims --check - the known probe case ids and the map.json checks.
+// release:facts --check - the known probe case ids and the map.json checks.
 import { existsSync, readdirSync } from "node:fs";
 import { readRun } from "../../lib/results.ts";
 import { LIVE_CASES } from "../../probes/live/cases.ts";
 import { CAPTURES } from "../../util.ts";
-import type { Claim, ClaimMap } from "../claims.ts";
+import type { Fact, FactMap } from "../facts.ts";
 import { KINDS } from "./kinds.ts";
 
 export type Known = {
   ids: Set<string>;
-  /** case id -> `claims` the result files declare */
-  claims: Map<string, Set<string>>;
+  /** case id -> `facts` the result files declare */
+  facts: Map<string, Set<string>>;
   /** false when no result files exist: print, pty and managed ids cannot be checked then */
   fromDisk: boolean;
 };
@@ -21,11 +21,11 @@ export type Known = {
 export const knownCases = (base = CAPTURES): Known => {
   const k: Known = {
     ids: new Set(LIVE_CASES.map((c) => `live.${c.id}`)),
-    claims: new Map(),
+    facts: new Map(),
     fromDisk: false,
   };
   if (!existsSync(base)) return k;
-  // oldest first, so a case's newest capture sets its claims; older ones hold ids since renamed
+  // oldest first, so a case's newest capture sets its facts; older ones hold ids since renamed
   const versions = readdirSync(base)
     .filter((n) => /^\d+\.\d+\.\d+$/.test(n))
     .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
@@ -33,22 +33,22 @@ export const knownCases = (base = CAPTURES): Known => {
     for (const r of readRun(v, base)) {
       k.fromDisk = true;
       k.ids.add(r.id);
-      k.claims.set(r.id, new Set(r.claims));
+      k.facts.set(r.id, new Set(r.facts));
     }
   return k;
 };
 
 export type Check = { errors: string[]; warnings: string[] };
 
-export const checkClaims = (
-  claims: Claim[],
-  map: ClaimMap,
+export const checkFacts = (
+  facts: Fact[],
+  map: FactMap,
   known: Known,
-  all: Claim[] = claims,
+  all: Fact[] = facts,
 ): Check => {
   const errors: string[] = [];
   const warnings: string[] = [];
-  for (const c of claims)
+  for (const c of facts)
     if (c.status === "unmapped")
       errors.push(`unmapped: ${c.id} (${c.file}:${c.line})`);
   const live = new Set(all.map((c) => c.id));
@@ -60,23 +60,23 @@ export const checkClaims = (
   for (const [id, e] of Object.entries(map)) {
     if (!(KINDS as readonly string[]).includes(e.kind))
       errors.push(`map.json: unknown kind "${e.kind}" for ${id}`);
-    if (!live.has(id)) warnings.push(`map.json entry has no claim: ${id}`);
+    if (!live.has(id)) warnings.push(`map.json entry has no fact: ${id}`);
     for (const p of e.probes) {
       used.add(p);
       if (!known.ids.has(p) && (known.fromDisk || p.startsWith("live.")))
         warnings.push(`map.json probe not found in any result: ${p} (${id})`);
-      const declared = known.claims.get(p);
+      const declared = known.facts.get(p);
       if (declared && !declared.has(id))
-        warnings.push(`probe ${p} does not list claim ${id} in its claims`);
+        warnings.push(`probe ${p} does not list fact ${id} in its facts`);
     }
   }
-  // probe-declared claims: ids (they contain `#`) must be current claims that map.json maps back to the case
-  for (const [caseId, set] of known.claims)
+  // probe-declared facts: ids (they contain `#`) must be current facts that map.json maps back to the case
+  for (const [caseId, set] of known.facts)
     for (const c of set) {
       if (!c.includes("#")) continue;
       if (!live.has(c))
         warnings.push(
-          `probe ${caseId} lists a claim id that no longer exists: ${c}`,
+          `probe ${caseId} lists a fact id that no longer exists: ${c}`,
         );
       else if (!map[c]?.probes.includes(caseId))
         warnings.push(
@@ -86,7 +86,7 @@ export const checkClaims = (
   const unused = [...known.ids].filter((p) => !used.has(p));
   if (unused.length)
     warnings.push(
-      `${unused.length} probe case(s) no claim uses${unused.length > 8 ? ` (first 8: ${unused.slice(0, 8).join(", ")})` : `: ${unused.join(", ")}`}`,
+      `${unused.length} probe case(s) no fact uses${unused.length > 8 ? ` (first 8: ${unused.slice(0, 8).join(", ")})` : `: ${unused.join(", ")}`}`,
     );
   return { errors, warnings };
 };

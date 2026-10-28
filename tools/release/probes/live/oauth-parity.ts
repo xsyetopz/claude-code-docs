@@ -8,7 +8,7 @@ import { assertSafeEnv, childEnv } from "../../lib/env.ts";
 import { startMitm } from "../../lib/mitm.ts";
 import { allocPort } from "../../lib/ports.ts";
 import { runChild } from "../../lib/proc.ts";
-import { type Fact, normalise } from "../../lib/results.ts";
+import { type Data, normalise } from "../../lib/results.ts";
 import { assertShimReady } from "../../lib/shim.ts";
 import { startStub } from "../../lib/stub.ts";
 import {
@@ -121,7 +121,7 @@ export const oauthParity: LiveCase = {
       );
       const a = mainShape(live);
       const b = mainShape(keyed);
-      const facts: Record<string, Fact> = {
+      const data: Record<string, Data> = {
         precondition: !!a && !!b,
         ...(a && b
           ? {}
@@ -141,29 +141,29 @@ export const oauthParity: LiveCase = {
         "key.exit": st.code ?? -1,
       };
       if (a && b) {
-        facts["same.bodyKeys"] = a.bodyKeys.join() === b.bodyKeys.join();
-        facts["bodyKeys.onlyOauth"] = only(a.bodyKeys, b.bodyKeys);
-        facts["bodyKeys.onlyKey"] = only(b.bodyKeys, a.bodyKeys);
-        facts["same.tools"] = a.tools.join() === b.tools.join();
-        facts["tools.onlyOauth"] = only(a.tools, b.tools);
-        facts["tools.onlyKey"] = only(b.tools, a.tools);
-        facts["systemBlocks.oauth"] = a.systemBlocks;
-        facts["systemBlocks.key"] = b.systemBlocks;
-        facts["same.systemText"] =
+        data["same.bodyKeys"] = a.bodyKeys.join() === b.bodyKeys.join();
+        data["bodyKeys.onlyOauth"] = only(a.bodyKeys, b.bodyKeys);
+        data["bodyKeys.onlyKey"] = only(b.bodyKeys, a.bodyKeys);
+        data["same.tools"] = a.tools.join() === b.tools.join();
+        data["tools.onlyOauth"] = only(a.tools, b.tools);
+        data["tools.onlyKey"] = only(b.tools, a.tools);
+        data["systemBlocks.oauth"] = a.systemBlocks;
+        data["systemBlocks.key"] = b.systemBlocks;
+        data["same.systemText"] =
           a.systemLines.join("\n") === b.systemLines.join("\n");
-        facts["systemText.linesOnlyOauth"] = only(
+        data["systemText.linesOnlyOauth"] = only(
           a.systemLines,
           b.systemLines,
         ).length;
-        facts["systemText.linesOnlyKey"] = only(
+        data["systemText.linesOnlyKey"] = only(
           b.systemLines,
           a.systemLines,
         ).length;
-        facts["betas.onlyOauth"] = only(a.betas, b.betas);
-        facts["betas.onlyKey"] = only(b.betas, a.betas);
-        facts["betas.oauth"] = a.betas;
-        facts["model.oauth"] = a.model;
-        facts["model.key"] = b.model;
+        data["betas.onlyOauth"] = only(a.betas, b.betas);
+        data["betas.onlyKey"] = only(b.betas, a.betas);
+        data["betas.oauth"] = a.betas;
+        data["model.oauth"] = a.model;
+        data["model.key"] = b.model;
       }
       const warm = warmFromUsage(firstUsage(lv.events));
       return [
@@ -171,14 +171,14 @@ export const oauthParity: LiveCase = {
           args: ["-p"],
           exit: lv.code,
           timedOut: lv.timedOut,
-          facts,
+          data,
           requests: {
             count: live.length,
             paths: ["/v1/messages"],
             ...(a ? { betas: a.betas, bodyKeys: a.bodyKeys } : {}),
           },
           ...(warm !== null ? { cacheWarm: warm } : {}),
-          claims: [],
+          facts: [],
           notes:
             "Default model. Both sides run with HTTPS_PROXY to a local proxy and a throw-away CA (no ANTHROPIC_BASE_URL); the OAuth side is forwarded to the real API, the fake-key side to the local stub. Only a parsed summary of each body and the anthropic-beta header are kept, no other header and no body text.",
         }),

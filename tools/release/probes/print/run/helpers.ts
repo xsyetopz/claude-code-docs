@@ -1,7 +1,7 @@
 // B3-specific helpers on top of run.ts (runCase, oneCase, baseResult, msgs, events, dispose).
 
 import { readFileSync } from "node:fs";
-import type { CaseResult, Fact } from "../../../lib/results.ts";
+import type { CaseResult, Data } from "../../../lib/results.ts";
 import type { LoggedRequest } from "../../../lib/stub.ts";
 import {
   baseResult,
@@ -88,7 +88,7 @@ export const fixed = (r: Run, s: string): string =>
 // ---- case definitions ----------------------------------------------------------------------
 
 export type Out = {
-  facts: Record<string, Fact>;
+  data: Record<string, Data>;
   samples?: Record<string, string>;
   notes?: string;
   from?: Run; // supplies prompt, args, envSet, exit and the request summary
@@ -111,7 +111,7 @@ export const runCases = async (
       ...(await oneCase(ctx, id, async () => {
         const o = await d.run(ctx);
         return baseResult(ctx, id, o.from ?? null, {
-          facts: o.facts,
+          data: o.data,
           samples: o.samples,
           ...(o.notes ? { notes: o.notes } : {}),
         });

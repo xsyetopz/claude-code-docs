@@ -80,7 +80,7 @@ export const permissionRequest = (c: PrCase): PtyCase => ({
     ESC(8),
   ],
   secs: 10,
-  claims: ["hooks.permissionrequest"],
+  facts: ["hooks.permissionrequest"],
   notes: `PermissionRequest hook reply: ${c.note}. The outcome lines are judged on the screen as it was when our own Esc was sent (the Esc itself prints "Interrupted").`,
   samples: (x) => {
     const d = firstSeenT(x, PROCEED_RE, "esc");
@@ -89,7 +89,7 @@ export const permissionRequest = (c: PrCase): PtyCase => ({
       dialogToOutcomeS: d !== null && o !== null ? String(round(o - d, 2)) : "",
     };
   },
-  facts: (x) => {
+  data: (x) => {
     const h = x.hook("PermissionRequest");
     const first = h[0]?.json ?? {};
     const before = screenBefore(x, "esc");
@@ -148,10 +148,10 @@ export const deniedCase = (retry: boolean): PtyCase => ({
     ESC(22),
   ],
   secs: 24,
-  claims: ["hooks.permissiondenied"],
+  facts: ["hooks.permissiondenied"],
   notes:
     "Auto mode (opt-in notice skipped, classifier billing notice acknowledged with Enter); the stub answers the classifier with plain text it cannot parse, so the call is blocked after retries. No classifier verdict exists, so retry:true should change nothing.",
-  facts: (x) => {
+  data: (x) => {
     const d = x.hook("PermissionDenied");
     const first = d[0]?.json ?? {};
     return {

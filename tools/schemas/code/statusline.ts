@@ -161,7 +161,7 @@ export const buildStatusLine = (): { file: string; schema: Json } => {
   const probe = readJson(
     join(CAPTURES, "pty/statusline.refresh-interval.json"),
   );
-  const seen = ((probe?.["facts"] as Json | undefined)?.["stdinKeys"] ??
+  const seen = ((probe?.["data"] as Json | undefined)?.["stdinKeys"] ??
     []) as string[];
   markObserved(schema, seen);
   for (const k of seen)
@@ -205,9 +205,9 @@ export const buildStatusLine = (): { file: string; schema: Json } => {
     for (const [k, v] of Object.entries(props(schema)))
       if (baseKeys.has(k)) props(subSchema)[k] = v;
     const subSeen = ((
-      readJson(join(CAPTURES, "pty/statusline.subagent-tick.json"))?.[
-        "facts"
-      ] as Json | undefined
+      readJson(join(CAPTURES, "pty/statusline.subagent-tick.json"))?.["data"] as
+        | Json
+        | undefined
     )?.["stdinKeys"] ?? []) as string[];
     markObserved(subSchema, subSeen);
     subDef = {

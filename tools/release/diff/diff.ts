@@ -1,6 +1,6 @@
 // release:diff - surface snapshots (design D4) of the old and new binary, diffed by kind.
 // Writes captures/<v>/surface.json for both versions, captures/<to>/diff/<group>.json, and diff/report.md.
-// The six files that claims and compare read keep their names (strings-env.json, flags.json, ...).
+// The six files that facts and compare read keep their names (strings-env.json, flags.json, ...).
 import {
   mkdirSync,
   readdirSync,

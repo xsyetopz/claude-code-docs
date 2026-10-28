@@ -43,7 +43,7 @@ Left as they are, with the reason:
   exclusion with a reason in `tools/surface/exclusions.json`.
   `bun run surface:check` prints `every item is mapped or excluded` over 9052 items.
 - [x] 3.2 Check each item against the program with the `cc-inspect` `release` and `code` actions before
-  a page states it. Each new claim cites a `captures/2.1.312/clean/modules/` chunk and line.
+  a page states it. Each new fact cites a `captures/2.1.312/clean/modules/` chunk and line.
 
 ## 4. Pages from the Release Notes
 
@@ -97,7 +97,7 @@ one paragraph.
 - [x] 5.1 `bun run release:prompts`, which renders `docs/prompts/` into its new group folders.
   60 variants, 8 of them duplicates, over 169 changed paths.
 - [x] 5.2 `docs/start/what-changed.md` holds only `2.1.312`. Move `2.1.311` to the top of
-  `docs/start/release-archive.md`, rename its claim ids in `tools/release/claims/map.json`, and update
+  `docs/start/release-archive.md`, rename its fact ids in `tools/release/facts/map.json`, and update
   the version ranges on both pages.
 - [x] 5.3 Change each current-behavior label from `2.1.311` to `2.1.312`, after a check of each.
   About 108 labels changed. A label of history ("Added in", "In `2.1.311` it was") stays.
@@ -110,4 +110,4 @@ one paragraph.
   refreshed, because the minifier renamed identifiers between `2.1.311` and `2.1.312`.
 - [ ] 5.5 `bun run version:bump`, the `CHANGELOG.md` entry, `bun run schemas:check`, `bun run verify:locked`.
   `bun run schemas:check` passes: 17 schemas valid, `claude-code.d.ts` ok, `surface.json` the same as a
-  fresh run. `bun run release:claims -- --check` prints `claims check ok` over 257 claims.
+  fresh run. `bun run release:facts -- --check` prints `facts check ok` over 257 facts.

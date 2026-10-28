@@ -1,5 +1,5 @@
-// Fact helpers of release:compare: equality, sample parts, ignored facts, empty diffs, invalid runs.
-import type { CaseResult, Fact } from "../../lib/results.ts";
+// Compares the observed data of release:compare: equality, sample parts, ignored data, empty diffs, invalid runs.
+import type { CaseResult, Data } from "../../lib/results.ts";
 import type { CaseDiff } from "./types.ts";
 
 export const PARTS_CAP = 10;
@@ -14,11 +14,11 @@ export const minus = (a: string[], b: string[]) => {
   });
 };
 
-export const same = (a: Fact, b: Fact): boolean =>
+export const same = (a: Data, b: Data): boolean =>
   JSON.stringify(a) === JSON.stringify(b);
 
-/** Facts that describe how a run went, not what the program does: never a diff. */
-export const IGNORED_FACTS = new Set(["retried", "startLagS"]);
+/** Data that describe how a run went, not what the program does: never a diff. */
+export const IGNORED_DATA = new Set(["retried", "startLagS"]);
 
 /** The precondition.detail of an invalid run (either side), or null when both runs are valid. */
 export const invalidDetail = (a: CaseResult, b: CaseResult): string | null => {
@@ -26,8 +26,8 @@ export const invalidDetail = (a: CaseResult, b: CaseResult): string | null => {
     ["old", a],
     ["new", b],
   ] as const)
-    if (r.facts["precondition"] === false)
-      return `${side}: ${String(r.facts["precondition.detail"] ?? r.facts["error"] ?? "precondition false")}`;
+    if (r.data["precondition"] === false)
+      return `${side}: ${String(r.data["precondition.detail"] ?? r.data["error"] ?? "precondition false")}`;
   return null;
 };
 

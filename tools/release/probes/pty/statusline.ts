@@ -63,7 +63,7 @@ const idxBurstGaps = (x: PtyRun): number[] => {
   return gaps(t.filter((v, i) => i === 0 || v - (t[i - 1] ?? v) > 1));
 };
 
-/** Facts for an interval: the tolerance verdict and a whole-second median. The raw numbers go to samples (intervalSamples). */
+/** Data for an interval: the tolerance verdict and a whole-second median. The raw numbers go to samples (intervalSamples). */
 const interval = (
   c: Call[],
   expected: number,
@@ -96,15 +96,15 @@ const refresh: PtyCase = {
   settings: SL({ refreshInterval: 3 }),
   schedule: [UP],
   secs: 26,
-  claims: ["statusline.timing"],
+  facts: ["statusline.timing"],
   notes:
-    "Idle session with refreshInterval 3: expected interval 3 s +-1 s (observed values are the facts).",
+    "Idle session with refreshInterval 3: expected interval 3 s +-1 s (observed values are the data).",
   retryIf: (f) => f["withinTolerance"] === false,
   samples: (x) => ({
     ...intervalSamples(calls(x, "main")),
     idxBurstMedianGapS: String(round(median(idxBurstGaps(x)), 2)),
   }),
-  facts: (x) => {
+  data: (x) => {
     const c = calls(x, "main");
     return {
       ...pre(c.length > 0, "status line command never ran"),
@@ -120,11 +120,11 @@ const noTick: PtyCase = {
   settings: SL(),
   schedule: [UP],
   secs: 32,
-  claims: ["statusline.timing"],
+  facts: ["statusline.timing"],
   notes:
     "Idle session, no refreshInterval and no subagent: the main status line is expected to run only at start (no periodic tick).",
   retryIf: (f) => f["withinTolerance"] === false,
-  facts: (x) => {
+  data: (x) => {
     const c = calls(x, "main");
     return {
       ...pre(c.length > 0, "status line command never ran"),
@@ -141,11 +141,11 @@ const dialogPause: PtyCase = {
   stub: TOUCH("ran-sl"),
   schedule: [UP, ASK(), WAIT("proceed?", "dialog"), ESC(26)],
   secs: 28,
-  claims: ["statusline.timing"],
+  facts: ["statusline.timing"],
   notes:
     "refreshInterval 3 and a permission dialog held open for about 20 s; runs are expected to pause while it shows.",
   retryIf: (f) => f["withinTolerance"] === false,
-  facts: (x) => {
+  data: (x) => {
     const c = calls(x, "main");
     const d = sentAt(x, "dialog");
     const e = sentAt(x, "esc");
@@ -189,11 +189,11 @@ const subagent: PtyCase = {
   },
   schedule: [UP, ASK()],
   secs: 34,
-  claims: ["statusline.subagent"],
+  facts: ["statusline.subagent"],
   notes:
     "The stub starts one background general-purpose agent; the subagent status line runs on a tick while the panel has tasks (expected 5 s +-1 s).",
   retryIf: (f) => f["withinTolerance"] === false,
-  facts: (x) => {
+  data: (x) => {
     const s = calls(x, "sub");
     const tasks = s.flatMap((k) =>
       Array.isArray(k.stdin["tasks"]) ? (k.stdin["tasks"] as Obj[]) : [],
@@ -226,11 +226,11 @@ const debounce: PtyCase = {
     { t: 30, send: "\u001b[Z\u001b[Z\u001b[Z", label: "t30-one-write" },
   ],
   secs: 38,
-  claims: ["statusline.debounce"],
+  facts: ["statusline.debounce"],
   notes:
     "Shift+Tab (mode change) three times in 0.2 s, then three in one write; counts status line runs in the 3 s after each burst (expected 1 each).",
   retryIf: (f) => f["withinTolerance"] === false,
-  facts: (x) => {
+  data: (x) => {
     const c = calls(x, "main");
     const a = sentAt(x, "t20-1");
     const b = sentAt(x, "t30-one-write");

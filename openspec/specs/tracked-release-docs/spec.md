@@ -46,10 +46,10 @@ Change notes and dated probe records SHALL keep their versions.
 - **WHEN** the change is done and someone runs `grep -rn '2\.1\.309' docs`
 - **THEN** each line it prints is a change note, a dated record, or a Release Archive line
 
-#### Scenario: Claim Map
+#### Scenario: Fact Map
 
-- **WHEN** `bun run release:claims -- --check` runs after the archive move
-- **THEN** it reports no `unmapped` claim
+- **WHEN** `bun run release:facts -- --check` runs after the archive move
+- **THEN** it reports no `unmapped` fact
 
 ### Requirement: Tracked Version Stamp
 

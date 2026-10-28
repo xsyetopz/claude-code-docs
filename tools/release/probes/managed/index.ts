@@ -130,10 +130,10 @@ export const runProbeManaged = async (ctx: Ctx): Promise<number> => {
       return;
     }
     writeCase(runDir, r);
-    const bad = r.facts["precondition"] === false;
+    const bad = r.data["precondition"] === false;
     if (bad) invalid++;
     console.log(
-      `  ${bad ? "INVALID" : "ok     "} ${r.id}${bad ? ` (${String(r.facts["error"] ?? "")})` : ""}`,
+      `  ${bad ? "INVALID" : "ok     "} ${r.id}${bad ? ` (${String(r.data["error"] ?? "")})` : ""}`,
     );
   };
   const truncate = (): void => writeFileSync(startedLog, "");

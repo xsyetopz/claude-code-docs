@@ -70,7 +70,7 @@ const main = async (): Promise<number> => {
       } catch (e) {
         results = [
           baseResult(x, c.id, {
-            facts: {
+            data: {
               precondition: false,
               error: redact(`case failed: ${(e as Error).message}`).slice(
                 0,
@@ -92,14 +92,14 @@ const main = async (): Promise<number> => {
               }
             : r0;
         writeCase(runDir, r);
-        const bad = r.facts["precondition"] === false;
+        const bad = r.data["precondition"] === false;
         if (bad) invalid++;
         const why = bad
-          ? ` (${String(r.facts["error"] ?? r.facts["precondition.detail"] ?? "")})`
+          ? ` (${String(r.data["error"] ?? r.data["precondition.detail"] ?? "")})`
           : "";
         const warm =
           r.cacheWarm === undefined ? "" : r.cacheWarm ? " cacheWarm" : " cold";
-        if (ctx.dry) console.log(`      facts: ${JSON.stringify(r.facts)}`);
+        if (ctx.dry) console.log(`      data: ${JSON.stringify(r.data)}`);
         console.log(`  ${bad ? "INVALID" : "ok     "} ${r.id}${warm}${why}`);
       }
     }

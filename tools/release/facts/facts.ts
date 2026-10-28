@@ -1,27 +1,28 @@
-// release:claims - finds version-labelled claims in docs/, maps each to a probe or a kind, writes claims.json.
+// release:facts - finds version-labelled facts in docs/, maps each to a probe or a kind, writes facts.json.
 // Design: openspec/changes/archive/2026-10-21-release-toolkit/design.md, section "Claim Map".
-//   bun tools/release/cli.ts claims [--check] [--all] [--to V]
+// The archive keeps the old term. A version-labelled sentence is now a fact, not a claim.
+//   bun tools/release/cli.ts facts [--check] [--all] [--to V]
 import { createHash } from "node:crypto";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import type { Ctx } from "../util.ts";
 import { CAPTURES, ROOT, toolEnv, versionDir, writeJson } from "../util.ts";
 
-import { checkClaims, knownCases } from "./claims/check.ts";
-import { KINDS, type Kind } from "./claims/kinds.ts";
+import { checkFacts, knownCases } from "./parts/check.ts";
+import { KINDS, type Kind } from "./parts/kinds.ts";
 
-export type { Check, Known } from "./claims/check.ts";
+export type { Check, Known } from "./parts/check.ts";
 export type { Kind };
-export { checkClaims, KINDS, knownCases };
-export type ClaimClass = "change" | "gap" | "info";
+export { checkFacts, KINDS, knownCases };
+export type FactClass = "change" | "gap" | "info";
 export type Status = "unmapped" | "mapped" | "static";
-export type Claim = {
+export type Fact = {
   id: string;
   file: string;
   line: number;
   text: string;
   heading: string;
-  class: ClaimClass;
+  class: FactClass;
   kind: Kind | null;
   probes: string[];
   status: Status;
@@ -29,7 +30,7 @@ export type Claim = {
   diffNames?: string[];
 };
 export type MapEntry = { probes: string[]; kind: Kind; note?: string };
-export type ClaimMap = Record<string, MapEntry>;
+export type FactMap = Record<string, MapEntry>;
 
 export const MAP_PATH = join(import.meta.dir, "map.json");
 const VERSION_RE = /2\.1\.\d+/;
@@ -48,7 +49,7 @@ const DIFF_KIND: Record<string, Kind> = {
 // Kinds that name a place to look (diff/*.json, schemas/) or say nothing needs a re-check; only `behaviour` needs a probe.
 const NO_PROBE = new Set<Kind>([...Object.values(DIFF_KIND), "schema"]);
 
-export const classify = (text: string): ClaimClass =>
+export const classify = (text: string): FactClass =>
   GAP_RE.test(text) ? "gap" : CHANGE_RE.test(text) ? "change" : "info";
 
 export const normalise = (s: string): string =>
@@ -61,7 +62,7 @@ export const slug = (h: string): string =>
     .replace(/[^\p{L}\p{N}_ -]/gu, "") // keeps non-ASCII letters; drops backticks and punctuation
     .replace(/ /g, "-"); // one hyphen per space, as github-slugger does ("A — B" -> "a--b")
 
-export const claimId = (file: string, heading: string, text: string): string =>
+export const factId = (file: string, heading: string, text: string): string =>
   `${file}#${slug(heading)}:${createHash("sha1").update(normalise(text)).digest("hex").slice(0, 8)}`;
 
 /** The sentences of a prose line that carry a version. Table rows stay whole. */
@@ -75,14 +76,14 @@ const units = (line: string): string[] => {
 };
 
 /**
- * Claims of one file. `hitLines` are 1-based lines that match the version regex (from git grep).
- * Same unit on two lines gets one claim (first line).
+ * Facts of one file. `hitLines` are 1-based lines that match the version regex (from git grep).
+ * Same unit on two lines gets one fact (first line).
  */
-export const claimsFromFile = (
+export const factsFromFile = (
   file: string,
   content: string,
   hitLines: number[],
-): Claim[] => {
+): Fact[] => {
   const lines = content.split("\n");
   // headings and frontmatter, outside code fences
   const headingAt: string[] = [];
@@ -109,13 +110,13 @@ export const claimsFromFile = (
     headingAt[i] = cur;
   });
   const seen = new Set<string>();
-  const out: Claim[] = [];
+  const out: Fact[] = [];
   for (const n of hitLines) {
     if (skip.has(n) || inFence.has(n)) continue;
     const line = lines[n - 1] ?? "";
     for (const u of units(line)) {
       const heading = headingAt[n - 1] ?? "";
-      const id = claimId(file, heading, u);
+      const id = factId(file, heading, u);
       if (seen.has(id)) continue;
       seen.add(id);
       out.push({
@@ -137,7 +138,7 @@ export const claimsFromFile = (
 /**
  * `git grep -n --untracked -E '2\.1\.[0-9]+' -- docs` as file -> lines.
  * `--untracked` covers a page that a split or a new page created and nobody staged yet,
- * because without it the claims of that page never reach the gate.
+ * because without it the facts of that page never reach the gate.
  */
 export const grepHits = (root = ROOT): Map<string, number[]> => {
   const r = Bun.spawnSync(
@@ -153,18 +154,18 @@ export const grepHits = (root = ROOT): Map<string, number[]> => {
   return hits;
 };
 
-export const findClaims = (): Claim[] => {
-  const out: Claim[] = [];
+export const findFacts = (): Fact[] => {
+  const out: Fact[] = [];
   for (const [file, lines] of [...grepHits()].sort(([a], [b]) =>
     a.localeCompare(b),
   ))
     out.push(
-      ...claimsFromFile(file, readFileSync(join(ROOT, file), "utf8"), lines),
+      ...factsFromFile(file, readFileSync(join(ROOT, file), "utf8"), lines),
     );
   return out;
 };
 
-export const readMap = (path = MAP_PATH): ClaimMap =>
+export const readMap = (path = MAP_PATH): FactMap =>
   existsSync(path) ? JSON.parse(readFileSync(path, "utf8")) : {};
 
 type DiffNames = Map<string, Kind>; // name -> kind
@@ -208,11 +209,11 @@ const subject = (text: string): string | null => {
 
 /** Apply map.json, then automatic kinds: a table row whose subject name is in diff/*.json. */
 export const applyMap = (
-  claims: Claim[],
-  map: ClaimMap,
+  facts: Fact[],
+  map: FactMap,
   diff: DiffNames | null,
-): Claim[] =>
-  claims.map((c) => {
+): Fact[] =>
+  facts.map((c) => {
     const subj = subject(c.text);
     const e = map[c.id];
     // diffNames: the row subject, when diff/ has it or map.json gives a diff kind (so compare can look it up without diff/)
@@ -242,39 +243,39 @@ export const applyMap = (
     };
   });
 
-export const runClaims = async (ctx: Ctx): Promise<number> => {
+export const runFacts = async (ctx: Ctx): Promise<number> => {
   const check = ctx.rest.includes("--check");
   const all = ctx.rest.includes("--all");
   const to = ctx.to || ctx.from;
   const diff = loadDiffNames(to);
-  const found = applyMap(findClaims(), readMap(), diff);
-  const claims = all ? found : found.filter((c) => c.class === "change");
-  const count = (f: (c: Claim) => string) => {
+  const found = applyMap(findFacts(), readMap(), diff);
+  const facts = all ? found : found.filter((c) => c.class === "change");
+  const count = (f: (c: Fact) => string) => {
     const m: Record<string, number> = {};
-    for (const c of claims) m[f(c)] = (m[f(c)] ?? 0) + 1;
+    for (const c of facts) m[f(c)] = (m[f(c)] ?? 0) + 1;
     return Object.entries(m)
       .map(([k, v]) => `${k} ${v}`)
       .join(", ");
   };
   console.log(
-    `release:claims: ${claims.length} claims (${count((c) => c.class)}); status: ${count((c) => c.status)}; kind: ${count((c) => c.kind ?? "none")}`,
+    `release:facts: ${facts.length} facts (${count((c) => c.class)}); status: ${count((c) => c.status)}; kind: ${count((c) => c.kind ?? "none")}`,
   );
   if (!diff) console.log("  no diff/*.json found: automatic kinds skipped");
   if (check) {
-    const r = checkClaims(claims, readMap(), knownCases(), found);
+    const r = checkFacts(facts, readMap(), knownCases(), found);
     for (const w of r.warnings) console.log(`  warn: ${w}`);
     for (const e of r.errors) console.log(`  FAIL ${e}`);
-    console.log(r.errors.length ? "claims check failed" : "claims check ok");
+    console.log(r.errors.length ? "facts check failed" : "facts check ok");
     return r.errors.length ? 1 : 0;
   }
   if (ctx.dry) {
-    console.log(`plan: write captures/${to}/claims.json`);
+    console.log(`plan: write captures/${to}/facts.json`);
     return 0;
   }
-  const path = join(versionDir(to), "claims.json");
+  const path = join(versionDir(to), "facts.json");
   writeJson(
     path,
-    claims.map(({ id, file, line, text, kind, probes, status, ...r }) => ({
+    facts.map(({ id, file, line, text, kind, probes, status, ...r }) => ({
       id,
       file,
       line,

@@ -53,7 +53,7 @@ export const plugindata: PrintGroup = {
         const bash = readIf(`${r.sb.cfg}/bash.log`);
         const data = value(byPath, "CLAUDE_PLUGIN_DATA");
         return baseResult(ctx, ID, r, {
-          facts: {
+          data: {
             precondition: r.code === 0 && toolResults(r) >= 1 && byPath !== "",
             "bin.onPath": byName !== "",
             "bin.pluginDataSet": data !== null && data !== "<unset>",

@@ -40,7 +40,7 @@ const typeCase = (t: string): CaseDef => ({
       const res = firstResult(r);
       return {
         from: r,
-        facts: {
+        data: {
           precondition: msgs(r).length >= 2,
           messages: msgs(r).length,
           handBack: res.includes("[Subagent hand-back]"),
@@ -79,7 +79,7 @@ const webFetch: CaseDef = {
         });
         return {
           from: r,
-          facts: {
+          data: {
             precondition: !!main,
             mainHasWebFetch: main ? toolNames(main).includes("WebFetch") : null,
             rosterHasWebFetch: main
@@ -113,7 +113,7 @@ const appendCase = (
         const main = msgs(r)[0];
         return {
           from: r,
-          facts: {
+          data: {
             precondition: sub.length > 0 && !!main,
             subRequests: sub.length,
             markerInSubSystem: sub.some((q) =>
@@ -147,7 +147,7 @@ const observerCase = (on: boolean): CaseDef => ({
         const ms = msgs(r);
         return {
           from: r,
-          facts: {
+          data: {
             precondition: ms.length >= 2,
             messages: ms.length,
             observerReportToolIn: ms.filter((q) =>

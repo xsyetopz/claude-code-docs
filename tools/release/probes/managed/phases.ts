@@ -52,11 +52,11 @@ const classifyDefs = (phase: Phase): Def[] => {
         tool: "Bash",
         toolInput: { command: "curl -s http://127.0.0.1:9/x" },
       },
-      facts: (_r, x) => {
+      data: (_r, x) => {
         // the stub reply makes the program retry, so only "any classifier request" is comparable
         const seen = x.classifierRequests > 0 ? 1 : 0;
         return {
-          facts: {
+          data: {
             managed: managed === undefined ? "unset" : managed,
             classifier_requested: seen === 1,
             expected_if_any_true: expectOld === 1,
@@ -111,10 +111,10 @@ const result = (
   envSet: r ? r.envSet : [],
   exit: r ? r.code : null,
   timedOut: r ? r.timedOut : false,
-  facts: normalise(o.facts),
+  data: normalise(o.data),
   ...(o.samples ? { samples: o.samples } : {}),
   ...(r ? { requests: requestSummary(r) } : {}),
-  claims: o.claims ?? [],
+  facts: o.facts ?? [],
   ...(notes ? { notes } : {}),
 });
 
@@ -131,7 +131,7 @@ export const runPhase = async (
   for (const d of selectedDefs(phase, ctx)) {
     const id = caseId(phase, d);
     if (ctx.dry) {
-      out.push(result(ctx, id, null, { facts: {} }));
+      out.push(result(ctx, id, null, { data: {} }));
       continue;
     }
     const bad = guard?.();
@@ -141,7 +141,7 @@ export const runPhase = async (
           ctx,
           id,
           null,
-          { facts: { precondition: false, error: bad } },
+          { data: { precondition: false, error: bad } },
           "probe invalid: phase precondition failed",
         ),
       );
@@ -159,7 +159,7 @@ export const runPhase = async (
         },
       });
       try {
-        out.push(result(ctx, id, r, d.facts(r, extend(r, started)), d.notes));
+        out.push(result(ctx, id, r, d.data(r, extend(r, started)), d.notes));
       } finally {
         dispose(r);
       }
@@ -169,8 +169,8 @@ export const runPhase = async (
           ctx,
           id,
           null,
-          { facts: { precondition: false, error: (e as Error).message } },
-          "probe invalid: threw before producing facts",
+          { data: { precondition: false, error: (e as Error).message } },
+          "probe invalid: threw before producing data",
         ),
       );
     }

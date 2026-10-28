@@ -1,6 +1,6 @@
 // Transcript (.jsonl) line types, keys, attachment types and api-request params (ported from p305-print/tr.ts, tr2.ts).
 import { join } from "node:path";
-import type { Fact } from "../../lib/results.ts";
+import type { Data } from "../../lib/results.ts";
 import {
   baseResult,
   type Case,
@@ -127,7 +127,7 @@ export const transcriptsGroup: PrintGroup = {
         if (first) dispose(r);
         else first = r;
       }
-      const facts: Record<string, Fact> = {
+      const data: Record<string, Data> = {
         precondition:
           allOk && keysByType.has("user") && keysByType.has("assistant"),
         "lines.total": lineCount,
@@ -138,10 +138,10 @@ export const transcriptsGroup: PrintGroup = {
         "api_request.betas": betas,
       };
       for (const [t, s] of [...keysByType].sort())
-        facts[`line.${t}`] = [...s].sort();
+        data[`line.${t}`] = [...s].sort();
       if (!first) throw new Error("no case ran");
       const res = baseResult(ctx, "print.transcripts.lines", first, {
-        facts,
+        data,
         notes:
           "Four runs merged (tools+memory, output style, auto mode, two stream-json turns); args shown are the first run.",
       });
@@ -191,7 +191,7 @@ export const transcriptsGroup: PrintGroup = {
         try {
           const plainTypes = attTypes(plain);
           return baseResult(ctx, "print.transcripts.attachments", plain, {
-            facts: {
+            data: {
               precondition:
                 plain.code === 0 &&
                 plainTypes.length > 0 &&

@@ -1,4 +1,4 @@
-// The claim kinds of release:claims.
+// The fact kinds of release:facts.
 /**
  * `hook` (hook events, from diff/hooks.json) and `manual` (program behaviour that no probe checks yet; compare always
  * reports it `not-run`) are additions to the first design list.

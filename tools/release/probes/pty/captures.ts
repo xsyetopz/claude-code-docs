@@ -1,5 +1,5 @@
 // Text captures that need the interactive screen: the claude-code-guide subagent system text and the /insights skill text.
-// Facts are length and hash (diffable); the full text is kept beside the JSON as <case>.system.txt / <case>.requests.txt.
+// The data is length and hash (diffable); the full text is kept beside the JSON as <case>.system.txt / <case>.requests.txt.
 import { normalise } from "../../lib/results.ts";
 import { agentCase, subSystem } from "./agents.ts";
 import {
@@ -26,8 +26,8 @@ const guide: PtyCase = agentCase(
   },
   "The claude-code-guide subagent: system text length and hash (docs/prompts/agents/subagent-claude-code-guide.md). Text kept as .system.txt.",
   {
-    claims: ["prompts.subagent-claude-code-guide"],
-    facts: (x) => {
+    facts: ["prompts.subagent-claude-code-guide"],
+    data: (x) => {
       const sys = subSystem(x);
       return {
         ...pre(sys.length > 0, "no claude-code-guide subagent request seen"),
@@ -75,9 +75,9 @@ const insights: PtyCase = {
     ESC(30),
   ],
   secs: 34,
-  claims: ["prompts.skill-insights"],
+  facts: ["prompts.skill-insights"],
   notes: "Interactive /insights; the stub answers every request with OK.",
-  facts: (x) => {
+  data: (x) => {
     const b = x.messages.map((q) => lastUser(q.body));
     // hash the text with the random sandbox path and ids normalised, so two runs of one version match
     const nb = b.map((t) => normalise(t));

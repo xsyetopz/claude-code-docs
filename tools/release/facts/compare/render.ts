@@ -30,7 +30,7 @@ const fmt = (v: unknown): string => {
 export const renderCompare = (c: Compare): string => {
   const L: string[] = [`# Compare ${c.from} to ${c.to}`, ""];
   if (c.warning) L.push(`> **WARNING:** ${c.warning}`, "");
-  const work = (c.claims ?? []).filter(
+  const work = (c.facts ?? []).filter(
     (x) =>
       x.result === "changed" ||
       x.result === "not-run" ||
@@ -46,17 +46,17 @@ export const renderCompare = (c: Compare): string => {
       "",
     );
   L.push("## Worklist", "");
-  if (c.claims) {
-    L.push(`Claims to re-check: ${work.length} of ${c.claims.length}.`, "");
+  if (c.facts) {
+    L.push(`Facts to re-check: ${work.length} of ${c.facts.length}.`, "");
     for (const r of work)
       L.push(
         `- ${r.result}: \`${r.id}\` (${r.file}:${r.line}, ${r.kind ?? "?"})${r.why ? ` - ${r.why}` : ""}`,
       );
-  } else L.push("No claims.json for this version: run `release:claims` first.");
+  } else L.push("No facts.json for this version: run `release:facts` first.");
   L.push("");
   if (c.uncoveredNames) {
     L.push(
-      `New names in diff/ that no claim covers: ${c.uncoveredNames.length}.`,
+      `New names in diff/ that no fact covers: ${c.uncoveredNames.length}.`,
       "",
     );
     for (const n of c.uncoveredNames.slice(0, 80))
@@ -92,19 +92,19 @@ export const renderCompare = (c: Compare): string => {
       L.push(`- sample \`${k}\` differs`);
     L.push("");
   }
-  if (c.noise || (c.claims ?? []).some((r) => r.noise))
+  if (c.noise || (c.facts ?? []).some((r) => r.noise))
     L.push(
       "## Noise (ignored)",
       "",
-      "Facts that differ but are not release changes (run-to-run noise, or a version string only). Rules: `NOISY` in `tools/release/claims/compare.ts`.",
+      "Data that differs but is not a release change (run-to-run noise, or a version string only). Rules: `NOISY` in `tools/release/facts/compare.ts`.",
       "",
       ...Object.entries(c.noise ?? {}).flatMap(([id, m]) =>
         Object.entries(m).map(([k, why]) => `- \`${id}\` \`${k}\`: ${why}`),
       ),
-      ...(c.claims ?? []).flatMap((r) =>
+      ...(c.facts ?? []).flatMap((r) =>
         Object.entries(r.noise ?? {}).flatMap(([id, m]) =>
           Object.entries(m).map(
-            ([k, why]) => `- claim \`${r.id}\`: \`${id}\` \`${k}\`: ${why}`,
+            ([k, why]) => `- fact \`${r.id}\`: \`${id}\` \`${k}\`: ${why}`,
           ),
         ),
       ),

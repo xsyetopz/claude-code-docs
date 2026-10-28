@@ -1,7 +1,7 @@
 // The shared stub of a pty probe run, the {HOME}/{CFG}/{PROJ} substitution, and the base case result.
 import { PROMPT } from "../../../lib/env.ts";
 import { allocPort } from "../../../lib/ports.ts";
-import type { CaseResult, Fact } from "../../../lib/results.ts";
+import type { CaseResult, Data } from "../../../lib/results.ts";
 import type { Sandbox } from "../../../lib/sandbox.ts";
 import { type LoggedRequest, type Stub, startStub } from "../../../lib/stub.ts";
 import type { PtyCase, PtyCtx } from "./types.ts";
@@ -28,8 +28,8 @@ export const subst = (s: string, sb: Sandbox): string =>
 
 export const baseResult = (
   ctx: PtyCtx,
-  c: Pick<PtyCase, "id" | "claims" | "notes" | "promptReason">,
-  o: Partial<CaseResult> & { facts: Record<string, Fact> },
+  c: Pick<PtyCase, "id" | "facts" | "notes" | "promptReason">,
+  o: Partial<CaseResult> & { data: Record<string, Data> },
 ): CaseResult => ({
   schema: 1,
   id: `pty.${c.id}`,
@@ -40,7 +40,7 @@ export const baseResult = (
   envSet: [],
   exit: null,
   timedOut: false,
-  claims: c.claims ?? [],
+  facts: c.facts ?? [],
   ...o,
   ...(c.promptReason || c.notes || o.notes
     ? {

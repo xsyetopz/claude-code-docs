@@ -56,7 +56,7 @@ export const scrubEnv: CaseDef = {
         const seen = readCfg(r, "benv.txt").split(" ");
         return {
           from: r,
-          facts: {
+          data: {
             precondition: seen.length > 3 && seen.includes("PATH"),
             kept: SCRUB_NAMES.filter((n) => seen.includes(n)),
             removed: SCRUB_NAMES.filter((n) => !seen.includes(n)),
@@ -84,7 +84,7 @@ export const scrubPerm = (allowed: boolean, scrub: "1" | "0"): CaseDef => ({
       },
       (r) => ({
         from: r,
-        facts: {
+        data: {
           precondition: msgs(r).length >= 2,
           needsApproval: (toolResultTexts(r)[0] ?? "").includes(
             "needs approval",

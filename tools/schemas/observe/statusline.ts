@@ -43,11 +43,11 @@ const feed = (x: PtyRun, kind: "main" | "sub"): void => {
 };
 const watch = ({ retryIf: _r, ...c }: PtyCase): PtyCase => ({
   ...c,
-  facts: (x) => {
+  data: (x) => {
     counts.runs++;
     feed(x, "main");
     feed(x, "sub");
-    return c.facts(x);
+    return c.data(x);
   },
 });
 
@@ -77,7 +77,7 @@ try {
       { version, bin, runDir, only: null, dry: false },
       c,
     );
-    console.log(c.id, r[0]?.facts["precondition"] === false ? "INVALID" : "ok");
+    console.log(c.id, r[0]?.data["precondition"] === false ? "INVALID" : "ok");
   }
 } finally {
   await stopStub();

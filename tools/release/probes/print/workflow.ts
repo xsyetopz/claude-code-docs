@@ -82,7 +82,7 @@ const rowCase = ([name, opt, env]: (typeof ROWS)[number]): CaseDef => ({
         );
         return {
           from: r,
-          facts: {
+          data: {
             precondition:
               ms.length > 0 &&
               toolNames(ms[0] as never).includes("Workflow") &&

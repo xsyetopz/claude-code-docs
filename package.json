@@ -40,7 +40,7 @@
     "release:probe:pty": "bun tools/release/cli.ts probe:pty",
     "release:probe:managed": "bun tools/release/cli.ts probe:managed",
     "release:probe:live": "bun tools/release/cli.ts probe:live",
-    "release:claims": "bun tools/release/cli.ts claims",
+    "release:facts": "bun tools/release/cli.ts facts",
     "release:compare": "bun tools/release/cli.ts compare",
     "release:all": "bun tools/release/cli.ts all"
   },

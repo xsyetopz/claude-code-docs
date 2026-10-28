@@ -5,7 +5,7 @@ import { join } from "node:path";
 import { childEnv, PROMPT } from "../../lib/env.ts";
 import { allocPort } from "../../lib/ports.ts";
 import { runChild } from "../../lib/proc.ts";
-import { type CaseResult, type Fact, normalise } from "../../lib/results.ts";
+import { type CaseResult, type Data, normalise } from "../../lib/results.ts";
 import {
   type Files,
   makeSandbox,
@@ -274,10 +274,10 @@ export const baseResult = (
   id: string,
   run: Run | null,
   o: {
-    facts: Record<string, Fact>;
+    data: Record<string, Data>;
     samples?: Record<string, string> | undefined;
     notes?: string;
-    claims?: string[];
+    facts?: string[];
   },
 ): CaseResult => ({
   schema: 1,
@@ -289,10 +289,10 @@ export const baseResult = (
   envSet: run ? run.envSet : [],
   exit: run ? run.code : null,
   timedOut: run ? run.timedOut : false,
-  facts: normalise(o.facts),
+  data: normalise(o.data),
   ...(o.samples ? { samples: o.samples } : {}),
   ...(run ? { requests: requestSummary(run) } : {}),
-  claims: o.claims ?? [],
+  facts: o.facts ?? [],
   ...(run?.promptReason || o.notes
     ? { notes: [run?.promptReason, o.notes].filter(Boolean).join(" ") }
     : {}),
@@ -308,14 +308,14 @@ export const oneCase = async (
   build: () => Promise<CaseResult>,
 ): Promise<CaseResult[]> => {
   if (!selected(ctx, id)) return [];
-  if (ctx.dry) return [baseResult(ctx, id, null, { facts: {} })];
+  if (ctx.dry) return [baseResult(ctx, id, null, { data: {} })];
   try {
     return [await build()];
   } catch (e) {
     return [
       baseResult(ctx, id, null, {
-        facts: { precondition: false, error: (e as Error).message },
-        notes: "probe invalid: threw before producing facts",
+        data: { precondition: false, error: (e as Error).message },
+        notes: "probe invalid: threw before producing data",
       }),
     ];
   }

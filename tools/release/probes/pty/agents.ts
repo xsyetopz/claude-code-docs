@@ -1,9 +1,9 @@
 // Subagent type probes in the interactive screen (ported from p305-pty guide/agent runs; PROGRESS.md "agent types").
-// The stub sends one Agent tool_use; the facts come from the subagent's own request and the tool result the model gets back.
+// The stub sends one Agent tool_use; the data comes from the subagent's own request and the tool result the model gets back.
 import {
   ASK,
   arr,
-  type Fact,
+  type Data,
   obj,
   PROMPT,
   type PtyCase,
@@ -28,9 +28,9 @@ export const agentCase = (
   stub: { seq: [{ name: "Agent", input }] },
   schedule: [READY, ASK()],
   secs: 16,
-  claims: ["agents.types"],
+  facts: ["agents.types"],
   notes: note,
-  facts: (x) => agentFacts(x),
+  data: (x) => agentData(x),
   ...extra,
 });
 
@@ -55,7 +55,7 @@ export const subSystem = (x: PtyRun): string => {
 const typeFromSystem = (sys: string): string =>
   (sys.match(/You are ([^.\n]{3,100})/)?.[1] ?? "").trim();
 
-const agentFacts = (x: PtyRun): Record<string, Fact> => {
+const agentData = (x: PtyRun): Record<string, Data> => {
   const sub = subRequests(x);
   const sys = subSystem(x);
   const result = toolResultText(x);

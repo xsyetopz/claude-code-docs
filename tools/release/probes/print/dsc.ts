@@ -54,7 +54,7 @@ const sizes: CaseDef = {
     return {
       from: on.r,
       args: ["--disable-slash-commands"],
-      facts: {
+      data: {
         precondition: !!a && !!b,
         baseTotalBytes: a?.total ?? null,
         flagTotalBytes: b?.total ?? null,

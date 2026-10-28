@@ -2,10 +2,10 @@
 import { join } from "node:path";
 import { openRun, writeCase } from "../../lib/results.ts";
 import {
-  type ClaimRow,
-  claimResults,
   compareResults,
   compareRuns,
+  type FactRow,
+  factResults,
   renderCompare,
 } from "../compare.ts";
 import { kase, type Step } from "./fixture.ts";
@@ -77,8 +77,8 @@ export const runCompareChecks = (
       kind: "pty",
       probes: ["pty.bad"],
       status: "ok",
-    } as ClaimRow;
-    const cr = claimResults([row], [ok], [bad], null)[0];
+    } as FactRow;
+    const cr = factResults([row], [ok], [bad], null)[0];
     const same = compareResults(
       "1.0.0",
       "1.0.1",
@@ -86,7 +86,7 @@ export const runCompareChecks = (
       [kase("1.0.1", "p.same", { x: 1, startLagS: 7, retried: true })],
       false,
     );
-    const md = renderCompare({ ...iv, claims: [cr as never] });
+    const md = renderCompare({ ...iv, facts: [cr as never] });
     step(
       "compare: precondition=false is invalid-run, not changed; retried/startLagS never diff",
       iv.counts.invalid === 1 &&
@@ -232,7 +232,7 @@ export const runCompareChecks = (
         status: "ok",
         diffNames: ["FOO"],
       },
-    ] as ClaimRow[];
+    ] as FactRow[];
     const old = kase("1.0.0", "print.sweep", {
       "API_TIMEOUT_MS.A": ["nreq"],
       "FOO.A": ["x"],
@@ -241,21 +241,18 @@ export const runCompareChecks = (
       "API_TIMEOUT_MS.A": ["nreq", "events"],
       "FOO.A": ["y"],
     });
-    const crs = claimResults(rows, [old], [now], null, null, [
-      "1.0.0",
-      "1.0.1",
-    ]);
+    const crs = factResults(rows, [old], [now], null, null, ["1.0.0", "1.0.1"]);
     const cc = compareResults("1.0.0", "1.0.1", [old], [now], false);
-    const md = renderCompare({ ...cc, claims: crs });
+    const md = renderCompare({ ...cc, facts: crs });
     step(
-      "compare: a claim that differs only by noise says so and is listed under Noise",
+      "compare: a fact that differs only by noise says so and is listed under Noise",
       crs[0]?.result === "unchanged" &&
         crs[0].why ===
           "unchanged (noise ignored: print.sweep API_TIMEOUT_MS.A)" &&
         crs[1]?.result === "changed" &&
         crs[1].noise === undefined &&
         cc.noise?.["print.sweep"]?.["API_TIMEOUT_MS.A"] !== undefined &&
-        md.includes("- claim `c.noise`: `print.sweep` `API_TIMEOUT_MS.A`"),
+        md.includes("- fact `c.noise`: `print.sweep` `API_TIMEOUT_MS.A`"),
       JSON.stringify(crs.map((r) => [r.result, r.why])),
     );
   }

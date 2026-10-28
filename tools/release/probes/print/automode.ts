@@ -80,7 +80,7 @@ const classifyCase = (c: Row): CaseDef => ({
         const cls = classifierReqs(r);
         return {
           from: r,
-          facts: {
+          data: {
             // the first request must carry the Bash tool, else the stub never issues the call
             precondition:
               m.length > 0 && toolNames(m[0] as never).includes("Bash"),
@@ -126,7 +126,7 @@ const serverCase = ([name, env]: [
         );
         return {
           from: r,
-          facts: {
+          data: {
             precondition:
               d.length > 0 &&
               !!msgs(r)[0] &&
@@ -201,7 +201,7 @@ const configCase = (c: Cfg): CaseDef => ({
       },
       (r) => ({
         from: r,
-        facts: {
+        data: {
           precondition: r.code !== null && !r.timedOut,
           seen: r.stdout.includes(c.marker),
           stderrHead: r.stderr.slice(0, 80).replace(/\s+/g, " "),

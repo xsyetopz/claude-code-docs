@@ -1,6 +1,6 @@
-// Result and negative checks of release:check --selftest: the claims a result lists, refused secrets and paths.
+// Result and negative checks of release:check --selftest: the facts a result lists, refused secrets and paths.
 import { join } from "node:path";
-import { claimsForProbe } from "../claims/map.ts";
+import { factsForProbe } from "../facts/map.ts";
 import { childEnv, PROMPT } from "../lib/env.ts";
 import { openRun, readRun, writeCase } from "../lib/results.ts";
 import { makeSandbox } from "../lib/sandbox.ts";
@@ -20,8 +20,8 @@ export type ResultChecks = {
 
 export const runResultChecks = async (c: ResultChecks): Promise<void> => {
   const { ctx, step, sb, stub, stubPort, out, dir } = c;
-  // a probe result lists the claims that map.json maps to its case, without each probe asking
-  const mapped = claimsForProbe("print.control.requests");
+  // a probe result lists the facts that map.json maps to its case, without each probe asking
+  const mapped = factsForProbe("print.control.requests");
   writeCase(openRun("0.0.1", out), {
     schema: 1,
     id: "print.control.requests",
@@ -32,12 +32,12 @@ export const runResultChecks = async (c: ResultChecks): Promise<void> => {
     envSet: [],
     exit: 0,
     timedOut: false,
-    facts: {},
-    claims: ["control.own"],
+    data: {},
+    facts: ["control.own"],
   });
-  const listed = readRun("0.0.1", out)[0]?.claims ?? [];
+  const listed = readRun("0.0.1", out)[0]?.facts ?? [];
   step(
-    "writeCase adds the map.json claims of the case",
+    "writeCase adds the map.json facts of the case",
     mapped.length > 0 &&
       [...mapped, "control.own"].every((c) => listed.includes(c)),
     `${listed.length} listed, ${mapped.length} mapped`,
@@ -54,8 +54,8 @@ export const runResultChecks = async (c: ResultChecks): Promise<void> => {
       envSet: [],
       exit: 0,
       timedOut: false,
-      facts: { k: "sk-ant-oat01-abcdef" },
-      claims: [],
+      data: { k: "sk-ant-oat01-abcdef" },
+      facts: [],
     });
   } catch {
     refused = true;
@@ -113,8 +113,8 @@ export const runResultChecks = async (c: ResultChecks): Promise<void> => {
         envSet: [],
         exit: 0,
         timedOut: false,
-        facts: {},
-        claims: [],
+        data: {},
+        facts: [],
       }),
     ) && throws(() => makeSandbox({ projFiles: { "../../evil": "x" } })),
   );

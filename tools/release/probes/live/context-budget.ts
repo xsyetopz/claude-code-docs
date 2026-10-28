@@ -3,7 +3,7 @@
 // `-p --continue "/context"`, and reads context_usage each time. Ports p305-live/lib.sh `var` and sum.py.
 // Cold-sensitive: cacheWarm comes from the first reply's usage, not from a marker (a marker would change the numbers).
 import { warmFromUsage } from "../../lib/cache.ts";
-import type { Fact } from "../../lib/results.ts";
+import type { Data } from "../../lib/results.ts";
 import {
   arr,
   baseResult,
@@ -21,25 +21,23 @@ import {
 
 const ID = "context-budget";
 
-const addUsage = (facts: Record<string, Fact>, p: string, c: Obj | null) => {
+const addUsage = (data: Record<string, Data>, p: string, c: Obj | null) => {
   if (!c) return;
-  facts[`${p}.total_tokens`] = Number(c["total_tokens"] ?? -1);
+  data[`${p}.total_tokens`] = Number(c["total_tokens"] ?? -1);
   for (const k of arr(c["categories"])) {
     const cat = obj(k);
     if (cat["kind"] !== "free")
-      facts[`${p}.category.${String(cat["name"])}`] = Number(
-        cat["tokens"] ?? 0,
-      );
+      data[`${p}.category.${String(cat["name"])}`] = Number(cat["tokens"] ?? 0);
   }
-  facts[`${p}.memory_files`] = arr(c["memory_files"]).map(
+  data[`${p}.memory_files`] = arr(c["memory_files"]).map(
     (m) =>
       `${String(obj(m)["path"] ?? obj(m)["name"] ?? "?")
         .split("/")
         .pop()}:${String(obj(m)["tokens"])}`,
   );
-  facts[`${p}.agents.tokens`] = sumTokens(arr(c["agents"]));
-  facts[`${p}.mcp_tools.tokens`] = sumTokens(arr(c["mcp_tools"]));
-  facts[`${p}.skills.count`] = arr(c["skills"]).length;
+  data[`${p}.agents.tokens`] = sumTokens(arr(c["agents"]));
+  data[`${p}.mcp_tools.tokens`] = sumTokens(arr(c["mcp_tools"]));
+  data[`${p}.skills.count`] = arr(c["skills"]).length;
 };
 
 export const contextBudget: LiveCase = {
@@ -59,7 +57,7 @@ export const contextBudget: LiveCase = {
       const ce = contextUsage(empty.events);
       const ca = contextUsage(cx.events);
       const ok = ce !== null && ca !== null;
-      const facts: Record<string, Fact> = {
+      const data: Record<string, Data> = {
         precondition: ok,
         ...(ok
           ? {}
@@ -75,19 +73,19 @@ export const contextBudget: LiveCase = {
           usage?.["cache_read_input_tokens"] ?? -1,
         ),
       };
-      addUsage(facts, "empty", ce);
-      addUsage(facts, "after", ca);
+      addUsage(data, "empty", ce);
+      addUsage(data, "after", ca);
       const warm = warmFromUsage(usage);
       return [
         baseResult(x, ID, {
           args: ["-p /context", "-p", "-p --continue /context"],
           exit: cx.code,
           timedOut: empty.timedOut || hi.timedOut || cx.timedOut,
-          facts,
+          data,
           ...(warm !== null ? { cacheWarm: warm } : {}),
-          claims: ["context.budget"],
+          facts: ["context.budget"],
           notes:
-            "Default model (facts.model is read from the init event), project with README.md only and no CLAUDE.md, as in docs/how-it-works/context-budget.md. /context is a local command, not a model prompt. cacheWarm comes from cache_read_input_tokens of the first reply.",
+            "Default model (data.model is read from the init event), project with README.md only and no CLAUDE.md, as in docs/how-it-works/context-budget.md. /context is a local command, not a model prompt. cacheWarm comes from cache_read_input_tokens of the first reply.",
         }),
       ];
     } finally {

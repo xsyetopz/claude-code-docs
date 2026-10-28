@@ -6,8 +6,8 @@ import { type Ctx, exitCodeOf } from "./util.ts";
 const CLI = join(import.meta.dir, "cli.ts");
 
 // prompts gets --no-render: render.ts rewrites docs/prompts, and `all` must not edit docs pages on its own.
-// `soft` steps do not stop the run: a flaky pty case must still yield a claims worklist. They fail the run at the end.
-// `claims --check` writes nothing and fails only on unmapped claims; its print.sweep warnings keep exit 0.
+// `soft` steps do not stop the run: a flaky pty case must still yield a facts worklist. They fail the run at the end.
+// `facts --check` writes nothing and fails only on unmapped facts; its print.sweep warnings keep exit 0.
 type Step = { name: string; extra: string[]; soft?: boolean };
 const STEPS: Step[] = [
   { name: "check", extra: [] },
@@ -17,8 +17,8 @@ const STEPS: Step[] = [
   { name: "prompts", extra: ["--no-render"] },
   { name: "probe:print", extra: [], soft: true },
   { name: "probe:pty", extra: [], soft: true },
-  { name: "claims", extra: ["--check"], soft: true },
-  { name: "claims", extra: [] },
+  { name: "facts", extra: ["--check"], soft: true },
+  { name: "facts", extra: [] },
   { name: "compare", extra: [] },
 ];
 const ALLOWED = new Set(["--from", "--to", "--dry"]);

@@ -2,11 +2,11 @@
 // Runbook: tools/release/README.md. Design: openspec/changes/archive/2026-10-21-release-toolkit/design.md. `all` runs the automatic steps in order.
 import { runAll } from "./all.ts";
 import { runCheck } from "./check.ts";
-import { normaliseArgs } from "./claims/args.ts";
-import { runClaims } from "./claims/claims.ts";
-import { runCompare } from "./claims/compare.ts";
 import { runClean } from "./clean.ts";
 import { runDiff } from "./diff/diff.ts";
+import { normaliseArgs } from "./facts/args.ts";
+import { runCompare } from "./facts/compare.ts";
+import { runFacts } from "./facts/facts.ts";
 import { runProbeLive } from "./probes/live/index.ts";
 import { runProbeManaged } from "./probes/managed/index.ts";
 import { runProbePrint } from "./probes/print/index.ts";
@@ -49,10 +49,10 @@ const COMMANDS: Record<string, Command> = {
     run: runProbeManaged,
     summary: "managed-folder probes; prints the sudo command (--only, --dry)",
   },
-  claims: {
-    run: runClaims,
+  facts: {
+    run: runFacts,
     summary:
-      "version-labelled claims in docs/ and their probes (--check, --all); writes claims.json",
+      "version-labelled facts in docs/ and their probes (--check, --all); writes facts.json",
   },
   compare: {
     run: runCompare,
@@ -62,7 +62,7 @@ const COMMANDS: Record<string, Command> = {
   all: {
     run: runAll,
     summary:
-      "check, schemas, diff, clean, prompts, probe:print, probe:pty, claims, compare; lists managed/live as needs you",
+      "check, schemas, diff, clean, prompts, probe:print, probe:pty, facts, compare; lists managed/live as needs you",
   },
 };
 

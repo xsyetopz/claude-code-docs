@@ -1,6 +1,6 @@
 // Types shared by the pty harness: the case, the run it produces, and the group.
 import type { PtyResult, PtyStep } from "../../../lib/pty/driver.ts";
-import type { Fact } from "../../../lib/results.ts";
+import type { Data } from "../../../lib/results.ts";
 import type { Files, Sandbox } from "../../../lib/sandbox.ts";
 import type { LoggedRequest, StubCase } from "../../../lib/stub.ts";
 
@@ -28,14 +28,14 @@ export type PtyCase = {
   cols?: number;
   prompt?: string; // anything but PROMPT needs promptReason
   promptReason?: string;
-  claims?: string[];
+  facts?: string[];
   notes?: string;
   setup?: (sb: Sandbox) => void;
-  facts: (x: PtyRun) => Record<string, Fact>;
+  data: (x: PtyRun) => Record<string, Data>;
   samples?: (x: PtyRun) => Record<string, string>;
   artifacts?: (x: PtyRun) => Record<string, string>; // extra files beside the JSON: <case>.<name>
-  /** Timing cases: when the first facts say "out of tolerance", run once more; disagreement marks the case flaky. */
-  retryIf?: (facts: Record<string, Fact>) => boolean;
+  /** Timing cases: when the first data says "out of tolerance", run once more; disagreement marks the case flaky. */
+  retryIf?: (data: Record<string, Data>) => boolean;
 };
 
 export type PtyRun = {

@@ -4,8 +4,8 @@ import { readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import {
   ASK,
+  type Data,
   ESC,
-  type Fact,
   type PtyCase,
   type PtyGroup,
   type PtyRun,
@@ -21,7 +21,7 @@ const walk = (d: string, base = d): string[] =>
       : [p.slice(base.length + 1)];
   });
 
-const traceFacts = (x: PtyRun, value: string): Record<string, Fact> => {
+const traceData = (x: PtyRun, value: string): Record<string, Data> => {
   const files = walk(x.sb.root).filter((f) =>
     /trace|perfetto|pftrace/i.test(f),
   );
@@ -43,9 +43,9 @@ const perfetto = (name: string, value: string): PtyCase => ({
   },
   schedule: [READY, ASK(), ESC(12)],
   secs: 14,
-  claims: ["env.CLAUDE_CODE_PERFETTO_TRACE"],
+  facts: ["env.CLAUDE_CODE_PERFETTO_TRACE"],
   notes: `CLAUDE_CODE_PERFETTO_TRACE=${value}, write interval 1 s, one interactive prompt.`,
-  facts: (x) => traceFacts(x, value),
+  data: (x) => traceData(x, value),
 });
 
 export const perfettoGroup: PtyGroup = {

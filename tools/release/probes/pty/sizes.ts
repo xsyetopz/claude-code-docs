@@ -44,9 +44,9 @@ const sizeCase = (s: Size): PtyCase => {
     cfgFiles,
     schedule: [READY, { t: 3, send: "/status\r", label: "status" }, ESC(8)],
     secs: 10,
-    claims: ["memory.size-warning"],
+    facts: ["memory.size-warning"],
     notes: `${s.files} instruction file(s) of ${s.chars} chars on ${s.model}; /status is a command, not a model prompt.`,
-    facts: (x) => ({
+    data: (x) => ({
       ...pre(
         shows(x, "shortcuts") || shows(x, "Claude Code"),
         "UI never started",

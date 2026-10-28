@@ -73,11 +73,11 @@ export const runProbePty = async (ctx: Ctx): Promise<number> => {
           }
           seen.add(r.id);
           writeCase(pctx.runDir, r);
-          const bad = r.facts["precondition"] === false;
+          const bad = r.data["precondition"] === false;
           if (bad) invalid++;
-          const flaky = r.facts["flaky"] === true ? " FLAKY" : "";
+          const flaky = r.data["flaky"] === true ? " FLAKY" : "";
           const why = bad
-            ? ` (${String(r.facts["error"] ?? r.facts["precondition.detail"] ?? "")})`
+            ? ` (${String(r.data["error"] ?? r.data["precondition.detail"] ?? "")})`
             : "";
           console.log(`  ${bad ? "INVALID" : "ok     "} ${r.id}${flaky}${why}`);
         }

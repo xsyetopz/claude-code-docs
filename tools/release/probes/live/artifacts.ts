@@ -46,7 +46,7 @@ export const artifactsCase: LiveCase = {
         baseResult(x, ID, {
           prompt: "",
           exit: pty.exit,
-          facts: {
+          data: {
             precondition: ready,
             ...(ready ? {} : { "precondition.detail": "UI never started" }),
             panelShown: artifactsPanelShown(s),
@@ -55,7 +55,7 @@ export const artifactsCase: LiveCase = {
             showsFailed: shows("Failed to load"),
           },
           samples: { screenTail: s.split("\n").slice(-30).join("\n") },
-          claims: [],
+          facts: [],
           notes:
             "No prompt is sent (prompt is empty): /artifacts is a local command and only the panel is read. Matching tolerates dropped letters in the rendered screen. URLs and ids are scrubbed from the sample.",
         }),

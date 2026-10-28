@@ -19,27 +19,27 @@ const MODELS =
 const matrix: CaseDef = {
   name: "matrix",
   run: async (ctx) => {
-    const facts: Record<string, string | number | boolean | null> = {};
+    const data: Record<string, string | number | boolean | null> = {};
     for (const m of MODELS) {
       await withRun(ctx, { model: m }, (r) => {
         const q = msgs(r)[0];
         if (!q) {
-          facts[`${m}.status`] = "no request";
+          data[`${m}.status`] = "no request";
           return;
         }
-        facts[`${m}.systemChars`] = fixed(r, sysText(q)).replace(
+        data[`${m}.systemChars`] = fixed(r, sysText(q)).replace(
           /cc_version=[^;]*;/,
           "",
         ).length;
-        facts[`${m}.tools`] = toolNames(q).length;
-        facts[`${m}.requestModel`] = bodyOf(q).model ?? null;
+        data[`${m}.tools`] = toolNames(q).length;
+        data[`${m}.requestModel`] = bodyOf(q).model ?? null;
       });
     }
     return {
-      facts: {
-        precondition: !!facts[`${MODELS[0]}.requestModel`],
+      data: {
+        precondition: !!data[`${MODELS[0]}.requestModel`],
         models: MODELS.length,
-        ...facts,
+        ...data,
       },
       notes: `One run per model name (${MODELS.length}); the model flag is the variable under test.`,
     };

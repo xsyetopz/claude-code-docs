@@ -1,4 +1,4 @@
-// Shared fixtures for the claims selftest parts.
+// Shared fixtures for the facts selftest parts.
 import type { CaseResult } from "../../lib/results.ts";
 
 export type Step = (name: string, ok: boolean, detail?: string) => void;
@@ -28,7 +28,7 @@ export const DOC = [
 export const kase = (
   version: string,
   id: string,
-  facts: CaseResult["facts"],
+  data: CaseResult["data"],
   samples?: Record<string, string>,
 ): CaseResult => ({
   schema: 1,
@@ -40,7 +40,7 @@ export const kase = (
   envSet: [],
   exit: 0,
   timedOut: false,
-  facts,
+  data,
   ...(samples ? { samples } : {}),
-  claims: [],
+  facts: [],
 });

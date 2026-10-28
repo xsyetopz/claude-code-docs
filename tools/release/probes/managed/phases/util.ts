@@ -1,5 +1,5 @@
 // Types and helpers of the managed phases: the phase context, a case definition, the run readers, the shared fixtures.
-import type { Fact } from "../../../lib/results.ts";
+import type { Data } from "../../../lib/results.ts";
 import {
   arr,
   type Case,
@@ -19,15 +19,15 @@ export type PhaseCtx = {
 };
 
 export type Out = {
-  facts: Record<string, Fact>;
+  data: Record<string, Data>;
   samples?: Record<string, string>;
-  claims?: string[];
+  facts?: string[];
 };
 export type Def = {
   name: string; // case name inside the phase
   c: Case;
-  /** Turn the run into facts. `started` is the list of MCP servers that started. */
-  facts: (r: Run, x: Ex) => Out;
+  /** Turn the run into data. `started` is the list of MCP servers that started. */
+  data: (r: Run, x: Ex) => Out;
   notes?: string;
 };
 export type Ex = {

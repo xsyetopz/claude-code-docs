@@ -65,7 +65,7 @@ const outputStyle: CaseDef = {
         const s = msgs(r)[0] ? json(bodyOf(msgs(r)[0] as never)) : "";
         return {
           from: r,
-          facts: {
+          data: {
             precondition: s.length > 0,
             forcedStyleInSystem: s.includes("ZZFORCEDSTYLEZZ"),
             userStyleInSystem: s.includes("ZZUSERSTYLEZZ"),
@@ -98,7 +98,7 @@ const memCase = ([name, env]: (typeof MEM_ENVS)[number]): CaseDef => ({
       const sys = fixed(r, sysText(msgs(r)[0] as never));
       return {
         from: r,
-        facts: {
+        data: {
           precondition: sys.length > 0,
           memHeading: /^# Memory/m.test(sys),
           autoMemoryWord:
@@ -141,7 +141,7 @@ const cowCase = ([name, env]: (typeof COW)[number]): CaseDef => ({
       const d = readCfg(r, "d.log");
       return {
         from: r,
-        facts: {
+        data: {
           precondition: t.length > 0 && d.length > 0,
           systemChars: t.length,
           markers: ["ZZCOWPATH", "ZZGUIDEZZ", "ZZEXTRAZZ", "ZZINDEXZZ"].filter(
@@ -172,7 +172,7 @@ const formCase = ([name, f]: [string, string]): CaseDef => ({
       const m = memSection(r);
       return {
         from: r,
-        facts: {
+        data: {
           precondition: !!msgs(r)[0],
           sectionChars: m.length,
           mentionsStore: /ZZMEMDIR2|\bs1\b|\/mnt\/m/.test(m),
@@ -192,7 +192,7 @@ const modeCase = (mode: "rw" | "ro"): CaseDef => ({
         const m = memSection(r);
         return {
           from: r,
-          facts: {
+          data: {
             precondition: !!msgs(r)[0],
             sectionChars: m.length,
             readOnlyNote: m.includes("read-only"),

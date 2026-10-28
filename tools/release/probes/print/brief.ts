@@ -38,7 +38,7 @@ const brief: CaseDef = {
       const b = view(r);
       return {
         from: r,
-        facts: {
+        data: {
           precondition: !!a.v && !!b,
           exit: r.code,
           baseTools: a.v?.tools ?? null,
@@ -82,7 +82,7 @@ const resume: CaseDef = {
           const m = (q ? bodyOf(q).messages : []) ?? [];
           return {
             from: r,
-            facts: {
+            data: {
               precondition: sid.length > 0 && !!q,
               exit: r.code,
               resumedMessages: m.length,

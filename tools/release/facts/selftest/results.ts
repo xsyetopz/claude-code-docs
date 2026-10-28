@@ -1,4 +1,4 @@
-// Claim-results part of the selftest: claims.json against two compared runs, worklist, diff and schema claims.
+// Fact-results part of the selftest: facts.json against two compared runs, worklist, diff and schema facts.
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { compareRuns, renderCompare } from "../compare.ts";
@@ -21,7 +21,7 @@ export const runResultsChecks = (
     ...extra,
   });
   writeFileSync(
-    join(b, "claims.json"),
+    join(b, "facts.json"),
     JSON.stringify([
       row("c.changed", ["print.one"], "behaviour"),
       row("c.same", ["print.same"], "behaviour"),
@@ -39,11 +39,9 @@ export const runResultsChecks = (
     ]),
   );
   const c2 = compareRuns("1.0.0", "1.0.1", base, false);
-  const res = Object.fromEntries(
-    (c2.claims ?? []).map((c) => [c.id, c.result]),
-  );
+  const res = Object.fromEntries((c2.facts ?? []).map((c) => [c.id, c.result]));
   step(
-    "compare: claim results",
+    "compare: fact results",
     res["c.changed"] === "changed" &&
       res["c.same"] === "unchanged" &&
       res["c.notrun"] === "not-run" &&
@@ -51,7 +49,7 @@ export const runResultsChecks = (
     JSON.stringify(res),
   );
   step(
-    "compare: case only on `to` is changed; manual, no-diff and bare claims are not-run",
+    "compare: case only on `to` is changed; manual, no-diff and bare facts are not-run",
     res["c.new"] === "changed" &&
       res["c.manual"] === "not-run" &&
       res["c.nodiff"] === "not-run" &&
@@ -60,7 +58,7 @@ export const runResultsChecks = (
     JSON.stringify(res),
   );
   step(
-    "compare: sweep claim only sees its own names",
+    "compare: sweep fact only sees its own names",
     res["c.sweep"] === "unchanged",
   );
   const md = renderCompare(c2);
@@ -106,9 +104,9 @@ export const runResultsChecks = (
       c3.uncoveredNames[0]?.name === "--new-flag",
     JSON.stringify(c3.uncoveredNames),
   );
-  const r3 = Object.fromEntries((c3.claims ?? []).map((c) => [c.id, c.result]));
+  const r3 = Object.fromEntries((c3.facts ?? []).map((c) => [c.id, c.result]));
   step(
-    "compare: diff and schema claims",
+    "compare: diff and schema facts",
     r3["c.diffhit"] === "changed" &&
       r3["c.diffmiss"] === "unchanged" &&
       r3["c.schema"] === "changed" &&
@@ -118,7 +116,7 @@ export const runResultsChecks = (
   );
   step(
     "compare: json round trip",
-    readFileSync(join(b, "claims.json"), "utf8").length > 0 &&
+    readFileSync(join(b, "facts.json"), "utf8").length > 0 &&
       JSON.parse(JSON.stringify(c3)).to === "1.0.1",
   );
 };

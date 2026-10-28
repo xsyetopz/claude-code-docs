@@ -21,8 +21,8 @@ const EMPTY = (c: PrintCtx): CaseResult => ({
   envSet: [],
   exit: null,
   timedOut: false,
-  facts: {},
-  claims: [],
+  data: {},
+  facts: [],
 });
 
 export const runProbePrint = async (ctx: Ctx): Promise<number> => {
@@ -62,10 +62,10 @@ export const runProbePrint = async (ctx: Ctx): Promise<number> => {
     }
     seen.add(r.id);
     writeCase(pctx.runDir, r);
-    const bad = r.facts["precondition"] === false;
+    const bad = r.data["precondition"] === false;
     if (bad) invalid++;
     console.log(
-      `  ${bad ? "INVALID" : "ok     "} ${r.id}${bad ? ` (${String(r.facts["error"] ?? r.facts["precondition.detail"] ?? "")})` : ""}`,
+      `  ${bad ? "INVALID" : "ok     "} ${r.id}${bad ? ` (${String(r.data["error"] ?? r.data["precondition.detail"] ?? "")})` : ""}`,
     );
   };
   try {
@@ -90,7 +90,7 @@ export const runProbePrint = async (ctx: Ctx): Promise<number> => {
             : [{ ...EMPTY(pctx), id: `print.${g.id}.group-error` }]
         ).map((r) => ({
           ...r,
-          facts: {
+          data: {
             precondition: false,
             error: `group failed: ${(e as Error).message}`,
           },

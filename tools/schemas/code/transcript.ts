@@ -160,7 +160,7 @@ export const buildTranscript = (): { file: string; schema: Json } => {
   walk(readJson(join(OUT, "claude-code-stream-json.json")));
 
   const probe = readJson(join(CAPTURES, "print/transcripts.lines.json"));
-  const facts = (probe?.["facts"] ?? {}) as Json;
+  const data = (probe?.["data"] ?? {}) as Json;
 
   const $defs: Record<string, Json> = {};
   const noCode: string[] = [];
@@ -198,7 +198,7 @@ export const buildTranscript = (): { file: string; schema: Json } => {
     const tur = withType["toolUseResult"];
     if (t === "user" && tur && !tur["type"])
       tur["type"] = ["object", "string", "array"];
-    const seen = facts[`line.${t}`];
+    const seen = data[`line.${t}`];
     if (Array.isArray(seen)) {
       // A key a probe saw that no constructor has is added by a later step: find that write.
       const fresh = (seen as string[]).filter((k) => !(k in withType));
@@ -222,7 +222,7 @@ export const buildTranscript = (): { file: string; schema: Json } => {
     note(
       `transcript: read-only types (the program reads them, and no code in this build writes them): ${noCode.join(", ")}`,
     );
-  const probed = Object.keys(facts)
+  const probed = Object.keys(data)
     .filter((k) => k.startsWith("line."))
     .map((k) => k.slice(5));
   for (const t of probed)

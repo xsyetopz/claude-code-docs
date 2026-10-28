@@ -1,5 +1,5 @@
 // CLAUDE_CODE_PERFETTO_TRACE values (ported from p305-print/perf.ts): what the debug log says and which trace files appear.
-import type { CaseResult, Fact } from "../../lib/results.ts";
+import type { CaseResult, Data } from "../../lib/results.ts";
 import {
   baseResult,
   dispose,
@@ -31,7 +31,7 @@ const runOne = (ctx: PrintCtx, name: string, value: string) =>
       const files = listFiles(r.sb.root).filter((f) =>
         /trace|perfetto|pftrace/i.test(f),
       );
-      const facts: Record<string, Fact> = {
+      const data: Record<string, Data> = {
         precondition: r.code === 0 && dbg !== "",
         "init.called": lines.some((l) =>
           /initializePerfettoTracing called/.test(l),
@@ -40,7 +40,7 @@ const runOne = (ctx: PrintCtx, name: string, value: string) =>
         "trace.files": files,
       };
       return baseResult(ctx, `print.perfetto.${name}`, r, {
-        facts,
+        data,
         samples: { debug_lines: lines.map((l) => l.slice(0, 200)).join("\n") },
       });
     } finally {

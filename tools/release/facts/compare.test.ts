@@ -6,12 +6,12 @@ const run = (keys: string): CaseResult =>
   ({
     schema: 1,
     id: "print.request.baseline-a",
-    claims: [],
-    facts: { evkeys: `sha1:${keys.length} len=${keys.length}` },
+    facts: [],
+    data: { evkeys: `sha1:${keys.length} len=${keys.length}` },
     samples: { evkeys: keys },
   }) as unknown as CaseResult;
 
-test("a hashed fact that changed names the parts its samples gained and lost", () => {
+test("hashed data that changed names the parts its samples gained and lost", () => {
   const d = diffCase(
     run("system:type,uuid|result:type,usage"),
     run("system:type,uuid|result:type,usage,model_usage_since_last_result"),

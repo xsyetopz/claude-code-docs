@@ -1,5 +1,5 @@
 {
-  "docs/reference/probes.md#managed-folder-probe:dc4731d1": {
+  "docs/reference/probes.md#managed-folder-probe:51acf199": {
     "kind": "behaviour",
     "probes": ["managed.baseline.mcp-run"]
   },

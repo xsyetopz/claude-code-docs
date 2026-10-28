@@ -1,51 +1,52 @@
-// release:compare - diffs captures/<from>/ against captures/<to>/ per case id, and per claim when claims.json exists.
+// release:compare - diffs captures/<from>/ against captures/<to>/ per case id, and per fact when facts.json exists.
 //   bun tools/release/cli.ts compare <from> <to> [--samples]     (or --from V --to V)
-// Writes captures/<to>/compare/<from>..<to>.json and compare.md. Design: "Commands" and "Claim Map".
+// Writes captures/<to>/compare/<from>..<to>.json and compare.md.
+// Design: the same archived design file, sections "Commands" and "Claim Map" under the old term.
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { type CaseResult, type Fact, readRun } from "../lib/results.ts";
+import { type CaseResult, type Data, readRun } from "../lib/results.ts";
 import { CAPTURES, type Ctx, ROOT, writeJson } from "../util.ts";
-import { claimResultsWith, docTokens } from "./compare/claims.ts";
 import {
-  IGNORED_FACTS,
+  IGNORED_DATA,
   invalidDetail,
   minus,
   PARTS_CAP,
   parts,
   same,
-} from "./compare/facts.ts";
+} from "./compare/data.ts";
+import { docTokens, factResultsWith } from "./compare/facts.ts";
 import { readDiffs, renderCompare } from "./compare/render.ts";
 import type {
   CaseDiff,
-  ClaimResult,
-  ClaimRow,
   Compare,
-  FactChange,
+  DataChange,
+  FactResult,
+  FactRow,
 } from "./compare/types.ts";
 
-export type { CaseDiff, ClaimResult, ClaimRow, Compare, FactChange };
+export type { CaseDiff, Compare, DataChange, FactResult, FactRow };
 export { invalidDetail, renderCompare };
 
 /**
- * Known noise by case id: facts that differ between two runs of the SAME version, so they are not release changes.
- * `facts` matches whole fact names and drops them. `items` removes those array elements from the facts that
- * `itemFacts` matches, then drops the fact when the two sides are then equal. With `values`, a `facts` match is
+ * Known noise by case id: data that differ between two runs of the SAME version, so they are not release changes.
+ * `data` matches whole data names and drops them. `items` removes those array elements from the data that
+ * `itemData` matches, then drops the data when the two sides are then equal. With `values`, a `data` match is
  * noise only when both sides are in that list, so a value outside the range seen across reruns still shows.
- * With `unordered`, a `facts` match is noise only when the two arrays hold the same items.
- * Ignored facts are listed under "Noise (ignored)" in compare.md, never dropped silently.
+ * With `unordered`, a `data` match is noise only when the two arrays hold the same items.
+ * Ignored data is listed under "Noise (ignored)" in compare.md, never dropped silently.
  */
 type Noisy = {
   why: string;
-  facts?: RegExp;
-  values?: Fact[];
+  data?: RegExp;
+  values?: Data[];
   unordered?: boolean;
-  itemFacts?: RegExp;
+  itemData?: RegExp;
   items?: string[];
 };
 const MCP_ORDER: Noisy[] = [
   {
     why: "the servers start in parallel, so their order varies from run to run (seen on 2.1.306 to 2.1.308)",
-    facts: /^started$/,
+    data: /^started$/,
     unordered: true,
   },
 ];
@@ -56,68 +57,68 @@ export const NOISY: Record<string, Noisy[]> = {
   "print.subagents.observer.on": [
     {
       why: "the background observer sends 3 or 5 requests from run to run (seen on 2.1.306 to 2.1.308)",
-      facts: /^(observerReportToolIn|observerMessageIn)$/,
+      data: /^(observerReportToolIn|observerMessageIn)$/,
       values: [3, 5],
     },
     {
       why: "the request count follows the observer's 3 or 5 requests",
-      facts: /^messages$/,
+      data: /^messages$/,
       values: [10, 12],
     },
   ],
   "print.sweep": [
     {
       why: "with Mantle on, the run times out before any stub request, so its stderr varies from run to run",
-      itemFacts: /^CLAUDE_CODE_USE_MANTLE\.[AB]$/,
+      itemData: /^CLAUDE_CODE_USE_MANTLE\.[AB]$/,
       items: ["stderr", "cfgfiles"],
     },
     {
       why: "API_TIMEOUT_MS sets a tiny timeout, so the retry count depends on machine load",
-      facts: /^API_TIMEOUT_MS\.[AB]$/,
+      data: /^API_TIMEOUT_MS\.[AB]$/,
     },
     {
       why: "cfgfiles flips for a random name on each run",
-      itemFacts: /\.[AB]$/,
+      itemData: /\.[AB]$/,
       items: ["cfgfiles"],
     },
     {
-      why: "list derived from the NAME.A and NAME.B facts, which are compared on their own",
-      facts: /^changed$/,
+      why: "list derived from the NAME.A and NAME.B data, which is compared on their own",
+      data: /^changed$/,
     },
   ],
 };
 
 /** `old` with every `from` replaced by `to` equals `now`: the only change is the version string. */
-const versionOnly = (old: Fact, now: Fact, v?: [string, string]): boolean =>
+const versionOnly = (old: Data, now: Data, v?: [string, string]): boolean =>
   !!v &&
   JSON.stringify(old).includes(v[0]) &&
   JSON.stringify(old).replaceAll(v[0], v[1]) === JSON.stringify(now);
 
-/** Why a changed fact is not a release change, or null. */
+/** Why a changed data is not a release change, or null. */
 const noiseReason = (
   id: string | undefined,
   k: string,
-  old: Fact,
-  now: Fact,
+  old: Data,
+  now: Data,
   v?: [string, string],
 ): string | null => {
   if (versionOnly(old, now, v)) return "version string only";
   for (const n of (id && NOISY[id]) || []) {
-    const inRange = (f: Fact) => n.values?.some((x) => same(x, f)) ?? true;
-    const sorted = (f: Fact) =>
+    const inRange = (f: Data) => n.values?.some((x) => same(x, f)) ?? true;
+    const sorted = (f: Data) =>
       JSON.stringify(Array.isArray(f) ? [...f].sort() : f);
-    if (n.unordered && n.facts?.test(k))
+    if (n.unordered && n.data?.test(k))
       return sorted(old) === sorted(now) ? n.why : null;
-    if (n.facts?.test(k) && inRange(old) && inRange(now)) return n.why;
+    if (n.data?.test(k) && inRange(old) && inRange(now)) return n.why;
     if (
-      n.itemFacts?.test(k) &&
+      n.itemData?.test(k) &&
       n.items &&
       Array.isArray(old) &&
       Array.isArray(now)
     ) {
-      const strip = (a: Fact[]) =>
+      const strip = (a: Data[]) =>
         JSON.stringify(a.filter((x) => !n.items?.includes(String(x))));
-      if (strip(old as Fact[]) === strip(now as Fact[])) return n.why;
+      if (strip(old as Data[]) === strip(now as Data[])) return n.why;
     }
   }
   return null;
@@ -126,9 +127,9 @@ const noiseReason = (
 export type DiffOpts = {
   /** case id, to look up NOISY */
   id?: string;
-  /** [from, to]: a fact that differs only by this version string is ignored */
+  /** [from, to]: data that differs only by this version string is ignored */
   versions?: [string, string];
-  /** receives fact -> reason for each ignored fact */
+  /** receives data -> reason for each ignored data */
   ignored?: Record<string, string>;
 };
 
@@ -139,16 +140,16 @@ export const diffCase = (
   only?: (key: string) => boolean,
   opts: DiffOpts = {},
 ): CaseDiff => {
-  const keep = (k: string) => !IGNORED_FACTS.has(k) && (!only || only(k));
+  const keep = (k: string) => !IGNORED_DATA.has(k) && (!only || only(k));
   const d: CaseDiff = { added: {}, removed: {}, changed: {} };
-  for (const [k, v] of Object.entries(b.facts)) {
+  for (const [k, v] of Object.entries(b.data)) {
     if (!keep(k)) continue;
-    if (!(k in a.facts)) d.added[k] = v;
-    else if (!same(a.facts[k] as Fact, v)) {
-      const why = noiseReason(opts.id, k, a.facts[k] as Fact, v, opts.versions);
+    if (!(k in a.data)) d.added[k] = v;
+    else if (!same(a.data[k] as Data, v)) {
+      const why = noiseReason(opts.id, k, a.data[k] as Data, v, opts.versions);
       if (why !== null && opts.ignored) opts.ignored[k] = why;
       if (why !== null) continue;
-      d.changed[k] = { old: a.facts[k] as Fact, new: v };
+      d.changed[k] = { old: a.data[k] as Data, new: v };
       const so = a.samples?.[k];
       const sn = b.samples?.[k];
       if (so !== undefined && sn !== undefined) {
@@ -158,8 +159,8 @@ export const diffCase = (
       }
     }
   }
-  for (const [k, v] of Object.entries(a.facts))
-    if (keep(k) && !(k in b.facts)) d.removed[k] = v;
+  for (const [k, v] of Object.entries(a.data))
+    if (keep(k) && !(k in b.data)) d.removed[k] = v;
   if (withSamples) {
     const s: NonNullable<CaseDiff["samples"]> = {};
     const keys = new Set([
@@ -230,24 +231,16 @@ export const compareResults = (
   };
 };
 
-/** `result` per claim from the mapped probes (or, for diff kinds, from diff/*.json of `to`). */
-export const claimResults = (
-  claims: ClaimRow[],
+/** `result` per fact from the mapped probes (or, for diff kinds, from diff/*.json of `to`). */
+export const factResults = (
+  facts: FactRow[],
   a: CaseResult[],
   b: CaseResult[],
   diffChanged: Set<string> | null,
   schemaText: string | null = null,
   versions?: [string, string],
-): ClaimResult[] =>
-  claimResultsWith(
-    { diffCase },
-    claims,
-    a,
-    b,
-    diffChanged,
-    schemaText,
-    versions,
-  );
+): FactResult[] =>
+  factResultsWith({ diffCase }, facts, a, b, diffChanged, schemaText, versions);
 
 /** Everything but the file writes, so the selftest can run it on fixture dirs. */
 export const compareRuns = (
@@ -268,11 +261,11 @@ export const compareRuns = (
       ...(d.changed ?? []).map((x) => x.name),
     ]),
   );
-  const cp = join(base, to, "claims.json");
+  const cp = join(base, to, "facts.json");
   if (existsSync(cp)) {
-    const rows = JSON.parse(readFileSync(cp, "utf8")) as ClaimRow[];
+    const rows = JSON.parse(readFileSync(cp, "utf8")) as FactRow[];
     const sp = join(base, to, "schemas-diff.json");
-    c.claims = claimResults(
+    c.facts = factResults(
       rows,
       a,
       b,
@@ -302,20 +295,20 @@ export const runCompare = async (ctx: Ctx): Promise<number> => {
   const c = compareRuns(from, to, CAPTURES, ctx.rest.includes("--samples"));
   const noOld = readRun(from, CAPTURES).length === 0;
   if (noOld) {
-    c.warning = `captures/${from}/ has no case results (print/ or pty/), so every probed claim shows as changed. Run \`release:probe:print -- --to ${from}\` and \`release:probe:pty -- --to ${from}\` with the old binary installed, then compare again.`;
+    c.warning = `captures/${from}/ has no case results (print/ or pty/), so every probed fact shows as changed. Run \`release:probe:print -- --to ${from}\` and \`release:probe:pty -- --to ${from}\` with the old binary installed, then compare again.`;
     console.error(`release:compare WARNING: ${c.warning}`);
   }
   const dir = join(CAPTURES, to, "compare");
   const jsonPath = join(dir, `${from}..${to}.json`);
   const mdPath = join(dir, "compare.md");
-  const work = (c.claims ?? []).filter(
+  const work = (c.facts ?? []).filter(
     (x) =>
       x.result === "changed" ||
       x.result === "not-run" ||
       x.result === "invalid-run",
   ).length;
   console.log(
-    `release:compare ${from}..${to}: ${c.counts.cases} cases in both (${c.counts.changed} changed, ${c.counts.invalid} invalid), ${c.onlyFrom.length} only in from, ${c.onlyTo.length} only in to; worklist ${c.claims ? `${work} claims` : "no claims.json"}${c.uncoveredNames ? `, ${c.uncoveredNames.length} uncovered names` : ""}`,
+    `release:compare ${from}..${to}: ${c.counts.cases} cases in both (${c.counts.changed} changed, ${c.counts.invalid} invalid), ${c.onlyFrom.length} only in from, ${c.onlyTo.length} only in to; worklist ${c.facts ? `${work} facts` : "no facts.json"}${c.uncoveredNames ? `, ${c.uncoveredNames.length} uncovered names` : ""}`,
   );
   if (ctx.dry) return 0;
   writeJson(jsonPath, c);

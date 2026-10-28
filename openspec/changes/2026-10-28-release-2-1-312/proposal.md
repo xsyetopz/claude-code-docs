@@ -44,4 +44,4 @@ None. `tracked-release-docs` already sets the release rules, and this change app
 
 ## Impact
 
-`docs/`, `tools/surface/`, `tools/release/claims/map.json`, `schemas/`, `src/version.ts`, the plugin versions, and `CHANGELOG.md`.
+`docs/`, `tools/surface/`, `tools/release/facts/map.json`, `schemas/`, `src/version.ts`, the plugin versions, and `CHANGELOG.md`.

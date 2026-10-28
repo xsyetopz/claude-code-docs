@@ -36,7 +36,7 @@ export const validateCase = ([
         const t = (r.stdout + r.stderr).replace(/\s+/g, " ");
         return {
           from: r,
-          facts: {
+          data: {
             precondition: t.includes("Validating plugin manifest"),
             exit: r.code,
             errors: t.match(/Found (\d+) errors?/)?.[1] ?? "0",

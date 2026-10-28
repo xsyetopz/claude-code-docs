@@ -32,7 +32,7 @@ export const fmCase = (name: string, fm: string): CaseDef => ({
         const sub = subReqs(r);
         return {
           from: r,
-          facts: {
+          data: {
             precondition: sub.length > 0,
             subRequests: sub.length,
             subTools: sub.map((q) => toolNames(q).join(",")),
@@ -63,7 +63,7 @@ export const isoCase = (iso: "remote" | "worktree" | "none"): CaseDef => ({
         const cwd = cwdInSub(r);
         return {
           from: r,
-          facts: {
+          data: {
             precondition: sub.length > 0,
             subRequests: sub.length,
             cwdInSub: cwd.replace(/agent-[0-9a-f]+/, "agent-<id>"),
@@ -97,7 +97,7 @@ export const setupCase = (flag: string): CaseDef => ({
       { args: [...BASE, flag], cfgFiles: { "settings.json": json(HOOK) } },
       (r) => ({
         from: r,
-        facts: {
+        data: {
           precondition: r.code !== null && !r.timedOut,
           hookRan:
             existsSync(`${r.sb.cfg}/setup.ran`) ||

@@ -100,7 +100,7 @@ for the schema `$id` addresses: the old ones are not served.
   fails the build. `render/groups.test.ts` checks the flag against the folder contents.
 - [x] 4.3 `render/hand.ts`, `render/listing.ts`, `render/index.ts`: read and write the hand-written
   pages from their group folders, and keep the index tables linking correctly.
-- [x] 4.4 `tools/release/claims/map.json`: the new paths of the prompts pages.
+- [x] 4.4 `tools/release/facts/map.json`: the new paths of the prompts pages.
 - [x] 4.5 Run `bun tools/capture-prompts/render.ts`, then delete the old flat pages with `git rm`.
   `docs/prompts/` now holds only `index.md` plus the 10 group folders.
 - [x] 4.6 Check: `bun run lint` printed `0 issues in 0 files`, `bun run check:docs` printed
@@ -123,14 +123,14 @@ for the schema `$id` addresses: the old ones are not served.
 ## 5a. Page Size (`docs/configure/`, `docs/extend/hooks/`, `docs/extend/mod-api/types/`, `src/css/`)
 
 No page holds its contents for a reader or an agent past about 300 lines, so each longer page becomes a
-section. A split re-keys every claim on a line that moves, because `claimId` hashes the file path.
+section. A split re-keys every fact on a line that moves, because `factId` hashes the file path.
 
-- [x] 5a.1 `docs/configure/keybindings.md` (535 lines) becomes a section of 4 pages. 13 claim keys moved.
+- [x] 5a.1 `docs/configure/keybindings.md` (535 lines) becomes a section of 4 pages. 13 fact keys moved.
   `tools/surface/coverage.ts` named the old path in `PAGES`, so 111 items showed as unmapped until it
   pointed at the folder. 159 routes in `tools/surface/map.json` moved with it.
 - [x] 5a.2 `docs/configure/models-and-providers.md` (422 lines) becomes a section of 4 pages.
 - [x] 5a.3 `docs/extend/hooks/events.md` (627 lines) keeps the table of all 33 events and links
-  `tool-events.md`, `session-events.md`, and `agent-events.md`. 5 claim keys moved.
+  `tool-events.md`, `session-events.md`, and `agent-events.md`. 5 fact keys moved.
 - [x] 5a.4 `src/css/custom.css` (539 lines) becomes 13 files that `custom.css` imports in the original
   order. No declaration changed. The built stylesheet loses 7 literal `font-family` fallbacks, because
   the Docusaurus PostCSS step writes a fallback before a `var()` only from variables in the same file.
@@ -140,10 +140,10 @@ section. A split re-keys every claim on a line that moves, because `claimId` has
 - [x] 5a.6 Split the 7 pages of `docs/extend/mod-api/types/` that are over 300 lines: `ui.md` (939),
   `turn-prompt.md` (820), `classic.md` (627), `session.md` (614), `testing.md` (413),
   `tool-command-config.md` (386), and `infra.md` (355). Every split falls on a `###` line, because no
-  page holds a `##` heading inside its type list. 20 claim keys moved. The largest hand-written page
+  page holds a `##` heading inside its type list. 20 fact keys moved. The largest hand-written page
   left is 279 lines.
 - [x] 5a.7 Check: `bun run surface:check` printed `every item is mapped or excluded`,
-  `bun run release:claims -- --check` printed `claims check ok` with 259 claims and 0 unmapped, and
+  `bun run release:facts -- --check` printed `facts check ok` with 259 facts and 0 unmapped, and
   `bun run build` printed `[SUCCESS] Generated static files in "build"`.
 
 ## 5b. Glance Table Removal (`docs/**`, `tools/capture-prompts/render/`, `docs/contributing/`)
@@ -157,7 +157,7 @@ or a count that no other line holds.
   must appear elsewhere on the page, in a sibling page of the folder, or on the page the row links to.
   A fact found nowhere else moved into the page lead.
 - [x] 5b.2 Keep each badge note with text of its own. `docs/extend/mod-api/index.md` moved its VS Code
-  `<Differs>` note into `## Known Gaps`, which re-keyed one claim from `#at-a-glance:1325b7a6` to
+  `<Differs>` note into `## Known Gaps`, which re-keyed one fact from `#at-a-glance:1325b7a6` to
   `#known-gaps:313a0dba`. The other two notes of that row were already bullets of that section.
   `docs/configure/settings/index.md` kept its `2.1.312` key-count sentence byte for byte.
 - [x] 5b.3 Drop a `| Status |` roll-up row only where the item tables of the page or its folder carry
@@ -174,12 +174,57 @@ or a count that no other line holds.
   No `#at-a-glance` anchor is left in the repository. The only `At a Glance` text left in `docs/` is
   inside a captured Anthropic prompt, which stays byte for byte.
 
+## 5c. Term Rename (`tools/release/`, `tools/schemas/`, `package.json`, Prose)
+
+The repo owner wrote that "claims" is "a disgusting term for what you're doing", and that the term must
+come from Simplified Technical English and its vocabulary. The ASD-STE100 Issue 9 dictionary has no
+entry for `claim`. It approves `fact` as a noun, with the meaning "Something that occurred or is
+correct", and `data` as a noun, with the meaning "Numbers and symbols used by computers". The program
+itself already uses `claim` for a JSON Web Token claim and `fact` for a pinned rendered value, so the
+old names collided with two meanings that this site documents.
+
+- [x] 5c.1 Rename the observed value first, so the word `fact` is free: the type `Fact` of
+  `tools/release/lib/results.ts` is now `Data`, and the fields `facts` and `attempts[].facts` are now
+  `data`. `FactChange` is now `DataChange`, `IGNORED_FACTS` is now `IGNORED_DATA`, and
+  `compare/facts.ts` is now `compare/data.ts`. The readers in `tools/schemas/code/` and
+  `tools/schemas/observe/` follow the field.
+- [x] 5c.2 Rename the sentence: `tools/release/claims/` is now `tools/release/facts/`, `claims.ts` is
+  `facts.ts`, the parts folder `claims/claims/` is `facts/parts/`, `compare/claims.ts` is
+  `compare/facts.ts`, and `selftest/claims.ts` is `selftest/facts.ts`. `Claim`, `ClaimClass`,
+  `ClaimMap`, `ClaimResult`, `ClaimRow`, `claimId`, `claimsFromFile`, `findClaims`, `runClaims`,
+  `checkClaims`, `claimsForProbe`, and `runClaimsSelftest` each take `fact` for `claim`.
+- [x] 5c.3 Rename what a user types or reads: the script `release:claims` is `release:facts`, the
+  `cli.ts` subcommand `claims` is `facts`, the output `captures/<version>/claims.json` is `facts.json`,
+  and the `claims` array of a probe result is `facts`. There is no alias, so the old names fail.
+- [x] 5c.4 Keep every key of `tools/release/facts/map.json` byte for byte. A key hashes the page
+  content, not the tool, so the rename must not touch one. One key did change, and only because the
+  rewrite of `docs/reference/probes.md:206` changed that sentence: `#managed-folder-probe:dc4731d1` is
+  now `#managed-folder-probe:51acf199`.
+- [x] 5c.5 Leave the two correct uses of "claim". `tools/release/lib/ports.ts` claims a TCP port. The
+  pages that document the program's JSON Web Token claims keep the word, as do the captured prompts.
+- [x] 5c.6 Check: `bun run verify` exited 0 (typecheck 304 files, Biome 437 files, lint 0 issues,
+  `check-docs: ok (320 files scanned)`, `check-hosts: ok (322 files scanned)`, `schemas:check: 17
+  schemas valid`, surface 0 unmapped of every kind, build `[SUCCESS]`, `llms:check ok: 252 pages, 272
+  links`, `plugin:check: manifests valid`). `bun test` gave 312 pass, 17 skip, 0 fail.
+  `bun run release:facts -- --check` printed `facts check ok` over 259 facts, with 0 unmapped and 0
+  warnings. The rename broke Biome formatting in 6 files and import order in 6 more, and
+  `biome format --write` and `biome check --write` fixed both.
+- [x] 5c.7 Rebuild every capture, because the field names changed. `probe:print` 125 cases,
+  `probe:pty` 35, `probe:managed` 55 over all four phases, and `probe:live` 6, each with 0 invalid
+  probes. Every result file now holds `data` and `facts`. The 2.1.311 baseline was rebuilt too (125
+  print and 35 pty cases), because without it `compare.md` reported 100 of 259 facts as changed from
+  the missing baseline alone. The real result is 160 cases in both, 3 changed: `init.capabilities`
+  gained `ask_user_question_unanswered_v1`, and `print.sweep` added
+  `CLAUDE_CODE_HOST_GUARDS_ARTIFACTS_MCP` and `CLAUDE_CODE_REMOTE_TOOLS_HOST_IDLE_RELEASE_MINUTES`
+  and dropped `CLAUDE_CODE_MCP_HANDED_LISTINGS` and `CLAUDE_WORKSHOP_PROGRESS`. Every one of the
+  three is already correct on the pages, so no page needed an edit.
+
 ## 6. ASD-STE100 Rewrite (`docs/**`, Prose Only)
 
 - [x] 6.1 Rewrite each prose page with the `asd-ste100:rewrite` skill, one section at a time.
 - [x] 6.2 Keep the exact bytes of every capture block in `docs/prompts/`, every generated table, and
   every quoted program text. A line that holds a `2.1.<n>` version string also stays byte for byte,
-  because `claimId` hashes the sentence. Those lines keep their `ste-lint` findings.
+  because `factId` hashes the sentence. Those lines keep their `ste-lint` findings.
 - [x] 6.3 Check: `bun run lint` printed `0 issues in 0 files`, `bun run check:docs` printed
   `ok (320 files scanned)`, and `bun run check:examples` passed inside `bun run verify`.
 

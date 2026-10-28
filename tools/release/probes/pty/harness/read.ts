@@ -2,7 +2,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { renderRaw } from "../../../lib/pty/render.ts";
-import type { Fact } from "../../../lib/results.ts";
+import type { Data } from "../../../lib/results.ts";
 import type { LoggedRequest } from "../../../lib/stub.ts";
 import { tolerant } from "./steps.ts";
 import { arr, type Obj, obj, type PtyRun } from "./types.ts";
@@ -120,8 +120,8 @@ export const toolResultText = (x: PtyRun): string =>
 export const ranFile = (x: PtyRun, name: string): boolean =>
   existsSync(join(x.sb.home, name));
 
-/** `precondition` fact: true when the feature under test showed up, so a miss reads as "probe invalid". */
-export const pre = (ok: boolean, detail: string): Record<string, Fact> => ({
+/** `precondition` data: true when the feature under test showed up, so a miss reads as "probe invalid". */
+export const pre = (ok: boolean, detail: string): Record<string, Data> => ({
   precondition: ok,
   ...(ok ? {} : { "precondition.detail": detail }),
 });

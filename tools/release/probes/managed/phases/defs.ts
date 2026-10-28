@@ -15,8 +15,8 @@ export const mcpDefs = (ctx: PhaseCtx): Def[] => {
   const list = (name: string, argv: string[]): Def => ({
     name,
     c: { argv },
-    facts: (r) => ({
-      facts: {
+    data: (r) => ({
+      data: {
         exit: r.code,
         names_managed_srv: has(r.stdout + r.stderr, "managed_srv"),
         names_user_srv: has(r.stdout + r.stderr, "user_srv"),
@@ -29,8 +29,8 @@ export const mcpDefs = (ctx: PhaseCtx): Def[] => {
     {
       name: "mcp-run",
       c: {},
-      facts: (_r, x) => ({
-        facts: {
+      data: (_r, x) => ({
+        data: {
           init_mcp_servers: arr(x.init?.["mcp_servers"]).map(
             (s) => `${String(obj(s)["name"])}:${String(obj(s)["status"])}`,
           ),
@@ -51,8 +51,8 @@ export const mcpDefs = (ctx: PhaseCtx): Def[] => {
         },
         args: ["--mcp-config", "{PROJ}/extra-mcp.json"],
       },
-      facts: (r, x) => ({
-        facts: { init_present: !!x.init, started: x.started },
+      data: (r, x) => ({
+        data: { init_present: !!x.init, started: x.started },
         samples: { stderr: r.stderr.trim().slice(0, 300) },
       }),
     },
@@ -78,8 +78,8 @@ export const mainDefs = (ctx: PhaseCtx): Def[] => {
         },
         args: ["--settings", JSON.stringify({ outputStyle: "flag-style" })],
       },
-      facts: (_r, x) => ({
-        facts: {
+      data: (_r, x) => ({
+        data: {
           init_output_style: String(x.init?.["output_style"] ?? null),
           request_has_managed_style_text: has(
             x.mainText,
@@ -93,8 +93,8 @@ export const mainDefs = (ctx: PhaseCtx): Def[] => {
     defs.push({
       name: `skill-${dis ? "disabled" : "default"}`,
       c: dis ? { env: { CLAUDE_CODE_DISABLE_POLICY_SKILLS: "1" } } : {},
-      facts: (_r, x) => ({
-        facts: {
+      data: (_r, x) => ({
+        data: {
           disable_policy_skills: dis,
           init_skills_has_managed: JSON.stringify(
             x.init?.["skills"] ?? [],
@@ -111,11 +111,11 @@ export const mainDefs = (ctx: PhaseCtx): Def[] => {
     notes:
       "order lists only the markers present; a missing marker is absent from the request, not first or last.",
     c: {},
-    facts: (_r, x) => {
+    data: (_r, x) => {
       const marks = ["PROBE-MANAGED-MD", "PROBE-USER-MD", "PROBE-PROJ-MD"];
       const idx = marks.map((m) => [m, x.mainText.indexOf(m)] as const);
       return {
-        facts: {
+        data: {
           order: idx
             .filter(([, i]) => i >= 0)
             .sort((a, b) => a[1] - b[1])
@@ -147,8 +147,8 @@ export const mainDefs = (ctx: PhaseCtx): Def[] => {
             ? { cfgFiles: { "settings.json": body } }
             : { projFiles: { ".claude/settings.json": body } }),
         },
-        facts: (_r, x) => ({
-          facts: {
+        data: (_r, x) => ({
+          data: {
             pattern: pat,
             managed_md: has(x.mainText, "PROBE-MANAGED-MD"),
             user_md: has(x.mainText, "PROBE-USER-MD"),
@@ -173,8 +173,8 @@ export const mainDefs = (ctx: PhaseCtx): Def[] => {
           run_in_background: false,
         },
       },
-      facts: (r, x) => ({
-        facts: {
+      data: (r, x) => ({
+        data: {
           agent_srv_started: x.started.includes("agent_srv"),
           blocked_notice:
             /blocked by enterprise MCP config[^"\\]*/.exec(
@@ -201,7 +201,7 @@ export const mainDefs = (ctx: PhaseCtx): Def[] => {
           "config",
         ],
       },
-      facts: (r) => {
+      data: (r) => {
         const t = r.stdout + r.stderr;
         const marks = [
           "PROBE-USER-ALLOW",
@@ -210,7 +210,7 @@ export const mainDefs = (ctx: PhaseCtx): Def[] => {
           "PROBE-DROPIN-ALLOW",
         ];
         return {
-          facts: {
+          data: {
             order: marks
               .map((m) => [m, t.indexOf(m)] as const)
               .filter(([, i]) => i >= 0)

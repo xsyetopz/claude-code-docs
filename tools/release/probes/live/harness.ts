@@ -8,7 +8,7 @@ import { liveEnv } from "../../lib/live/env.ts";
 import type { Mitm } from "../../lib/mitm.ts";
 import { runChild } from "../../lib/proc.ts";
 import { type PtyResult, type PtyStep, runPty } from "../../lib/pty/driver.ts";
-import type { CaseResult, Fact } from "../../lib/results.ts";
+import type { CaseResult, Data } from "../../lib/results.ts";
 import { type Files, makeSandbox, type Sandbox } from "../../lib/sandbox.ts";
 import { assertShimReady } from "../../lib/shim.ts";
 import type { Stub } from "../../lib/stub.ts";
@@ -201,7 +201,7 @@ export const sumTokens = (xs: unknown[]): number =>
 export const baseResult = (
   x: LiveCtx,
   id: string,
-  o: Partial<CaseResult> & { facts: Record<string, Fact> },
+  o: Partial<CaseResult> & { data: Record<string, Data> },
 ): CaseResult => ({
   schema: 1,
   id: `live.${id}`,
@@ -212,6 +212,6 @@ export const baseResult = (
   envSet: ["CLAUDE_CODE_OAUTH_TOKEN"], // name only
   exit: null,
   timedOut: false,
-  claims: [],
+  facts: [],
   ...o,
 });

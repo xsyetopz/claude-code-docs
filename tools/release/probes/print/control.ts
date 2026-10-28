@@ -1,5 +1,5 @@
 // Control protocol over stream-json stdin (ported from p305-print/ctl.ts). No user prompt: only control requests.
-import type { Fact } from "../../lib/results.ts";
+import type { Data } from "../../lib/results.ts";
 import { baseResult, dispose, events, obj, oneCase, runCase } from "./run.ts";
 import type { PrintGroup } from "./types.ts";
 
@@ -43,7 +43,7 @@ export const controlGroup: PrintGroup = {
       try {
         const ev = events(r);
         const responses = ev.filter((e) => e["type"] === "control_response");
-        const facts: Record<string, Fact> = {
+        const data: Record<string, Data> = {
           precondition: r.code === 0 && responses.length > 0,
           responses: responses.length,
           "event.types": [
@@ -60,17 +60,17 @@ export const controlGroup: PrintGroup = {
             (e) => obj(e["response"])["request_id"] === `req-${i + 1}`,
           );
           if (!hit) {
-            facts[key] = "no response";
+            data[key] = "no response";
             return;
           }
           const body = obj(hit["response"]);
-          facts[key] =
+          data[key] =
             body["subtype"] === "success"
               ? `success {${Object.keys(obj(body["response"])).join(",")}}`
               : `${String(body["subtype"])}: ${String(body["error"]).slice(0, 160)}`;
         });
         return baseResult(ctx, "print.control.requests", r, {
-          facts,
+          data,
           samples: {
             responses: responses.map((e) => JSON.stringify(e)).join("\n"),
           },

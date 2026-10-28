@@ -1,7 +1,7 @@
 // Request details of the plain and the tool+plugin+hooks runs: headers, betas, body keys, system, tools, init event.
-// Built on sig.ts; two identical runs give the noise keys, which are left out of the facts.
+// Built on sig.ts; two identical runs give the noise keys, which are left out of the data.
 import { createHash } from "node:crypto";
-import type { CaseResult, Fact } from "../../lib/results.ts";
+import type { CaseResult, Data } from "../../lib/results.ts";
 import { baseResult, dispose, oneCase, runCase } from "./run.ts";
 import { baselineA, baselineB, sig, stableBaseline } from "./sig.ts";
 import type { PrintGroup } from "./types.ts";
@@ -18,7 +18,7 @@ const one = (
     const r = await runCase(ctx.bin, mk());
     try {
       const s = sig(r);
-      const facts: Record<string, Fact> = {
+      const data: Record<string, Data> = {
         precondition:
           b.valid &&
           s["code"] === "0" &&
@@ -31,16 +31,16 @@ const one = (
       for (const [k, v] of Object.entries(s)) {
         if (b.noise.includes(k)) continue;
         if (v.length > LONG) {
-          facts[k] =
+          data[k] =
             `sha1:${createHash("sha1").update(v).digest("hex").slice(0, 10)} len=${v.length}`;
           samples[k] = v;
-        } else facts[k] = v;
+        } else data[k] = v;
       }
       return baseResult(ctx, `print.request.${name}`, r, {
-        facts,
+        data,
         samples,
         notes:
-          "Long values are a hash in facts and full text in samples. Keys that differ between two identical runs are listed in noise and left out.",
+          "Long values are a hash in data and full text in samples. Keys that differ between two identical runs are listed in noise and left out.",
       });
     } finally {
       dispose(r);

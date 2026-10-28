@@ -5,7 +5,7 @@ import { readFileSync } from "node:fs";
 import { extractEnv } from "../../diff/extract.ts";
 import { dumpStrings } from "../../diff/strings.ts";
 import { assertSafeEnv, binaryPath, childEnv, PROMPT } from "../../lib/env.ts";
-import { type CaseResult, type Fact, normalise } from "../../lib/results.ts";
+import { type CaseResult, type Data, normalise } from "../../lib/results.ts";
 import { dispose, runCase, selected } from "./run.ts";
 import {
   baselineA,
@@ -53,7 +53,7 @@ const run = async (ctx: PrintCtx): Promise<CaseResult[]> => {
     .filter((o) => o.startsWith("sweep."))
     .map((o) => o.slice("sweep.".length));
   const base = (
-    facts: Record<string, Fact>,
+    data: Record<string, Data>,
     extra?: Partial<CaseResult>,
   ): CaseResult => ({
     schema: 1,
@@ -65,8 +65,8 @@ const run = async (ctx: PrintCtx): Promise<CaseResult[]> => {
     envSet: [],
     exit: null,
     timedOut: false,
-    facts: normalise(facts),
-    claims: [],
+    data: normalise(data),
+    facts: [],
     ...extra,
   });
   if (ctx.dry) return [base({})];
@@ -140,7 +140,7 @@ const run = async (ctx: PrintCtx): Promise<CaseResult[]> => {
     };
     await Promise.all(Array.from({ length: WORKERS }, worker));
 
-    const facts: Record<string, Fact> = {
+    const data: Record<string, Data> = {
       precondition: bases.A.valid && bases.B.valid,
       "precondition.detail": [
         bases.A.why && `A: ${bases.A.why}`,
@@ -161,11 +161,11 @@ const run = async (ctx: PrintCtx): Promise<CaseResult[]> => {
         const o = res.get(v)?.[k];
         if (!o) continue;
         if ("err" in o) {
-          facts[`${v}.${k}`] = [`error: ${o.err}`];
+          data[`${v}.${k}`] = [`error: ${o.err}`];
           errored.push(`${v}.${k}`);
           continue;
         }
-        facts[`${v}.${k}`] = o.diff;
+        data[`${v}.${k}`] = o.diff;
         if (o.diff.length) {
           changed.push(v);
           for (const [key, [a, b]] of Object.entries(o.vals))
@@ -174,11 +174,11 @@ const run = async (ctx: PrintCtx): Promise<CaseResult[]> => {
         }
       }
     }
-    facts["changed"] = [...new Set(changed)];
-    facts["errors"] = errored;
+    data["changed"] = [...new Set(changed)];
+    data["errors"] = errored;
     const notes =
-      "Each name set to 1. Facts: NAME.A / NAME.B = signature keys that changed vs baseline (noise removed).";
-    if (!want.length) return [base(facts, { samples, notes })];
+      "Each name set to 1. Data: NAME.A / NAME.B = signature keys that changed vs baseline (noise removed).";
+    if (!want.length) return [base(data, { samples, notes })];
     const common = [
       "precondition",
       "precondition.detail",
@@ -188,9 +188,9 @@ const run = async (ctx: PrintCtx): Promise<CaseResult[]> => {
     return todo.map((v) =>
       base(
         {
-          ...Object.fromEntries(common.map((k) => [k, facts[k] ?? null])),
+          ...Object.fromEntries(common.map((k) => [k, data[k] ?? null])),
           ...Object.fromEntries(
-            Object.entries(facts).filter(([k]) => k.startsWith(`${v}.`)),
+            Object.entries(data).filter(([k]) => k.startsWith(`${v}.`)),
           ),
         },
         {

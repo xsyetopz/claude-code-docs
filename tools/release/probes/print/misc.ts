@@ -63,7 +63,7 @@ const agentMcp = (where: "user" | "project"): CaseDef => ({
       (r) => {
         return {
           from: r,
-          facts: {
+          data: {
             precondition: msgs(r).length >= 2,
             started: r.after["started"] === true,
             stopped: r.after["stopped"] === true,
@@ -87,7 +87,7 @@ const contextCmd: CaseDef = {
       },
       (r) => ({
         from: r,
-        facts: {
+        data: {
           precondition: r.code !== null,
           requests: r.reqs.length,
           paths: [...new Set(r.reqs.map((x) => x.path.split("?")[0] ?? ""))],
@@ -114,7 +114,7 @@ const managedPath: CaseDef = {
         const d = readCfg(r, "d.log");
         return {
           from: r,
-          facts: {
+          data: {
             precondition: !!q && d.length > 0,
             bashToolPresent: q ? toolNames(q).includes("Bash") : null,
             defaultManagedFileChecked: /managed-settings\.json/.test(d),
@@ -182,7 +182,7 @@ const bigClaudeMd: CaseDef = {
       );
       return {
         from: r,
-        facts: {
+        data: {
           precondition: msgs(r).length > 0 && st.titles.length > 0,
           printWarns: /Large CLAUDE|exceeds|memory files/i.test(t),
           doctorWarns: /Large CLAUDE|exceed|memory files/i.test(doc),
