@@ -125,7 +125,16 @@ GitHub Actions secret, and no Cloudflare credential enters this repository.
   `/configure/` 307 to `/configure`, `/schemas/claude-code-settings.json` 200, `/llms.txt` 200, and
   a missing path 404. The same paths answer the same way on the `workers.dev` address, and both
   serve the `assets/js/b432f8a5.f253f2ce.js` of this deploy, so the domain is on this Worker.
-- [ ] 3.13 Owner step: disconnect the Worker from Workers Builds (the Worker, then Settings, then
+- [x] 3.13 `workers_dev` and `preview_urls` are `false`, because the first deploy warned that both
+  were absent and turned them on, which put a second public copy of the site on the `workers.dev`
+  address. Check: the run on `868a752` is `success` with
+  `Current Version ID: d37a173e-4976-44e2-9308-87c84ea9f119`. The `workers.dev` address now answers
+  404, and <https://clawdipedia.cc/> still answers 200 with 404 on a missing path. The deploy also
+  prints "No targets deployed for clawdipedia", because the config declares no route. The custom
+  domain is set in the dashboard, and it kept serving. Open point: both commits build the same
+  pages, so this check cannot prove that the custom domain follows the newest version. The next
+  deploy that changes a page settles it.
+- [ ] 3.14 Owner step: disconnect the Worker from Workers Builds (the Worker, then Settings, then
   Builds, then Disconnect). GitHub Actions deploys now, so a connected repository would deploy the
   same commit twice. The docs do not state whether builds stop on their own after a disconnect.
 
