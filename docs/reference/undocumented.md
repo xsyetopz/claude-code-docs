@@ -31,10 +31,10 @@ Items that the docs name but describe wrongly are in [Behaves Differently From t
 | [API Endpoints and Betas](#api-endpoints-and-betas) | 98 |
 | [System Prompt](#system-prompt) | 34 |
 | [Transcript and Sessions](#transcript-and-sessions) | 13 |
-| [Headless Protocol](#headless-protocol) | 168 |
+| [Headless Protocol](#headless-protocol) | 192 |
 | [Mod API](#mod-api) | 0 |
 | [Other](#other) | 106 |
-| Total | 1663 |
+| Total | 1687 |
 
 ## Settings Keys
 
@@ -123,7 +123,7 @@ Count: 52.
 | `--max-thinking-tokens <tokens>` | [All Flags](../configure/cli/flags.md#model-and-thinking) (Model and Thinking) |
 | `--task-budget <tokens>` | [All Flags](../configure/cli/flags.md#model-and-thinking) (Model and Thinking) |
 | `--fast-mode <on\|off>` | [All Flags](../configure/cli/flags.md#model-and-thinking) (Model and Thinking) |
-| `--include-unsupported-models` | [All Flags](../configure/cli/flags.md#model-and-thinking) (Model and Thinking); [Models and Providers](../configure/models-and-providers.md#choose-a-model) (Choose a Model) |
+| `--include-unsupported-models` | [All Flags](../configure/cli/flags.md#model-and-thinking) (Model and Thinking); [Models and Providers](../configure/models-and-providers/model-catalog.md#choose-a-model) (Choose a Model) |
 | `--resume-session-at <message id>` | [All Flags](../configure/cli/flags.md#sessions-and-worktrees) (Sessions and Worktrees); [Sessions and Storage](../how-it-works/sessions-and-storage.md#resume-and-branch) (Resume and Branch) |
 | `--resume-drops-turn <message id>` | [All Flags](../configure/cli/flags.md#sessions-and-worktrees) (Sessions and Worktrees) |
 | `--reply-on-resume` | [All Flags](../configure/cli/flags.md#sessions-and-worktrees) (Sessions and Worktrees); [Sessions and Storage](../how-it-works/sessions-and-storage.md#resume-and-branch) (Resume and Branch) |
@@ -217,9 +217,9 @@ Count: 15.
 | `CLAUDE_CODE_DISABLE_HOOK_FORWARDING` | [Hook Configuration](../extend/hooks/configuration.md#environment-variables-for-hooks) (Environment Variables for Hooks) |
 | `CLAUDE_CODE_RESUME_SESSIONSTART_HOOKS_WAIT_MS` | [Hook Configuration](../extend/hooks/configuration.md#environment-variables-for-hooks) (Environment Variables for Hooks) |
 | `DISABLE_BRIEF_MODE_STOP_HOOK` | [Hook Configuration](../extend/hooks/configuration.md#environment-variables-for-hooks) (Environment Variables for Hooks) |
-| `permissionDisplay` | [Hook Events](../extend/hooks/events.md#pretooluse) (PreToolUse) |
-| `source` | [Hook Events](../extend/hooks/events.md#userpromptsubmit) (UserPromptSubmit) |
-| `auth_storage_failure`, `computer_use_enter`, `computer_use_exit`, and 3 more | [Hook Events](../extend/hooks/events.md#notification) (Notification) |
+| `permissionDisplay` | [Hook Events](../extend/hooks/tool-events.md#pretooluse) (PreToolUse) |
+| `source` | [Hook Events](../extend/hooks/session-events.md#userpromptsubmit) (UserPromptSubmit) |
+| `auth_storage_failure`, `computer_use_enter`, `computer_use_exit`, and 3 more | [Hook Events](../extend/hooks/session-events.md#notification) (Notification) |
 | `callback` | [Hook Handlers](../extend/hooks/handlers.md#handler-types) (Handler Types) |
 | `rewakeMessage` | [Hook Handlers](../extend/hooks/handlers.md#command-fields) (Command Fields) |
 | `rewakeSummary` | [Hook Handlers](../extend/hooks/handlers.md#command-fields) (Command Fields) |
@@ -400,7 +400,7 @@ Count: 98.
 | `mcp-servers-2025-12-04` | [Betas](api/betas.md#registry) (Registry) |
 | `files-api-2025-04-14` | [Betas](api/betas.md#registry) (Registry) |
 | `environments-2025-11-01` | [Betas](api/betas.md#registry) (Registry) |
-| `per-turn-control-2026-07-01` | [Betas](api/betas.md#registry) (Registry); [Models and Providers](../configure/models-and-providers.md#effort) (Effort) |
+| `per-turn-control-2026-07-01` | [Betas](api/betas.md#registry) (Registry); [Models and Providers](../configure/models-and-providers/effort-thinking-and-fallback.md#effort) (Effort) |
 | `timing-2026-09-09` | [Betas](api/betas.md#registry) (Registry) |
 | `mid-conversation-tool-changes-2026-07-01` | [Betas](api/betas.md#registry) (Registry) |
 | `inline-tools-2026-09-15` | [Betas](api/betas.md#registry) (Registry) |
@@ -506,7 +506,7 @@ Count: 34.
 | `memory` | [The System Prompt](../how-it-works/system-prompt.md#session-sections) (Session Sections) |
 | `env_info_simple` | [The System Prompt](../how-it-works/system-prompt.md#session-sections) (Session Sections) |
 | `env_info_static` | [The System Prompt](../how-it-works/system-prompt.md#session-sections) (Session Sections) |
-| `context_management` | [The System Prompt](../how-it-works/system-prompt.md#session-sections) (Session Sections); [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
+| `context_management` | [The System Prompt](../how-it-works/system-prompt.md#session-sections) (Session Sections); [Models and Providers](../configure/models-and-providers/model-catalog.md#capabilities) (Capabilities) |
 | `brief` | [The System Prompt](../how-it-works/system-prompt.md#session-sections) (Session Sections) |
 | `focus_mode` | [The System Prompt](../how-it-works/system-prompt.md#session-sections) (Session Sections) |
 | Default, Lean Prompt | [Captured System Prompts](../prompts/index.md#all-variants) (All Variants) |
@@ -544,12 +544,12 @@ Count: 13.
 
 Message types of `--output-format stream-json` and of the control protocol. Nearly every row is undocumented, so this page links to the two pages with counts.
 
-Count: 168.
+Count: 192.
 
 | Page | Undocumented Rows |
 | --- | --- |
 | [Control Protocol](../extend/headless/control-protocol.md) | 95 |
-| [Stream JSON Messages](../extend/headless/stream-json.md) | 73 |
+| [Stream JSON Messages](../extend/headless/stream-json.md) | 97 |
 
 ## Mod API
 
@@ -569,28 +569,28 @@ Count: 106.
 | The OpenTelemetry events other than `tool_decision` | [OpenTelemetry Events](opentelemetry.md#events) (Events) |
 | `CLAUDE_CODE_REMOTE_MEMORY_DIR`, `CLAUDE_CODE_POST_TURN_MEMORY`, `CLAUDE_COWORK_MEMORY_*`, `CLAUDE_MEMORY_STORES` | [Memory and Rules](../configure/memory-and-rules.md#auto-memory) (Auto Memory) |
 | `InstructionFileKind` | [Memory and Rules](../configure/memory-and-rules.md#the-instructionsloaded-hook) (The InstructionsLoaded Hook) |
-| `claude-3-5-haiku` | [Models and Providers](../configure/models-and-providers.md#catalog) (Catalog); [Models and Providers](../configure/models-and-providers.md#provider-names) (Provider Names) |
-| `claude-3-5-sonnet` | [Models and Providers](../configure/models-and-providers.md#catalog) (Catalog); [Models and Providers](../configure/models-and-providers.md#provider-names) (Provider Names) |
-| `claude-3-7-sonnet` | [Models and Providers](../configure/models-and-providers.md#catalog) (Catalog); [Models and Providers](../configure/models-and-providers.md#provider-names) (Provider Names) |
-| `claude-sonnet-4-0` | [Models and Providers](../configure/models-and-providers.md#catalog) (Catalog); [Models and Providers](../configure/models-and-providers.md#provider-names) (Provider Names) |
-| `claude-opus-4-0` | [Models and Providers](../configure/models-and-providers.md#catalog) (Catalog); [Models and Providers](../configure/models-and-providers.md#provider-names) (Provider Names) |
-| `claude-mythos-5-1` | [Models and Providers](../configure/models-and-providers.md#catalog) (Catalog); [Models and Providers](../configure/models-and-providers.md#provider-names) (Provider Names) |
-| `claude-3-opus`, `claude-3-sonnet`, `claude-3-haiku` | [Models and Providers](../configure/models-and-providers.md#other-model-ids-in-the-program) (Other Model IDs in the Program) |
-| `claude-haiku-3-5`, `claude-sonnet-3-7` | [Models and Providers](../configure/models-and-providers.md#other-model-ids-in-the-program) (Other Model IDs in the Program) |
-| `claude-mythos-preview` | [Models and Providers](../configure/models-and-providers.md#other-model-ids-in-the-program) (Other Model IDs in the Program) |
-| `claude-sonnet-4-5-20250929[1m]` | [Models and Providers](../configure/models-and-providers.md#other-model-ids-in-the-program) (Other Model IDs in the Program) |
-| `claude-fable-5[1m]` | [Models and Providers](../configure/models-and-providers.md#other-model-ids-in-the-program) (Other Model IDs in the Program) |
-| `claude-sonnet-4-6[1m]`, `claude-opus-4-6[1m]` | [Models and Providers](../configure/models-and-providers.md#other-model-ids-in-the-program) (Other Model IDs in the Program) |
-| `claude-opus-5[1m]`, `claude-opus-5-5[1m]`, `claude-sonnet-5-5[1m]` | [Models and Providers](../configure/models-and-providers.md#other-model-ids-in-the-program) (Other Model IDs in the Program) |
-| `claude-sonnet-5[1m]`, `claude-opus-4-8[1m]` | [Models and Providers](../configure/models-and-providers.md#other-model-ids-in-the-program) (Other Model IDs in the Program) |
-| `--thinking <enabled\|adaptive\|disabled>` | [Models and Providers](../configure/models-and-providers.md#thinking) (Thinking) |
-| `--thinking-display <summarized\|omitted\|highlights>` | [Models and Providers](../configure/models-and-providers.md#thinking) (Thinking) |
-| `--max-thinking-tokens` | [Models and Providers](../configure/models-and-providers.md#thinking) (Thinking) |
-| `CLAUDE_CODE_NO_MODEL_FALLBACK` | [Models and Providers](../configure/models-and-providers.md#fallback-and-retries) (Fallback and Retries) |
-| `CLAUDE_CODE_USE_ANTHROPIC_GOOGLE_CLOUD` | [Models and Providers](../configure/models-and-providers.md#providers) (Providers) |
-| `CLAUDE_CODE_USE_GATEWAY` | [Models and Providers](../configure/models-and-providers.md#providers) (Providers) |
-| `ANTHROPIC_GOOGLE_CLOUD_BASE_URL`, `_LOCATION`, `_PROJECT`, `_WORKSPACE_ID` | [Models and Providers](../configure/models-and-providers.md#endpoint-and-region-variables) (Endpoint and Region Variables) |
-| `CLAUDE_CODE_SKIP_ANTHROPIC_GOOGLE_CLOUD_AUTH` | [Models and Providers](../configure/models-and-providers.md#endpoint-and-region-variables) (Endpoint and Region Variables) |
+| `claude-3-5-haiku` | [Models and Providers](../configure/models-and-providers/model-catalog.md#catalog) (Catalog); [Models and Providers](../configure/models-and-providers/providers.md#provider-names) (Provider Names) |
+| `claude-3-5-sonnet` | [Models and Providers](../configure/models-and-providers/model-catalog.md#catalog) (Catalog); [Models and Providers](../configure/models-and-providers/providers.md#provider-names) (Provider Names) |
+| `claude-3-7-sonnet` | [Models and Providers](../configure/models-and-providers/model-catalog.md#catalog) (Catalog); [Models and Providers](../configure/models-and-providers/providers.md#provider-names) (Provider Names) |
+| `claude-sonnet-4-0` | [Models and Providers](../configure/models-and-providers/model-catalog.md#catalog) (Catalog); [Models and Providers](../configure/models-and-providers/providers.md#provider-names) (Provider Names) |
+| `claude-opus-4-0` | [Models and Providers](../configure/models-and-providers/model-catalog.md#catalog) (Catalog); [Models and Providers](../configure/models-and-providers/providers.md#provider-names) (Provider Names) |
+| `claude-mythos-5-1` | [Models and Providers](../configure/models-and-providers/model-catalog.md#catalog) (Catalog); [Models and Providers](../configure/models-and-providers/providers.md#provider-names) (Provider Names) |
+| `claude-3-opus`, `claude-3-sonnet`, `claude-3-haiku` | [Models and Providers](../configure/models-and-providers/model-catalog.md#other-model-ids-in-the-program) (Other Model IDs in the Program) |
+| `claude-haiku-3-5`, `claude-sonnet-3-7` | [Models and Providers](../configure/models-and-providers/model-catalog.md#other-model-ids-in-the-program) (Other Model IDs in the Program) |
+| `claude-mythos-preview` | [Models and Providers](../configure/models-and-providers/model-catalog.md#other-model-ids-in-the-program) (Other Model IDs in the Program) |
+| `claude-sonnet-4-5-20250929[1m]` | [Models and Providers](../configure/models-and-providers/model-catalog.md#other-model-ids-in-the-program) (Other Model IDs in the Program) |
+| `claude-fable-5[1m]` | [Models and Providers](../configure/models-and-providers/model-catalog.md#other-model-ids-in-the-program) (Other Model IDs in the Program) |
+| `claude-sonnet-4-6[1m]`, `claude-opus-4-6[1m]` | [Models and Providers](../configure/models-and-providers/model-catalog.md#other-model-ids-in-the-program) (Other Model IDs in the Program) |
+| `claude-opus-5[1m]`, `claude-opus-5-5[1m]`, `claude-sonnet-5-5[1m]` | [Models and Providers](../configure/models-and-providers/model-catalog.md#other-model-ids-in-the-program) (Other Model IDs in the Program) |
+| `claude-sonnet-5[1m]`, `claude-opus-4-8[1m]` | [Models and Providers](../configure/models-and-providers/model-catalog.md#other-model-ids-in-the-program) (Other Model IDs in the Program) |
+| `--thinking <enabled\|adaptive\|disabled>` | [Models and Providers](../configure/models-and-providers/effort-thinking-and-fallback.md#thinking) (Thinking) |
+| `--thinking-display <summarized\|omitted\|highlights>` | [Models and Providers](../configure/models-and-providers/effort-thinking-and-fallback.md#thinking) (Thinking) |
+| `--max-thinking-tokens` | [Models and Providers](../configure/models-and-providers/effort-thinking-and-fallback.md#thinking) (Thinking) |
+| `CLAUDE_CODE_NO_MODEL_FALLBACK` | [Models and Providers](../configure/models-and-providers/effort-thinking-and-fallback.md#fallback-and-retries) (Fallback and Retries) |
+| `CLAUDE_CODE_USE_ANTHROPIC_GOOGLE_CLOUD` | [Models and Providers](../configure/models-and-providers/providers.md#providers) (Providers) |
+| `CLAUDE_CODE_USE_GATEWAY` | [Models and Providers](../configure/models-and-providers/providers.md#providers) (Providers) |
+| `ANTHROPIC_GOOGLE_CLOUD_BASE_URL`, `_LOCATION`, `_PROJECT`, `_WORKSPACE_ID` | [Models and Providers](../configure/models-and-providers/providers.md#endpoint-and-region-variables) (Endpoint and Region Variables) |
+| `CLAUDE_CODE_SKIP_ANTHROPIC_GOOGLE_CLOUD_AUTH` | [Models and Providers](../configure/models-and-providers/providers.md#endpoint-and-region-variables) (Endpoint and Region Variables) |
 | Custom style over Remote Control | [Output Styles](../configure/output-styles.md#the-outputstyle-setting-and-switching) (The outputStyle Setting and Switching) |
 | `outputStylesPath`, `outputStylesPaths` | [Output Styles](../configure/output-styles.md#locations-and-precedence) (Locations and Precedence) |
 | Merge order | [Output Styles](../configure/output-styles.md#locations-and-precedence) (Locations and Precedence) |
@@ -632,27 +632,27 @@ Count: 106.
 | Precomputed | [Context and Compaction](../how-it-works/context-and-compaction.md#kinds-of-compaction) (Kinds of Compaction) |
 | Larger-model retry | [Context and Compaction](../how-it-works/context-and-compaction.md#kinds-of-compaction) (Kinds of Compaction) |
 | Server side | [Context and Compaction](../how-it-works/context-and-compaction.md#kinds-of-compaction) (Kinds of Compaction) |
-| `--thinking <enabled\|adaptive\|disabled>` | [Models and Providers](../configure/models-and-providers.md#thinking) (Thinking) |
-| `--thinking-display <summarized\|omitted\|highlights>` | [Models and Providers](../configure/models-and-providers.md#thinking) (Thinking) |
-| `effort` | [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
-| `max_effort` | [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
-| `xhigh_effort` | [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
-| `adaptive_thinking` | [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
-| `mid_conv_tool_change` | [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
-| `rejects_disabled_thinking` | [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
-| `per_turn_effort` | [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
-| `per_turn_timing` | [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
-| `lean_prompt` | [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
-| `org_locked_thinking` | [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
-| `haiku_5_5_early_stopping_guidance` | [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
-| `refusal_fallback` | [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
-| `silent_turn_reminder` | [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
-| `fast_mode` | [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
-| `thinking_disabled_effort_cap` | [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
-| `opus_5_prompt_bundle` | [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
-| `opus_5_5_prompt_bundle` | [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
-| `fable_5_mitigations` | [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
-| `fable_5_1_prompt_bundle` | [Models and Providers](../configure/models-and-providers.md#capabilities) (Capabilities) |
+| `--thinking <enabled\|adaptive\|disabled>` | [Models and Providers](../configure/models-and-providers/effort-thinking-and-fallback.md#thinking) (Thinking) |
+| `--thinking-display <summarized\|omitted\|highlights>` | [Models and Providers](../configure/models-and-providers/effort-thinking-and-fallback.md#thinking) (Thinking) |
+| `effort` | [Models and Providers](../configure/models-and-providers/model-catalog.md#capabilities) (Capabilities) |
+| `max_effort` | [Models and Providers](../configure/models-and-providers/model-catalog.md#capabilities) (Capabilities) |
+| `xhigh_effort` | [Models and Providers](../configure/models-and-providers/model-catalog.md#capabilities) (Capabilities) |
+| `adaptive_thinking` | [Models and Providers](../configure/models-and-providers/model-catalog.md#capabilities) (Capabilities) |
+| `mid_conv_tool_change` | [Models and Providers](../configure/models-and-providers/model-catalog.md#capabilities) (Capabilities) |
+| `rejects_disabled_thinking` | [Models and Providers](../configure/models-and-providers/model-catalog.md#capabilities) (Capabilities) |
+| `per_turn_effort` | [Models and Providers](../configure/models-and-providers/model-catalog.md#capabilities) (Capabilities) |
+| `per_turn_timing` | [Models and Providers](../configure/models-and-providers/model-catalog.md#capabilities) (Capabilities) |
+| `lean_prompt` | [Models and Providers](../configure/models-and-providers/model-catalog.md#capabilities) (Capabilities) |
+| `org_locked_thinking` | [Models and Providers](../configure/models-and-providers/model-catalog.md#capabilities) (Capabilities) |
+| `haiku_5_5_early_stopping_guidance` | [Models and Providers](../configure/models-and-providers/model-catalog.md#capabilities) (Capabilities) |
+| `refusal_fallback` | [Models and Providers](../configure/models-and-providers/model-catalog.md#capabilities) (Capabilities) |
+| `silent_turn_reminder` | [Models and Providers](../configure/models-and-providers/model-catalog.md#capabilities) (Capabilities) |
+| `fast_mode` | [Models and Providers](../configure/models-and-providers/model-catalog.md#capabilities) (Capabilities) |
+| `thinking_disabled_effort_cap` | [Models and Providers](../configure/models-and-providers/model-catalog.md#capabilities) (Capabilities) |
+| `opus_5_prompt_bundle` | [Models and Providers](../configure/models-and-providers/model-catalog.md#capabilities) (Capabilities) |
+| `opus_5_5_prompt_bundle` | [Models and Providers](../configure/models-and-providers/model-catalog.md#capabilities) (Capabilities) |
+| `fable_5_mitigations` | [Models and Providers](../configure/models-and-providers/model-catalog.md#capabilities) (Capabilities) |
+| `fable_5_1_prompt_bundle` | [Models and Providers](../configure/models-and-providers/model-catalog.md#capabilities) (Capabilities) |
 | `safeguards` | [Request and Cache](../how-it-works/request-and-cache.md#body-fields) (Body Fields) |
 | `system[0]` (attribution line) | [Request and Cache](../how-it-works/request-and-cache.md#system-blocks-and-cache-markers) (System Blocks and Cache Markers) |
 | `system[1]` (identity line) | [Request and Cache](../how-it-works/request-and-cache.md#system-blocks-and-cache-markers) (System Blocks and Cache Markers) |
@@ -680,15 +680,15 @@ These items exist in the official docs, but the program works in another way. Co
 | --- | --- |
 | `disallowedTools` | [Subagent Frontmatter](../extend/subagents/frontmatter.md#keys) (Keys) |
 | `effort` | [Skill Frontmatter](../extend/skills-and-commands/frontmatter.md#keys) (Keys) |
-| `next.error` | [Hooks and the Hook Chain](../extend/mod-api/hooks.md#arguments-of-a-hook) (Arguments of a Hook) |
-| `prompt.edit` hook time | [Hooks and the Hook Chain](../extend/mod-api/hooks.md#budgets) (Budgets) |
-| `vscode` | [Surfaces, Elements, and Render Sites](../extend/mod-api/ui-elements.md#surfaces) (Surfaces) |
+| `next.error` | [Hooks and the Hook Chain](../extend/mod-api/events/hooks.md#arguments-of-a-hook) (Arguments of a Hook) |
+| `prompt.edit` hook time | [Hooks and the Hook Chain](../extend/mod-api/events/hooks.md#budgets) (Budgets) |
+| `vscode` | [Surfaces, Elements, and Render Sites](../extend/mod-api/ui/ui-elements.md#surfaces) (Surfaces) |
 | Error type | [Hook Configuration](../extend/hooks/configuration.md#matcher-targets) (Matcher Targets) |
 | `disableAllHooks` | [Hook Configuration](../extend/hooks/configuration.md#settings-keys-and-trust) (Settings Keys and Trust) |
-| Top-level `decision` and `reason` | [Hook Events](../extend/hooks/events.md#pretooluse) (PreToolUse) |
-| `destination` | [Hook Events](../extend/hooks/events.md#permission-update-entries) (Permission Update Entries) |
-| `additionalContext` | [Hook Events](../extend/hooks/events.md#setup) (Setup) |
-| `error` | [Hook Events](../extend/hooks/events.md#stopfailure) (StopFailure) |
+| Top-level `decision` and `reason` | [Hook Events](../extend/hooks/tool-events.md#pretooluse) (PreToolUse) |
+| `destination` | [Hook Events](../extend/hooks/tool-events.md#permission-update-entries) (Permission Update Entries) |
+| `additionalContext` | [Hook Events](../extend/hooks/session-events.md#setup) (Setup) |
+| `error` | [Hook Events](../extend/hooks/session-events.md#stopfailure) (StopFailure) |
 | `script` | [Hook Handlers](../extend/hooks/handlers.md#handler-types) (Handler Types) |
 | `model` | [Hook Handlers](../extend/hooks/handlers.md#prompt-and-agent-fields) (Prompt and Agent Fields) |
 | `scratchpad_dir` | [Hook Input and Output](../extend/hooks/input-and-output.md#common-input-fields) (Common Input Fields) |

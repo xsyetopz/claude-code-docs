@@ -8,7 +8,7 @@ A flag changes how one `claude` run behaves.
 `claude --help` shows 66 flags. Another 64 work but stay hidden from the help text.
 This page lists both kinds in one place, grouped by what they do.
 
-Pass a flag after `claude`, for example `claude --model opus`. Most flags last for one run only. A flag is on when you pass it, and some have a `--no-` twin, such as `--no-chrome`.
+Pass a flag after `claude`, for example `claude --model opus`. Most flags last for one run only. A flag is on when you pass it. Some flags have a `--no-` twin, such as `--no-chrome`.
 
 ## How to Read the Tables
 
@@ -37,8 +37,8 @@ Flags that choose how a run starts and how print mode reads input and writes out
 
 | Flag | Status | In `--help` | What it does |
 | --- | --- | --- | --- |
-| `-p, --print` | <Documented /> | ✅ | Prints the answer and exits, which suits pipes, and the trust dialog is skipped in this mode. |
-| `--output-format` `<format>` | <Documented /> | ✅ | Sets the output of print mode to `text`, `json`, or `stream-json`. `text` is the default, `json` gives one result object, and `stream-json` gives one JSON object per line, live. |
+| `-p, --print` | <Documented /> | ✅ | Prints the answer and exits. This suits pipes. This mode skips the trust dialog. |
+| `--output-format` `<format>` | <Documented /> | ✅ | Sets the output of print mode to `text`, `json`, or `stream-json`. `text` is the default. `json` gives one result object. `stream-json` gives one JSON object per line, live. |
 | `--input-format` `<format>` | <Documented /> | ✅ | Sets the input of print mode to `text` or `stream-json`. `text` is the default. `stream-json` gives live input and control requests. |
 | `--json-schema` `<schema>` | <Documented /> | ✅ | Checks the final answer against a JSON Schema. It works only with `--print`. Pass the schema as a JSON string. |
 | `--include-hook-events` | <Documented /> | ✅ | Adds the hook events to the stream, with `--output-format=stream-json`. |
@@ -48,7 +48,7 @@ Flags that choose how a run starts and how print mode reads input and writes out
 | `--max-budget-usd` `<amount>` | <Documented /> | ✅ | Stops at a spend limit in dollars, with `--print` only. |
 | `--max-turns` `<turns>` | <Documented /> | ❌ | Stops after a number of agent turns, with `--print` only. |
 | `--no-session-persistence` | <Documented /> | ✅ | Saves nothing to disk, so the session cannot be resumed, with `--print` only. |
-| `--prompt-suggestions` `[value]` | <Documented /> | ✅ | Turns on prompt suggestions, and print mode sends a `prompt_suggestion` message after each turn. |
+| `--prompt-suggestions` `[value]` | <Documented /> | ✅ | Turns on prompt suggestions. Print mode sends a `prompt_suggestion` message after each turn. |
 | `--init` | <Documented /> | ❌ | Runs `Setup` hooks with the `init` trigger and then goes on. |
 | `--init-only` | <Documented /> | ❌ | Runs `Setup` and `SessionStart:startup` hooks and then exits. |
 | `--maintenance` | <Documented /> | ❌ | Runs `Setup` hooks with the `maintenance` trigger and then goes on. |
@@ -71,13 +71,13 @@ Flags that strip your setup down, load extra settings, or turn on logs.
 | --- | --- | --- | --- |
 | `-h, --help` | <Documented /> | ✅ | Shows the help text and exits. |
 | `-v, --version` | <Documented /> | ✅ | Prints the version number. |
-| `-d`, `--debug` `[filter]` | <Documented /> | ✅ | Turns on debug logs, and an optional filter picks the categories, such as `--debug=hooks,mcp` or `--debug='!hooks,!mcp'`. |
-| `-d2e`, `--debug-to-stderr` | <Undocumented /> | ❌ | Turns on debug mode and writes to stderr, and the flag is deprecated. |
+| `-d`, `--debug` `[filter]` | <Documented /> | ✅ | Turns on debug logs. An optional filter picks the categories, such as `--debug=hooks,mcp` or `--debug='!hooks,!mcp'`. |
+| `-d2e`, `--debug-to-stderr` | <Undocumented /> | ❌ | Turns on debug mode and writes to stderr. The flag is deprecated. |
 | `--debug-file` `<path>` | <Documented /> | ✅ | Writes the debug logs to a file and turns on debug mode. |
 | `--verbose` | <Documented /> | ✅ | Overrides the verbose setting of your config. |
-| `--bare` | <Documented /> | ✅ | Starts with a minimal setup: no hooks, no plugin sync, no auto memory, and no background work. It skips hooks, LSP, plugin sync, attribution, auto memory, background prefetches, keychain reads, and `CLAUDE.md` discovery. |
+| `--bare` | <Documented /> | ✅ | Starts with a minimal setup that has no hooks, no plugin sync, no auto memory, and no background work. It skips hooks, LSP, plugin sync, attribution, auto memory, background prefetches, keychain reads, and `CLAUDE.md` discovery. |
 | `--safe-mode` | <Documented /> | ✅ | Starts with all customizations off, such as `CLAUDE.md`, skills, plugins, hooks, and MCP servers. |
-| `--restricted` | <Documented /> | ✅ | Removes the tools that run code and `WebFetch`, and ignores user, project, and local settings. Good for untrusted input. |
+| `--restricted` | <Documented /> | ✅ | Removes the tools that run code and `WebFetch`. Also ignores user, project, and local settings. It suits untrusted input. |
 | `--ax-screen-reader` | <Documented /> | ✅ | Draws flat text with no borders or animations, for screen readers. |
 | `--settings` `<file-or-json>` | <Documented /> | ✅ | Loads more settings from a JSON file or a JSON string. |
 | `--setting-sources` `<sources>` | <Documented /> | ✅ | Chooses which setting sources load: `user`, `project`, and `local`. |
@@ -91,15 +91,15 @@ Flags that set the permission mode and the tools the model may use. See [Permiss
 | --- | --- | --- | --- |
 | `--permission-mode` `<mode>` | <Documented /> | ✅ | Sets the permission mode of the session. |
 | `--inherit-permission-mode` `<mode>` | <Undocumented /> | ❌ | Sets a permission mode from a parent session, used only when nothing else sets one. |
-| `--dangerously-skip-permissions` | <Documented /> <Caution note="Skips all permission checks" /> | ✅ | Skips all permission checks, and you should use it only in a sandbox with no internet access. |
+| `--dangerously-skip-permissions` | <Documented /> <Caution note="Skips all permission checks" /> | ✅ | Skips all permission checks. Use it only in a sandbox with no internet access. |
 | `--allow-dangerously-skip-permissions` | <Documented /> | ✅ | Makes skipping all permission checks a choice, without turning it on. |
 | `--allowedTools`, `--allowed-tools` `<tools...>` | <Documented /> | ✅ | Lists the tools that run without a permission prompt. |
 | `--disallowedTools`, `--disallowed-tools` `<tools...>` | <Documented /> | ✅ | Lists the tools that the model cannot use. |
 | `--tools` `<tools...>` | <Documented /> | ✅ | Lists the built-in tools that the model can use. `"default"` uses the default set. |
-| `--permission-prompts` `<target>` | <Documented /> | ✅ | Sets who answers permission prompts: `host` or `none`. `host` means the SDK host or `--permission-prompt-tool`. `none` denies anything that would prompt, and the permission mode decides the rest. |
+| `--permission-prompts` `<target>` | <Documented /> | ✅ | Sets who answers permission prompts: `host` or `none`. `host` means the SDK host or `--permission-prompt-tool`. `none` denies anything that would prompt. The permission mode decides the rest. |
 | `--permission-prompt-tool <tool>` | <Documented /> | ❌ | Names an MCP tool that answers permission prompts, with `--print` only. |
 | `--plan-mode-instructions` `<instructions>` | <Undocumented /> | ❌ | Replaces the default steps of plan mode with your own text. |
-| `--enable-auto-mode` | <Undocumented /> <Deprecated note="The help text says deprecated" /> | ❌ | Opts in to auto mode, and the flag is deprecated. |
+| `--enable-auto-mode` | <Undocumented /> <Deprecated note="The help text says deprecated" /> | ❌ | Opts in to auto mode. The flag is deprecated. |
 
 ### Model and Thinking
 
@@ -109,12 +109,12 @@ Flags that pick the model and set how hard it thinks.
 | --- | --- | --- | --- |
 | `--model` `<model>` | <Documented /> | ✅ | Sets the model with an alias such as `opus` or with a full name. |
 | `--effort` `<level>` | <Documented /> | ✅ | Sets the effort level of the session. |
-| `--fallback-model` `<model>` | <Documented /> | ✅ | Sets one or more models to try when the main model is overloaded or not available. |
+| `--fallback-model` `<model>` | <Documented /> | ✅ | Sets one or more models to try when the main model is overloaded or unavailable. |
 | `--betas` `<betas...>` | <Documented /> | ✅ | Adds beta headers to API requests, for API key users only. |
 | `--advisor` `<model>` | <Documented /> | ❌ | Turns on the server-side advisor tool with the model that you name. |
 | `--thinking <mode>` | <Undocumented /> | ❌ | Sets the thinking mode: `enabled` (the same as `adaptive`) or `disabled`. |
 | `--thinking-display` `<display>` | <Undocumented /> | ❌ | Sets how the thinking text appears in the response. |
-| `--max-thinking-tokens` `<tokens>` | <Undocumented /> <Deprecated note="Use --thinking" /> | ❌ | Sets a thinking token limit, and the flag is deprecated in favor of `--thinking`. |
+| `--max-thinking-tokens` `<tokens>` | <Undocumented /> <Deprecated note="Use --thinking" /> | ❌ | Sets a thinking token limit. The flag is deprecated. Use `--thinking` instead. |
 | `--task-budget` `<tokens>` | <Undocumented /> | ❌ | Sets a task budget in tokens on the API side (`output_config.task_budget`). |
 | `--fast-mode` `<on\|off>` | <Undocumented /> | ❌ | Turns fast mode on or off. |
 | `--include-unsupported-models` | <Undocumented /> | ❌ | Offers models that your account can use and this version does not know. |
@@ -132,7 +132,7 @@ Flags that replace or extend the system prompt. See [System Prompt](../../how-it
 | `--append-system-prompt-file` `<file>` | <Documented /> | ❌ | Reads text from a file and adds it to the end of the default system prompt. |
 | `--append-subagent-system-prompt` `<prompt>` | <Documented /> | ❌ | Adds text to the system prompt of every subagent, with `--print` only. |
 | `--append-subagent-system-prompt-file` `<file>` | <Documented /> | ❌ | Reads text from a file and adds it to every subagent prompt, with `--print` only. |
-| `--system-prompt-snapshot` `<on\|off>` | <Documented /> | ✅ | Sets whether the system prompt is recorded once and reused on every request and resume. |
+| `--system-prompt-snapshot` `<on\|off>` | <Documented /> | ✅ | Sets whether Claude Code records the system prompt once and reuses it on every request and resume. |
 | `--exclude-dynamic-system-prompt-sections` | <Documented /> | ✅ | Moves the data of the machine from the system prompt to the first user message for better cache reuse. |
 
 ### Sessions and Worktrees
@@ -148,12 +148,12 @@ Flags that continue, fork, name, or rewind a session, or run it in a worktree or
 | `--session-id` `<uuid>` | <Documented /> | ✅ | Uses a UUID that you give as the session ID. |
 | `-n`, `--name` `<name>` | <Documented /> | ✅ | Sets the display name of the session. |
 | `--resume-session-at` `<message id>` | <Undocumented /> | ❌ | Resumes only up to one message of the chain, with `--resume` in print mode. |
-| `--resume-drops-turn` `<message id>` | <Undocumented /> | ❌ | Names the turn that a truncating resume drops, and the resume fails if more would go. |
+| `--resume-drops-turn` `<message id>` | <Undocumented /> | ❌ | Names the turn that a truncating resume drops. The resume fails if more would go. |
 | `--reply-on-resume` | <Undocumented /> | ❌ | Asks the model to reply at once when the transcript ends with a user message. |
-| `--rewind-files` `<user-message-id>` | <Undocumented /> | ❌ | Restores the files to the state at a user message and exits, and it needs `--resume`. |
+| `--rewind-files` `<user-message-id>` | <Undocumented /> | ❌ | Restores the files to the state at a user message and exits. It needs `--resume`. |
 | `--bg`, `--background` | <Documented /> | ✅ | Starts the session in the background and prints its ID. |
 | `-w, --worktree [name]` | <Documented /> | ✅ | Creates a new git worktree for the session. |
-| `--tmux` | <Documented /> | ✅ | Creates a tmux session for the worktree, and it needs `--worktree`. |
+| `--tmux` | <Documented /> | ✅ | Creates a tmux session for the worktree. It needs `--worktree`. |
 
 ### Agents, Plugins, MCP, and Context
 
@@ -177,7 +177,7 @@ Flags that add agents, plugins, MCP servers, folders, and files.
 | `--watch-artifact` `<artifact>` | <Undocumented /> | ❌ | Watches a Claude artifact for new versions and comments. |
 | `--watch-artifact-no-autoreact` `<artifact>` | <Undocumented /> | ❌ | Watches an artifact and does not react to it by itself. |
 | `--messaging-socket-path` `<path>` | <Undocumented /> | ❌ | Sets the socket or pipe path of the cross-session messaging server. |
-| `--proactivity` `<level>` | <Undocumented /> | ❌ | Sets the level of proactivity, and the bundle gives no help text. |
+| `--proactivity` `<level>` | <Undocumented /> | ❌ | Sets the level of proactivity. The bundle gives no help text. |
 
 ### Teammate Flags
 
@@ -190,7 +190,7 @@ Flags that a lead agent passes to a teammate process it starts. You rarely set t
 | `--team-name` `<name>` | <Undocumented /> | ❌ | Sets the team name for teammate coordination. |
 | `--agent-color` `<color>` | <Undocumented /> | ❌ | Sets the UI color of a teammate. |
 | `--plan-mode-required` | <Undocumented /> | ❌ | Requires plan mode before the teammate implements anything. |
-| `--teammate-mode` `<mode>` | <Documented /> | ❌ | Sets the mode of a teammate, and the bundle gives no help text. |
+| `--teammate-mode` `<mode>` | <Documented /> | ❌ | Sets the mode of a teammate. The bundle gives no help text. |
 | `--agent-type` `<type>` | <Undocumented /> | ❌ | Sets a custom agent type for a teammate. |
 | `--parent-session-id` `<id>` | <Undocumented /> | ❌ | Gives the parent session ID for analytics. |
 
@@ -222,14 +222,14 @@ Flags for cloud sessions and Remote Control.
 | `--environment <environment_id>` | <Documented /> | ✅ | Creates a cloud session on a self-hosted environment. |
 | `--remote-control [name]` | <Documented /> | ✅ | Starts an interactive session with Remote Control turned on. |
 | `--rc` `[name]` | <Documented /> | ❌ | Is an alias for `--remote-control`. |
-| `--remote-control-session-name-prefix` `<prefix>` | <Documented /> | ✅ | Sets the prefix of the names that Remote Control makes, and the default is the host name. |
+| `--remote-control-session-name-prefix` `<prefix>` | <Documented /> | ✅ | Sets the prefix of the names that Remote Control makes. The default is the host name. |
 | `--remote` `[description\|session_id\|url]` | <Documented /> <Deprecated note="Use --cloud" /> | ❌ | Is a deprecated alias for `--cloud`. |
 | `--pool` `<pool_id>` | <Undocumented /> <Deprecated note="Use --environment" /> | ❌ | Is a deprecated alias for `--environment`. |
-| `--correlation-id` `<id>` | <Undocumented /> | ❌ | Sets an ID that goes back to the environment orchestrator, and it needs `--environment`. |
-| `--ref` `<ref>` | <Documented /> | ❌ | Sets the branch, tag, or SHA to check out in the remote session, and it needs `--cloud` or `--environment`. |
+| `--correlation-id` `<id>` | <Undocumented /> | ❌ | Sets an ID that goes back to the environment orchestrator. It needs `--environment`. |
+| `--ref` `<ref>` | <Documented /> | ❌ | Sets the branch, tag, or SHA to check out in the remote session. It needs `--cloud` or `--environment`. |
 | `--on-branch` `<branch>` | <Undocumented /> | ❌ | Works directly on a branch in the remote session, with checkout and push. |
 | `--forward-home-settings` `<true\|false>` | <Undocumented /> | ❌ | Sets whether this machine sends its settings to the cloud session. |
-| `--attach-serve` `<session_id>` | <Undocumented /> | ❌ | Attaches a helper to a cloud session, and the desktop app starts it. |
+| `--attach-serve` `<session_id>` | <Undocumented /> | ❌ | Attaches a helper to a cloud session. The desktop app starts it. |
 
 ## Errors
 
@@ -237,9 +237,9 @@ Each row is a family of messages. The backticked text is the start that every me
 
 | Start of Message | Status | What It Means | Cases |
 | --- | --- | --- | --- |
-| Various | <Undocumented /> | **Deep links.** A deep link was refused. | The `cwd` is not an absolute path or holds `..`, control characters, or a network path; the plugin or marketplace value is not valid; the scheme or action is unknown; or the launch command cannot be quoted safely. |
-| Various | <Undocumented /> | **Flag values.** A command-line flag value or combination was refused. | A flag needs another flag (`--resume-session-at` needs `--resume`), cannot be combined with a prompt, needs a value in a range, or the socket path of `--messaging-socket-path` is not a private local socket. |
-| Various | <Undocumented /> | **Claude in Chrome.** The Claude in Chrome connection failed. | The bridge is not connected, no extension connected, the browser is not paired, the socket directory or socket has the wrong owner or permissions, or the browser helper could not be found. |
+| Various | <Undocumented /> | **Deep links.** Claude Code refused a deep link. | The `cwd` is not an absolute path. The `cwd` holds `..`, control characters, or a network path. The plugin or marketplace value is not valid. The scheme or action is unknown. The launch command cannot be quoted safely. |
+| Various | <Undocumented /> | **Flag values.** Claude Code refused a command-line flag value or combination. | A flag needs another flag. For example, `--resume-session-at` needs `--resume`. A flag cannot be combined with a prompt. A flag needs a value in a range. The socket path of `--messaging-socket-path` is not a private local socket. |
+| Various | <Undocumented /> | **Claude in Chrome.** The Claude in Chrome connection failed. | The bridge is not connected. No extension connected. The browser is not paired. The socket directory or socket has the wrong owner or permissions. Claude Code could not find the browser helper. |
 
 ## Related Pages
 

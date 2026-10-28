@@ -5,9 +5,9 @@ sidebar_position: 2
 ---
 
 A turn is everything that happens from your prompt to the final answer.
-Inside a turn, the model asks for tools, Claude Code runs them, and the model reads the results.
+Inside a turn, the model asks for tools. Claude Code runs them. The model reads the results.
 This repeats until the model answers without a tool call.
-This page walks through each stage and shows where you can step in.
+This page explains each stage. It also shows where you can act.
 
 ## The Turn at a Glance
 
@@ -79,7 +79,7 @@ flowchart TD
 | 7. Request build | <Documented /> | Claude Code builds the `system`, `tools`, and `messages` parts. See [Request and Cache](request-and-cache.md). | `prompt.section`, `prompt.compose`, and `tool.describe` mod events |
 | 8. Stream | <Documented /> | Claude Code sends the request and reads the events, with retries and fallbacks. See [Models](models.md). | `MessageDisplay` hook |
 | 9. Tools | <Documented /> | Each tool call passes the permission check and then runs. | Tool hooks (next section) |
-| 10. Next round | <Undocumented /> | The tool results join the messages, and the loop starts again at stage 3. | `PostToolBatch` hook |
+| 10. Next round | <Undocumented /> | The tool results join the messages. The loop starts again at stage 3. | `PostToolBatch` hook |
 | 11. Stop | <Documented /> | With no tool call, the `Stop` hooks run. A hook that blocks sends its reason back to the model. | `Stop` and `StopFailure` hooks |
 
 The mod events `turn.start`, `turn.step`, and `turn.complete` wrap the whole turn.
@@ -118,7 +118,7 @@ flowchart TD
 
 ## Recovery Inside the Loop
 
-The loop does not fail on every error. It tries to fix the problem and go on.
+The loop does not fail on every error. It tries to fix the problem and continue.
 
 | Case | Status | What Claude Code does |
 | --- | --- | --- |
@@ -129,12 +129,12 @@ The loop does not fail on every error. It tries to fix the problem and go on.
 | A safety refusal | <Documented /> | It runs again on the fallback model of that category. See [Models](models.md#fallback). |
 | The context is too long | <Documented /> | It lowers `max_tokens` or compacts. |
 | Autocompact refills 3 times in a row | <Documented /> | It ends the turn with an error that starts `Autocompact is thrashing`. See [Troubleshooting](https://code.claude.com/docs/en/troubleshooting) in the official docs. |
-| A `Stop` hook blocks | <Documented /> | It feeds the reason back. After `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP` blocks in a row (default 8), it ends the turn. |
+| A `Stop` hook blocks | <Documented /> | It sends the reason back to the model. After `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP` blocks in a row (default 8), it ends the turn. |
 | `--max-turns` is reached | <Documented /> | It ends the run. See the [CLI Reference](https://code.claude.com/docs/en/cli-reference) in the official docs. |
 
 ## How a Turn Ends
 
-The loop returns a `reason`, and Claude Code records it in telemetry.
+The loop returns a `reason`. Claude Code records it in telemetry.
 The chat does not show it.
 A result message of the Agent SDK and of `--output-format stream-json` carries it as `terminal_reason`.
 All reasons are <Undocumented />, because only the Agent SDK pages name some of them.
@@ -157,18 +157,18 @@ stateDiagram-v2
 | `reason` | Meaning |
 | --- | --- |
 | `completed` | The turn ended in the normal way. |
-| `max_turns` | The turn limit was reached. |
+| `max_turns` | The turn reached the turn limit. |
 | `aborted_streaming`, `aborted_tools` | You stopped the turn (for example with `Esc`) while the model streamed or tools ran. |
 | `hook_stopped`, `stop_hook_prevented` | A hook stopped the turn. |
 | `tool_deferred` | A hook deferred a tool call. |
-| `tool_deferred_unavailable` | A deferred tool call could not be resumed. |
+| `tool_deferred_unavailable` | Claude Code could not resume a deferred tool call. |
 | `background_requested` | The turn moved to a background session. |
 | `blocking_limit` | The context hit the blocked level. See [Context and Compaction](context-and-compaction.md#when-compaction-runs). |
 | `rapid_refill_breaker` | Autocompact refilled the context too fast. |
 | `model_error`, `api_error`, `image_error` | The API or an image failed. |
 | `malformed_tool_use_exhausted` | The model sent a tool call that could not be parsed, and the retries failed too. Since `2.1.307` Claude Code retries the call up to twice ([release notes](https://github.com/anthropics/claude-code/releases/tag/v2.1.307)). Before, the turn ended after two bad calls in a row. |
 | `prompt_too_long` | The prompt did not fit the context window. |
-| `budget_exhausted` | The budget for the run was used up. |
+| `budget_exhausted` | The run used all of its budget. |
 | `structured_output_retry_exhausted` | The model did not give valid structured output after the allowed retries. |
 | `turn_setup_failed` | Claude Code failed to set up the turn. |
 
@@ -187,7 +187,7 @@ stateDiagram-v2
 ## Example
 
 This hook in `.claude/settings.json` runs a script before every `Bash` call.
-If the script exits with code 2, the call is blocked and the reason goes back to the model.
+If the script exits with code 2, Claude Code blocks the call. The reason goes back to the model.
 
 ```json title=".claude/settings.json"
 {

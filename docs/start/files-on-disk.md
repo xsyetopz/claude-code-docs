@@ -8,21 +8,11 @@ Claude Code keeps its state in plain files.
 Some you write, such as settings and `CLAUDE.md`. Others Claude Code writes, such as transcripts and caches.
 This page lists them by place, says what each one is, and links to the page with the details.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. Open any file listed here in an editor. Most are plain JSON, Markdown, or JSONL. |
-| Can you change it? | You edit the files marked "You write". Do not edit the files that Claude Code writes. |
-| Can you turn it on or off? | `CLAUDE_CONFIG_DIR` moves `~/.claude`. `cleanupPeriodDays` sets the cleanup age. |
-| Where does it live? | `~/.claude/`, `~/.claude.json`, `.claude/` in a project, and managed folders. |
-| Status | <Documented /> <Undocumented /> |
-
 Source: [Explore the .claude Directory](https://code.claude.com/docs/en/claude-directory) and the program.
 
 :::warning
 The files are not encrypted.
-A secret that a tool prints goes into the transcript, and every prompt you type goes into `history.jsonl`.
+A secret that a tool prints goes into the transcript. Every prompt you type goes into `history.jsonl`.
 :::
 
 ## The Big Picture
@@ -62,7 +52,7 @@ You usually commit these files, except the ones marked local.
 | `.claude/settings.local.json` | <Documented /> | ✅ | Your private project settings. Claude Code adds it to your global git excludes. | [Settings Files and Scopes](../configure/settings/index.md) |
 | `CLAUDE.md` or `.claude/CLAUDE.md` | <Documented /> | ✅ | Project instructions. Files in the working folder and each folder above it load at launch. | [Memory and Rules](../configure/memory-and-rules.md) |
 | `CLAUDE.local.md` | <Documented /> | ✅ | Private project notes. Add it to `.gitignore`. | [Memory and Rules](../configure/memory-and-rules.md) |
-| `AGENTS.md` or `.claude/AGENTS.md` | <Documented /> | ✅ | Read when no `CLAUDE.md` or `CLAUDE.local.md` is in or above the working folder. | [Memory and Rules](../configure/memory-and-rules.md) |
+| `AGENTS.md` or `.claude/AGENTS.md` | <Documented /> | ✅ | Claude Code reads it when no `CLAUDE.md` or `CLAUDE.local.md` is in or above the working folder. | [Memory and Rules](../configure/memory-and-rules.md) |
 | `.claude/rules/**/*.md` | <Documented /> | ✅ | Rules. A `paths` key limits a rule to matching files. | [Memory and Rules](../configure/memory-and-rules.md) |
 | `<subfolder>/CLAUDE.md` | <Documented /> | ✅ | Loads after Claude reads or edits a file in that subfolder. | [Memory and Rules](../configure/memory-and-rules.md) |
 | `.claude/skills/<name>/SKILL.md` | <Documented /> | ✅ | A project skill. | [Skills and Commands](../extend/skills-and-commands/index.md) |
@@ -84,7 +74,7 @@ You usually commit these files, except the ones marked local.
 | `~/.claude/rules/*.md` | <Documented /> | ✅ | Your personal rules. They load before project rules. | [Memory and Rules](../configure/memory-and-rules.md) |
 | `~/.claude/skills/<name>/SKILL.md` | <Documented /> | ✅ | Your personal skills. | [Skills and Commands](../extend/skills-and-commands/index.md) |
 | `~/.claude/skills/synced/` | <Documented /> | ❌ | Skills from your claude.ai account. | [Skills and Commands](../extend/skills-and-commands/index.md) |
-| `~/.claude/skills/.trash/`, `~/.claude/plugins/.trash/` | <Documented /> | ❌ | Synced items that were removed. Kept so you can recover them until the retention sweep deletes them. The sweep uses `cleanupPeriodDays`, which is 30 days by default. | [Skills and Commands](../extend/skills-and-commands/index.md) |
+| `~/.claude/skills/.trash/`, `~/.claude/plugins/.trash/` | <Documented /> | ❌ | Removed synced items. They stay so you can recover them until the retention sweep deletes them. The sweep uses `cleanupPeriodDays`, which is 30 days by default. | [Skills and Commands](../extend/skills-and-commands/index.md) |
 | `~/.claude/commands/` | <Documented /> | ✅ | Your personal slash commands. | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
 | `~/.claude/agents/*.md` | <Documented /> | ✅ | Your personal subagents. | [Subagents](../extend/subagents/index.md) |
 | `~/.claude/output-styles/*.md` | <Documented /> | ✅ | Your personal output styles. | [Output Styles](../configure/output-styles.md) |
@@ -112,7 +102,7 @@ Source: [Plugin Loading Reference](https://code.claude.com/docs/en/plugins/loadi
 ## Sessions and Transcripts
 
 All paths here are under `~/.claude/`.
-`<project>` is the project folder path with every character other than a letter or digit turned into `-`.
+`<project>` is the project folder path. In it, `-` replaces every character other than a letter or digit.
 Source: [Explore the .claude Directory](https://code.claude.com/docs/en/claude-directory).
 
 | Path | Status | What it is | Cleaned by age? |
@@ -142,8 +132,8 @@ The line format of a transcript is on [Transcript Format](../reference/transcrip
 
 | Path | Status | What it is | Page |
 | --- | --- | --- | --- |
-| `~/.claude/.credentials.json` | <Documented /> | Your login credentials. On macOS, the Keychain holds them, and Claude Code falls back to this file when the Keychain rejects the write. On Linux and Windows, Claude Code uses this file (mode `0600` on Linux). Keep it private and do not delete it. | [Sessions and Storage](../how-it-works/sessions-and-storage.md) |
-| `~/.claude/stats-cache.json` | <Documented /> | Totals shown by `/usage`. | [Sessions and Storage](../how-it-works/sessions-and-storage.md) |
+| `~/.claude/.credentials.json` | <Documented /> | Your login credentials. On macOS, the Keychain holds them. Claude Code uses this file when the Keychain rejects the write. On Linux and Windows, Claude Code uses this file (mode `0600` on Linux). Keep it private and do not delete it. | [Sessions and Storage](../how-it-works/sessions-and-storage.md) |
+| `~/.claude/stats-cache.json` | <Documented /> | Totals that `/usage` shows. | [Sessions and Storage](../how-it-works/sessions-and-storage.md) |
 | `~/.claude/remote-settings.json` | <Documented /> | Cached server-managed settings, or `{}`. | [Enterprise Settings](../configure/settings/enterprise.md) |
 | `~/.claude/policy-limits.json` | <Documented /> | Cached organization limits. Some account types only. | [Enterprise Settings](../configure/settings/enterprise.md) |
 | `~/.claude/cache/changelog.md` | <Documented /> | A cached copy of the [changelog](https://code.claude.com/docs/en/changelog) for `/release-notes`. | [What Changed](what-changed.md) |
@@ -154,12 +144,12 @@ The line format of a transcript is on [Transcript Format](../reference/transcrip
 
 The tables above show full paths. This table lists each name on its own, so you can look one up.
 The paths are under `~/.claude/` unless the Where column says otherwise.
-The program holds more names than this table lists. They are internal files or names whose use this page could not confirm.
+The program holds more names than this table lists. They are internal files, or names with a use that this page could not confirm.
 
 | Name | Status | Where | What it is |
 | --- | --- | --- | --- |
 | `settings.json` | <Documented /> | `~/.claude/`, `.claude/` | Your user or project settings. |
-| `keybindings.json` | <Documented /> | `~/.claude/` | Your keyboard shortcuts. The contexts and actions are on [Keybindings](../configure/keybindings.md). |
+| `keybindings.json` | <Documented /> | `~/.claude/` | Your keyboard shortcuts. The contexts and actions are on [Keybindings](../configure/keybindings/index.md). |
 | `commands` | <Documented /> | `~/.claude/`, `.claude/` | Slash commands. |
 | `skills` | <Documented /> | `~/.claude/`, `.claude/` | Skills. |
 | `rules` | <Documented /> | `~/.claude/`, `.claude/` | Rules. |
@@ -181,7 +171,7 @@ The program holds more names than this table lists. They are internal files or n
 | `daemon` | <Documented /> | `~/.claude/` | The list of running background sessions. |
 | `cache` | <Documented /> | `~/.claude/` | Caches, such as `changelog.md`. |
 | `changelog.md` | <Documented /> | `~/.claude/cache/` | A cached copy of the [changelog](https://code.claude.com/docs/en/changelog) for `/release-notes`. |
-| `stats-cache.json` | <Documented /> | `~/.claude/` | Totals shown by `/usage`. |
+| `stats-cache.json` | <Documented /> | `~/.claude/` | Totals that `/usage` shows. |
 | `remote-settings.json` | <Documented /> | `~/.claude/` | Cached server-managed settings. |
 | `policy-limits.json` | <Documented /> | `~/.claude/` | Cached organization limits. |
 | `feedback-bundles` | <Documented /> | `~/.claude/` | Feedback archives. |
@@ -189,9 +179,9 @@ The program holds more names than this table lists. They are internal files or n
 | `state` | <Undocumented /> | `~/.claude/` | Staged settings changes and consent records. See [Sessions and Storage](../how-it-works/sessions-and-storage.md). |
 | `seed-admin` | <Undocumented /> | `~/.claude/` | The root for temp folders of cloud-session uploads. See [Sessions and Storage](../how-it-works/sessions-and-storage.md). |
 | `model-catalog` | <Undocumented /> | `~/.claude/cache/` | Cached model catalog files and `masked-ids.json`. See [Sessions and Storage](../how-it-works/sessions-and-storage.md). |
-| `.config.json` | <Undocumented /> | `~/.claude/` | The old place of the global config. The program uses it when it is a non-empty file, and `~/.claude.json` otherwise. |
+| `.config.json` | <Undocumented /> | `~/.claude/` | The old place of the global config. The program uses it when it is a non-empty file. Otherwise it uses `~/.claude.json`. |
 | `.last-cleanup` | <Undocumented /> | `~/.claude/` | Holds an ISO time. The program reads the age of the file to skip a new cleanup run. |
-| `.deep-link-register-failed` | <Undocumented /> | `~/.claude/` | A marker that the deep-link registration failed. The program reads the age of the file and does not try again for a while. |
+| `.deep-link-register-failed` | <Undocumented /> | `~/.claude/` | A marker that the deep-link registration failed. The program reads the age of the file. It does not try again for a while. |
 | `.last-update-result.json` | <Undocumented /> | `~/.claude/` | The result of the last update, with the fields `outcome` (`success` or `failed`), `status`, `version_from`, `version_to`, and `error_code`. |
 | `.update.lock` | <Undocumented /> | `~/.claude/` | The update lock. The program treats a lock younger than 5 minutes as held. |
 | `active-time.json` | <Undocumented /> | `~/.claude/` | A ledger of active time, with `version` `1` and a `windows` list. |
@@ -212,7 +202,7 @@ An administrator puts these on the machine. A user cannot override them.
 
 | Path | Status | What it is | Page |
 | --- | --- | --- | --- |
-| `managed-settings.json` and `managed-settings.d/*.json` | <Documented /> | Organization settings. The folder is next to the file and merges in alphabetical order. | [Settings Files and Scopes](../configure/settings/index.md) |
+| `managed-settings.json` and `managed-settings.d/*.json` | <Documented /> | Organization settings. The folder is next to the file. Its files merge in alphabetical order. | [Settings Files and Scopes](../configure/settings/index.md) |
 | Managed `CLAUDE.md` | <Documented /> | Organization instructions. A user cannot exclude it. | [Memory and Rules](../configure/memory-and-rules.md) |
 | `managed-mcp.json` | <Documented /> | A fixed set of MCP servers. It gives the organization exclusive control. | [MCP Settings and Policy](../extend/mcp/settings.md) |
 | Managed skills `<managed dir>/.claude/skills/` | <Documented /> | Skills for all users on a machine. They win over personal and project skills. | [Skills and Commands](../extend/skills-and-commands/index.md) |
@@ -236,7 +226,7 @@ The exceptions and the merge rules are on [Settings Files and Scopes](../configu
 
 ## Example
 
-You want to find where Claude Code kept the last session in `/work/app`, and then remove old ones.
+You want to find where Claude Code kept the last session in `/work/app`. Then you want to remove old ones.
 
 ```bash
 ls ~/.claude/projects/-work-app/
@@ -244,12 +234,12 @@ claude purge --dry-run
 ```
 
 The first command lists the transcripts of that project.
-The second shows what `claude purge` would delete, without deleting it.
+The second shows what `claude purge` would delete. It deletes nothing.
 
 ## Exact Fields
 
-The exact fields of `~/.claude.json`: `https://xsyetopz.github.io/clawdipedia/schemas/claude-code-claude-json.json`. The program builds this payload in code, not with a validator, so the schema is read from that code: a field marked `x-unverified` has a type the code does not show, and `x-observed` marks a field that a probe saw.
-It lists every field of this release, so build on the fields it names and look each one up there before you rely on it.
+The exact fields of `~/.claude.json` are in this schema: `https://clawdipedia.cc/schemas/claude-code-claude-json.json`. The program builds this payload in code, not with a validator. So the schema comes from that code. A field marked `x-unverified` has a type that the code does not show. A field marked `x-observed` is a field that a probe saw.
+It lists every field of this release. Build on the fields it names. Look each one up there before you rely on it.
 
 ## Related Pages
 

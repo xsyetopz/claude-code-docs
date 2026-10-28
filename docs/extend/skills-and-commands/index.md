@@ -9,16 +9,6 @@ A slash command is a short action that you type, such as `/compact` or `/model`.
 A skill also gives you a slash command. For example, `.claude/skills/deploy/SKILL.md` gives you `/deploy`.
 The older `.claude/commands/` folder still works and acts like a skill.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. Type `/` to see the list. |
-| Can you change it? | ✅ Yes. Write your own skills and commands. Built-in commands are fixed. |
-| Can you turn it on or off? | `skillOverrides`, `disableBundledSkills`, `disableSkillShellExecution`, `--disable-slash-commands`, and the `disable-model-invocation` and `user-invocable` keys. |
-| Where does it live? | `~/.claude/skills/`, `.claude/skills/`, plugins, managed folders, and `.claude/commands/`. |
-| Status | <Documented /> <Undocumented /> <Differs /> <Gated /> |
-
 ## Example
 
 This skill makes a `/summarize-diff` command. Only you can start it.
@@ -50,9 +40,9 @@ When two skills share a name, the one in the higher place wins.
 | `--add-dir` or `/add-dir` folder | <Documented /> | Skills, `commands/`, and `agents/` of another folder. | `permissions.additionalDirectories` grants file access only and loads none of these. Needs the `project` setting source. Since `2.1.309`, when another skill already has its name, the skill is offered as `<folder>:<name>` ([v2.1.309 release notes](https://github.com/anthropics/claude-code/releases/tag/v2.1.309)). |
 | Plugin `skills/<name>/SKILL.md` | <Documented /> | Skills of a plugin. | The command name is `/<plugin>:<skill>`. A plugin root `SKILL.md` with no `skills/` folder loads as one skill. |
 | Synced skills `~/.claude/skills/synced/` | <Documented /> | Skills turned on in your claude.ai account. | Downloaded in the background (2.1.273 or later). Checked about every 10 minutes while active and every 40 minutes while idle. Never uploaded. The name `anthropic-skills` is reserved. Needs a claude.ai sign-in. Not in bare mode or `--safe-mode`. |
-| Trash `~/.claude/skills/.trash/` | <Documented /> | Removed synced skills. | A sweep deletes entries, after 30 days by default. |
+| Trash `~/.claude/skills/.trash/` | <Documented /> | Removed synced skills. | A sweep removes entries after 30 days by default. |
 | `<name>@skills-dir` plugin | <Documented /> | A plugin made by `claude plugin init` in `~/.claude/skills/<name>/`. | Loads with no install step. The marketplace name `skills-dir` is reserved. |
-| MCP-served skill | <Undocumented /> | A skill that an MCP server serves. | Supporting files are read through MCP resources. The origin tag is `mcp`. |
+| MCP-served skill | <Undocumented /> | A skill that an MCP server serves. | Claude Code reads supporting files through MCP resources. The origin tag is `mcp`. |
 | Skill `loadedFrom` values | <Undocumented /> | Internal origin tags. | Found: `skills`, `commands_DEPRECATED`, `plugin`, `bundled`, `syncedSkills`, `mcp`, `memoryStore`. |
 
 ## Name Resolution
@@ -62,7 +52,7 @@ When two skills share a name, the one in the higher place wins.
 | Clash order | <Documented /> | Picks the skill that `/name` runs. | Enterprise, then personal, then project. A skill replaces a bundled skill or a built-in command of the same name, but not its aliases. A skill wins over a `.claude/commands/` file. |
 | Name from layout | <Documented /> | Sets the command name. | `.claude/commands/frontend/component.md` is `/frontend:component`. Frontmatter `name` sets the name of a skill folder. A plugin `name` sets the last part. |
 | Refused characters | <Documented /> | Protects the `/` menu. | Refused: zero-width, control, private-use, bidirectional, odd blank characters, `<`, and `>`. The debug log tag is `[names]`. |
-| Name length | <Undocumented /> | Caps a frontmatter `name`. | A name over 256 characters is ignored with a warning. |
+| Name length | <Undocumented /> | Caps a frontmatter `name`. | Claude Code ignores a name over 256 characters. It gives a warning. |
 
 ## Custom Commands
 
@@ -76,12 +66,12 @@ When two skills share a name, the one in the higher place wins.
 | Item | Status | What it does | Notes |
 | --- | --- | --- | --- |
 | Live change detection | <Documented /> | Reloads `SKILL.md` text when it changes. | Not in bare mode. A new top-level skills folder needs `/reload-skills`. Changes to `hooks/`, `.mcp.json`, `agents/`, and `output-styles/` need `/reload-plugins`. |
-| Skill listing budget | <Documented /> | Caps how much skill text goes into context. | 1 percent of the window (`skillListingBudgetFraction`), counted at 4 characters per token for Claude 3 to 4.6 models and 3 for newer ones (the program). So Opus 5.5 with a 200,000-token window gets 6,000 characters. Each entry is cut at 1,536 characters (`skillListingMaxDescChars`). When the listing is over the budget, the program drops descriptions and leaves only the names. The env var `SLASH_COMMAND_TOOL_CHAR_BUDGET` sets a fixed count. |
+| Skill listing budget | <Documented /> | Caps how much skill text goes into context. | 1 percent of the window (`skillListingBudgetFraction`), counted at 4 characters per token for Claude 3 to 4.6 models and 3 for newer ones (the program). So Opus 5.5 with a 200,000-token window gets 6,000 characters. Each entry is cut at 1,536 characters (`skillListingMaxDescChars`). When the listing is over the budget, the program drops descriptions. It leaves only the names. The env var `SLASH_COMMAND_TOOL_CHAR_BUDGET` sets a fixed count. |
 | `--disable-slash-commands` | <Documented /> | Turns off all skills and commands. | A CLI flag. Its help text is "Disable all skills and commands" since `2.1.304`. |
 | Setting `skillOverrides` | <Documented /> | Sets the visibility of each skill. | Values: `on`, `name-only`, `user-invocable-only`, `off`. Plugin skills are not affected. |
 | Setting `disableBundledSkills` | <Documented /> | Removes bundled skills. | Same as `CLAUDE_CODE_DISABLE_BUNDLED_SKILLS=1`. Built-in commands stay. See [Bundled Skills](bundled-skills.md#controls). |
-| Setting `disableSkillShellExecution` | <Documented /> | Turns off `` !`cmd` `` injection. | See [Substitutions](substitutions.md#shell-injection). |
-| `CLAUDE_CODE_DISABLE_POLICY_SKILLS`, `CLAUDE_CODE_DISABLE_CLAUDE_API_SKILL`, `CLAUDE_CODE_DISABLE_CLAUDE_CODE_SKILL`, `CLAUDE_CODE_SKILL_PROPOSALS`, `CLAUDE_CODE_SKILL_ATTRIBUTION` | <Documented /> | Skill-related environment variables. | `CLAUDE_CODE_DISABLE_CLAUDE_API_SKILL` removes the `claude-api` skill (checked). `CLAUDE_CODE_DISABLE_POLICY_SKILLS` skips skills from the managed folder (checked: the managed skill was listed, and the variable removed it). `CLAUDE_CODE_SKILL_PROPOSALS` turns on skill proposals in cloud sessions and has no visible effect locally. `CLAUDE_CODE_SKILL_ATTRIBUTION` is removed from the env of subprocesses. `CLAUDE_CODE_DISABLE_CLAUDE_CODE_SKILL` disables the `claude-code` skill, which a plain `-p` run does not list. See [Environment Variables](../../configure/env-vars/index.md). |
+| Setting `disableSkillShellExecution` | <Documented /> | Disables `` !`cmd` `` injection. | See [Substitutions](substitutions.md#shell-injection). |
+| `CLAUDE_CODE_DISABLE_POLICY_SKILLS`, `CLAUDE_CODE_DISABLE_CLAUDE_API_SKILL`, `CLAUDE_CODE_DISABLE_CLAUDE_CODE_SKILL`, `CLAUDE_CODE_SKILL_PROPOSALS`, `CLAUDE_CODE_SKILL_ATTRIBUTION` | <Documented /> | Skill-related environment variables. | `CLAUDE_CODE_DISABLE_CLAUDE_API_SKILL` removes the `claude-api` skill (checked). `CLAUDE_CODE_DISABLE_POLICY_SKILLS` skips skills from the managed folder (checked: the managed skill was listed, and the variable removed it). `CLAUDE_CODE_SKILL_PROPOSALS` enables skill proposals in cloud sessions. It has no visible effect locally. Claude Code removes `CLAUDE_CODE_SKILL_ATTRIBUTION` from the env of subprocesses. `CLAUDE_CODE_DISABLE_CLAUDE_CODE_SKILL` disables the `claude-code` skill, which a plain `-p` run does not list. See [Environment Variables](../../configure/env-vars/index.md). |
 
 ## How It Works
 

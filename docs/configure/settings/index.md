@@ -6,17 +6,9 @@ sidebar_position: 1
 
 Settings are JSON files that change how Claude Code behaves.
 You can pick a model, add permission rules, turn off a feature, or share the same rules with a whole team.
-This page explains the files, the scopes, and which value wins. The other pages in this folder list every key.
-
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. Create or edit a settings file, or run `/config`. |
-| Can you change it? | Edit the JSON files below, pass `--settings`, use `/config` or `/model` for some keys, or ask an administrator to deploy managed settings. |
-| Can you turn it on or off? | Each key is its own switch. `disableAllHooks` turns off hooks, the status line, and file suggestions at once. |
-| Where does it live? | `~/.claude/settings.json`, `.claude/settings.json`, `.claude/settings.local.json`, managed files, and `~/.claude.json` |
-| Status | <Documented /> <Undocumented /> <Differs note="appendPlugins and prependPlugins" /> |
+Create or edit a settings file, pass `--settings`, or use `/config` and `/model` for some keys.
+An administrator can deploy managed settings.
+Each key is its own switch. `disableAllHooks` turns off hooks, the status line, and file suggestions at once.
 
 The managed schema of `2.1.312` lists 194 top-level keys. The user schema lists 171, and the other 23 are managed-only.
 Source: the program (the published settings schemas).
@@ -27,7 +19,7 @@ A project can share one small file with the whole team.
 
 ```json title=".claude/settings.json"
 {
-  "$schema": "https://xsyetopz.github.io/clawdipedia/schemas/claude-code-settings.json",
+  "$schema": "https://clawdipedia.cc/schemas/claude-code-settings.json",
   "model": "opus",
   "permissions": {
     "allow": ["Bash(bun test)"]
@@ -121,7 +113,7 @@ Source: [Settings Files and Precedence](https://code.claude.com/docs/en/settings
 - `fallbackModel` is an ordered chain. The whole value comes from the highest scope that sets it.
 - `modelPicker` never merges. The whole value comes from managed settings, `--settings`, or user settings.
   Claude Code ignores project and local values (v2.1.242 or later).
-- `availableModels`: a managed list applies as it is. Across the other scopes, the arrays merge.
+- For `availableModels`, a managed list applies as it is. Across the other scopes, the arrays merge.
 - `modelSettings` resolves one model at a time, together with `effortLevel`.
 - Managed `env` blocks merge per key across admin sources. `CLAUDE_CODE_DISABLE_ADMIN_ENV_UNION=1` turns that off.
 
@@ -157,7 +149,7 @@ Source: [Settings Files and Precedence](https://code.claude.com/docs/en/settings
 | --- | --- | --- | --- |
 | `disableClaudeAiConnectors`, `isolatePeerMachines`, `permissions.blockReadsOutsideWorkingDirectories` | <Documented /> | `true` | Any scope |
 | `enableArtifact`, `disableArtifact` | <Documented /> | `enableArtifact: false` or `disableArtifact: true` | Any scope |
-| `autoMode.classifyAllShell` | <Documented /> | `true` | `~/.claude/settings.json` or `--settings`. Any `true` wins, and `false` never turns it off |
+| `autoMode.classifyAllShell` | <Documented /> | `true` | `~/.claude/settings.json` or `--settings`. Any `true` wins. `false` never turns it off |
 | `remoteControlAtStartup` | <Documented /> | `false` | `.claude/settings.json` or `.claude/settings.local.json` |
 | `crossSessionInbound` | <Documented /> | A stricter value on the ladder `accept`, `hold`, `refuse` | `.claude/settings.json` or `.claude/settings.local.json` |
 | `useAutoModeDuringPlan`, `syncClaudeAiSkills`, `syncClaudeAiPlugins` | <Documented /> | `false` | Managed, `--settings`, `~/.claude/settings.json`, or `.claude/settings.local.json` |
@@ -171,7 +163,7 @@ Claude Code then takes the model keys of that app over the managed values.
 
 These keys do nothing in `2.1.312`, so the pages do not list them.
 
-- `taskOutputMaxChars` — The `TaskOutput` tool was removed.
+- `taskOutputMaxChars` — Claude Code removed the `TaskOutput` tool.
 - `keybindingFlavor` — Word-editing keys always follow Bash (readline) rules now.
 - `permissionExplainerEnabled` — Removed in v2.1.257.
 - `teammateDefaultModel` — Removed in v2.1.234.

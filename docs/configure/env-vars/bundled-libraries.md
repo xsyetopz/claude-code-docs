@@ -35,7 +35,7 @@ The table is sorted by name. See [Environment Variables](index.md#how-to-read-th
 | `AWS_EC2_METADATA_DISABLED` | <Undocumented /> | AWS SDK | Turns off the EC2 instance metadata lookup in the bundled AWS SDK credential chain and region defaults. |
 | `AWS_EC2_METADATA_SERVICE_ENDPOINT` | <Undocumented /> | AWS SDK | Sets the EC2 metadata service URL for the bundled AWS SDK. |
 | `AWS_EC2_METADATA_SERVICE_ENDPOINT_MODE` | <Undocumented /> | AWS SDK | Picks `IPv4` or `IPv6` for the EC2 metadata service address in the bundled AWS SDK. |
-| `AWS_EC2_METADATA_V1_DISABLED` | <Undocumented /> | AWS SDK | Blocks the IMDSv1 fallback in the bundled AWS SDK, so only token-based IMDSv2 is used. |
+| `AWS_EC2_METADATA_V1_DISABLED` | <Undocumented /> | AWS SDK | Blocks the IMDSv1 fallback in the bundled AWS SDK, so the SDK uses only token-based IMDSv2. |
 | `AWS_ENDPOINT_URL_SSO` | <Undocumented /> | AWS SDK | Overrides the AWS SSO endpoint in the bundled AWS SDK. |
 | `AWS_ENDPOINT_URL_SSO_OIDC` | <Undocumented /> | AWS SDK | Overrides the AWS SSO OIDC endpoint in the bundled AWS SDK. |
 | `AWS_LAMBDA_MAX_CONCURRENCY` | <Undocumented /> | AWS SDK | Selects the concurrent-aware store in the bundled AWS Lambda `InvokeStore` when present. |
@@ -53,7 +53,7 @@ The table is sorted by name. See [Environment Variables](index.md#how-to-read-th
 | `AZURE_CLIENT_SECRET` | <Undocumented /> | Azure SDK | Gives the Azure app client secret for the Azure `EnvironmentCredential`. |
 | `AZURE_CLIENT_SEND_CERTIFICATE_CHAIN` | <Undocumented /> | Azure SDK | Makes the Azure client certificate credential send the full certificate chain. |
 | `AZURE_FEDERATED_TOKEN_FILE` | <Undocumented /> | Azure SDK | Gives the federated token file for Azure workload identity login. |
-| `AZURE_IDENTITY_DISABLE_MULTITENANTAUTH` | <Undocumented /> | Azure SDK | Turns off multi-tenant token requests in the Azure identity library, so the configured tenant is always used. |
+| `AZURE_IDENTITY_DISABLE_MULTITENANTAUTH` | <Undocumented /> | Azure SDK | Turns off multi-tenant token requests in the Azure identity library, so the library always uses the configured tenant. |
 | `AZURE_LOG_LEVEL` | <Undocumented /> | Azure SDK | Sets the log level of the bundled Azure SDK logger. |
 | `AZURE_PASSWORD` | <Undocumented /> | Azure SDK | Gives the password for the Azure username and password credential. |
 | `AZURE_POD_IDENTITY_AUTHORITY_HOST` | <Undocumented /> | Azure SDK | Sets the Azure pod identity authority host for managed identity login in the bundled MSAL library. |
@@ -79,10 +79,10 @@ The table is sorted by name. See [Environment Variables](index.md#how-to-read-th
 | `GAE_SERVICE` | <Undocumented /> | Google auth | Marks a Google App Engine runtime in the bundled Google auth library. |
 | `GCE_METADATA_HOST` | <Undocumented /> | Google auth | Sets the host of the Compute Engine metadata server for the bundled Google auth library. |
 | `GCE_METADATA_IP` | <Undocumented /> | Google auth | Sets the address of the Compute Engine metadata server for the bundled Google auth library. |
-| `GOOGLE_API_CERTIFICATE_CONFIG` | <Undocumented /> | Google auth | Path of the certificate config for mTLS in the bundled Google auth library. |
+| `GOOGLE_API_CERTIFICATE_CONFIG` | <Undocumented /> | Google auth | Gives the path of the certificate config for mTLS in the bundled Google auth library. |
 | `GOOGLE_CLOUD_QUOTA_PROJECT` | <Undocumented /> | Google auth | Sets the quota project of the credential in the bundled Google auth library. |
 | `GRACEFUL_FS_PLATFORM` | <Undocumented /> | graceful-fs | Overrides the platform name that the bundled `graceful-fs` patches use. |
-| `GRPC_DEFAULT_SSL_ROOTS_FILE_PATH` | <Undocumented /> | gRPC | Path of a root certificate file that the bundled gRPC library loads as its TLS roots. |
+| `GRPC_DEFAULT_SSL_ROOTS_FILE_PATH` | <Undocumented /> | gRPC | Gives the path of a root certificate file that the bundled gRPC library loads as its TLS roots. |
 | `GRPC_EXPERIMENTAL_ENABLE_OUTLIER_DETECTION` | <Undocumented /> | gRPC | Turns the gRPC outlier detection load balancer on or off. |
 | `GRPC_NODE_TRACE` | <Undocumented /> | gRPC | Lists the gRPC tracers to turn on. |
 | `GRPC_NODE_USE_ALTERNATIVE_RESOLVER` | <Undocumented /> | gRPC | Makes the gRPC DNS resolver use the alternative path when it is `true`. |
@@ -115,17 +115,17 @@ The table is sorted by name. See [Environment Variables](index.md#how-to-read-th
 | `MYSQLPORT` | <Undocumented /> | Bun SQL | Is another spelling of `MYSQL_PORT`. |
 | `MYSQLURL` | <Undocumented /> | Bun SQL | Is another spelling of `MYSQL_URL` for the embedded Bun SQL client. |
 | `MYSQLUSER` | <Undocumented /> | Bun SQL | Is another spelling of `MYSQL_USER`. |
-| `NODE_CHANNEL_FD` | <Undocumented /> | Bun runtime | Bun runtime: if set, the process has an IPC channel and `send` and `disconnect` are stubbed in workers. |
-| `NODE_CLUSTER_SCHED_POLICY` | <Undocumented /> | Bun runtime | Bun runtime `cluster`: `rr` or `none` picks the scheduling policy. |
-| `NODE_DEBUG` | <Undocumented /> | Bun runtime | Bun runtime: enables `debuglog` sections by name. |
-| `NODE_DISABLE_COLORS` | <Undocumented /> | Bun runtime | Bun runtime: a non-empty value sets terminal color depth to one color. |
-| `NODE_NO_READLINE` | <Undocumented /> | Bun runtime | Bun REPL: a number that parses to non-zero turns off terminal mode. |
-| `NODE_PORT` | <Undocumented /> | Bun runtime | Bun dev server: fallback port after `PORT` and `BUN_PORT` when the port is in use. |
-| `NODE_REPL_EXTERNAL_MODULE` | <Undocumented /> | Bun runtime | Bun REPL: path of a module to load in place of the built-in REPL. |
-| `NODE_REPL_HISTORY` | <Undocumented /> | Bun runtime | Bun REPL: file path for persistent history. |
-| `NODE_REPL_HISTORY_SIZE` | <Undocumented /> | Bun runtime | Bun REPL: history size. |
-| `NODE_REPL_MODE` | <Undocumented /> | Bun runtime | Bun REPL: `strict` or `sloppy` mode. |
-| `NODE_UNIQUE_ID` | <Undocumented /> | Bun runtime | Bun runtime `cluster`: gives the worker id of a forked worker and is deleted after use. |
+| `NODE_CHANNEL_FD` | <Undocumented /> | Bun runtime | In the Bun runtime, a set value means that the process has an IPC channel. The runtime stubs `send` and `disconnect` in workers. |
+| `NODE_CLUSTER_SCHED_POLICY` | <Undocumented /> | Bun runtime | Sets the scheduling policy of the Bun runtime `cluster` to `rr` or `none`. |
+| `NODE_DEBUG` | <Undocumented /> | Bun runtime | Enables `debuglog` sections by name in the Bun runtime. |
+| `NODE_DISABLE_COLORS` | <Undocumented /> | Bun runtime | In the Bun runtime, a non-empty value sets the terminal color depth to one color. |
+| `NODE_NO_READLINE` | <Undocumented /> | Bun runtime | In the Bun REPL, a number that parses to non-zero turns off terminal mode. |
+| `NODE_PORT` | <Undocumented /> | Bun runtime | Gives a fallback port for the Bun dev server after `PORT` and `BUN_PORT`, when the port is in use. |
+| `NODE_REPL_EXTERNAL_MODULE` | <Undocumented /> | Bun runtime | Gives the path of a module that the Bun REPL loads in place of the built-in REPL. |
+| `NODE_REPL_HISTORY` | <Undocumented /> | Bun runtime | Sets the file path for persistent history in the Bun REPL. |
+| `NODE_REPL_HISTORY_SIZE` | <Undocumented /> | Bun runtime | Sets the history size of the Bun REPL. |
+| `NODE_REPL_MODE` | <Undocumented /> | Bun runtime | Sets the Bun REPL mode to `strict` or `sloppy`. |
+| `NODE_UNIQUE_ID` | <Undocumented /> | Bun runtime | Gives the worker id of a forked worker in the Bun runtime `cluster`. The runtime deletes it after use. |
 | `OSTYPE` | <Undocumented /> | which | The bundled `which` code treats `cygwin` or `msys` as a Windows-style path list. |
 | `PASSWORD` | <Documented /> | Bun SQL | Gives a fallback password to the embedded Bun SQL client. |
 | `PG_DATABASE` | <Undocumented /> | Bun SQL | Sets the database of the Postgres connection of the embedded Bun SQL client. |
@@ -145,16 +145,16 @@ The table is sorted by name. See [Environment Variables](index.md#how-to-read-th
 | `POSTGRES_URL` | <Undocumented /> | Bun SQL | Gives the default Postgres connection URL to the embedded Bun SQL client. |
 | `SQLITE_URL` | <Undocumented /> | Bun SQL | Gives the default SQLite connection URL to the embedded Bun SQL client. |
 | `SQLITEURL` | <Undocumented /> | Bun SQL | Is another spelling of `SQLITE_URL` for the embedded Bun SQL client. |
-| `TEAMCITY_VERSION` | <Undocumented /> | color support | TeamCity CI variable. |
+| `TEAMCITY_VERSION` | <Undocumented /> | color support | Is a TeamCity CI variable. |
 | `TLS_DATABASE_URL` | <Undocumented /> | Bun SQL | Gives a default URL and turns on TLS for the embedded Bun SQL client. |
 | `TLS_MARIADB_DATABASE_URL` | <Undocumented /> | Bun SQL | Gives the MariaDB URL and turns on TLS for the embedded Bun SQL client. |
 | `TLS_MYSQL_DATABASE_URL` | <Undocumented /> | Bun SQL | Gives the MySQL URL and turns on TLS for the embedded Bun SQL client. |
 | `TLS_POSTGRES_DATABASE_URL` | <Undocumented /> | Bun SQL | Gives the Postgres URL and turns on TLS for the embedded Bun SQL client. |
-| `VERBOSE_SSR` | <Undocumented /> | Bun runtime | Bun's server-side rendering debug flag. |
+| `VERBOSE_SSR` | <Undocumented /> | Bun runtime | Is the debug flag for Bun server-side rendering. |
 
 ## How It Works
 
-The names were found by scanning strings in the program, so the list can miss names built at run time.
+A scan of strings in the program found the names, so the list can miss names that the program builds at run time.
 Rows describe what the library does with the name, not what Claude Code does.
 
 ## Related Pages

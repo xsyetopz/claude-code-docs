@@ -90,7 +90,7 @@ This covers custom deployment names and inference profile ARNs. The test in the 
 The program decides in this order:
 
 1. `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT` set to a true value gives the short prompt. A false value, such as `0`, gives the full prompt.
-2. If the variable is not set, a name that is not a known one gives the short prompt. A known name has `claude-3-` or `haiku` or `sonnet` in it, or is `claude-opus-4-0`, `-4-1`, `-4-5`, `-4-6`, or `-4-7`. A server-side catalog flag `lean_prompt` for the model comes first.
+2. If the variable is unset, an unknown name gives the short prompt. A known name has `claude-3-` or `haiku` or `sonnet` in it, or is `claude-opus-4-0`, `-4-1`, `-4-5`, `-4-6`, or `-4-7`. A server-side catalog flag `lean_prompt` for the model comes first.
 3. For a known name, the gate `tengu_velvet_tide` gives the short prompt when on. Otherwise the server setting `simple_system_prompt` for the model decides.
 
 The program now canonicalizes the name for this test with the option `deterministic`. The option skips the lookup that turns an `application-inference-profile` ARN into the model behind it. So an ARN no longer counts as the Sonnet or Haiku model that it fronts, unless `modelOverrides` maps it.
@@ -100,7 +100,7 @@ Source: the program (`chunk-9wgj206m.js` lines 334 to 363, `chunk-3xe0k172.js` l
 
 We ran the default prompt for every model in the program's catalog, plus names that end in `-eap` and an unknown name (see [Probes](../reference/probes.md#static-and-print-probes)). The stub accepted every name. The real API may refuse retired models.
 
-The models with the catalog flag `lean_prompt` get the short prompt: Haiku 5.5, Sonnet 5.5, Opus 4.8, Opus 5, Opus 5.5, Fable 5, Fable 5.1, and Mythos 5.1. `claude-mythos-5` has no such flag, but a name rule gives it the short prompt, as it does for a name that ends in `-eap` and for an unknown name. Older models, and `claude-sonnet-5`, get the full prompt. Some models add sections to the short prompt, which follow the flags `opus_5_prompt_bundle`, `opus_5_5_prompt_bundle`, `fable_5_mitigations`, and `fable_5_1_prompt_bundle`.
+The models with the catalog flag `lean_prompt` get the short prompt: Haiku 5.5, Sonnet 5.5, Opus 4.8, Opus 5, Opus 5.5, Fable 5, Fable 5.1, and Mythos 5.1. `claude-mythos-5` has no such flag. A name rule gives it the short prompt. The same rule applies to a name that ends in `-eap` and to an unknown name. Older models, and `claude-sonnet-5`, get the full prompt. Some models add sections to the short prompt. These sections follow the flags `opus_5_prompt_bundle`, `opus_5_5_prompt_bundle`, `fable_5_mitigations`, and `fable_5_1_prompt_bundle`.
 
 | Model | Prompt | System Characters |
 | --- | --- | --- |
@@ -120,7 +120,7 @@ The models with the catalog flag `lean_prompt` get the short prompt: Haiku 5.5, 
 The 3.5 and 3.7 Haiku and Sonnet models also get 25 tools and not 12, because they have no tool search. In `2.1.309` it was 24, before `Monitor` joined the tool list (probe `print.models.matrix`). The captures cover only Opus 5.5, Sonnet 5.5, Haiku 5.5, and the full prompt. The other models have no capture page.
 
 The [official docs](https://code.claude.com/docs/en/env-vars) say that Haiku 4.5, Sonnet 5, Opus 4.7, and earlier models get the full prompt, and newer models get the short one.
-The captures match this for Sonnet 5.5, Opus 5.5, and Haiku 5.5. The old wiki said Sonnet gets the full prompt, and that is wrong.
+The captures match this for Sonnet 5.5, Opus 5.5, and Haiku 5.5. The old wiki said Sonnet gets the full prompt. That is wrong.
 
 Captured texts: [lean prompt](../prompts/defaults/default-lean.md), [Sonnet 5.5](../prompts/defaults/default-sonnet.md), [Haiku 5.5](../prompts/defaults/default-haiku.md), and the [full prompt](../prompts/defaults/full-prompt.md).
 
@@ -139,7 +139,7 @@ The captures show this split.
 
 The identity line is `You are a Claude agent, built on Anthropic's Claude Agent SDK.` in print mode.
 With `--append-system-prompt`, print mode sends `You are Claude Code, Anthropic's official CLI for Claude, running within the Claude Agent SDK.`
-The interactive line is `You are Claude Code, Anthropic's official CLI for Claude.` The program picks it when the session is interactive, and it also picks it for Google Cloud Agent Platform (Vertex) sessions.
+The interactive line is `You are Claude Code, Anthropic's official CLI for Claude.` The program picks it when the session is interactive. It also picks it for Google Cloud Agent Platform (Vertex) sessions.
 
 ## What Each Flag Does in the Captures
 
@@ -155,7 +155,7 @@ The interactive line is `You are Claude Code, Anthropic's official CLI for Claud
 ## Sections
 
 No official docs page lists the sections, so every row below is <Undocumented /> unless the row says otherwise.
-The names matter because a `prompt.compose` hook sees all of them, and a `prompt.section` hook sees only the session sections.
+The names matter because of this. A `prompt.compose` hook sees all of them. A `prompt.section` hook sees only the session sections.
 
 ### Shared Sections
 
@@ -176,7 +176,7 @@ Only a `prompt.compose` hook sees them.
 
 ### Session Sections
 
-They follow in this order. A section that has no text is left out. Session sections, such as `memory`, do fire `prompt.section`.
+They follow in this order. Claude Code omits a section that has no text. Session sections, such as `memory`, do fire `prompt.section`.
 
 | Section | Status | When | Content |
 | --- | --- | --- | --- |
@@ -191,7 +191,7 @@ They follow in this order. A section that has no text is left out. Session secti
 | `env_info_simple` | <Undocumented /> | Normally | The latest model IDs, where Claude Code runs, and a note about `/fast`. |
 | `env_info_static` | <Undocumented /> | With `--exclude-dynamic-system-prompt-sections` | The same text, without data of the machine. |
 | `bg-session` | <Gated note="CLAUDE_CODE_SESSION_KIND=bg and CLAUDE_JOB_DIR set" /> | `CLAUDE_CODE_SESSION_KIND=bg` and `CLAUDE_JOB_DIR` set | Rules for background jobs: use `$CLAUDE_JOB_DIR/tmp`, use `EnterWorktree`, and end with a report. |
-| `context_management` | <Undocumented /> | Always | Old context gets summarized, so do not wrap up early. |
+| `context_management` | <Undocumented /> | Always | Old context gets summarized, so do not finish early. |
 | `brief` | <Undocumented /> | `--brief`, or the `SendUserMessage` tool | Rules for that tool. |
 | `focus_mode` | <Undocumented /> | The view mode is focus | The user sees only the final message. |
 | `act_dont_rederive` | <Gated note="CLAUDE_CODE_ACT_DONT_REDERIVE, or an experiment that is on by default" /> | `CLAUDE_CODE_ACT_DONT_REDERIVE`, or an experiment that is on by default | Act when you have enough information. |
@@ -207,7 +207,7 @@ They follow in this order. A section that has no text is left out. Session secti
 | `user_pays` | <Gated note="An experiment that is off by default" /> | An experiment that is off by default | The user pays for each token. |
 
 Experiments come from GrowthBook, a flag service that Anthropic runs.
-You cannot set an experiment, but the env vars in the table switch some of the sections.
+You cannot set an experiment. But the env vars in the table switch some of the sections.
 
 ## Bare Mode
 
@@ -225,7 +225,7 @@ See the captured prompts for [general-purpose](../prompts/agents/subagent-genera
 
 ## Example
 
-You want the model to follow one more rule, and you want a mod to remove the memory section.
+You want the model to follow one more rule. You also want a mod to remove the memory section.
 
 ```bash
 claude --append-system-prompt "Always use TypeScript"

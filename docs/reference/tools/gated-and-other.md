@@ -7,14 +7,14 @@ sidebar_position: 5
 These tools appear only when a gate, a plan, or a session mode turns them on.
 Most of them serve onboarding, design work, connectors, or self-hosted runners.
 For example, `PushNotification` sends a notice to your terminal when a long task ends.
-For most of them a server-side flag decides, so you cannot switch them on yourself.
+For most of them a server-side flag decides. So you cannot switch them on yourself.
 
 These tools work only if your account, plan, or session mode has the gate on. A hidden server-side flag decides, with few exceptions. A few have an env var or setting, such as `CLAUDE_CODE_SKILL_PROPOSALS`.
 
 ## Gated Tools
 
-All of these are available in the main session only, and background subagents do not keep them, unless the Notes column says otherwise.
-The Yes and No columns are explained on [Tools](index.md#how-to-read-the-tool-tables).
+All of these are available in the main session only. Background subagents do not keep them, unless the Notes column says otherwise.
+[Tools](index.md#how-to-read-the-tool-tables) explains the Yes and No columns.
 Source: [Tools Reference](https://code.claude.com/docs/en/tools-reference) for the tools marked as documented, and the program (the tool definitions and their `searchHint` text) for the rest.
 
 | Tool | Status | What It Does | Parameters and Gate | Read-Only | Parallel | Deferred |
@@ -51,11 +51,11 @@ Source: the program (the tool names and the input schemas in [`claude-code-tools
 
 | Tool | Status | What It Does | Parameters and Gate |
 | --- | --- | --- | --- |
-| `ListPlugins` | <Undocumented /> | Lists plugins. | `keywords` (up to 8 strings, optional filter; omit to list everything). Gate not confirmed. |
-| `ListSkills` | <Undocumented /> | Lists skills. | `keywords` (up to 8 strings, optional filter; omit to list everything). Gate not confirmed. |
+| `ListPlugins` | <Undocumented /> | Lists plugins. | `keywords` (up to 8 strings, optional filter). Omit it to list everything. Gate not confirmed. |
+| `ListSkills` | <Undocumented /> | Lists skills. | `keywords` (up to 8 strings, optional filter). Omit it to list everything. Gate not confirmed. |
 | `SearchPlugins` | <Undocumented /> | Searches plugins by keyword. | `keywords` (1 to 8 strings, required). Gate not confirmed. |
 | `SearchSkills` | <Undocumented /> | Searches skills by keyword. | `keywords` (1 to 8 strings, required). Gate not confirmed. |
-| `RefreshMcpTools` | <Undocumented /> <Gated note="CLAUDE_CODE_ENABLE_REFRESH_MCP_TOOLS" /> | Queries the tool list of connected MCP servers again and applies it. It never dials a server. | `server` (string, optional; omit to refresh all connected servers). Each result has a `status` of `refreshed`, `error`, or `not_connected`. |
+| `RefreshMcpTools` | <Undocumented /> <Gated note="CLAUDE_CODE_ENABLE_REFRESH_MCP_TOOLS" /> | Queries the tool list of connected MCP servers again and applies it. It never dials a server. | `server` (string, optional). Omit it to refresh all connected servers. Each result has a `status` of `refreshed`, `error`, or `not_connected`. |
 | `enable__mcp__claude-in-chrome` | <Undocumented /> | Enables Claude in Chrome, the Claude extension in the Chrome browser on your computer, for the conversation. | Parameters and gate not confirmed. |
 | `enable__mcp__remote-devices__Claude_Browser` | <Undocumented /> | Enables the browser built into the Claude desktop app for the conversation. | Parameters and gate not confirmed. |
 
@@ -86,7 +86,7 @@ The inventory file does not list these tools, because their definitions do not u
 | `StructuredOutput` | <Undocumented /> | Returns the final JSON for `--json-schema` runs. | Never deferred. | Main session in print mode. | ❌ | ❌ | ❌ |
 | `ListMcpResourcesTool`, `ReadMcpResourceTool`, `ReadMcpResourceDirTool` | <Documented /> | List and read MCP resources. | Deferred. Offered when an MCP server has resources. | Main session. | ✅ | ✅ | ✅ |
 
-`Agent`, `Monitor`, `ScheduleWakeup`, `Workflow`, and `SubagentHandback` are on [Agents, Tasks, and Planning](agents-and-tasks.md) and [Shell, Web, and Background Tasks](shell-and-web.md).
+[Agents, Tasks, and Planning](agents-and-tasks.md) and [Shell, Web, and Background Tasks](shell-and-web.md) list `Agent`, `Monitor`, `ScheduleWakeup`, `Workflow`, and `SubagentHandback`.
 
 ## Result Fields New in `2.1.311`
 
@@ -94,15 +94,15 @@ Source: `AppifactReplResult`, `PollResult`, and `ProjectsResult` in [`claude-cod
 
 | Field | Status | Tool and Result | Type | What It Means |
 | --- | --- | --- | --- | --- |
-| `toolsUsed` | <Undocumented /> | `AppifactRepl` | Array of strings | The tools that the calls of the script's artifact reached, whose names the prompt of this conversation did not yet carry. The `tool_result` text opens with a line that names them. The field is left out when the list is empty (`chunk-9ea8x39q.js:1778`, `chunk-9ea8x39q.js:1872`, `chunk-9ea8x39q.js:1991`). |
-| `toolsUsed` | <Undocumented /> | `Poll` | Array of strings | A list of tool names. The field is left out when the list is empty (`chunk-2ht8z368.js:161333`). The schema gives no description, so this page states only its name and type. |
-| `local_file` | <Undocumented /> | `Projects`, the `project_info` result | String | A path to a file that holds the project description and instructions in full, with long lines split. The program returns it when the two together are too long to return, and then `description` and `instructions` are empty strings. The file is for reading only, and edits to it do not change the project (`chunk-kg0z6tbm.js:1587`, `chunk-kg0z6tbm.js:1625`). |
+| `toolsUsed` | <Undocumented /> | `AppifactRepl` | Array of strings | The tools that the calls of the script's artifact reached, whose names the prompt of this conversation did not yet carry. The `tool_result` text opens with a line that names them. The program leaves the field out when the list is empty (`chunk-9ea8x39q.js:1778`, `chunk-9ea8x39q.js:1872`, `chunk-9ea8x39q.js:1991`). |
+| `toolsUsed` | <Undocumented /> | `Poll` | Array of strings | A list of tool names. The program leaves the field out when the list is empty (`chunk-2ht8z368.js:161333`). The schema gives no description, so this page states only its name and type. |
+| `local_file` | <Undocumented /> | `Projects`, the `project_info` result | String | A path to a file that holds the project description and instructions in full, with long lines split. The program returns it when the two together are too long to return. Then `description` and `instructions` are empty strings. The file is for reading only. Edits to it do not change the project (`chunk-kg0z6tbm.js:1587`, `chunk-kg0z6tbm.js:1625`). |
 
 The `toolsUsed` list is empty while the server flag `tengu_silly_shore` is off (default on) (`chunk-35qty13k.js:101`, `chunk-2ht8z368.js:12649`).
 
 ## Example
 
-Turn on skill proposals for one session. The tool also needs a remote environment (see the `propose_skills` row), so in a local terminal this line alone does not turn it on.
+Turn on skill proposals for one session. The tool also needs a remote environment (see the `propose_skills` row). So in a local terminal this line alone does not turn it on.
 
 ```bash title="Enable propose_skills"
 CLAUDE_CODE_SKILL_PROPOSALS=1 claude
@@ -110,9 +110,9 @@ CLAUDE_CODE_SKILL_PROPOSALS=1 claude
 
 ## How It Works
 
-A gated tool is built only when its gate passes. Gates are a login type, a policy, an entry point, an env var, or a server-side flag.
-A tool with a server-side flag appears for some accounts and not for others, so the same version can show different tools.
-Most of these tools are deferred, so Claude finds them with `ToolSearch` and not in the first tool list.
+Claude Code builds a gated tool only when its gate passes. Gates are a login type, a policy, an entry point, an env var, or a server-side flag.
+A tool with a server-side flag appears for some accounts and not for others. So the same version can show different tools.
+Most of these tools are deferred. So Claude finds them with `ToolSearch` and not in the first tool list.
 
 ## Errors
 
@@ -120,11 +120,11 @@ Each row is a family of messages. The backticked text is the start that every me
 
 | Start of Message | Status | What It Means | Cases |
 | --- | --- | --- | --- |
-| Various | <Undocumented /> | **Artifact.** The `Artifact` tool refused or could not finish a call. | An input no longer matches what was approved (`action`, `url`, `type_url`, `out_dir`, or a file), so nothing was done and the call must be retried. An action is not available in this session or build. A required argument is missing or wrong (`url`, `thread_id`, `cursor`, `db_op`, `collection`, `doc_id`, `file_path`, `asset_id`). A Read or Edit permission rule blocks the file. The page, the preview, or a database write could not be completed. |
-| Various | <Undocumented /> | **Claude Design.** `DesignSync` or `ClaudeDesign` refused a call or could not reach Claude Design. | No plan token or an old one: run `finalize_plan` first. A path is reserved (`CLAUDE.md` and `.claude/`) or outside the finalized plan. A write needs a one-time approval or a project write grant that is not active. A request to Claude Design failed with an HTTP status, or the OAuth base URL is not on the first-party allowlist. |
-| Various | <Undocumented /> | **Projects.** The `Projects` tool refused a read or write. | The session has no project attached, a write would put the project over its maximum size, `if_version` no longer matches the doc, the uploaded bytes do not match, or the path is a file upload (`project_delete` removes text docs only). |
-| Various | <Undocumented /> | **Computer use.** A computer-use action was refused. | The platform is not supported, a key chord has too many components, the clipboard write did not round-trip, the session has no disk for the lock, or a session context is missing. |
-| Various | <Undocumented /> | **Trigger tools.** A trigger call was missing a required argument. | An action such as `get`, `update`, `list_runs`, `run`, or `get_run_log` was called without `trigger_id` or `session_id`, or `create`, `update`, and `create_webhook_trigger` without `body`. |
+| Various | <Undocumented /> | **Artifact.** The `Artifact` tool refused or could not finish a call. | An input no longer matches what was approved (`action`, `url`, `type_url`, `out_dir`, or a file). So nothing was done. The call must be retried. An action is not available in this session or build. A required argument is missing or wrong (`url`, `thread_id`, `cursor`, `db_op`, `collection`, `doc_id`, `file_path`, `asset_id`). A Read or Edit permission rule blocks the file. The page, the preview, or a database write could not be completed. |
+| Various | <Undocumented /> | **Claude Design.** `DesignSync` or `ClaudeDesign` refused a call or could not reach Claude Design. | No plan token or an old one. Run `finalize_plan` first. A path is reserved (`CLAUDE.md` and `.claude/`) or outside the finalized plan. A write needs a one-time approval or a project write grant that is not active. A request to Claude Design failed with an HTTP status, or the OAuth base URL is not on the first-party allowlist. |
+| Various | <Undocumented /> | **Projects.** The `Projects` tool refused a read or write. | The session has no project attached. A write would put the project over its maximum size. `if_version` no longer matches the doc. The uploaded bytes do not match. The path is a file upload (`project_delete` removes text docs only). |
+| Various | <Undocumented /> | **Computer use.** A computer-use action was refused. | The platform is not supported. A key chord has too many components. The clipboard write did not round-trip. The session has no disk for the lock. A session context is missing. |
+| Various | <Undocumented /> | **Trigger tools.** A trigger call was missing a required argument. | A caller used an action such as `get`, `update`, `list_runs`, `run`, or `get_run_log` without `trigger_id` or `session_id`. A caller used `create`, `update`, or `create_webhook_trigger` without `body`. |
 
 ## Related Pages
 

@@ -2467,8 +2467,8 @@ Items: 4049.
 | `"url" is required in "amzOptions"` | Excluded: Bundled Google auth library (google-auth-library) |
 | `"version" cannot be null or undefined` | Excluded: Bundled QR code library |
 | `"version" should be in range from 1 to 40` | Excluded: Bundled QR code library |
-| `$.${…} in a test takes the whole input of its event, which a mod's call may leave out` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| `$.${…} is no call on the engine's $` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
+| `$.${…} in a test takes the whole input of its event, which a mod's call may leave out` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| `$.${…} is no call on the engine's $` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
 | `$.${…}: no core at the bottom of the chain (the site did not install one and the call supplied none)` | [/extend/mod-api#errors](/extend/mod-api#errors) |
 | `$.${…}: this environment was made without the host's streaming ops` | [/extend/mod-api#errors](/extend/mod-api#errors) |
 | `$.audio.play: asset must be a path inside the plugin's directory (got ${…})` | [/extend/mod-api#errors](/extend/mod-api#errors) |
@@ -2485,21 +2485,21 @@ Items: 4049.
 | `$.audio.play: the plugin has no id` | [/extend/mod-api#errors](/extend/mod-api#errors) |
 | `$.audio.speak: text must be a non-empty string` | [/extend/mod-api#errors](/extend/mod-api#errors) |
 | `$.audio.speak: voice must be a string when given` | [/extend/mod-api#errors](/extend/mod-api#errors) |
-| `$.classic.PreToolUse is no call on the engine's $: the engine raises it inside tool.call, so a test calls $.tool.call` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
+| `$.classic.PreToolUse is no call on the engine's $: the engine raises it inside tool.call, so a test calls $.tool.call` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
 | `$.session.append: refused: ${…}` | [/extend/mod-api#errors](/extend/mod-api#errors) |
 | `$.session.append: this process keeps no conversation to append to` | [/extend/mod-api#errors](/extend/mod-api#errors) |
 | `$.skill.prompt: called with ${…}` | [/extend/mod-api#errors](/extend/mod-api#errors) |
 | `$.telemetry: the call names no origin` | [/extend/mod-api#errors](/extend/mod-api#errors) |
-| `$.ui.${…}: ${…} holds ${…} ${…}s keyed ${…}, in ${…}; name the requestId or the surface` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| `$.ui.${…}: no ${…} of ${…} keyed ${…} is drawn${…}; render or mount the tree that holds it first` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| `$.ui.mount: ${…} ${…} is mounted on the ${…} surface already; unmount it first, or name another requestId for a second instance` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| `$.ui.mount: the test ended while the drawing was being raised` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
+| `$.ui.${…}: ${…} holds ${…} ${…}s keyed ${…}, in ${…}; name the requestId or the surface` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| `$.ui.${…}: no ${…} of ${…} keyed ${…} is drawn${…}; render or mount the tree that holds it first` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| `$.ui.mount: ${…} ${…} is mounted on the ${…} surface already; unmount it first, or name another requestId for a second instance` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| `$.ui.mount: the test ended while the drawing was being raised` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
 | `$data keyword must have "code" or "validate" function` | Excluded: Bundled Ajv JSON Schema validator |
 | `$schema must be a string` | Excluded: Bundled Ajv JSON Schema validator |
-| `${…} ${…} could not be resolved (${…}) — refusing to write there` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
+| `${…} ${…} could not be resolved (${…}) — refusing to write there` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
 | `${…} ${…} has ${…} components; at most ${…} are allowed. Send one key, with its modifiers, per action.` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `${…} ${…} has ${…} keys that are not modifiers (${…}); a chord is modifier keys plus at most one other key. Send a separate action for each key.` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
-| `${…} ${…} resolves to ${…}, outside ${…} — refusing to write there (is it a symlink?)` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
+| `${…} ${…} resolves to ${…}, outside ${…} — refusing to write there (is it a symlink?)` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
 | `${…} ${…}; not sent` | [/configure/cli/flags#errors](/configure/cli/flags#errors) |
 | `${…} (a sandbox path entry from ${…})` | [/configure/permissions/sandbox#errors](/configure/permissions/sandbox#errors) |
 | `${…} (this machine's managed settings: ${…})` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
@@ -2640,11 +2640,11 @@ Items: 4049.
 | `${…}/ has ${…} .md entries (cap: ${…})` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
 | `${…}/ has no result rows under ${…} - nothing to report${…}` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
 | `${…}/ is a symbolic link whose target does not exist` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
-| `${…}: "${…}" must be a real directory inside the case, not a symbolic link` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| `${…}: "${…}" under a plugin or eval directory is not a valid UTF-8 name (or imitates one that is not) — rename or remove it` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| `${…}: "${…}" under the eval directory is a symbolic link to a directory — case definitions must be plain files and directories` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| `${…}: "${…}" under the eval directory is a symbolic link whose target cannot be resolved — remove it or point it at an existing file` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| `${…}: "${…}" under the eval directory links to a file with ${…} names — case definitions must not be reachable by another name` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
+| `${…}: "${…}" must be a real directory inside the case, not a symbolic link` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| `${…}: "${…}" under a plugin or eval directory is not a valid UTF-8 name (or imitates one that is not) — rename or remove it` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| `${…}: "${…}" under the eval directory is a symbolic link to a directory — case definitions must be plain files and directories` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| `${…}: "${…}" under the eval directory is a symbolic link whose target cannot be resolved — remove it or point it at an existing file` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| `${…}: "${…}" under the eval directory links to a file with ${…} names — case definitions must not be reachable by another name` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
 | `${…}: $ is already built` | Excluded: Mod engine load and registration assertions (plugin module shape, hook results) |
 | `${…}: $.${…} must be an object of methods, not ${…}` | [/extend/mod-api#errors](/extend/mod-api#errors) |
 | `${…}: $.${…} refused: ${…}` | [/extend/mod-api#errors](/extend/mod-api#errors) |
@@ -2703,15 +2703,15 @@ Items: 4049.
 | `${…}: ${…} exports no register(on, options) function` | Excluded: Mod engine load and registration assertions (plugin module shape, hook results) |
 | `${…}: ${…} exports the name "then" (its own, or through an export *), which no entry module may: rename the export` | Excluded: Mod engine load and registration assertions (plugin module shape, hook results) |
 | `${…}: ${…} failed: ${…}` | Excluded: Mod engine load and registration assertions (plugin module shape, hook results) |
-| `${…}: ${…} is a network-reaching path (UNC / automount) — refusing it` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| `${…}: ${…} is an automounter path (macOS /Network, or the bare /net root) — refusing it (a lookup there is a network request)` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| `${…}: ${…} is an eval-directory link that points outside the plugin — remove it` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
+| `${…}: ${…} is a network-reaching path (UNC / automount) — refusing it` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| `${…}: ${…} is an automounter path (macOS /Network, or the bare /net root) — refusing it (a lookup there is a network request)` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| `${…}: ${…} is an eval-directory link that points outside the plugin — remove it` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
 | `${…}: ${…} is not a PEM ${…}` | [/configure/permissions/sandbox#errors](/configure/permissions/sandbox#errors) |
 | `${…}: ${…} is not available in this mode: no session is bound in this process (the REPL has not mounted and no headless session is built); catch it and carry on` | Excluded: Mod engine load and registration assertions (plugin module shape, hook results) |
-| `${…}: ${…} leads to an automounter map directory (/net, /net/<host>; macOS /Network, /home) — refusing it (naming anything in it asks the automounter or a host)` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
+| `${…}: ${…} leads to an automounter map directory (/net, /net/<host>; macOS /Network, /home) — refusing it (naming anything in it asks the automounter or a host)` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
 | `${…}: ${…} must be a non-negative integer, got ${…}` | Excluded: Plugin option value checks (required, length, single line, boolean, integer, JSON object) |
-| `${…}: ${…} passes through a component that cannot be examined (unreadable, a link or junction whose target does not exist, or a symlink chain too long to follow) — refusing it (it could not be vetted)` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| `${…}: ${…} passes through a symlink to a network-reaching path (or a dotted one that cannot be vetted) — refusing it` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
+| `${…}: ${…} passes through a component that cannot be examined (unreadable, a link or junction whose target does not exist, or a symlink chain too long to follow) — refusing it (it could not be vetted)` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| `${…}: ${…} passes through a symlink to a network-reaching path (or a dotted one that cannot be vetted) — refusing it` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
 | `${…}: ${…} takes a function` | Excluded: Mod engine load and registration assertions (plugin module shape, hook results) |
 | `${…}: ${…} was not linked` | Excluded: Mod engine load and registration assertions (plugin module shape, hook results) |
 | `${…}: ${…} — send only this Artifact's own files` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
@@ -2750,38 +2750,38 @@ Items: 4049.
 | `${…}: Multiple scopes are not supported.` | Excluded: Bundled Azure SDK (@azure/identity, @azure/core) |
 | `${…}: Provide either a PEM certificate in string form, or the path to that certificate in the filesystem. To troubleshoot, visit https://aka.ms/azsdk/js/identity/serviceprincipalauthentication/trouble…` | Excluded: Bundled Azure SDK (@azure/identity, @azure/core) |
 | `${…}: To avoid unexpected behaviors, providing both the contents of a PEM certificate and the path to a PEM certificate is forbidden. To troubleshoot, visit https://aka.ms/azsdk/js/identity/servicepri…` | Excluded: Bundled Azure SDK (@azure/identity, @azure/core) |
-| `` ${…}: `abort_when:` needs `type: agent`; a fixed responder guards its input with `expect:` `` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| ``${…}: `error:` applies to fixed responders only`` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| ``${…}: `tools:` belongs in ${…} (a <tool>.md answers the tool it is named after)`` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| `${…}: a baseline grader's baseline_file must be a relative path inside the suite or the plugin under test` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| `${…}: a baseline grader's baseline_file must name a regular file` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| `${…}: a baseline grader's reference file is hard-linked (has another name) — keep a single copy` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| `${…}: a file in the plugin has more than one name (a hard link) — case definitions must not be reachable by another name; replace it with a copy` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| `${…}: a git directory of the plugin registers more linked worktrees than can be screened` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
+| `` ${…}: `abort_when:` needs `type: agent`; a fixed responder guards its input with `expect:` `` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| ``${…}: `error:` applies to fixed responders only`` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| ``${…}: `tools:` belongs in ${…} (a <tool>.md answers the tool it is named after)`` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| `${…}: a baseline grader's baseline_file must be a relative path inside the suite or the plugin under test` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| `${…}: a baseline grader's baseline_file must name a regular file` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| `${…}: a baseline grader's reference file is hard-linked (has another name) — keep a single copy` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| `${…}: a file in the plugin has more than one name (a hard link) — case definitions must not be reachable by another name; replace it with a copy` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| `${…}: a git directory of the plugin registers more linked worktrees than can be screened` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
 | `${…}: a hook on a streaming event returns its async generator; got ${…}` | Excluded: Plugin test kit and render-surface assertions (Client drawing, mounted tree, timers) |
 | `${…}: a hop member is not one of these handlers` | [/reference/tools/agents-and-tasks#errors](/reference/tools/agents-and-tasks#errors) |
-| `${…}: a plugin listed by the case lies inside an eval suite or another fenced directory — move it out of the suite` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| `${…}: a plugin, case or add_dirs path could not be resolved (${…}) — make it readable or remove it` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| `${…}: a plugins entry names the case directory, its graders or mocks, or a directory covering them — a plugin shipped with a case must sit in its own subdirectory` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
+| `${…}: a plugin listed by the case lies inside an eval suite or another fenced directory — move it out of the suite` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| `${…}: a plugin, case or add_dirs path could not be resolved (${…}) — make it readable or remove it` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| `${…}: a plugins entry names the case directory, its graders or mocks, or a directory covering them — a plugin shipped with a case must sit in its own subdirectory` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
 | `${…}: a tool server doesn't run a marketplace's headersHelper on its own: the command was not run and the marketplace was not fetched.` | [/extend/plugins/loading#errors](/extend/plugins/loading#errors) |
-| `${…}: a version-control directory or one of its pointers could not be resolved (${…}) — make it readable or remove it` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| `${…}: a version-control store holds too many top-level entries to examine — refusing to run` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| `${…}: an add_dir may only name fixture directories inside this case — not the case directory itself, its graders, a sibling case, an eval directory, or the plugin root` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| `${…}: an add_dir must name a directory, not a file` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| `${…}: an add_dirs entry points inside a directory that holds case definitions or version-control data of a plugin under test — point it at the fixtures themselves` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| `${…}: an add_dirs entry points into version-control metadata — point it at the fixtures themselves` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| `${…}: an agent responder needs a description of the server it plays as its body${…}` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
+| `${…}: a version-control directory or one of its pointers could not be resolved (${…}) — make it readable or remove it` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| `${…}: a version-control store holds too many top-level entries to examine — refusing to run` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| `${…}: an add_dir may only name fixture directories inside this case — not the case directory itself, its graders, a sibling case, an eval directory, or the plugin root` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| `${…}: an add_dir must name a directory, not a file` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| `${…}: an add_dirs entry points inside a directory that holds case definitions or version-control data of a plugin under test — point it at the fixtures themselves` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| `${…}: an add_dirs entry points into version-control metadata — point it at the fixtures themselves` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| `${…}: an agent responder needs a description of the server it plays as its body${…}` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
 | `${…}: an engine.create hook has no budget and its failure fails the load; .catch does not apply` | Excluded: Mod engine load and registration assertions (plugin module shape, hook results) |
-| `${…}: cannot list "${…}" under a plugin or eval directory — make it readable or remove it` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
+| `${…}: cannot list "${…}" under a plugin or eval directory — make it readable or remove it` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
 | `${…}: cannot read ${…} (${…})` | [/configure/permissions/sandbox#errors](/configure/permissions/sandbox#errors) |
-| `${…}: cannot tell what "${…}" under the eval directory is — make it readable or remove it` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
+| `${…}: cannot tell what "${…}" under the eval directory is — make it readable or remove it` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
 | `${…}: collection must be an odd-depth path of 1-15 segments and doc_id one segment, within the path byte cap, after permission or hook rewrites` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `${…}: cursor must be a non-empty string of at most ${…} characters` | Excluded: Internal consistency and refusal messages (bundled text, tool pairing, import size cap, host checks) |
-| `${…}: disappeared while loading` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
+| `${…}: disappeared while loading` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
 | `${…}: engine.create must return $ ({ ...await next(e), <noun>: { <event>() {} } }), not ${…}` | [/extend/mod-api#errors](/extend/mod-api#errors) |
 | `${…}: engine.create returned $.${…} changed; it is this plugin's identity, not a noun` | [/extend/mod-api#errors](/extend/mod-api#errors) |
-| `${…}: expected a saved tools/list response ({"tools": [{"name", "description", "inputSchema"}]})` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| `${…}: file identity cannot be verified on this filesystem; use a local volume` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
+| `${…}: expected a saved tools/list response ({"tools": [{"name", "description", "inputSchema"}]})` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| `${…}: file identity cannot be verified on this filesystem; use a local volume` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
 | `${…}: frontmatter must be a YAML object` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
 | `${…}: frontmatter must include "type:" (regex \| tool_order \| tool_used \| file_exists \| llm \| baseline)` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
 | `${…}: hooks module not loaded; ${…} (policy/scan)` | [/extend/mod-api#errors](/extend/mod-api#errors) |
@@ -2815,14 +2815,14 @@ Items: 4049.
 | `${…}: no such plugin folder` | Excluded: Plugin test kit and render-surface assertions (Client drawing, mounted tree, timers) |
 | `${…}: not a function` | Excluded: Plugin test kit and render-surface assertions (Client drawing, mounted tree, timers) |
 | `${…}: not a hooks module the binary carries; it loads in the plugin sandbox, not natively` | Excluded: Plugin test kit and render-surface assertions (Client drawing, mounted tree, timers) |
-| `${…}: not valid JSON (${…})` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
+| `${…}: not valid JSON (${…})` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
 | `${…}: on("${…}") ${…}` | [/extend/mod-api#errors](/extend/mod-api#errors) |
 | `${…}: on("${…}") after register() returned: on() is for register(); a hook may not register hooks` | [/extend/mod-api#errors](/extend/mod-api#errors) |
 | `${…}: on("${…}") registered twice` | [/extend/mod-api#errors](/extend/mod-api#errors) |
 | `${…}: on("${…}") takes (pattern, hook) or (pattern, matcher, hook); the hook must be a function` | [/extend/mod-api#errors](/extend/mod-api#errors) |
 | `${…}: on(): ${…}` | [/extend/mod-api#errors](/extend/mod-api#errors) |
 | `${…}: options.signal must be an AbortSignal` | Excluded: Mod engine load and registration assertions (plugin module shape, hook results) |
-| ``${…}: path "${…}" escapes the ${…} (`..` or an absolute path) — it must name something inside it`` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
+| ``${…}: path "${…}" escapes the ${…} (`..` or an absolute path) — it must name something inside it`` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
 | `${…}: read_file saves only to local directories — out_dir names a network path or cannot be resolved` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `${…}: registered "${…}", which is not an event` | [/extend/mod-api#errors](/extend/mod-api#errors) |
 | `${…}: registered ${…}` | [/extend/mod-api#errors](/extend/mod-api#errors) |
@@ -2839,7 +2839,7 @@ Items: 4049.
 | `${…}: returned a drawing with a function where plain data goes; a closure rides only in an element's onPress or onEvent` | [/extend/mod-api#errors](/extend/mod-api#errors) |
 | `${…}: send_task_message` | [/extend/headless#errors](/extend/headless#errors) |
 | `${…}: session_id is not a cloud session id` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
-| `${…}: still holds the scaffolded placeholder — write the tool's canned answer as the body` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
+| `${…}: still holds the scaffolded placeholder — write the tool's canned answer as the body` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
 | `${…}: still running — couldn't confirm restart, retry in a moment` | [/configure/cli/subcommands#errors](/configure/cli/subcommands#errors) |
 | `${…}: store file ${…} is malformed (${…})` | [/extend/mod-api#errors](/extend/mod-api#errors) |
 | `${…}: store file ${…} is malformed (the JSON is not an object)` | [/extend/mod-api#errors](/extend/mod-api#errors) |
@@ -2847,15 +2847,15 @@ Items: 4049.
 | `${…}: surface module ${…} ${…}` | Excluded: Plugin test kit and render-surface assertions (Client drawing, mounted tree, timers) |
 | `${…}: tenantId and clientId are required parameters.` | Excluded: Bundled Azure SDK (@azure/identity, @azure/core) |
 | `${…}: the ${…} surface draws no ${…}; ${…} reaches ${…}, so it is not an act on this surface` | Excluded: Plugin test kit and render-surface assertions (Client drawing, mounted tree, timers) |
-| `${…}: the case directory has more than one entry named "${…}" up to letter case — keep exactly one` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
+| `${…}: the case directory has more than one entry named "${…}" up to letter case — keep exactly one` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
 | `` ${…}: the drawing holds ${…} Clients (${…}); name one with `in` `` | Excluded: Plugin test kit and render-surface assertions (Client drawing, mounted tree, timers) |
 | `${…}: the drawing holds no Client${…}` | Excluded: Plugin test kit and render-surface assertions (Client drawing, mounted tree, timers) |
-| `${…}: the eval directory holds more than ${…} entries — move large fixtures out of it` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
+| `${…}: the eval directory holds more than ${…} entries — move large fixtures out of it` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
 | `${…}: the interface table names core as the owner of $.${…}, which core does not provide` | Excluded: Mod engine load and registration assertions (plugin module shape, hook results) |
 | `${…}: the matcher must be a plain object (a partial of e)` | Excluded: Mod engine load and registration assertions (plugin module shape, hook results) |
 | `${…}: the on("${…}") hook returned no result` | Excluded: Mod engine load and registration assertions (plugin module shape, hook results) |
-| `${…}: the repository layout keeps revealing further working trees — refusing to run` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| `${…}: too many directories to examine for eval manifests — refusing to run` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
+| `${…}: the repository layout keeps revealing further working trees — refusing to run` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| `${…}: too many directories to examine for eval manifests — refusing to run` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
 | `${…}: unknown frontmatter key "${…}" (expected one of: ${…})` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
 | `${…}: unloaded while its module loaded` | Excluded: Mod engine load and registration assertions (plugin module shape, hook results) |
 | `${…}: unloaded while its reload ${…} (${…}); not reloaded` | Excluded: Mod engine load and registration assertions (plugin module shape, hook results) |
@@ -4468,9 +4468,9 @@ Items: 4049.
 | `Symbol.dispose is not defined.` | Excluded: Bundled tslib helpers |
 | `Symlink loop detected in path: "${…}"` | [/configure/memory-and-rules#errors](/configure/memory-and-rules#errors) |
 | `Synchronous parse encountered promise.` | Excluded: Bundled Zod schema library |
-| `TODO: gradeCase` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| `TODO: loadCases` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| `TODO: runCase` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
+| `TODO: gradeCase` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| `TODO: loadCases` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| `TODO: runCase` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
 | ``Takes `servers`: http or sse entries with an https URL, each under a name that starts with org-connector-, has only letters, digits, . _ and -, has no two of . and _ in a row, ends in a letter or a di…`` | [/extend/hooks/configuration#errors](/extend/hooks/configuration#errors) |
 | `Takes a server name and one JSON-RPC request with an id` | [/extend/hooks/configuration#errors](/extend/hooks/configuration#errors) |
 | `Takes a server name, whether it is enabled, and optionally a request id of at most 64 characters` | [/extend/hooks/configuration#errors](/extend/hooks/configuration#errors) |
@@ -4966,7 +4966,7 @@ Items: 4049.
 | `adopted agent ${…} declares forked-skill ${…} but its scoping record is unusable (${…})` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `adopted agent ${…} declares forked-skill ${…} but its scoping record names a different skill` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `adopted agent ${…} has an unusable forked-skill scoping record (${…})` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
-| ``advance(${…}): ${…} timer ticks fired and more were due; advance in smaller steps, or check for an `every` the module re-arms on each tick`` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
+| ``advance(${…}): ${…} timer ticks fired and more were due; advance in smaller steps, or check for an `every` the module re-arms on each tick`` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
 | `after must be the next value from a previous list_assets result` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `agent stop sibling: no storage key for this path` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
 | `agent stop sibling: no storage key while diskless` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
@@ -5155,9 +5155,9 @@ Items: 4049.
 | `claude gateway requires the native binary. Install via https://claude.ai/install.sh instead of npm.` | [/configure/cli/subcommands#errors](/configure/cli/subcommands#errors) |
 | `claude gateway: ${…}` | [/configure/cli/subcommands#errors](/configure/cli/subcommands#errors) |
 | `claude plugin eval can't pass this session's API key to its test runs on Windows; set ANTHROPIC_API_KEY and run it again` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
-| `claude plugin test: ${…}` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| `claude plugin test: ${…} is not in ${…}` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| `claude plugin test: no *.test.ts or *.test.tsx under ${…}` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
+| `claude plugin test: ${…}` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| `claude plugin test: ${…} is not in ${…}` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| `claude plugin test: no *.test.ts or *.test.tsx under ${…}` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
 | `claude-code-remote serves only add_repo, check_repo_access, list_repos, register_repo_root under your organization's MCP policy` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `claude-test: installedRoot() was called before the plugin's texts were loaded. Await loadContent() first.` | Excluded: Plugin test kit and render-surface assertions (Client drawing, mounted tree, timers) |
 | `claude.ai MCP proxy is not available on third-party providers` | [/extend/mcp/runtime#errors](/extend/mcp/runtime#errors) |
@@ -5220,7 +5220,7 @@ Items: 4049.
 | `could not tell the current branch for {branch}: spell the branch out` | [/reference/tools/shell-and-web#errors](/reference/tools/shell-and-web#errors) |
 | `could not tell which ${…} repository {owner}/{repo} is: set GH_REPO=${…}OWNER/REPO or spell the repository out in the endpoint${…}` | [/reference/tools/shell-and-web#errors](/reference/tools/shell-and-web#errors) |
 | `could not tell which ${…}repository {owner}/{repo} is: set GH_REPO=OWNER/REPO or spell the repository out in the endpoint${…}` | [/reference/tools/shell-and-web#errors](/reference/tools/shell-and-web#errors) |
-| `could not write the identity line to the run call log — refusing to serve unidentified` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
+| `could not write the identity line to the run call log — refusing to serve unidentified` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
 | `couldn't check whether ${…} was created from an Artifact type (${…}) — retry` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `couldn't check whether ${…} was created from an Artifact type (its settings read answered 404; ${…}) — retry` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `couldn't remove ${…} — ${…}` | [/configure/cli/subcommands#errors](/configure/cli/subcommands#errors) |
@@ -5359,8 +5359,8 @@ Items: 4049.
 | `enumeration deadline reached` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
 | `environment ${…} is not loaded` | Excluded: Coding-error guards: a provider, delegate, or controller used before it is bound, and test-only setters |
 | `environment secret is missing the ccr:pool_id claim — cannot derive the environment ID for spawn-hint polling` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
-| `eval mock stand-in: agent relay failed: ${…}` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| `eval mock stand-in: could not write the abort record to the call log` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
+| `eval mock stand-in: agent relay failed: ${…}` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| `eval mock stand-in: could not write the abort record to the call log` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
 | `exclusive unions (z.xor)` | Excluded: Bundled Zod schema library |
 | `executor must be a function.` | Excluded: Bundled undici HTTP client |
 | `exp field using invalid format` | Excluded: Bundled Google auth library (google-auth-library) |
@@ -5696,7 +5696,7 @@ Items: 4049.
 | `missing JWE Algorithm (alg) in JWE Header` | Excluded: Bundled jose library (JWT, JWS, JWE, JWK) |
 | `missing JWE Encryption Algorithm (enc) in JWE Header` | Excluded: Bundled jose library (JWT, JWS, JWE, JWK) |
 | `missing required "${…}" claim` | Excluded: Bundled jose library (JWT, JWS, JWE, JWK) |
-| `missing spec path` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
+| `missing spec path` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
 | `mocks is not a directory` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
 | `mocks/ has ${…} entries (cap: ${…})` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
 | `mocks/ is a symbolic link whose target does not exist` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
@@ -5954,8 +5954,8 @@ Items: 4049.
 | `refreshWorkSecret callback is not provided.` | [/extend/headless#errors](/extend/headless#errors) |
 | `refused by its name or place (${…}): ${…}` | [/reference/tools/files#errors](/reference/tools/files#errors) |
 | `refusing a redirect whose Location is not a URL` | [/reference/tools/shell-and-web#errors](/reference/tools/shell-and-web#errors) |
-| `refusing to ${…}: ${…} resolves outside the flow directory` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| `refusing to ${…}: flow root not resolved yet` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
+| `refusing to ${…}: ${…} resolves outside the flow directory` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| `refusing to ${…}: flow root not resolved yet` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
 | `refusing to create the download folders: this is supported only on Linux` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
 | `refusing to derive a messaging key name for a non-canonical socket path` | [/configure/cli/flags#errors](/configure/cli/flags#errors) |
 | `refusing to export a git config entry with shell-active characters` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
@@ -6115,9 +6115,9 @@ Items: 4049.
 | `spawn-runner hook at ${…} is not a regular file` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
 | `spawn-runner hook at ${…} is not executable (chmod +x ${…})` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
 | `spawn-runner hook not found at ${…} — the orchestrator cannot start without it (${…})` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
-| `spec file does not match the hash the harness launched this stand-in with — refusing to serve it` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| `spec file is over the size limit the harness writes — refusing to read it` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| `spec path is not a regular file — refusing to read it` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
+| `spec file does not match the hash the harness launched this stand-in with — refusing to serve it` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| `spec file is over the size limit the harness writes — refusing to read it` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| `spec path is not a regular file — refusing to read it` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
 | `spread not allowed in meta` | [/reference/tools/agents-and-tasks#errors](/reference/tools/agents-and-tasks#errors) |
 | `staging block exited without a staging file` | Excluded: Internal staging check |
 | `start_shell_task: ${…}` | Excluded: Internal start_shell_task control request, which only a cloud worker answers |
@@ -6162,9 +6162,9 @@ Items: 4049.
 | `target must be an object` | Excluded: Bundled undici HTTP client |
 | `template interpolation not allowed in meta` | [/reference/tools/agents-and-tasks#errors](/reference/tools/agents-and-tasks#errors) |
 | `template prepare timed out` | [/extend/hooks/configuration#errors](/extend/hooks/configuration#errors) |
-| `test(name, { plugins }): "${…}" is no plugin name (lowercase letters, digits and dashes)` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| `test(name, { plugins }): ${…} is loaded twice` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| `` test(name, { plugins }): ${…}'s register is written `register(on) { ... }` `` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
+| `test(name, { plugins }): "${…}" is no plugin name (lowercase letters, digits and dashes)` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| `test(name, { plugins }): ${…} is loaded twice` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| `` test(name, { plugins }): ${…}'s register is written `register(on) { ... }` `` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
 | `text contains invisible or control characters, or a run of exotic blanks (non-breaking/ideographic spaces, braille blanks), that consent surfaces cannot display faithfully — note this includes the joi…` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `text is ${…} bytes of UTF-8 after permission or hook rewrites — the limit is ${…}. Shorten the reply.` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `text is empty or visually blank after permission or hook rewrites — a reply no approval surface could display is not posted` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
@@ -6216,8 +6216,8 @@ Items: 4049.
 | `the journal holds no mark after it was written` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
 | `the kept directory is not the one the harness created` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
 | `the kit answered results of the wrong shape` | Excluded: Plugin test kit and render-surface assertions (Client drawing, mounted tree, timers) |
-| `the kit's ${…} imports ${…}, which is no module of it` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
-| `the kit's ${…} imports ${…}, which is outside the kit` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
+| `the kit's ${…} imports ${…}, which is no module of it` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| `the kit's ${…} imports ${…}, which is outside the kit` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
 | `the managed-settings path was overridden` | Excluded: Managed settings read and device registry assertions |
 | `the measurement returned no data` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `the measurement returned too much data` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
@@ -6448,7 +6448,7 @@ Items: 4049.
 | `wrapWithSandbox() returns a shell string and is not supported on Windows. Use SandboxManager.wrapWithSandboxArgv() and spawn the result with {shell: false}.` | [/configure/permissions/sandbox#errors](/configure/permissions/sandbox#errors) |
 | `write returned 0 bytes with data remaining` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
 | `writeRemoteAgentMetadata: storage write failed` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
-| `writeRunMocks: agent responders need the agent service` | [/extend/mod-api/testing#errors](/extend/mod-api/testing#errors) |
+| `writeRunMocks: agent responders need the agent service` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
 | `write_files with localPath requires a plan finalized with localDir. Re-run finalize_plan with the bundle directory.` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `write_files: ${…} has both data and localPath` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `write_files: ${…} has neither data nor localPath` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
@@ -8109,210 +8109,210 @@ Items: 204.
 
 | Item | Where |
 | --- | --- |
-| `AbovePrompt` | [Keybindings](../configure/keybindings.md) |
-| `AbovePromptInput` | [Keybindings](../configure/keybindings.md) |
-| `AbovePromptSelect` | [Keybindings](../configure/keybindings.md) |
-| `Agents` | [Keybindings](../configure/keybindings.md) |
-| `Attachments` | [Keybindings](../configure/keybindings.md) |
-| `Autocomplete` | [Keybindings](../configure/keybindings.md) |
-| `Chat` | [Keybindings](../configure/keybindings.md) |
-| `Confirmation` | [Keybindings](../configure/keybindings.md) |
-| `DiffDialog` | [Keybindings](../configure/keybindings.md) |
-| `DiffPanel` | [Keybindings](../configure/keybindings.md) |
-| `EffortSlider` | [Keybindings](../configure/keybindings.md) |
-| `FeedbackSurvey` | [Keybindings](../configure/keybindings.md) |
-| `Footer` | [Keybindings](../configure/keybindings.md) |
-| `Global` | [Keybindings](../configure/keybindings.md) |
-| `Help` | [Keybindings](../configure/keybindings.md) |
-| `HistorySearch` | [Keybindings](../configure/keybindings.md) |
-| `MessageSelector` | [Keybindings](../configure/keybindings.md) |
-| `ModelPicker` | [Keybindings](../configure/keybindings.md) |
-| `Pane` | [Keybindings](../configure/keybindings.md) |
-| `PaneField` | [Keybindings](../configure/keybindings.md) |
-| `Plugin` | [Keybindings](../configure/keybindings.md) |
-| `ProactivityMenu` | [Keybindings](../configure/keybindings.md) |
-| `Scroll` | [Keybindings](../configure/keybindings.md) |
-| `Select` | [Keybindings](../configure/keybindings.md) |
-| `Settings` | [Keybindings](../configure/keybindings.md) |
-| `Tabs` | [Keybindings](../configure/keybindings.md) |
-| `Task` | [Keybindings](../configure/keybindings.md) |
-| `ThemePicker` | [Keybindings](../configure/keybindings.md) |
-| `Transcript` | [Keybindings](../configure/keybindings.md) |
-| `abovePrompt:focus` | [/configure/keybindings#chat](/configure/keybindings#chat) |
-| `abovePrompt:highlightNext` | [/configure/keybindings#abovepromptselect](/configure/keybindings#abovepromptselect) |
-| `abovePrompt:highlightPrevious` | [/configure/keybindings#abovepromptselect](/configure/keybindings#abovepromptselect) |
-| `abovePrompt:leave` | [/configure/keybindings#aboveprompt](/configure/keybindings#aboveprompt) |
-| `abovePrompt:next` | [/configure/keybindings#aboveprompt](/configure/keybindings#aboveprompt) |
-| `abovePrompt:press` | [/configure/keybindings#aboveprompt](/configure/keybindings#aboveprompt) |
-| `abovePrompt:previous` | [/configure/keybindings#aboveprompt](/configure/keybindings#aboveprompt) |
-| `abovePrompt:toggle` | [/configure/keybindings#chat](/configure/keybindings#chat) |
-| `agents:find` | [/configure/keybindings#agents](/configure/keybindings#agents) |
-| `agents:nextGroup` | [/configure/keybindings#agents](/configure/keybindings#agents) |
-| `agents:previousGroup` | [/configure/keybindings#agents](/configure/keybindings#agents) |
-| `agents:rename` | [/configure/keybindings#agents](/configure/keybindings#agents) |
-| `agents:setGroup` | [Keybindings](../configure/keybindings.md) |
-| `agents:switchView` | [/configure/keybindings#agents](/configure/keybindings#agents) |
-| `agents:togglePin` | [/configure/keybindings#agents](/configure/keybindings#agents) |
-| `app:cycleDiffBase` | [/configure/keybindings#diffpanel](/configure/keybindings#diffpanel) |
-| `app:diffFileListDown` | [/configure/keybindings#global](/configure/keybindings#global) |
-| `app:diffFileListUp` | [/configure/keybindings#global](/configure/keybindings#global) |
-| `app:exit` | [/configure/keybindings#global](/configure/keybindings#global) |
-| `app:interrupt` | [/configure/keybindings#global](/configure/keybindings#global) |
-| `app:openArtifact` | [/configure/keybindings#global](/configure/keybindings#global) |
-| `app:redraw` | [Keybindings](../configure/keybindings.md) |
-| `app:toggleBrief` | [/configure/keybindings#global](/configure/keybindings#global) |
-| `app:toggleDiffNoiseFilter` | [Keybindings](../configure/keybindings.md) |
-| `app:toggleDiffPreSession` | [Keybindings](../configure/keybindings.md) |
-| `app:toggleReplTab` | [Keybindings](../configure/keybindings.md) |
-| `app:toggleTerminal` | [Keybindings](../configure/keybindings.md) |
-| `app:toggleTodos` | [/configure/keybindings#global](/configure/keybindings#global) |
-| `app:toggleTranscript` | [/configure/keybindings#global](/configure/keybindings#global) |
-| `attachments:exit` | [/configure/keybindings#attachments](/configure/keybindings#attachments) |
-| `attachments:next` | [/configure/keybindings#attachments](/configure/keybindings#attachments) |
-| `attachments:previous` | [/configure/keybindings#attachments](/configure/keybindings#attachments) |
-| `attachments:remove` | [/configure/keybindings#attachments](/configure/keybindings#attachments) |
-| `autocomplete:accept` | [/configure/keybindings#autocomplete](/configure/keybindings#autocomplete) |
-| `autocomplete:dismiss` | [/configure/keybindings#autocomplete](/configure/keybindings#autocomplete) |
-| `autocomplete:next` | [/configure/keybindings#autocomplete](/configure/keybindings#autocomplete) |
-| `autocomplete:previous` | [/configure/keybindings#autocomplete](/configure/keybindings#autocomplete) |
-| `chat:attentionDown` | [Keybindings](../configure/keybindings.md) |
-| `chat:attentionUp` | [Keybindings](../configure/keybindings.md) |
-| `chat:cancel` | [/configure/keybindings#chat](/configure/keybindings#chat) |
-| `chat:clearInput` | [/configure/keybindings#chat](/configure/keybindings#chat) |
-| `chat:clearScreen` | [/configure/keybindings#chat](/configure/keybindings#chat) |
-| `chat:cycleMode` | [/configure/keybindings#chat](/configure/keybindings#chat) |
-| `chat:cycleProactivity` | [Keybindings](../configure/keybindings.md) |
-| `chat:decreaseEffort` | [Keybindings](../configure/keybindings.md) |
-| `chat:defaultToNewerModel` | [/configure/keybindings#chat](/configure/keybindings#chat) |
-| `chat:externalEditor` | [/configure/keybindings#chat](/configure/keybindings#chat) |
-| `chat:fastMode` | [/configure/keybindings#chat](/configure/keybindings#chat) |
-| `chat:imagePaste` | [/configure/keybindings#chat](/configure/keybindings#chat) |
-| `chat:increaseEffort` | [Keybindings](../configure/keybindings.md) |
-| `chat:killAgents` | [/configure/keybindings#chat](/configure/keybindings#chat) |
-| `chat:modelPicker` | [/configure/keybindings#chat](/configure/keybindings#chat) |
-| `chat:newline` | [/configure/keybindings#chat](/configure/keybindings#chat) |
-| `chat:queueSubmit` | [/configure/keybindings#chat](/configure/keybindings#chat) |
-| `chat:sendNow` | [/configure/keybindings#chat](/configure/keybindings#chat) |
-| `chat:stash` | [/configure/keybindings#chat](/configure/keybindings#chat) |
-| `chat:submit` | [/configure/keybindings#chat](/configure/keybindings#chat) |
-| `chat:thinkingToggle` | [/configure/keybindings#chat](/configure/keybindings#chat) |
-| `chat:undo` | [/configure/keybindings#chat](/configure/keybindings#chat) |
-| `chat:workflowKeywordToggle` | [/configure/keybindings#chat](/configure/keybindings#chat) |
-| `confirm:cycleMode` | [/configure/keybindings#confirmation](/configure/keybindings#confirmation) |
-| `confirm:next` | [/configure/keybindings#confirmation](/configure/keybindings#confirmation) |
-| `confirm:nextField` | [/configure/keybindings#confirmation](/configure/keybindings#confirmation) |
-| `confirm:no` | [/configure/keybindings#confirmation](/configure/keybindings#confirmation) |
-| `confirm:previous` | [/configure/keybindings#confirmation](/configure/keybindings#confirmation) |
-| `confirm:previousField` | [Keybindings](../configure/keybindings.md) |
-| `confirm:toggle` | [/configure/keybindings#confirmation](/configure/keybindings#confirmation) |
-| `confirm:yes` | [/configure/keybindings#confirmation](/configure/keybindings#confirmation) |
-| `diff:back` | [Keybindings](../configure/keybindings.md) |
-| `diff:dismiss` | [/configure/keybindings#diffdialog](/configure/keybindings#diffdialog) |
-| `diff:nextFile` | [/configure/keybindings#diffdialog](/configure/keybindings#diffdialog) |
-| `diff:nextSource` | [/configure/keybindings#diffdialog](/configure/keybindings#diffdialog) |
-| `diff:previousFile` | [/configure/keybindings#diffdialog](/configure/keybindings#diffdialog) |
-| `diff:previousSource` | [/configure/keybindings#diffdialog](/configure/keybindings#diffdialog) |
-| `effortSlider:decreaseEffort` | [/configure/keybindings#effortslider](/configure/keybindings#effortslider) |
-| `effortSlider:increaseEffort` | [/configure/keybindings#effortslider](/configure/keybindings#effortslider) |
-| `effortSlider:thisSessionOnly` | [/configure/keybindings#effortslider](/configure/keybindings#effortslider) |
-| `effortSlider:toggleUltracode` | [/configure/keybindings#effortslider](/configure/keybindings#effortslider) |
-| `feedbackSurvey:bad` | [/configure/keybindings#feedbacksurvey](/configure/keybindings#feedbacksurvey) |
-| `feedbackSurvey:fine` | [/configure/keybindings#feedbacksurvey](/configure/keybindings#feedbacksurvey) |
-| `feedbackSurvey:good` | [/configure/keybindings#feedbacksurvey](/configure/keybindings#feedbacksurvey) |
-| `footer:clearSelection` | [/configure/keybindings#footer](/configure/keybindings#footer) |
-| `footer:close` | [/configure/keybindings#footer](/configure/keybindings#footer) |
-| `footer:dismiss` | [Keybindings](../configure/keybindings.md) |
-| `footer:down` | [/configure/keybindings#footer](/configure/keybindings#footer) |
-| `footer:next` | [/configure/keybindings#footer](/configure/keybindings#footer) |
-| `footer:openSelected` | [/configure/keybindings#footer](/configure/keybindings#footer) |
-| `footer:previous` | [/configure/keybindings#footer](/configure/keybindings#footer) |
-| `footer:up` | [/configure/keybindings#footer](/configure/keybindings#footer) |
-| `help:dismiss` | [/configure/keybindings#help](/configure/keybindings#help) |
-| `history:next` | [/configure/keybindings#chat](/configure/keybindings#chat) |
-| `history:previous` | [/configure/keybindings#chat](/configure/keybindings#chat) |
-| `history:search` | [/configure/keybindings#global](/configure/keybindings#global) |
-| `historySearch:accept` | [/configure/keybindings#historysearch](/configure/keybindings#historysearch) |
-| `historySearch:cancel` | [/configure/keybindings#historysearch](/configure/keybindings#historysearch) |
-| `historySearch:cycleScope` | [/configure/keybindings#historysearch](/configure/keybindings#historysearch) |
-| `historySearch:execute` | [/configure/keybindings#historysearch](/configure/keybindings#historysearch) |
-| `historySearch:next` | [/configure/keybindings#historysearch](/configure/keybindings#historysearch) |
-| `modelPicker:decreaseEffort` | [/configure/keybindings#modelpicker](/configure/keybindings#modelpicker) |
-| `modelPicker:increaseEffort` | [/configure/keybindings#modelpicker](/configure/keybindings#modelpicker) |
-| `modelPicker:thisSessionOnly` | [/configure/keybindings#modelpicker](/configure/keybindings#modelpicker) |
-| `pane:bottom` | [/configure/keybindings#aboveprompt](/configure/keybindings#aboveprompt) |
-| `pane:close` | [/configure/keybindings#pane](/configure/keybindings#pane) |
-| `pane:grow` | [/configure/keybindings#pane](/configure/keybindings#pane) |
-| `pane:next` | [Keybindings](../configure/keybindings.md) |
-| `pane:pageDown` | [/configure/keybindings#aboveprompt](/configure/keybindings#aboveprompt) |
-| `pane:pageUp` | [/configure/keybindings#aboveprompt](/configure/keybindings#aboveprompt) |
-| `pane:previous` | [Keybindings](../configure/keybindings.md) |
-| `pane:scrollDown` | [/configure/keybindings#aboveprompt](/configure/keybindings#aboveprompt) |
-| `pane:scrollUp` | [/configure/keybindings#aboveprompt](/configure/keybindings#aboveprompt) |
-| `pane:shrink` | [/configure/keybindings#pane](/configure/keybindings#pane) |
-| `pane:top` | [/configure/keybindings#aboveprompt](/configure/keybindings#aboveprompt) |
-| `permission:toggleDebug` | [Keybindings](../configure/keybindings.md) |
-| `plugin:cycleMarketplace` | [/configure/keybindings#plugin](/configure/keybindings#plugin) |
-| `plugin:favorite` | [/configure/keybindings#plugin](/configure/keybindings#plugin) |
-| `plugin:install` | [/configure/keybindings#plugin](/configure/keybindings#plugin) |
-| `plugin:toggle` | [/configure/keybindings#plugin](/configure/keybindings#plugin) |
-| `proactivityMenu:nextMode` | [Keybindings](../configure/keybindings.md) |
-| `proactivityMenu:previousMode` | [Keybindings](../configure/keybindings.md) |
-| `scroll:bottom` | [/configure/keybindings#transcript](/configure/keybindings#transcript) |
-| `scroll:fullPageDown` | [/configure/keybindings#transcript](/configure/keybindings#transcript) |
-| `scroll:fullPageUp` | [/configure/keybindings#transcript](/configure/keybindings#transcript) |
-| `scroll:halfPageDown` | [/configure/keybindings#transcript](/configure/keybindings#transcript) |
-| `scroll:halfPageUp` | [/configure/keybindings#transcript](/configure/keybindings#transcript) |
-| `scroll:lineDown` | [/configure/keybindings#transcript](/configure/keybindings#transcript) |
-| `scroll:lineUp` | [/configure/keybindings#transcript](/configure/keybindings#transcript) |
-| `scroll:pageDown` | [/configure/keybindings#diffdialog](/configure/keybindings#diffdialog) |
-| `scroll:pageUp` | [/configure/keybindings#diffdialog](/configure/keybindings#diffdialog) |
-| `scroll:top` | [/configure/keybindings#transcript](/configure/keybindings#transcript) |
-| `select:accept` | [/configure/keybindings#settings](/configure/keybindings#settings) |
-| `select:cancel` | [/configure/keybindings#select](/configure/keybindings#select) |
-| `select:first` | [/configure/keybindings#settings](/configure/keybindings#settings) |
-| `select:last` | [/configure/keybindings#settings](/configure/keybindings#settings) |
-| `select:next` | [/configure/keybindings#settings](/configure/keybindings#settings) |
-| `select:pageDown` | [/configure/keybindings#settings](/configure/keybindings#settings) |
-| `select:pageUp` | [/configure/keybindings#settings](/configure/keybindings#settings) |
-| `select:previous` | [/configure/keybindings#settings](/configure/keybindings#settings) |
-| `selection:clear` | [Keybindings](../configure/keybindings.md) |
-| `selection:copy` | [/configure/keybindings#scroll](/configure/keybindings#scroll) |
-| `selection:extendDown` | [/configure/keybindings#scroll](/configure/keybindings#scroll) |
-| `selection:extendLeft` | [/configure/keybindings#scroll](/configure/keybindings#scroll) |
-| `selection:extendLineEnd` | [/configure/keybindings#scroll](/configure/keybindings#scroll) |
-| `selection:extendLineStart` | [/configure/keybindings#scroll](/configure/keybindings#scroll) |
-| `selection:extendRight` | [/configure/keybindings#scroll](/configure/keybindings#scroll) |
-| `selection:extendUp` | [/configure/keybindings#scroll](/configure/keybindings#scroll) |
-| `settings:fixUsage` | [/configure/keybindings#settings](/configure/keybindings#settings) |
-| `settings:periodDay` | [/configure/keybindings#settings](/configure/keybindings#settings) |
-| `settings:periodWeek` | [/configure/keybindings#settings](/configure/keybindings#settings) |
-| `settings:retry` | [/configure/keybindings#settings](/configure/keybindings#settings) |
-| `settings:search` | [/configure/keybindings#settings](/configure/keybindings#settings) |
-| `settings:sortByTokens` | [/configure/keybindings#settings](/configure/keybindings#settings) |
-| `strip:jump1` | [Keybindings](../configure/keybindings.md) |
-| `strip:jump2` | [Keybindings](../configure/keybindings.md) |
-| `strip:jump3` | [Keybindings](../configure/keybindings.md) |
-| `strip:jump4` | [Keybindings](../configure/keybindings.md) |
-| `strip:jump5` | [Keybindings](../configure/keybindings.md) |
-| `strip:jump6` | [Keybindings](../configure/keybindings.md) |
-| `strip:jump7` | [Keybindings](../configure/keybindings.md) |
-| `strip:jump8` | [Keybindings](../configure/keybindings.md) |
-| `strip:jump9` | [Keybindings](../configure/keybindings.md) |
-| `strip:new` | [Keybindings](../configure/keybindings.md) |
-| `strip:next` | [Keybindings](../configure/keybindings.md) |
-| `strip:previous` | [Keybindings](../configure/keybindings.md) |
-| `strip:tabNext` | [Keybindings](../configure/keybindings.md) |
-| `strip:tabPrevious` | [Keybindings](../configure/keybindings.md) |
-| `strip:toggle` | [Keybindings](../configure/keybindings.md) |
-| `strip:viewAll` | [Keybindings](../configure/keybindings.md) |
-| `tabs:next` | [/configure/keybindings#tabs](/configure/keybindings#tabs) |
-| `tabs:previous` | [/configure/keybindings#tabs](/configure/keybindings#tabs) |
-| `task:background` | [/configure/keybindings#task](/configure/keybindings#task) |
-| `theme:editCustom` | [/configure/keybindings#themepicker](/configure/keybindings#themepicker) |
-| `theme:toggleSyntaxHighlighting` | [/configure/keybindings#themepicker](/configure/keybindings#themepicker) |
-| `transcript:exit` | [/configure/keybindings#transcript](/configure/keybindings#transcript) |
-| `transcript:toggleShowAll` | [/configure/keybindings#transcript](/configure/keybindings#transcript) |
-| `voice:pushToTalk` | [/configure/keybindings#chat](/configure/keybindings#chat) |
+| `AbovePrompt` | [Keybindings](../configure/keybindings/index.md) |
+| `AbovePromptInput` | [Keybindings](../configure/keybindings/index.md) |
+| `AbovePromptSelect` | [Keybindings](../configure/keybindings/index.md) |
+| `Agents` | [Keybindings](../configure/keybindings/index.md) |
+| `Attachments` | [Keybindings](../configure/keybindings/index.md) |
+| `Autocomplete` | [Keybindings](../configure/keybindings/index.md) |
+| `Chat` | [Keybindings](../configure/keybindings/index.md) |
+| `Confirmation` | [Keybindings](../configure/keybindings/index.md) |
+| `DiffDialog` | [Keybindings](../configure/keybindings/index.md) |
+| `DiffPanel` | [Keybindings](../configure/keybindings/index.md) |
+| `EffortSlider` | [Keybindings](../configure/keybindings/index.md) |
+| `FeedbackSurvey` | [Keybindings](../configure/keybindings/index.md) |
+| `Footer` | [Keybindings](../configure/keybindings/index.md) |
+| `Global` | [Keybindings](../configure/keybindings/index.md) |
+| `Help` | [Keybindings](../configure/keybindings/index.md) |
+| `HistorySearch` | [Keybindings](../configure/keybindings/index.md) |
+| `MessageSelector` | [Keybindings](../configure/keybindings/index.md) |
+| `ModelPicker` | [Keybindings](../configure/keybindings/index.md) |
+| `Pane` | [Keybindings](../configure/keybindings/index.md) |
+| `PaneField` | [Keybindings](../configure/keybindings/index.md) |
+| `Plugin` | [Keybindings](../configure/keybindings/index.md) |
+| `ProactivityMenu` | [Keybindings](../configure/keybindings/index.md) |
+| `Scroll` | [Keybindings](../configure/keybindings/index.md) |
+| `Select` | [Keybindings](../configure/keybindings/index.md) |
+| `Settings` | [Keybindings](../configure/keybindings/index.md) |
+| `Tabs` | [Keybindings](../configure/keybindings/index.md) |
+| `Task` | [Keybindings](../configure/keybindings/index.md) |
+| `ThemePicker` | [Keybindings](../configure/keybindings/index.md) |
+| `Transcript` | [Keybindings](../configure/keybindings/index.md) |
+| `abovePrompt:focus` | [/configure/keybindings/default-keys#chat](/configure/keybindings/default-keys#chat) |
+| `abovePrompt:highlightNext` | [/configure/keybindings/panels-and-dialogs#abovepromptselect](/configure/keybindings/panels-and-dialogs#abovepromptselect) |
+| `abovePrompt:highlightPrevious` | [/configure/keybindings/panels-and-dialogs#abovepromptselect](/configure/keybindings/panels-and-dialogs#abovepromptselect) |
+| `abovePrompt:leave` | [/configure/keybindings/panels-and-dialogs#aboveprompt](/configure/keybindings/panels-and-dialogs#aboveprompt) |
+| `abovePrompt:next` | [/configure/keybindings/panels-and-dialogs#aboveprompt](/configure/keybindings/panels-and-dialogs#aboveprompt) |
+| `abovePrompt:press` | [/configure/keybindings/panels-and-dialogs#aboveprompt](/configure/keybindings/panels-and-dialogs#aboveprompt) |
+| `abovePrompt:previous` | [/configure/keybindings/panels-and-dialogs#aboveprompt](/configure/keybindings/panels-and-dialogs#aboveprompt) |
+| `abovePrompt:toggle` | [/configure/keybindings/default-keys#chat](/configure/keybindings/default-keys#chat) |
+| `agents:find` | [/configure/keybindings/panels-and-dialogs#agents](/configure/keybindings/panels-and-dialogs#agents) |
+| `agents:nextGroup` | [/configure/keybindings/panels-and-dialogs#agents](/configure/keybindings/panels-and-dialogs#agents) |
+| `agents:previousGroup` | [/configure/keybindings/panels-and-dialogs#agents](/configure/keybindings/panels-and-dialogs#agents) |
+| `agents:rename` | [/configure/keybindings/panels-and-dialogs#agents](/configure/keybindings/panels-and-dialogs#agents) |
+| `agents:setGroup` | [Unbound Actions and Reserved Keys](../configure/keybindings/unbound-and-reserved.md) |
+| `agents:switchView` | [/configure/keybindings/panels-and-dialogs#agents](/configure/keybindings/panels-and-dialogs#agents) |
+| `agents:togglePin` | [/configure/keybindings/panels-and-dialogs#agents](/configure/keybindings/panels-and-dialogs#agents) |
+| `app:cycleDiffBase` | [/configure/keybindings/panels-and-dialogs#diffpanel](/configure/keybindings/panels-and-dialogs#diffpanel) |
+| `app:diffFileListDown` | [/configure/keybindings/default-keys#global](/configure/keybindings/default-keys#global) |
+| `app:diffFileListUp` | [/configure/keybindings/default-keys#global](/configure/keybindings/default-keys#global) |
+| `app:exit` | [/configure/keybindings/default-keys#global](/configure/keybindings/default-keys#global) |
+| `app:interrupt` | [/configure/keybindings/default-keys#global](/configure/keybindings/default-keys#global) |
+| `app:openArtifact` | [/configure/keybindings/default-keys#global](/configure/keybindings/default-keys#global) |
+| `app:redraw` | [Unbound Actions and Reserved Keys](../configure/keybindings/unbound-and-reserved.md) |
+| `app:toggleBrief` | [/configure/keybindings/default-keys#global](/configure/keybindings/default-keys#global) |
+| `app:toggleDiffNoiseFilter` | [Unbound Actions and Reserved Keys](../configure/keybindings/unbound-and-reserved.md) |
+| `app:toggleDiffPreSession` | [Unbound Actions and Reserved Keys](../configure/keybindings/unbound-and-reserved.md) |
+| `app:toggleReplTab` | [Unbound Actions and Reserved Keys](../configure/keybindings/unbound-and-reserved.md) |
+| `app:toggleTerminal` | [Unbound Actions and Reserved Keys](../configure/keybindings/unbound-and-reserved.md) |
+| `app:toggleTodos` | [/configure/keybindings/default-keys#global](/configure/keybindings/default-keys#global) |
+| `app:toggleTranscript` | [/configure/keybindings/default-keys#global](/configure/keybindings/default-keys#global) |
+| `attachments:exit` | [/configure/keybindings/default-keys#attachments](/configure/keybindings/default-keys#attachments) |
+| `attachments:next` | [/configure/keybindings/default-keys#attachments](/configure/keybindings/default-keys#attachments) |
+| `attachments:previous` | [/configure/keybindings/default-keys#attachments](/configure/keybindings/default-keys#attachments) |
+| `attachments:remove` | [/configure/keybindings/default-keys#attachments](/configure/keybindings/default-keys#attachments) |
+| `autocomplete:accept` | [/configure/keybindings/default-keys#autocomplete](/configure/keybindings/default-keys#autocomplete) |
+| `autocomplete:dismiss` | [/configure/keybindings/default-keys#autocomplete](/configure/keybindings/default-keys#autocomplete) |
+| `autocomplete:next` | [/configure/keybindings/default-keys#autocomplete](/configure/keybindings/default-keys#autocomplete) |
+| `autocomplete:previous` | [/configure/keybindings/default-keys#autocomplete](/configure/keybindings/default-keys#autocomplete) |
+| `chat:attentionDown` | [Unbound Actions and Reserved Keys](../configure/keybindings/unbound-and-reserved.md) |
+| `chat:attentionUp` | [Unbound Actions and Reserved Keys](../configure/keybindings/unbound-and-reserved.md) |
+| `chat:cancel` | [/configure/keybindings/default-keys#chat](/configure/keybindings/default-keys#chat) |
+| `chat:clearInput` | [/configure/keybindings/default-keys#chat](/configure/keybindings/default-keys#chat) |
+| `chat:clearScreen` | [/configure/keybindings/default-keys#chat](/configure/keybindings/default-keys#chat) |
+| `chat:cycleMode` | [/configure/keybindings/default-keys#chat](/configure/keybindings/default-keys#chat) |
+| `chat:cycleProactivity` | [Unbound Actions and Reserved Keys](../configure/keybindings/unbound-and-reserved.md) |
+| `chat:decreaseEffort` | [Unbound Actions and Reserved Keys](../configure/keybindings/unbound-and-reserved.md) |
+| `chat:defaultToNewerModel` | [/configure/keybindings/default-keys#chat](/configure/keybindings/default-keys#chat) |
+| `chat:externalEditor` | [/configure/keybindings/default-keys#chat](/configure/keybindings/default-keys#chat) |
+| `chat:fastMode` | [/configure/keybindings/default-keys#chat](/configure/keybindings/default-keys#chat) |
+| `chat:imagePaste` | [/configure/keybindings/default-keys#chat](/configure/keybindings/default-keys#chat) |
+| `chat:increaseEffort` | [Unbound Actions and Reserved Keys](../configure/keybindings/unbound-and-reserved.md) |
+| `chat:killAgents` | [/configure/keybindings/default-keys#chat](/configure/keybindings/default-keys#chat) |
+| `chat:modelPicker` | [/configure/keybindings/default-keys#chat](/configure/keybindings/default-keys#chat) |
+| `chat:newline` | [/configure/keybindings/default-keys#chat](/configure/keybindings/default-keys#chat) |
+| `chat:queueSubmit` | [/configure/keybindings/default-keys#chat](/configure/keybindings/default-keys#chat) |
+| `chat:sendNow` | [/configure/keybindings/default-keys#chat](/configure/keybindings/default-keys#chat) |
+| `chat:stash` | [/configure/keybindings/default-keys#chat](/configure/keybindings/default-keys#chat) |
+| `chat:submit` | [/configure/keybindings/default-keys#chat](/configure/keybindings/default-keys#chat) |
+| `chat:thinkingToggle` | [/configure/keybindings/default-keys#chat](/configure/keybindings/default-keys#chat) |
+| `chat:undo` | [/configure/keybindings/default-keys#chat](/configure/keybindings/default-keys#chat) |
+| `chat:workflowKeywordToggle` | [/configure/keybindings/default-keys#chat](/configure/keybindings/default-keys#chat) |
+| `confirm:cycleMode` | [/configure/keybindings/default-keys#confirmation](/configure/keybindings/default-keys#confirmation) |
+| `confirm:next` | [/configure/keybindings/default-keys#confirmation](/configure/keybindings/default-keys#confirmation) |
+| `confirm:nextField` | [/configure/keybindings/default-keys#confirmation](/configure/keybindings/default-keys#confirmation) |
+| `confirm:no` | [/configure/keybindings/default-keys#confirmation](/configure/keybindings/default-keys#confirmation) |
+| `confirm:previous` | [/configure/keybindings/default-keys#confirmation](/configure/keybindings/default-keys#confirmation) |
+| `confirm:previousField` | [Unbound Actions and Reserved Keys](../configure/keybindings/unbound-and-reserved.md) |
+| `confirm:toggle` | [/configure/keybindings/default-keys#confirmation](/configure/keybindings/default-keys#confirmation) |
+| `confirm:yes` | [/configure/keybindings/default-keys#confirmation](/configure/keybindings/default-keys#confirmation) |
+| `diff:back` | [Unbound Actions and Reserved Keys](../configure/keybindings/unbound-and-reserved.md) |
+| `diff:dismiss` | [/configure/keybindings/panels-and-dialogs#diffdialog](/configure/keybindings/panels-and-dialogs#diffdialog) |
+| `diff:nextFile` | [/configure/keybindings/panels-and-dialogs#diffdialog](/configure/keybindings/panels-and-dialogs#diffdialog) |
+| `diff:nextSource` | [/configure/keybindings/panels-and-dialogs#diffdialog](/configure/keybindings/panels-and-dialogs#diffdialog) |
+| `diff:previousFile` | [/configure/keybindings/panels-and-dialogs#diffdialog](/configure/keybindings/panels-and-dialogs#diffdialog) |
+| `diff:previousSource` | [/configure/keybindings/panels-and-dialogs#diffdialog](/configure/keybindings/panels-and-dialogs#diffdialog) |
+| `effortSlider:decreaseEffort` | [/configure/keybindings/panels-and-dialogs#effortslider](/configure/keybindings/panels-and-dialogs#effortslider) |
+| `effortSlider:increaseEffort` | [/configure/keybindings/panels-and-dialogs#effortslider](/configure/keybindings/panels-and-dialogs#effortslider) |
+| `effortSlider:thisSessionOnly` | [/configure/keybindings/panels-and-dialogs#effortslider](/configure/keybindings/panels-and-dialogs#effortslider) |
+| `effortSlider:toggleUltracode` | [/configure/keybindings/panels-and-dialogs#effortslider](/configure/keybindings/panels-and-dialogs#effortslider) |
+| `feedbackSurvey:bad` | [/configure/keybindings/panels-and-dialogs#feedbacksurvey](/configure/keybindings/panels-and-dialogs#feedbacksurvey) |
+| `feedbackSurvey:fine` | [/configure/keybindings/panels-and-dialogs#feedbacksurvey](/configure/keybindings/panels-and-dialogs#feedbacksurvey) |
+| `feedbackSurvey:good` | [/configure/keybindings/panels-and-dialogs#feedbacksurvey](/configure/keybindings/panels-and-dialogs#feedbacksurvey) |
+| `footer:clearSelection` | [/configure/keybindings/default-keys#footer](/configure/keybindings/default-keys#footer) |
+| `footer:close` | [/configure/keybindings/default-keys#footer](/configure/keybindings/default-keys#footer) |
+| `footer:dismiss` | [Unbound Actions and Reserved Keys](../configure/keybindings/unbound-and-reserved.md) |
+| `footer:down` | [/configure/keybindings/default-keys#footer](/configure/keybindings/default-keys#footer) |
+| `footer:next` | [/configure/keybindings/default-keys#footer](/configure/keybindings/default-keys#footer) |
+| `footer:openSelected` | [/configure/keybindings/default-keys#footer](/configure/keybindings/default-keys#footer) |
+| `footer:previous` | [/configure/keybindings/default-keys#footer](/configure/keybindings/default-keys#footer) |
+| `footer:up` | [/configure/keybindings/default-keys#footer](/configure/keybindings/default-keys#footer) |
+| `help:dismiss` | [/configure/keybindings/default-keys#help](/configure/keybindings/default-keys#help) |
+| `history:next` | [/configure/keybindings/default-keys#chat](/configure/keybindings/default-keys#chat) |
+| `history:previous` | [/configure/keybindings/default-keys#chat](/configure/keybindings/default-keys#chat) |
+| `history:search` | [/configure/keybindings/default-keys#global](/configure/keybindings/default-keys#global) |
+| `historySearch:accept` | [/configure/keybindings/default-keys#historysearch](/configure/keybindings/default-keys#historysearch) |
+| `historySearch:cancel` | [/configure/keybindings/default-keys#historysearch](/configure/keybindings/default-keys#historysearch) |
+| `historySearch:cycleScope` | [/configure/keybindings/default-keys#historysearch](/configure/keybindings/default-keys#historysearch) |
+| `historySearch:execute` | [/configure/keybindings/default-keys#historysearch](/configure/keybindings/default-keys#historysearch) |
+| `historySearch:next` | [/configure/keybindings/default-keys#historysearch](/configure/keybindings/default-keys#historysearch) |
+| `modelPicker:decreaseEffort` | [/configure/keybindings/panels-and-dialogs#modelpicker](/configure/keybindings/panels-and-dialogs#modelpicker) |
+| `modelPicker:increaseEffort` | [/configure/keybindings/panels-and-dialogs#modelpicker](/configure/keybindings/panels-and-dialogs#modelpicker) |
+| `modelPicker:thisSessionOnly` | [/configure/keybindings/panels-and-dialogs#modelpicker](/configure/keybindings/panels-and-dialogs#modelpicker) |
+| `pane:bottom` | [/configure/keybindings/panels-and-dialogs#aboveprompt](/configure/keybindings/panels-and-dialogs#aboveprompt) |
+| `pane:close` | [/configure/keybindings/panels-and-dialogs#pane](/configure/keybindings/panels-and-dialogs#pane) |
+| `pane:grow` | [/configure/keybindings/panels-and-dialogs#pane](/configure/keybindings/panels-and-dialogs#pane) |
+| `pane:next` | [Unbound Actions and Reserved Keys](../configure/keybindings/unbound-and-reserved.md) |
+| `pane:pageDown` | [/configure/keybindings/panels-and-dialogs#aboveprompt](/configure/keybindings/panels-and-dialogs#aboveprompt) |
+| `pane:pageUp` | [/configure/keybindings/panels-and-dialogs#aboveprompt](/configure/keybindings/panels-and-dialogs#aboveprompt) |
+| `pane:previous` | [Unbound Actions and Reserved Keys](../configure/keybindings/unbound-and-reserved.md) |
+| `pane:scrollDown` | [/configure/keybindings/panels-and-dialogs#aboveprompt](/configure/keybindings/panels-and-dialogs#aboveprompt) |
+| `pane:scrollUp` | [/configure/keybindings/panels-and-dialogs#aboveprompt](/configure/keybindings/panels-and-dialogs#aboveprompt) |
+| `pane:shrink` | [/configure/keybindings/panels-and-dialogs#pane](/configure/keybindings/panels-and-dialogs#pane) |
+| `pane:top` | [/configure/keybindings/panels-and-dialogs#aboveprompt](/configure/keybindings/panels-and-dialogs#aboveprompt) |
+| `permission:toggleDebug` | [Unbound Actions and Reserved Keys](../configure/keybindings/unbound-and-reserved.md) |
+| `plugin:cycleMarketplace` | [/configure/keybindings/panels-and-dialogs#plugin](/configure/keybindings/panels-and-dialogs#plugin) |
+| `plugin:favorite` | [/configure/keybindings/panels-and-dialogs#plugin](/configure/keybindings/panels-and-dialogs#plugin) |
+| `plugin:install` | [/configure/keybindings/panels-and-dialogs#plugin](/configure/keybindings/panels-and-dialogs#plugin) |
+| `plugin:toggle` | [/configure/keybindings/panels-and-dialogs#plugin](/configure/keybindings/panels-and-dialogs#plugin) |
+| `proactivityMenu:nextMode` | [Unbound Actions and Reserved Keys](../configure/keybindings/unbound-and-reserved.md) |
+| `proactivityMenu:previousMode` | [Unbound Actions and Reserved Keys](../configure/keybindings/unbound-and-reserved.md) |
+| `scroll:bottom` | [/configure/keybindings/default-keys#transcript](/configure/keybindings/default-keys#transcript) |
+| `scroll:fullPageDown` | [/configure/keybindings/default-keys#transcript](/configure/keybindings/default-keys#transcript) |
+| `scroll:fullPageUp` | [/configure/keybindings/default-keys#transcript](/configure/keybindings/default-keys#transcript) |
+| `scroll:halfPageDown` | [/configure/keybindings/default-keys#transcript](/configure/keybindings/default-keys#transcript) |
+| `scroll:halfPageUp` | [/configure/keybindings/default-keys#transcript](/configure/keybindings/default-keys#transcript) |
+| `scroll:lineDown` | [/configure/keybindings/default-keys#transcript](/configure/keybindings/default-keys#transcript) |
+| `scroll:lineUp` | [/configure/keybindings/default-keys#transcript](/configure/keybindings/default-keys#transcript) |
+| `scroll:pageDown` | [/configure/keybindings/panels-and-dialogs#diffdialog](/configure/keybindings/panels-and-dialogs#diffdialog) |
+| `scroll:pageUp` | [/configure/keybindings/panels-and-dialogs#diffdialog](/configure/keybindings/panels-and-dialogs#diffdialog) |
+| `scroll:top` | [/configure/keybindings/default-keys#transcript](/configure/keybindings/default-keys#transcript) |
+| `select:accept` | [/configure/keybindings/default-keys#settings](/configure/keybindings/default-keys#settings) |
+| `select:cancel` | [/configure/keybindings/panels-and-dialogs#select](/configure/keybindings/panels-and-dialogs#select) |
+| `select:first` | [/configure/keybindings/default-keys#settings](/configure/keybindings/default-keys#settings) |
+| `select:last` | [/configure/keybindings/default-keys#settings](/configure/keybindings/default-keys#settings) |
+| `select:next` | [/configure/keybindings/default-keys#settings](/configure/keybindings/default-keys#settings) |
+| `select:pageDown` | [/configure/keybindings/default-keys#settings](/configure/keybindings/default-keys#settings) |
+| `select:pageUp` | [/configure/keybindings/default-keys#settings](/configure/keybindings/default-keys#settings) |
+| `select:previous` | [/configure/keybindings/default-keys#settings](/configure/keybindings/default-keys#settings) |
+| `selection:clear` | [Unbound Actions and Reserved Keys](../configure/keybindings/unbound-and-reserved.md) |
+| `selection:copy` | [/configure/keybindings/panels-and-dialogs#scroll](/configure/keybindings/panels-and-dialogs#scroll) |
+| `selection:extendDown` | [/configure/keybindings/panels-and-dialogs#scroll](/configure/keybindings/panels-and-dialogs#scroll) |
+| `selection:extendLeft` | [/configure/keybindings/panels-and-dialogs#scroll](/configure/keybindings/panels-and-dialogs#scroll) |
+| `selection:extendLineEnd` | [/configure/keybindings/panels-and-dialogs#scroll](/configure/keybindings/panels-and-dialogs#scroll) |
+| `selection:extendLineStart` | [/configure/keybindings/panels-and-dialogs#scroll](/configure/keybindings/panels-and-dialogs#scroll) |
+| `selection:extendRight` | [/configure/keybindings/panels-and-dialogs#scroll](/configure/keybindings/panels-and-dialogs#scroll) |
+| `selection:extendUp` | [/configure/keybindings/panels-and-dialogs#scroll](/configure/keybindings/panels-and-dialogs#scroll) |
+| `settings:fixUsage` | [/configure/keybindings/default-keys#settings](/configure/keybindings/default-keys#settings) |
+| `settings:periodDay` | [/configure/keybindings/default-keys#settings](/configure/keybindings/default-keys#settings) |
+| `settings:periodWeek` | [/configure/keybindings/default-keys#settings](/configure/keybindings/default-keys#settings) |
+| `settings:retry` | [/configure/keybindings/default-keys#settings](/configure/keybindings/default-keys#settings) |
+| `settings:search` | [/configure/keybindings/default-keys#settings](/configure/keybindings/default-keys#settings) |
+| `settings:sortByTokens` | [/configure/keybindings/default-keys#settings](/configure/keybindings/default-keys#settings) |
+| `strip:jump1` | [Unbound Actions and Reserved Keys](../configure/keybindings/unbound-and-reserved.md) |
+| `strip:jump2` | [Unbound Actions and Reserved Keys](../configure/keybindings/unbound-and-reserved.md) |
+| `strip:jump3` | [Unbound Actions and Reserved Keys](../configure/keybindings/unbound-and-reserved.md) |
+| `strip:jump4` | [Unbound Actions and Reserved Keys](../configure/keybindings/unbound-and-reserved.md) |
+| `strip:jump5` | [Unbound Actions and Reserved Keys](../configure/keybindings/unbound-and-reserved.md) |
+| `strip:jump6` | [Unbound Actions and Reserved Keys](../configure/keybindings/unbound-and-reserved.md) |
+| `strip:jump7` | [Unbound Actions and Reserved Keys](../configure/keybindings/unbound-and-reserved.md) |
+| `strip:jump8` | [Unbound Actions and Reserved Keys](../configure/keybindings/unbound-and-reserved.md) |
+| `strip:jump9` | [Unbound Actions and Reserved Keys](../configure/keybindings/unbound-and-reserved.md) |
+| `strip:new` | [Unbound Actions and Reserved Keys](../configure/keybindings/unbound-and-reserved.md) |
+| `strip:next` | [Unbound Actions and Reserved Keys](../configure/keybindings/unbound-and-reserved.md) |
+| `strip:previous` | [Unbound Actions and Reserved Keys](../configure/keybindings/unbound-and-reserved.md) |
+| `strip:tabNext` | [Unbound Actions and Reserved Keys](../configure/keybindings/unbound-and-reserved.md) |
+| `strip:tabPrevious` | [Unbound Actions and Reserved Keys](../configure/keybindings/unbound-and-reserved.md) |
+| `strip:toggle` | [Unbound Actions and Reserved Keys](../configure/keybindings/unbound-and-reserved.md) |
+| `strip:viewAll` | [Unbound Actions and Reserved Keys](../configure/keybindings/unbound-and-reserved.md) |
+| `tabs:next` | [/configure/keybindings/default-keys#tabs](/configure/keybindings/default-keys#tabs) |
+| `tabs:previous` | [/configure/keybindings/default-keys#tabs](/configure/keybindings/default-keys#tabs) |
+| `task:background` | [/configure/keybindings/default-keys#task](/configure/keybindings/default-keys#task) |
+| `theme:editCustom` | [/configure/keybindings/default-keys#themepicker](/configure/keybindings/default-keys#themepicker) |
+| `theme:toggleSyntaxHighlighting` | [/configure/keybindings/default-keys#themepicker](/configure/keybindings/default-keys#themepicker) |
+| `transcript:exit` | [/configure/keybindings/default-keys#transcript](/configure/keybindings/default-keys#transcript) |
+| `transcript:toggleShowAll` | [/configure/keybindings/default-keys#transcript](/configure/keybindings/default-keys#transcript) |
+| `voice:pushToTalk` | [/configure/keybindings/default-keys#chat](/configure/keybindings/default-keys#chat) |
 
 ## Mod API
 
@@ -8320,237 +8320,237 @@ Items: 231.
 
 | Item | Where |
 | --- | --- |
-| `$.agent.list` | [Agent](../extend/mod-api/agent.md) |
-| `$.agent.register` | [Agent](../extend/mod-api/agent.md) |
-| `$.agent.spawn` | [Agent](../extend/mod-api/agent.md) |
-| `$.audio.play` | [Model, Audio, and MCP](../extend/mod-api/model-audio-mcp.md) |
-| `$.audio.speak` | [Model, Audio, and MCP](../extend/mod-api/model-audio-mcp.md) |
-| `$.clock.after` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/clock-http-process-env-settings.md) |
-| `$.clock.every` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/clock-http-process-env-settings.md) |
-| `$.clock.now` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/clock-http-process-env-settings.md) |
-| `$.clock.sleep` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/clock-http-process-env-settings.md) |
-| `$.command.list` | [Tool, Command, and Config](../extend/mod-api/tool-command-config.md) |
-| `$.command.register` | [Tool, Command, and Config](../extend/mod-api/tool-command-config.md) |
-| `$.command.run` | [Tool, Command, and Config](../extend/mod-api/tool-command-config.md) |
-| `$.config.list` | [Tool, Command, and Config](../extend/mod-api/tool-command-config.md) |
-| `$.config.set` | [Tool, Command, and Config](../extend/mod-api/tool-command-config.md) |
-| `$.env.get` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/clock-http-process-env-settings.md) |
-| `$.env.set` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/clock-http-process-env-settings.md) |
-| `$.fs.ancestors` | [Files, Store, and State](../extend/mod-api/fs-store-state.md) |
-| `$.fs.exists` | [Files, Store, and State](../extend/mod-api/fs-store-state.md) |
-| `$.fs.list` | [Files, Store, and State](../extend/mod-api/fs-store-state.md) |
-| `$.fs.read` | [Files, Store, and State](../extend/mod-api/fs-store-state.md) |
-| `$.fs.stat` | [Files, Store, and State](../extend/mod-api/fs-store-state.md) |
-| `$.fs.write` | [Files, Store, and State](../extend/mod-api/fs-store-state.md) |
-| `$.http.fetch` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/clock-http-process-env-settings.md) |
-| `$.mcp.call` | [Model, Audio, and MCP](../extend/mod-api/model-audio-mcp.md) |
-| `$.mcp.connect` | [Model, Audio, and MCP](../extend/mod-api/model-audio-mcp.md) |
-| `$.model.classify` | [Model, Audio, and MCP](../extend/mod-api/model-audio-mcp.md) |
-| `$.model.complete` | [Model, Audio, and MCP](../extend/mod-api/model-audio-mcp.md) |
-| `$.model.fork` | [Model, Audio, and MCP](../extend/mod-api/model-audio-mcp.md) |
-| `$.plugin.name` | [Plugin and Engine](../extend/mod-api/plugin.md) |
-| `$.plugin.root` | [Plugin and Engine](../extend/mod-api/plugin.md) |
-| `$.process.run` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/clock-http-process-env-settings.md) |
-| `$.process.spawn` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/clock-http-process-env-settings.md) |
-| `$.prompt.compose` | [Turn and Prompt](../extend/mod-api/turn-prompt.md) |
-| `$.prompt.fill` | [Turn and Prompt](../extend/mod-api/turn-prompt.md) |
-| `$.prompt.media` | [Turn and Prompt](../extend/mod-api/turn-prompt.md) |
-| `$.prompt.paint` | [Turn and Prompt](../extend/mod-api/turn-prompt.md) |
-| `$.prompt.read` | [Turn and Prompt](../extend/mod-api/turn-prompt.md) |
-| `$.prompt.submit` | [Turn and Prompt](../extend/mod-api/turn-prompt.md) |
-| `$.prompt.suggest` | [Turn and Prompt](../extend/mod-api/turn-prompt.md) |
-| `$.session.append` | [Session](../extend/mod-api/session.md) |
-| `$.session.authorize` | [Session](../extend/mod-api/session.md) |
-| `$.session.compact` | [Session](../extend/mod-api/session.md) |
-| `$.session.cwd` | [Session](../extend/mod-api/session.md) |
-| `$.session.id` | [Session](../extend/mod-api/session.md) |
-| `$.session.identity` | [Session](../extend/mod-api/session.md) |
-| `$.session.messages` | [Session](../extend/mod-api/session.md) |
-| `$.session.model` | [Session](../extend/mod-api/session.md) |
-| `$.session.repo` | [Session](../extend/mod-api/session.md) |
-| `$.session.root` | [Session](../extend/mod-api/session.md) |
-| `$.session.send` | [Session](../extend/mod-api/session.md) |
-| `$.session.surface` | [Session](../extend/mod-api/session.md) |
-| `$.session.surfaces` | [Session](../extend/mod-api/session.md) |
-| `$.session.turns` | [Session](../extend/mod-api/session.md) |
-| `$.session.usage` | [Session](../extend/mod-api/session.md) |
-| `$.session.version` | [Session](../extend/mod-api/session.md) |
-| `$.settings.read` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/clock-http-process-env-settings.md) |
-| `$.state.get` | [Files, Store, and State](../extend/mod-api/fs-store-state.md) |
-| `$.state.set` | [Files, Store, and State](../extend/mod-api/fs-store-state.md) |
-| `$.store.delete` | [Files, Store, and State](../extend/mod-api/fs-store-state.md) |
-| `$.store.get` | [Files, Store, and State](../extend/mod-api/fs-store-state.md) |
-| `$.store.keys` | [Files, Store, and State](../extend/mod-api/fs-store-state.md) |
-| `$.store.set` | [Files, Store, and State](../extend/mod-api/fs-store-state.md) |
-| `$.telemetry.log` | [Telemetry](../extend/mod-api/telemetry.md) |
-| `$.telemetry.mark` | [Telemetry](../extend/mod-api/telemetry.md) |
-| `$.tool.call` | [Tool, Command, and Config](../extend/mod-api/tool-command-config.md) |
-| `$.tool.check` | [Tool, Command, and Config](../extend/mod-api/tool-command-config.md) |
-| `$.tool.list` | [Tool, Command, and Config](../extend/mod-api/tool-command-config.md) |
-| `$.tool.register` | [Tool, Command, and Config](../extend/mod-api/tool-command-config.md) |
-| `$.turn.abort` | [Turn and Prompt](../extend/mod-api/turn-prompt.md) |
-| `$.ui.ask` | [UI Methods](../extend/mod-api/ui.md) |
-| `$.ui.blit` | [UI Methods](../extend/mod-api/ui.md) |
-| `$.ui.close` | [UI Methods](../extend/mod-api/ui.md) |
-| `$.ui.copy` | [UI Methods](../extend/mod-api/ui.md) |
-| `$.ui.focus` | [UI Methods](../extend/mod-api/ui.md) |
-| `$.ui.invalidate` | [UI Methods](../extend/mod-api/ui.md) |
-| `$.ui.log` | [UI Methods](../extend/mod-api/ui.md) |
-| `$.ui.notice` | [UI Methods](../extend/mod-api/ui.md) |
-| `$.ui.notify` | [UI Methods](../extend/mod-api/ui.md) |
-| `$.ui.open` | [UI Methods](../extend/mod-api/ui.md) |
-| `$.ui.panes` | [UI Methods](../extend/mod-api/ui.md) |
-| `$.ui.resolve` | [UI Methods](../extend/mod-api/ui.md) |
-| `$.ui.scroll` | [UI Methods](../extend/mod-api/ui.md) |
-| `$.ui.selection` | [UI Methods](../extend/mod-api/ui.md) |
-| `$.ui.status` | [UI Methods](../extend/mod-api/ui.md) |
+| `$.agent.list` | [Agent](../extend/mod-api/calls/agent.md) |
+| `$.agent.register` | [Agent](../extend/mod-api/calls/agent.md) |
+| `$.agent.spawn` | [Agent](../extend/mod-api/calls/agent.md) |
+| `$.audio.play` | [Model, Audio, and MCP](../extend/mod-api/calls/model-audio-mcp.md) |
+| `$.audio.speak` | [Model, Audio, and MCP](../extend/mod-api/calls/model-audio-mcp.md) |
+| `$.clock.after` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/calls/clock-http-process-env-settings.md) |
+| `$.clock.every` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/calls/clock-http-process-env-settings.md) |
+| `$.clock.now` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/calls/clock-http-process-env-settings.md) |
+| `$.clock.sleep` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/calls/clock-http-process-env-settings.md) |
+| `$.command.list` | [Tool, Command, and Config](../extend/mod-api/calls/tool-command-config.md) |
+| `$.command.register` | [Tool, Command, and Config](../extend/mod-api/calls/tool-command-config.md) |
+| `$.command.run` | [Tool, Command, and Config](../extend/mod-api/calls/tool-command-config.md) |
+| `$.config.list` | [Tool, Command, and Config](../extend/mod-api/calls/tool-command-config.md) |
+| `$.config.set` | [Tool, Command, and Config](../extend/mod-api/calls/tool-command-config.md) |
+| `$.env.get` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/calls/clock-http-process-env-settings.md) |
+| `$.env.set` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/calls/clock-http-process-env-settings.md) |
+| `$.fs.ancestors` | [Files, Store, and State](../extend/mod-api/calls/fs-store-state.md) |
+| `$.fs.exists` | [Files, Store, and State](../extend/mod-api/calls/fs-store-state.md) |
+| `$.fs.list` | [Files, Store, and State](../extend/mod-api/calls/fs-store-state.md) |
+| `$.fs.read` | [Files, Store, and State](../extend/mod-api/calls/fs-store-state.md) |
+| `$.fs.stat` | [Files, Store, and State](../extend/mod-api/calls/fs-store-state.md) |
+| `$.fs.write` | [Files, Store, and State](../extend/mod-api/calls/fs-store-state.md) |
+| `$.http.fetch` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/calls/clock-http-process-env-settings.md) |
+| `$.mcp.call` | [Model, Audio, and MCP](../extend/mod-api/calls/model-audio-mcp.md) |
+| `$.mcp.connect` | [Model, Audio, and MCP](../extend/mod-api/calls/model-audio-mcp.md) |
+| `$.model.classify` | [Model, Audio, and MCP](../extend/mod-api/calls/model-audio-mcp.md) |
+| `$.model.complete` | [Model, Audio, and MCP](../extend/mod-api/calls/model-audio-mcp.md) |
+| `$.model.fork` | [Model, Audio, and MCP](../extend/mod-api/calls/model-audio-mcp.md) |
+| `$.plugin.name` | [Plugin and Engine](../extend/mod-api/calls/plugin.md) |
+| `$.plugin.root` | [Plugin and Engine](../extend/mod-api/calls/plugin.md) |
+| `$.process.run` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/calls/clock-http-process-env-settings.md) |
+| `$.process.spawn` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/calls/clock-http-process-env-settings.md) |
+| `$.prompt.compose` | [Turn and Prompt](../extend/mod-api/calls/turn-prompt.md) |
+| `$.prompt.fill` | [Turn and Prompt](../extend/mod-api/calls/turn-prompt.md) |
+| `$.prompt.media` | [Turn and Prompt](../extend/mod-api/calls/turn-prompt.md) |
+| `$.prompt.paint` | [Turn and Prompt](../extend/mod-api/calls/turn-prompt.md) |
+| `$.prompt.read` | [Turn and Prompt](../extend/mod-api/calls/turn-prompt.md) |
+| `$.prompt.submit` | [Turn and Prompt](../extend/mod-api/calls/turn-prompt.md) |
+| `$.prompt.suggest` | [Turn and Prompt](../extend/mod-api/calls/turn-prompt.md) |
+| `$.session.append` | [Session](../extend/mod-api/calls/session.md) |
+| `$.session.authorize` | [Session](../extend/mod-api/calls/session.md) |
+| `$.session.compact` | [Session](../extend/mod-api/calls/session.md) |
+| `$.session.cwd` | [Session](../extend/mod-api/calls/session.md) |
+| `$.session.id` | [Session](../extend/mod-api/calls/session.md) |
+| `$.session.identity` | [Session](../extend/mod-api/calls/session.md) |
+| `$.session.messages` | [Session](../extend/mod-api/calls/session.md) |
+| `$.session.model` | [Session](../extend/mod-api/calls/session.md) |
+| `$.session.repo` | [Session](../extend/mod-api/calls/session.md) |
+| `$.session.root` | [Session](../extend/mod-api/calls/session.md) |
+| `$.session.send` | [Session](../extend/mod-api/calls/session.md) |
+| `$.session.surface` | [Session](../extend/mod-api/calls/session.md) |
+| `$.session.surfaces` | [Session](../extend/mod-api/calls/session.md) |
+| `$.session.turns` | [Session](../extend/mod-api/calls/session.md) |
+| `$.session.usage` | [Session](../extend/mod-api/calls/session.md) |
+| `$.session.version` | [Session](../extend/mod-api/calls/session.md) |
+| `$.settings.read` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/calls/clock-http-process-env-settings.md) |
+| `$.state.get` | [Files, Store, and State](../extend/mod-api/calls/fs-store-state.md) |
+| `$.state.set` | [Files, Store, and State](../extend/mod-api/calls/fs-store-state.md) |
+| `$.store.delete` | [Files, Store, and State](../extend/mod-api/calls/fs-store-state.md) |
+| `$.store.get` | [Files, Store, and State](../extend/mod-api/calls/fs-store-state.md) |
+| `$.store.keys` | [Files, Store, and State](../extend/mod-api/calls/fs-store-state.md) |
+| `$.store.set` | [Files, Store, and State](../extend/mod-api/calls/fs-store-state.md) |
+| `$.telemetry.log` | [Telemetry](../extend/mod-api/calls/telemetry.md) |
+| `$.telemetry.mark` | [Telemetry](../extend/mod-api/calls/telemetry.md) |
+| `$.tool.call` | [Tool, Command, and Config](../extend/mod-api/calls/tool-command-config.md) |
+| `$.tool.check` | [Tool, Command, and Config](../extend/mod-api/calls/tool-command-config.md) |
+| `$.tool.list` | [Tool, Command, and Config](../extend/mod-api/calls/tool-command-config.md) |
+| `$.tool.register` | [Tool, Command, and Config](../extend/mod-api/calls/tool-command-config.md) |
+| `$.turn.abort` | [Turn and Prompt](../extend/mod-api/calls/turn-prompt.md) |
+| `$.ui.ask` | [UI Methods](../extend/mod-api/ui/ui.md) |
+| `$.ui.blit` | [UI Methods](../extend/mod-api/ui/ui.md) |
+| `$.ui.close` | [UI Methods](../extend/mod-api/ui/ui.md) |
+| `$.ui.copy` | [UI Methods](../extend/mod-api/ui/ui.md) |
+| `$.ui.focus` | [UI Methods](../extend/mod-api/ui/ui.md) |
+| `$.ui.invalidate` | [UI Methods](../extend/mod-api/ui/ui.md) |
+| `$.ui.log` | [UI Methods](../extend/mod-api/ui/ui.md) |
+| `$.ui.notice` | [UI Methods](../extend/mod-api/ui/ui.md) |
+| `$.ui.notify` | [UI Methods](../extend/mod-api/ui/ui.md) |
+| `$.ui.open` | [UI Methods](../extend/mod-api/ui/ui.md) |
+| `$.ui.panes` | [UI Methods](../extend/mod-api/ui/ui.md) |
+| `$.ui.resolve` | [UI Methods](../extend/mod-api/ui/ui.md) |
+| `$.ui.scroll` | [UI Methods](../extend/mod-api/ui/ui.md) |
+| `$.ui.selection` | [UI Methods](../extend/mod-api/ui/ui.md) |
+| `$.ui.status` | [UI Methods](../extend/mod-api/ui/ui.md) |
 | `$.ui.toast` | [Files, Nouns, and Gates](../extend/mod-api/nouns-and-gates.md) |
-| `$.ui.view` | [UI Methods](../extend/mod-api/ui.md) |
-| `agent.list` | [Agent](../extend/mod-api/agent.md) |
-| `agent.offer` | [Agent](../extend/mod-api/agent.md) |
-| `agent.register` | [Agent](../extend/mod-api/agent.md) |
-| `agent.spawn` | [Agent](../extend/mod-api/agent.md) |
-| `attribution.text` | [Hooks and the Hook Chain](../extend/mod-api/hooks.md) |
-| `audio.play` | [Model, Audio, and MCP](../extend/mod-api/model-audio-mcp.md) |
-| `audio.speak` | [Model, Audio, and MCP](../extend/mod-api/model-audio-mcp.md) |
-| `classic.ConfigChange` | [Classic Events](../extend/mod-api/classic-events.md) |
-| `classic.CwdChanged` | [Classic Events](../extend/mod-api/classic-events.md) |
-| `classic.DirectoryAdded` | [Classic Events](../extend/mod-api/classic-events.md) |
-| `classic.Elicitation` | [Classic Events](../extend/mod-api/classic-events.md) |
-| `classic.ElicitationResult` | [Classic Events](../extend/mod-api/classic-events.md) |
-| `classic.FileChanged` | [Classic Events](../extend/mod-api/classic-events.md) |
-| `classic.InstructionsLoaded` | [Classic Events](../extend/mod-api/classic-events.md) |
-| `classic.MessageDisplay` | [Classic Events](../extend/mod-api/classic-events.md) |
-| `classic.Notification` | [Classic Events](../extend/mod-api/classic-events.md) |
-| `classic.PermissionDenied` | [Classic Events](../extend/mod-api/classic-events.md) |
-| `classic.PermissionRequest` | [Classic Events](../extend/mod-api/classic-events.md) |
-| `classic.PostCompact` | [Classic Events](../extend/mod-api/classic-events.md) |
-| `classic.PostModelSwitch` | [Classic Events](../extend/mod-api/classic-events.md) |
-| `classic.PostToolBatch` | [Classic Events](../extend/mod-api/classic-events.md) |
-| `classic.PostToolUse` | [Classic Events](../extend/mod-api/classic-events.md) |
-| `classic.PostToolUseFailure` | [Classic Events](../extend/mod-api/classic-events.md) |
-| `classic.PreCompact` | [Classic Events](../extend/mod-api/classic-events.md) |
-| `classic.PreModelSwitch` | [Classic Events](../extend/mod-api/classic-events.md) |
-| `classic.PreToolUse` | [Classic Events](../extend/mod-api/classic-events.md) |
-| `classic.SessionEnd` | [Classic Events](../extend/mod-api/classic-events.md) |
-| `classic.SessionStart` | [Classic Events](../extend/mod-api/classic-events.md) |
-| `classic.Setup` | [Classic Events](../extend/mod-api/classic-events.md) |
-| `classic.Stop` | [Classic Events](../extend/mod-api/classic-events.md) |
-| `classic.StopFailure` | [Classic Events](../extend/mod-api/classic-events.md) |
-| `classic.SubagentStart` | [Classic Events](../extend/mod-api/classic-events.md) |
-| `classic.SubagentStop` | [Classic Events](../extend/mod-api/classic-events.md) |
-| `classic.TaskCompleted` | [Classic Events](../extend/mod-api/classic-events.md) |
-| `classic.TaskCreated` | [Classic Events](../extend/mod-api/classic-events.md) |
-| `classic.TeammateIdle` | [Classic Events](../extend/mod-api/classic-events.md) |
-| `classic.UserPromptExpansion` | [Classic Events](../extend/mod-api/classic-events.md) |
-| `classic.UserPromptSubmit` | [Classic Events](../extend/mod-api/classic-events.md) |
-| `classic.WorktreeCreate` | [Classic Events](../extend/mod-api/classic-events.md) |
-| `classic.WorktreeRemove` | [Classic Events](../extend/mod-api/classic-events.md) |
-| `clock.after` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/clock-http-process-env-settings.md) |
-| `clock.every` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/clock-http-process-env-settings.md) |
-| `clock.now` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/clock-http-process-env-settings.md) |
-| `clock.sleep` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/clock-http-process-env-settings.md) |
-| `command.describe` | [Hooks and the Hook Chain](../extend/mod-api/hooks.md) |
-| `command.list` | [Tool, Command, and Config](../extend/mod-api/tool-command-config.md) |
-| `command.register` | [Tool, Command, and Config](../extend/mod-api/tool-command-config.md) |
-| `command.run` | [Hooks and the Hook Chain](../extend/mod-api/hooks.md) |
-| `config.describe` | [Hooks and the Hook Chain](../extend/mod-api/hooks.md) |
-| `config.list` | [Tool, Command, and Config](../extend/mod-api/tool-command-config.md) |
-| `config.set` | [Hooks and the Hook Chain](../extend/mod-api/hooks.md) |
-| `engine.create` | [Hooks and the Hook Chain](../extend/mod-api/hooks.md) |
-| `env.get` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/clock-http-process-env-settings.md) |
-| `env.set` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/clock-http-process-env-settings.md) |
-| `fs.ancestors` | [Files, Store, and State](../extend/mod-api/fs-store-state.md) |
-| `fs.exists` | [Files, Store, and State](../extend/mod-api/fs-store-state.md) |
-| `fs.list` | [Files, Store, and State](../extend/mod-api/fs-store-state.md) |
-| `fs.read` | [Files, Store, and State](../extend/mod-api/fs-store-state.md) |
-| `fs.stat` | [Files, Store, and State](../extend/mod-api/fs-store-state.md) |
-| `fs.write` | [Files, Store, and State](../extend/mod-api/fs-store-state.md) |
-| `http.fetch` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/clock-http-process-env-settings.md) |
-| `mcp.call` | [Model, Audio, and MCP](../extend/mod-api/model-audio-mcp.md) |
-| `mcp.connect` | [Model, Audio, and MCP](../extend/mod-api/model-audio-mcp.md) |
-| `model.classify` | [Model, Audio, and MCP](../extend/mod-api/model-audio-mcp.md) |
-| `model.complete` | [Model, Audio, and MCP](../extend/mod-api/model-audio-mcp.md) |
-| `model.fork` | [Model, Audio, and MCP](../extend/mod-api/model-audio-mcp.md) |
-| `plugin.register` | [Hooks and the Hook Chain](../extend/mod-api/hooks.md) |
-| `process.run` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/clock-http-process-env-settings.md) |
-| `process.spawn` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/clock-http-process-env-settings.md) |
-| `prompt.attachment` | [Turn and Prompt](../extend/mod-api/turn-prompt.md) |
-| `prompt.autocomplete` | [Turn and Prompt](../extend/mod-api/turn-prompt.md) |
-| `prompt.change` | [Turn and Prompt](../extend/mod-api/turn-prompt.md) |
-| `prompt.compose` | [Turn and Prompt](../extend/mod-api/turn-prompt.md) |
-| `prompt.context` | [Turn and Prompt](../extend/mod-api/turn-prompt.md) |
-| `prompt.edit` | [Hooks and the Hook Chain](../extend/mod-api/hooks.md) |
-| `prompt.fill` | [Turn and Prompt](../extend/mod-api/turn-prompt.md) |
-| `prompt.mention` | [Hooks and the Hook Chain](../extend/mod-api/hooks.md) |
-| `prompt.paint` | [Turn and Prompt](../extend/mod-api/turn-prompt.md) |
-| `prompt.read` | [Turn and Prompt](../extend/mod-api/turn-prompt.md) |
-| `prompt.section` | [Turn and Prompt](../extend/mod-api/turn-prompt.md) |
-| `prompt.submit` | [Hooks and the Hook Chain](../extend/mod-api/hooks.md) |
-| `prompt.suggest` | [Turn and Prompt](../extend/mod-api/turn-prompt.md) |
-| `session.append` | [Session](../extend/mod-api/session.md) |
-| `session.attach` | [Session](../extend/mod-api/session.md) |
-| `session.authorize` | [Session](../extend/mod-api/session.md) |
-| `session.compact` | [Session](../extend/mod-api/session.md) |
-| `session.cwd` | [Session](../extend/mod-api/session.md) |
-| `session.detach` | [Session](../extend/mod-api/session.md) |
-| `session.end` | [Hooks and the Hook Chain](../extend/mod-api/hooks.md) |
-| `session.id` | [Session](../extend/mod-api/session.md) |
-| `session.identity` | [Session](../extend/mod-api/session.md) |
-| `session.measure` | [Session](../extend/mod-api/session.md) |
-| `session.messages` | [Session](../extend/mod-api/session.md) |
-| `session.model` | [Session](../extend/mod-api/session.md) |
-| `session.receive` | [Session](../extend/mod-api/session.md) |
-| `session.repo` | [Session](../extend/mod-api/session.md) |
-| `session.root` | [Session](../extend/mod-api/session.md) |
-| `session.send` | [Session](../extend/mod-api/session.md) |
-| `session.start` | [Session](../extend/mod-api/session.md) |
-| `session.surface` | [Session](../extend/mod-api/session.md) |
-| `session.surfaces` | [Session](../extend/mod-api/session.md) |
-| `session.turns` | [Session](../extend/mod-api/session.md) |
-| `session.usage` | [Session](../extend/mod-api/session.md) |
-| `session.version` | [Session](../extend/mod-api/session.md) |
-| `settings.read` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/clock-http-process-env-settings.md) |
-| `skill.prompt` | [Hooks and the Hook Chain](../extend/mod-api/hooks.md) |
-| `state.get` | [Files, Store, and State](../extend/mod-api/fs-store-state.md) |
-| `state.set` | [Files, Store, and State](../extend/mod-api/fs-store-state.md) |
-| `store.delete` | [Files, Store, and State](../extend/mod-api/fs-store-state.md) |
-| `store.get` | [Files, Store, and State](../extend/mod-api/fs-store-state.md) |
-| `store.keys` | [Files, Store, and State](../extend/mod-api/fs-store-state.md) |
-| `store.set` | [Files, Store, and State](../extend/mod-api/fs-store-state.md) |
-| `telemetry.log` | [Telemetry](../extend/mod-api/telemetry.md) |
-| `telemetry.mark` | [Telemetry](../extend/mod-api/telemetry.md) |
-| `tool.call` | [Hooks and the Hook Chain](../extend/mod-api/hooks.md) |
-| `tool.check` | [Hooks and the Hook Chain](../extend/mod-api/hooks.md) |
-| `tool.describe` | [Tool, Command, and Config](../extend/mod-api/tool-command-config.md) |
-| `tool.list` | [Tool, Command, and Config](../extend/mod-api/tool-command-config.md) |
-| `tool.register` | [Tool, Command, and Config](../extend/mod-api/tool-command-config.md) |
-| `turn.abort` | [Turn and Prompt](../extend/mod-api/turn-prompt.md) |
-| `turn.complete` | [Hooks and the Hook Chain](../extend/mod-api/hooks.md) |
-| `turn.start` | [Turn and Prompt](../extend/mod-api/turn-prompt.md) |
-| `turn.step` | [Turn and Prompt](../extend/mod-api/turn-prompt.md) |
-| `ui.blit` | [UI Events](../extend/mod-api/ui-events.md) |
-| `ui.close` | [UI Events](../extend/mod-api/ui-events.md) |
-| `ui.copy` | [UI Events](../extend/mod-api/ui-events.md) |
-| `ui.fault` | [Hooks and the Hook Chain](../extend/mod-api/hooks.md) |
-| `ui.focus` | [Hooks and the Hook Chain](../extend/mod-api/hooks.md) |
-| `ui.input` | [UI Events](../extend/mod-api/ui-events.md) |
-| `ui.invalidate` | [UI Events](../extend/mod-api/ui-events.md) |
-| `ui.log` | [UI Events](../extend/mod-api/ui-events.md) |
-| `ui.message` | [UI Events](../extend/mod-api/ui-events.md) |
-| `ui.notice` | [UI Events](../extend/mod-api/ui-events.md) |
-| `ui.notify` | [UI Events](../extend/mod-api/ui-events.md) |
-| `ui.open` | [UI Events](../extend/mod-api/ui-events.md) |
-| `ui.panes` | [UI Events](../extend/mod-api/ui-events.md) |
-| `ui.press` | [UI Events](../extend/mod-api/ui-events.md) |
-| `ui.render` | [UI Events](../extend/mod-api/ui-events.md) |
-| `ui.resolve` | [Hooks and the Hook Chain](../extend/mod-api/hooks.md) |
-| `ui.scroll` | [UI Events](../extend/mod-api/ui-events.md) |
-| `ui.select` | [UI Events](../extend/mod-api/ui-events.md) |
-| `ui.selection` | [UI Events](../extend/mod-api/ui-events.md) |
-| `ui.status` | [UI Events](../extend/mod-api/ui-events.md) |
-| `ui.toast` | [UI Events](../extend/mod-api/ui-events.md) |
-| `ui.view` | [UI Events](../extend/mod-api/ui-events.md) |
+| `$.ui.view` | [UI Methods](../extend/mod-api/ui/ui.md) |
+| `agent.list` | [Agent](../extend/mod-api/calls/agent.md) |
+| `agent.offer` | [Agent](../extend/mod-api/calls/agent.md) |
+| `agent.register` | [Agent](../extend/mod-api/calls/agent.md) |
+| `agent.spawn` | [Agent](../extend/mod-api/calls/agent.md) |
+| `attribution.text` | [Turn and Prompt](../extend/mod-api/calls/turn-prompt.md) |
+| `audio.play` | [Model, Audio, and MCP](../extend/mod-api/calls/model-audio-mcp.md) |
+| `audio.speak` | [Model, Audio, and MCP](../extend/mod-api/calls/model-audio-mcp.md) |
+| `classic.ConfigChange` | [Classic Events](../extend/mod-api/events/classic-events.md) |
+| `classic.CwdChanged` | [Classic Events](../extend/mod-api/events/classic-events.md) |
+| `classic.DirectoryAdded` | [Classic Events](../extend/mod-api/events/classic-events.md) |
+| `classic.Elicitation` | [Classic Events](../extend/mod-api/events/classic-events.md) |
+| `classic.ElicitationResult` | [Classic Events](../extend/mod-api/events/classic-events.md) |
+| `classic.FileChanged` | [Classic Events](../extend/mod-api/events/classic-events.md) |
+| `classic.InstructionsLoaded` | [Classic Events](../extend/mod-api/events/classic-events.md) |
+| `classic.MessageDisplay` | [Classic Events](../extend/mod-api/events/classic-events.md) |
+| `classic.Notification` | [Classic Events](../extend/mod-api/events/classic-events.md) |
+| `classic.PermissionDenied` | [Classic Events](../extend/mod-api/events/classic-events.md) |
+| `classic.PermissionRequest` | [Classic Events](../extend/mod-api/events/classic-events.md) |
+| `classic.PostCompact` | [Classic Events](../extend/mod-api/events/classic-events.md) |
+| `classic.PostModelSwitch` | [Classic Events](../extend/mod-api/events/classic-events.md) |
+| `classic.PostToolBatch` | [Classic Events](../extend/mod-api/events/classic-events.md) |
+| `classic.PostToolUse` | [Classic Events](../extend/mod-api/events/classic-events.md) |
+| `classic.PostToolUseFailure` | [Classic Events](../extend/mod-api/events/classic-events.md) |
+| `classic.PreCompact` | [Classic Events](../extend/mod-api/events/classic-events.md) |
+| `classic.PreModelSwitch` | [Classic Events](../extend/mod-api/events/classic-events.md) |
+| `classic.PreToolUse` | [Classic Events](../extend/mod-api/events/classic-events.md) |
+| `classic.SessionEnd` | [Classic Events](../extend/mod-api/events/classic-events.md) |
+| `classic.SessionStart` | [Classic Events](../extend/mod-api/events/classic-events.md) |
+| `classic.Setup` | [Classic Events](../extend/mod-api/events/classic-events.md) |
+| `classic.Stop` | [Classic Events](../extend/mod-api/events/classic-events.md) |
+| `classic.StopFailure` | [Classic Events](../extend/mod-api/events/classic-events.md) |
+| `classic.SubagentStart` | [Classic Events](../extend/mod-api/events/classic-events.md) |
+| `classic.SubagentStop` | [Classic Events](../extend/mod-api/events/classic-events.md) |
+| `classic.TaskCompleted` | [Classic Events](../extend/mod-api/events/classic-events.md) |
+| `classic.TaskCreated` | [Classic Events](../extend/mod-api/events/classic-events.md) |
+| `classic.TeammateIdle` | [Classic Events](../extend/mod-api/events/classic-events.md) |
+| `classic.UserPromptExpansion` | [Classic Events](../extend/mod-api/events/classic-events.md) |
+| `classic.UserPromptSubmit` | [Classic Events](../extend/mod-api/events/classic-events.md) |
+| `classic.WorktreeCreate` | [Classic Events](../extend/mod-api/events/classic-events.md) |
+| `classic.WorktreeRemove` | [Classic Events](../extend/mod-api/events/classic-events.md) |
+| `clock.after` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/calls/clock-http-process-env-settings.md) |
+| `clock.every` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/calls/clock-http-process-env-settings.md) |
+| `clock.now` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/calls/clock-http-process-env-settings.md) |
+| `clock.sleep` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/calls/clock-http-process-env-settings.md) |
+| `command.describe` | [Tool, Command, and Config](../extend/mod-api/calls/tool-command-config.md) |
+| `command.list` | [Tool, Command, and Config](../extend/mod-api/calls/tool-command-config.md) |
+| `command.register` | [Tool, Command, and Config](../extend/mod-api/calls/tool-command-config.md) |
+| `command.run` | [Tool, Command, and Config](../extend/mod-api/calls/tool-command-config.md) |
+| `config.describe` | [Tool, Command, and Config](../extend/mod-api/calls/tool-command-config.md) |
+| `config.list` | [Tool, Command, and Config](../extend/mod-api/calls/tool-command-config.md) |
+| `config.set` | [Tool, Command, and Config](../extend/mod-api/calls/tool-command-config.md) |
+| `engine.create` | [Plugin and Engine](../extend/mod-api/calls/plugin.md) |
+| `env.get` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/calls/clock-http-process-env-settings.md) |
+| `env.set` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/calls/clock-http-process-env-settings.md) |
+| `fs.ancestors` | [Files, Store, and State](../extend/mod-api/calls/fs-store-state.md) |
+| `fs.exists` | [Files, Store, and State](../extend/mod-api/calls/fs-store-state.md) |
+| `fs.list` | [Files, Store, and State](../extend/mod-api/calls/fs-store-state.md) |
+| `fs.read` | [Files, Store, and State](../extend/mod-api/calls/fs-store-state.md) |
+| `fs.stat` | [Files, Store, and State](../extend/mod-api/calls/fs-store-state.md) |
+| `fs.write` | [Files, Store, and State](../extend/mod-api/calls/fs-store-state.md) |
+| `http.fetch` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/calls/clock-http-process-env-settings.md) |
+| `mcp.call` | [Model, Audio, and MCP](../extend/mod-api/calls/model-audio-mcp.md) |
+| `mcp.connect` | [Model, Audio, and MCP](../extend/mod-api/calls/model-audio-mcp.md) |
+| `model.classify` | [Model, Audio, and MCP](../extend/mod-api/calls/model-audio-mcp.md) |
+| `model.complete` | [Model, Audio, and MCP](../extend/mod-api/calls/model-audio-mcp.md) |
+| `model.fork` | [Model, Audio, and MCP](../extend/mod-api/calls/model-audio-mcp.md) |
+| `plugin.register` | [Plugin and Engine](../extend/mod-api/calls/plugin.md) |
+| `process.run` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/calls/clock-http-process-env-settings.md) |
+| `process.spawn` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/calls/clock-http-process-env-settings.md) |
+| `prompt.attachment` | [Turn and Prompt](../extend/mod-api/calls/turn-prompt.md) |
+| `prompt.autocomplete` | [Turn and Prompt](../extend/mod-api/calls/turn-prompt.md) |
+| `prompt.change` | [Turn and Prompt](../extend/mod-api/calls/turn-prompt.md) |
+| `prompt.compose` | [Turn and Prompt](../extend/mod-api/calls/turn-prompt.md) |
+| `prompt.context` | [Turn and Prompt](../extend/mod-api/calls/turn-prompt.md) |
+| `prompt.edit` | [Turn and Prompt](../extend/mod-api/calls/turn-prompt.md) |
+| `prompt.fill` | [Turn and Prompt](../extend/mod-api/calls/turn-prompt.md) |
+| `prompt.mention` | [Turn and Prompt](../extend/mod-api/calls/turn-prompt.md) |
+| `prompt.paint` | [Turn and Prompt](../extend/mod-api/calls/turn-prompt.md) |
+| `prompt.read` | [Turn and Prompt](../extend/mod-api/calls/turn-prompt.md) |
+| `prompt.section` | [Turn and Prompt](../extend/mod-api/calls/turn-prompt.md) |
+| `prompt.submit` | [Turn and Prompt](../extend/mod-api/calls/turn-prompt.md) |
+| `prompt.suggest` | [Turn and Prompt](../extend/mod-api/calls/turn-prompt.md) |
+| `session.append` | [Session](../extend/mod-api/calls/session.md) |
+| `session.attach` | [Session](../extend/mod-api/calls/session.md) |
+| `session.authorize` | [Session](../extend/mod-api/calls/session.md) |
+| `session.compact` | [Session](../extend/mod-api/calls/session.md) |
+| `session.cwd` | [Session](../extend/mod-api/calls/session.md) |
+| `session.detach` | [Session](../extend/mod-api/calls/session.md) |
+| `session.end` | [Session](../extend/mod-api/calls/session.md) |
+| `session.id` | [Session](../extend/mod-api/calls/session.md) |
+| `session.identity` | [Session](../extend/mod-api/calls/session.md) |
+| `session.measure` | [Session](../extend/mod-api/calls/session.md) |
+| `session.messages` | [Session](../extend/mod-api/calls/session.md) |
+| `session.model` | [Session](../extend/mod-api/calls/session.md) |
+| `session.receive` | [Session](../extend/mod-api/calls/session.md) |
+| `session.repo` | [Session](../extend/mod-api/calls/session.md) |
+| `session.root` | [Session](../extend/mod-api/calls/session.md) |
+| `session.send` | [Session](../extend/mod-api/calls/session.md) |
+| `session.start` | [Session](../extend/mod-api/calls/session.md) |
+| `session.surface` | [Session](../extend/mod-api/calls/session.md) |
+| `session.surfaces` | [Session](../extend/mod-api/calls/session.md) |
+| `session.turns` | [Session](../extend/mod-api/calls/session.md) |
+| `session.usage` | [Session](../extend/mod-api/calls/session.md) |
+| `session.version` | [Session](../extend/mod-api/calls/session.md) |
+| `settings.read` | [Clock, HTTP, Process, Env, and Settings](../extend/mod-api/calls/clock-http-process-env-settings.md) |
+| `skill.prompt` | [Turn and Prompt](../extend/mod-api/calls/turn-prompt.md) |
+| `state.get` | [Files, Store, and State](../extend/mod-api/calls/fs-store-state.md) |
+| `state.set` | [Files, Store, and State](../extend/mod-api/calls/fs-store-state.md) |
+| `store.delete` | [Files, Store, and State](../extend/mod-api/calls/fs-store-state.md) |
+| `store.get` | [Files, Store, and State](../extend/mod-api/calls/fs-store-state.md) |
+| `store.keys` | [Files, Store, and State](../extend/mod-api/calls/fs-store-state.md) |
+| `store.set` | [Files, Store, and State](../extend/mod-api/calls/fs-store-state.md) |
+| `telemetry.log` | [Telemetry](../extend/mod-api/calls/telemetry.md) |
+| `telemetry.mark` | [Telemetry](../extend/mod-api/calls/telemetry.md) |
+| `tool.call` | [Tool, Command, and Config](../extend/mod-api/calls/tool-command-config.md) |
+| `tool.check` | [Tool, Command, and Config](../extend/mod-api/calls/tool-command-config.md) |
+| `tool.describe` | [Tool, Command, and Config](../extend/mod-api/calls/tool-command-config.md) |
+| `tool.list` | [Tool, Command, and Config](../extend/mod-api/calls/tool-command-config.md) |
+| `tool.register` | [Tool, Command, and Config](../extend/mod-api/calls/tool-command-config.md) |
+| `turn.abort` | [Turn and Prompt](../extend/mod-api/calls/turn-prompt.md) |
+| `turn.complete` | [Turn and Prompt](../extend/mod-api/calls/turn-prompt.md) |
+| `turn.start` | [Turn and Prompt](../extend/mod-api/calls/turn-prompt.md) |
+| `turn.step` | [Turn and Prompt](../extend/mod-api/calls/turn-prompt.md) |
+| `ui.blit` | [UI Events](../extend/mod-api/ui/ui-events.md) |
+| `ui.close` | [UI Events](../extend/mod-api/ui/ui-events.md) |
+| `ui.copy` | [UI Events](../extend/mod-api/ui/ui-events.md) |
+| `ui.fault` | [Hooks and the Hook Chain](../extend/mod-api/events/hooks.md) |
+| `ui.focus` | [Hooks and the Hook Chain](../extend/mod-api/events/hooks.md) |
+| `ui.input` | [UI Events](../extend/mod-api/ui/ui-events.md) |
+| `ui.invalidate` | [UI Events](../extend/mod-api/ui/ui-events.md) |
+| `ui.log` | [UI Events](../extend/mod-api/ui/ui-events.md) |
+| `ui.message` | [UI Events](../extend/mod-api/ui/ui-events.md) |
+| `ui.notice` | [UI Events](../extend/mod-api/ui/ui-events.md) |
+| `ui.notify` | [UI Events](../extend/mod-api/ui/ui-events.md) |
+| `ui.open` | [UI Events](../extend/mod-api/ui/ui-events.md) |
+| `ui.panes` | [UI Events](../extend/mod-api/ui/ui-events.md) |
+| `ui.press` | [UI Events](../extend/mod-api/ui/ui-events.md) |
+| `ui.render` | [UI Events](../extend/mod-api/ui/ui-events.md) |
+| `ui.resolve` | [Hooks and the Hook Chain](../extend/mod-api/events/hooks.md) |
+| `ui.scroll` | [UI Events](../extend/mod-api/ui/ui-events.md) |
+| `ui.select` | [UI Events](../extend/mod-api/ui/ui-events.md) |
+| `ui.selection` | [UI Events](../extend/mod-api/ui/ui-events.md) |
+| `ui.status` | [UI Events](../extend/mod-api/ui/ui-events.md) |
+| `ui.toast` | [UI Events](../extend/mod-api/ui/ui-events.md) |
+| `ui.view` | [UI Events](../extend/mod-api/ui/ui-events.md) |
 
 ## Models
 
@@ -8558,80 +8558,80 @@ Items: 74.
 
 | Item | Where |
 | --- | --- |
-| `best` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-3-5-haiku` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-3-5-haiku-20241022` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
+| `best` | [Model Catalog, Aliases, and Pricing](../configure/models-and-providers/model-catalog.md) |
+| `claude-3-5-haiku` | [Model Catalog, Aliases, and Pricing](../configure/models-and-providers/model-catalog.md) |
+| `claude-3-5-haiku-20241022` | [/configure/models-and-providers/providers#provider-names](/configure/models-and-providers/providers#provider-names) |
 | `claude-3-5-haiku-latest` | Excluded: Named only in the retired-model table of the `/claude-api` skill, which warns about these ids in project files; they are not models to pick (see Bundled Skills). |
-| `claude-3-5-haiku@20241022` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
-| `claude-3-5-sonnet` | [Models and Providers](../configure/models-and-providers.md) |
+| `claude-3-5-haiku@20241022` | [/configure/models-and-providers/providers#provider-names](/configure/models-and-providers/providers#provider-names) |
+| `claude-3-5-sonnet` | [Model Catalog, Aliases, and Pricing](../configure/models-and-providers/model-catalog.md) |
 | `claude-3-5-sonnet-20240620` | Excluded: Named only in the retired-model table of the `/claude-api` skill, which warns about these ids in project files; they are not models to pick (see Bundled Skills). |
-| `claude-3-5-sonnet-20241022` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
+| `claude-3-5-sonnet-20241022` | [/configure/models-and-providers/providers#provider-names](/configure/models-and-providers/providers#provider-names) |
 | `claude-3-5-sonnet-latest` | Excluded: Named only in the retired-model table of the `/claude-api` skill, which warns about these ids in project files; they are not models to pick (see Bundled Skills). |
-| `claude-3-5-sonnet-v2@20241022` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
-| `claude-3-7-sonnet` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-3-7-sonnet-20250219` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
+| `claude-3-5-sonnet-v2@20241022` | [/configure/models-and-providers/providers#provider-names](/configure/models-and-providers/providers#provider-names) |
+| `claude-3-7-sonnet` | [Model Catalog, Aliases, and Pricing](../configure/models-and-providers/model-catalog.md) |
+| `claude-3-7-sonnet-20250219` | [/configure/models-and-providers/providers#provider-names](/configure/models-and-providers/providers#provider-names) |
 | `claude-3-7-sonnet-latest` | Excluded: Named only in the retired-model table of the `/claude-api` skill, which warns about these ids in project files; they are not models to pick (see Bundled Skills). |
-| `claude-3-7-sonnet@20250219` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
-| `claude-3-haiku` | [Models and Providers](../configure/models-and-providers.md) |
+| `claude-3-7-sonnet@20250219` | [/configure/models-and-providers/providers#provider-names](/configure/models-and-providers/providers#provider-names) |
+| `claude-3-haiku` | [Model Catalog, Aliases, and Pricing](../configure/models-and-providers/model-catalog.md) |
 | `claude-3-haiku-20240307` | Excluded: Named only in the retired-model table of the `/claude-api` skill, which warns about these ids in project files; they are not models to pick (see Bundled Skills). |
-| `claude-3-opus` | [Models and Providers](../configure/models-and-providers.md) |
+| `claude-3-opus` | [Model Catalog, Aliases, and Pricing](../configure/models-and-providers/model-catalog.md) |
 | `claude-3-opus-20240229` | Excluded: Named only in the retired-model table of the `/claude-api` skill, which warns about these ids in project files; they are not models to pick (see Bundled Skills). |
 | `claude-3-opus-latest` | Excluded: Named only in the retired-model table of the `/claude-api` skill, which warns about these ids in project files; they are not models to pick (see Bundled Skills). |
-| `claude-3-sonnet` | [Models and Providers](../configure/models-and-providers.md) |
+| `claude-3-sonnet` | [Model Catalog, Aliases, and Pricing](../configure/models-and-providers/model-catalog.md) |
 | `claude-3-sonnet-20240229` | Excluded: Named only in the retired-model table of the `/claude-api` skill, which warns about these ids in project files; they are not models to pick (see Bundled Skills). |
-| `claude-fable-5` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-fable-5-1` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-fable-5[1m]` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-haiku-3-5` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-haiku-4-5` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-haiku-4-5-20251001` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
-| `claude-haiku-4-5@20251001` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
-| `claude-haiku-5-5` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-mythos-5` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-mythos-5-1` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-mythos-preview` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-opus-4` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
-| `claude-opus-4-0` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-opus-4-1` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-opus-4-1-20250805` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
-| `claude-opus-4-1@20250805` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
-| `claude-opus-4-20250514` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
-| `claude-opus-4-5` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-opus-4-5-20251101` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
-| `claude-opus-4-5@20251101` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
-| `claude-opus-4-6` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-opus-4-6[1m]` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-opus-4-7` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-opus-4-8` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-opus-4-8[1m]` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-opus-4@20250514` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
-| `claude-opus-5` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-opus-5-5` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-opus-5-5[1m]` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-opus-5[1m]` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-sonnet-3-7` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-sonnet-4` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
-| `claude-sonnet-4-0` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-sonnet-4-20250514` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
-| `claude-sonnet-4-5` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-sonnet-4-5-20250929` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
-| `claude-sonnet-4-5-20250929[1m]` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-sonnet-4-5@20250929` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
-| `claude-sonnet-4-6` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-sonnet-4-6[1m]` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-sonnet-4@20250514` | [/configure/models-and-providers#provider-names](/configure/models-and-providers#provider-names) |
-| `claude-sonnet-5` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-sonnet-5-5` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-sonnet-5-5[1m]` | [Models and Providers](../configure/models-and-providers.md) |
-| `claude-sonnet-5[1m]` | [Models and Providers](../configure/models-and-providers.md) |
-| `fable` | [Models and Providers](../configure/models-and-providers.md) |
-| `fable[1m]` | [Models and Providers](../configure/models-and-providers.md) |
-| `haiku` | [Models and Providers](../configure/models-and-providers.md) |
-| `opus` | [Models and Providers](../configure/models-and-providers.md) |
-| `opus[1m]` | [Models and Providers](../configure/models-and-providers.md) |
-| `opusplan` | [Models and Providers](../configure/models-and-providers.md) |
-| `sonnet` | [Models and Providers](../configure/models-and-providers.md) |
-| `sonnet[1m]` | [Models and Providers](../configure/models-and-providers.md) |
+| `claude-fable-5` | [Effort, Thinking, and Fallback](../configure/models-and-providers/effort-thinking-and-fallback.md) |
+| `claude-fable-5-1` | [Effort, Thinking, and Fallback](../configure/models-and-providers/effort-thinking-and-fallback.md) |
+| `claude-fable-5[1m]` | [Model Catalog, Aliases, and Pricing](../configure/models-and-providers/model-catalog.md) |
+| `claude-haiku-3-5` | [Model Catalog, Aliases, and Pricing](../configure/models-and-providers/model-catalog.md) |
+| `claude-haiku-4-5` | [Model Catalog, Aliases, and Pricing](../configure/models-and-providers/model-catalog.md) |
+| `claude-haiku-4-5-20251001` | [/configure/models-and-providers/providers#provider-names](/configure/models-and-providers/providers#provider-names) |
+| `claude-haiku-4-5@20251001` | [/configure/models-and-providers/providers#provider-names](/configure/models-and-providers/providers#provider-names) |
+| `claude-haiku-5-5` | [Effort, Thinking, and Fallback](../configure/models-and-providers/effort-thinking-and-fallback.md) |
+| `claude-mythos-5` | [Model Catalog, Aliases, and Pricing](../configure/models-and-providers/model-catalog.md) |
+| `claude-mythos-5-1` | [Effort, Thinking, and Fallback](../configure/models-and-providers/effort-thinking-and-fallback.md) |
+| `claude-mythos-preview` | [Model Catalog, Aliases, and Pricing](../configure/models-and-providers/model-catalog.md) |
+| `claude-opus-4` | [/configure/models-and-providers/providers#provider-names](/configure/models-and-providers/providers#provider-names) |
+| `claude-opus-4-0` | [Model Catalog, Aliases, and Pricing](../configure/models-and-providers/model-catalog.md) |
+| `claude-opus-4-1` | [Model Catalog, Aliases, and Pricing](../configure/models-and-providers/model-catalog.md) |
+| `claude-opus-4-1-20250805` | [/configure/models-and-providers/providers#provider-names](/configure/models-and-providers/providers#provider-names) |
+| `claude-opus-4-1@20250805` | [/configure/models-and-providers/providers#provider-names](/configure/models-and-providers/providers#provider-names) |
+| `claude-opus-4-20250514` | [/configure/models-and-providers/providers#provider-names](/configure/models-and-providers/providers#provider-names) |
+| `claude-opus-4-5` | [Model Catalog, Aliases, and Pricing](../configure/models-and-providers/model-catalog.md) |
+| `claude-opus-4-5-20251101` | [/configure/models-and-providers/providers#provider-names](/configure/models-and-providers/providers#provider-names) |
+| `claude-opus-4-5@20251101` | [/configure/models-and-providers/providers#provider-names](/configure/models-and-providers/providers#provider-names) |
+| `claude-opus-4-6` | [Model Catalog, Aliases, and Pricing](../configure/models-and-providers/model-catalog.md) |
+| `claude-opus-4-6[1m]` | [Model Catalog, Aliases, and Pricing](../configure/models-and-providers/model-catalog.md) |
+| `claude-opus-4-7` | [Effort, Thinking, and Fallback](../configure/models-and-providers/effort-thinking-and-fallback.md) |
+| `claude-opus-4-8` | [Effort, Thinking, and Fallback](../configure/models-and-providers/effort-thinking-and-fallback.md) |
+| `claude-opus-4-8[1m]` | [Model Catalog, Aliases, and Pricing](../configure/models-and-providers/model-catalog.md) |
+| `claude-opus-4@20250514` | [/configure/models-and-providers/providers#provider-names](/configure/models-and-providers/providers#provider-names) |
+| `claude-opus-5` | [Effort, Thinking, and Fallback](../configure/models-and-providers/effort-thinking-and-fallback.md) |
+| `claude-opus-5-5` | [Effort, Thinking, and Fallback](../configure/models-and-providers/effort-thinking-and-fallback.md) |
+| `claude-opus-5-5[1m]` | [Model Catalog, Aliases, and Pricing](../configure/models-and-providers/model-catalog.md) |
+| `claude-opus-5[1m]` | [Model Catalog, Aliases, and Pricing](../configure/models-and-providers/model-catalog.md) |
+| `claude-sonnet-3-7` | [Model Catalog, Aliases, and Pricing](../configure/models-and-providers/model-catalog.md) |
+| `claude-sonnet-4` | [/configure/models-and-providers/providers#provider-names](/configure/models-and-providers/providers#provider-names) |
+| `claude-sonnet-4-0` | [Model Catalog, Aliases, and Pricing](../configure/models-and-providers/model-catalog.md) |
+| `claude-sonnet-4-20250514` | [/configure/models-and-providers/providers#provider-names](/configure/models-and-providers/providers#provider-names) |
+| `claude-sonnet-4-5` | [Model Catalog, Aliases, and Pricing](../configure/models-and-providers/model-catalog.md) |
+| `claude-sonnet-4-5-20250929` | [/configure/models-and-providers/providers#provider-names](/configure/models-and-providers/providers#provider-names) |
+| `claude-sonnet-4-5-20250929[1m]` | [Model Catalog, Aliases, and Pricing](../configure/models-and-providers/model-catalog.md) |
+| `claude-sonnet-4-5@20250929` | [/configure/models-and-providers/providers#provider-names](/configure/models-and-providers/providers#provider-names) |
+| `claude-sonnet-4-6` | [Model Catalog, Aliases, and Pricing](../configure/models-and-providers/model-catalog.md) |
+| `claude-sonnet-4-6[1m]` | [Model Catalog, Aliases, and Pricing](../configure/models-and-providers/model-catalog.md) |
+| `claude-sonnet-4@20250514` | [/configure/models-and-providers/providers#provider-names](/configure/models-and-providers/providers#provider-names) |
+| `claude-sonnet-5` | [Effort, Thinking, and Fallback](../configure/models-and-providers/effort-thinking-and-fallback.md) |
+| `claude-sonnet-5-5` | [Effort, Thinking, and Fallback](../configure/models-and-providers/effort-thinking-and-fallback.md) |
+| `claude-sonnet-5-5[1m]` | [Model Catalog, Aliases, and Pricing](../configure/models-and-providers/model-catalog.md) |
+| `claude-sonnet-5[1m]` | [Model Catalog, Aliases, and Pricing](../configure/models-and-providers/model-catalog.md) |
+| `fable` | [Model Catalog, Aliases, and Pricing](../configure/models-and-providers/model-catalog.md) |
+| `fable[1m]` | [Model Catalog, Aliases, and Pricing](../configure/models-and-providers/model-catalog.md) |
+| `haiku` | [Model Catalog, Aliases, and Pricing](../configure/models-and-providers/model-catalog.md) |
+| `opus` | [Model Catalog, Aliases, and Pricing](../configure/models-and-providers/model-catalog.md) |
+| `opus[1m]` | [Model Catalog, Aliases, and Pricing](../configure/models-and-providers/model-catalog.md) |
+| `opusplan` | [Model Catalog, Aliases, and Pricing](../configure/models-and-providers/model-catalog.md) |
+| `sonnet` | [Model Catalog, Aliases, and Pricing](../configure/models-and-providers/model-catalog.md) |
+| `sonnet[1m]` | [Model Catalog, Aliases, and Pricing](../configure/models-and-providers/model-catalog.md) |
 
 ## OpenTelemetry Events
 

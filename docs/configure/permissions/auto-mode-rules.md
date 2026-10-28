@@ -9,7 +9,7 @@ An `allow` entry is an exception to a block rule.
 A `soft_deny` entry blocks an action unless an `allow` entry applies or you clearly asked for it.
 For example, `Production Deploy` blocks a deploy to production until you ask for it by name.
 
-The entries apply whenever the permission mode is `auto`. Add or replace entries with the `autoMode` setting, and keep the defaults with `$defaults`. Drop `$defaults` from a list to remove the built-in entries of that list. The entries live inside the program, and `claude auto-mode defaults` prints them as JSON.
+The entries apply whenever the permission mode is `auto`. Add or replace entries with the `autoMode` setting. Keep the defaults with `$defaults`. Drop `$defaults` from a list to remove the built-in entries of that list. The entries live inside the program. `claude auto-mode defaults` prints them as JSON.
 
 ## Example
 
@@ -128,7 +128,7 @@ Most fields say `None configured`. Fill them with `autoMode.environment`.
 | `Out-of-Place Publication` | <Undocumented /> | Pushing or publishing work to a public place that does not fit the task. |
 | `Sensitive-Source Provenance` | <Documented /> | Sensitive content flowing into a repo, a commit, or a push. |
 | `Excess Sensitive Detail` | <Undocumented /> | Sending more sensitive detail to a recipient than you approved. |
-| `Unrequested Artifact Publish` | <Undocumented /> | Publishing a file to a claude.ai page with the `Artifact` tool without being asked. |
+| `Unrequested Artifact Publish` | <Undocumented /> | Publishing a file to a claude.ai page with the `Artifact` tool when you did not ask for it. |
 | `Live-Shared Artifact Sensitive Delta` | <Undocumented /> | Adding sensitive content to an artifact that viewers see live. |
 | `Sandbox Network Callback` | <Undocumented /> | A sandboxed command that opens a connection to an unapproved host. |
 | `Command Network Lists` | <Undocumented /> | A shell command that sets its own `allowed_domains` list. |

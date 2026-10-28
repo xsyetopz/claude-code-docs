@@ -12,7 +12,7 @@ Source for all facts: the program (Claude Code `2.1.311`), with the module and l
 ## Where the Plan Comes From
 
 Claude Code asks for the plan only with a claude.ai login.
-With an API key or a cloud provider, the plan is empty, and plan rules do not apply.
+With an API key or a cloud provider, the plan is empty. Plan rules do not apply.
 
 ```mermaid
 flowchart TD
@@ -28,7 +28,7 @@ flowchart TD
 - The plan is one of `max`, `pro`, `team`, or `enterprise` (`chunk-r1ht672j.js:30327`, `:30336`).
 - The server names the plan by its organization type. Claude Code maps `claude_max` to `max`, `claude_pro` to `pro`, `claude_team` to `team`, and `claude_enterprise` to `enterprise`. Any other value gives no plan (`chunk-r1ht672j.js:16573`).
 - With `CLAUDE_CODE_OAUTH_TOKEN`, Claude Code does not ask the server for the plan. It takes the plan from `CLAUDE_CODE_SUBSCRIPTION_TYPE` and the rate limit tier from `CLAUDE_CODE_RATE_LIMIT_TIER`. Each is empty when unset (`chunk-r1ht672j.js:29083`). See [Auth and Accounts](../configure/env-vars/auth-and-accounts.md).
-- A host can pass the account with `CLAUDE_CODE_ACCOUNT_UUID`, `CLAUDE_CODE_USER_EMAIL`, and `CLAUDE_CODE_ORGANIZATION_UUID`. Claude Code uses them only when all three are set and no account record exists yet (`chunk-r1ht672j.js:16660`).
+- A host can pass the account with `CLAUDE_CODE_ACCOUNT_UUID`, `CLAUDE_CODE_USER_EMAIL`, and `CLAUDE_CODE_ORGANIZATION_UUID`. Claude Code uses them only when the host sets all three and no account record exists yet (`chunk-r1ht672j.js:16660`).
 
 ## The Profile Request
 
@@ -55,9 +55,9 @@ From the reply, Claude Code keeps these facts (`chunk-r1ht672j.js:16623`).
 
 ## Where Claude Code Keeps It
 
-- The plan and the rate limit tier are saved with the login (`chunk-r1ht672j.js:29142`). On macOS, Claude Code reads the login from the keychain with `security find-generic-password` (`chunk-03f64wch.js:389`). The file store is `~/.claude/.credentials.json` (`chunk-r1ht672j.js:29280`). See [Sessions and Storage](sessions-and-storage.md#where-files-live).
+- Claude Code saves the plan and the rate limit tier with the login (`chunk-r1ht672j.js:29142`). On macOS, Claude Code reads the login from the keychain with `security find-generic-password` (`chunk-03f64wch.js:389`). The file store is `~/.claude/.credentials.json` (`chunk-r1ht672j.js:29280`). See [Sessions and Storage](sessions-and-storage.md#where-files-live).
 - The account record is the `oauthAccount` key of `~/.claude.json`. It holds the account and organization ids, your email, the plan facts from the reply, and `profileFetchedAt`, the time of the last request (`chunk-r1ht672j.js:16758`). `schemas/claude-code-claude-json.json` does not list `oauthAccount`, so its key names are unconfirmed.
-- You can edit these records. The Mod API type file says the account it gives a mod takes `organizationType` from the login record on disk, which the person can edit (`schemas/claude-code.d.ts`).
+- You can edit these records. The Mod API type file describes the account that Claude Code gives a mod. The account takes `organizationType` from the login record on disk. The person can edit that record (`schemas/claude-code.d.ts`).
 
 ## When It Asks Again
 
@@ -68,18 +68,18 @@ From the reply, Claude Code keeps these facts (`chunk-r1ht672j.js:16623`).
 ## How Model Access Is Decided
 
 The plan does not hide models from `/model`.
-The picker lists a model when the model catalog has an ID for your provider, or when the `modelOverrides` setting maps it (`chunk-r1ht672j.js:13242`).
-So the provider decides which models are listed, and the plan changes only the Fable entry below.
+The picker lists a model when the model catalog has an ID for your provider. It also lists a model when the `modelOverrides` setting maps it (`chunk-r1ht672j.js:13242`).
+So the provider decides which models the picker lists. The plan changes only the Fable entry below.
 
 | Model | How it reaches the picker |
 | --- | --- |
-| Fable | The `fable` alias is listed when the catalog has a Fable ID for your provider. `ANTHROPIC_DEFAULT_FABLE_MODEL` replaces it with your own model (`chunk-hvd0h18m.js:12004`, `:12357`). |
-| Mythos | The picker never lists a Mythos model, and there is no `mythos` alias (`chunk-577rcnzg.js:37`). Pick it by its full ID, such as `claude-mythos-5-1`. The model-name check also accepts `claude-mythos-preview` (`chunk-577rcnzg.js:48`). |
+| Fable | The picker lists the `fable` alias when the catalog has a Fable ID for your provider. `ANTHROPIC_DEFAULT_FABLE_MODEL` replaces it with your own model (`chunk-hvd0h18m.js:12004`, `:12357`). |
+| Mythos | The picker never lists a Mythos model. There is no `mythos` alias (`chunk-577rcnzg.js:37`). Pick it by its full ID, such as `claude-mythos-5-1`. The model-name check also accepts `claude-mythos-preview` (`chunk-577rcnzg.js:48`). |
 
 These rules change the Fable entry:
 
 - **Usage credits.** A server config, `tengu_saffron_lattice`, says for each model whether it needs usage credits. When it does, the entry ends in "· Requires usage credits" (`chunk-hvd0h18m.js:10809`, `:12018`). Users cannot set this config.
-- **Disabled entry.** When the server flag `tengu_saffron_picker_dim` is on, the entry turns into "Fable (disabled)" if all of these are true (`chunk-hvd0h18m.js:13082`):
+- **Disabled entry.** The server flag `tengu_saffron_picker_dim` must be on. Then the entry turns into "Fable (disabled)" if all of these are true (`chunk-hvd0h18m.js:13082`):
   - Your plan is not `max` or `pro`, and your organization role is not `admin`, `billing`, `owner`, or `primary_owner` (`chunk-hvd0h18m.js:10722`, `chunk-r1ht672j.js:30305`). Without a claude.ai login with the inference scope, neither the plan nor the role keeps the entry on (`chunk-r1ht672j.js:30148`).
   - Usage credits are off for the organization, or not set up (`org_level_disabled` or `overage_not_provisioned`).
   - The model's billing mode is not `pay_per_request` or `included_in_plan`.
@@ -91,7 +91,7 @@ These rules change the Fable entry:
 When something needs usage credits, such as fast mode or the 1M context window, the message names where to turn them on (`chunk-r1ht672j.js:30309`, `:19388`, `chunk-2ht8z368.js:85323`).
 In most cases it is "turn on usage credits at" your own usage page, whatever the plan.
 
-A Team or Enterprise plan gets other wording only when Claude Code runs with no terminal inside Claude Desktop (`claude-desktop` or `claude-desktop-3p`) or a `local-agent` host, as the main session (`chunk-r1ht672j.js:18904`, `chunk-p49f57nv.js:110`, `:390`):
+A Team or Enterprise plan gets other wording only in one case. Claude Code runs as the main session with no terminal. It runs inside Claude Desktop (`claude-desktop` or `claude-desktop-3p`) or a `local-agent` host (`chunk-r1ht672j.js:18904`, `chunk-p49f57nv.js:110`, `:390`):
 
 | Who | Message |
 | --- | --- |
@@ -122,7 +122,7 @@ Since `2.1.312`, the program calls the five-hour window the "5-hour limit". Earl
 
 ## Example
 
-Run a script with a long-lived token, and tell Claude Code the plan of that token, since it cannot ask for it:
+Run a script with a long-lived token. Tell Claude Code the plan of that token, because it cannot ask for it:
 
 ```bash
 CLAUDE_CODE_OAUTH_TOKEN="$TOKEN" CLAUDE_CODE_SUBSCRIPTION_TYPE=max claude -p "Reply with 'OK'."
@@ -137,6 +137,6 @@ claude --model claude-mythos-5-1
 ## Related Pages
 
 - [Models](models.md)
-- [Models and Providers](../configure/models-and-providers.md)
+- [Models and Providers](../configure/models-and-providers/index.md)
 - [Auth and Accounts](../configure/env-vars/auth-and-accounts.md)
 - [Sessions and Storage](sessions-and-storage.md)

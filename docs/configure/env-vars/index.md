@@ -6,18 +6,11 @@ sidebar_position: 1
 
 An environment variable is a named setting that a program reads when it starts.
 Claude Code `2.1.312` reads well over a thousand of them.
-This section lists 1458 that you can use, split into groups so you can find them.
-A few are in the official docs. Most are found only in the program.
+This section lists 1458 variables that you can use. It splits them into groups, so you can find them.
+The [official docs](https://code.claude.com/docs/en/env-vars) list a few of them. Only the program shows most of them.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. Set a variable in your shell, or under `env` in a `settings.json` file. |
-| Can you change it? | ✅ Yes. Change the value, then restart `claude`. Values in a settings `env` block also apply to a running session when the file changes. |
-| Can you turn it on or off? | Delete the variable. In a settings file you cannot remove one that your shell sets, but you can set it to an empty string. |
-| Where does it live? | Your shell, or the `env` key of `~/.claude/settings.json`, `.claude/settings.json`, `.claude/settings.local.json`, or managed settings. |
-| Status | <Documented /> <Undocumented /> <Differs /> <Gated /> |
+Set a variable in your shell, or under the `env` key of `~/.claude/settings.json`, `.claude/settings.json`, `.claude/settings.local.json`, or managed settings.
+To change a value, edit it, then restart `claude`. When the file changes, values in a settings `env` block also apply to a running session.
 
 ## How Claude Code Reads Variables
 
@@ -50,7 +43,7 @@ flowchart TD
 1. A value in a settings `env` block replaces the value from your shell in most sessions. The [official docs](https://code.claude.com/docs/en/settings-reference#how-env-values-interact-with-your-shell) list the sessions that keep the shell value.
 2. Between settings files, `env` values follow the normal settings order. A managed entry beats the same variable in user or project settings.
 3. Some behaviors have a variable, a settings key, and a flag. Which one wins differs for each pair. For example, `--model` and `/model` beat `ANTHROPIC_MODEL`, and `ANTHROPIC_MODEL` beats the `model` key. But `CLAUDE_CODE_EFFORT_LEVEL` beats `--effort` and `/effort`.
-4. Project and local settings cannot set some variables, such as `CLAUDE_CONFIG_DIR` and the OpenTelemetry exporter variables. Most other `env` values from a project wait until you trust the folder.
+4. Project and local settings cannot set some variables, such as `CLAUDE_CONFIG_DIR` and the OpenTelemetry exporter variables. Claude Code applies most other `env` values from a project only after you trust the folder.
 5. You cannot remove a variable from a settings file. To cancel one that a shell profile exports, set it to an empty string, for example `"CLAUDE_CODE_USE_VERTEX": ""`. Claude Code treats the empty value as unset for provider selection, but child processes still inherit the empty value.
 
 Each row says what applies to it. Look in the Notes column for the words "Project `env` can set it before trust" or "Not set from project `env` before trust".
@@ -61,7 +54,7 @@ Put variables under the `env` key. Claude Code copies the values as written. No 
 
 ```json title="~/.claude/settings.json"
 {
-  "$schema": "https://xsyetopz.github.io/clawdipedia/schemas/claude-code-settings.json",
+  "$schema": "https://clawdipedia.cc/schemas/claude-code-settings.json",
   "env": {
     "API_TIMEOUT_MS": "1200000",
     "BASH_DEFAULT_TIMEOUT_MS": "300000",
@@ -70,7 +63,7 @@ Put variables under the `env` key. Claude Code copies the values as written. No 
 }
 ```
 
-Or set one in your shell for one session.
+Alternatively, set one in your shell for one session.
 
 ```bash
 export API_TIMEOUT_MS=1200000
@@ -135,7 +128,7 @@ Every group page has the same columns.
 | Column | Meaning |
 | --- | --- |
 | Variable | The exact name. Names are case sensitive. |
-| Status | Badges. <Documented /> means the [official docs](https://code.claude.com/docs/en/env-vars) name it. <Undocumented /> means only the program shows it. <Differs /> means the docs and the program disagree. <Gated /> means a feature flag or server gate is involved. |
+| Status | Badges. <Documented /> means the [official docs](https://code.claude.com/docs/en/env-vars) name it. <Undocumented /> means only the program shows it. <Differs /> means the docs and the program disagree. <Gated /> means a feature flag or server gate affects it. |
 | What it does | The effect, in plain words. |
 | Values and default | The accepted values and the default, as far as the program shows. A dash means the source gave no detail. |
 | Notes | Where it applies, and whether a project `env` block can set it before you trust the folder. |

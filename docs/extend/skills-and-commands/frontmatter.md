@@ -34,7 +34,7 @@ Review the changes under $ARGUMENTS and list the bugs you find.
 
 - Claude Code reads the frontmatter only when the first line is `---`.
 - A YAML error loads the skill with no fields. You see the warning `[skills] YAML frontmatter ... failed to parse and was ignored`.
-- Keys are case exact. An unknown key is ignored with no error.
+- Keys are case-sensitive. Claude Code ignores an unknown key with no error.
 - Booleans accept `true`, `false`, `yes`, `no`, `on`, `off`, `1`, and `0` in any case (2.1.218 or later).
 - A top-level `PreToolUse` or `PermissionRequest` key outside `hooks` is an error. The skill then loads with no hooks and no `allowed-tools`.
 - If `description` is missing, Claude Code uses the first line of the body. It removes heading marks and cuts the text at 100 characters.
@@ -44,34 +44,34 @@ Review the changes under $ARGUMENTS and list the bugs you find.
 | Key | Status | What it does | Notes |
 | --- | --- | --- | --- |
 | `name` | <Documented /> | The command name. | Defaults to the folder name. At most 256 characters. Skills and plugin skills only, not command files. |
-| `description` | <Documented /> | Tells Claude when to use the skill. | Numbers and booleans become strings. Cut at 1,536 characters in the listing. |
-| `when_to_use` | <Documented /> | More trigger text. | Added after `description`. Counts toward the 1,536 limit. The only key with an underscore. |
+| `description` | <Documented /> | Tells Claude when to use the skill. | Numbers and booleans become strings. The listing cuts it at 1,536 characters. |
+| `when_to_use` | <Documented /> | More trigger text. | Claude Code adds it after `description`. Counts toward the 1,536 limit. The only documented key with an underscore. |
 | `argument-hint` | <Documented /> | An autocomplete hint. | Text, for example `[issue-number]`. |
-| `arguments` | <Documented /> | Names for `$name` placeholders. | A space-separated string or a YAML list. Names made only of digits are dropped. |
+| `arguments` | <Documented /> | Names for `$name` placeholders. | A space-separated string or a YAML list. Claude Code drops names made only of digits. |
 | `disable-model-invocation` | <Documented /> | Stops Claude from loading the skill by itself. | Also blocks preload into subagents and use by scheduled tasks. |
 | `user-invocable` | <Documented /> | `false` hides the skill from the `/` menu. | Default `true`. |
 | `allowed-tools` | <Documented /> | Tools allowed without a prompt for the turn. | A space or comma string, or a list. The grant clears at your next message. Ignored under `allowManagedPermissionRulesOnly` (2.1.282). Since 2.1.305, plugins that Claude Desktop mounts by path no longer keep their `allowed-tools` when your organization's managed settings set it ([v2.1.305 release](https://github.com/anthropics/claude-code/releases/tag/v2.1.305)). `${CLAUDE_SKILL_DIR}` works in Bash rules. |
 | `disallowed-tools` | <Documented /> | Removes tools while the skill is active. | The same format. The program also reads `disallowedTools`. |
 | `model` | <Documented /> | The model for the turn. | `inherit` keeps the active model. A model outside `availableModels` is not used. With `context: fork` it sets the subagent model. |
 | `effort` | <Differs note="Docs: low, medium, high, xhigh, max. The program also accepts an integer." /> | The effort level for the turn. | The program warns `Valid options: ... or an integer`. |
-| `context` | <Documented /> | `fork` runs the skill in a subagent. | Any other value is ignored. |
+| `context` | <Documented /> | `fork` runs the skill in a subagent. | Claude Code ignores any other value. |
 | `agent` | <Documented /> | The subagent type for `context: fork`. | Default `general-purpose`. |
 | `background` | <Documented /> | `false` waits for the forked result. | Default `true`. 2.1.218 or later. |
 | `hooks` | <Documented /> | Hooks that start when the skill runs. | They last for the session. See [Hooks](../hooks/index.md). |
-| `paths` | <Documented /> | A glob limit for automatic loading. | A trailing `/**` is removed. A list of only `**` means no limit. Skills only. |
-| `shell` | <Documented /> | The shell for `` !`cmd` `` blocks. | `bash` or `powershell`. Other values warn and fall back to bash. |
-| `metadata` | <Documented /> | A free map for your own tools. | Dropped when it is not a map. |
-| `license` | <Documented /> | An Agent Skills spec field. | Accepted, no effect. |
+| `paths` | <Documented /> | A glob limit for automatic loading. | Claude Code removes a trailing `/**`. A list of only `**` means no limit. Skills only. |
+| `shell` | <Documented /> | The shell for `` !`cmd` `` blocks. | `bash` or `powershell`. Other values cause a warning. Claude Code then uses bash. |
+| `metadata` | <Documented /> | A free map for your own tools. | Claude Code drops it when it is not a map. |
+| `license` | <Documented /> | An Agent Skills spec field. | Claude Code accepts it. It has no effect. |
 | `compatibility` | <Documented /> | An Agent Skills spec field. | A string up to 500 characters. No effect. |
-| `version` | <Documented /> | Skill version text. | Read as a string. Not in the docs key table. For skills and plugin commands. |
-| `fallback` | <Documented /> | A boolean that the loader reads. | Parsed with the boolean rule above. |
+| `version` | <Documented /> | Skill version text. | Claude Code reads it as a string. Not in the docs key table. For skills and plugin commands. |
+| `fallback` | <Documented /> | A boolean that the loader reads. | The loader parses it with the boolean rule above. |
 | `created_by`, `improved_by` | <Undocumented /> | Mark a skill as made by the `dream-proposal` flow. | Only the value `dream-proposal` counts. The env var `CLAUDE_CODE_SKILL_PROPOSALS` exists. |
-| `experimental` | <Documented /> <Experimental /> | A map whose key names are recorded. | Only the key names go into `declaredFields`. |
+| `experimental` | <Documented /> <Experimental /> | A map. Claude Code records its key names. | Only the key names go into `declaredFields`. |
 
 ## Skill Discovery with Bash `cd`
 
 Since `2.1.312`, Claude Code finds per-directory skills and `paths` skills after a Bash command moves the working directory deeper into the same git repository.
-When a file is read or written, the program walks up from the file to a base directory and looks for `.claude/skills` on the way.
+When a file is read or written, the program walks up from the file to a base directory. It looks for `.claude/skills` on the way.
 It also tests the `paths` globs of conditional skills against the file path, relative to that base.
 The base is now the directory where the session started, when all of these are true:
 
@@ -90,8 +90,8 @@ Other keys fail the upload.
 
 ## Exact Fields
 
-The exact fields: the `skill` definition in `https://xsyetopz.github.io/clawdipedia/schemas/claude-code-frontmatter.json`, made from the program's frontmatter validators.
-It lists every field of this release, so build on the fields it names and look each one up there before you rely on it.
+The exact fields are in the `skill` definition in `https://clawdipedia.cc/schemas/claude-code-frontmatter.json`. It comes from the program's frontmatter validators.
+It lists every field of this release. Build on the fields that it names. Look each one up there before you rely on it.
 
 ## Related Pages
 

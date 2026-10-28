@@ -6,7 +6,7 @@ sidebar_position: 2
 
 This guide tells you how to write a page for this site.
 Follow it so every page looks and reads the same.
-Run `bun run verify` before you open a pull request. It runs the type check, the format check, the code lint, markdownlint, the docs check, the schema check, and the build. Git hooks run on every commit, and commitlint checks the message.
+Run `bun run verify` before you open a pull request. It runs the type check, the format check, the code lint, markdownlint, the docs check, the schema check, and the build. Git hooks run on every commit. Commitlint checks the message.
 
 ## Core Rules
 
@@ -73,24 +73,9 @@ sidebar_position: 7
 A surface page has this order.
 
 1. A 2 to 4 sentence intro.
-2. An At a Glance table, only on a section's index page or on a standalone page with no section folder. Subpages do not repeat it.
-3. Item tables, grouped by topic.
-4. An Example section with a real config or command.
-5. Related pages and sources.
-
-### At a Glance Template
-
-```markdown
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. Run `claude --example`. |
-| Can you change it? | Edit `~/.claude/settings.json`. |
-| Can you turn it on or off? | Set `exampleEnabled` to `false`. |
-| Where does it live? | `~/.claude/settings.json` (user scope) |
-| Status | <Documented /> |
-```
+2. Item tables, grouped by topic.
+3. An Example section with a real config or command.
+4. Related pages and sources.
 
 ### Item Table Template
 
@@ -114,7 +99,7 @@ The badge components are global. Do not import them.
 | `<Differs />` | The docs and the program disagree. Say how in the row. |
 | `<Gated />` | The item works only behind a flag or server gate. Say which. |
 
-`Gated` and `Differs` take an optional `note` shown as a tooltip.
+`Gated` and `Differs` take an optional `note`. The note shows as a tooltip.
 
 ```mdx
 <Gated note="CLAUDE_CODE_EXAMPLE=1" />
@@ -127,8 +112,8 @@ You can place several badges in one cell. Separate them with a space.
 
 List only items a user can use. Leave out these items.
 
-- Items that are removed or do nothing.
-- Items used only in tests.
+- Removed items and items that do nothing.
+- Items that exist only for tests.
 - Items for Anthropic staff, such as those behind `USER_TYPE=ant`.
 
 Keep a gated item only if a user can turn it on or it is live for some accounts. Mark it <Gated />.
@@ -156,7 +141,7 @@ flowchart LR
 ### File Trees
 
 Do not draw trees with box characters. Wrap a nested list in the `<FileTree>` component.
-Write one item on each line. Give a folder a trailing `/`, and put a short note after the name.
+Write one item on each line. Give a folder a trailing `/`. Put a short note after the name.
 
 ````markdown
 <FileTree>
@@ -184,7 +169,7 @@ It looks like this.
 
 ### Table Marks
 
-Use these marks in a table cell that is a yes, no, or unknown answer, such as an At a Glance answer or a boolean column.
+Use these marks in a table cell that answers yes, no, or unknown. An example is a boolean column of an item table.
 
 | Mark | Meaning | Write |
 | --- | --- | --- |
@@ -194,13 +179,13 @@ Use these marks in a table cell that is a yes, no, or unknown answer, such as an
 
 - Do not use a mark where Yes or No is part of a value, such as a default that is literally "no".
 - Never put a mark in a heading, a sidebar label, or link text.
-- For a short clarification, put `\*` after the mark (`✅\*`) and write `\* The note.` right after the table. Use `\*\*` for a second note.
+- For a short clarification, put `\*` after the mark (`✅\*`). Then write `\* The note.` right after the table. Use `\*\*` for a second note.
 - `bun run check:docs` rejects every emoji that is not on the allow-list in `tools/check/docs.ts`.
 
 ### Status Labels
 
 Put one of these components in the `Status` column, after the provenance badges. The name cell holds only the identifier.
-Each has one meaning, and a provenance badge stays the primary status.
+Each has one meaning. A provenance badge stays the primary status.
 
 | Component | Meaning | Use it when |
 | --- | --- | --- |
@@ -237,17 +222,17 @@ Give a code block a language and, when useful, a title.
 
 Every surface page has at least one worked example.
 
-Examples in `ts`, `tsx`, `js`, `jsx`, `json`, and `jsonc` blocks follow `biome.json`: formatting, lint rules, and typed const arrows instead of `function` declarations. Run `bun run check:examples` (add `--fix` for safe fixes). To skip a block that must stay verbatim, such as program output or a wire format, add `skip-lint` to its fence: ` ```json skip-lint title="..." `. Blocks in `docs/prompts/` are skipped.
+Examples in `ts`, `tsx`, `js`, `jsx`, `json`, and `jsonc` blocks follow `biome.json`. This covers formatting, lint rules, and typed const arrows instead of `function` declarations. Run `bun run check:examples` (add `--fix` for safe fixes). To skip a block that must stay verbatim, such as program output or a wire format, add `skip-lint` to its fence: ` ```json skip-lint title="..." `. The check skips blocks in `docs/prompts/`.
 
 ### Example Hosts
 
-Use `example.com` for a host in a page example. [IANA](https://www.iana.org/help/example-domains) reserves it for this use, and it needs no permission.
+Use `example.com` for a host in a page example. [IANA](https://www.iana.org/help/example-domains) reserves it for this use. It needs no permission.
 
 Do not use `example.com` in a test or a probe. The same IANA page states that `example.com` "is not a service" and that you must "avoid relying on it for testing and monitoring purposes". A test that reaches it depends on a host that nobody promises to keep.
 
-In a test or a probe, use a name under `.invalid`, such as `probe.invalid`. [RFC 2606 section 2](https://www.rfc-editor.org/rfc/rfc2606#section-2) reserves `.invalid` for a name that never resolves, so the request stays on the machine. Use `127.0.0.1` with a port when the test needs a server that answers.
+In a test or a probe, use a name under `.invalid`, such as `probe.invalid`. [RFC 2606 section 2](https://www.rfc-editor.org/rfc/rfc2606#section-2) reserves `.invalid` for a name that never resolves. So the request stays on the machine. Use `127.0.0.1` with a port when the test needs a server that answers.
 
-An email address in a test, such as a git author, may keep `example.com`. Git never resolves an email address, so no request leaves the machine.
+An email address in a test, such as a git author, may keep `example.com`. Git never resolves an email address. So no request leaves the machine.
 
 ## MDX Gotchas
 
@@ -266,8 +251,8 @@ Lines inside code fences are safe.
 ## Links
 
 - Link to other pages with a relative file path: `[Hooks](../extend/hooks/index.md)`.
-- Name official pages by their Title Case page names, and link each one to its URL: `[Hooks Reference](https://code.claude.com/docs/en/hooks)`. Add `#anchor` when you name a section. Link the changelog, GitHub, and other outside sources the same way. "The program" stays plain text.
-- The build fails on a broken link or anchor. Fix it, do not remove it.
+- Name official pages by their Title Case page names. Link each one to its URL: `[Hooks Reference](https://code.claude.com/docs/en/hooks)`. Add `#anchor` when you name a section. Link the changelog, GitHub, and other outside sources the same way. "The program" stays plain text.
+- The build fails on a broken link or anchor. Fix it. Do not remove it.
 
 ## Sources
 

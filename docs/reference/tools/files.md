@@ -7,7 +7,7 @@ sidebar_position: 2
 These tools read, write, and search files, and they store memory notes.
 Use `Read` before `Edit`, because `Edit` replaces an exact string in a file.
 For example, `Grep` with `output_mode` set to `files_with_matches` lists only the files that match.
-The Yes and No columns are explained on [Tools](index.md#how-to-read-the-tool-tables).
+[Tools](index.md#how-to-read-the-tool-tables) explains the Yes and No columns.
 
 You can also read or edit files yourself and let Claude see the result. Deny the tool name in `permissions.deny`, or leave it out of a subagent `tools` list, to turn a tool off. The memory tools need a server-side flag.
 
@@ -24,9 +24,9 @@ Source: [Tools Reference](https://code.claude.com/docs/en/tools-reference), [Con
 | `Glob` | <Documented /> | Finds files by glob pattern. | `pattern` (string, required), `path` (string, optional, directory), `machine` (optional). | Main session and subagents. The docs say a subagent can get `Glob` and `Grep` when the main session lacks them (macOS, Linux, WSL). | ✅ | ✅ | ❌ |
 | `Grep` | <Documented /> | Searches file contents with ripgrep. | See [Grep Parameters](#grep-parameters). | Same as `Glob`. | ✅ | ✅ | ❌ |
 | `LSP` | <Documented /> | Code intelligence: definitions, references, symbols, hover, call hierarchy. | `operation`, `filePath` (required), `line` (int, 1 or more, required), `character` (int, 1 or more, required), `query` (optional, `workspaceSymbol` only). | Main session and subagents. Background subagents keep it since `2.1.280`. | ✅ | ✅ | ✅ |
-| `memory_read` | <Undocumented /> <Gated note="hidden server-side flag" /> | Reads a document from a memory store. | `store` (string, required), `path` (string, required). | Only when auto memory is on (`autoMemoryEnabled`, no `CLAUDE_CODE_DISABLE_AUTO_MEMORY`) and the memory mode is `tools`. The mode is `tools` when the server flag `tengu_linen_orbit` is on (default off) or organization memory is not closed. Organization memory needs the server flag `tengu_haze_glass`, no `CLAUDE_CODE_DISABLE_ORG_MEMORY` or `CLAUDE_MEMORY_STORES`, and the `allow_memory_sync` policy. The mode stays `files` in cloud sessions that set `CLAUDE_CODE_REMOTE_MEMORY_DIR`, and when `CLAUDE_COWORK_MEMORY_GUIDELINES` is set. | ✅ | ✅ | ❌ |
-| `memory_write` | <Undocumented /> <Gated note="hidden server-side flag" /> | Saves a document to a memory store. | `store`, `path`, `content` (all strings, required; `content` replaces the whole document), `if_version` (string, max 64, version token for compare-and-set). | Only when auto memory is on (`autoMemoryEnabled`, no `CLAUDE_CODE_DISABLE_AUTO_MEMORY`) and the memory mode is `tools`. The mode is `tools` when the server flag `tengu_linen_orbit` is on (default off) or organization memory is not closed. Organization memory needs the server flag `tengu_haze_glass`, no `CLAUDE_CODE_DISABLE_ORG_MEMORY` or `CLAUDE_MEMORY_STORES`, and the `allow_memory_sync` policy. The mode stays `files` in cloud sessions that set `CLAUDE_CODE_REMOTE_MEMORY_DIR`, and when `CLAUDE_COWORK_MEMORY_GUIDELINES` is set. | ❌ | ❌ | ❌ |
-| `memory_list` | <Undocumented /> <Gated note="hidden server-side flag" /> | Lists memory stores and their documents. | `store` (optional), `path_prefix` (optional, directory-aligned), `cursor` (optional). | Only when auto memory is on (`autoMemoryEnabled`, no `CLAUDE_CODE_DISABLE_AUTO_MEMORY`) and the memory mode is `tools`. The mode is `tools` when the server flag `tengu_linen_orbit` is on (default off) or organization memory is not closed. Organization memory needs the server flag `tengu_haze_glass`, no `CLAUDE_CODE_DISABLE_ORG_MEMORY` or `CLAUDE_MEMORY_STORES`, and the `allow_memory_sync` policy. The mode stays `files` in cloud sessions that set `CLAUDE_CODE_REMOTE_MEMORY_DIR`, and when `CLAUDE_COWORK_MEMORY_GUIDELINES` is set. | ✅ | ✅ | ❌ |
+| `memory_read` | <Undocumented /> <Gated note="hidden server-side flag" /> | Reads a document from a memory store. | `store` (string, required), `path` (string, required). | Only when auto memory is on (`autoMemoryEnabled`, no `CLAUDE_CODE_DISABLE_AUTO_MEMORY`) and the memory mode is `tools`. The mode is `tools` when the server flag `tengu_linen_orbit` is on (default off) or organization memory is not closed. Organization memory needs the server flag `tengu_haze_glass`, no `CLAUDE_CODE_DISABLE_ORG_MEMORY` or `CLAUDE_MEMORY_STORES`, and the `allow_memory_sync` policy. The mode stays `files` in cloud sessions that set `CLAUDE_CODE_REMOTE_MEMORY_DIR`, and when you set `CLAUDE_COWORK_MEMORY_GUIDELINES`. | ✅ | ✅ | ❌ |
+| `memory_write` | <Undocumented /> <Gated note="hidden server-side flag" /> | Saves a document to a memory store. | `store`, `path`, `content` (all strings, required), `if_version` (string, max 64, version token for compare-and-set). `content` replaces the whole document. | Only when auto memory is on (`autoMemoryEnabled`, no `CLAUDE_CODE_DISABLE_AUTO_MEMORY`) and the memory mode is `tools`. The mode is `tools` when the server flag `tengu_linen_orbit` is on (default off) or organization memory is not closed. Organization memory needs the server flag `tengu_haze_glass`, no `CLAUDE_CODE_DISABLE_ORG_MEMORY` or `CLAUDE_MEMORY_STORES`, and the `allow_memory_sync` policy. The mode stays `files` in cloud sessions that set `CLAUDE_CODE_REMOTE_MEMORY_DIR`, and when you set `CLAUDE_COWORK_MEMORY_GUIDELINES`. | ❌ | ❌ | ❌ |
+| `memory_list` | <Undocumented /> <Gated note="hidden server-side flag" /> | Lists memory stores and their documents. | `store` (optional), `path_prefix` (optional, directory-aligned), `cursor` (optional). | Only when auto memory is on (`autoMemoryEnabled`, no `CLAUDE_CODE_DISABLE_AUTO_MEMORY`) and the memory mode is `tools`. The mode is `tools` when the server flag `tengu_linen_orbit` is on (default off) or organization memory is not closed. Organization memory needs the server flag `tengu_haze_glass`, no `CLAUDE_CODE_DISABLE_ORG_MEMORY` or `CLAUDE_MEMORY_STORES`, and the `allow_memory_sync` policy. The mode stays `files` in cloud sessions that set `CLAUDE_CODE_REMOTE_MEMORY_DIR`, and when you set `CLAUDE_COWORK_MEMORY_GUIDELINES`. | ✅ | ✅ | ❌ |
 
 ## `Read` Parameters
 
@@ -87,7 +87,7 @@ Block reads of secret files and all edits to lock files.
 - `machine` is an extra optional field that Claude Code adds to a tool schema when an attached-machines feature is on.
 - File tools check permissions with the rule syntax in [Permission Rules](../../configure/permissions/rules.md).
 - `Read`, `Glob`, `Grep`, `Write`, and `Edit` carry `remoteExecution` metadata in the program. It marks them as runnable on a remote host.
-- `Read` has no result size cap, so use `offset` and `limit` for large files.
+- `Read` has no result size cap. So use `offset` and `limit` for large files.
 
 ## Write on a File That Claude Read Only in Part
 
@@ -108,7 +108,7 @@ Each row is a family of messages. The backticked text is the start that every me
 
 | Start of Message | Status | What It Means | Cases |
 | --- | --- | --- | --- |
-| Various | <Undocumented /> | **File tools.** `Read`, `Edit`, `Write`, or `NotebookEdit` refused a call. | The file is covered by a Read deny rule, has not been read yet, changed since it was last read, is too large, is a pipe or device, is a symbolic link, is not a valid image, PDF page, or notebook, or the edit does not match (string not found, no change). A write failed after the file was truncated. |
+| Various | <Undocumented /> | **File tools.** `Read`, `Edit`, `Write`, or `NotebookEdit` refused a call. | A Read deny rule covers the file. Claude has not read it yet. It changed since Claude last read it. It is too large. It is a pipe or device. It is a symbolic link. It is not a valid image, PDF page, or notebook. The edit does not match (string not found, no change). A write failed after the file was truncated. |
 
 ## Related Pages
 

@@ -8,16 +8,6 @@ Claude Code is a client of the Messages API. It sends model requests, counts tok
 Each request carries headers and a list of beta values. This section lists them all.
 If you run Claude Code behind a gateway or proxy, read these pages first, because the gateway must pass some headers on without a change.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | Not directly. Claude Code makes these calls for you. You can watch them with a proxy or a local stub. |
-| Can you change it? | ✅ Yes. `ANTHROPIC_BASE_URL`, `ANTHROPIC_CUSTOM_HEADERS`, `ANTHROPIC_BETAS`, `--betas`, and provider variables change the calls. |
-| Can you turn it on or off? | `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS`, `CLAUDE_CODE_GATEWAY_HINT_HEADERS`, `CLAUDE_CODE_ATTRIBUTION_HEADER=0`. |
-| Where does it live? | In the program. The gateway guide is the only official source. |
-| Status | <Documented /> <Undocumented /> |
-
 ## Pages
 
 | Page | What It Covers |
@@ -48,5 +38,5 @@ flowchart LR
 
 - [Gateway Compatibility Guide](https://code.claude.com/docs/en/llm-gateway-protocol) is the official page for the model server contract.
 - [Request and Cache](../../how-it-works/request-and-cache.md)
-- [Models and Providers](../../configure/models-and-providers.md)
+- [Models and Providers](../../configure/models-and-providers/index.md)
 - [Network and Proxy Variables](../../configure/env-vars/network-and-proxy.md)

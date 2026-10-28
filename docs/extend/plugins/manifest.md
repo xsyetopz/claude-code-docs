@@ -5,17 +5,17 @@ sidebar_position: 2
 ---
 
 The manifest is the file `.claude-plugin/plugin.json` inside a plugin.
-It names the plugin and can point to its parts.
-The file is optional, and only `name` is required.
+It names the plugin. It can also point to its parts.
+The file is optional. Only `name` is required.
 For example, `{ "name": "my-plugin", "version": "1.0.0" }` is a valid manifest.
 
-You write it by hand or start from `claude plugin init`. Run `claude plugin validate` after you edit it. `enabledPlugins` turns the plugin as a whole on or off. A manifest can set `defaultEnabled` for users who set nothing.
+You write it by hand or start from `claude plugin init`. Run `claude plugin validate` after you edit it. `enabledPlugins` enables or disables the plugin as a whole. A manifest can set `defaultEnabled` for users who set nothing.
 
 ## Rules
 
-- An unknown top-level key is stripped. `claude plugin validate` warns about it.
+- Claude Code strips an unknown top-level key. `claude plugin validate` warns about it.
 - An unknown key inside `userConfig`, `channels`, `lspServers`, or `monitors` is an error. The plugin does not load.
-- A component path starts with `./`, stays inside the plugin folder, and must exist.
+- A component path starts with `./`. It stays inside the plugin folder. It must exist.
 
 Source: [Plugin Manifest Reference](https://code.claude.com/docs/en/plugins/manifest-reference) and the program (the bundled manifest schema).
 A marketplace entry can repeat many of these keys. See [Marketplaces](marketplace.md#plugin-entry-keys).
@@ -26,20 +26,20 @@ The last column says where the key may appear: the manifest, a marketplace entry
 
 | Key | Status | What It Does | How It Works | Where |
 | --- | --- | --- | --- | --- |
-| `$schema` | <Documented /> | Gives an editor schema URL. | Ignored when the plugin loads. | Manifest |
+| `$schema` | <Documented /> | Gives an editor schema URL. | The loader ignores it. | Manifest |
 | `name` | <Documented /> | Sets the plugin id and namespace. | Not empty, no spaces, no control or bidirectional characters. Reserved: names that start with `claude-`, `anthropic-`, `anthropics-`, or `cc-plugin-`, and the names `claude`, `anthropic`, `claude-code`, `claude-mods`. | Both |
 | `displayName` | <Documented /> | Sets the name shown in the UI. | The entry value wins. | Both |
-| `version` | <Documented /> | Sets the version text. | Must be a string (a number is an error). Any text works, because it is not checked as semver. The validator only warns when it is missing or empty. Users stay on this version until you change it. The manifest value wins over the entry, and `claude plugin validate` warns when they differ. | Both |
+| `version` | <Documented /> | Sets the version text. | Must be a string (a number is an error). Any text works. Nothing checks it as semver. The validator only warns when it is missing or empty. Users stay on this version until you change it. The manifest value wins over the entry. `claude plugin validate` warns when they differ. | Both |
 | `description`, `homepage`, `repository`, `license`, `keywords` | <Documented /> | Listing data. | `homepage` must be a URL. | Both |
 | `author` | <Documented /> | Names the maker. | An object: `name` (required), `email`, `url`. | Both |
-| `metadata` | <Documented /> | A free map for your own data. | A value that is not an object is dropped. | Both |
+| `metadata` | <Documented /> | A free map for your own data. | The program drops a value that is not an object. | Both |
 | `icon`, `documentationUrl`, `supportUrl`, `privacyPolicyUrl`, `termsOfServiceUrl` | <Documented /> | Directory listing data. | The program also ignores these names without error: `screenshots`, `classification`, `privacy_policy`, `privacyPolicy`, `support`, `bugs`, `terms_of_service`, `docs`. | Manifest only |
 | `defaultEnabled` | <Documented /> | Sets the start state when the user chose nothing. | Default `true`. The entry value wins. `enabledPlugins` always wins. | Both |
-| `dependencies` | <Documented /> | Lists plugins that must be enabled too. | Each item is `"name"`, `"name@marketplace"`, or an object. The program also accepts a trailing `@^range` and strips it. | Both |
+| `dependencies` | <Documented /> | Lists plugins that must be enabled too. | Each item is `"name"`, `"name@marketplace"`, or an object. The program also accepts a trailing `@^range`. It strips the range. | Both |
 | `settings` | <Documented /> | Applies settings while the plugin is enabled. | Only `agent` and `subagentStatusLine` take effect. A `settings.json` in the plugin root wins. | Manifest |
 | `userConfig` | <Documented /> | Asks the user for values when the plugin is enabled. | See [`userConfig` Option Keys](#userconfig-option-keys). | Manifest |
 | `channels` | <Documented /> | Declares message channels. | Items have `server`, `displayName`, and `userConfig`. Strict. | Manifest |
-| `types` | <Documented /> | Points to a `.d.ts` file for a mod. | Must end in `.d.ts` and may not contain `..`. | Manifest |
+| `types` | <Documented /> | Points to a `.d.ts` file for a mod. | Must end in `.d.ts` and must not contain `..`. | Manifest |
 | `skills` | <Documented /> | Adds skill folders. | Adds to `skills/`. The value `"."` means the plugin root. | Manifest |
 | `commands` | <Documented /> | Lists command files or a map. | Replaces `commands/`. A map entry has `source` or `content` (exactly one), `description`, `argumentHint`, `model`, and `allowedTools`. | Manifest |
 | `agents` | <Documented /> | Lists agent `.md` files. | Replaces `agents/`. Folders are not allowed. | Manifest |
@@ -48,9 +48,9 @@ The last column says where the key may appear: the manifest, a marketplace entry
 | `lspServers` | <Documented /> | Gives language server config. | Fields: `command`, `extensionToLanguage`, `args`, `transport`, `env`, `initializationOptions`, `settings`, `workspaceFolder`, `startupTimeout`, `shutdownTimeout`, `requestTimeout`, `restartOnCrash`, `maxRestarts`, `diagnostics`. | Manifest |
 | `outputStyles` | <Documented /> | Lists style files or folders. | Replaces `output-styles/`. | Manifest |
 | `workflows` | <Documented /> | Lists workflow `.js` files or folders. | Replaces `workflows/`. | Manifest |
-| `experimental.themes` | <Documented /> <Experimental /> | Lists theme files or folders. | Replaces `themes/`. A top-level `themes` key still loads and gives a warning. | Manifest |
+| `experimental.themes` | <Documented /> <Experimental /> | Lists theme files or folders. | Replaces `themes/`. A top-level `themes` key still loads. It gives a warning. | Manifest |
 | `experimental.monitors` | <Documented /> <Experimental /> | Declares background watchers. | Items: `name`, `command`, `description`, `when` (`always` or `on-skill-invoke:<skill>`). Interactive sessions only. Since `2.1.310`, they also run on Bedrock, Vertex, and Foundry, and with telemetry or nonessential traffic off ([v2.1.310 release](https://github.com/anthropics/claude-code/releases/tag/v2.1.310)). | Manifest |
-| `experimental.evals` | <Documented /> <Experimental /> | Names the eval folder. | Default `evals/`. Used by `claude plugin eval`. | Manifest |
+| `experimental.evals` | <Documented /> <Experimental /> | Names the eval folder. | Default `evals/`. `claude plugin eval` uses it. | Manifest |
 | `experimental.syntaxHighlighting.hljsLanguages` | <Undocumented /> <Experimental /> | Adds highlight.js languages. | Up to 16 items. `id` matches `^[a-z][a-z0-9_-]*$` (64 characters at most). `remote` is `npm:<pkg>[@ver]` or `github:<owner>/<repo>@<ref>#<path>.js`. `integrity` is an SRI hash with `sha256-`, `sha384-`, or `sha512-`. Strict. | Manifest |
 | `binaries` | <Undocumented /> | Lists files fetched into `bin/` at install. | A map of base name to `{ "sha256": <64 hex> }`. At most 64 entries. Names match `^[a-z0-9](?:[a-z0-9._-]*[a-z0-9_-])?$`. The env var `CLAUDE_CODE_PLUGIN_BINARY_ASSETS` also exists. | Manifest |
 
@@ -99,8 +99,8 @@ The same option shape works inside `channels`.
 | `hooks/hooks.json` | <Documented /> | Holds the plugin hooks. | Keys: `hooks`, and also `modules` (one path to a hooks module) and `description`. The old `surface` key is gone. |
 | `.mcp.json`, `.lsp.json`, `monitors/monitors.json`, `settings.json` | <Documented /> | Config files at fixed places. | Claude Code loads these before it reads manifest entries. |
 | `bin/` | <Documented /> | Puts programs on the `PATH` of the Bash tool. | claude.ai and Cowork do not install a plugin that has a `bin/` folder. |
-| Root `SKILL.md` | <Documented /> | Makes a single-skill plugin. | Used only when there is no `skills/` folder and no `skills` key. |
-| Root `CLAUDE.md` | <Documented /> | Not loaded. | `claude plugin validate` warns about it. |
+| Root `SKILL.md` | <Documented /> | Makes a single-skill plugin. | The loader uses it only when there is no `skills/` folder and no `skills` key. |
+| Root `CLAUDE.md` | <Documented /> | The loader does not load it. | `claude plugin validate` warns about it. |
 
 ## Example
 

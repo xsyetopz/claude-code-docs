@@ -5,11 +5,11 @@ sidebar_position: 3
 ---
 
 A skill body can hold placeholders that Claude Code fills in when the skill runs.
-It can also run shell commands and paste in their output.
+It can also run shell commands and insert their output.
 This page lists the placeholders, the shell syntax, and the rules for who can start a skill.
 For example, `$ARGUMENTS` in a `SKILL.md` file becomes the text that you type after the command.
 
-`disableSkillShellExecution` turns off shell injection. `disable-model-invocation` and `user-invocable` control who can run a skill.
+`disableSkillShellExecution` disables shell injection. `disable-model-invocation` and `user-invocable` control who can run a skill.
 
 ## Example
 
@@ -26,7 +26,7 @@ Issue details:
 Fix issue $issue. Session: ${CLAUDE_SESSION_ID}.
 ```
 
-Type `/fix-issue 42`. Claude Code runs `gh issue view 42`, pastes the output, and sends the whole text to Claude.
+Type `/fix-issue 42`. Claude Code runs `gh issue view 42`. It inserts the output. It then sends the whole text to Claude.
 
 ## String Substitutions
 
@@ -36,23 +36,23 @@ Type `/fix-issue 42`. Claude Code runs `gh issue view 42`, pastes the output, an
 | `$ARGUMENTS[N]`, `$N` | <Documented /> | One argument by index, counting from 0. | Shell-style quotes group words. A missing index stays as text. |
 | `$name` | <Documented /> | A named argument from the `arguments` key. | A missing value gives an empty string. |
 | `\$1` | <Documented /> | The literal text `$1`. | One backslash before a token escapes it. `\\$1` still expands. |
-| `${CLAUDE_SESSION_ID}` | <Documented /> | The session ID. | Not replaced in synced skills. |
+| `${CLAUDE_SESSION_ID}` | <Documented /> | The session ID. | Claude Code does not replace it in synced skills. |
 | `${CLAUDE_EFFORT}` | <Documented /> | The current effort level. | `low` to `max`. |
-| `${CLAUDE_SKILL_DIR}` | <Documented /> | The folder of the `SKILL.md`. | Also replaced in `allowed-tools` Bash rules. In a plugin it is the skill subfolder. |
-| `${CLAUDE_PROJECT_DIR}` | <Documented /> | The project root. | Replaced in the body and in `allowed-tools`. |
+| `${CLAUDE_SKILL_DIR}` | <Documented /> | The folder of the `SKILL.md`. | Claude Code also replaces it in `allowed-tools` Bash rules. In a plugin it is the skill subfolder. |
+| `${CLAUDE_PROJECT_DIR}` | <Documented /> | The project root. | Claude Code replaces it in the body and in `allowed-tools`. |
 | `${CLAUDE_PLUGIN_ROOT}`, `${CLAUDE_PLUGIN_DATA}` | <Documented /> | Plugin paths. | Plugin skills only. |
-| `${user_config.KEY}` | <Documented /> | A saved plugin option. | In skill and agent content only non-sensitive values are filled. |
-| Total size cap | <Undocumented /> | Stops huge fills. | The error says "This skill, command or hook and the arguments filled into it add up to more than N characters". Argument values are marked so a `$` inside them is not expanded. |
+| `${user_config.KEY}` | <Documented /> | A saved plugin option. | Claude Code fills only non-sensitive values in skill and agent content. |
+| Total size cap | <Undocumented /> | Stops huge fills. | The error says "This skill, command or hook and the arguments filled into it add up to more than N characters". The program marks argument values. A `$` inside them is then not expanded. |
 
 ## Shell Injection
 
 | Syntax or setting | Status | What it does | Notes |
 | --- | --- | --- | --- |
-| `` !`command` `` | <Documented /> | Runs a command and inserts its output. | Only at the start of a line or after whitespace. The output is not scanned again. User, project, and plugin skills. |
+| `` !`command` `` | <Documented /> | Runs a command and inserts its output. | Only at the start of a line or after whitespace. Claude Code does not scan the output again. User, project, and plugin skills. |
 | A fenced block with `!` after the opening backticks | <Documented /> | A multi-line command. | The same rules. |
 | A failing command | <Documented /> | Aborts the whole invocation. | The error is `Shell command failed for pattern "..."`. Exit code 1 from search commands is a normal result. A permission failure says `Shell command permission check failed`. |
-| `disableSkillShellExecution` | <Documented /> | Replaces each command with `[shell command execution disabled by policy]`. | Bundled and managed skills are not affected. |
-| Synced skills | <Documented /> | Never run `!` commands. | `@` files and two placeholders are not expanded either. |
+| `disableSkillShellExecution` | <Documented /> | Replaces each command with `[shell command execution disabled by policy]`. | The setting does not affect bundled and managed skills. |
+| Synced skills | <Documented /> | Never run `!` commands. | Claude Code also does not expand `@` files or two placeholders. |
 
 ## Invocation Control
 
@@ -60,7 +60,7 @@ Type `/fix-issue 42`. Claude Code runs `gh issue view 42`, pastes the output, an
 | --- | --- | --- | --- |
 | Default | <Documented /> | You and Claude can both run the skill. | The description is always in context. |
 | `disable-model-invocation: true` | <Documented /> | Only you can run it. | The description is not in context. |
-| `user-invocable: false` | <Documented /> | Only Claude can run it. | The skill is hidden from the `/` menu. |
+| `user-invocable: false` | <Documented /> | Only Claude can run it. | Claude Code hides the skill from the `/` menu. |
 | A name at the start of a message | <Documented /> | Runs the skill. | After plain text it only grants permission. You can stack up to five more skills in a terminal prompt. |
 | `Skill(name)` and `Skill(name *)` rules | <Documented /> | Permission rules for the `Skill` tool. | A deny on an alias blocks the bundled skill. Allow rules match the skill name only. |
 | Lifecycle | <Documented /> | The skill text stays in the conversation. | An identical second run adds a short note. Compaction keeps 5,000 tokens for each skill and 25,000 in total. See [Context and Compaction](../../how-it-works/context-and-compaction.md). |

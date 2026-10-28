@@ -1,11 +1,11 @@
 ---
 title: How to Read These Docs
-description: What the badges mean, what the At a Glance table answers, where the facts come from, and which release this site covers.
+description: What the badges mean, what the tables show, where the facts come from, and which release this site covers.
 sidebar_position: 1
 ---
 
 This site explains Claude Code in plain words.
-Each page tells you what you can use, what you can change, and how to switch it on or off.
+Each page names what an item does, where you set it, and which switch turns it on or off.
 This page shows you how to read the marks and tables on those pages.
 
 :::note[Unofficial Site]
@@ -43,9 +43,9 @@ Each has one meaning. A label adds a fact that the provenance badges above do no
 | <ManagedOnly /> | The setting works only in managed (organization policy) settings. The source is the `x-managed-only` flag in the managed settings schema. |
 | <Experimental /> | The program or the official docs call it experimental or beta. |
 | <Deprecated note="Example: use the new name" /> | It is deprecated. Hover over the label to see what replaces it, when the row names one. |
-| <Caution note="Example: deletes data" /> | It has a side effect to notice: it deletes data, skips a safety check or permission, or sends data off your machine. |
+| <Caution note="Example: deletes data" /> | It has a side effect to notice. It deletes data, skips a safety check or permission, or sends data off your machine. |
 
-The name cell holds only the item name. The label is plain text, so a screen reader reads it with the other badges.
+The name cell holds only the item name. The label is plain text. A screen reader reads it with the other badges.
 
 ## Marks in Tables
 
@@ -62,26 +62,15 @@ A star after a mark, such as ✅\*, points to a note under the table that starts
 In a table cell, a screen reader says "Yes" or "No" for a mark that stands alone.
 The marks never replace the words in a heading or a link.
 
-## At a Glance
+## Item Tables
 
-A section index page, or a standalone page about a surface, starts with a short intro and then an At a Glance table. Subpages in a section do not repeat it.
-The table answers five questions.
-
-| Question | What the answer tells you |
-| --- | --- |
-| Can you use it? | ✅ Yes, ❌ No, or Partly, and how to start. |
-| Can you change it? | Where and how you change it. |
-| Can you turn it on or off? | The switch: a setting, an environment variable, or a flag. |
-| Where does it live? | The file paths or scopes that hold it. |
-| Status | The badges for the surface. |
-
-Below that, tables list single items.
+Tables list single items.
 They use columns such as `Item`, `Status`, `What it does`, `Default`, and `Where to set it`.
 
 ## Only Usable Items Are Listed
 
 The site lists only things you can use, change, or switch.
-It leaves out items that are removed, do nothing, exist only for tests, or are for Anthropic staff.
+It leaves out removed items, items that do nothing, items that exist only for tests, and items for Anthropic staff.
 If an item is not here, you should not rely on it.
 
 ## Where Facts Come From
@@ -99,10 +88,10 @@ If a fact is not checked, the page puts it in a "Not Verified" box or leaves it 
 This site tracks only the newest release.
 The current release is shown in the top bar, for example "Tracks 2.1.312".
 There are no old versions of the docs.
-The [What Changed](what-changed.md) page lists breaking changes in the current release, and the [Release Archive](release-archive.md) keeps earlier ones.
+The [What Changed](what-changed.md) page lists breaking changes in the current release. The [Release Archive](release-archive.md) keeps earlier ones.
 
 ## How the Text Is Written
 
 The text uses Simple English: common words, short sentences, and one idea at a time.
 Every code item, such as a command, a path, a key, or an environment variable, is in `inline code`.
-To help, read the [Style Guide](../contributing/style-guide.md).
+For more help, read the [Style Guide](../contributing/style-guide.md).

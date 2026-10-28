@@ -5,9 +5,9 @@ sidebar_position: 5
 ---
 
 The context window is the amount of text the model can read at one time.
-When a session gets close to the limit, Claude Code compacts it:
-it asks the model for a summary and goes on from the summary.
-You can set when this happens, and you can say what the summary must keep.
+When a session gets close to the limit, Claude Code compacts it.
+It asks the model for a summary. Then it continues from the summary.
+You can set when this happens. You can also say what the summary must keep.
 
 ## What Fills the Context
 
@@ -108,7 +108,7 @@ stateDiagram-v2
 | Manual | <Documented /> | It starts with `/compact`. The trigger is `manual`. |
 | Reactive | <Undocumented /> | The API refuses a request as too long, and Claude Code compacts and tries again. Since `2.1.311`, this also covers a standard-window session that goes over 200K tokens and gets "Usage credits required for 1M context" (`chunk-8qajn51r.js:6009`). It compacts and continues. |
 | Precomputed | <Undocumented /> | A summary made ahead of time replaces the conversation. |
-| Larger-model retry | <Undocumented /> | A compaction that fails can try again on a model with a larger window. |
+| Larger-model retry | <Undocumented /> | Claude Code can retry a failed compaction on a model with a larger window. |
 | Server side | <Undocumented /> | The beta `context-management-2025-06-27` lets the API edit the context. |
 
 Since `2.1.311`, when the model's reply to a compaction request has no `<summary>` block, Claude Code usually asks once more for the summary before it replaces the conversation (`chunk-2ht8z368.js:108786`).
@@ -136,7 +136,7 @@ Source: the program (<Undocumented />).
 8. Current Work
 9. Optional Next Step
 
-The prompt has a short form ("in 2000 words or fewer"), a form that asks for an `<analysis>` first, and a form that covers only the recent messages.
+The prompt has three forms. One is short ("in 2000 words or fewer"). One asks for an `<analysis>` first. One covers only the recent messages.
 The request uses the thinking setting of the session (v2.1.198 or later).
 See the captured [compaction prompt](../prompts/context-and-memory/compact.md).
 
@@ -150,14 +150,14 @@ Source: [Explore the Context Window: What Survives Compaction](https://code.clau
 | Root `CLAUDE.md`, unscoped rules, and auto memory | <Documented /> | Claude Code reads them again from disk. |
 | The plan from plan mode | <Documented /> | Claude Code reads it again from disk. |
 | Rules with `paths:` and nested `CLAUDE.md` files | <Documented /> | They load again when needed. |
-| Files that were read or edited | <Documented /> | Up to five are read again, newest first. A file over 5,000 tokens comes back as a path. |
+| Files that the session read or edited | <Documented /> | Claude Code reads up to five again, newest first. A file over 5,000 tokens comes back as a path. |
 | Skills that ran | <Documented /> | Each keeps 5,000 tokens, up to 25,000 in total. The oldest go first. |
 | Background commands and subagents | <Documented /> | They keep running. |
 | `SessionStart` hooks with the `compact` matcher | <Documented /> | They run again. |
 
 ## Example
 
-Your session is long and you start a new task.
+Your session is long. You start a new task.
 Run `/compact focus on the auth bug fix` to keep what matters.
 Or compact earlier next time by setting a smaller window.
 
@@ -167,7 +167,7 @@ claude --autocompact 500000
 
 ```json title="~/.claude/settings.json"
 {
-  "$schema": "https://xsyetopz.github.io/clawdipedia/schemas/claude-code-settings.json",
+  "$schema": "https://clawdipedia.cc/schemas/claude-code-settings.json",
   "autoCompactWindow": 500000
 }
 ```
@@ -178,7 +178,7 @@ Each row is a family of messages. The backticked text is the start that every me
 
 | Start of Message | Status | What It Means | Cases |
 | --- | --- | --- | --- |
-| Various | <Undocumented /> | **Compaction.** A compaction did not run or failed. | There are no or not enough messages to compact, compaction was canceled, the conversation could not be reduced below the limit, attached media exceeds size limits, or the model policy blocks the swap. |
+| Various | <Undocumented /> | **Compaction.** A compaction did not run or failed. | There are no messages to compact, or not enough. The compaction was canceled. Claude Code could not reduce the conversation below the limit. Attached media exceeds size limits. The model policy blocks the swap. |
 
 ## Related Pages
 

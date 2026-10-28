@@ -7,7 +7,7 @@ sidebar_position: 3
 Each time the model must answer, Claude Code builds one request to the Messages API.
 The request holds the tool list, the system prompt, and the whole conversation so far.
 The API can reuse the start of a request it has seen before. That reuse is the prompt cache.
-What you change in the request decides what the cache can reuse, so it decides speed and cost.
+What you change in the request decides what the cache can reuse. So it decides speed and cost.
 
 ## Parts of a Request
 
@@ -25,7 +25,7 @@ flowchart LR
 
 | Part | Status | Content | Changes when |
 | --- | --- | --- | --- |
-| `tools` | <Documented /> | The tool definitions. MCP tools are deferred by default, so only their names go in. | The set of loaded tools changes. |
+| `tools` | <Documented /> | The tool definitions. Claude Code defers MCP tools by default, so only their names go in. | The set of loaded tools changes. |
 | `system` | <Documented /> | The attribution line, the identity line, and the system prompt. | The model, the output style, or the prompt flags change. |
 | `messages` | <Documented /> | The first user message with project context (`CLAUDE.md`, auto memory, unscoped rules), then the conversation. | Every turn. |
 
@@ -67,7 +67,7 @@ An observed request had three `system` blocks and three markers.
 
 Claude Code also marks the block of system context in the middle of a conversation, such as file-change notices, on every provider.
 `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS` turns this off.
-If a gateway rejects the marker with a `400` error, Claude Code moves it to the last message and keeps it there.
+If a gateway rejects the marker with a `400` error, Claude Code moves it to the last message. It keeps it there.
 
 ```mermaid
 sequenceDiagram
@@ -111,7 +111,7 @@ Source: [How Claude Code Uses Prompt Caching](https://code.claude.com/docs/en/pr
 | Deny a whole tool | <Documented /> | A miss, because its definition leaves the list. |
 | Run `/compact` | <Documented /> | A new prefix starts. |
 | Upgrade Claude Code | <Documented /> | A miss. |
-| Enable a plugin with skills, agents, or hooks | <Documented /> | No miss, because the content is appended. |
+| Enable a plugin with skills, agents, or hooks | <Documented /> | No miss, because Claude Code appends the content. |
 
 ## Per-Turn Values
 
@@ -124,7 +124,7 @@ These values are <Undocumented />. The capability flags `per_turn_effort` and `p
 A local stub of the Messages API showed these facts.
 No model call left the machine.
 
-- A model name with the `[1m]` suffix adds the `context-1m-2025-08-07` beta. Without the suffix it is never sent.
+- A model name with the `[1m]` suffix adds the `context-1m-2025-08-07` beta. Without the suffix, Claude Code never sends it.
 - The call to `/v1/messages/cache_touch` needs a subscriber login and the `cache-keepalive-2026-09-03` beta.
   It repeats every 30 seconds (10 to 120), with the body `{"request_id": ...}`.
 

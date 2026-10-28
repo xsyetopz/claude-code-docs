@@ -6,23 +6,16 @@ sidebar_position: 1
 
 Permissions decide which tool calls Claude Code may run, which need a prompt, and which it must refuse.
 The sandbox adds a second wall around `Bash` commands, enforced by the operating system.
-For example, an `allow` rule for `Bash(bun test)` runs the tests with no prompt, and the sandbox still limits what that command can reach.
-
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. It is always on. You see it as prompts, or as silent allows and denies. |
-| Can you change it? | ✅ Yes. Use rules, a permission mode, hooks, the sandbox, or the auto mode classifier. |
-| Can you turn it on or off? | You can loosen it (`bypassPermissions`) or lock it down (`dontAsk`, `--restricted`, managed settings). You cannot remove it. The sandbox is off by default, and `sandbox.enabled` turns it on. |
-| Where does it live? | The `permissions`, `sandbox`, and `autoMode` keys in settings files, plus CLI flags. |
-| Status | <Documented /> <Undocumented /> <Differs /> <Gated /> |
+For example, an `allow` rule for `Bash(bun test)` runs the tests with no prompt. The sandbox still limits what that command can reach.
+Permissions are always on. You see them as prompts, or as silent allows and denies. You cannot remove them.
+Set them with the `permissions`, `sandbox`, and `autoMode` keys in settings files, and with CLI flags.
+You can loosen them with `bypassPermissions`. You can lock them down with `dontAsk`, `--restricted`, or managed settings.
 
 ## Pages in This Section
 
 | Page | What it covers |
 | --- | --- |
-| [Permission Modes](modes.md) | The six modes, how a mode is chosen, decision reasons, and safety checks. |
+| [Permission Modes](modes.md) | The six modes, how Claude Code chooses a mode, decision reasons, and safety checks. |
 | [Permission Rules](rules.md) | Rule syntax, the `permissions.*` keys, related flags and hooks, and permission updates. |
 | [Sandbox](sandbox.md) | Every `sandbox.*` key and its environment variables. |
 | [Auto Mode](auto-mode.md) | The classifier, the `autoMode` setting, and the `claude auto-mode` commands. |
@@ -42,7 +35,7 @@ For example, an `allow` rule for `Bash(bun test)` runs the tests with no prompt,
 }
 ```
 
-`bun test` runs without a prompt. `git push` is blocked. Other commands prompt you, and `Bash` runs in the sandbox.
+`bun test` runs without a prompt. The `deny` rule blocks `git push`. Other commands prompt you. `Bash` runs in the sandbox.
 
 ## Marks and Sources
 

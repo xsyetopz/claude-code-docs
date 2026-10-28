@@ -45,7 +45,7 @@ Where to Set It tells you which files may set the key. See [Settings Files and S
 | `timeFormat` | <Documented /> | string | - | Show the times in the interface on a 12-hour or 24-hour clock, in UTC, or with a strftime pattern. | Any settings file |
 | `timeZone` | <Documented /> | string | The system time zone | Show the times in the interface in a time zone other than your system's. | Any settings file |
 | `tui` | <Documented /> | enum: `default`, `fullscreen` | - | Choose the fullscreen or classic terminal renderer. | Any settings file |
-| `verbose` | <Documented /> | boolean | - | Show full tool output instead of truncated summaries, and `viewMode` takes precedence when both are set. | Any settings file |
+| `verbose` | <Documented /> | boolean | - | Show full tool output instead of truncated summaries. `viewMode` takes precedence when you set both. | Any settings file |
 | `viewMode` | <Documented /> | enum: `default`, `verbose`, `focus` | - | Start every session in default, verbose, or focus view. | Any settings file |
 | `vimInsertModeRemaps` | <Documented /> | object | - | Map a two-key INSERT-mode sequence such as `jj` to Escape. | User or managed settings |
 | `voice` | <Documented /> | object | - | Turn on voice dictation and pick hold or tap mode. | Any settings file |
@@ -55,11 +55,11 @@ Where to Set It tells you which files may set the key. See [Settings Files and S
 
 ### Calm Terminal
 
-This file hides spinner tips, reduces animation, starts every session in focus view, and picks the fullscreen renderer.
+This file hides spinner tips. It reduces animation. It starts every session in focus view. It picks the fullscreen renderer.
 
 ```json title="~/.claude/settings.json"
 {
-  "$schema": "https://xsyetopz.github.io/clawdipedia/schemas/claude-code-settings.json",
+  "$schema": "https://clawdipedia.cc/schemas/claude-code-settings.json",
   "spinnerTipsEnabled": false,
   "prefersReducedMotion": true,
   "viewMode": "focus",
@@ -72,6 +72,6 @@ This file hides spinner tips, reduces animation, starts every session in focus v
 - [Settings Files and Scopes](index.md) explains the scopes, precedence, and managed settings.
 - [Settings Reference](https://code.claude.com/docs/en/settings-reference) is the official page for each key.
 - [Customize Keyboard Shortcuts](https://code.claude.com/docs/en/keybindings) covers key bindings.
-- [Keybindings](../keybindings.md) lists every context and action with its default key.
+- [Keybindings](../keybindings/index.md) lists every context and action with its default key.
 - [Status Line](../status-line.md) and [Output Styles](../output-styles.md) cover two related features.
 - [UI and Terminal Variables](../env-vars/ui-and-terminal.md) lists the matching environment variables.

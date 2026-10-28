@@ -9,16 +9,6 @@ A program that offers them is an MCP server.
 For example, `claude mcp add --transport http notion https://mcp.notion.com/mcp` adds a server over HTTP.
 This page covers the big picture. The other pages list every option.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. Add servers with `claude mcp add`, `.mcp.json`, or `--mcp-config`. |
-| Can you change it? | ✅ Yes. Config, settings, and env vars control servers, limits, and approvals. |
-| Can you turn it on or off? | `/mcp` enable and disable, `disabledMcpjsonServers`, `--strict-mcp-config`, and the policy lists. |
-| Where does it live? | `.mcp.json`, `~/.claude.json`, plugin files, and managed settings |
-| Status | <Documented /> <Undocumented /> <Gated note="XAA needs CLAUDE_CODE_ENABLE_XAA" /> |
-
 ## Transports
 
 The transport is how Claude Code talks to a server. Set it with `type` in the server entry.
@@ -29,7 +19,7 @@ Source: [Connect Claude Code to Tools via MCP](https://code.claude.com/docs/en/m
 | `stdio` | <Documented /> | Runs a local process. | The default when `type` is missing. Needs `command`. Claude Code sets `CLAUDE_PROJECT_DIR` in the process env. |
 | `http` | <Documented /> | Talks to a remote server over streamable HTTP. | The recommended remote transport. `streamable-http` is an alias. Supports OAuth and `headers`. |
 | `sse` | <Documented /> <Deprecated note="Use --transport http" /> | Talks to a remote server over server-sent events. | Deprecated. `--transport http` tries HTTP first and falls back to SSE (`2.1.265` and later). |
-| `ws` | <Documented /> | Talks to a remote server over WebSocket. | Header-only auth, no OAuth. `claude mcp add --transport` does not accept it. The first connect is not retried. Use it in `.mcp.json`, `add-json`, plugins, and agent files. |
+| `ws` | <Documented /> | Talks to a remote server over WebSocket. | Header-only auth, no OAuth. `claude mcp add --transport` does not accept it. Claude Code does not retry the first connect. Use it in `.mcp.json`, `add-json`, plugins, and agent files. |
 | `sdk` | <Documented /> | An in-process server of an SDK host. | Only an SDK host can register it. Claude Code skips it in `.mcp.json` and settings. |
 | `sse-ide` | <Undocumented /> | A server of an IDE extension over SSE. | Has `ideName` and `ideRunningInWindows`. The idle timeout does not apply. |
 | `ws-ide` | <Undocumented /> | A server of an IDE extension over WebSocket. | Has `ideName`, `authToken`, and `ideRunningInWindows`. |
@@ -37,19 +27,19 @@ Source: [Connect Claude Code to Tools via MCP](https://code.claude.com/docs/en/m
 
 ## Scopes
 
-A scope says where a server is stored and who sees it.
+A scope says where Claude Code stores a server and who sees it.
 
 | Scope | Status | What It Is | How It Works |
 | --- | --- | --- | --- |
-| `local` | <Documented /> | A private server for one project. | The default scope. Stored in `~/.claude.json` under `projects["<path>"].mcpServers`. |
-| `project` | <Documented /> | A server shared with the team. | Stored in `.mcp.json` at the project root. Interactive sessions ask for approval. |
-| `user` | <Documented /> | A server for all your projects. | Stored in `~/.claude.json` under `mcpServers`. |
+| `local` | <Documented /> | A private server for one project. | The default scope. Claude Code stores it in `~/.claude.json` under `projects["<path>"].mcpServers`. |
+| `project` | <Documented /> | A server shared with the team. | Claude Code stores it in `.mcp.json` at the project root. Interactive sessions ask for approval. |
+| `user` | <Documented /> | A server for all your projects. | Claude Code stores it in `~/.claude.json` under `mcpServers`. |
 | Plugin | <Documented /> | Servers that a plugin bundles. | Named `plugin:<plugin>:<server>`. Tools are `mcp__plugin_<plugin>_<server>__<tool>`. |
-| claude.ai connectors | <Documented /> | Servers you added in claude.ai. | Fetched at start for a claude.ai login. Lowest precedence. |
+| claude.ai connectors | <Documented /> | Servers you added in claude.ai. | Claude Code fetches it at start for a claude.ai login. It has the lowest precedence. |
 | `managed` | <Documented /> | Servers your organization provides. | From the `managedMcpServers` key in managed settings (the `managed-mcp.json` file gets the `enterprise` scope; source: the program). Ranks above every other source (`2.1.259` and later). |
 | `dynamic` | <Undocumented /> | Servers passed at run time. | Used for `--mcp-config`, for the remote copy from `CLAUDE_CODE_REMOTE_MCP_CONFIG`, and for plugin servers. |
-| `enterprise` | <Undocumented /> | The servers in `managed-mcp.json`. | Read from the managed settings folder. While the file exists it has exclusive control of MCP servers, and agent frontmatter servers are blocked. Checked: user and project servers did not start, `claude mcp list` showed only the managed server, `claude mcp get` showed `Scope: Enterprise config (managed by your organization)`, and `--mcp-config` failed with `You cannot dynamically configure MCP servers when an enterprise MCP config is present`. Checked with a user agent that has `mcpServers` frontmatter: the agent ran, but its server did not start, and a notice said `probe-agent agent MCP server blocked by enterprise MCP config: agent_srv`. `init` listed the managed server with `source` `enterprise`. See [Probes](../../reference/probes.md#managed-folder-probe). |
-| `agent` | <Undocumented /> | A server in an agent's `mcpServers` frontmatter. | Starts when that agent runs and stops when it ends. Project agents (`.claude/agents/`) are skipped in a folder you have not trusted. Blocked by `--strict-mcp-config` and `--bare`. Checked in `-p` with a user agent. |
+| `enterprise` | <Undocumented /> | The servers in `managed-mcp.json`. | Read from the managed settings folder. While the file exists, it has exclusive control of MCP servers. Claude Code blocks agent frontmatter servers. Checked: user and project servers did not start. `claude mcp list` showed only the managed server. `claude mcp get` showed `Scope: Enterprise config (managed by your organization)`. `--mcp-config` failed with `You cannot dynamically configure MCP servers when an enterprise MCP config is present`. Checked with a user agent that has `mcpServers` frontmatter: the agent ran, but its server did not start. A notice said `probe-agent agent MCP server blocked by enterprise MCP config: agent_srv`. `init` listed the managed server with `source` `enterprise`. See [Probes](../../reference/probes.md#managed-folder-probe). |
+| `agent` | <Undocumented /> | A server in an agent's `mcpServers` frontmatter. | Starts when that agent runs and stops when it ends. Claude Code skips project agents (`.claude/agents/`) in a folder you have not trusted. `--strict-mcp-config` and `--bare` block it. Checked in `-p` with a user agent. |
 
 The full scope list is `local`, `user`, `project`, `dynamic`, `enterprise`, `claudeai`, `managed`, `agent`. Plugin servers also use `dynamic`.
 

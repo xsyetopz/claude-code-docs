@@ -9,16 +9,6 @@ A marketplace is a list of plugins that you can install.
 For example, `claude plugin install my-plugin@my-marketplace` installs a plugin from a marketplace.
 This page gives the big picture. The other pages list every key, command, and path.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. Install with `claude plugin install` or the `/plugin` panel. |
-| Can you change it? | ✅ Yes. Write your own plugin folder and an optional marketplace file. |
-| Can you turn it on or off? | `claude plugin enable` and `disable`, or `enabledPlugins` in settings. Managed settings can lock the rules. |
-| Where does it live? | `~/.claude/plugins/` for installs. `.claude-plugin/plugin.json` in the plugin folder. |
-| Status | <Documented /> <Undocumented /> |
-
 ## What a Plugin Holds
 
 A plugin can bundle these parts. Each part has a default folder or file name.
@@ -41,19 +31,19 @@ A plugin can bundle these parts. Each part has a default folder or file name.
 
 - A plugin id is `name@marketplace`. The text before `@` is the entry name in the marketplace file.
 - The scopes are `user`, `project`, `local`, and `managed`. The enable state of each plugin lives in `enabledPlugins`.
-- A plugin skill gets the name `/<plugin>:<skill>`, so two plugins cannot clash.
-- Four marketplace names are special and you cannot reuse them.
+- A plugin skill gets the name `/<plugin>:<skill>`. Two plugins cannot clash.
+- Four marketplace names are special. You cannot reuse them.
 
 | Marketplace | Status | Meaning |
 | --- | --- | --- |
 | `inline` | <Documented /> | Plugins loaded for one session with `--plugin-dir` or `--plugin-url`. Their ids end in `@inline`. |
 | `builtin` | <Documented /> | Plugins that ship inside Claude Code. |
-| `skills-dir` | <Documented /> | Plugins made by `claude plugin init` in `~/.claude/skills/`. They load on the next session. |
+| `skills-dir` | <Documented /> | Plugins that `claude plugin init` makes in `~/.claude/skills/`. They load on the next session. |
 | `synced` | <Documented /> | Plugins synced from your claude.ai account. Turn off with `syncClaudeAiPlugins: false`. |
 
 ## Example
 
-This flow creates a plugin, tests it for one session, and installs it from a marketplace.
+This flow creates a plugin. It tests the plugin for one session. It then installs the plugin from a marketplace.
 
 ```bash title="Build, test, and install"
 # Create a plugin folder at ~/.claude/skills/my-plugin/
@@ -82,7 +72,7 @@ flowchart TD
   E -->|"<code>false</code>"| X[Stay off]
 ```
 
-Claude Code reads the marketplace, fetches the source of the plugin you pick, and copies it into a cache folder.
+Claude Code reads the marketplace. It gets the source of the plugin that you pick. It copies the source into a cache folder.
 It writes an install record. At session start it loads every enabled plugin.
 Paths and variables are in [Plugin Loading](loading.md).
 

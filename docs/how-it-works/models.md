@@ -8,7 +8,7 @@ A model is the Claude version that answers you.
 Effort is how hard the model thinks before it answers.
 An API call is one request to the model server.
 This page explains how Claude Code chooses each of these and what happens when a call fails.
-The full list of models, aliases, and providers is on [Models and Providers](../configure/models-and-providers.md).
+The full list of models, aliases, and providers is on [Models and Providers](../configure/models-and-providers/index.md).
 
 ## Choosing the Model
 
@@ -34,7 +34,7 @@ flowchart TD
   I --> J
 ```
 
-The items that set the model (flags, environment variables, settings, aliases such as `default`, `opusplan`, and `best`, the `[1m]` suffix, and the switch hooks) are listed in [Choose a Model](../configure/models-and-providers.md#choose-a-model) and [Aliases](../configure/models-and-providers.md#aliases).
+Other pages list the items that set the model. They are flags, environment variables, settings, aliases such as `default`, `opusplan`, and `best`, the `[1m]` suffix, and the switch hooks. See [Choose a Model](../configure/models-and-providers/model-catalog.md#choose-a-model) and [Aliases](../configure/models-and-providers/model-catalog.md#aliases).
 
 A switch of the model is a cache miss. See [Request and Cache](request-and-cache.md#what-breaks-the-cache).
 
@@ -44,14 +44,14 @@ The effort levels are `low`, `medium`, `high`, `xhigh`, and `max`.
 A level that the model does not accept runs as the highest accepted level below it.
 Source: [Model Configuration](https://code.claude.com/docs/en/model-config).
 
-The flags, variables, settings, request field, and default level for each model are in [Effort](../configure/models-and-providers.md#effort).
+The flags, variables, settings, request field, and default level for each model are in [Effort](../configure/models-and-providers/effort-thinking-and-fallback.md#effort).
 The cache warning, the prompt note, and the spinner text for an effort change are in the same section.
 
 ## Thinking
 
 Sources: [Model Configuration](https://code.claude.com/docs/en/model-config) and [Environment Variables](https://code.claude.com/docs/en/env-vars).
 
-The thinking flags, variables, and settings are in [Thinking](../configure/models-and-providers.md#thinking).
+The thinking flags, variables, and settings are in [Thinking](../configure/models-and-providers/effort-thinking-and-fallback.md#thinking).
 
 `MAX_THINKING_TOKENS` cannot turn thinking off on Opus 5.5, Sonnet 5.5, Haiku 5.5, and the Fable models.
 `CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING` has no effect on newer models.
@@ -59,8 +59,8 @@ The thinking flags, variables, and settings are in [Thinking](../configure/model
 ## Capabilities
 
 The model catalog gives each model a list of capability flags.
-The code tests a flag to switch a feature on for that model.
-The flag list, with what each flag does and how many models have it, is in [Capabilities](../configure/models-and-providers.md#capabilities).
+The code tests a flag to enable a feature for that model.
+The flag list, with what each flag does and how many models have it, is in [Capabilities](../configure/models-and-providers/model-catalog.md#capabilities).
 The flags `effort`, `max_effort`, `xhigh_effort`, and `adaptive_thinking` say which effort levels and which thinking mode a model accepts.
 The betas `per-turn-control-2026-07-01` and `timing-2026-09-09` match the flags `per_turn_effort` and `per_turn_timing`.
 
@@ -80,7 +80,7 @@ flowchart TD
 
 - A fallback chain (`--fallback-model`, `fallbackModel`) holds at most three models.
   It covers overload and server errors, and not auth, billing, rate-limit, request-size, or transport errors.
-  The switch lasts for the current turn, and the next turn tries the main model first.
+  The switch lasts for the current turn. The next turn tries the main model first.
   Source: [Model Configuration: Fallback Model Chains](https://code.claude.com/docs/en/model-config#fallback-model-chains).
 - Content-based fallback applies to the Fable models, Opus 5.5, Sonnet 5.5, and Opus 5.
   A request that is flagged as biology or cybersecurity runs again on the fallback model of that category.
@@ -92,13 +92,13 @@ flowchart TD
 
 Sources: [Error Reference: Automatic Retries](https://code.claude.com/docs/en/errors#automatic-retries) and [Environment Variables](https://code.claude.com/docs/en/env-vars).
 
-The variables, with their defaults, are in [Fallback and Retries](../configure/models-and-providers.md#fallback-and-retries).
+The variables, with their defaults, are in [Fallback and Retries](../configure/models-and-providers/effort-thinking-and-fallback.md#fallback-and-retries).
 
 Since `2.1.311`, Claude Code does not retry a `429` or `529` that the API marked with `x-should-retry: false`, and that includes unattended mode (`CLAUDE_CODE_RETRY_WATCHDOG`).
 Before, such a request could hold a turn for minutes, or for good in that mode.
 Source: the [Claude Code changelog](https://code.claude.com/docs/en/changelog), and the program (`chunk-2ht8z368.js:131464`; the old rule is `chunk-31gxg38t.js:137298` in the 2.1.310 program).
 
-When a request is too long for the context, Claude Code tries again with a smaller `max_tokens`, and it compacts when that is not enough.
+When a request is too long for the context, Claude Code tries again with a smaller `max_tokens`. It compacts when that is not enough.
 Since `2.1.311`, a session on a standard window (not 1M) that sends more than 200K tokens and gets the error "Usage credits required for 1M context" compacts the conversation and goes on, where it stopped before.
 Source: the [Claude Code changelog](https://code.claude.com/docs/en/changelog), and the program (`chunk-8qajn51r.js:6009` checks for that refusal on a model whose window is standard, then the code at `chunk-8qajn51r.js:11603` to `:11700` runs the reactive compaction).
 The loop also recovers from a stop at `max_tokens` and from a bad tool call. See [The Agent Loop](agent-loop.md#recovery-inside-the-loop).
@@ -115,7 +115,7 @@ CLAUDE_CODE_MAX_RETRIES=3 claude -p "summarize this repo"
 
 ## Related Pages
 
-- [Models and Providers](../configure/models-and-providers.md)
+- [Models and Providers](../configure/models-and-providers/index.md)
 - [Request and Cache](request-and-cache.md)
 - [Context and Compaction](context-and-compaction.md)
 - [Settings](../configure/settings/index.md) and [Environment Variable](../configure/env-vars/index.md) pages in Configure.

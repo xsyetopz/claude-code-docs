@@ -1,0 +1,8 @@
+{
+  "label": "Classic Event Types",
+  "position": 2,
+  "link": {
+    "type": "doc",
+    "id": "extend/mod-api/types/classic/index"
+  }
+}

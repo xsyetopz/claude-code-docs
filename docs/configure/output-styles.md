@@ -5,19 +5,9 @@ sidebar_position: 6
 ---
 
 An output style changes the role, tone, and format of Claude's answers in a session.
-You pick one with `/output-style`, and it applies from the next message.
+You pick one with `/output-style`. It applies from the next message.
 An output style is an instruction, so nothing enforces it.
 For project facts, use [Memory and Rules](memory-and-rules.md). For actions that must always happen, use hooks.
-
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. Run `/output-style`, or pick one in `/config`. |
-| Can you change it? | ✅ Yes. Set `outputStyle`, or write your own Markdown file. |
-| Can you turn it on or off? | Pick `default`, or remove `outputStyle`. `CLAUDE_CODE_SAFE_MODE=1` skips all styles. |
-| Where does it live? | `~/.claude/output-styles/`, `.claude/output-styles/`, managed settings, and plugins. |
-| Status | <Documented /> <Undocumented /> |
 
 ## Example
 
@@ -47,20 +37,20 @@ The captured prompts are on these pages: [Proactive](../prompts/output-styles/st
 | Item | Status | What it does | How it works | Where to set it |
 | --- | --- | --- | --- | --- |
 | `default` | <Documented /> | No style instructions | The standard system prompt for software engineering. It shows in the `/output-style` list | All sessions |
-| `Proactive` | <Documented /> | Starts work at once and assumes on routine choices | No plan mode unless asked. It checks in the chat before it deletes data or changes shared systems. It does not change the permission mode | All sessions |
+| `Proactive` | <Documented /> | Starts work at once and assumes on routine choices | Claude does not use plan mode unless you ask. It checks in the chat before it deletes data or changes shared systems. It does not change the permission mode | All sessions |
 | `Concise` | <Documented /> | Leads with the result, no preamble, narration, or recap | Simple answers take one to three sentences. Full length stays for requested detail and safety content. Needs `2.1.237`. The bundle gives it a `turnReminder` | All sessions |
-| `Explanatory` | <Documented /> | Adds `Insight` blocks | Two or three points per block, not written into files | All sessions |
-| `Learning` | <Documented /> | `Insight` blocks plus `TODO(human)` tasks | Claude asks you to write 2 to 10 lines when it generates 20 or more lines with a design choice. It then stops and waits | All sessions |
+| `Explanatory` | <Documented /> | Adds `Insight` blocks | Each block has two or three points. Claude does not write them into files | All sessions |
+| `Learning` | <Documented /> | Adds `Insight` blocks and `TODO(human)` tasks | Claude asks you to write 2 to 10 lines when it generates 20 or more lines with a design choice. It then stops and waits | All sessions |
 
 ## The `outputStyle` Setting and Switching
 
 | Item | Status | What it does | How it works | Where to set it |
 | --- | --- | --- | --- | --- |
-| `outputStyle` | <Documented /> | Names the active style | The value is case-sensitive: `Explanatory` works and `explanatory` gives Default. No value means Default. A project file wins over user settings | Any settings scope |
+| `outputStyle` | <Documented /> | Names the active style | The value is case-sensitive. `Explanatory` works. `explanatory` gives Default. No value means Default. A project file wins over user settings | Any settings scope |
 | `/output-style <style>` | <Documented /> | Switches the style | Saves to `.claude/settings.local.json`. No argument lists the styles. Ignores case. Works in print mode and the SDK. Needs `2.1.269` for remote lists | Interactive, print |
 | `/config` Output style | <Documented /> | Menu picker | Saves to local settings | Terminal |
 | Switch in a session | <Documented /> | New style applies from the next message | Before `2.1.251` it needed `/clear`. Prompt caching costs the first message | All sessions |
-| Custom style over Remote Control | <Undocumented /> | Not selectable | The bundle text says to pick one in the session itself | Remote Control |
+| Custom style over Remote Control | <Undocumented /> | You cannot select it | The bundle text tells you to pick one in the session itself | Remote Control |
 | `CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT` | <Documented /> | Chooses the full or short system prompt | `0` selects the full prompt. `keep-coding-instructions` has no effect on the short prompt | Env |
 | Safe mode | <Documented /> | Styles do not load | `CLAUDE_CODE_SAFE_MODE=1` skips output styles | Env |
 
@@ -68,24 +58,24 @@ The captured prompts are on these pages: [Proactive](../prompts/output-styles/st
 
 | Item | Status | What it does | How it works | Where to set it |
 | --- | --- | --- | --- | --- |
-| `~/.claude/output-styles/*.md` | <Documented /> | User styles | The file name is the style name unless `name` is set | User |
+| `~/.claude/output-styles/*.md` | <Documented /> | User styles | The file name is the style name unless you set `name` | User |
 | `.claude/output-styles/*.md` | <Documented /> | Project styles | Every such directory between the working directory and the repository root loads. The closest one wins for a name | Project |
-| Managed `.claude/output-styles` | <Documented /> | Policy styles | Inside the managed settings directory | Managed |
+| Managed `.claude/output-styles` | <Documented /> | Policy styles | The styles are inside the managed settings directory | Managed |
 | Plugin `output-styles/` | <Documented /> | Plugin styles | See Plugins | Plugin |
-| `outputStylesPath`, `outputStylesPaths` | <Undocumented /> | Manifest key for style files or directories | When set, the `output-styles/` directory is not auto-loaded | Plugin manifest |
-| Merge order | <Undocumented /> | For the same name the later source wins | Built-in, plugin, user, project, then policy. Plugin style names start with the plugin name and a colon, so they do not clash with the others. With safe mode on, only the built-ins load | All |
+| `outputStylesPath`, `outputStylesPaths` | <Undocumented /> | Manifest key for style files or directories | When set, Claude Code does not auto-load the `output-styles/` directory | Plugin manifest |
+| Merge order | <Undocumented /> | For the same name the later source wins | The order is built-in, plugin, user, project, then policy. Plugin style names start with the plugin name and a colon, so they do not clash with the others. With safe mode on, only the built-ins load | All |
 | File reading | <Documented /> | Styles load when Claude Code starts | A new file needs a restart in the terminal | Terminal |
 
 ## Frontmatter Keys
 
-All keys are optional. A misspelled key is ignored. Bad YAML loads the style under its file name with no fields.
+All keys are optional. Claude Code ignores a misspelled key. Bad YAML loads the style under its file name with no fields.
 
 | Item | Status | What it does | How it works | Where to set it |
 | --- | --- | --- | --- | --- |
-| `name` | <Documented /> | Style name in the picker | Default is the file name | Style file |
+| `name` | <Documented /> | Style name in the picker | The default is the file name | Style file |
 | `description` | <Documented /> | Text in the picker | String | Style file |
-| `keep-coding-instructions` | <Documented /> | Keeps the built-in software engineering section | Default `false`. Works only on the full system prompt | Style file |
-| `force-for-plugin` | <Documented /> | Applies the style when the plugin is enabled | Overrides `outputStyle`. The first loaded plugin wins and a warning names the others. On a non-plugin style the key is ignored with a warning | Plugin styles |
+| `keep-coding-instructions` | <Documented /> | Keeps the built-in software engineering section | The default is `false`. It works only on the full system prompt | Style file |
+| `force-for-plugin` | <Documented /> | Applies the style when you enable the plugin | It overrides `outputStyle`. The first loaded plugin wins. A warning names the others. On a non-plugin style, Claude Code ignores the key and shows a warning | Plugin styles |
 
 Captured prompts for custom styles: [Custom Style](../prompts/output-styles/style-custom.md), [Custom Style on the Full Prompt](../prompts/output-styles/style-custom-full.md), and [Custom Style with Keep Coding Instructions](../prompts/output-styles/style-custom-keep.md).
 
@@ -108,14 +98,14 @@ flowchart TD
 ```
 
 :::note
-A probe set `outputStyle` in user settings and added a plugin style with `force-for-plugin: true`. The system prompt used the forced style and not the configured one. The `init` event still showed the setting's name. With several forced styles, the first wins and a warning lists all. In a user style, `force-for-plugin` is ignored. A managed `outputStyle` with its style file in the managed folder won over user, project, local, and `--settings` values. See [Probes](../reference/probes.md#configure-and-memory) and [Managed Folder Probe](../reference/probes.md#managed-folder-probe).
-The captures linked above hold the full text of each built-in style prompt. We compared them with the strings in the program: the only difference is the blank lines that the capture adds after the style header and between paragraphs.
+A probe set `outputStyle` in user settings and added a plugin style with `force-for-plugin: true`. The system prompt used the forced style and not the configured one. The `init` event still showed the setting's name. With several forced styles, the first wins. A warning lists all. In a user style, Claude Code ignores `force-for-plugin`. A managed `outputStyle` with its style file in the managed folder won over user, project, local, and `--settings` values. See [Probes](../reference/probes.md#configure-and-memory) and [Managed Folder Probe](../reference/probes.md#managed-folder-probe).
+The captures linked above hold the full text of each built-in style prompt. We compared them with the strings in the program. The only difference is the blank lines that the capture adds after the style header and between paragraphs.
 :::
 
 ## Exact Fields
 
-The exact fields: the `output-style` definition in `https://xsyetopz.github.io/clawdipedia/schemas/claude-code-frontmatter.json`, made from the program's frontmatter validators.
-It lists every field of this release, so build on the fields it names and look each one up there before you rely on it.
+The exact fields are in the `output-style` definition in `https://clawdipedia.cc/schemas/claude-code-frontmatter.json`. The program's frontmatter validators produce it.
+It lists every field of this release. Build on the fields it names. Look each one up there before you rely on it.
 
 ## Related Pages
 

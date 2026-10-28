@@ -9,7 +9,7 @@ Type `/` to see the list.
 Some commands open a panel. Others print a result or expand into a prompt for Claude.
 Many commands are hidden unless your account, provider, or settings allow them.
 
-You cannot change built-in commands, but you can add your own with [skills](index.md). Some commands have an env var or setting. The Notes column names it. Some also work in `-p` and the SDK.
+You cannot change built-in commands. You can add your own with [skills](index.md). Some commands have an env var or setting. The Notes column names it. Some also work in `-p` and the SDK.
 
 ## Example
 
@@ -28,7 +28,7 @@ Each line is a separate command. The text after the name is the argument.
 - A prompt command expands into a model prompt. The program calls it `prompt`.
 - Many commands have two forms: a panel for interactive sessions and a text form for `-p` and the SDK.
 - A `Gated` badge means a flag, policy, plan, provider, or env var must allow the command.
-- The program holds about 101 command names, and it also makes `/mcp__<server>__<prompt>` commands from MCP prompts.
+- The program holds about 101 command names. It also makes `/mcp__<server>__<prompt>` commands from MCP prompts.
 
 ## Session and Conversation Commands
 
@@ -37,24 +37,24 @@ Each line is a separate command. The text after the name is the argument.
 | `/add-dir` `<path>` | <Documented /> | Adds a working folder. | Panel. Runs at once when you give a path. Loads `.claude/skills`, `.claude/commands`, and `.claude/agents` of that folder. A text form runs for some SDK entry points. |
 | `/cd` `<path>` | <Documented /> | Moves this session to a new working folder. | Panel. The new folder adds its project skills (2.1.246 or later). |
 | `/clear` (aliases `/reset`, `/new`) `[name]` | <Documented /> | Starts a new session with empty context. | The old session stays on disk. `/resume` opens it. Works non-interactive too. |
-| `/compact` `<optional custom summarization instructions>` | <Documented /> | Summarizes the conversation to free context. | Turned off when env var `DISABLE_COMPACT` is truthy. See [Context and Compaction](../../how-it-works/context-and-compaction.md). |
+| `/compact` `<optional custom summarization instructions>` | <Documented /> | Summarizes the conversation to free context. | Off when env var `DISABLE_COMPACT` is truthy. See [Context and Compaction](../../how-it-works/context-and-compaction.md). |
 | `/autocompact` `[auto\|<tokens>]` | <Documented /> | Sets how full the context gets before it auto-summarizes. | Panel in interactive mode. A text form, "Configure the auto-compact window size", runs non-interactive or in a remote workspace. |
 | `/context` | <Documented /> | Shows current context use. | Found only as a text command, enabled in non-interactive mode. |
 | `/resume` (alias `/continue`) `[conversation id or search term]` | <Documented /> | Resumes a past conversation. | Panel. Hidden for a remote viewer. See [Sessions and Storage](../../how-it-works/sessions-and-storage.md). |
 | `/rename` (alias `/name`) `[name]` | <Documented /> | Renames the conversation. | Panel and text form. |
 | `/branch` `[name]` | <Documented /> | Branches the conversation at this point. | Panel. |
 | `/fork` `<directive> or [prompt]` | <Documented /> | Starts a background agent that inherits the full conversation. | Panel. Off in coordinator mode. |
-| `/subtask` `<task>` | <Documented /> | Sends a subagent off with your full context. Its result comes back here. | Panel. Off in coordinator mode. |
-| `/background` (alias `/bg`) `[prompt]` | <Documented /> | Sends this session to the background and frees the terminal. | Panel. Runs at once with no prompt. Matches the `--bg` flag. |
-| `/stop` | <Gated note="The session must be a background session." /> | Stops this background session. | The transcript and worktree are kept. |
+| `/subtask` `<task>` | <Documented /> | Sends a subagent to work with your full context. Its result returns here. | Panel. Off in coordinator mode. |
+| `/background` (alias `/bg`) `[prompt]` | <Documented /> | Sends this session to the background. Frees the terminal. | Panel. Runs at once with no prompt. Matches the `--bg` flag. |
+| `/stop` | <Gated note="The session must be a background session." /> | Stops this background session. | It keeps the transcript and worktree. |
 | `/goal` `[<condition> \| clear]` | <Documented /> | Sets a goal that Claude checks before it stops. | Panel. A text form ("keep working until the condition is met") runs non-interactive or in a remote workspace. |
-| `/plan` `[open\|<description>]` | <Documented /> | Turns on plan mode, or shows the session plan. | Panel. |
+| `/plan` `[open\|<description>]` | <Documented /> | Enables plan mode, or shows the session plan. | Panel. |
 | `/recap` | <Documented /> | Writes a one-line session recap now. | Text command. |
 | `/btw` `[question]` | <Documented /> | Asks a quick side question without interrupting the main conversation. | Panel. |
 | `/export` `[filename]` | <Documented /> | Exports the conversation to a file or the clipboard. | Panel. |
 | `/copy` `[N]` | <Documented /> | Copies the last reply to the clipboard. `/copy N` copies the Nth latest. | Panel. |
-| `/exit` (alias `/quit`) | <Documented /> | Exits the CLI. In a background session it detaches and the session keeps running. | Panel and text form. |
-| `/restart` (alias `/update`) | <Gated note="Interactive terminal on macOS or Linux, native install only, and a server-side feature flag." /> | Restarts Claude Code on the newly installed version and resumes this session. | Interactive only. See [How `/restart` Works](#how-restart-works). |
+| `/exit` (alias `/quit`) | <Documented /> | Exits the CLI. In a background session, it detaches. The session keeps running. | Panel and text form. |
+| `/restart` (alias `/update`) | <Gated note="Interactive terminal on macOS or Linux, native install only, and a server-side feature flag." /> | Restarts Claude Code on the newly installed version. Resumes this session. | Interactive only. See [How `/restart` Works](#how-restart-works). |
 | `/rewind` (aliases `/checkpoint`, `/undo`) | <Documented /> | Restores the code, the conversation, or both to an earlier point. | Interactive only. |
 | `/tasks` (alias `/bashes`) | <Documented /> | Shows and manages everything that runs in the background. | Panel. |
 | `/list-agents` (alias `/peers`) | <Documented /> | Lists subagents, teammates, and other sessions you can message. | Off when the org setting `messagingBeyondOwnAgentsDisabled` is set. |
@@ -76,7 +76,7 @@ Each line is a separate command. The text after the name is the argument.
 | `/mcp` `[reconnect\|enable\|disable [<server>\|all]]` | <Documented /> | Manages MCP servers. | Panel and text form. |
 | `/plugin` (aliases `/plugins`, `/marketplace`) `[subcommand]` | <Documented /> | Manages plugins. | Panel with argument completion. |
 | `/reload-plugins` `[--force]` | <Documented /> | Activates pending plugin changes in the current session. | Runs non-interactive too (2.1.260 or later). |
-| `/reload-skills` | <Documented /> | Picks up skills added or changed on disk during this session. | Works in both modes. |
+| `/reload-skills` | <Documented /> | Loads skills added or changed on disk during this session. | Works in both modes. |
 | `/skills` | <Documented /> | Lists available skills. `Space` cycles the `skillOverrides` state and `Esc` saves it. | Panel. |
 | `/skill-doctor` | <Documented /> | Shows which loaded skills are unused and cost context. | Panel (opens the `/plugin` Stats tab) and a text form. Needs feature-flag fetching. |
 | `/output-style` `[style]` | <Documented /> | Lists output styles or switches to one. | Text command. |
@@ -88,14 +88,14 @@ Each line is a separate command. The text after the name is the argument.
 | `/terminal-setup` | <Documented /> | Installs the Shift+Enter key binding. | The text changes with the terminal. |
 | `/keybindings` | <Documented /> | Opens your keyboard shortcuts file. | Interactive only. Needs keybinding customization on. |
 | `/ide` `[open]` | <Documented /> | Manages IDE integrations and shows status. | Panel. |
-| `/init` | <Documented /> | Creates a `CLAUDE.md` file with codebase notes. | A prompt command. With env var `CLAUDE_CODE_NEW_INIT` it also sets up skills and hooks. Claude can call it through the `Skill` tool. |
+| `/init` | <Documented /> | Creates a `CLAUDE.md` file with codebase notes. | A prompt command. With env var `CLAUDE_CODE_NEW_INIT` it also configures skills and hooks. Claude can call it through the `Skill` tool. |
 | `/auto-mode-setup` `[--request-id <uuid>] (--wizard ... --propose \| --expect-sha256 <hex> --apply-file <path>)` | <Gated note="An environment-onboarding policy flag." /> | Teaches auto mode about your environment, with optional rule changes. It reads your project and recent sessions. | Panel. The text form is non-interactive. Since `2.1.304` it is also on Bedrock, Vertex, Foundry, a Claude apps gateway, and with telemetry off. `skillOverrides["auto-mode-setup"]: "off"` turns it off (the program). |
-| `/import` `[codex\|gemini\|cursor] [--dry-run]` | <Gated note="Server flag tengu_import, off by default. You cannot turn it on" /> | Imports config from another AI coding agent. | Panel and text form. |
+| `/import` `[codex\|gemini\|cursor] [--dry-run]` | <Gated note="Server flag tengu_import, off by default. You cannot enable it" /> | Imports config from another AI coding agent. | Panel and text form. |
 | `/help` | <Documented /> | Shows help and the command list. | Panel. Terminal only. |
 | `/status` | <Documented /> | Shows version, model, account, API connectivity, and tool status. | Panel. Lists skills whose `allowed-tools` were ignored. |
 | `/usage` (aliases `/cost`, `/stats`) | <Documented /> | Shows session cost, plan use, and activity stats. | Panel and text form. Since `2.1.304` it says when a rate limit ends. `CLAUDE_CODE_OAUTH_TOKEN` shows the limit rows too. Since `2.1.305` each warning is a one-line fix that names its source, and `f` applies the fixes. The same fixes appear in VS Code and `/doctor` ([v2.1.305 release](https://github.com/anthropics/claude-code/releases/tag/v2.1.305)). See [How `/usage` and `/artifacts` Work](#how-usage-and-artifacts-work). |
 | `/release-notes` | <Documented /> | Shows release notes. | Panel. |
-| `/statusline` | <Documented /> | Sets up the status line. | A prompt command. Not in safe mode. Interactive only. |
+| `/statusline` | <Documented /> | Configures the status line. | A prompt command. Not in safe mode. Interactive only. |
 | `/sandbox` `exclude "command pattern"` (Windows also `install`) | <Gated note="Hidden when the platform is not supported or not in the enabled list." /> | Shows sandbox state and opens its settings. | Panel. |
 | `/chrome` | <Gated note="Availability claude-ai, policy allow_claude_browser_extension, interactive only." /> | Opens Claude in Chrome settings. | Panel. |
 | `/insights` | <Gated note="Policy allow_insights, and needs a workspace." /> | Makes a report that analyzes your sessions. | A prompt command. |
@@ -108,18 +108,18 @@ Each line is a separate command. The text after the name is the argument.
 
 | Command | Status | What it does | Notes |
 | --- | --- | --- | --- |
-| `/usage-credits` | <Gated note="Env var DISABLE_EXTRA_USAGE_COMMAND not set, and the account can use credits." /> | Sets up usage credits, or asks your admin for them at a limit. | Panel and text form. |
+| `/usage-credits` | <Gated note="Env var DISABLE_EXTRA_USAGE_COMMAND not set, and the account can use credits." /> | Configures usage credits, or asks your admin for them at a limit. | Panel and text form. |
 | `/upgrade` | <Gated note="Availability claude-ai, env var DISABLE_UPGRADE_COMMAND not set, plan is not enterprise." /> | Upgrades to Max for higher rate limits. | Panel. |
 | `/pro-trial-expired` | <Undocumented /> | Options shown when the Pro plan trial ends. | Hidden. The UI shows it. You do not type it. |
 | `/rate-limit-options` | <Gated note="claude.ai sign-in." /> | Manages usage limits and upgrade options. | Panel. |
 | `/passes` | <Gated note="Hidden unless the account is eligible." /> | Shares a free week of Claude Code with friends. | Panel. |
 | `/feedback` `[report]` | <Gated note="Off when env var DISABLE_FEEDBACK_COMMAND is set." /> | Sends feedback or reports a bug. | Panel. |
 | `/bug` (alias `/share`) `[report]` | <Gated note="Env var DISABLE_BUG_COMMAND exists." /> | Reports a bug or shares your conversation. | Panel. |
-| `/install-github-app` | <Gated note="Availability claude-ai and console. Off when env var DISABLE_INSTALL_GITHUB_APP_COMMAND is set." /> | Sets up GitHub Actions for a repository. | Panel. |
+| `/install-github-app` | <Gated note="Availability claude-ai and console. Off when env var DISABLE_INSTALL_GITHUB_APP_COMMAND is set." /> | Configures GitHub Actions for a repository. | Panel. |
 | `/install-slack-app` | <Gated note="Availability claude-ai." /> | Installs the Slack app. | Text command. |
-| `/setup-bedrock` | <Gated note="Hidden unless CLAUDE_CODE_USE_BEDROCK is set." /> | Reconfigures Amazon Bedrock sign-in, region, or model pins. | Panel. See [Models and Providers](../../configure/models-and-providers.md). |
+| `/setup-bedrock` | <Gated note="Hidden unless CLAUDE_CODE_USE_BEDROCK is set." /> | Reconfigures Amazon Bedrock sign-in, region, or model pins. | Panel. See [Models and Providers](../../configure/models-and-providers/index.md). |
 | `/setup-vertex` | <Gated note="Hidden unless CLAUDE_CODE_USE_VERTEX is set." /> | Reconfigures Google Vertex AI sign-in, project, region, or model pins. | Panel. |
-| `/web-setup` | <Gated note="Availability claude-ai. Policies allow_remote_sessions and allow_quick_web_setup." /> | Sets up cloud sessions with your GitHub account. | Panel. |
+| `/web-setup` | <Gated note="Availability claude-ai. Policies allow_remote_sessions and allow_quick_web_setup." /> | Configures cloud sessions with your GitHub account. | Panel. |
 | `/cloud-plugins` | <Gated note="Off when env var CLAUDE_CODE_DISABLE_PLUGIN_FORWARDING is set." /> | Chooses whether cloud sessions use the plugins enabled on this machine. | Panel. |
 | `/remote-env` | <Gated note="Availability claude-ai and console-profile. Policy allow_remote_sessions." /> | Chooses the default environment for cloud agents. | Panel. |
 | `/teleport` (alias `/tp`) | <Gated note="Availability claude-ai and console-profile. Policy allow_remote_sessions." /> | Sends this session to the cloud, or resumes one from claude.ai. | Panel. |
@@ -142,14 +142,14 @@ Each line is a separate command. The text after the name is the argument.
 | `/team-onboarding` | <Gated note="Policy allow_team_onboarding, and needs a workspace." /> | Builds a guide that helps teammates learn Claude Code from your usage. | A prompt command. |
 | `/claim-credit` | <Undocumented /> <Gated note="Hidden. An isEnabled check decides." /> | Opens the page of the offer shown at start-up. | Hidden text command. |
 | `/low-priority` | <Undocumented /> <Gated note="Hidden. An isEnabled check decides." /> | Continues now at lower priority after you reach your 5-hour limit. Run it again to stop. | Hidden text command. |
-| `/workflow-launch-exec` | <Undocumented /> <Gated note="Hidden." /> | Runs a workflow handoff that the server launched. | Hidden text command. Only for sessions that a `workflow_launch` event starts. |
+| `/workflow-launch-exec` | <Undocumented /> <Gated note="Hidden." /> | Runs a workflow handoff that the server started. | Hidden text command. Only for sessions that a `workflow_launch` event starts. |
 | `/heapdump` | <Gated note="Policy allow_heap_dump." /> | Writes the JavaScript heap to your Desktop (home folder on Linux without a Desktop). | Hidden text command. |
-| `/mcp__<server>__<prompt>` `prompt arguments` | <Documented /> | MCP prompts become commands. Missing required arguments give "Missing required argument". | Made on the fly with `source:"mcp"`. The alias form is `<server>:<prompt> (MCP)`. |
+| `/mcp__<server>__<prompt>` `prompt arguments` | <Documented /> | MCP prompts become commands. Missing required arguments give "Missing required argument". | Made at run time with `source:"mcp"`. The alias form is `<server>:<prompt> (MCP)`. |
 
 ## How It Works
 
 Each command is an object with a kind: panel, text, or prompt.
-A command can have two objects, one for interactive use and a text one for non-interactive use. The second one is picked when the session is not interactive.
+A command can have two objects, one for interactive use and a text one for non-interactive use. The program picks the second one when the session is not interactive.
 Aliases come from an `aliases` list on the object.
 A skill or custom command with the same name replaces a built-in command, but not its aliases (see [Skills and Commands](index.md#name-resolution)).
 
@@ -157,21 +157,21 @@ A skill or custom command with the same name replaces a built-in command, but no
 
 The program loads custom commands from `.claude/commands/` and skills together. A command that fails a check does not stop the others from loading.
 
-- **Name rule.** A name may not hold hidden, direction-changing, or blank-like characters, `<` or `>`. It may not be over 256 characters (`chunk-r5cyd28m.js:54682`). When a name fails, the program does not offer the command. It writes a warning to the debug log: `[names] <name> is not offered: a name may not hold hidden, direction-changing or blank-like characters, < or >, or be over 256 characters` (`chunk-r5cyd28m.js:54686`, `:155024`). Rename the file to fix it.
+- **Name rule.** A name must not hold hidden, direction-changing, or blank-like characters, `<` or `>`. It must not be over 256 characters (`chunk-r5cyd28m.js:54682`). When a name fails, the program does not offer the command. It writes a warning to the debug log: `[names] <name> is not offered: a name may not hold hidden, direction-changing or blank-like characters, < or >, or be over 256 characters` (`chunk-r5cyd28m.js:54686`, `:155024`). Rename the file to fix it.
 - **Name type.** Since `2.1.312`, the program skips a command whose name or display name is not a string. It reports an error that starts "Command not listed: its name or display name is not a string" and keeps the other commands (`chunk-r5cyd28m.js:53519`). In `2.1.311` the same loop made no such check (`chunk-2ht8z368.js:53427`).
-- **File errors.** If one file in `.claude/commands/` cannot load, the program logs `[skills] failed to load command from <path>: <error>` at the error level and loads the other files (`chunk-r5cyd28m.js:155696`).
+- **File errors.** If one file in `.claude/commands/` cannot load, the program logs `[skills] failed to load command from <path>: <error>` at the error level. It loads the other files (`chunk-r5cyd28m.js:155696`).
 
 The release note says that one bad command name could leave `claude -p` with no output ([release notes](https://github.com/anthropics/claude-code/releases/tag/v2.1.312)). The program code does not show that link.
 
 ## How `/restart` Works
 
-`/restart` restarts Claude Code on the installed version and resumes the same session. It keeps the model, the permission mode, extra working directories, and the Remote Control state. After the restart, it adds a "Successfully updated from A to B" message.
+`/restart` restarts Claude Code on the installed version. It resumes the same session. It keeps the model, the permission mode, extra working directories, and the Remote Control state. After the restart, it adds a "Successfully updated from A to B" message.
 
 It only shows when all of these are true:
 
 - You are in an interactive terminal (not `-p`).
 - You run macOS or Linux.
-- You use the native install (the binary is under `~/.local/share/claude/versions/`, or `$XDG_DATA_HOME/claude/versions/`; a package-manager global install does not count).
+- You use the native install. The binary is under `~/.local/share/claude/versions/`, or `$XDG_DATA_HOME/claude/versions/`. A package-manager global install does not count.
 - You are not in a teammate agent or a remote session, and slash commands are not disabled.
 - A server-side feature flag is on for you. Some users never see it.
 
@@ -190,34 +190,36 @@ Background sessions use `claude respawn <id>` instead.
 ## How `/usage` and `/artifacts` Work
 
 `/artifacts` has four tabs: `All`, `Mine`, `Shared`, and `Pinned`. `Pinned` shows only when you have pins.
-The footer lists the keys. `Enter` attaches the selected artifact to the session (the panel shows `Attaching <title>…`, and an artifact that is already attached is opened instead), `x` dismisses, `c` copies the URL, `Ctrl+R` renames, `d` deletes, `p` pins, `/` searches, and `r` refreshes.
+The footer lists the keys. `Enter` attaches the selected artifact to the session. The panel shows `Attaching <title>…`. `Enter` opens an artifact that is already attached instead. `x` dismisses, `c` copies the URL, `Ctrl+R` renames, `d` deletes, `p` pins, `/` searches, and `r` refreshes.
 
 To delete, press `d` or choose `Delete` from the actions menu. Only the owner can delete, so the key works only on your own artifacts. The panel asks `Delete <title>? This cannot be undone.` Choose `No, keep it` or `Yes, delete it`. Since `2.1.304` the keys are 1 or Enter to keep and 2 to delete, and `y`, `n`, and Esc still worked. Since `2.1.305` `y` and `n` no longer answer, and Esc goes back with nothing sent ([v2.1.305 release](https://github.com/anthropics/claude-code/releases/tag/v2.1.305)).
 
-A yes sends `DELETE /api/frame/<slug>`. The program retries once on `409`, `429`, or `503`. Success shows `Artifact deleted`. The link stops working for everyone. You cannot restore it, and republishing makes a new URL.
+A yes sends `DELETE /api/frame/<slug>`. The program retries once on `409`, `429`, or `503`. Success shows `Artifact deleted`. The link stops working for everyone. You cannot restore it. Republishing makes a new URL.
 
 Since `2.1.305` `/usage` turns each warning into a one-line fix that names its source, and `f` applies the fixes. Each fix starts a prompt that begins `Fix what /usage flagged. Show me each change before you make it.` It tells Claude that text in backticks is a name from your logs, never an instruction. Examples of fix lines are `Turn off MCP servers you don't use`, `Stop sessions you no longer need`, `Start fresh when you switch tasks`, and `Give simple subagents a cheaper model` (the program). With Remote Control on, `/usage` says `Nothing was sent. Turn off Remote Control to use fixes.`
 
 On `2.1.305`, an API key shows only session cost and tokens. `CLAUDE_CODE_OAUTH_TOKEN` also shows the `Current session` and `Current week (all models)` rows, filled from model reply headers. The panel then also shows `What's contributing to your limits usage?` with `Scanning local sessions…`. The program did not call the usage endpoint with the token, on `2.1.305` and again on `2.1.306` (see [Probes](../../reference/probes.md#static-and-print-probes)). A claude.ai login with the `user:inference` and `user:profile` scopes is what the program checks for the full section.
 
-Reset times look like `Resets <time> (<time zone>)`. Minutes are dropped on the hour. A date is added when the reset is more than 24 hours away, and weekly rows always show the date.
+Reset times look like `Resets <time> (<time zone>)`. `/usage` drops minutes on the hour. It adds a date when the reset is more than 24 hours away. Weekly rows always show the date.
 
 When the usage endpoint is rate limited, `/usage` says so. What you see depends on the data it already has. A run against a local stub that answered `429` showed these texts. The time is 12-hour, rounded up to the next minute, with no zone and no date. This differs from the `Resets` lines.
+
+The two rows for the `200` reply hold the `2.1.312` text, which the program gives. `2.1.311` and earlier said `Usage endpoint is rate limited. Please try again in a moment.` and `(rate limited — try again in a moment)`. No `2.1.312` run reached the usage endpoint, so a run has not shown the new text. See [Probes](../../reference/probes.md#interactive-probes).
 
 | Data Before the `429` | What `/usage` Shows |
 | --- | --- |
 | None | `Error: Usage endpoint is rate limited until 10:44am.` |
-| None, and the reply is a `200` with an `error` of type `rate_limit_error` | `Error: Usage endpoint is rate limited. Please try again in a moment.` |
+| None, and the reply is a `200` with an `error` of type `rate_limit_error` | `Error: Claude is temporarily limiting requests to the usage page (not your usage limit). Try again in a moment.` |
 | Bars from the `anthropic-ratelimit-unified-5h` and `-7d` headers | The bars, then `Per-model breakdown unavailable (rate limited until 10:43am)` |
 | The same, plus `7d_oi` headers | An extra `Current week (<model>)` row, then `Partial usage data (rate limited until 10:47am)` |
 | A saved cache that is 10 minutes old | The cached bars, then `Showing last-known usage as of 10m ago (rate limited until 10:45am)` |
-| The same cache, with the `200` reply | `Showing last-known usage as of 10m ago (rate limited — try again in a moment)` |
+| The same cache, with the `200` reply | `Showing last-known usage as of 10m ago (requests temporarily limited — try again in a moment)` |
 
-The end time comes from `Retry-After`. A `Retry-After` of `1800` gave 30 minutes, and a missing one gave the 5-minute default. The program caps the hold at 1 hour. Claude Code keeps the hold in memory for each token, so a new process asks again. A saved cache younger than 60 seconds is shown without a request. The `200` reply has no end time, because only the `429` path reads the hold.
+The end time comes from `Retry-After`. A `Retry-After` of `1800` gave 30 minutes. A missing one gave the 5-minute default. The program caps the hold at 1 hour. Claude Code keeps the hold in memory for each token. A new process therefore asks again. Claude Code shows a saved cache younger than 60 seconds without a request. The `200` reply has no end time, because only the `429` path reads the hold.
 
 With `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` set, the panel shows `Failed to load usage data` and sends no request.
 
-Not seen live, so these come from the program: the `(could not refresh)` ending, which the program uses when the request fails for a reason other than a rate limit, the form `Showing last-known usage (rate limited until <time>)` without `as of`, and a `403` response.
+No live run showed these items. They come from the program. The first is the `(could not refresh)` ending. The program uses it when the request fails for a reason other than a rate limit. The second is the form `Showing last-known usage (rate limited until <time>)` without `as of`. The third is a `403` response.
 
 Source: the program. The delete prompt, the footer keys, and `Artifact deleted` were also seen in a live run. The `Resets` lines and the rate-limit texts above were seen against a local stub with fake subscriber credentials.
 
@@ -227,7 +229,7 @@ Each row is a family of messages. The backticked text is the start that every me
 
 | Start of Message | Status | What It Means | Cases |
 | --- | --- | --- | --- |
-| Various | <Undocumented /> | **Terminal setup.** `/terminal-setup` could not change a terminal's settings. | A backup of the Terminal.app preferences could not be made, a profile could not be read, Option as Meta or the audio bell could not be set, or no config path was found for Alacritty. The text says whether the settings were restored. |
+| Various | <Undocumented /> | **Terminal setup.** `/terminal-setup` could not change a terminal's settings. | A backup of the Terminal.app preferences could not be made. A profile could not be read. Option as Meta or the audio bell could not be set. No config path was found for Alacritty. The text says whether the settings were restored. |
 
 ## Related Pages
 

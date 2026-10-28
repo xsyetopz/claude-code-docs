@@ -5,8 +5,8 @@ sidebar_position: 1
 ---
 
 Claude Code is one program that runs a loop.
-You give it a task, it asks a model what to do, it runs tools, and it repeats until the task is done.
-Settings, hooks, plugins, skills, MCP servers, and subagents are layers around this loop, and you can change each of them.
+You give it a task. It asks a model what to do. It runs tools. It repeats until the task is done.
+Settings, hooks, plugins, skills, MCP servers, and subagents are layers around this loop. You can change each of them.
 This page shows the pieces, the processes, and the order of the startup.
 
 ## The Big Picture
@@ -29,7 +29,7 @@ Source: [How Claude Code Works](https://code.claude.com/docs/en/how-claude-code-
 
 | Piece | Status | What it is |
 | --- | --- | --- |
-| Native binary | <Documented /> | One program file for each version. It lives in `~/.local/share/claude/versions/`, and a launcher at `~/.local/bin/claude` points to it. See [Advanced Setup](https://code.claude.com/docs/en/setup) in the official docs. |
+| Native binary | <Documented /> | One program file for each version. It lives in `~/.local/share/claude/versions/`. A launcher at `~/.local/bin/claude` points to it. See [Advanced Setup](https://code.claude.com/docs/en/setup) in the official docs. |
 | Bundled code | <Undocumented /> | The program carries its JavaScript inside the file and runs it with the Bun runtime. |
 | Command parser | <Undocumented /> | The `commander` library builds the tree of commands and flags. |
 | Terminal screen | <Undocumented /> | A React-based renderer draws the chat with `ink-box` and `ink-text` elements. |
@@ -74,7 +74,7 @@ flowchart TD
 | Process | Status | Role |
 | --- | --- | --- |
 | Main process | <Documented /> | One for each interactive or print session. |
-| Supervisor (`claude daemon`) | <Documented /> | Runs background sessions so they live on after you close the terminal. See [Manage Multiple Agents with Agent View](https://code.claude.com/docs/en/agent-view) in the official docs. |
+| Supervisor (`claude daemon`) | <Documented /> | Runs background sessions so they continue after you close the terminal. See [Manage Multiple Agents with Agent View](https://code.claude.com/docs/en/agent-view) in the official docs. |
 | Subagent | <Documented /> | A separate loop with its own context window. |
 | Hook command | <Documented /> | A child process for each command hook. |
 | MCP server | <Documented /> | A child process or a remote connection. |
@@ -86,7 +86,7 @@ Its files are `~/.claude/daemon.json` and `~/.claude/daemon.log`.
 ## Startup Steps
 
 The order below comes from the program (the bundled code).
-It runs before your first prompt, so a slow step here makes every launch slow.
+It runs before your first prompt, so a slow step here makes every start slow.
 
 ```mermaid
 sequenceDiagram
@@ -116,14 +116,14 @@ sequenceDiagram
 | Start | <Undocumented /> | The process sets its entry point and builds the command tree. |
 | Device settings | <Undocumented /> | Reads device-management settings and the keychain at the same time. |
 | Project root | <Undocumented /> | Checks `--project-config-root`, which must be an absolute local folder. |
-| Init | <Undocumented /> | Loads config, opens storage, starts the feature flag fetch, and starts the fetch of managed settings. |
-| Client data | <Undocumented /> | Loads a signed configuration document if `--client-data-url` or `CLAUDE_CODE_CLIENT_DATA_URL` is set. |
+| Init | <Undocumented /> | Loads config. Opens storage. Starts the feature flag fetch and the fetch of managed settings. |
+| Client data | <Undocumented /> | Loads a signed configuration document if you set `--client-data-url` or `CLAUDE_CODE_CLIENT_DATA_URL`. |
 | Log sinks | <Undocumented /> | Sets the process title to `claude` and starts the log and telemetry sinks. |
 | Plugin folders | <Undocumented /> | Reads `--plugin-dir`, `--plugin-dir-no-mcp`, and `--plugin-url`. |
 | Migrations | <Undocumented /> | Runs settings migrations. |
 | Managed settings | <Undocumented /> | Reads policy settings and refuses a version below the minimum. |
 | Plugin early start | <Undocumented /> | Starts plugin install and load early. |
-| Main action | <Undocumented /> | Starts telemetry, starts `SessionStart` hooks (not on resume), checks forced login, and builds the app state. |
+| Main action | <Undocumented /> | Starts telemetry. Starts `SessionStart` hooks (not on resume). Checks forced login. Builds the app state. |
 | MCP connect | <Undocumented /> | Connects MCP servers, then the `claude.ai` connectors. |
 | Print mode | <Undocumented /> | Runs the turn and writes the output. |
 | Interactive mode | <Undocumented /> | Draws the screen and waits for input. |

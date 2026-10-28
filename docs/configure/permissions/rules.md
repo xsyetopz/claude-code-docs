@@ -8,7 +8,7 @@ A permission rule names a tool, and it can name a pattern for that tool.
 Three lists hold the rules. `allow` runs a call with no prompt. `ask` always prompts. `deny` blocks the call.
 For example, `Bash(git push:*)` in `deny` stops each `git push` command.
 
-Add rules to `permissions.allow`, `permissions.ask`, or `permissions.deny` in a settings file, run `/permissions`, or pass `--allowedTools` and `--disallowedTools` for one session. Remove a rule to turn it off. `allowManagedPermissionRulesOnly` turns off rules from every scope except managed settings.
+Add rules to `permissions.allow`, `permissions.ask`, or `permissions.deny` in a settings file. Or run `/permissions`. Or pass `--allowedTools` and `--disallowedTools` for one session. Remove a rule to turn it off. `allowManagedPermissionRulesOnly` turns off rules from every scope except managed settings.
 
 ## Example
 
@@ -33,7 +33,7 @@ Lists from all scopes merge. Official pages: [Configure Permissions](https://cod
 | `permissions.ask` | <Documented /> | List of rules that always prompt | `ask` and `deny` rules apply at once, before trust. An `allow` rule in a local file does not outrank an `ask` rule from a project or managed file | Each settings scope |
 | `permissions.deny` | <Documented /> | List of rules for denied operations | A bare tool name hides the tool from the model. See Tools | Each settings scope |
 | `permissions.defaultMode` | <Documented /> | Default permission mode | `manual` is an alias of `default`. `auto` and `bypassPermissions` do not take effect from project or local settings | User, managed, `--settings` |
-| `permissions.disableBypassPermissionsMode` | <Documented /> | Value `disable` removes `bypassPermissions` | Checked when a session starts in or can return to that mode | Mainly managed settings |
+| `permissions.disableBypassPermissionsMode` | <Documented /> | Value `disable` removes `bypassPermissions` | Claude Code checks it when a session starts in that mode or can return to it | Mainly managed settings |
 | `permissions.blockReadsOutsideWorkingDirectories` | <Documented /> | Refuses `Read`, `Grep`, `Glob`, and `LSP` reads outside the working directories in each mode | `true` from any scope wins, also over a managed `false`. Needs `2.1.257` | Each settings scope |
 | `permissions.additionalDirectories` | <Documented /> | Extra directories in the permission scope | Applies after workspace trust. `--add-dir` and `/add-dir` do the same for one session | Each settings scope |
 | `permissions.disableAutoMode` | <Documented /> | Value `disable` turns auto mode off | The reason text is `disableAutoMode in settings`. See [Auto Mode](auto-mode.md) | Settings, mainly managed |
@@ -45,7 +45,7 @@ Lists from all scopes merge. Official pages: [Configure Permissions](https://cod
 | `allowManagedPermissionRulesOnly` | <Documented /> | Only managed settings supply permission rules | Rules from other scopes are ignored with a notice that names this key. Since `2.1.305`, plugins that Claude Desktop mounts by path no longer keep their `allowed-tools` ([v2.1.305 release](https://github.com/anthropics/claude-code/releases/tag/v2.1.305)) | Managed settings |
 | `skipDangerousModePermissionPrompt` | <Documented /> | The user accepted the bypass dialog | Boolean | User settings |
 | `skipAutoPermissionPrompt` | <Documented /> | The user accepted the auto mode opt-in dialog | Boolean | Settings |
-| `useAutoModeDuringPlan` | <Documented /> | Plan mode uses auto mode semantics when auto mode is available | Default `true`. A `false` from managed, `--settings`, user, or local settings wins | Settings |
+| `useAutoModeDuringPlan` | <Documented /> | Plan mode uses auto mode semantics when auto mode is available | The default is `true`. A `false` from managed, `--settings`, user, or local settings wins | Settings |
 | `autoMode` | <Documented /> | Classifier rules | See [Auto Mode](auto-mode.md) | User, `--settings`, managed |
 | `sandbox` | <Documented /> | Bash sandbox | See [Sandbox](sandbox.md) | Each settings scope |
 
@@ -60,8 +60,8 @@ Source: the program text `tool name case-sensitive, non-empty content with no le
 | `Bash(bun test)`, `PowerShell(...)` | <Documented /> | Shell commands by pattern. | `*` is a wildcard. `\*` is a literal star. A pattern that ends in a space and one star also matches the bare command. |
 | `Bash(git push:*)` | <Documented /> | The legacy prefix form. | The suffix `:*` matches the prefix before it. Use `Bash(git push *)` in new rules. |
 | `Read(src/**)`, `Edit(...)` | <Documented /> | Files by glob. | `**` crosses folders. A rule that starts with `/` anchors at the primary working folder. |
-| `WebFetch(domain:example.com)` | <Documented /> | One host. | The prefix `domain:` is required. `domain:*.example.com` is allowed. A full URL is rejected. |
-| `WebSearch(terms)` | <Documented /> | Exact search terms. | Wildcards `*` and `?` are rejected. |
+| `WebFetch(domain:example.com)` | <Documented /> | One host. | Claude Code requires the prefix `domain:`. It allows `domain:*.example.com`. It rejects a full URL. |
+| `WebSearch(terms)` | <Documented /> | Exact search terms. | Claude Code rejects the wildcards `*` and `?`. |
 | `mcp__server`, `mcp__server__tool` | <Undocumented /> | All tools of one MCP server, or one tool. | The program pattern is `^mcp__[\w-]+(?:__(?:[\w.-]+\|\*))?$`. |
 | `Skill(name)` | <Documented /> | One skill. | The program text is `Skill execution blocked by permission rules`. |
 | `Bash` (no content) | <Documented /> | The whole tool. | In `deny`, a bare tool name hides the tool from the model. |
@@ -78,9 +78,9 @@ See [Permission Flow](../../how-it-works/permission-flow.md).
 | `--permission-mode <mode>` | <Documented /> | Sets the mode for one session | Choices `acceptEdits`, `auto`, `bypassPermissions`, `manual`, `dontAsk`, `plan` | CLI |
 | `--allowedTools`, `--disallowedTools` | <Documented /> | Allow or deny tool rules for one session | Comma or space separated, such as `"Bash(git *) Edit"` | CLI |
 | `--dangerously-skip-permissions` | <Documented /> | Same as `--permission-mode bypassPermissions` | Use only in sandboxes with no internet | CLI |
-| `--allow-dangerously-skip-permissions` | <Documented /> | Makes bypass available without enabling it | Mode can be chosen later | CLI |
+| `--allow-dangerously-skip-permissions` | <Documented /> | Makes bypass available without enabling it | You can choose the mode later | CLI |
 | `--permission-prompts <host\|none>` | <Documented /> | Who answers prompts with `--print` | `none` denies every prompt. The mode still decides the rest | CLI print mode |
-| `--restricted` | <Documented /> | Restricted mode | Refuses `bypassPermissions`, confines file tools to the working directories. Env `CLAUDE_CODE_RESTRICTED=1` | CLI |
+| `--restricted` | <Documented /> | Restricted mode | It refuses `bypassPermissions`. It confines file tools to the working directories. Env `CLAUDE_CODE_RESTRICTED=1` | CLI |
 | `PermissionRequest` hook | <Documented /> | Answers a prompt | Output `decision.behavior` is `allow` (with `updatedInput`, `updatedPermissions`) or `deny` (`message`, `interrupt`) | Hooks |
 | `PermissionDenied` hook | <Documented /> | Fires on an auto mode denial | Output `retry` | Hooks |
 

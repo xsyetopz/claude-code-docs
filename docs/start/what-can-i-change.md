@@ -5,18 +5,8 @@ sidebar_position: 2
 ---
 
 Claude Code has many places where you can change how it works.
-This page starts from what you want to do, and it points to the right place.
+This page starts from what you want to do. It points to the right place.
 Each row links to the page that lists every key, flag, or field.
-
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. Find your goal in a table below and follow the link. |
-| Can you change it? | Every row names the surface that changes the goal. |
-| Can you turn it on or off? | The "How" column names the switch. |
-| Where does it live? | The pages in Configure, Extend, and How It Works. |
-| Status | <Documented /> <Undocumented /> |
 
 ## The Surfaces
 
@@ -56,7 +46,7 @@ flowchart LR
 | Let a classifier approve safe actions | <Documented /> | Auto mode and its rules | [Auto Mode](../configure/permissions/auto-mode.md) |
 | Limit what shell commands can touch | <Documented /> | The `sandbox` settings | [Sandbox](../configure/permissions/sandbox.md) |
 | Block a command with my own logic | <Documented /> | A `PreToolUse` hook | [Hook Events](../extend/hooks/events.md) |
-| Understand why a call was allowed or asked | <Documented /> | Read the flow | [Permission Flow](../how-it-works/permission-flow.md) |
+| Understand why Claude Code allowed a call or asked about it | <Documented /> | Read the flow | [Permission Flow](../how-it-works/permission-flow.md) |
 | Let managed policy lock a value | <Documented /> | Managed settings | [Enterprise Settings](../configure/settings/enterprise.md) |
 
 ## Models and Cost
@@ -65,9 +55,9 @@ flowchart LR
 | --- | --- | --- | --- |
 | Pick the model | <Documented /> | `/model`, `--model`, the `model` setting, or `ANTHROPIC_MODEL` | [Model Settings](../configure/settings/model.md) |
 | Change how hard the model thinks | <Documented /> | The effort and thinking settings | [Models and Effort Variables](../configure/env-vars/models-and-effort.md) |
-| Use Bedrock, Vertex, or Foundry | <Documented /> | Provider variables | [Models and Providers](../configure/models-and-providers.md) |
-| Change when old messages are summarized | <Documented /> | Compaction settings and variables | [Context and Compaction Variables](../configure/env-vars/context-and-compaction.md) |
-| Understand how a model is chosen | <Documented /> | Read the flow | [Models](../how-it-works/models.md) |
+| Use Bedrock, Vertex, or Foundry | <Documented /> | Provider variables | [Models and Providers](../configure/models-and-providers/index.md) |
+| Change when Claude Code summarizes old messages | <Documented /> | Compaction settings and variables | [Context and Compaction Variables](../configure/env-vars/context-and-compaction.md) |
+| Understand how Claude Code chooses a model | <Documented /> | Read the flow | [Models](../how-it-works/models.md) |
 | Route requests through a proxy or custom CA | <Documented /> | Network variables | [Network and Proxy Variables](../configure/env-vars/network-and-proxy.md) |
 
 ## Instructions and Memory
@@ -79,7 +69,7 @@ flowchart LR
 | Turn off auto memory | <Documented /> | `autoMemoryEnabled: false` or `CLAUDE_CODE_DISABLE_AUTO_MEMORY=1` | [Memory and Rules](../configure/memory-and-rules.md) |
 | Change the tone or style of replies | <Documented /> | An output style | [Output Styles](../configure/output-styles.md) |
 | See the real system prompt | <Undocumented /> | Captured prompts on this site | [Prompt Captures](../prompts/index.md) |
-| Understand how the prompt is built | <Documented /> | Read the build steps | [System Prompt](../how-it-works/system-prompt.md) |
+| Understand how Claude Code builds the prompt | <Documented /> | Read the build steps | [System Prompt](../how-it-works/system-prompt.md) |
 | Add text to the system prompt | <Documented /> | `--append-system-prompt` | [CLI Flags](../configure/cli/flags.md) |
 
 ## Tools and Automation
@@ -103,7 +93,7 @@ flowchart LR
 | Change theme, spinner, or notices | <Documented /> | Interface settings | [Interface Settings](../configure/settings/ui.md) |
 | Change terminal behavior with variables | <Documented /> | UI and terminal variables | [UI and Terminal Variables](../configure/env-vars/ui-and-terminal.md) |
 | Change keyboard shortcuts | <Documented /> | `/keybindings` opens `~/.claude/keybindings.json` | [Slash Commands](../extend/skills-and-commands/slash-commands.md) |
-| Add a screen element or dialog | <Documented /> | A mod that uses `$.ui` | [Mod API UI](../extend/mod-api/ui.md) |
+| Add a screen element or dialog | <Documented /> | A mod that uses `$.ui` | [Mod API UI](../extend/mod-api/ui/ui.md) |
 
 ## Sessions, Files, and Privacy
 
@@ -118,7 +108,7 @@ flowchart LR
 
 ## What You Cannot Change
 
-Some parts are fixed in the program.
+The program fixes some parts.
 You cannot edit the built-in tools, the permission engine, or the request format from a setting.
 You can still watch or shape them with a hook or a mod.
 The [Architecture](../how-it-works/architecture.md) and [Agent Loop](../how-it-works/agent-loop.md) pages show where each part sits.

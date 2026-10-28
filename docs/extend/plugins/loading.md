@@ -4,11 +4,11 @@ description: Where plugin files live, the variables a plugin can use, and the en
 sidebar_position: 5
 ---
 
-The loader finds plugins, copies them into a cache, and turns their parts on.
+The loader finds plugins. It copies them into a cache. It enables their parts.
 This page lists the paths, the variables a plugin can use, and the env vars and settings that change loading.
 For example, `${CLAUDE_PLUGIN_ROOT}` in a hook command is the folder of the plugin.
 
-Loading runs by itself at session start. Env vars and settings change the paths, timeouts, and rules. The switches are `enabledPlugins`, `CLAUDE_CODE_PLUGIN_DIRS`, and `syncClaudeAiPlugins`.
+Loading runs automatically at session start. Env vars and settings change the paths, timeouts, and rules. The switches are `enabledPlugins`, `CLAUDE_CODE_PLUGIN_DIRS`, and `syncClaudeAiPlugins`.
 
 ## Paths
 
@@ -17,13 +17,13 @@ Source: [Plugin Loading Reference](https://code.claude.com/docs/en/plugins/loadi
 | Path | Status | What It Is | How It Works |
 | --- | --- | --- | --- |
 | `~/.claude/plugins/` | <Documented /> | The plugins root. | `CLAUDE_CODE_PLUGIN_CACHE_DIR` sets this parent folder, not the cache itself. |
-| `plugins/data/<id>/` | <Documented /> | The folder behind `${CLAUDE_PLUGIN_DATA}`. | Made on first use. Survives updates. In `<id>`, every character other than letters, digits, `_`, and `-` becomes `-`. Deleted on the last uninstall unless you use `--keep-data`. |
-| `plugins/cache/<marketplace>/<plugin>/<version>/` | <Undocumented /> | One copy of each installed version. | A cache path with these three parts is parsed this way. A `.zip` version is excluded. |
-| `.orphaned_at`, `.in_use`, `.gcs-sha`, `.links_materialized` | <Documented /> | State marker files in a version folder. | `.orphaned_at` is written only inside the cache root and not on a symlinked version. |
+| `plugins/data/<id>/` | <Documented /> | The folder behind `${CLAUDE_PLUGIN_DATA}`. | First use makes it. It survives updates. In `<id>`, every character other than letters, digits, `_`, and `-` becomes `-`. The last uninstall removes it, unless you use `--keep-data`. |
+| `plugins/cache/<marketplace>/<plugin>/<version>/` | <Undocumented /> | One copy of each installed version. | The program parses a cache path with these three parts this way. The program excludes a `.zip` version. |
+| `.orphaned_at`, `.in_use`, `.gcs-sha`, `.links_materialized` | <Documented /> | State marker files in a version folder. | Claude Code writes `.orphaned_at` only inside the cache root, and not on a symlinked version. |
 | `plugins/installed_plugins.json` | <Undocumented /> | Install records. | Fields: `version`, `installedAt`, `lastUpdated`, `installPath`, `gitCommitSha`, `resolvedVersion`, `auto` (set for a dependency install). |
 | `plugins/known_marketplaces.json` | <Undocumented /> | Marketplace records. | Fields: `source`, `installLocation`, `lastUpdated`, `autoUpdate`. Clones live in `plugins/marketplaces/<name>`. |
 | Registry files `installed`, `marketplaces`, `flagged`, `catalog`, `inUseSweep` | <Undocumented /> | Named files of the plugin registry. | The names come from a list in the program. |
-| `~/.claude/plugins/synced` | <Documented /> | Plugins synced from claude.ai. | The id is `<name>@synced`. Turn off with `syncClaudeAiPlugins: false`. |
+| `~/.claude/plugins/synced` | <Documented /> | Plugins synced from claude.ai. | The id is `<name>@synced`. Set `syncClaudeAiPlugins: false` to turn it off. |
 
 ## Variables
 
@@ -31,7 +31,7 @@ Source: [Plugin Manifest Reference](https://code.claude.com/docs/en/plugins/mani
 
 | Variable | Status | What It Is | Where You Can Use It |
 | --- | --- | --- | --- |
-| `${CLAUDE_PLUGIN_ROOT}` | <Documented /> | The installed plugin folder. It changes on update, so do not write state there. | Hook `command` and `args`, monitor `command`, MCP stdio `command`, `args`, `env`, MCP remote `url`, `headers`, `headersHelper`, LSP fields, skill and agent text |
+| `${CLAUDE_PLUGIN_ROOT}` | <Documented /> | The installed plugin folder. It changes on update. Do not write state there. | Hook `command` and `args`, monitor `command`, MCP stdio `command`, `args`, `env`, MCP remote `url`, `headers`, `headersHelper`, LSP fields, skill and agent text |
 | `${CLAUDE_PLUGIN_DATA}` | <Documented /> | The data folder. Claude Code exports it to hooks, MCP stdio servers, and LSP servers. | The same places |
 | `${CLAUDE_PROJECT_DIR}` | <Documented /> | The project root. Claude Code exports it to hooks and LSP servers. | The same places |
 | `${user_config.KEY}` | <Documented /> | A saved `userConfig` value. | MCP, LSP, exec-form hook `args`, skill and agent text. Not in shell-form hooks, monitor commands, or `headersHelper`. |
@@ -54,7 +54,7 @@ Source: [Environment Variables](https://code.claude.com/docs/en/env-vars) and th
 | `CLAUDE_CODE_PLUGIN_GIT_TIMEOUT_MS` | <Documented /> | Sets the git timeout. | Default 120000. |
 | `CLAUDE_CODE_PLUGIN_KEEP_MARKETPLACE_ON_FAILURE` | <Documented /> | Keeps the old checkout when a refresh fails. | Set to `1`. |
 | `CLAUDE_CODE_PLUGIN_PREFER_HTTPS` | <Documented /> | Clones GitHub shorthand over HTTPS. | Set to `1`. |
-| `CLAUDE_CODE_PLUGIN_SEED_DIR` | <Documented /> | Gives read-only seed folders. | Registers marketplaces at start and uses the plugins already cached there. |
+| `CLAUDE_CODE_PLUGIN_SEED_DIR` | <Documented /> | Gives read-only seed folders. | Registers marketplaces at start. Uses the plugins already cached there. |
 | `CLAUDE_CODE_PLUGIN_DIR_WATCH` | <Documented /> | Reloads a mod when its file changes. | On by default in interactive sessions and off in non-interactive ones. `0` turns it off everywhere. |
 | `FORCE_AUTOUPDATE_PLUGINS` | <Documented /> | Updates plugins even when `DISABLE_AUTOUPDATER` is set. | Set to `1`. |
 | `CLAUDE_CODE_SYNC_PLUGINS`, `CLAUDE_CODE_SYNC_PLUGIN_INSTALL` and their `_TIMEOUT_MS` forms | <Documented /> | Sync claude.ai plugins in headless runs. | The exact effects are not documented. In print mode, `CLAUDE_CODE_SYNC_PLUGIN_INSTALL` makes the stream carry [`plugin_install`](../headless/stream-json.md) messages. |
@@ -103,8 +103,8 @@ Each row is a family of messages. The backticked text is the start that every me
 
 | Start of Message | Status | What It Means | Cases |
 | --- | --- | --- | --- |
-| `Hooks file`, `hooks.json declares`, `hooks: must be`, `hooks: the array form`, `Server ${…} missing required`, `Unsupported plugin type`, `Invalid manifest`, `Invalid JSON in manifest.json`, `Failed to save sensitive config`, `Plugin ${…}:` | <Undocumented /> | A plugin file could not be loaded. | A hooks file cannot be read or is missing, `hooks.json` declares keys outside the `hooks` object, the manifest is not valid, or an LSP server entry misses `command` or `extensionToLanguage`. |
-| `claude plugin install`, `${…} This install runs that command`, `${…}'s marketplace changed`, `${…}'s marketplace entry`, `${…} is installed by running a command`, `A top-level entry of the plugin directory`, `The link farm`, `A link in the staged farm`, `The link-farm marker`, `A tool server doesn't run`, `${…}: a tool server doesn't run`, `${…}: your organization's managed settings disable marketplace-declared` | <Undocumented /> | A plugin install that runs a command was not run. | The command has not been reviewed yet, the marketplace changed the command after it was accepted, a tool server never runs it, managed settings disable marketplace-declared commands (`disableCommandPluginSources`), or the plugin directory that it produced points to a network location or through a link. |
+| `Hooks file`, `hooks.json declares`, `hooks: must be`, `hooks: the array form`, `Server ${…} missing required`, `Unsupported plugin type`, `Invalid manifest`, `Invalid JSON in manifest.json`, `Failed to save sensitive config`, `Plugin ${…}:` | <Undocumented /> | The loader could not load a plugin file. | A hooks file cannot be read or is missing. `hooks.json` declares keys outside the `hooks` object. The manifest is not valid. An LSP server entry lacks `command` or `extensionToLanguage`. |
+| `claude plugin install`, `${…} This install runs that command`, `${…}'s marketplace changed`, `${…}'s marketplace entry`, `${…} is installed by running a command`, `A top-level entry of the plugin directory`, `The link farm`, `A link in the staged farm`, `The link-farm marker`, `A tool server doesn't run`, `${…}: a tool server doesn't run`, `${…}: your organization's managed settings disable marketplace-declared` | <Undocumented /> | A plugin install that runs a command did not run. | The command has not been reviewed yet. The marketplace changed the command after it was accepted. A tool server never runs it. Managed settings disable marketplace-declared commands (`disableCommandPluginSources`). The plugin directory that the command produced points to a network location or through a link. |
 
 ## Related Pages
 

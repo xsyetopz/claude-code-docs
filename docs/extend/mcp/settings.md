@@ -31,7 +31,7 @@ These keys sit under `projects["<path>"]`.
 | Key | Status | What It Does | How It Works |
 | --- | --- | --- | --- |
 | `disabledMcpServers` | <Documented /> | A per-project opt-out list. | Covers user, plugin, managed, connector, and default-on built-in servers. A connector uses its display name, such as `claude.ai Slack`. |
-| `enabledMcpServers` | <Documented /> | A per-project opt-in list. | Only for built-in servers that default to off, such as `computer-use`. Other entries are ignored. |
+| `enabledMcpServers` | <Documented /> | A per-project opt-in list. | Only for built-in servers that default to off, such as `computer-use`. Claude Code ignores other entries. |
 | `hasTrustDialogAccepted` | <Documented /> | The workspace trust flag. | `true` lets a `headersHelper` of a project or local server run without the dialog. |
 
 ## Files and Flags
@@ -39,8 +39,8 @@ These keys sit under `projects["<path>"]`.
 | Item | Status | What It Does | How It Works |
 | --- | --- | --- | --- |
 | `.mcp.json` | <Documented /> | Holds project servers. | At the project root. Interactive sessions ask for approval. `claude -p`, the SDK, and cloud sessions load it without a prompt. |
-| `~/.claude.json` | <Documented /> | Holds local and user servers. | Written by `claude mcp add`. |
-| `managed-mcp.json` | <Documented /> | A fixed server set from the organization. | Gives the organization exclusive control. Claude Code ignores other sources. In the probe, user and project servers were dropped with no warning, which matches the [official page](https://code.claude.com/docs/en/managed-mcp#disable-mcp-entirely) (see [Managed Folder Probe](../../reference/probes.md#managed-folder-probe)). Claude in Chrome and connectors stay blocked unless the two `allow` keys above are set. |
+| `~/.claude.json` | <Documented /> | Holds local and user servers. | `claude mcp add` writes it. |
+| `managed-mcp.json` | <Documented /> | A fixed server set from the organization. | Gives the organization exclusive control. Claude Code ignores other sources. In the probe, Claude Code dropped user and project servers with no warning, which matches the [official page](https://code.claude.com/docs/en/managed-mcp#disable-mcp-entirely) (see [Managed Folder Probe](../../reference/probes.md#managed-folder-probe)). Claude in Chrome and connectors stay blocked unless you set the two `allow` keys above. |
 | `--mcp-config <configs...>` | <Documented /> | Loads servers from files or strings. | Space-separated. Scope `dynamic`. `headersHelper` runs in the primary working folder. |
 | `--strict-mcp-config` | <Documented /> | Uses only the `--mcp-config` servers. | Skips the approval prompt for project servers it does not load (`2.1.246` and later). |
 | `--plugin-dir-no-mcp <path>` | <Undocumented /> | Loads an inline plugin without its MCP servers. | Hidden flag. The SDK form is `skipMcpDiscovery`. |
@@ -53,7 +53,7 @@ These keys sit under `projects["<path>"]`.
 - `claude mcp list` and `claude mcp get` read approvals only from files outside the repository until you trust the folder.
 - In an untrusted folder, these sources apply: `~/.claude/settings.json`, managed settings, and `--settings`.
 - An untracked `.claude/settings.local.json` applies only in a trusted folder. Before `2.1.207` it always applied.
-- In `bypassPermissions` mode, Claude Code skips the project prompt when `skipDangerousModePermissionPrompt` is set in user or managed settings.
+- In `bypassPermissions` mode, Claude Code skips the project prompt when you set `skipDangerousModePermissionPrompt` in user or managed settings.
 
 ## Example
 

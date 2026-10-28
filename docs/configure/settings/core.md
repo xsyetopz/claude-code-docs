@@ -27,26 +27,26 @@ Where to Set It tells you which files may set the key. See [Settings Files and S
 | `autoUpdatesChannel` | <Documented /> | enum: `latest`, `stable`, `rc` | `latest` | Follow the stable release channel instead of latest. | Any settings file |
 | `awaySummaryEnabled` | <Documented /> | boolean | - | Turn off the session recap shown when you come back to the terminal. The recap shows after 5 or more minutes away. | Any settings file |
 | `bashEditDiffEnabled` | <Documented /> | boolean | On when the Bash tool handles file edits | Record the files that changed while a Bash command ran in every permission mode. Outside auto and `bypassPermissions` modes, only user or managed settings can turn it on. | User or managed settings |
-| `bashOutputMaxChars` | <Documented /> | integer | `30000` | Set how much of a successful command's output Claude receives inline. Clamped to `4000`-`128000`. Longer output goes to a file and Claude gets a preview. | Any settings file |
+| `bashOutputMaxChars` | <Documented /> | integer | `30000` | Set how much of a successful command's output Claude receives inline. Claude Code clamps it to `4000`-`128000`. Longer output goes to a file. Claude gets a preview. | Any settings file |
 | `claudeMd` | <Documented /> <ManagedOnly /> | string | - | Inject organization-wide CLAUDE.md instructions from managed settings. Only managed settings honor it. | Managed settings only |
 | `claudeMdExcludes` | <Documented /> | array of string | - | Skip specific CLAUDE.md files when memory loads. Takes glob patterns or absolute paths. Managed files cannot be excluded. | Any settings file |
 | `cleanupPeriodDays` | <Documented /> | integer | 30 | Choose how many days Claude Code keeps transcripts before deleting them. The minimum is `1`. `--no-session-persistence` turns off transcript writes. | Any settings file |
 | `defaultShell` | <Documented /> | enum: `bash`, `powershell` | `bash` | Choose whether Bash or PowerShell runs the shell commands you type with the `!` prefix. | Any settings file |
-| `desktopSessionCleanupPeriodDays` | <Documented /> | integer | - | Set an age limit in days for Claude Desktop and Cowork transcripts. `0` (the default) means no ceiling. Ignored when org policy sets `cleanupPeriodDays`. | User or managed settings |
-| `disableArtifact` | <Documented /> <Deprecated note="Use enableArtifact" /> | boolean | - | Deprecated, so use `enableArtifact` to turn the Artifact tool off. `true` still turns the tool off. `false` is ignored. | Any settings file |
-| `enableArtifact` | <Documented /> | boolean | On once the feature is available | Turn the `Artifact` tool on or off. A `false` in any file turns it off, and no file can turn it back on. | Any settings file |
+| `desktopSessionCleanupPeriodDays` | <Documented /> | integer | - | Set an age limit in days for Claude Desktop and Cowork transcripts. `0` (the default) means no ceiling. Claude Code ignores it when org policy sets `cleanupPeriodDays`. | User or managed settings |
+| `disableArtifact` | <Documented /> <Deprecated note="Use enableArtifact" /> | boolean | - | Deprecated. Use `enableArtifact` to turn the Artifact tool off. `true` still turns the tool off. Claude Code ignores `false`. | Any settings file |
+| `enableArtifact` | <Documented /> | boolean | On once the feature is available | Turn the `Artifact` tool on or off. A `false` in any file turns it off. No file can turn it back on. | Any settings file |
 | `env` | <Documented /> | object | - | Set environment variables for every session and its subprocesses. | Any settings file |
 | `fileCheckpointingEnabled` | <Documented /> | boolean | - | Turn off or on the file snapshots that `/rewind` restores. | Any settings file |
 | `fileSuggestion` | <Documented /> | object | - | Supply `@` file autocomplete from your own command. | Any settings file |
 | `idleCompaction` | <Documented /> | boolean | - | Stop Claude Code from compacting a long conversation while your terminal session is idle. Setting `true` does not turn idle compaction on. | Any settings file |
-| `attributionProject` | <Undocumented /> | string | - | The claude.ai Project this session names for your organization's usage reports: the Project UUID, or its ID that starts with `claude_proj_`. An empty string names none and stops lower-precedence files from naming one. Sent only with a claude.ai login or a direct Anthropic API connection, outside cloud sessions, and when `CLAUDE_CODE_ATTRIBUTION_HEADER` is not `0`. The `CLAUDE_CODE_ATTRIBUTION_PROJECT` variable wins. In managed settings it overrides personal files. Project settings count only once the folder is trusted, so use the variable for CI. Source: the settings schema | Any settings file |
+| `attributionProject` | <Undocumented /> | string | - | The claude.ai Project this session names for your organization's usage reports: the Project UUID, or its ID that starts with `claude_proj_`. An empty string names none and stops lower-precedence files from naming one. Claude Code sends it only with a claude.ai login or a direct Anthropic API connection, outside cloud sessions, and when `CLAUDE_CODE_ATTRIBUTION_HEADER` is not `0`. The `CLAUDE_CODE_ATTRIBUTION_PROJECT` variable wins. In managed settings it overrides personal files. Project settings count only once you trust the folder, so use the variable for CI. Source: the settings schema | Any settings file |
 | `attributionProjectPolicy` | <Undocumented /> <ManagedOnly /> | object | - | Your organization's default for `attributionProject`. Its `default` key is the Project used when neither `CLAUDE_CODE_ATTRIBUTION_PROJECT` nor `attributionProject` names one. Source: the settings schema | Managed settings only |
 | `includeCoAuthoredBy` | <Documented /> <Deprecated note="Use attribution" /> | boolean | `true` | Deprecated, so use `attribution` to hide or change commit and PR attribution. | Any settings file |
 | `includeGitInstructions` | <Documented /> | boolean | `true` | Remove the built-in commit and PR instructions from Claude's context. | Any settings file |
 | `language` | <Documented /> | string | - | Have Claude respond in a language other than English. | Any settings file |
 | `minimumVersion` | <Documented /> | string | - | Keep auto-updates from installing anything below a version. | Any settings file |
 | `plansDirectory` | <Documented /> | string | `~/.claude/plans` | Choose where plan mode writes plan files. The path is relative to the project root. | Any settings file |
-| `precomputeCompactionEnabled` | <Undocumented /> | boolean | - | Build the compaction summary in the background before it is needed. Applies only when auto-compact is on. | Settings files |
+| `precomputeCompactionEnabled` | <Undocumented /> | boolean | - | Build the compaction summary in the background before Claude Code needs it. It applies only when auto-compact is on. | Settings files |
 | `respectGitignore` | <Documented /> | boolean | `true` | Keep gitignored files out of the `@` file picker. | Any settings file |
 | `respondToBashCommands` | <Documented /> | boolean | `true` | Stop Claude from responding after a `!` shell command runs. The command output still joins the context. | Any settings file |
 | `sandbox` | <Documented /> | object | - | Isolate Bash commands from your filesystem and network on macOS, Linux, and WSL2. | Any settings file |
@@ -58,11 +58,11 @@ Where to Set It tells you which files may set the key. See [Settings Files and S
 
 ### Keep Transcripts for a Week
 
-This file deletes transcripts after 7 days, keeps auto memory on, lets Claude see more shell output inline, and asks for answers in German.
+This file deletes transcripts after 7 days. It keeps auto memory on. It lets Claude see more shell output inline. It asks for answers in German.
 
 ```json title="~/.claude/settings.json"
 {
-  "$schema": "https://xsyetopz.github.io/clawdipedia/schemas/claude-code-settings.json",
+  "$schema": "https://clawdipedia.cc/schemas/claude-code-settings.json",
   "cleanupPeriodDays": 7,
   "autoMemoryEnabled": true,
   "bashOutputMaxChars": 50000,

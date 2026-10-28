@@ -28,12 +28,12 @@ Official pages: [Mods Reference](https://code.claude.com/docs/en/plugins/mods/re
 | Item | Status | What it does | How it works | Where it can be used |
 | --- | --- | --- | --- | --- |
 | `hooks/hooks.json` key `modules` | <Documented /> | The path of the hooks module. | One path only. The module and each file it imports end in `.ts`, `.tsx`, `.jsx`, `.js`, `.mjs`, `.cjs`, `.mts`, or `.cts`. The program says: `hooks.json` `modules` names one hooks module per plugin. | Plugin `hooks/` folder. |
-| `register(on, options)` | <Documented /> | The export that the loader reads. Nothing else is read. | See [Hooks](hooks.md). | The hooks module. |
+| `register(on, options)` | <Documented /> | The export that the loader reads. The loader reads nothing else. | See [Hooks](events/hooks.md). | The hooks module. |
 | Manifest key `types` | <Documented /> | Path to the type contract of the plugin. It starts with `./`. | A self-contained `.d.ts` with no import, export-from, require, or reference. It declares the noun in `declare module 'claude-code' { interface EngineInterface { ... } }` and the `PluginState` values. `claude plugin validate` checks it. | `plugin.json` |
 | Manifest key `dependencies` | <Documented /> | Plugins that must be enabled. | A mod that lists a plugin here gets its contract at `.claude-plugin/types/<plugin>/index.d.ts` when the engine loads the mod from a folder the person owns. | `plugin.json` |
-| Manifest key `userConfig` | <Documented /> | Fields whose values reach `register` as `options`. | Defaults are filled in. Values are in `pluginConfigs` of settings. A required field with no value fails the load. `PluginOptions` is a read-only record of string, number, boolean, or string list. | `plugin.json` |
-| `.claude-plugin/types/` | <Documented /> | The engine writes `claude-code/index.d.ts`, `claude-code-tools/`, `claude-code-mcp/`, and one folder for each dependency here. | Written again after an update. A mod that has no tsconfig gets one that extends `.claude-plugin/types/tsconfig.json`. | A mod loaded from a folder the person owns. |
-| Tests `*.test.ts`, `*.test.tsx` | <Documented /> | Run by `claude plugin test [dir]`. | See [Testing](testing.md). | Plugin folder. |
+| Manifest key `userConfig` | <Documented /> | Fields whose values reach `register` as `options`. | The engine fills in defaults. Values are in `pluginConfigs` of settings. A required field with no value fails the load. `PluginOptions` is a read-only record of string, number, boolean, or string list. | `plugin.json` |
+| `.claude-plugin/types/` | <Documented /> | The engine writes `claude-code/index.d.ts`, `claude-code-tools/`, `claude-code-mcp/`, and one folder for each dependency here. | The engine writes them again after an update. A mod that has no tsconfig gets one that extends `.claude-plugin/types/tsconfig.json`. | A mod loaded from a folder the person owns. |
+| Tests `*.test.ts`, `*.test.tsx` | <Documented /> | `claude plugin test [dir]` runs them. | See [Testing](calls/testing.md). | Plugin folder. |
 
 ## The Dollar Object
 
@@ -43,39 +43,39 @@ It has `plugin`, 20 nouns, and every noun that an `engine.create` hook added.
 Write each call in full, such as `$.fs.read('notes.md')`.
 Each `$` call is also an event with the same name, such as `fs.read`.
 A hook on it can pass the call on, refuse it with `{ deny }`, or answer it with `{ value }`.
-The calling hook alone is skipped, so a plugin does not trap itself.
+The dispatch skips the calling hook alone, so a plugin does not trap itself.
 
 | Item | Status | What it does | Members | Page |
 | --- | --- | --- | --- | --- |
-| `$.plugin` | <Documented /> | This plugin as loaded: its manifest name and its directory. | `name`, `root` | [Plugin](plugin.md) |
-| `$.ui` | <Documented /> | Display: a line under an open dialog, redraws, log lines, panes, scroll, focus, the clipboard. | `notice`, `invalidate`, `blit`, `resolve`, `log`, `ask`, `toast`, `notify`, `status`, `open`, `close`, `panes`, `scroll`, `focus`, `copy`, `selection`, `view` | [UI](ui.md) |
-| `$.model` | <Documented /> | Completions through the session's own client. | `complete`, `fork`, `classify` | [Model, Audio, and MCP](model-audio-mcp.md) |
-| `$.audio` | <Documented /> | Sound: clip playback and platform speech. | `play`, `speak` | [Model, Audio, and MCP](model-audio-mcp.md) |
-| `$.mcp` | <Documented /> | The engine's MCP servers: call a tool of a connected one, or connect one the plugin lists. | `call`, `connect` | [Model, Audio, and MCP](model-audio-mcp.md) |
-| `$.session` | <Documented /> | The running session as plain data, compacting it, and sending a message to another agent or session. | `messages`, `cwd`, `root`, `model`, `turns`, `id`, `repo`, `surfaces`, `surface`, `usage`, `version`, `compact`, `send`, `append`, `identity` | [Session](session.md) |
-| `$.turn` | <Documented /> | The running model turn: ending it. | `abort` | [Turn and Prompt](turn-prompt.md) |
-| `$.prompt` | <Documented /> | Submitting a prompt as a user turn, and the prompt box: read, write, paint, or propose into. | `submit`, `read`, `media`, `fill`, `paint`, `suggest`, `compose` | [Turn and Prompt](turn-prompt.md) |
-| `$.tool` | <Documented /> | The tools the model has in this session, and running one. | `list`, `call`, `check`, `register` | [Tool, Command, and Config](tool-command-config.md) |
-| `$.command` | <Documented /> | The slash commands the person can run, and running one. | `list`, `run`, `register` | [Tool, Command, and Config](tool-command-config.md) |
-| `$.config` | <Documented /> | Every row of the `/config` menu, including each enabled plugin's `userConfig` fields. | `list`, `set` | [Tool, Command, and Config](tool-command-config.md) |
-| `$.telemetry` | <Documented /> | Analytics records and feature marks. | `log`, `mark` | [Telemetry](telemetry.md) |
-| `$.agent` | <Documented /> | Subagents. | `spawn`, `list`, `register` | [Agent](agent.md) |
-| `$.fs` | <Documented /> | The file system as the engine process reaches it. A relative path is under the session's working directory. Text is UTF-8. | `read`, `write`, `list`, `exists`, `stat`, `ancestors` | [Files, Store, and State](fs-store-state.md) |
-| `$.store` | <Documented /> | This plugin's key-value store. It lasts across sessions and hot reloads. Values are JSON. | `get`, `set`, `delete`, `keys` | [Files, Store, and State](fs-store-state.md) |
-| `$.state` | <Documented /> | Named values the host holds for the session, each with a version. They survive a hot reload. | `get`, `set` | [Files, Store, and State](fs-store-state.md) |
-| `$.clock` | <Documented /> | Time and timers, each an event through the host. | `now`, `sleep`, `after`, `every` | [Clock, HTTP, Process, Env, and Settings](clock-http-process-env-settings.md) |
-| `$.http` | <Documented /> | The network, through the host. | `fetch` | [Clock, HTTP, Process, Env, and Settings](clock-http-process-env-settings.md) |
-| `$.process` | <Documented /> | Commands on the host, run as the user of the session. CLI only. | `run`, `spawn` | [Clock, HTTP, Process, Env, and Settings](clock-http-process-env-settings.md) |
-| `$.settings` | <Documented /> | What the settings files, `--settings`, and managed policy hold. Read only. | `read` | [Clock, HTTP, Process, Env, and Settings](clock-http-process-env-settings.md) |
-| `$.env` | <Documented /> | The environment of this process. Every Bash child, MCP server, and `$.process.run` command started later inherits it. | `get`, `set` | [Clock, HTTP, Process, Env, and Settings](clock-http-process-env-settings.md) |
+| `$.plugin` | <Documented /> | This plugin as loaded: its manifest name and its directory. | `name`, `root` | [Plugin](calls/plugin.md) |
+| `$.ui` | <Documented /> | Display: a line under an open dialog, redraws, log lines, panes, scroll, focus, the clipboard. | `notice`, `invalidate`, `blit`, `resolve`, `log`, `ask`, `toast`, `notify`, `status`, `open`, `close`, `panes`, `scroll`, `focus`, `copy`, `selection`, `view` | [UI](ui/ui.md) |
+| `$.model` | <Documented /> | Completions through the session's own client. | `complete`, `fork`, `classify` | [Model, Audio, and MCP](calls/model-audio-mcp.md) |
+| `$.audio` | <Documented /> | Sound: clip playback and platform speech. | `play`, `speak` | [Model, Audio, and MCP](calls/model-audio-mcp.md) |
+| `$.mcp` | <Documented /> | The engine's MCP servers: call a tool of a connected one, or connect one the plugin lists. | `call`, `connect` | [Model, Audio, and MCP](calls/model-audio-mcp.md) |
+| `$.session` | <Documented /> | The running session as plain data, compacting it, and sending a message to another agent or session. | `messages`, `cwd`, `root`, `model`, `turns`, `id`, `repo`, `surfaces`, `surface`, `usage`, `version`, `compact`, `send`, `append`, `identity` | [Session](calls/session.md) |
+| `$.turn` | <Documented /> | The running model turn: ending it. | `abort` | [Turn and Prompt](calls/turn-prompt.md) |
+| `$.prompt` | <Documented /> | Submitting a prompt as a user turn, and the prompt box: read, write, paint, or propose into. | `submit`, `read`, `media`, `fill`, `paint`, `suggest`, `compose` | [Turn and Prompt](calls/turn-prompt.md) |
+| `$.tool` | <Documented /> | The tools the model has in this session, and running one. | `list`, `call`, `check`, `register` | [Tool, Command, and Config](calls/tool-command-config.md) |
+| `$.command` | <Documented /> | The slash commands the person can run, and running one. | `list`, `run`, `register` | [Tool, Command, and Config](calls/tool-command-config.md) |
+| `$.config` | <Documented /> | Every row of the `/config` menu, including each enabled plugin's `userConfig` fields. | `list`, `set` | [Tool, Command, and Config](calls/tool-command-config.md) |
+| `$.telemetry` | <Documented /> | Analytics records and feature marks. | `log`, `mark` | [Telemetry](calls/telemetry.md) |
+| `$.agent` | <Documented /> | Subagents. | `spawn`, `list`, `register` | [Agent](calls/agent.md) |
+| `$.fs` | <Documented /> | The file system as the engine process reaches it. A relative path is under the session's working directory. Text is UTF-8. | `read`, `write`, `list`, `exists`, `stat`, `ancestors` | [Files, Store, and State](calls/fs-store-state.md) |
+| `$.store` | <Documented /> | This plugin's key-value store. It lasts across sessions and hot reloads. Values are JSON. | `get`, `set`, `delete`, `keys` | [Files, Store, and State](calls/fs-store-state.md) |
+| `$.state` | <Documented /> | Named values the host holds for the session, each with a version. They survive a hot reload. | `get`, `set` | [Files, Store, and State](calls/fs-store-state.md) |
+| `$.clock` | <Documented /> | Time and timers, each an event through the host. | `now`, `sleep`, `after`, `every` | [Clock, HTTP, Process, Env, and Settings](calls/clock-http-process-env-settings.md) |
+| `$.http` | <Documented /> | The network, through the host. | `fetch` | [Clock, HTTP, Process, Env, and Settings](calls/clock-http-process-env-settings.md) |
+| `$.process` | <Documented /> | Commands on the host, run as the user of the session. CLI only. | `run`, `spawn` | [Clock, HTTP, Process, Env, and Settings](calls/clock-http-process-env-settings.md) |
+| `$.settings` | <Documented /> | What the settings files, `--settings`, and managed policy hold. Read only. | `read` | [Clock, HTTP, Process, Env, and Settings](calls/clock-http-process-env-settings.md) |
+| `$.env` | <Documented /> | The environment of this process. Every Bash child, MCP server, and `$.process.run` command started later inherits it. | `get`, `set` | [Clock, HTTP, Process, Env, and Settings](calls/clock-http-process-env-settings.md) |
 
 ## Modules
 
 | Item | Status | What it does | How it works | Where it can be used |
 | --- | --- | --- | --- | --- |
-| `claude-code` | <Documented /> | Types only. `import type { Register, On, EngineInterface } from 'claude-code'`. At run time the import is empty. | Exports 585 declarations. The values `atom`, `derive`, `memberOf`, `read`, and `update` are the state helpers. See [Files, Store, and State](fs-store-state.md#state-helpers-imported-from-claude-code). | Hooks modules and contracts. |
-| `claude-code/testing` | <Documented /> | The kit for `claude plugin test`: `test`, `describe`, `expect`, `mock`, `tier`. | See [Testing](testing.md). | `*.test.ts` and `*.test.tsx` |
-| Globals `h`, `Fragment`, `JSX` | <Documented /> | JSX compiles against them. | See [Surfaces, Elements, and Render Sites](ui-elements.md#jsx-and-globals). | Files with JSX. |
+| `claude-code` | <Documented /> | Types only. `import type { Register, On, EngineInterface } from 'claude-code'`. At run time the import is empty. | Exports 585 declarations. The values `atom`, `derive`, `memberOf`, `read`, and `update` are the state helpers. See [Files, Store, and State](calls/fs-store-state.md#state-helpers-imported-from-claude-code). | Hooks modules and contracts. |
+| `claude-code/testing` | <Documented /> | The kit for `claude plugin test`: `test`, `describe`, `expect`, `mock`, `tier`. | See [Testing](calls/testing.md). | `*.test.ts` and `*.test.tsx` |
+| Globals `h`, `Fragment`, `JSX` | <Documented /> | JSX compiles against them. | See [Surfaces, Elements, and Render Sites](ui/ui-elements.md#jsx-and-globals). | Files with JSX. |
 
 ## Gates That Stop Mods
 
@@ -89,7 +89,7 @@ The calling hook alone is skipped, so a plugin does not trap itself.
 | `disableSideloadFlags` | <Documented /> <ManagedOnly /> | Rejects `--plugin-dir` and `--plugin-url`. | Row: [Hooks, Plugins, and Skills Settings](../../configure/settings/hooks-and-plugins.md#keys). | Managed settings. |
 | `--safe-mode`, `--bare` | <Documented /> | No installed hooks module loads. | The program says: installed plugins are disabled, none of their hooks or hooks modules load, built-in plugins load regardless. | CLI flags. |
 | Rollout switch | <Gated note="Remote flag, name not shown in the program strings" /> | Installed hooks modules wait for a rollout flag. A message says installed mods are turned off remotely. | Built-in plugins and organization plugins load regardless. | Installed plugins. |
-| `CLAUDE_CODE_PLUGIN_DIRS`, `CLAUDE_CODE_PLUGIN_DIR_WATCH` | <Documented /> | Load plugin dirs as `--plugin-dir` does, and reload on save in a non-interactive session. | None. | Environment. |
+| `CLAUDE_CODE_PLUGIN_DIRS`, `CLAUDE_CODE_PLUGIN_DIR_WATCH` | <Documented /> | Load plugin dirs as `--plugin-dir` does. Reload on save in a non-interactive session. | None. | Environment. |
 
 ## Limits
 
@@ -98,7 +98,7 @@ Claude Code skips a hook that is too slow.
 
 | Limit | Value |
 | --- | --- |
-| Own time of one hook for one event | 10 seconds, or 50 milliseconds for a `prompt.edit` hook (set on the event in the program) |
+| Own time of one hook for one event | 10 seconds, or 50 milliseconds for a `prompt.edit` hook (the program sets it on the event) |
 | A `.catch` handler | 1 second |
 | All `session.end` hooks together | 1.5 seconds unless you change the `SessionEnd` hook budget |
 | `$.process.run` | 30 seconds by default, 10 minutes at most |
@@ -125,9 +125,9 @@ The settings and flags that stop installed mods do not stop them.
 | `cc-plugin-plugin-authoring` | Gives Claude the `plugin-authoring` skill for writing mods. It holds no mod code. |
 | `cc-plugin-sec-default` | Guards what your organization manages from the mods a user installs. You cannot turn it off. |
 | `cc-plugin-telemetry` | Sends the analytics records that Claude Code and its built-in mods log. |
-| `cc-plugin-you-should-know` | Shows a note above the prompt when a side agent finds something you might have missed. Off until you turn it on. |
+| `cc-plugin-you-should-know` | Displays a note above the prompt when a side agent finds something you might have missed. Off until you turn it on. |
 
 ## Related Pages
 
 - [Mod API Overview](index.md)
-- [Hooks, `on`, and `next`](hooks.md)
+- [Hooks, `on`, and `next`](events/hooks.md)

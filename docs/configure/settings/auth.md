@@ -17,18 +17,18 @@ Where to Set It tells you which files may set the key. See [Settings Files and S
 
 | Key | Status | Type | Default | What It Does | Where to Set It |
 | --- | --- | --- | --- | --- | --- |
-| `allowedProviders` | <Documented /> <ManagedOnly /> | array of: `anthropic`, `customEndpoint`, `bedrock`, `vertex`, `foundry`, `anthropicAws`, `mantle`, `gateway` | - | Limit which API providers a machine may use. Managed settings only. Unknown entries are removed. An empty list admits nothing. A session on an unlisted provider is refused at startup, at login, and on the next API call. `customEndpoint` (any other base URL) is admitted only for a value pinned in the `env` block of the same managed source. Source: the program. | Managed settings only |
+| `allowedProviders` | <Documented /> <ManagedOnly /> | array of: `anthropic`, `customEndpoint`, `bedrock`, `vertex`, `foundry`, `anthropicAws`, `mantle`, `gateway` | - | Limit which API providers a machine may use. This key works in managed settings only. Claude Code removes unknown entries. An empty list admits nothing. Claude Code refuses a session on an unlisted provider at startup, at login, and on the next API call. Claude Code admits `customEndpoint` (any other base URL) only for a value pinned in the `env` block of the same managed source. Source: the program. | Managed settings only |
 | `apiKeyHelper` | <Documented /> | string | - | Generate the API credential with your own command. | Any settings file |
 | `awsAuthRefresh` | <Documented /> | string | - | Refresh expired Bedrock credentials in `.aws` with your own command. | Any settings file |
 | `awsCredentialExport` | <Documented /> | string | - | Supply Bedrock credentials as JSON from your own command. | Any settings file |
 | `forceLoginGatewayUrl` | <Documented /> | string | - | Set the gateway URL the login screen connects to. Pairs with `forceLoginMethod: "gateway"`. Claude Code ignores it in project, local, flag, and server-managed settings. | User or managed settings |
 | `forceLoginMethod` | <Documented /> | enum: `claudeai`, `console`, `gateway` | - | Restrict login to claude.ai, Claude Console, or a cloud gateway. | Any settings file |
-| `forceLoginOrgUUID` | <Documented /> | array or string | - | Pin claude.ai logins to your organization. Takes one UUID or an array. In managed settings, login fails for any other account. | Any settings file |
-| `gatewayInternalNetworks` | <Documented /> <ManagedOnly /> | array of string | - | Let `/login` reach a cloud gateway on public IPv4 space your organization uses internally. Up to 4 IPv4 blocks, each `/8` to `/32`. | Managed settings only |
+| `forceLoginOrgUUID` | <Documented /> | array or string | - | Pin claude.ai logins to your organization. It takes one UUID or an array. In managed settings, login fails for any other account. | Any settings file |
+| `gatewayInternalNetworks` | <Documented /> <ManagedOnly /> | array of string | - | Let `/login` reach a cloud gateway on public IPv4 space your organization uses internally. It allows up to 4 IPv4 blocks, each `/8` to `/32`. | Managed settings only |
 | `gcpAuthRefresh` | <Documented /> | string | - | Refresh Google Cloud credentials with your own command. | Any settings file |
 | `otelHeadersHelper` | <Documented /> | string | - | Generate rotating OpenTelemetry headers with your own command. | Any settings file |
-| `proxyAuthHelper` | <Documented /> | string | - | Run your own command that prints a `Proxy-Authorization` header value. Read from the highest-priority source only. | Settings files |
-| `xaaIdp` | <Undocumented /> | object | - | Set the XAA (SEP-990) identity provider once, and every XAA-enabled MCP server reuses it. `claude mcp xaa setup` writes it as an object `{ issuer, clientId, callbackPort? }`. | User settings |
+| `proxyAuthHelper` | <Documented /> | string | - | Run your own command that prints a `Proxy-Authorization` header value. Claude Code reads it from the highest-priority source only. | Settings files |
+| `xaaIdp` | <Undocumented /> | object | - | Set the XAA (SEP-990) identity provider once. Every XAA-enabled MCP server reuses it. `claude mcp xaa setup` writes it as an object `{ issuer, clientId, callbackPort? }`. | User settings |
 
 ## Example
 
@@ -38,7 +38,7 @@ The first key runs `~/bin/get-key.sh` to get the API key. The second limits sign
 
 ```json title="~/.claude/settings.json"
 {
-  "$schema": "https://xsyetopz.github.io/clawdipedia/schemas/claude-code-settings.json",
+  "$schema": "https://clawdipedia.cc/schemas/claude-code-settings.json",
   "apiKeyHelper": "~/bin/get-key.sh",
   "forceLoginMethod": "console"
 }
@@ -50,10 +50,10 @@ Each row is a family of messages. The backticked text is the start that every me
 
 | Start of Message | Status | What It Means | Cases |
 | --- | --- | --- | --- |
-| Various | <Undocumented /> | **Login and accounts.** A sign-in, sign-out, token, or profile step was refused. | `--console` and `--claudeai` were both given, the policy does not permit `setup-token`, an API key or provider setting takes precedence over a profile, a workload identity federation machine signs in on its own, a profile name or config file is not valid, the code is not valid, or an account call such as the org UUID or an API key creation failed. |
+| Various | <Undocumented /> | **Login and accounts.** Claude Code refused a sign-in, sign-out, token, or profile step. | You gave both `--console` and `--claudeai`. The policy does not permit `setup-token`. An API key or provider setting takes precedence over a profile. A workload identity federation machine signs in on its own. A profile name or config file is not valid. The code is not valid. An account call such as the org UUID or an API key creation failed. |
 | Various | <Undocumented /> | **Grove settings.** A Grove setting or notice could not be read or changed. | The request failed or the answer has no `grove_enabled` value. |
 | Various | <Undocumented /> | **Billing and usage requests.** A billing, usage, or metrics request failed. | The text names the request (for example `prepaid/credits`, `payment_method`, `auto_reload_settings`, `metrics_enabled`) and says it is unavailable, with the reason. |
-| Various | <Undocumented /> | **Provider and model setup.** A provider or model setting is not valid. | A project or region value has characters that the request path does not allow, a Foundry resource name is not valid, a model catalog entry or alias is not valid, or a fallback model cannot be used. |
+| Various | <Undocumented /> | **Provider and model setup.** A provider or model setting is not valid. | A project or region value has characters that the request path does not allow. A Foundry resource name is not valid. A model catalog entry or alias is not valid. A fallback model cannot be used. |
 
 ## Claude Apps Gateway Server Key
 

@@ -5,18 +5,8 @@ sidebar_position: 1
 ---
 
 A subagent is a separate Claude run with its own context window, prompt, tools, and model.
-It does a side task, such as a long search, and returns only a short summary, so your main conversation stays clean.
+It does a side task, such as a long search. It returns only a short summary, so your main conversation stays clean.
 For example, Claude can send a code search to the `Explore` subagent and get back only the answer.
-
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. Claude starts subagents with the `Agent` tool. You can also name one with `@`, or run one as the main session with `--agent`. |
-| Can you change it? | ✅ Yes. Write agent files, or pass `--agents` JSON. |
-| Can you turn it on or off? | Deny `Agent` or `Agent(name)` in `permissions.deny`. Env vars and settings in [Subagent Runtime](runtime.md#limits-and-switches) set limits. |
-| Where does it live? | `.claude/agents/`, `~/.claude/agents/`, plugins, managed settings, or `--agents`. |
-| Status | <Documented /> <Undocumented /> <Differs /> <Gated /> |
 
 ## Example
 
@@ -49,7 +39,7 @@ Claude can now send review work to `reviewer`. You can also write `@reviewer che
 | `permissions.deny` with `Agent(name)` | <Documented /> | Disables one agent type. | `Agent(fork)` blocks forks. Deny `Agent` to stop all delegation. `Task(...)` is an alias. |
 | `Task` alias | <Documented /> | The old name of `Agent` (before 2.1.63). | Works in rules and agent files. |
 | `/subtask` | <Documented /> | Starts a fork by hand (2.1.212). | On 2.1.161 to 2.1.211 the command was `/fork`. |
-| Description cost | <Documented /> | Subagent descriptions count toward context. | At startup the interactive screen warns `Agent descriptions are over the 15,000-token limit` when the `name: description` text of all non-built-in agents is over 15,000 tokens. Source: the program (not shown in `-p`). |
+| Description cost | <Documented /> | Subagent descriptions count toward context. | At startup the interactive screen warns `Agent descriptions are over the 15,000-token limit`. It warns when the `name: description` text of all non-built-in agents is over 15,000 tokens. Source: the program (not shown in `-p`). |
 
 ## Agent Locations and Priority
 
@@ -59,8 +49,8 @@ If the same name appears in two places, the higher priority wins.
 | --- | --- | --- | --- |
 | 1 (highest) | Managed settings | <Documented /> | Pushed by an administrator. |
 | 2 | `--agents` JSON | <Documented /> | This session only. Not saved. |
-| 3 | `.claude/agents/` | <Documented /> | Found by walking up from the working folder. The closest definition wins. `--add-dir` folders also load. |
-| 4 | `~/.claude/agents/` | <Documented /> | Scanned deep into subfolders. The `name` is the identity, not the path. |
+| 3 | `.claude/agents/` | <Documented /> | Claude Code searches upward from the working folder. The closest definition wins. `--add-dir` folders also load. |
+| 4 | `~/.claude/agents/` | <Documented /> | Claude Code scans deep into subfolders. The `name` is the identity, not the path. |
 | 5 (lowest) | Plugin `agents/` | <Documented /> | Subfolders become part of `plugin:folder:file`. |
 
 ## How It Works
@@ -91,7 +81,7 @@ See [Subagent Runtime](runtime.md) for the details, and [Agent Loop](../../how-i
 
 ## Related Pages
 
-- [Hooks](../hooks/events.md#agent-and-task-events): `SubagentStart`, `SubagentStop`, and task events.
+- [Hooks](../hooks/agent-events.md#agent-and-task-events): `SubagentStart`, `SubagentStop`, and task events.
 - [Skills and Commands](../skills-and-commands/index.md): skills can run in a fork or be preloaded.
 - [Environment Variables for Agents and Teams](../../configure/env-vars/agents-and-teams.md): the full list of variables.
 

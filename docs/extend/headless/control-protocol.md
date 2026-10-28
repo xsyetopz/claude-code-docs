@@ -14,7 +14,7 @@ The protocol is on whenever you start `claude -p --input-format stream-json --ou
 ## Subtypes
 
 The schema does not mark the direction of each request.
-Only the Agent SDK pages describe most of them, and no other docs page does, so every row is marked <Undocumented />.
+Only the Agent SDK pages describe most of them, and no other docs page does, so every row has the status <Undocumented />.
 Source: the program (the bundled schema of `2.1.311`; for the `2.1.311` additions, `chunk-7ew55hkc.js:19068` for `ui_prompt_paint`, `chunk-7ew55hkc.js:18942` for the `ui_attach` list, `chunk-7ew55hkc.js:17074` for `turn_handoff`, `chunk-7ew55hkc.js:17966` for `oauth_token_refresh`, `chunk-7ew55hkc.js:17747` for `mcpMount`, `chunk-7ew55hkc.js:13704` for `background_color`, and `chunk-7ew55hkc.js:15654` for the transcript note).
 
 | `subtype` | Status | What It Does |
@@ -41,7 +41,7 @@ Source: the program (the bundled schema of `2.1.311`; for the `2.1.311` addition
 | `get_memory_dialog` | <Undocumented /> | Asks for the rows and switches of the `/memory` dialog. |
 | `get_skills_dialog` | <Undocumented /> | Asks for the rows of the `/skills` menu. |
 | `get_chrome_dialog` | <Undocumented /> | Asks for the state of the `/chrome` dialog. |
-| `get_chrome_browsers` | <Undocumented /> | Asks for the browsers that are connected to Claude in Chrome. |
+| `get_chrome_browsers` | <Undocumented /> | Asks for the browsers that have a connection to Claude in Chrome. |
 | `select_chrome_browser` | <Undocumented /> | Switches Claude in Chrome to the browser that you name. |
 | `get_sandbox_dialog` | <Undocumented /> | Asks for the state of the `/sandbox` dialog. |
 | `get_binary_version` | <Undocumented /> | Asks for the version of the binary. |
@@ -179,7 +179,7 @@ Long requests send `control_request_progress` lines first.
 
 ## Exact Fields
 
-The exact fields: `https://xsyetopz.github.io/clawdipedia/schemas/claude-code-control-protocol.json`, made from the program's own validators. It has a `Request` and a `Response` definition for each subtype.
+The exact fields: `https://clawdipedia.cc/schemas/claude-code-control-protocol.json`, made from the program's own validators. It has a `Request` and a `Response` definition for each subtype.
 It lists every field of this release, so build on the fields it names and look each one up there before you rely on it.
 
 ## Related Pages

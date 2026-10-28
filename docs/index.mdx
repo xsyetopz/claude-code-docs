@@ -14,6 +14,32 @@ Claude Code is a coding assistant that runs in your terminal, your editor, and t
 You tell it a task in plain words. It reads your files, runs commands, and edits code to finish the task.
 You can change almost every part of it with settings, hooks, plugins, skills, and MCP servers.
 
+## Find an Answer by Question
+
+Each row names one question and the page that answers it.
+
+| If You Ask | Read |
+| --- | --- |
+| How do I change a setting, and which file holds it? | [Settings](configure/settings/index.md) and [Files on Disk](start/files-on-disk.md) |
+| Which environment variable controls this? | [Environment Variables](configure/env-vars/index.md) |
+| What does this command line flag do? | [CLI Flags](configure/cli/flags.md) |
+| How do I keep Claude Code away from a file or a command? | [Permission Rules](configure/permissions/rules.md) |
+| Why did Claude Code ask me to approve this? | [Permission Flow](how-it-works/permission-flow.md) |
+| Which model runs, and how do I switch it? | [Models and Providers](configure/models-and-providers/index.md) |
+| How do I run my own code before or after a tool? | [Hooks](extend/hooks/index.md) |
+| How do I add a command, a skill, or a subagent? | [Skills and Commands](extend/skills-and-commands/index.md) and [Subagents](extend/subagents/index.md) |
+| How do I give my team one configuration? | [Plugins](extend/plugins/index.md) |
+| How do I connect an MCP server? | [MCP](extend/mcp/index.md) |
+| How do I drive Claude Code from a script? | [Headless Mode](extend/headless/index.md) |
+| Why is my context full, and what fills it? | [Context Budget](how-it-works/context-budget.md) and [Context and Compaction](how-it-works/context-and-compaction.md) |
+| What text does the model read first? | [Captured System Prompts](prompts/index.md) |
+| What can I change at all? | [What Can I Change](start/what-can-i-change.md) |
+| What changed in this release? | [What Changed](start/what-changed.md) |
+| Is this item in the official docs? | [How to Read These Docs](start/how-to-read.md) |
+| Which items do the official docs leave out? | [Undocumented Items](reference/undocumented.md) |
+| Where does a session go on disk, and what is in it? | [Files on Disk](start/files-on-disk.md) and [Transcript Format](reference/transcript-format.md) |
+| What are the exact fields of a tool or a payload? | [Tools](reference/tools/index.md) and [Schemas](reference/schemas.md) |
+
 ## What This Site Covers
 
 The [official docs](https://code.claude.com/docs/en/overview) explain the features that Anthropic supports.
@@ -65,16 +91,13 @@ When the conversation gets too long, it asks the model for a short summary and g
 | --- | --- | --- |
 | [Start Here](/start) | How to read the badges, a map of what you can change, the files Claude Code keeps, and breaking changes per release. | [How to Read These Docs](start/how-to-read.md) and [What Changed](start/what-changed.md) |
 | [How It Works](/how-it-works) | The harness in depth: architecture, the agent loop, requests and cache, the system prompt, compaction, sessions, models, and permissions. | [Architecture](how-it-works/architecture.md) |
-| [Configure](/configure) | Settings keys, environment variables, command line flags, permissions, memory, output styles, the status line, and models and providers. | [Models and Providers](configure/models-and-providers.md) |
+| [Configure](/configure) | Settings keys, environment variables, command line flags, permissions, memory, output styles, the status line, and models and providers. | [Models and Providers](configure/models-and-providers/index.md) |
 | [Extend](/extend) | Hooks, skills and commands, subagents, plugins, MCP servers, the Mod API, and headless mode. | [Hooks](extend/hooks/index.md) and [Plugins](extend/plugins/index.md) |
 | [Reference](/reference) | Every tool and parameter, API endpoints and betas, the transcript format, probes, and an index of undocumented items. | [Transcript Format](reference/transcript-format.md) and [Undocumented Items](reference/undocumented.md) |
 | [System Prompts](prompts/index.md) | The full text of each system prompt variant, captured offline, with sizes and diffs. | [Captured System Prompts](prompts/index.md) |
 
 ## Where to Go Next
 
-- To change how Claude Code behaves, begin with [Models and Providers](configure/models-and-providers.md) and the Settings pages.
-- To write a hook or a plugin, read [The Agent Loop](how-it-works/agent-loop.md) first. It shows where each hook event fires.
-- To understand cost and speed, read [Request and Cache](how-it-works/request-and-cache.md).
-- To see what an empty session holds and how to shrink it, read [Context Budget](how-it-works/context-budget.md).
-- To see exactly what the model reads, open [Captured System Prompts](prompts/index.md).
+- Before you write a hook or a plugin, read [The Agent Loop](how-it-works/agent-loop.md). It shows where each hook event fires.
+- For cost and speed, read [Request and Cache](how-it-works/request-and-cache.md).
 - To help improve this site, read the [Style Guide](contributing/style-guide.md).

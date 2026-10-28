@@ -14,7 +14,7 @@ Export the variable, or add it to `env` in a settings file. Some are switches, s
 
 Each name links to its row on the env var pages, which hold the status, the values, the defaults, and the notes.
 Source: [Connect Claude Code to Tools via MCP](https://code.claude.com/docs/en/mcp), [Environment Variables](https://code.claude.com/docs/en/env-vars), and [Settings Reference](https://code.claude.com/docs/en/settings-reference).
-All env vars of Claude Code are listed on [Plugin and MCP Env Vars](../../configure/env-vars/plugins-and-mcp.md) and the other env var pages.
+[Plugin and MCP Env Vars](../../configure/env-vars/plugins-and-mcp.md) and the other env var pages list all env vars of Claude Code.
 
 - [`MCP_TIMEOUT`](../../configure/env-vars/plugins-and-mcp.md#variables): Startup timeout of one server.
 - [`MCP_TOOL_TIMEOUT`](../../configure/env-vars/plugins-and-mcp.md#variables): Timeout of one tool call.
@@ -36,7 +36,7 @@ All env vars of Claude Code are listed on [Plugin and MCP Env Vars](../../config
 - [`MCP_DISCOVERY_CACHE`](../../configure/env-vars/plugins-and-mcp.md#variables): Turns the discovery cache on or off.
 - [`MCP_DISCOVERY_CACHE_TTL_S`](../../configure/env-vars/plugins-and-mcp.md#variables): Sets entry age without a refresh.
 - [`MCP_DISCOVERY_CACHE_MAX_STALE_S`](../../configure/env-vars/plugins-and-mcp.md#variables): Sets the maximum entry age.
-- [`MCP_DISCOVERY_CACHE_STRIKES`](../../configure/env-vars/plugins-and-mcp.md#variables): Sets failed refreshes before an entry is discarded.
+- [`MCP_DISCOVERY_CACHE_STRIKES`](../../configure/env-vars/plugins-and-mcp.md#variables): Sets failed refreshes before Claude Code discards an entry.
 - [`MCP_SDK_GENERATION`](../../configure/env-vars/plugins-and-mcp.md#variables): Pins the client runtime.
 - [`MCP_PROTOCOL_NEGOTIATION`](../../configure/env-vars/plugins-and-mcp.md#variables): Probes for revision 2026-07-28.
 - [`MCP_CLIENT_SECRET`](../../configure/env-vars/auth-and-accounts.md#variables): Gives the OAuth client secret.

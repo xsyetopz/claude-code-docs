@@ -9,16 +9,6 @@ Each tool has input fields and a few flags that tell Claude Code how to treat it
 For example, `Grep` is read-only and safe to run in parallel, so Claude Code can run many searches at once.
 This page covers the shared rules. The other pages list every tool and every parameter.
 
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | Partly. Claude calls tools for you. You allow, ask, or deny them with permission rules. |
-| Can you change it? | ✅ Yes. Permission rules, subagent `tools` and `disallowedTools` lists, and MCP servers change which tools Claude can use. |
-| Can you turn it on or off? | `permissions.deny`, `ENABLE_TOOL_SEARCH`, and tool-specific env vars such as `CLAUDE_CODE_DISABLE_WEB_FETCH`. |
-| Where does it live? | Built into the program. MCP tools come from servers you configure. |
-| Status | <Documented /> <Undocumented /> <Differs /> <Gated note="many tools need a server-side flag, including the task, cron, plan, agent-listing, PowerShell, WebFetch switch, GetTask, and memory tools" /> |
-
 ## Tool Pages
 
 | Page | What It Covers |
@@ -35,7 +25,7 @@ Each tool table has three Yes or No columns.
 
 | Column | Yes Means | No Means |
 | --- | --- | --- |
-| Read-Only | The tool changes nothing, so Claude Code can skip some prompts for it. | The tool can change things, or the program sets no flag. |
+| Read-Only | The tool changes nothing. So Claude Code can skip some prompts for it. | The tool can change things, or the program sets no flag. |
 | Parallel | Claude Code can run several calls of the tool at once. | Calls run one after the other, or the program sets no flag. |
 | Deferred | The tool is not loaded at the start. Claude finds it with `ToolSearch` first. | The tool is loaded at the start. |
 
@@ -73,7 +63,7 @@ Source: [Tools Reference](https://code.claude.com/docs/en/tools-reference), [Cre
 
 ## Deferral Rules
 
-Claude Code checks these rules in order to decide if a tool is deferred.
+Claude Code checks these rules in order. They decide whether a tool is deferred.
 
 1. A hook or a server-side override can set the state first.
 2. A tool with `alwaysLoad` set to `true` is not deferred.
@@ -125,7 +115,7 @@ Source: [Connect Claude Code to Tools via MCP](https://code.claude.com/docs/en/m
 
 ## Example
 
-Hide web tools from Claude, and keep MCP tools loaded at the start when they are small.
+Hide web tools from Claude. Keep MCP tools loaded at the start when they are small.
 
 ```json title=".claude/settings.json"
 {
@@ -140,14 +130,14 @@ Hide web tools from Claude, and keep MCP tools loaded at the start when they are
 
 ## How It Works
 
-Claude Code builds the tool list for each request. A deferred tool appears only as a name, so the request stays small.
-When Claude needs a deferred tool, it calls `ToolSearch`. Claude Code then loads the full schema, and Claude calls the tool.
+Claude Code builds the tool list for each request. A deferred tool appears only as a name. So the request stays small.
+When Claude needs a deferred tool, it calls `ToolSearch`. Claude Code then loads the full schema. Then Claude calls the tool.
 Permission rules run when a tool is called, not when it is listed.
 
 ## Exact Fields
 
-The exact fields: `https://xsyetopz.github.io/clawdipedia/schemas/claude-code-tools.json`, made from each built-in tool's own input and output validator. It has an `<Tool>Input` and an `<Tool>Result` definition for each tool the program could export; its `description` names the few it lacks.
-It lists every field of this release, so build on the fields it names and look each one up there before you rely on it.
+The exact fields are in this schema: `https://clawdipedia.cc/schemas/claude-code-tools.json`. It is made from each built-in tool's own input and output validator. It has an `<Tool>Input` and an `<Tool>Result` definition for each tool the program could export. Its `description` names the few it lacks.
+It lists every field of this release. Build on the fields it names. Look each one up there before you rely on it.
 
 ## Related Pages
 

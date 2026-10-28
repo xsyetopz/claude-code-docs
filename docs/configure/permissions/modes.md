@@ -8,13 +8,13 @@ A permission mode sets which tool calls run without a prompt.
 The modes go from `plan`, which only reads, to `bypassPermissions`, which skips most checks.
 For example, `claude --permission-mode acceptEdits` starts a session that edits files with no prompt.
 
-Run `/permissions` in the chat, or start with `--permission-mode`, which wins for one session. Set `permissions.defaultMode` for the start mode. `permissions.disableBypassPermissionsMode: "disable"` removes `bypassPermissions`, and `permissions.disableAutoMode: "disable"` removes `auto`.
+Run `/permissions` in the chat. Or start with `--permission-mode`, which wins for one session. Set `permissions.defaultMode` for the start mode. `permissions.disableBypassPermissionsMode: "disable"` removes `bypassPermissions`. `permissions.disableAutoMode: "disable"` removes `auto`.
 
 ## Example
 
 ```json title="~/.claude/settings.json"
 {
-  "$schema": "https://xsyetopz.github.io/clawdipedia/schemas/claude-code-settings.json",
+  "$schema": "https://clawdipedia.cc/schemas/claude-code-settings.json",
   "permissions": {
     "defaultMode": "acceptEdits",
     "disableBypassPermissionsMode": "disable"
@@ -22,7 +22,7 @@ Run `/permissions` in the chat, or start with `--permission-mode`, which wins fo
 }
 ```
 
-New sessions start in `acceptEdits`, and nobody can switch the session to `bypassPermissions`.
+New sessions start in `acceptEdits`. Nobody can switch the session to `bypassPermissions`.
 
 ## The Six Modes
 
@@ -34,11 +34,11 @@ Official pages: [Configure Permissions](https://code.claude.com/docs/en/permissi
 | Item | Status | What it does | How it works | Where to set it |
 | --- | --- | --- | --- | --- |
 | `default` | <Documented /> | Standard behavior | Prompts for dangerous operations. The picker text is `default (ask each time)` | `--permission-mode`, `defaultMode`, `/permissions` |
-| `acceptEdits` | <Documented /> | Auto-accepts file edits | Picker text: `accept edits (auto-approve file edits and common file commands)`. It allows edits inside the workspace. A Bash check says `would be allowed in acceptEdits mode` | Same |
-| `plan` | <Documented /> | Analysis only, no edits | Picker text: `plan mode (research and propose changes without making them)`. With auto mode available, plan mode uses auto mode semantics unless `useAutoModeDuringPlan` is `false` | Same |
-| `auto` | <Documented /> | A classifier screens each action | Picker text: `auto (no routine prompts, a reviewer model screens actions)`. See [Auto Mode](auto-mode.md) | Same. Not from project or local `defaultMode` |
-| `dontAsk` | <Documented /> | Denies what would prompt | Picker text: `don't ask (auto-deny anything that would prompt)`. The deny reason says `Claude Code is running in don't ask mode` | Same |
-| `bypassPermissions` | <Documented /> <Caution /> | Skips permission checks | Picker text: `BYPASS PERMISSIONS (no further prompts)`. Explicit `deny` rules still apply. Safety checks marked bypass-immune still ask | Needs `--dangerously-skip-permissions` or `--allow-dangerously-skip-permissions`. Not from project or local `defaultMode` |
+| `acceptEdits` | <Documented /> | Auto-accepts file edits | The picker text is `accept edits (auto-approve file edits and common file commands)`. It allows edits inside the workspace. A Bash check says `would be allowed in acceptEdits mode` | Same |
+| `plan` | <Documented /> | Analysis only, no edits | The picker text is `plan mode (research and propose changes without making them)`. With auto mode available, plan mode uses auto mode semantics unless `useAutoModeDuringPlan` is `false` | Same |
+| `auto` | <Documented /> | A classifier screens each action | The picker text is `auto (no routine prompts, a reviewer model screens actions)`. See [Auto Mode](auto-mode.md) | Same. Not from project or local `defaultMode` |
+| `dontAsk` | <Documented /> | Denies what would prompt | The picker text is `don't ask (auto-deny anything that would prompt)`. The deny reason says `Claude Code is running in don't ask mode` | Same |
+| `bypassPermissions` | <Documented /> <Caution /> | Skips permission checks | The picker text is `BYPASS PERMISSIONS (no further prompts)`. Explicit `deny` rules still apply. Safety checks marked bypass-immune still ask | Needs `--dangerously-skip-permissions` or `--allow-dangerously-skip-permissions`. Not from project or local `defaultMode` |
 
 Captured system prompts for some modes: [Plan](../../prompts/modes/mode-plan.md), [Accept Edits](../../prompts/modes/mode-acceptEdits.md), and [Don't Ask](../../prompts/modes/mode-dontAsk.md).
 
@@ -58,16 +58,16 @@ Source: the program. Hooks and SDK hosts can see these types.
 
 | Reason Type | Status | What it means | Text or detail | Seen In |
 | --- | --- | --- | --- | --- |
-| `rule` | <Undocumented /> | A permission rule decided | Text such as `Denied by a permission rule` | Each tool |
+| `rule` | <Undocumented /> | A permission rule decided | An example of the text is `Denied by a permission rule` | Each tool |
 | `mode` | <Undocumented /> | The mode decided | For example `dontAsk` denies | Each tool |
 | `subcommandResults` | <Undocumented /> | Parts of a compound command decided | Each sub-command has its own reason | `Bash`, `PowerShell` |
 | `permissionPromptTool` | <Undocumented /> | An MCP permission prompt tool decided | Set with `--permission-prompt-tool` | Print mode |
 | `hook` | <Undocumented /> | A hook decided | `PreToolUse` or `PermissionRequest` | Hooks |
 | `asyncAgent` | <Undocumented /> | A background agent has no prompt surface | Denies with `no approval surface in this session` | Background agents |
 | `sandboxOverride` | <Undocumented /> | A command runs outside the sandbox | The text is `Run outside of the sandbox` | `Bash` |
-| `workingDir` | <Undocumented /> | The path is outside the working directories | Text `Path is outside allowed working directories` | File tools |
+| `workingDir` | <Undocumented /> | The path is outside the working directories | The text is `Path is outside allowed working directories` | File tools |
 | `safetyCheck` | <Undocumented /> | A built-in safety check fired | See the next table | Each tool |
-| `classifier` | <Undocumented /> | The auto mode classifier decided | Text `Denied by auto mode classifier` or `Allowed by auto mode classifier` | `auto` mode |
+| `classifier` | <Undocumented /> | The auto mode classifier decided | The text is `Denied by auto mode classifier` or `Allowed by auto mode classifier` | `auto` mode |
 | `other` | <Undocumented /> | Anything else | For example a closed permission stream | Hosts |
 
 ## Safety Checks

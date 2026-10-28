@@ -9,7 +9,7 @@ It can run a command, call a URL, call an MCP tool, ask a model, or start a suba
 The `type` key picks which one.
 For example, `{"type": "command", "command": "./check.sh"}` runs a script.
 
-Remove the entry, or use `disableAllHooks`, to turn a handler off.
+To disable a handler, remove the entry or use `disableAllHooks`.
 
 ## Example
 
@@ -35,7 +35,7 @@ An HTTP hook that posts every `Stop` event to a local service.
 }
 ```
 
-Only names in `allowedEnvVars` are filled into headers. Other references become empty strings.
+Claude Code fills only names in `allowedEnvVars` into headers. Other references become empty strings.
 
 ## Handler Types
 
@@ -43,7 +43,7 @@ Only names in `allowedEnvVars` are filled into headers. Other references become 
 | --- | --- | --- | --- |
 | `command` | <Documented /> | Runs a shell command or an executable. Input on `stdin`. Result by exit code, `stdout`, and `stderr`. | All 33 events. |
 | `http` | <Documented /> | Sends the input as JSON in a POST to a URL. The result is the response body, and needs a 2xx status. | 31 events. Not `SessionStart` and not `Setup`. |
-| `mcp_tool` | <Documented /> | Calls a tool on a configured MCP server. The text result is read like `stdout`. A result with `isError: true` is a non-blocking error. | 33 events, but skipped on `Setup` and on `SessionStart` at launch. |
+| `mcp_tool` | <Documented /> | Calls a tool on a configured MCP server. Claude Code reads the text result like `stdout`. A result with `isError: true` is a non-blocking error. | 33 events. Claude Code skips it on `Setup`, and on `SessionStart` when Claude Code starts. |
 | `prompt` | <Documented /> | One model call that returns `ok`. | 12 events, plus `PermissionRequest`. |
 | `agent` | <Documented /> <Experimental /> | A subagent that checks a condition. Up to 50 turns. Experimental, and the docs say it may change. | 12 events. Not `PermissionRequest`. |
 | `callback` | <Undocumented /> | A function that an SDK host or a mod registers. | Events that run device hooks. It is not a config key. |
@@ -65,20 +65,20 @@ Source: a probe of the program (see [Probes](../../reference/probes.md)).
 | `if` | <Documented /> | One permission rule that filters the handler. | Only tool events read it. See [Configuration](configuration.md#the-if-filter). |
 | `timeout` | <Documented /> | Seconds before Claude Code cancels the hook. | A positive number. Defaults are on [Configuration](configuration.md#timeouts). |
 | `statusMessage` | <Documented /> | Spinner text while the hook runs. | A string. |
-| `once` | <Documented /> | Removes the hook after its first successful run. | A failure, exit 2, or timeout keeps it. Honored only in skill frontmatter. |
+| `once` | <Documented /> | Removes the hook after its first successful run. | A failure, exit 2, or timeout keeps it. Claude Code honors it only in skill frontmatter. |
 
 ## Command Fields
 
 | Field | Status | What it does | Notes |
 | --- | --- | --- | --- |
-| `command` | <Documented /> | The command string, or the program to run when `args` is set. | Shell form uses `sh -c`, Git Bash, or PowerShell. |
-| `args` | <Documented /> | An argument list for exec form. | No shell runs. Placeholders are replaced in `command` and in each element. |
-| `shell` | <Documented /> | `bash` or `powershell`. | Ignored when `args` is set. |
-| `async` | <Documented /> | Runs in the background. | `timeout` is not enforced. The hook cannot block. Output arrives on the next turn. |
+| `command` | <Documented /> | The command string, or the program to run when you set `args`. | Shell form uses `sh -c`, Git Bash, or PowerShell. |
+| `args` | <Documented /> | An argument list for exec form. | No shell runs. Claude Code replaces placeholders in `command` and in each element. |
+| `shell` | <Documented /> | `bash` or `powershell`. | Claude Code ignores it when you set `args`. |
+| `async` | <Documented /> | Runs in the background. | Claude Code does not enforce `timeout`. The hook cannot block. Output arrives on the next turn. |
 | `asyncRewake` | <Documented /> | A background run that wakes the model on exit 2. | `stderr` (or `stdout` if `stderr` is empty) becomes a system reminder. `timeout` still applies. Implies `async`. |
 | `onFailure` | <Documented /> | `continue` or `block`. | Needs 2.1.295. See [Configuration](configuration.md#failure-handling). Also works on `http`. |
 | `rewakeMessage` | <Undocumented /> | A custom prefix for the system reminder of `asyncRewake`. | An internal field. |
-| `rewakeSummary` | <Undocumented /> | A one-line summary shown to you for `asyncRewake`. | An internal field. Default text is `Stop hook feedback`. |
+| `rewakeSummary` | <Undocumented /> | A one-line summary that Claude Code shows to you for `asyncRewake`. | An internal field. Default text is `Stop hook feedback`. |
 | `cloud` | <Undocumented /> | `device` or `skip` for cloud sessions that this machine drives. | An internal field. An unknown value reads as `skip`. Also works on `http`. |
 
 ## HTTP Fields
@@ -86,8 +86,8 @@ Source: a probe of the program (see [Probes](../../reference/probes.md)).
 | Field | Status | What it does | Notes |
 | --- | --- | --- | --- |
 | `url` | <Documented /> | The POST target. | Must pass `allowedHttpHookUrls` when that setting exists. |
-| `headers` | <Documented /> | Extra request headers. | `$VAR` and `${VAR}` are replaced only for names in `allowedEnvVars`. |
-| `allowedEnvVars` | <Documented /> | Names that may be replaced in headers. | Other references become empty strings. `httpHookAllowedEnvVars` narrows the list. |
+| `headers` | <Documented /> | Extra request headers. | Claude Code replaces `$VAR` and `${VAR}` only for names in `allowedEnvVars`. |
+| `allowedEnvVars` | <Documented /> | Names that Claude Code may replace in headers. | Other references become empty strings. `httpHookAllowedEnvVars` narrows the list. |
 | `onFailure` | <Documented /> | `continue` or `block`. | A non-2xx status or a connection error counts as a failure. |
 
 ## MCP Tool Fields
@@ -106,9 +106,9 @@ On observer events, it does not wait.
 
 | Field | Status | What it does | Notes |
 | --- | --- | --- | --- |
-| `prompt` | <Documented /> | The text to evaluate. | `$ARGUMENTS` is replaced by the input JSON. Without it, Claude Code appends the JSON. |
+| `prompt` | <Documented /> | The text to evaluate. | Claude Code replaces `$ARGUMENTS` with the input JSON. Without it, Claude Code appends the JSON. |
 | `model` | <Differs note="Docs: the default is the background model for both types. Program: the agent default is Haiku." /> | The model for the check. | Applies to `prompt` and `agent`. |
-| `continueOnBlock` | <Documented /> | Feeds an `ok: false` reason to Claude and goes on. | `prompt` only. Default `false`. Agent hooks always act as if `true`. |
+| `continueOnBlock` | <Documented /> | Feeds an `ok: false` reason to Claude. Then it continues. | `prompt` only. Default `false`. Agent hooks always act as if `true`. |
 | `ok` (model reply) | <Documented /> | `true` allows. `false` blocks. | The effect of `false` per event is in the Response schema section of the Hooks Reference. |
 | `reason` (model reply) | <Documented /> | Why the model blocked. | Required when `ok` is `false`. |
 | `impossible` (model reply) | <Documented /> | The condition can never be met. | On `Stop` and `SubagentStop` the turn ends. Agents ignore it. `prompt` only. |
@@ -121,7 +121,7 @@ The limits do not cover `command`, `http`, or `mcp_tool` hooks.
 | Limit | Status | What it does | Notes |
 | --- | --- | --- | --- |
 | 24 at a time | <Documented /> | At most 24 `prompt` and `agent` hooks run at once. | The program counts them per session host, not per agent. A hook over the limit waits for a free place. |
-| 12 overdue | <Documented /> | At most 12 more run when they waited longer than the timeout of their event. | These hooks use a second count of 12, kept apart from the first. |
+| 12 overdue | <Documented /> | At most 12 more run when they waited longer than the timeout of their event. | These hooks use a second count of 12. It is separate from the first. |
 | 12 per event | <Undocumented /> | When one event starts several of these hooks, at most 12 start together. | The program also uses this number to size the time budget of the event. |
 
 Source: the program (`chunk-r5cyd28m.js`, the `model hooks` and `overdue model hooks` counts).
@@ -134,4 +134,4 @@ We did not trace that a subagent shares the session host of its parent.
 - [Input and Output](input-and-output.md): what each handler can answer.
 
 Source: [Hooks Reference](https://code.claude.com/docs/en/hooks) and the program (handler schemas for `command`, `prompt`, `mcp_tool`, `http`, and `agent`).
-Cloud sessions forward only your own hooks of kind `command` and `http` from user settings, `settings.local.json`, or `--settings`. They never forward `prompt`, `agent`, or `mcp_tool` hooks, or plugin or managed hooks. A device client registers up to 128 hooks with a lease of 60 to 3600 seconds (600 by default), and the cloud worker calls back with `hook_callback`. We read these rules in the program and did not run them, because a cloud session needs a login (needs a cloud session, not run).
+Cloud sessions forward only your own hooks of kind `command` and `http` from user settings, `settings.local.json`, or `--settings`. They never forward `prompt`, `agent`, or `mcp_tool` hooks, or plugin or managed hooks. A device client registers up to 128 hooks with a lease of 60 to 3600 seconds (600 by default). The cloud worker calls back with `hook_callback`. We read these rules in the program. We did not run them, because a cloud session needs a login (needs a cloud session, not run).

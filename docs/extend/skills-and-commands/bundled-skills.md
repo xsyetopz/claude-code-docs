@@ -8,7 +8,7 @@ Bundled skills ship inside Claude Code, so you need no files to use them.
 They are prompts that guide Claude through a common job.
 For example, `/simplify` reviews changed code and fixes the problems it finds.
 
-You cannot change a bundled skill, but you can replace one by making your own skill with the same name. Turn them off with the `disableBundledSkills` setting or `CLAUDE_CODE_DISABLE_BUNDLED_SKILLS=1`.
+You cannot change a bundled skill. You can replace one with your own skill of the same name. Turn them off with the `disableBundledSkills` setting or `CLAUDE_CODE_DISABLE_BUNDLED_SKILLS=1`.
 
 ## Example
 
@@ -16,7 +16,7 @@ You cannot change a bundled skill, but you can replace one by making your own sk
 claude -p "/debug the login test fails on CI"
 ```
 
-`/debug` turns on debug logging and then looks into the issue you describe.
+`/debug` enables debug logging. It then investigates the issue that you describe.
 
 ## Controls
 
@@ -32,8 +32,8 @@ claude -p "/debug the login test fails on CI"
 | `/doctor` (alias `/checkup`) | <Documented /> | Checks your setup: install, unused extensions, `CLAUDE.md`, hooks, permissions. `/doctor prompt-audit` audits instructions. | Hidden by env var `DISABLE_DOCTOR_COMMAND` or `skillOverrides` `"doctor": "off"`. Needs a workspace. Interactive. |
 | `/claude-api` | <Documented /> | A reference for the Claude API and Managed Agents in your language. | Subcommands: `migrate`, `upgrade`, `api-version` (new in `2.1.307`: moves Claude API code to API version `2026-10-21`, per the [release notes](https://github.com/anthropics/claude-code/releases/tag/v2.1.307)), `managed-agents-onboard`, `prompt-audit`, `cost-optimize`, `build-eval`, `hillclimb`, `preserved-thinking-migration`, `managed-agents-secure`. Since `2.1.310`, when two server flags (`tengu_cosmic_sketch` and `tengu_typed_trinket`) turn it on, it also searches the project for deprecated or retired model IDs and lists them in a section "Deprecated or Retired Models in This Project" (the program). The `2.1.311` release diff lists `/claude-api` as removed, but the skill is still in `2.1.311`: the startup code still registers it and `CLAUDE_CODE_DISABLE_CLAUDE_API_SKILL` still turns it off (`chunk-nxczhwwr.js:5483`), and its definition is in `chunk-cqcx451p.js:325`. Only the way the program registers it changed, so the diff tool missed it. The built-in plugin `cc-plugin-claude-platform` also offers the same skill, only when no bundled skill has that name, and adds a docs MCP server (`chunk-j1r347qy.js:160`, `chunk-j1r347qy.js:183`). |
 | `/claude-api managed-agents-secure` | <Documented /> | Compares a Managed Agents agent's settings with Anthropic's published security guide. It changes nothing. | New in `2.1.304`. It is unavailable when Claude Code's check on its `ant` commands does not run. Source: the [release notes](https://github.com/anthropics/claude-code/releases/tag/v2.1.304) and the program. |
-| `/debug` `[issue description]` | <Documented /> | Turns on debug logging and investigates. | `disableModelInvocation`. Allowed tools: `Read`, `Grep`, `Glob`. |
-| `/batch` `<instruction>` | <Documented /> | Plans a large change and runs 5 to 30 worktree agents that open pull requests. | `disableModelInvocation`. |
+| `/debug` `[issue description]` | <Documented /> | Enables debug logging and investigates. | `disableModelInvocation`. Allowed tools: `Read`, `Grep`, `Glob`. |
+| `/batch` `<instruction>` | <Documented /> | Plans a large change. Runs 5 to 30 worktree agents that open pull requests. | `disableModelInvocation`. |
 | `/run` | <Documented /> | Launches your app so you can see a change work. | Reads a recorded `run-<name>` skill if one exists. |
 | `/run-skill-generator` | <Documented /> | Records how to run the project as `.claude/skills/run-<name>/`. | `disableModelInvocation`. |
 | `/verify` | <Documented /> | Tries your change and reports if it works. | Records its recipe in `.claude/skills/verify/SKILL.md`. Since `2.1.312`, `/help` and the `/` command menu show the short text "Try your change and report if it works" (`chunk-ktc61wsq.js:5169`). Claude gets the long description (`chunk-ktc61wsq.js:5163`). In `2.1.311` the menu showed the long description (`chunk-nxczhwwr.js:5393`). Source: the [release notes](https://github.com/anthropics/claude-code/releases/tag/v2.1.312) and the program. |
@@ -48,7 +48,7 @@ claude -p "/debug the login test fails on CI"
 | `/design-sync` `[<project hint>]` | <Gated note="Policy allow_design_sync." /> | Pushes design-system components to claude.ai/design. | `disableModelInvocation`. |
 | `/commit` | <Undocumented /> <Gated note="An isEnabled check decides." /> | Creates a git commit. It gathers git context first. | A `prompt` command. |
 | `/pr` | <Undocumented /> <Gated note="An isEnabled check decides." /> | Creates a GitHub pull request. It gathers branch context first. | A `prompt` command. |
-| `/commit-push-pr` | <Undocumented /> | Commits, pushes, and opens a pull request. | A `prompt` command. |
+| `/commit-push-pr` | <Undocumented /> | Makes a commit. Pushes it. Opens a pull request. | A `prompt` command. |
 | `/dataviz` | <Undocumented /> | Guides Claude when it makes a chart, graph, plot, dashboard, or other data visualization. | A `prompt` command. |
 | `/explain-usage` | <Undocumented /> <Gated note="An isEnabled check decides." /> | Explains where the tokens of this session went, with one simple chart. | A `prompt` command. |
 | `/memory-types` | <Undocumented /> <Gated note="An isEnabled check decides." /> | A full reference for the memory types: what each captures, when to save it, and how to write the body. | A `prompt` command. |
@@ -58,7 +58,7 @@ claude -p "/debug the login test fails on CI"
 | `/design` | <Undocumented /> <Gated note="An isEnabled check decides." /> | A design command. The program gives no description. | A `prompt` command. |
 | `/claude-code-docs` | <Undocumented /> <Gated note="An isEnabled check decides, and it reads the server flag tengu_birch_kettle." /> | A command for questions about Claude Code. The program gives no description. | A `prompt` command. |
 | `/cowork-plugin` | <Undocumented /> <Gated note="An isEnabled check decides." /> | Creates a new Cowork plugin from scratch, or customizes an installed plugin for an organization. | A `prompt` command. |
-| `/setup-claude` (alias `/setup-cowork`) | <Undocumented /> <Gated note="An isEnabled check decides." /> | A guided setup: pick a role, install a matching plugin, try a skill, and connect tools. | A `prompt` command. |
+| `/setup-claude` (alias `/setup-cowork`) | <Undocumented /> <Gated note="An isEnabled check decides." /> | A guided setup. You pick a role, install a matching plugin, try a skill, and connect tools. | A `prompt` command. |
 
 ## Related Pages
 

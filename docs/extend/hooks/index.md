@@ -11,18 +11,7 @@ A prompt to Claude cannot promise that, but a hook can.
 
 Claude Code `2.1.312` has 33 hook events.
 The [official docs](https://code.claude.com/docs/en/hooks) and the program list the same 33 names.
-
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. |
-| Can you change it? | ✅ Yes. You write the hooks. |
-| Can you turn it on or off? | ✅ Yes. Remove the hook, or set `disableAllHooks` in settings. See [Configuration](configuration.md#settings-keys-and-trust). |
-| Where does it live? | Settings files, plugin `hooks/hooks.json`, and skill or subagent frontmatter. |
-| Events | 33 |
-| Handler types | 5 (`command`, `http`, `mcp_tool`, `prompt`, `agent`) |
-| Status | <Documented /> <Undocumented /> <Differs /> <Gated /> |
+Each hook uses one of 5 handler types: `command`, `http`, `mcp_tool`, `prompt`, or `agent`.
 
 ## Example
 
@@ -64,7 +53,7 @@ A hook config has three levels.
 2. A matcher group. It has an optional `matcher` that picks when the group runs.
 3. The `hooks` array. Each entry is a handler that does the work.
 
-The same shape is used in settings files, in a plugin `hooks/hooks.json` (wrapped in a top-level `hooks` key), and in skill and subagent frontmatter.
+Settings files, a plugin `hooks/hooks.json` (wrapped in a top-level `hooks` key), and skill and subagent frontmatter all use the same shape.
 
 All matching handlers of an event run in parallel.
 If a settings file defines the same handler twice, Claude Code runs it once.
@@ -75,22 +64,22 @@ A copy from a plugin or a skill stays separate.
 | Place | Status | What it does | Notes |
 | --- | --- | --- | --- |
 | `~/.claude/settings.json` | <Documented /> | User hooks for all projects. | Merged with the other levels. Not shared. |
-| `.claude/settings.json` | <Documented /> | Project hooks. | Merged. Held back until you accept the workspace trust dialog. Can be committed. |
+| `.claude/settings.json` | <Documented /> | Project hooks. | Merged. Waits for you to accept the workspace trust dialog. You can commit it. |
 | `.claude/settings.local.json` | <Documented /> | Local project hooks. | Merged. Not shared. |
-| Managed policy settings | <Documented /> | Organization hooks. | `disableAllHooks` set below the managed level cannot turn them off. |
+| Managed policy settings | <Documented /> | Organization hooks. | `disableAllHooks` set below the managed level cannot disable them. |
 | `--settings '{...}'` flag | <Documented /> | Hooks for one run. | The program calls this source `flagSettings`. It can set `disableAllHooks`. |
 | Plugin `hooks/hooks.json` | <Documented /> | Plugin hooks. | Active while the plugin is on. |
 | Plugin manifest key `hooks` | <Documented /> | A path, an inline object, or an array. | Merged with `hooks/hooks.json`. See [Plugin Manifest Reference](https://code.claude.com/docs/en/plugins/manifest-reference). |
-| Skill frontmatter `hooks` | <Documented /> | Skill hooks. | Registered when the skill runs. Kept for the session. `once` works only here. |
-| Subagent frontmatter `hooks` | <Documented /> | Hooks that run only while that subagent runs. | `Stop` becomes `SubagentStop`. Ignored for plugin subagents. See [Subagent Frontmatter](../subagents/frontmatter.md). |
-| Mod `on("classic.<Event>")` | <Documented /> | A function hook on a classic event. | The chain is managed hooks, hooks modules, then other settings hooks. See [React to Events](https://code.claude.com/docs/en/plugins/mods/events). |
-| SDK callback hooks | <Undocumented /> | Handler type `callback`. | Set by an Agent SDK host. A callback that times out on `PreToolUse` or `UserPromptSubmit` blocks. |
+| Skill frontmatter `hooks` | <Documented /> | Skill hooks. | Claude Code registers them when the skill runs and keeps them for the session. `once` works only here. |
+| Subagent frontmatter `hooks` | <Documented /> | Hooks that run only while that subagent runs. | `Stop` becomes `SubagentStop`. Claude Code ignores them for plugin subagents. See [Subagent Frontmatter](../subagents/frontmatter.md). |
+| Mod `on("classic.<Event>")` | <Documented /> | A function hook on a classic event. | The chain order is managed hooks, hooks modules, then other settings hooks. See [React to Events](https://code.claude.com/docs/en/plugins/mods/events). |
+| SDK callback hooks | <Undocumented /> | Handler type `callback`. | An Agent SDK host sets it. A callback that reaches its timeout on `PreToolUse` or `UserPromptSubmit` blocks. |
 
 ## How It Works
 
 When something happens, Claude Code finds every hook for that event.
 It filters them with the matcher and the optional `if` rule.
-Then it runs the survivors in parallel and merges their answers.
+Then it runs the remaining hooks in parallel. It merges their answers.
 
 ```mermaid
 flowchart TD
@@ -104,17 +93,17 @@ flowchart TD
     F --> G[Read exit code and output]
     G --> H{Blocks?}
     H -- yes --> I[Stop or change the action]
-    H -- no --> J[Go on, maybe add context]
+    H -- no --> J[Continue, maybe add context]
 ```
 
 Each handler gets a JSON description of the event.
 A command hook reads it on `stdin`. An HTTP hook gets it as the POST body.
-It answers with an exit code, or with exit 0 and a JSON object.
-The fields are on [Input and Output](input-and-output.md).
+A handler answers with an exit code, or with exit 0 and a JSON object.
+[Input and Output](input-and-output.md) lists the fields.
 
 :::note
-Hooks that run as JavaScript functions inside Claude Code are called mods.
-They are not covered here. See the [Mod API](../mod-api/index.md) section of this site.
+A mod is a hook that runs as a JavaScript function inside Claude Code.
+This section does not cover mods. See the [Mod API](../mod-api/index.md) section of this site.
 :::
 
 ## Pages in This Section

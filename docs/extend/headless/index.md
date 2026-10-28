@@ -7,22 +7,14 @@ sidebar_position: 1
 Print mode runs one prompt, prints the answer, and exits.
 Use it in scripts, pipes, and CI. It is also the base of the Agent SDK.
 Add `-p` (or `--print`) to start it. For example, `claude -p "Summarize README.md" --output-format json` prints one JSON result.
+Send the prompt as an argument or on stdin.
+Print mode still saves the session to `~/.claude/projects/`. Add `--no-session-persistence` to save nothing.
 
 :::warning
 Print mode skips the workspace trust dialog.
 This also happens when stdout is not a terminal, such as when you pipe or redirect output.
 Use it only in folders you trust.
 :::
-
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes. `claude -p "<prompt>"`, or send the prompt on stdin. |
-| Can you change it? | ✅ Yes. Flags set the output and input format, budget, schema, and permission handling. |
-| Can you turn it on or off? | `-p` turns it on. `--bare` strips extras. `--no-session-persistence` saves nothing. |
-| Where does it live? | Flags on the `claude` command. Sessions still save to `~/.claude/projects/` unless you turn that off. |
-| Status | <Documented /> <Undocumented /> |
 
 ## Print Mode Flags
 
@@ -80,7 +72,7 @@ Each row is a family of messages. The backticked text is the start that every me
 
 | Start of Message | Status | What It Means | Cases |
 | --- | --- | --- | --- |
-| Various | <Undocumented /> | **Agent SDK.** The Agent SDK or the control protocol refused an option or a request. | A skill name is not valid, `sessionStore` is used with an option it cannot work with, a callback such as `canUseTool` or `getOAuthToken` was not provided, a control request subtype is not supported, a value has the wrong type, or the native CLI binary was not found. |
+| Various | <Undocumented /> | **Agent SDK.** The Agent SDK or the control protocol refused an option or a request. | A skill name is not valid. The caller used `sessionStore` with an option that it cannot work with. The caller did not provide a callback such as `canUseTool` or `getOAuthToken`. A control request subtype is not supported. A value has the wrong type. Claude Code did not find the native CLI binary. |
 | Various | <Undocumented /> | **Exporter variables.** An OpenTelemetry exporter setting is not known. | The protocol or exporter type set in an `OTEL_*` variable is not known, or the Cloud gateway session that named the collector ended. |
 
 ## Related Pages

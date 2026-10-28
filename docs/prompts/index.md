@@ -12,9 +12,9 @@ The text on these pages is Anthropic's. It is shown here only to describe how th
 
 Status badges: <Documented /> means an official docs page names the switch. <Undocumented /> means only the program shows it. <Differs note="example" /> means the docs and the program disagree. <Gated note="example" /> means a flag or a server gate is needed.
 
-## At a Glance
+## Every Prompt and How to Change It
 
-You can use every prompt here: the answer to "Can you use it?" is ✅ Yes for all of them. Where a page adds a condition, it is in parentheses after the name.
+A condition in parentheses after a prompt name is the condition that makes the prompt apply.
 
 | Prompt | Can You Change It? | Turn On or Off | Where It Lives | Status |
 | --- | --- | --- | --- | --- |

@@ -6,18 +6,9 @@ sidebar_position: 5
 
 A transcript is a text file with one JSON object on each line.
 Each object is a message, or a note about the session.
-Claude Code appends a line as things happen, so a crash loses little.
-The [official docs](https://code.claude.com/docs/en/claude-directory) say the format is internal and changes between versions, so a script that reads it can break.
-
-## At a Glance
-
-| Question | Answer |
-| --- | --- |
-| Can you use it? | ✅ Yes, read-only. Open the file with `jq` or any JSON Lines reader. |
-| Can you change it? | Not safely. Claude Code owns the file. Use `/export` or print mode output for scripts. |
-| Can you turn it on or off? | `--no-session-persistence` (print mode) or `CLAUDE_CODE_SKIP_PROMPT_HISTORY` (any mode). |
-| Where does it live? | `~/.claude/projects/<project>/<session>.jsonl` |
-| Status | <Documented /> for the location. <Undocumented /> for every line type and field. |
+Claude Code appends a line as things happen. So a crash loses little.
+The [official docs](https://code.claude.com/docs/en/claude-directory) say the format is internal and changes between versions. So a script that reads it can break.
+Do not edit the file. For scripts, use `/export` or print mode output.
 
 ## Where Files Live
 
@@ -38,12 +29,12 @@ Source: [Explore the .claude Directory: Application Data](https://code.claude.co
 
 </FileTree>
 
-The `<project>` name is the folder path with every character other than a letter or a digit changed to `-`.
+The `<project>` name is the folder path. In it, `-` replaces every character other than a letter or a digit.
 `CLAUDE_CONFIG_DIR` moves `~/.claude`. See [Sessions and Storage](../how-it-works/sessions-and-storage.md) for cleanup and resume rules.
 
 ## How the Lines Link
 
-Most lines carry `uuid` and `parentUuid`. The `parentUuid` field points to the line before, so the lines form a chain.
+Most lines carry `uuid` and `parentUuid`. The `parentUuid` field points to the line before. So the lines form a chain.
 A branch or a rewind makes a second child for one parent. The `last-prompt` line holds a `leafUuid` that marks the tip the picker uses.
 
 ```mermaid
@@ -97,7 +88,7 @@ The key lists come from transcripts that 2.1.305 wrote on a real machine and in 
 | `mode` | `mode` | The mode of the session. Seen value: `normal`. |
 | `permission-mode` | `permissionMode` | The permission mode. Seen value: `auto`. |
 | `cost-state` | `totalCostUSD`, `totalAPIDuration`, `totalAPIDurationWithoutRetries`, `totalToolDuration`, `totalDuration`, `totalLinesAdded`, `totalLinesRemoved`, `modelUsage`, `hasUnknownModelCost`, `startTime` | Totals for cost and time. Since `2.1.311`, each `modelUsage` entry also has `cacheCreationEphemeral5mInputTokens` and `cacheCreationEphemeral1hInputTokens` (see [Stream JSON Messages](../extend/headless/stream-json.md#fields-new-in-21311)). |
-| `atis-latch` | `atis` | The `atis` value of the session's feature-flag client, kept once per conversation so it stays the same, and sent as the `x-cc-atis` header. Empty without a flag value (it was empty in our stub run). |
+| `atis-latch` | `atis` | The `atis` value of the session's feature-flag client, Claude Code keeps it once per conversation, so it stays the same. Claude Code sends it as the `x-cc-atis` header. Empty without a flag value (it was empty in our stub run). |
 
 Lines of types `file-history-snapshot`, `file-history-delta`, `last-prompt`, `ai-title`, `mode`, `permission-mode`, `cost-state`, `atis-latch`, and `queue-operation` carry `sessionId` but not the chain fields.
 
@@ -108,13 +99,13 @@ These names are in the program next to the writer. The meanings come from the wr
 | `type` | Main keys | Meaning |
 | --- | --- | --- |
 | `custom-title` | `customTitle` | The title you set, for example with `/rename`. |
-| `agent-name`, `agent-color` | | The name and color of the session's agent. Set by `/rename`, `/color`, or an agent. |
+| `agent-name`, `agent-color` | | The name and color of the session's agent. `/rename`, `/color`, or an agent sets them. |
 | `agent-setting` | | The agent definition that the session runs as, for example from `--agent`. |
 | `tag` | `tag` | A tag on the session. |
 | `worktree-state` | `worktreeSession` | The worktree that the session works in. `null` after it ends. |
 | `pr-link` | `prNumber`, `prUrl`, `prRepository`, `timestamp` | Ties the session to a pull request. |
 | `bridge-session` | `bridgeSessionId`, `lastSequenceNum`, `sessionGroupingId`, owner ids | The Remote Control link. |
-| `content-replacement` | `replacements`, `agentId` | Records which large tool results were replaced by a short stand-in, so a resume uses the same stand-ins. |
+| `content-replacement` | `replacements`, `agentId` | Records which large tool results a short stand-in replaced. A resume then uses the same stand-ins. |
 | `attribution-snapshot` | `messageId` | A snapshot of file-contribution data for commits. On load the program keeps only the last one and trims a large one. In `2.1.312` the program exports its writer function and no code calls it, so only older sessions hold these lines (the program). |
 | `fork-context-ref` | `agentId`, `parentSessionId`, `parentLastUuid`, `contextLength` | A forked agent's pointer to its parent. The fork reads the parent's lines and does not copy them. |
 | `observer-ref` | `observerTaskId`, `observerAgentType`, `agentId`, `timestamp` | An observer agent's pointer. |
@@ -124,12 +115,12 @@ These names are in the program next to the writer. The meanings come from the wr
 | `dev-mods` | `folder` | The folder of a mod under development that the session uses. |
 | `frame-link` | `path`, `frameUrl`, `title`, `artifactCount` | A link from the session to an artifact page. |
 | `ended-by-model` | `timestamp` | Marks that the model ended the session. |
-| `line-withheld` | `bytes` | Not a stored type. A line that could not be read or was too large is swapped for `{"type":"line-withheld","bytes":N}` when a transcript is uploaded. |
+| `line-withheld` | `bytes` | Not a stored type. When a transcript is uploaded, `{"type":"line-withheld","bytes":N}` replaces a line that could not be read or was too large. |
 | `artifact-autoreact-ledger` | `artifacts`, `accountUuid`, `v` | Bookkeeping for automatic replies to artifact comments. |
 | `relocated` | `relocatedCwd` | The working folder was moved. |
 | `summary` | `leafUuid`, `summary` | A summary line. The program reads these lines on load, and no code in `2.1.312` writes them, so only older sessions hold them. |
 | `continued-in` | `continuedInSessionId` | Points to the session that continued this one. |
-| `history-suppression`, `artifact-comment-monitor` | | Also in the program's table. No further meaning was read. |
+| `history-suppression`, `artifact-comment-monitor` | | Also in the program's table. We read no further meaning. |
 
 `proactivity` and `language` are not line types. They are kinds of `attachment` (`attachment.type`). `proactivity` carries `status`, `level`, and `tools`. `language` carries the reply `language`.
 
@@ -173,7 +164,7 @@ Content block types seen: `text`, `thinking`, `tool_use` (in `assistant` lines),
 | `promptId` | Groups the lines of one prompt. |
 | `permissionMode` | The permission mode when the prompt was sent. |
 | `permissionDecision` | On a tool result: an object with `decision` (seen: `accept`), `source` (seen: `config`), and `reasonType` (seen: `classifier`, `mode`). |
-| `toolUseResult` | The structured result of a tool. Its keys depend on the tool. Seen: `stdout`, `stderr`, `interrupted`, `isImage` for `Bash`; `filePath`, `structuredPatch`, `originalFile`, `userModified` for edits; `agentId`, `status`, `outputFile`, `isAsync` for `Agent`. |
+| `toolUseResult` | The structured result of a tool. Its keys depend on the tool. Seen for `Bash`: `stdout`, `stderr`, `interrupted`, `isImage`. Seen for edits: `filePath`, `structuredPatch`, `originalFile`, `userModified`. Seen for `Agent`: `agentId`, `status`, `outputFile`, `isAsync`. |
 | `sourceToolAssistantUUID` | `uuid` of the assistant line whose `tool_use` this answers. |
 | `origin` | Who caused the line. Seen kinds: `human`, `peer` (a subagent hand-back). |
 | `promptSource` | How the prompt came in. Seen: `typed`. |
@@ -190,7 +181,7 @@ Content block types seen: `text`, `thinking`, `tool_use` (in `assistant` lines),
 | `effort`, `perTurnEffort` | The effort level of the call. Since `2.1.312`, `effort` is the level in force: if the conversation already holds an effort change that the model applied, the request uses that level, not a newly picked one. The program reads `effort` from `output_config.effort` of the request it built (`chunk-r5cyd28m.js` lines 135670 and 136924). In `2.1.311` it was built from the new pick (`chunk-2ht8z368.js` line 134537). |
 | `advisorModel` | The advisor model, if the advisor tool was on. |
 | `apiBlockIndex` | The index of this block in the API reply. One reply can produce several lines. |
-| `thinkingDisplay`, `thinkingDurationMs` | How the thinking text was shown, and how long it took. |
+| `thinkingDisplay`, `thinkingDurationMs` | How Claude Code showed the thinking text, and how long it took. |
 | `serverClassifierRequest`, `wireToolInputs`, `wireIngestContext` | Internal fields about classifier calls and tool input on the wire. |
 
 ## `system` Subtypes
@@ -212,7 +203,7 @@ Types seen in real 2.1.305 transcripts: `total_tokens_reminder`, `output_style`,
 | `total_tokens_reminder` | A reminder of the token budget. |
 | `output_style`, `output_style_instructions` | The active output style. |
 | `queued_command` | A prompt that was queued while a turn ran. |
-| `nested_memory` | A nested `CLAUDE.md` that was picked up. |
+| `nested_memory` | A nested `CLAUDE.md` that Claude Code loaded. |
 | `skill_listing` | The list of skills. |
 | `agent_listing_delta`, `deferred_tools_delta`, `mcp_instructions_delta` | Changes to agents, deferred tools, or MCP instructions. |
 | `deferred_tools_record` | A record of deferred tools. |
@@ -230,13 +221,13 @@ The `operation` key was seen as `enqueue`, `dequeue`, and `remove`. A `remove` l
 ## File History Lines
 
 A `file-history-snapshot` line holds `snapshot` with `messageId`, `timestamp`, and `trackedFileBackups`.
-`/rewind` and `--rewind-files` use these to restore files. The newest 100 checkpoints are kept.
+`/rewind` and `--rewind-files` use these to restore files. Claude Code keeps the newest 100 checkpoints.
 
 ## `api-request` Lines
 
 The `params` object of an `api-request` line has these keys: `model`, `max_tokens`, `thinking`, `output_config`, `context_management`, `safeguards`, and `betas`.
 The `system` and `tools` parts are in a separate `api-request-shape` line with the same `shapeHash`.
-Large messages are stored once in `api-request-blob` lines and referred to by hash. See [Request and Cache](../how-it-works/request-and-cache.md#body-fields).
+Claude Code stores large messages once in `api-request-blob` lines. Lines refer to them by hash. See [Request and Cache](../how-it-works/request-and-cache.md#body-fields).
 
 ## Example
 
@@ -260,8 +251,8 @@ Set `cleanupPeriodDays` low, or `CLAUDE_CODE_SKIP_PROMPT_HISTORY`, if that matte
 
 ## Exact Fields
 
-The exact fields: `https://xsyetopz.github.io/clawdipedia/schemas/claude-code-transcript.json`, with one definition for each line `type`. The program builds this payload in code, not with a validator, so the schema is read from that code: a field marked `x-unverified` has a type the code does not show, and `x-observed` marks a field that a probe saw.
-It lists every field of this release, so build on the fields it names and look each one up there before you rely on it.
+The exact fields are in this schema: `https://clawdipedia.cc/schemas/claude-code-transcript.json`, with one definition for each line `type`. The program builds this payload in code, not with a validator. So the schema comes from that code. A field marked `x-unverified` has a type that the code does not show. A field marked `x-observed` is a field that a probe saw.
+It lists every field of this release. Build on the fields it names. Look each one up there before you rely on it.
 
 ## Related Pages
 

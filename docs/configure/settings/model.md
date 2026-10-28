@@ -19,23 +19,23 @@ Where to Set It tells you which files may set the key. See [Settings Files and S
 | --- | --- | --- | --- | --- | --- |
 | `advisorModel` | <Documented /> | string | - | Pick which model answers when Claude asks the advisor tool. | Any settings file |
 | `alwaysThinkingEnabled` | <Documented /> | boolean | - | Turn extended thinking off for every session. | Any settings file |
-| `availableModels` | <Documented /> | array of string | - | Restrict which models people can pick. Accepts family aliases (`opus`), version prefixes (`opus-4-5`), and full model IDs. An empty array leaves only the default model. | Any settings file |
+| `availableModels` | <Documented /> | array of string | - | Restrict which models people can pick. It accepts family aliases (`opus`), version prefixes (`opus-4-5`), and full model IDs. An empty array leaves only the default model. | Any settings file |
 | `availableModelsMatch` | <Documented /> <ManagedOnly /> | enum: `prefix`, `exact` | - | Make each `availableModels` model ID entry permit only the version it names. `prefix` is the default. `exact` stops an entry from allowing other versions. | Managed settings only |
 | `deniedModels` | <Documented /> <ManagedOnly /> | array of string | - | Block specific models, even ones `availableModels` permits. A family alias blocks the family. Claude Code does not start if no allowed model is left for Default. | Managed settings only |
-| `effortLevel` | <Documented /> | enum: `low`, `medium`, `high`, `xhigh` | - | Set a default effort level for models without a saved level of their own. Saved for supported models. | Any settings file |
-| `enforceAvailableModels` | <Documented /> | boolean | - | Keep the `/model` Default choice inside your `availableModels` allowlist. Has no effect when `availableModels` is unset or empty. | Any settings file |
-| `fallbackModel` | <Documented /> | array of string | - | Name backup models for when the primary is overloaded. Models are tried in order. The `--fallback-model` flag wins. `default` expands to the default model. | Any settings file |
+| `effortLevel` | <Documented /> | enum: `low`, `medium`, `high`, `xhigh` | - | Set a default effort level for models without a saved level of their own. Claude Code saves levels for supported models. | Any settings file |
+| `enforceAvailableModels` | <Documented /> | boolean | - | Keep the `/model` Default choice inside your `availableModels` allowlist. It has no effect when `availableModels` is unset or empty. | Any settings file |
+| `fallbackModel` | <Documented /> | array of string | - | Name backup models for when the primary is overloaded. Claude Code tries the models in order. The `--fallback-model` flag wins. `default` expands to the default model. | Any settings file |
 | `fastMode` | <Documented /> | boolean | - | Turn fast mode on for sessions where it's available. | Any settings file |
 | `fastModePerSessionOptIn` | <Documented /> | boolean | - | Require people to turn fast mode on each session. Each session starts with fast mode off. | Any settings file |
-| `maxEffortLevel` | <Documented /> | string | - | Cap the effort level for every model or per model, on every provider. The lowest value across files wins. An effort set through `CLAUDE_CODE_EXTRA_BODY` is not clamped. | Any settings file |
+| `maxEffortLevel` | <Documented /> | string | - | Cap the effort level for every model or per model, on every provider. The lowest value across files wins. Claude Code does not clamp an effort set through `CLAUDE_CODE_EXTRA_BODY`. | Any settings file |
 | `model` | <Documented /> | string | - | Change the model Claude Code starts with. | Any settings file |
 | `modelOverrides` | <Documented /> | object | - | Map model IDs to your provider's IDs, such as Bedrock ARNs. Usually set in managed settings. Since `2.1.305`, `/effort` and `/autocompact` settings apply even when the model name differs from a `modelOverrides` value by letter case or a `[1m]` tag ([v2.1.305 release](https://github.com/anthropics/claude-code/releases/tag/v2.1.305)). | Any settings file |
-| `modelPicker` | <Documented /> | object | - | Choose which models the `/model` picker lists, in your own order and with your own labels. Read only from managed, `--settings`, and user settings. The first source that sets it wins whole. | User or managed settings |
+| `modelPicker` | <Documented /> | object | - | Choose which models the `/model` picker lists, in your own order and with your own labels. Claude Code reads it only from managed, `--settings`, and user settings. The first source that sets it wins whole. | User or managed settings |
 | `modelPricing` | <Documented /> <ManagedOnly /> | object | - | Report spend at your organization's contracted rates instead of list price. `overrides` maps a model ID to USD rates per million tokens. The figures stay estimates. | Managed settings only |
-| `modelSettings` | <Documented /> | object: model name to `{effortLevel, maxEffortLevel, autoCompactWindow}` | - | Keep a saved effort level (`low`, `medium`, `high`, `xhigh`), a top effort cap (`maxEffortLevel`), or an auto-compact window (`"auto"` or 100000 to 1000000 tokens) for each model. `/autocompact` saves here. Invalid values are dropped. Across settings files the lowest cap wins. Source: the program. | Any settings file |
-| `promptCacheTtl` | <Documented /> | string | - | Choose the prompt cache lifetime for the main conversation. `5m` or `1h`. Unset is 1 hour on a subscription and 5 minutes on an API key or cloud provider. `CLAUDE_CODE_PROMPT_CACHE_TTL` wins. | Any settings file |
+| `modelSettings` | <Documented /> | object: model name to `{effortLevel, maxEffortLevel, autoCompactWindow}` | - | Keep a saved effort level (`low`, `medium`, `high`, `xhigh`), a top effort cap (`maxEffortLevel`), or an auto-compact window (`"auto"` or 100000 to 1000000 tokens) for each model. `/autocompact` saves here. Claude Code drops invalid values. Across settings files the lowest cap wins. Source: the program. | Any settings file |
+| `promptCacheTtl` | <Documented /> | string | - | Choose the prompt cache lifetime for the main conversation. The values are `5m` or `1h`. When unset, it is 1 hour on a subscription and 5 minutes on an API key or cloud provider. `CLAUDE_CODE_PROMPT_CACHE_TTL` wins. | Any settings file |
 | `showThinkingSummaries` | <Documented /> | boolean | - | See summaries of Claude's thinking instead of a collapsed stub. | Any settings file |
-| `subagentPromptCacheTtl` | <Documented /> | string | - | Choose the prompt cache lifetime for subagent requests. `5m` or `1h`. Unset is 5 minutes unless `ENABLE_PROMPT_CACHING_1H=1`. `CLAUDE_CODE_SUBAGENT_PROMPT_CACHE_TTL` wins. | Any settings file |
+| `subagentPromptCacheTtl` | <Documented /> | string | - | Choose the prompt cache lifetime for subagent requests. The values are `5m` or `1h`. When unset, it is 5 minutes unless `ENABLE_PROMPT_CACHING_1H=1`. `CLAUDE_CODE_SUBAGENT_PROMPT_CACHE_TTL` wins. | Any settings file |
 | `switchModelsOnFlag` | <Documented /> | boolean | - | Switch models automatically or pause when a safety classifier flags a request. | Any settings file |
 | `totalTokensReminder` | <Undocumented /> | enum: `off`, `infinite`, `fixed`, `countdown`, `padded-countdown` | `padded-countdown` | Add a "tokens left" reminder to the system prompt and after each tool result. Modes: `off`, `infinite`, `fixed`, `countdown`, `padded-countdown`. `CLAUDE_CODE_TOTAL_TOKENS_REMINDER` wins. | Settings files |
 | `totalTokensReminderAfterUserTurn` | <Undocumented /> | boolean | On | Repeat the "tokens left" reminder after each user prompt. When off, it shows only in the system prompt and after tool results. `CLAUDE_CODE_TOTAL_TOKENS_REMINDER_AFTER_USER_TURN` wins. | Settings files |
@@ -49,7 +49,7 @@ This file starts each session on Opus at high effort. If Opus is overloaded, Cla
 
 ```json title="~/.claude/settings.json"
 {
-  "$schema": "https://xsyetopz.github.io/clawdipedia/schemas/claude-code-settings.json",
+  "$schema": "https://clawdipedia.cc/schemas/claude-code-settings.json",
   "model": "opus",
   "effortLevel": "high",
   "fallbackModel": ["sonnet"],
@@ -62,6 +62,6 @@ This file starts each session on Opus at high effort. If Opus is overloaded, Cla
 - [Settings Files and Scopes](index.md) explains the scopes, precedence, and managed settings.
 - [Settings Reference](https://code.claude.com/docs/en/settings-reference) is the official page for each key.
 - [Model and Effort Variables](../env-vars/models-and-effort.md) lists the variables that win over these keys.
-- [Models](../../how-it-works/models.md) explains how model, effort, and retry choices are made.
-- [Models and Providers](../models-and-providers.md) lists the model catalog and aliases.
+- [Models](../../how-it-works/models.md) explains how Claude Code makes model, effort, and retry choices.
+- [Models and Providers](../models-and-providers/index.md) lists the model catalog and aliases.
 - [Model Configuration](https://code.claude.com/docs/en/model-config) explains aliases and effort in the official docs.

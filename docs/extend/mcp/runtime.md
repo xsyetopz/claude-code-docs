@@ -6,10 +6,10 @@ sidebar_position: 6
 
 After an MCP server connects, Claude Code adds its tools, resources, and prompts to the session.
 The names, the permission rules, and the limits decide what Claude can use and for how long.
-A tool from a server is named `mcp__<server>__<tool>`.
+Claude Code names a tool from a server `mcp__<server>__<tool>`.
 For example, `mcp__github__create_issue` is the `create_issue` tool of the `github` server.
 
-This runs by itself once a server connects. Use `permissions.deny` for tools, `ENABLE_TOOL_SEARCH` for deferral, and `CLAUDE_CODE_MCP_AUTO_BACKGROUND_MS` for background moves. Large results are saved under `tool-results`.
+This runs by itself once a server connects. Use `permissions.deny` for tools, `ENABLE_TOOL_SEARCH` for deferral, and `CLAUDE_CODE_MCP_AUTO_BACKGROUND_MS` for background moves. Claude Code saves large results under `tool-results`.
 
 ## Tools and Names
 
@@ -17,12 +17,12 @@ Source: [Connect Claude Code to Tools via MCP](https://code.claude.com/docs/en/m
 
 | Item | Status | What It Does | How It Works |
 | --- | --- | --- | --- |
-| `mcp__<server>__<tool>` | <Documented /> | Names an MCP tool. | Characters outside `A-Z a-z 0-9 _ -` in the server name become `_`. A tool whose full name is over 128 characters is left out. Used in permission rules, hooks, `tools`, and `allowed-tools`. |
-| `mcp__plugin_<plugin>_<server>__<tool>` | <Documented /> | Names a plugin server tool. | The server is named `plugin:<plugin>:<server>`. A hook matcher on the bare server key never fires for it. |
+| `mcp__<server>__<tool>` | <Documented /> | Names an MCP tool. | Characters outside `A-Z a-z 0-9 _ -` in the server name become `_`. Claude Code leaves out a tool whose full name is over 128 characters. Used in permission rules, hooks, `tools`, and `allowed-tools`. |
+| `mcp__plugin_<plugin>_<server>__<tool>` | <Documented /> | Names a plugin server tool. | Its server name is `plugin:<plugin>:<server>`. A hook matcher on the bare server key never fires for it. |
 | `mcp__github`, `mcp__github__*`, `mcp__*` | <Documented /> | Select tools by server. | The first two match one server. `mcp__*` matches all MCP tools. Used in subagent `tools` and `disallowedTools`. |
-| Hook matcher `mcp__memory__.*` | <Documented /> | Matches a server in hooks. | A matcher with only exact-match characters, such as `mcp__memory`, matches no tool. The `.*` is required. |
+| Hook matcher `mcp__memory__.*` | <Documented /> | Matches a server in hooks. | A matcher with only exact-match characters, such as `mcp__memory`, matches no tool. You must add `.*`. |
 | `mcp_server` hook input field | <Documented /> | Gives the origin of the server. | An object with `name` and `source` (`plugin`, `sdk`, `user`, `project`, and more). Sent to tool hooks. |
-| `mcp_tool` hook type | <Documented /> | Calls an MCP tool as a hook. | The output counts as command stdout. Skipped on `Setup`, and at `SessionStart` before servers connect. |
+| `mcp_tool` hook type | <Documented /> | Calls an MCP tool as a hook. | The output counts as command stdout. Claude Code skips it on `Setup`, and at `SessionStart` before servers connect. |
 | `updatedMCPToolOutput` | <Documented /> | Replaces an MCP tool result. | Output of a `PostToolUse` hook. MCP tools only. |
 | `ToolSearch` | <Documented /> | Finds deferred MCP tools. | On by default. `permissions.deny: ["ToolSearch"]` turns the tool off. |
 | [`WaitForMcpServers`](../../reference/tools/gated-and-other.md) | <Documented /> <Gated note="used when tool search is off" /> | Waits for a connecting server. | Used when tool search is off. With tool search the wait happens inside `ToolSearch`. Works in the main session and subagents. |
@@ -32,7 +32,7 @@ Source: [Connect Claude Code to Tools via MCP](https://code.claude.com/docs/en/m
 
 | Item | Status | What It Does | How It Works |
 | --- | --- | --- | --- |
-| `@server:protocol://path` | <Documented /> | Attaches a resource. | Fetched as an attachment. The `@` menu has fuzzy search. |
+| `@server:protocol://path` | <Documented /> | Attaches a resource. | Claude Code fetches it as an attachment. The `@` menu has fuzzy search. |
 | `ListMcpResourcesTool` | <Documented /> | Lists resources of all servers. | The docs say Claude Code has tools to list and read resources but give no names. Each entry has a `server` field. `ui://` entries are hidden. |
 | `ReadMcpResourceTool` | <Documented /> | Reads one resource. | Parameters `server` and `uri`, both required. |
 | `ReadMcpResourceDirTool` | <Undocumented /> | Lists the children of a directory resource. | Parameters `server` and `uri`. Uses `resources/directory/read`. Not recursive. Only for a server that declares directory support. |
@@ -51,7 +51,7 @@ A channel is a way for a server to push messages into your session.
 | Elicitation dialog | <Documented /> | Asks you for input. | `form` mode shows fields. `url` mode asks to open a link. The escaped URL has a cap of about 8000 characters. Claude Code declares `elicitation: {form: {}, url: {}}`. |
 | `Elicitation` hook | <Documented /> | Answers a request. | Input: `mcp_server_name`, `message`, `mode`, `url`, `elicitation_id`, `requested_schema`. Output action: `accept` (with `content`), `decline`, or `cancel`. |
 | `ElicitationResult` hook | <Documented /> | Observes or overrides the answer. | Input has `action` and `content`. Runs before the answer goes to the server. |
-| `claude/channel` capability | <Documented /> | Lets a server push messages. | You opt in with `--channels`. Not registered on a v2 connection that agreed on revision 2026-07-28. |
+| `claude/channel` capability | <Documented /> | Lets a server push messages. | You opt in with `--channels`. Claude Code does not register it on a v2 connection that agreed on revision 2026-07-28. |
 | `claude/channel/permission` | <Documented /> | Relays permission prompts over a channel. | Notifications `notifications/claude/channel/permission_request` and `.../permission`. |
 | `channels` plugin key | <Documented /> | Binds a channel to a plugin server. | Fields `server`, `displayName`, `userConfig`. In `plugin.json`. |
 
@@ -63,7 +63,7 @@ Source: [Channels Reference](https://code.claude.com/docs/en/channels-reference)
 | --- | --- | --- | --- |
 | Output warning | <Documented /> | Warns on large output. | Fixed at 10000 tokens. |
 | `MAX_MCP_OUTPUT_TOKENS` | <Documented /> | Sets the token limit of a result. | Default 25000. Over the limit, Claude Code saves the result to a file in `tool-results` and shows the path. Images stay under this limit. |
-| 50000 characters | <Documented /> | File threshold for text. | A successful text result over 50000 characters is saved to a file, whatever the token count. |
+| 50000 characters | <Documented /> | File threshold for text. | Claude Code saves a successful text result over 50000 characters to a file, whatever the token count. |
 | `ENABLE_MCP_LARGE_OUTPUT_FILES` | <Undocumented /> | Switch for the file path. | When `false`, Claude Code truncates instead of saving to a file. |
 | `_meta["anthropic/maxResultSizeChars"]` | <Documented /> | Raises the threshold for one tool. | Up to 500000 characters. Text only. Set in the `tools/list` entry. |
 | `_meta["anthropic/requiresUserInteraction"]` | <Documented /> | Always asks. | Only JSON `true` counts. It prompts in all modes. `dontAsk` denies. With `--permission-prompt-tool`, an allow becomes a deny. |
@@ -79,10 +79,10 @@ Source: [Channels Reference](https://code.claude.com/docs/en/channels-reference)
 | --- | --- | --- | --- |
 | Auto background | <Documented /> | Moves a long call to a task. | After 120000 ms in the main conversation. Not for subagents, IDE servers, or `-p` unless `CLAUDE_AUTO_BACKGROUND_TASKS=1`. |
 | Idle timeout | <Documented /> | Aborts a silent call. | 5 minutes for remote servers, 30 minutes for stdio. `CLAUDE_CODE_MCP_TOOL_IDLE_TIMEOUT` changes it. `0` turns it off. Not for IDE and `sdk` servers. |
-| Reconnection | <Documented /> | Retries a dropped remote server. | Five tries with backoff from 1 s. Stdio is not reconnected. The first connect retries 3 times, except `ws` and auth errors. |
+| Reconnection | <Documented /> | Retries a dropped remote server. | Five tries with backoff from 1 s. Claude Code does not reconnect stdio. The first connect retries 3 times, except `ws` and auth errors. |
 | `list_changed` | <Documented /> | Refreshes tools, prompts, and resources. | Interactive sessions refresh all three. `-p` refreshes tools only. A failed refresh keeps the old lists. |
 | Stdio shutdown | <Documented /> | Stops a stdio server. | On macOS and Linux: `SIGINT`, then `SIGTERM` after 100 ms, then `SIGKILL` after 400 ms more. |
-| `roots/list` | <Documented /> | Tells servers which folders are allowed. | Answers with the launch folder and added folders. |
+| `roots/list` | <Documented /> | Tells servers which folders Claude Code allows. | Answers with the launch folder and added folders. |
 | Tool search modes | <Documented /> | Controls deferral. | `ENABLE_TOOL_SEARCH`: not set, `true`, `auto`, `auto:N`, or `false`. Since 2.1.304 tool search is on by default behind a custom `ANTHROPIC_BASE_URL`, and a 400 or 422 from the gateway is retried without it. Since 2.1.305 the retry also covers an endpoint or gateway that rejects tool search, and a `ToolSearch` that is disallowed or left out of `--tools` ([v2.1.305 release](https://github.com/anthropics/claude-code/releases/tag/v2.1.305)). After a refusal the program says `Tool search is off for this conversation: the endpoint refused it earlier in this process.` `ENABLE_TOOL_SEARCH=true` overrides a conversation that ran without `ToolSearch`, which stays that way until it is compacted or cleared (the program). |
 
 ## Example
@@ -132,10 +132,10 @@ Rows with a start of a message are families. The backticked text is the start th
 | Start of Message | Status | What It Means | Cases |
 | --- | --- | --- | --- |
 | `.mcp.json is malformed (not valid JSON, or mcpServers is not an object)` | <Undocumented /> | Claude Code could not read the project `.mcp.json`. | The file is not valid JSON, or `mcpServers` is not an object. |
-| `MCP server "` | <Undocumented /> | A tool call or command named a server that cannot be used. | The server is blocked by managed policy, is disabled (re-enable it with `/mcp`), or was not found. |
+| `MCP server "` | <Undocumented /> | A tool call or command named a server that cannot be used. | Managed policy blocks the server, the server is disabled (re-enable it with `/mcp`), or Claude Code did not find it. |
 | `Server "` | <Undocumented /> | A server operation failed. | The server does not support resources, is not connected, or was not found. The last case lists the available servers. |
-| `No MCP server named` | <Undocumented /> | A server name is not in the scope that the command looked in. | The scope is `.mcp.json`, local, or user. |
-| `StdioClientTransport already started`, `MCP tool call to server`, `Missing required ${…}: ${…}. Usage: /mcp__`, `The tool call was interrupted`, `Unsupported server type`, `claude.ai MCP proxy is not available`, `No claude.ai OAuth token`, `The "${…}" connector`, `"${…}" was disabled while reconnecting`, `Connection failed`, `Server status:`, `The result of MCP tool` | <Undocumented /> | An MCP server or tool call failed. | The server or client does not support a capability that the call needs (roots, sampling, elicitation, tasks, resources), the tool call was interrupted or aborted because the account changed, a required argument is missing, or the server type is not supported. |
+| `No MCP server named` | <Undocumented /> | A server name is not in the scope that the command searched. | The scope is `.mcp.json`, local, or user. |
+| `StdioClientTransport already started`, `MCP tool call to server`, `Missing required ${…}: ${…}. Usage: /mcp__`, `The tool call was interrupted`, `Unsupported server type`, `claude.ai MCP proxy is not available`, `No claude.ai OAuth token`, `The "${…}" connector`, `"${…}" was disabled while reconnecting`, `Connection failed`, `Server status:`, `The result of MCP tool` | <Undocumented /> | An MCP server or tool call failed. | One of these causes applies. The server or client does not support a capability that the call needs (roots, sampling, elicitation, tasks, resources). The tool call was interrupted or aborted because the account changed. A required argument is missing. The server type is not supported. |
 
 ## Related Pages
 

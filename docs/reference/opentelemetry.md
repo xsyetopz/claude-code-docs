@@ -11,9 +11,9 @@ The variables that turn telemetry on and set the exporters are on [Telemetry and
 ## Events
 
 Source: the program. The attribute names come from the call sites of the event emitter, read into [`claude-code-otel.json`](schemas.md).
-A key that some call sites leave out may be missing from an event, so treat every attribute as optional.
-The type of each attribute is in the schema: some numbers are sent as strings, so look a field up there before you rely on its type.
-Only `tool_decision` is marked <Documented />, because earlier pages of this site name it. The other events were not checked against the official [Monitoring](https://code.claude.com/docs/en/monitoring-usage) page.
+A key that some call sites leave out may be missing from an event. So treat every attribute as optional.
+The schema has the type of each attribute. The program sends some numbers as strings. So look a field up there before you rely on its type.
+Only `tool_decision` is marked <Documented />, because earlier pages of this site name it. We did not check the other events against the official [Monitoring](https://code.claude.com/docs/en/monitoring-usage) page.
 
 | Event | Status | What It Records | Attributes |
 | --- | --- | --- | --- |
