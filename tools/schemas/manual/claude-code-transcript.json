@@ -1786,7 +1786,7 @@
       "anchors": [
         "subtype:\"informational\",content:«»,isMeta:!1,timestamp:new Date().toISOString(),uuid:«»(),level:n",
         "subtype:\"local_command\",content:«»,level:\"info\",timestamp:new Date().toISOString(),uuid:«»(),isMeta:!1,...n?.contextUsage!==void 0&&{contextUsage:«».contextUsage},...n?.usageReport!==void 0&&{usageReport:«».usageReport},...n?.commandRun!==void 0&&{commandRun:«».commandRun},...n?.commandOutcome!==void 0&&{commandOutcome:«».commandOutcome},...n?.submitUuid&&{submitUuid:«».submitUuid}",
-        "subtype:\"permission_retry\",content:`Allowed ${e.join(\", \")}`"
+        "subtype:\"permission_retry\",content:`${«»(«»)} ${e.join(\", \")}. ${«»(e.length)}`"
       ],
       "note": "The program builds system lines in the message constructors of the session code (createSystemMessage and the other subtype builders), and the remote-session path rebuilds some from stream-json frames. content is a string at every site: the caller's text (informational, local_command), a template string (permission_retry, bridge_status), the literal 'Conversation compacted', or the content string of a stream frame."
     },
@@ -1959,7 +1959,7 @@
         }
       },
       "anchors": [
-        "subtype:\"permission_retry\",content:`Allowed ${e.join(\", \")}`,commands:e"
+        "subtype:\"permission_retry\",content:`${«»(«»)} ${e.join(\", \")}. ${«»(e.length)}`,commands:e,heardAtNextPrompt:«»"
       ],
       "note": "permission_retry: commands is the array e that content joins with ', ', so an array of command strings."
     },
@@ -3629,7 +3629,7 @@
         "type": "string"
       },
       "anchors": [
-        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{invokedSkill:«»},...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»"
+        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{[«»]:«»},...«»!==void 0&&{invokedSkill:«»},...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. uuid is the uuid argument or a randomUUID string."
     },
@@ -3638,7 +3638,7 @@
         "type": "string"
       },
       "anchors": [
-        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{invokedSkill:«»},...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»"
+        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{[«»]:«»},...«»!==void 0&&{invokedSkill:«»},...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. timestamp is the timestamp argument or new Date().toISOString(), a string."
     },
@@ -3647,7 +3647,7 @@
         "const": "user"
       },
       "anchors": [
-        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{invokedSkill:«»},...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»"
+        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{[«»]:«»},...«»!==void 0&&{invokedSkill:«»},...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. role is the literal 'user'. Type follows MessageParam in @anthropic-ai/sdk."
     },
@@ -3666,7 +3666,7 @@
         ]
       },
       "anchors": [
-        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{invokedSkill:«»},...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»"
+        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{[«»]:«»},...«»!==void 0&&{invokedSkill:«»},...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. content is a string, or an array of content block objects (text, image, document, tool_result, ...), as MessageParam.content in @anthropic-ai/sdk (string | Array<ContentBlockParam>)."
     },
@@ -3675,7 +3675,7 @@
         "type": "boolean"
       },
       "anchors": [
-        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{invokedSkill:«»},...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»"
+        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{[«»]:«»},...«»!==void 0&&{invokedSkill:«»},...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. isMeta: every call site passes true (the literal !0 or a condition ending in ||void 0), so only true is written, the type is boolean."
     },
@@ -3684,7 +3684,7 @@
         "type": "boolean"
       },
       "anchors": [
-        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{invokedSkill:«»},...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»"
+        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{[«»]:«»},...«»!==void 0&&{invokedSkill:«»},...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. isCompactSummary: every call site passes true (the literal !0 or a condition ending in ||void 0), so only true is written, the type is boolean."
     },
@@ -3693,7 +3693,7 @@
         "type": "boolean"
       },
       "anchors": [
-        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{invokedSkill:«»},...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»"
+        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{[«»]:«»},...«»!==void 0&&{invokedSkill:«»},...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. isVisibleInTranscriptOnly: every call site passes true (the literal !0 or a condition ending in ||void 0), so only true is written, the type is boolean."
     },
@@ -3702,7 +3702,7 @@
         "type": "boolean"
       },
       "anchors": [
-        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{invokedSkill:«»},...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»"
+        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{[«»]:«»},...«»!==void 0&&{invokedSkill:«»},...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. turnCompanion: every call site passes true (the literal !0 or a condition ending in ||void 0), so only true is written, the type is boolean."
     },
@@ -3711,7 +3711,7 @@
         "type": "boolean"
       },
       "anchors": [
-        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{invokedSkill:«»},...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»"
+        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{[«»]:«»},...«»!==void 0&&{invokedSkill:«»},...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. isVirtual: every call site passes true (the literal !0 or a condition ending in ||void 0), so only true is written, the type is boolean."
     },
@@ -3720,7 +3720,7 @@
         "type": "boolean"
       },
       "anchors": [
-        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{invokedSkill:«»},...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»"
+        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{[«»]:«»},...«»!==void 0&&{invokedSkill:«»},...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. ephemeral: every call site passes true (the literal !0 or a condition ending in ||void 0), so only true is written, the type is boolean."
     },
@@ -3729,7 +3729,7 @@
         "type": "boolean"
       },
       "anchors": [
-        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{invokedSkill:«»},...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»"
+        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{[«»]:«»},...«»!==void 0&&{invokedSkill:«»},...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. repeatsCompactSummary: every call site passes true (the literal !0 or a condition ending in ||void 0), so only true is written, the type is boolean."
     },
@@ -3738,7 +3738,7 @@
         "enum": ["wrap_up", "release", "near_limit"]
       },
       "anchors": [
-        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{invokedSkill:«»},...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»",
+        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{[«»]:«»},...«»!==void 0&&{invokedSkill:«»},...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»",
         "\"wrap_up\""
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. usageLimitNote: the three call sites pass 'wrap_up', 'release' and 'near_limit'."
@@ -3763,7 +3763,7 @@
         }
       },
       "anchors": [
-        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{invokedSkill:«»},...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»",
+        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{[«»]:«»},...«»!==void 0&&{invokedSkill:«»},...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»",
         "{promptShellHandOff:{agentId:«»,commands:«»}}"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. promptShellHandOff is {agentId: string or null (agentId ?? null), commands: non-empty array of the shell commands}."
@@ -3778,7 +3778,7 @@
         }
       },
       "anchors": [
-        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{invokedSkill:«»},...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»",
+        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{[«»]:«»},...«»!==void 0&&{invokedSkill:«»},...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»",
         "{mcpSkill:{...«»,name:«».name}}"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. mcpSkill is the object {...(skill info), name: the skill name string}; other keys come from the skill info object and are not typed here."
@@ -3799,7 +3799,7 @@
         }
       },
       "anchors": [
-        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{invokedSkill:«»},...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»",
+        "type:\"user\",message:{role:\"user\",content:«»||«»},isMeta:«»,promptShellHandOff:«»,mcpSkill:«»,ephemeral:«»,turnCompanion:«»,usageLimitNote:«»,replacesSpan:«»,isVisibleInTranscriptOnly:«»,isVirtual:«»,isCompactSummary:«»,...«»!==void 0&&{[«»]:«»},...«»!==void 0&&{invokedSkill:«»},...«»!==void 0&&{repeatsCompactSummary:«»},...«»!==void 0&&{modelOnlyText:«»},summarizeMetadata:«»,uuid:«»||(«»?«»():«»()),timestamp:«»??(«»?«»():new «»().toISOString()),toolUseResult:«»",
         "{summarizeMetadata:{messagesSummarized:«».length,userContext:«»,direction:«»}}"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. summarizeMetadata is {messagesSummarized: message count, userContext: the focus text, direction: the summarize direction string ('up_to' or 'from')}."
@@ -3809,7 +3809,7 @@
         "type": "string"
       },
       "anchors": [
-        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
+        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,...«»&&{toolDenialAfterRun:«»},...«»&&{toolDenialFromHost:«»},userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
         "\"user-rejected\"",
         "\"permission-rule\"",
         "\"interrupted\"",
@@ -3822,7 +3822,7 @@
         "type": "boolean"
       },
       "anchors": [
-        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
+        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,...«»&&{toolDenialAfterRun:«»},...«»&&{toolDenialFromHost:«»},userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
         "«».behavior===\"deny\"&&«».endsTurn?!0:void 0"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. toolDenialEndsTurn is true when written, else undefined."
@@ -3832,7 +3832,7 @@
         "type": "boolean"
       },
       "anchors": [
-        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
+        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,...«»&&{toolDenialAfterRun:«»},...«»&&{toolDenialFromHost:«»},userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
         "«».decisionReason.monitorBlocked===!0?!0:void 0"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. toolDenialMonitorBlocked is true when written (the spread is guarded by the value)."
@@ -3842,7 +3842,7 @@
         "type": "array"
       },
       "anchors": [
-        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
+        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,...«»&&{toolDenialAfterRun:«»},...«»&&{toolDenialFromHost:«»},userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
         "«» instanceof «»?«».sandboxViolations:void 0"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. sandboxViolations is an array of sandbox violation records from the sandbox runtime; the items are not typed here."
@@ -3852,7 +3852,7 @@
         "type": "boolean"
       },
       "anchors": [
-        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
+        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,...«»&&{toolDenialAfterRun:«»},...«»&&{toolDenialFromHost:«»},userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
         "«» instanceof «»?«».sandboxed:void 0"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. sandboxed is a boolean flag."
@@ -3862,7 +3862,7 @@
         "type": "boolean"
       },
       "anchors": [
-        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
+        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,...«»&&{toolDenialAfterRun:«»},...«»&&{toolDenialFromHost:«»},userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
         "toolEndsTurn:«»"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. toolEndsTurn is a boolean flag set when the tool ends the turn."
@@ -3880,7 +3880,7 @@
         }
       },
       "anchors": [
-        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
+        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,...«»&&{toolDenialAfterRun:«»},...«»&&{toolDenialFromHost:«»},userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
         "mcpMeta:«».mcpMeta"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. mcpMeta holds the MCP CallToolResult fields _meta and structuredContent (@modelcontextprotocol/sdk CallToolResult: _meta?: object, structuredContent?: object); only the keys present in the tool result are written."
@@ -3893,7 +3893,7 @@
         }
       },
       "anchors": [
-        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
+        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,...«»&&{toolDenialAfterRun:«»},...«»&&{toolDenialFromHost:«»},userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
         "imagePasteIds:«».length>0?«»:void 0,permissionMode:«»"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. imagePasteIds is an array of paste ids (numbers) of images pasted in the prompt. The prompt write site drops the key when the list is empty (chunk-m9qw0baf.js:2276)."
@@ -3903,7 +3903,7 @@
         "type": "string"
       },
       "anchors": [
-        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
+        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,...«»&&{toolDenialAfterRun:«»},...«»&&{toolDenialFromHost:«»},userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
         "sourceToolAssistantUUID:«».uuid"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. sourceToolAssistantUUID is the uuid string of the assistant line holding the tool_use."
@@ -3920,7 +3920,7 @@
         ]
       },
       "anchors": [
-        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
+        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,...«»&&{toolDenialAfterRun:«»},...«»&&{toolDenialFromHost:«»},userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
         "«»=[\"acceptEdits\",\"auto\",\"bypassPermissions\",\"default\",\"dontAsk\",\"plan\"]"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. permissionMode is a permission mode string; the program's list of modes is acceptEdits, auto, bypassPermissions, default, dontAsk, plan, and the reader drops other values."
@@ -3950,7 +3950,7 @@
         }
       },
       "anchors": [
-        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»"
+        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,...«»&&{toolDenialAfterRun:«»},...«»&&{toolDenialFromHost:«»},userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. origin is an object with a kind string ('human', 'plugin', 'channel', 'task-notification', 'peer', 'coordinator', 'unclassified', 'observer', 'auto-continuation', 'observer-activity', 'slack-ping' are handled by the origin helper dle), plus kind-specific keys: name and asUser (plugin), server (channel), subkind (task-notification), plugin (peer, coordinator)."
     },
@@ -3959,7 +3959,7 @@
         "enum": ["typed", "queued", "suggestion_accepted", "sdk", "system"]
       },
       "anchors": [
-        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
+        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,...«»&&{toolDenialAfterRun:«»},...«»&&{toolDenialFromHost:«»},userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
         "case\"typed\":case\"queued\":case\"suggestion_accepted\":return{kind:\"unclassified\"};case\"sdk\""
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. promptSource is one of the five values the origin helper switches on."
@@ -3969,7 +3969,7 @@
         "type": "string"
       },
       "anchors": [
-        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
+        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,...«»&&{toolDenialAfterRun:«»},...«»&&{toolDenialFromHost:«»},userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
         "interruptedMessageId:«»"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. interruptedMessageId is a message uuid string."
@@ -3979,7 +3979,7 @@
         "type": "boolean"
       },
       "anchors": [
-        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
+        "toolDenialKind:«»,toolDenialEndsTurn:«»,...«»&&{toolDenialMonitorBlocked:«»},toolDenialUnanswered:«»,...«»&&{toolDenialAfterRun:«»},...«»&&{toolDenialFromHost:«»},userFeedback:«»,toolResultRemedy:«»,...«»!==void 0&&{permissionDecision:«»},...«»!==void 0&&{sandboxViolations:«»},...«»!==void 0&&{sandboxed:«»},mcpMeta:«»,toolEndsTurn:«»,imagePasteIds:«»,sourceToolAssistantUUID:«»,permissionMode:«»,origin:«»,promptSource:«»,...«»!==void 0&&{promptId:«»},interruptedMessageId:«»,...«»!==void 0&&{refusedMessageId:«»},interruptedByShutdown:«»",
         "function «»(«»){return «»(«».reason)===\"shutdown\"?!0:void 0}"
       ],
       "note": "The user line is built by the createUserMessage function Pe({content, isMeta, ...}) in the session module (about 345 call sites; the key/values below come from reading each call's object literal), and by the stream-json rebuild sites. interruptedByShutdown is true when the abort reason is 'shutdown' and is not written otherwise."
@@ -4119,7 +4119,7 @@
       },
       "anchors": [
         "attachment:{type:\"queued_command\",prompt:«».text,source_uuid:«»(),origin:{kind:\"unclassified\"},timestamp:«».timestamp,isMeta:!0,forwardedIntent:{lineage:«».lineage,source:«».source}",
-        "type:\"goal_status\",met:«»,sentinel:!0,condition:e",
+        "type:\"goal_status\",met:«»,sentinel:!0,condition:«»",
         "type:\"async_hook_response_batch\",hooks:«»"
       ],
       "note": "The attachment line is {type:'attachment', uuid, timestamp, attachment} built by the attachment constructors (a different object shape per attachment type); the key below is the union over those shapes. attachment.type is the string tag of the attachment kind (queued_command, goal_status, async_hook_response_batch, teammate_shutdown_batch and many more); the list of kinds is long and not enumerated here."
@@ -4194,21 +4194,21 @@
       "schema": {
         "type": "boolean"
       },
-      "anchors": ["type:\"goal_status\",met:«»,sentinel:!0,condition:e"],
+      "anchors": ["type:\"goal_status\",met:«»,sentinel:!0,condition:«»"],
       "note": "The attachment line is {type:'attachment', uuid, timestamp, attachment} built by the attachment constructors (a different object shape per attachment type); the key below is the union over those shapes. met (goal_status) is a boolean (callers pass true or false)."
     },
     "attachment.attachment.sentinel": {
       "schema": {
         "type": "boolean"
       },
-      "anchors": ["type:\"goal_status\",met:«»,sentinel:!0,condition:e"],
+      "anchors": ["type:\"goal_status\",met:«»,sentinel:!0,condition:«»"],
       "note": "The attachment line is {type:'attachment', uuid, timestamp, attachment} built by the attachment constructors (a different object shape per attachment type); the key below is the union over those shapes. sentinel (goal_status) is true."
     },
     "attachment.attachment.condition": {
       "schema": {
         "type": "string"
       },
-      "anchors": ["type:\"goal_status\",met:«»,sentinel:!0,condition:e"],
+      "anchors": ["type:\"goal_status\",met:«»,sentinel:!0,condition:«»"],
       "note": "The attachment line is {type:'attachment', uuid, timestamp, attachment} built by the attachment constructors (a different object shape per attachment type); the key below is the union over those shapes. condition (goal_status) is the goal condition string."
     },
     "progress.uuid": {
@@ -4504,7 +4504,7 @@
         "type": "number"
       },
       "anchors": [
-        "type:\"search_results_received\",resultCount:«».results.length,query:b"
+        "type:\"search_results_received\",resultCount:«».results.length,query:«»"
       ],
       "note": "The progress line is {type:'progress', data, toolUseID, parentToolUseID, uuid}; data is a different object per progress type (hook_progress, bash_progress, powershell_progress, tool_heartbeat, agent_progress, skill_progress, agent_api_retry, search_results_received, query_update, workflow_log, workflow_phase, workflow_agent, artifact_publish_retry, ...); the key below is the union over the literals of those types. resultCount (search_results_received) is a count."
     },
@@ -4513,7 +4513,7 @@
         "type": "string"
       },
       "anchors": [
-        "type:\"search_results_received\",resultCount:«».results.length,query:b",
+        "type:\"search_results_received\",resultCount:«».results.length,query:«»",
         "type:\"query_update\",query:«»"
       ],
       "note": "The progress line is {type:'progress', data, toolUseID, parentToolUseID, uuid}; data is a different object per progress type (hook_progress, bash_progress, powershell_progress, tool_heartbeat, agent_progress, skill_progress, agent_api_retry, search_results_received, query_update, workflow_log, workflow_phase, workflow_agent, artifact_publish_retry, ...); the key below is the union over the literals of those types. query (search_results_received, query_update) is the search query string."
@@ -4698,7 +4698,7 @@
         "base:«».lastId",
         "requestDigest:«»",
         "cutRequestDigest:«»",
-        "shapeHash:Q"
+        "querySource:«»,shapeHash:«»,params:"
       ],
       "note": "A journal line the request journal writes (a hash-chained record of API request bodies): sessionId is a string: the session id, the agent id (written only for subagents), the line's id (a randomUUID string), the query source name, the shape hash, the id of the previous line (base), or the sha256 hex digest of the request (requestDigest, cutRequestDigest)."
     },
@@ -4711,7 +4711,7 @@
         "base:«».lastId",
         "requestDigest:«»",
         "cutRequestDigest:«»",
-        "shapeHash:Q"
+        "querySource:«»,shapeHash:«»,params:"
       ],
       "note": "A journal line the request journal writes (a hash-chained record of API request bodies): agentId is a string: the session id, the agent id (written only for subagents), the line's id (a randomUUID string), the query source name, the shape hash, the id of the previous line (base), or the sha256 hex digest of the request (requestDigest, cutRequestDigest)."
     },
@@ -4724,7 +4724,7 @@
         "base:«».lastId",
         "requestDigest:«»",
         "cutRequestDigest:«»",
-        "shapeHash:Q"
+        "querySource:«»,shapeHash:«»,params:"
       ],
       "note": "A journal line the request journal writes (a hash-chained record of API request bodies): id is a string: the session id, the agent id (written only for subagents), the line's id (a randomUUID string), the query source name, the shape hash, the id of the previous line (base), or the sha256 hex digest of the request (requestDigest, cutRequestDigest)."
     },
@@ -4737,7 +4737,7 @@
         "base:«».lastId",
         "requestDigest:«»",
         "cutRequestDigest:«»",
-        "shapeHash:Q"
+        "querySource:«»,shapeHash:«»,params:"
       ],
       "note": "A journal line the request journal writes (a hash-chained record of API request bodies): querySource is a string: the session id, the agent id (written only for subagents), the line's id (a randomUUID string), the query source name, the shape hash, the id of the previous line (base), or the sha256 hex digest of the request (requestDigest, cutRequestDigest)."
     },
@@ -4750,7 +4750,7 @@
         "base:«».lastId",
         "requestDigest:«»",
         "cutRequestDigest:«»",
-        "shapeHash:Q"
+        "querySource:«»,shapeHash:«»,params:"
       ],
       "note": "A journal line the request journal writes (a hash-chained record of API request bodies): shapeHash is a string: the session id, the agent id (written only for subagents), the line's id (a randomUUID string), the query source name, the shape hash, the id of the previous line (base), or the sha256 hex digest of the request (requestDigest, cutRequestDigest)."
     },
@@ -4763,7 +4763,7 @@
         "base:«».lastId",
         "requestDigest:«»",
         "cutRequestDigest:«»",
-        "shapeHash:Q"
+        "querySource:«»,shapeHash:«»,params:"
       ],
       "note": "A journal line the request journal writes (a hash-chained record of API request bodies): base is a string: the session id, the agent id (written only for subagents), the line's id (a randomUUID string), the query source name, the shape hash, the id of the previous line (base), or the sha256 hex digest of the request (requestDigest, cutRequestDigest)."
     },
@@ -4776,7 +4776,7 @@
         "base:«».lastId",
         "requestDigest:«»",
         "cutRequestDigest:«»",
-        "shapeHash:Q"
+        "querySource:«»,shapeHash:«»,params:"
       ],
       "note": "A journal line the request journal writes (a hash-chained record of API request bodies): requestDigest is a string: the session id, the agent id (written only for subagents), the line's id (a randomUUID string), the query source name, the shape hash, the id of the previous line (base), or the sha256 hex digest of the request (requestDigest, cutRequestDigest)."
     },
@@ -4789,7 +4789,7 @@
         "base:«».lastId",
         "requestDigest:«»",
         "cutRequestDigest:«»",
-        "shapeHash:Q"
+        "querySource:«»,shapeHash:«»,params:"
       ],
       "note": "A journal line the request journal writes (a hash-chained record of API request bodies): cutRequestDigest is a string: the session id, the agent id (written only for subagents), the line's id (a randomUUID string), the query source name, the shape hash, the id of the previous line (base), or the sha256 hex digest of the request (requestDigest, cutRequestDigest)."
     },
@@ -5096,13 +5096,12 @@
         "{type:\"elapsed_time_reminder\",text:«»(«»-«».startedAt)}",
         "{type:\"fork_briefing\",text:«»}",
         "{type:\"model\",identity:«»,text:«»}",
-        "{type:\"output_limit_note\",model:«»,text:«»}",
         "{type:\"prefix_delta\",text:«»}",
         "{type:\"silent_turn_reminder\",text:«»()}",
         "{type:\"total_tokens_reminder\",text:«»(«»,«»)}",
         "{type:\"total_tokens_reminder\",text:«»(\"padded-countdown\",«».totalTokensBudget)}"
       ],
-      "note": "Attachment kinds whose object literal sets `text` (found by scanning every {type:\"<kind>\"...} literal for a top-level text key, and checking the spread ones: artifact_opening_prefetch, *_delta, cowork_memory_context, instructions have no text): batching_reminder and secondary_reminder (enhx8a0q, only built when the reminder text is non-null: the latched string), elapsed_time_reminder (template string 'Elapsed time so far: Nm SSs'), fork_briefing (template string about the forked worktree), output_limit_note (jNr.replace(...) string), prefix_delta (text from the prefix ledger, K.text, a string, only used when not undefined), silent_turn_reminder (env override string, a feature flag string, or the HTn default string), total_tokens_reminder (template '<total_tokens>N tokens left</total_tokens>'). The model kind sets text from Hbt('env_info_model', text), which returns `cache.get(key) ?? null` or the prompt-section resolver result, and the reader schema for it is string|null|undefined, so model.text can be null. Every other kind writes a string. Only model can write null, so the union is string|null."
+      "note": "Attachment kinds whose object literal sets `text` (found by scanning every {type:\"<kind>\"...} literal for a top-level text key, and checking the spread ones: artifact_opening_prefetch, *_delta, cowork_memory_context, instructions have no text): batching_reminder and secondary_reminder (enhx8a0q, only built when the reminder text is non-null: the latched string), elapsed_time_reminder (template string 'Elapsed time so far: Nm SSs'), fork_briefing (template string about the forked worktree), prefix_delta (text from the prefix ledger, K.text, a string, only used when not undefined), silent_turn_reminder (env override string, a feature flag string, or the HTn default string), total_tokens_reminder (template '<total_tokens>N tokens left</total_tokens>'). The model kind sets text from Hbt('env_info_model', text), which returns `cache.get(key) ?? null` or the prompt-section resolver result, and the reader schema for it is string|null|undefined, so model.text can be null. Every other kind writes a string. Only model can write null, so the union is string|null. 2.1.314 no longer writes output_limit_note: the builder that set {type:\"output_limit_note\",model,text} is gone, and only the reader, the renderer (which still reads text) and the kind lists are left, so the kind still parses in an older transcript."
     },
     "progress.data.durationMs": {
       "schema": {
@@ -5548,7 +5547,7 @@
       },
       "anchors": [
         "...«»!==void 0&&{remoteToolDenialKind:«»}",
-        "return «».data.non_execution_kind",
+        "return «»(«»(),«»,«»)?.non_execution_kind",
         "[\"user-rejected\",\"permission-rule\",\"automode-blocked\",\"automode-unavailable\",\"automode-parsing-error\",\"interrupted\",\"cancelled\"]"
       ],
       "note": "Set on user lines rebuilt from a remote/SDK stream. Value is the non_execution_kind of the tool_result_meta entry (Kyr), validated by a zod enum of seven strings, only when the sole tool_result is_error. Key omitted otherwise."

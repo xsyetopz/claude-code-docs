@@ -8,7 +8,7 @@ Claude Code ships with libraries inside its program.
 These libraries read their own environment variables, and Claude Code itself does not use them.
 A variable here only works when the library code runs. Setting one can change behavior in a way Claude Code does not plan for.
 
-This page lists 126 variables. The effect depends on the library and the feature that runs it. Set them in your shell.
+This page lists 127 variables. The effect depends on the library and the feature that runs it. Set them in your shell.
 
 ## Example
 
@@ -36,6 +36,7 @@ The table is sorted by name. See [Environment Variables](index.md#how-to-read-th
 | `AWS_EC2_METADATA_SERVICE_ENDPOINT` | <Undocumented /> | AWS SDK | Sets the EC2 metadata service URL for the bundled AWS SDK. |
 | `AWS_EC2_METADATA_SERVICE_ENDPOINT_MODE` | <Undocumented /> | AWS SDK | Picks `IPv4` or `IPv6` for the EC2 metadata service address in the bundled AWS SDK. |
 | `AWS_EC2_METADATA_V1_DISABLED` | <Undocumented /> | AWS SDK | Blocks the IMDSv1 fallback in the bundled AWS SDK, so the SDK uses only token-based IMDSv2. |
+| `AWS_ENDPOINT_URL_SIGNIN` | <Undocumented /> | AWS SDK | Overrides the AWS sign-in endpoint in the bundled AWS SDK. The `login_session` credential provider (`aws login`) loads the SDK sign-in client to refresh tokens. Added in `2.1.314`. |
 | `AWS_ENDPOINT_URL_SSO` | <Undocumented /> | AWS SDK | Overrides the AWS SSO endpoint in the bundled AWS SDK. |
 | `AWS_ENDPOINT_URL_SSO_OIDC` | <Undocumented /> | AWS SDK | Overrides the AWS SSO OIDC endpoint in the bundled AWS SDK. |
 | `AWS_LAMBDA_MAX_CONCURRENCY` | <Undocumented /> | AWS SDK | Selects the concurrent-aware store in the bundled AWS Lambda `InvokeStore` when present. |
@@ -164,4 +165,4 @@ Rows describe what the library does with the name, not what Claude Code does.
 - [Telemetry and Debug](telemetry-and-debug.md)
 - [Undocumented Items](../../reference/undocumented.md): every item that only the program shows.
 
-Source: the program (variable names found in the `2.1.312` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
+Source: the program (variable names found in the `2.1.314` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.

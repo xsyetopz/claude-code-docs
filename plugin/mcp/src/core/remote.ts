@@ -1,4 +1,4 @@
-// search, list, and read for the remote sources (platform, code, anthropic). The result shapes are the same for all three.
+// search, list, and read for the remote sources (platform, code, claude-resources). The result shapes are the same for all three.
 import { sourceData, sourceLine } from "../fetcher.ts";
 import { pageResult } from "./page.ts";
 import { DEFAULT_PAGE_CHARS, fail, ok, type Result } from "./shared.ts";

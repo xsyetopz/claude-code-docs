@@ -151,15 +151,15 @@ The same list sits next to the message "MCP server changes are not available in 
 A real run of this release, in print mode, wrote the first 14 rows in the order of the table.
 The capture shows the fifth entry hidden, and the program source shows it is `msg_lifecycle_v1`.
 
-Source: the program. These lines are in `captures/2.1.312/clean/modules/`.
-The program builds the array at `chunk-eqtnnadd.js:23527`. The names and the always-on list are at `chunk-51gdrpr2.js:95-131`.
-The MCP names are at `chunk-8kqh31e4.js:64`. The UI names are at `chunk-8kqh31e4.js:217` and `:238`.
-The notification names are at `chunk-za6y3khz.js:250`. `session_notices` is at `chunk-eqtnnadd.js:2968`.
-The gate of `read_file_as_written_v1` is at `chunk-eqtnnadd.js:2874`. The lifecycle forwarder is at `chunk-eqtnnadd.js:32013`.
-The task list field is at `chunk-eqtnnadd.js:12828`. The cloud list is at `chunk-x32tgnr9.js:2871` and `chunk-dxg4gme2.js:1514`.
-The meanings come from `chunk-b09ckz08.js:14163`, `:14696`, `:9419`, `:16215`, `:16357`, `:17438`, `:17567`, and `:13627`.
-The first 14 rows come from `captures/2.1.312/print/request.baseline-a.json`.
-The schema describes the array at `schemas/claude-code-stream-json.json:5701`.
+Source: the program. These lines are in `captures/2.1.314/clean/modules/`.
+The program builds the array at `chunk-z2g9tcvz.js:24122`. The names and the always-on list are at `chunk-kprfx59c.js:93-126`.
+The MCP names are at `chunk-3ypna2v5.js:56`. The UI names are at `chunk-3ypna2v5.js:216` and `:236`.
+The notification names are at `chunk-hfhf9ghk.js:175`. `session_notices` is at `chunk-z2g9tcvz.js:3034`.
+The gate of `read_file_as_written_v1` is at `chunk-z2g9tcvz.js:2940`. The lifecycle forwarder is at `chunk-z2g9tcvz.js:24125`.
+The task list field is at `chunk-z2g9tcvz.js:12992`. The cloud list is at `chunk-0vbp3v0p.js:1510` and `chunk-cnndy6f2.js:2867`.
+The meanings come from `chunk-svc70m2z.js:15105`, `:14762`, `:9466`, `:16443`, `:16298`, `:17524`, `:17653`, and `:14243`.
+The first 14 rows come from `captures/2.1.314/print/request.baseline-a.json`.
+The schema describes the array at `schemas/claude-code-stream-json.json:5708`.
 
 ## Fields New in `2.1.311`
 

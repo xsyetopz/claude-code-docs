@@ -93,6 +93,26 @@ One of the open panes of this plugin as `$.ui.panes()` lists it. It has the id a
 | `isFocused` | <Documented /> | True while the person has given it the keyboard. | Type: `boolean`. |
 | `isPlaced` | <Documented /> | False while it waits undrawn. It was opened unasked on a terminal too narrow for an unrequested pane, and its `$.ui.open` answered `{ isPlaced: false }`. | Type: `boolean`. It turns true when the person opens the pane or the terminal widens to the floor. It is false on every row while an open answers `no-surface`. |
 
+### `UiPlaceArgs`
+
+The argument of `$.ui.place`. A `ui.render` hook reads the `id` as `e.props.id`. Used by `$.ui.place`, `ui.place`.
+
+| Field | Status | What it is for | Type and limits |
+| --- | --- | --- | --- |
+| `id` | <Undocumented /> | Names the row among this plugin's rows. | Type: `string`. 1 to 64 letters, digits, `_`, and `-`, as the id of a pane. New in `2.1.314`. |
+
+### `UiPlaceResult`
+
+What `$.ui.place` resolves to and what the `{ value }` of a `ui.place` hook holds. The row stands in the conversation in both cases, except past the cap and with no conversation, where there is no `requestId`.
+
+| Field | Status | What it is for | Type and limits |
+| --- | --- | --- | --- |
+| `isPlaced` | <Undocumented /> | True: a surface is attached to draw the row. | Type: `true`. New in `2.1.314`. |
+| `requestId` | <Undocumented /> | The `e.requestId` of the row at `ui.render`. `$.ui.scroll` takes it. | Type: `string`. New in `2.1.314`. |
+| `isPlaced` | <Undocumented /> | False: nothing draws the row now. | Type: `false`. New in `2.1.314`. |
+| `requestId` | <Undocumented /> | The id of the row when it stands for a surface that is not attached yet. | Type: `string`. Optional. New in `2.1.314`. |
+| `reason` | <Undocumented /> | Why nothing draws it, in one line to show or log. | Type: `string`. New in `2.1.314`. |
+
 ### `UiPressArgument`
 
 The argument of `ui.press`: a press on a `Button` that a render hook drew, or on an answered `Markdown` link. Flat and frozen like every event argument. Another plugin addresses one button by matcher: `on("ui.press", { plugin: "explainer", element: "explain" }, ...)`. Used by `ui.press`.
@@ -212,7 +232,7 @@ What `$.ui.view` hands back and what the `{ value }` of a `ui.view` hook holds. 
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `deny` | <Documented /> | Absent when the main view displays the transcript asked for, else why the view did not move. | Type: `string`. Optional. Says why the view did not change. The call was not the own input of the person, no agent has the id, or the view moved meanwhile. |
+| `deny` | <Undocumented /> | Absent when the main view displays the transcript asked for, else why the view did not move. | Type: `string`. Optional. Says why the view did not change. The call was not the own input of the person, no agent has the id, or the view moved meanwhile. |
 
 ### `UserMessageFrom`
 

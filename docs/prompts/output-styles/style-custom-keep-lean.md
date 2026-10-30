@@ -12,12 +12,12 @@ The same keep flag on the lean prompt. The diff shows whether it does anything. 
 | --- | --- |
 | `system[0]` | 78 |
 | `system[1]` | 62 |
-| `system[2]` | 5,665 |
+| `system[2]` | 5,804 |
 | `messages[0].content[0]` | 592 |
 | `messages[0].content[1]` | 16 |
-| `messages[1].content[0]` | 9,236 |
-| System blocks only | 5,805 |
-| Everything shown here | 15,939 |
+| `messages[1].content[0]` | 9,185 |
+| System blocks only | 5,944 |
+| Everything shown here | 16,027 |
 | Tools sent | 12 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.

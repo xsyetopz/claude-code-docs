@@ -199,11 +199,12 @@ They follow in this order. Claude Code omits a section that has no text. Session
 | `overcorrection` | <Gated note="CLAUDE_CODE_LARCH_CISTERN, or an experiment" /> | `CLAUDE_CODE_LARCH_CISTERN`, or an experiment | Correct yourself only when it matters. |
 | `subagent_steer_delegation` | <Gated note="The Agent tool exists and an experiment arm is on" /> | The `Agent` tool exists and an experiment arm is on | Steers when to delegate. |
 | `opus5_reduced_delegation` | <Gated note="Opus 5 prompt bundle, with an experiment that is on by default" /> | Opus 5 prompt bundle, with an experiment that is on by default | Do not use the `Agent` tool, workflows, or deep research unless asked. |
+| `original_games` | <Gated note="The Opus 5.5 prompt bundle, or the original_games_guidance capability" /> | A model that carries `opus_5_5_prompt_bundle` (Opus 5.5) or `original_games_guidance` (Mythos 5.1). Not from a chat entrypoint, and the server can switch it off. New in `2.1.314`. | Build an original game, not a copy of a named one. |
 | `heron_brook`, `brook_heron` | <Gated note="An experiment, or Haiku 5.5 early-stopping guidance" /> | An experiment, or Haiku 5.5 early-stopping guidance | Text that the server sets. |
 | `willow_tern` | <Gated note="CLAUDE_CODE_WILLOW_TERN, or an experiment" /> | `CLAUDE_CODE_WILLOW_TERN`, or an experiment | Rules for writing to the user. |
 | `autonomy_append` | <Gated note="Mythos 5, a Fable 5 mitigation model, or CLAUDE_CODE_AMBER_ASTROLABE" /> | Mythos 5, a Fable 5 mitigation model, or `CLAUDE_CODE_AMBER_ASTROLABE` | Work without asking in the middle of a task. |
 | `endconv_deferred_hint` | <Gated note="The EndConversation tool exists" /> | The `EndConversation` tool exists | A hint for that tool. |
-| `total_tokens` | <Gated note="Mode comes from CLAUDE_CODE_TOTAL_TOKENS_REMINDER" /> | Not with `CLAUDE_CODE_DISABLE_ATTACHMENTS` or `CLAUDE_CODE_SIMPLE`, and the mode comes from `CLAUDE_CODE_TOTAL_TOKENS_REMINDER` | A reminder of the token budget. |
+| `total_tokens` | <Gated note="Needs a model with the total_tokens_reminder capability" /> | Not with `CLAUDE_CODE_DISABLE_ATTACHMENTS` or `CLAUDE_CODE_SIMPLE`. The model must carry the `total_tokens_reminder` capability, which Sonnet 5.5 and Opus 5.5 lost in `2.1.314`. The mode comes from `CLAUDE_CODE_TOTAL_TOKENS_REMINDER` | A reminder of the token budget. |
 | `user_pays` | <Gated note="An experiment that is off by default" /> | An experiment that is off by default | The user pays for each token. |
 
 Experiments come from GrowthBook, a flag service that Anthropic runs.

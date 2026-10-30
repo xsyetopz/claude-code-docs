@@ -2,8 +2,8 @@
   "$schema": "https://clawdipedia.cc/schemas/claude-code-plugin-manifest.json",
   "name": "clawdipedia-docs",
   "displayName": "Anthropic Docs",
-  "version": "2.0.0",
-  "description": "MCP server and skill for four doc sources: clawdipedia (the unofficial Claude Code Wikipedia), platform.claude.com, code.claude.com, and anthropic.com. Searches, reads pages, serves schemas.",
+  "version": "3.0.0",
+  "description": "MCP server and skill for four doc sources: clawdipedia (the unofficial Claude Code Wikipedia), platform.claude.com, code.claude.com, and claude.com/resources. Searches, reads pages, serves schemas.",
   "author": {
     "name": "xsyetopz"
   },
@@ -12,7 +12,6 @@
   "license": "MIT",
   "keywords": [
     "anthropic",
-    "anthropic-docs",
     "clawdipedia",
     "clawdipedia-docs",
     "claude",
@@ -29,6 +28,7 @@
     "claude-code-mcp-server",
     "claude-docs-mcp",
     "claude-docs-mcp-server",
+    "claude-resources",
     "docs",
     "docs-mcp",
     "docs-mcp-server",

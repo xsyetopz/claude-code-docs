@@ -1,5 +1,5 @@
 #!/usr/bin/env bun
-// clawdipedia: four doc sources (clawdipedia, platform, code, anthropic) from a shell. A front end on the same core as the MCP server.
+// clawdipedia: four doc sources (clawdipedia, platform, code, claude-resources) from a shell. A front end on the same core as the MCP server.
 // Exit codes: 0 a result, 1 no result (no hit, unknown page, unknown schema property), 2 a usage error.
 import { parseArgs } from "node:util";
 import {
@@ -23,7 +23,7 @@ Commands:
 
 Options:
   --source <name>            clawdipedia (default): unofficial Claude Code Docs. platform: platform.claude.com/docs.
-                             code: code.claude.com/docs. anthropic: www.anthropic.com (news, research, legal)
+                             code: code.claude.com/docs. claude-resources: claude.com/resources
   --section <heading>        read: print only the H2 section with this heading
   --limit <n>                search: most hits, 1 to 25 (default 8)
   --offset <n>               read, schema: character offset to continue a long output
@@ -36,9 +36,9 @@ Exit codes: 0 a result, 1 no result, 2 usage error.
 
 const COMMANDS = {
   search:
-    "Usage: clawdipedia search <query> [--source clawdipedia|platform|code|anthropic] [--limit <n>] [--json]\n\nRanks pages for keywords or an identifier (clawdipedia search PreToolUse).\nPrints the route, title, URL, and a snippet for each hit.\nThe first search reads one prebuilt index file and caches it.\n",
-  read: "Usage: clawdipedia read <route> [--source clawdipedia|platform|code|anthropic] [--section <heading>] [--offset <n>] [--json]\n\nPrints one page as markdown. A route comes from search or list, for example configure/status-line.\n--section prints only the H2 section with that heading.\nA long page ends its header line with the offset for --offset.\n",
-  list: "Usage: clawdipedia list [prefix] [--source clawdipedia|platform|code|anthropic] [--json]\n\nLists pages in sidebar order. A prefix is a top-level section (clawdipedia) or a group or section (the other sources), for example configure.\n",
+    "Usage: clawdipedia search <query> [--source clawdipedia|platform|code|claude-resources] [--limit <n>] [--json]\n\nRanks pages for keywords or an identifier (clawdipedia search PreToolUse).\nPrints the route, title, URL, and a snippet for each hit.\nThe first search reads one prebuilt index file and caches it.\n",
+  read: "Usage: clawdipedia read <route> [--source clawdipedia|platform|code|claude-resources] [--section <heading>] [--offset <n>] [--json]\n\nPrints one page as markdown. A route comes from search or list, for example configure/status-line.\n--section prints only the H2 section with that heading.\nA long page ends its header line with the offset for --offset.\n",
+  list: "Usage: clawdipedia list [prefix] [--source clawdipedia|platform|code|claude-resources] [--json]\n\nLists pages in sidebar order. A prefix is a top-level section (clawdipedia) or a group or section (the other sources), for example configure.\n",
   schema:
     "Usage: clawdipedia schema <name> [property] [--offset <n>] [--json]\n\nPrints the outline of a JSON Schema (settings, tools, hook-output, ...), one property of it (hooks.PreToolUse), or a definition (BashInput.command).\nWith the name types, prints names of the Mod API type file, or the type, member, call, or event that the property names.\n",
 } as const;

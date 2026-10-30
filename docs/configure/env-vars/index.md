@@ -5,8 +5,8 @@ sidebar_position: 1
 ---
 
 An environment variable is a named setting that a program reads when it starts.
-Claude Code `2.1.312` reads well over a thousand of them.
-This section lists 1458 variables that you can use. It splits them into groups, so you can find them.
+Claude Code `2.1.314` reads well over a thousand of them.
+This section lists 1465 variables that you can use. It splits them into groups, so you can find them.
 The [official docs](https://code.claude.com/docs/en/env-vars) list a few of them. Only the program shows most of them.
 
 Set a variable in your shell, or under the `env` key of `~/.claude/settings.json`, `.claude/settings.json`, `.claude/settings.local.json`, or managed settings.
@@ -107,7 +107,7 @@ Numeric variables, such as timeouts and token budgets, accept forms like `2e3` (
 | [Models and Effort](models-and-effort.md) | Environment variables that pick the model, pin model aliases, set thinking effort, and limit output size | 84 |
 | [Auth and Accounts](auth-and-accounts.md) | Environment variables for API keys, login tokens, credential helpers, and account details | 79 |
 | [Cloud Providers](cloud-providers.md) | Environment variables for Amazon Bedrock, Google Vertex AI, Microsoft Foundry, and gateway setups | 78 |
-| [Network and Proxy](network-and-proxy.md) | Environment variables for API addresses, proxies, TLS certificates, time limits, and retries | 68 |
+| [Network and Proxy](network-and-proxy.md) | Environment variables for API addresses, proxies, TLS certificates, time limits, and retries | 70 |
 | [Context and Compaction](context-and-compaction.md) | Environment variables for the context window, compaction, memory, and the prompt cache | 49 |
 | [Tools and Bash](tools-and-bash.md) | Environment variables for the Bash tool, file tools, search, permissions, and the sandbox | 102 |
 | [UI and Terminal](ui-and-terminal.md) | Environment variables for the terminal screen, colors, voice, keys, and notifications | 88 |
@@ -116,10 +116,10 @@ Numeric variables, such as timeouts and token budgets, accept forms like `2e3` (
 | [Plugins and MCP](plugins-and-mcp.md) | Environment variables for plugins, MCP servers, skills, hooks, and marketplaces | 102 |
 | [Agents and Teams](agents-and-teams.md) | Environment variables for subagents, agent teams, background tasks, and workers | 80 |
 | [Features and Toggles](features-and-toggles.md) | Environment variables that turn single features on or off, including server-gated features | 67 |
-| [Remote and Cloud Sessions](remote-and-cloud-sessions.md) | Environment variables for cloud sessions, the bridge, the desktop app, Chrome, Cowork, and Slack | 186 |
-| [SDK and Automation](sdk-and-automation.md) | Environment variables for programs that host Claude Code, the Agent SDK, and automation | 25 |
+| [Remote and Cloud Sessions](remote-and-cloud-sessions.md) | Environment variables for cloud sessions, the bridge, the desktop app, Chrome, Cowork, and Slack | 188 |
+| [SDK and Automation](sdk-and-automation.md) | Environment variables for programs that host Claude Code, the Agent SDK, and automation | 27 |
 | [System and Third-Party](system-and-third-party.md) | Environment variables owned by your system or other tools that Claude Code reads, such as HOME, TERM, and ALL_PROXY | 130 |
-| [Bundled Libraries](bundled-libraries.md) | Environment variables read only by libraries bundled inside Claude Code, such as the AWS SDK, gRPC, and cloud detectors | 126 |
+| [Bundled Libraries](bundled-libraries.md) | Environment variables read only by libraries bundled inside Claude Code, such as the AWS SDK, gRPC, and cloud detectors | 127 |
 
 ## How to Read the Tables
 
@@ -135,7 +135,7 @@ Every group page has the same columns.
 
 :::warning
 Treat <Undocumented /> and <Gated /> rows with care.
-They work in `2.1.312`, but nothing promises they will work in the next release.
+They work in `2.1.314`, but nothing promises they will work in the next release.
 :::
 
 Some rows mention a probe. That means a run of the real binary against a local stub showed what the variable changed in the request. No model call leaves the machine in a probe. A run with no visible effect does not prove that a variable does nothing.

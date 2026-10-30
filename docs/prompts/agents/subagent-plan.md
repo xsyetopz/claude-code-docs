@@ -12,12 +12,12 @@ The prompt that a `Plan` subagent gets. The main agent calls the `Agent` tool wi
 | --- | --- |
 | `system[0]` | 99 |
 | `system[1]` | 62 |
-| `system[2]` | 3,570 |
+| `system[2]` | 3,519 |
 | `messages[0].content[0]` | 592 |
 | `messages[0].content[1]` | 36 |
 | `messages[1].content[0]` | 7,323 |
-| System blocks only | 3,731 |
-| Everything shown here | 11,972 |
+| System blocks only | 3,680 |
+| Everything shown here | 11,921 |
 | Tools sent | 5 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -33,7 +33,7 @@ The text below is every part of the request that Claude Code builds before your 
 
 ```text
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.312.<build>; cc_entrypoint=sdk-cli; cc_is_subagent=true;
+x-anthropic-billing-header: cc_version=2.1.314.<build>; cc_entrypoint=sdk-cli; cc_is_subagent=true;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -99,8 +99,6 @@ Notes:
 - Do not use a colon before tool calls. Text like "Let me read the file:" followed by a read tool call should just be "Let me read the file." with a period.
 - Do NOT Write report/summary/findings/analysis .md files. Return findings directly as your final assistant message — the parent agent reads your text output, not files you create. (Files written as input to another tool are fine; this note is about report files.)
 
-<total_tokens>15000000 tokens left</total_tokens>
-
 === messages[0].content[0] (role: user) ===
 <system-reminder>
 Attribution for git commits and pull requests you create from here on (this replaces Claude Code's own earlier attribution guidance, such as a previous copy of this reminder; the user's own instructions about these lines, such as a CLAUDE.md or memory rule, take precedence over this reminder, but do not add attribution lines this reminder leaves out):
@@ -159,15 +157,15 @@ Today's date is <date>.
 
 The diff below starts from [Default, Lean Prompt](../defaults/default-lean.md). Lines that start with `-` are only in the baseline. Lines that start with `+` are only here.
 
-Lines added: 56. Lines removed: 63. Size change: -3,749 characters.
+Lines added: 56. Lines removed: 63. Size change: -3,888 characters.
 
 ````diff
 --- default-lean
 +++ subagent-plan
-@@ -1,64 +1,70 @@
+@@ -1,66 +1,70 @@
  === system[0] (no cache marker) ===
--x-anthropic-billing-header: cc_version=2.1.312.<build>; cc_entrypoint=sdk-cli;
-+x-anthropic-billing-header: cc_version=2.1.312.<build>; cc_entrypoint=sdk-cli; cc_is_subagent=true;
+-x-anthropic-billing-header: cc_version=2.1.314.<build>; cc_entrypoint=sdk-cli;
++x-anthropic-billing-header: cc_version=2.1.314.<build>; cc_entrypoint=sdk-cli; cc_is_subagent=true;
 
  === system[1] (cache marker: {"type":"ephemeral"}) ===
  You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -272,10 +270,12 @@ Lines added: 56. Lines removed: 63. Size change: -3,749 characters.
 -
 -When you have enough information to act, act. Do not re-derive facts already established in the conversation, re-litigate a decision the user has already made, or narrate options you will not pursue. If you are weighing a choice, give a recommendation, not an exhaustive survey
 -
- <total_tokens>15000000 tokens left</total_tokens>
-
+-Do build original games, games in a genre, and games from the user's own designs and assets. Don't build a recreation of a specific existing game, even if it is renamed or called original.
+-
  === messages[0].content[0] (role: user) ===
-@@ -71,9 +77,18 @@
+ <system-reminder>
+ Attribution for git commits and pull requests you create from here on (this replaces Claude Code's own earlier attribution guidance, such as a previous copy of this reminder; the user's own instructions about these lines, such as a CLAUDE.md or memory rule, take precedence over this reminder, but do not add attribution lines this reminder leaves out):
+@@ -71,9 +75,18 @@
  </system-reminder>
 
  === messages[0].content[1] (role: user) ===
@@ -295,7 +295,7 @@ Lines added: 56. Lines removed: 63. Size change: -3,749 characters.
  # Environment
  You have been invoked in the following environment:
   - Primary working directory: <cwd>
-@@ -85,28 +100,6 @@
+@@ -85,28 +98,6 @@
 
  You are powered by the model named Opus 5.5. The exact model ID is claude-opus-5-5. Assistant knowledge cutoff is June 2026.
 
@@ -324,13 +324,6 @@ Lines added: 56. Lines removed: 63. Size change: -3,749 characters.
  The following skills are available for use with the Skill tool:
 
  - dataviz: Use this skill whenever you are about to create ANY chart, graph, plot, dashboard, or data visualization, in ANY output medium — an HTML or React artifact, inline SVG, plotting code in any library (matplotlib, plotly, d3, Recharts, …), an image/PNG you will render and upload, or a chart shared into Slack. Read it BEFORE writing the first line of chart code, choosing chart colors, building a stat tile / meter / KPI row, or laying out a dashboard. When the destination is a first-party document connector (host-designated, never self-described) that renders live charts, hand it the rows (inline, or as an uploaded data file the chart cites) rather than a rendered PNG/SVG — a picture of a chart loses hover, data inspection and per-value comments. Produces visualizations that read as one system — elegant, accessible, consistent in light and dark — using a brand-neutral placeholder palette you swap for your own. Teaches a design-system-agnostic method: a form heuristic, a color formula with a runnable validator, mark specs, and interaction rules. A validated default palette is documented in `references/palette.md` — swap that file's values for your brand's. Triggers on: "chart", "graph", "plot", "data viz", "visualization", "dashboard", "analytics", "visualize data", "categorical colors", "sequential / diverging palette", "stat tile", "sparkline", "heatmap", "legend", "axis", "tooltip", "chart colors", "color by series".
-@@ -125,6 +118,4 @@
- - init: Initialize a new CLAUDE.md file with codebase documentation
- - security-review: Complete a security review of the pending changes on the current branch
-
--<total_tokens>15000000 tokens left</total_tokens>
--
- Today's date is <date>.
 ````
 
 Tool list: removes `Agent`, `Edit`, `ListAgents`, `ReportFindings`, `ScheduleWakeup`, `Workflow`, `Write`. See [Tools per Variant](../tools/tools-per-variant.md).

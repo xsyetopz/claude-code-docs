@@ -82,7 +82,7 @@ Sources: [Model Configuration: Set the Auto-Compact Window](https://code.claude.
 | `CLAUDE_CODE_MAX_CONTEXT_TOKENS` | <Documented /> | Sets the window for a model ID that Claude Code does not know. |
 | `CLAUDE_CODE_DISABLE_UNKNOWN_MODEL_WINDOW_ENFORCEMENT` | <Documented /> | Compacts only after the API says the prompt is too long. |
 | `CLAUDE_CODE_DISABLE_1M_CONTEXT` | <Documented /> | Turns off the 1M choice. |
-| `idleCompaction`, `CLAUDE_CODE_IDLE_COMPACT_MIN_TOKENS` | <Documented /> | Compact a conversation that is idle. |
+| `idleCompaction`, `CLAUDE_CODE_IDLE_COMPACT_MIN_TOKENS` | <Documented /> | Compact a conversation that is idle. `idleCompaction` defaults to `true`. Set it to `false` to stop idle compaction. |
 | `/rewind`, then Summarize from here or up to here | <Documented /> | Compacts one part of the conversation. |
 | `/clear` | <Documented /> | Starts with an empty context. |
 | `PreCompact`, `PostCompact` hooks | <Documented /> | Run around a compaction. The `trigger` field is `auto` or `manual`. |

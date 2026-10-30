@@ -1,18 +1,18 @@
 ---
 title: Surfaces, Elements, and Render Sites
-description: What a mod may draw and where - the surfaces, the 15 render sites with their props, and the JSX globals.
+description: What a mod may draw and where - the surfaces, the 16 render sites with their props, and the JSX globals.
 sidebar_position: 8
 ---
 
 An element is a building block of a drawing, such as `Box`, `Text`, or `Button`.
 A render site is a part of Claude Code that a mod may redraw, such as the spinner or the prompt hint.
 A `ui.render` hook gets the site in `e.component` and returns a tree of elements.
-The 15 render sites are `AskUserQuestion`, `UserMessage`, `AssistantMessage`, `ToolUse`, `ToolResult`, `ToolGroup`, `ToolProgress`, `CommandOutput`, `Spinner`, `TurnDuration`, `InfoNotice`, `SessionMode`, `PromptHint`, `AbovePrompt`, and `Pane`.
+The 16 render sites are `AskUserQuestion`, `UserMessage`, `AssistantMessage`, `ToolUse`, `ToolResult`, `ToolGroup`, `ToolProgress`, `CommandOutput`, `Spinner`, `TurnDuration`, `InfoNotice`, `SessionMode`, `PromptHint`, `AbovePrompt`, `Pane`, and `Placed`.
 The engine alone draws the permission dialog. A mod adds context to it with `$.ui.notice`.
 
 Return the engine's tree (call `next(e)`) to leave a site as it is. JSX needs a `.tsx` or `.jsx` file.
 
-Official pages: [Draw in the Interface](https://code.claude.com/docs/en/plugins/mods/interface), [Mods Overview](https://code.claude.com/docs/en/plugins/mods/overview), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the Mod API type file of the 2.1.312 program (`schemas/claude-code.d.ts`).
+Official pages: [Draw in the Interface](https://code.claude.com/docs/en/plugins/mods/interface), [Mods Overview](https://code.claude.com/docs/en/plugins/mods/overview), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the Mod API type file of the 2.1.314 program (`schemas/claude-code.d.ts`).
 
 ## Example
 
@@ -221,6 +221,16 @@ The framed region a plugin opened with `$.ui.open({ id })`. There is one instanc
 | `placement` | <Documented /> | Where the surface seated the pane: `dock` beside the transcript (the terminal in fullscreen from 110 columns), or `inline` above the prompt. | `'dock' \| 'inline'`. Read-only. The engine refuses a change. |
 | `scroll` | <Documented /> | The window of the body over the tree. Engine-owned. | `SiteScroll`. `bodyRows` is the room the frame may use. Inline, the frame fits the tree. |
 | `view` | <Documented /> | Which transcript is on screen beside the pane. | `SiteView`. The pane stays open across a switch of view. |
+
+### `Placed`
+
+A row that a plugin placed in the transcript with `$.ui.place`. It is empty until a hook draws it, in the row's place in the conversation. Every plugin's hook hears every row, so read `plugin` beside `id`. Outside fullscreen, a compaction ends the row, and the same id then places a new one. The engine raises it on every attached surface.
+
+| Item | Status | What it is for | Shape and limits |
+| --- | --- | --- | --- |
+| `id` | <Undocumented /> | What `$.ui.place` was given. It is unique among that plugin's rows. | `string`. Read-only. New in `2.1.314`. |
+| `plugin` | <Undocumented /> | Who placed the row, so a hook can leave the row of another plugin alone. | `string`. Read-only. New in `2.1.314`. |
+| `onScreen` | <Undocumented /> | Which of its rows the viewport of the transcript shows now. It is reported once the row is drawn, and again when it changes. On a scroll, it is reported for the messages at the edges of the viewport only. | `OnScreen \| null`, optional. Read-only. `null` while drawn outside the viewport. Absent where the surface does not say. A rewrite carries it on as received. The engine refuses a rewrite that changes or drops it. New in `2.1.314`. |
 
 ## JSX and Globals
 

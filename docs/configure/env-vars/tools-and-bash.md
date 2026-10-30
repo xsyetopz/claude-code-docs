@@ -158,4 +158,4 @@ While the scrub is on (`CLAUDE_CODE_SUBPROCESS_ENV_SCRUB` true, or `GITHUB_ACTIO
 - [Permissions](../permissions/index.md)
 - [Undocumented Items](../../reference/undocumented.md): every item that only the program shows.
 
-Source: the program (variable names found in the `2.1.312` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
+Source: the program (variable names found in the `2.1.314` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.

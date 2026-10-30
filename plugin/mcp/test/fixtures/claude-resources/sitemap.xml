@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url><loc>https://claude.com/resources</loc></url>
+<url><loc>https://claude.com/resources/best-practices</loc></url>
+<url><loc>https://claude.com/resources/articles</loc></url>
+<url>
+<loc>https://claude.com/resources/articles/claude-duet</loc>
+<lastmod>2026-10-27T18:50:27.000Z</lastmod>
+</url>
+<url><loc>https://claude.com/resources/articles/agent-patterns</loc></url>
+<url><loc>https://claude.com/resources/guides/building-agents</loc></url>
+<url><loc>https://claude.com/resources/webinars/agents-live</loc></url>
+<url><loc>https://claude.com/resources/webinar-series/agent-sessions</loc></url>
+<url><loc>https://claude.com/de/resources/articles/claude-duet</loc></url>
+<url><loc>https://claude.com/ja/resources/guides/building-agents</loc></url>
+<url><loc>https://claude.com/fr/resources</loc></url>
+<url><loc>https://claude.com/resources-archive/old</loc></url>
+<url><loc>https://claude.com/pricing</loc></url>
+<url><loc>https://claude.com/product/claude-code</loc></url>
+<url><loc>https://claude.com/</loc></url>
+<url><loc>https://evil.example/resources/articles/evil</loc></url>
+</urlset>

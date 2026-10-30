@@ -28218,11 +28218,11 @@ class StdioServerTransport {
 // plugin/mcp/package.json
 var package_default = {
   name: "clawdipedia-docs-mcp",
-  version: "2.0.0",
+  version: "3.0.0",
   private: true,
   license: "MIT",
   type: "module",
-  description: "MCP server for the Anthropic docs (clawdipedia, platform, code, and anthropic sources). Source for dist/server.js, which is committed.",
+  description: "MCP server for the Anthropic docs (clawdipedia, platform, code, and claude-resources sources). Source for dist/server.js, which is committed.",
   scripts: {
     build: "bun build src/server.ts --target=bun --outfile=dist/server.js"
   },
@@ -28275,7 +28275,7 @@ var isMeta = (m) => {
 };
 var pruneRank = (relPath) => {
   const rel = relPath.replaceAll("\\", "/");
-  if (rel.startsWith("platform/pages/") || rel.startsWith("code/pages/") || rel.startsWith("anthropic/pages/"))
+  if (rel.startsWith("platform/pages/") || rel.startsWith("code/pages/") || rel.startsWith("claude-resources/pages/"))
     return 0;
   if (rel.startsWith("site/pages/") || rel.startsWith("site/schemas/"))
     return 1;
@@ -29921,34 +29921,30 @@ class Content {
   }
 }
 
-// plugin/mcp/src/anthropic.ts
-var ANTHROPIC = "https://www.anthropic.com";
-var anthropicBase = () => baseUrl("ANTHROPIC_SITE_BASE_URL", ANTHROPIC);
+// plugin/mcp/src/claude-resources.ts
+var CLAUDE_RESOURCES = "https://claude.com";
+var claudeResourcesBase = () => baseUrl("CLAUDE_RESOURCES_BASE_URL", CLAUDE_RESOURCES);
 var INDEX_TTL_MS2 = 60 * 60 * 1000;
 var PAGE_TTL_MS2 = 6 * 60 * 60 * 1000;
 var SITEMAP_MAX = 2 * MB;
 var PAGE_MAX2 = 4 * MB;
-var ROOT = "index";
+var SCOPE = "resources";
 var PATH_RE = /^[a-z0-9][a-z0-9/_.-]*$/;
-var normalizeAnthropicPath = (input) => {
+var normalizeClaudeResourcesPath = (input) => {
   let r = input.trim();
   if (/^[a-z][a-z0-9+.-]*:\/\//i.test(r) || r.startsWith("//")) {
-    const hosts = new Set([anthropicBase(), ANTHROPIC]);
+    const hosts = new Set([claudeResourcesBase(), CLAUDE_RESOURCES]);
     const o = [...hosts].find((h) => r === h || r.startsWith(`${h}/`));
     if (!o)
       return;
     r = r.slice(o.length);
   }
   r = r.replace(/[?#].*$/, "").replace(/^\/+|\/+$/g, "");
-  if (r === "")
-    return ROOT;
   if (!PATH_RE.test(r) || r.includes("//") || /(^|\/)\./.test(r))
     return;
-  return r;
+  return r.split("/")[0] === SCOPE ? r : undefined;
 };
 var titleOfSlug = (path) => {
-  if (path === ROOT)
-    return "Anthropic";
   const last = path.split("/").pop() ?? path;
   return last.split(/[-_.]+/).filter(Boolean).map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
 };
@@ -29958,7 +29954,7 @@ var childText = (el, name) => {
   return child?.text.trim();
 };
 var urlElements = (node) => node.children.flatMap((c) => c instanceof XmlElement ? localName(c.name) === "url" ? [c] : urlElements(c) : []);
-var parseSitemap = (xml, base = anthropicBase()) => {
+var parseSitemap = (xml, base = claudeResourcesBase()) => {
   let doc;
   try {
     doc = parseXml(xml);
@@ -29969,16 +29965,16 @@ var parseSitemap = (xml, base = anthropicBase()) => {
   const seen = new Set;
   for (const url of doc.root ? urlElements(doc.root) : []) {
     const loc = childText(url, "loc");
-    const path = loc ? normalizeAnthropicPath(loc) : undefined;
+    const path = loc ? normalizeClaudeResourcesPath(loc) : undefined;
     if (!path || seen.has(path))
       continue;
     seen.add(path);
     out.push({
       path,
       title: titleOfSlug(path),
-      section: path === ROOT ? "site" : path.split("/")[0] ?? "site",
+      section: path.split("/")[1] ?? SCOPE,
       lastmod: childText(url, "lastmod") ?? "",
-      url: path === ROOT ? `${base}/` : `${base}/${path}`
+      url: `${base}/${path}`
     });
   }
   return out;
@@ -29992,18 +29988,18 @@ var asEntry = (p) => ({
   url: p.url
 });
 
-class Anthropic {
+class ClaudeResources {
   memo;
   async index() {
     const r = await getResource({
-      url: `${anthropicBase()}/sitemap.xml`,
-      rel: "anthropic/sitemap.xml",
+      url: `${claudeResourcesBase()}/sitemap.xml`,
+      rel: "claude-resources/sitemap.xml",
       ttlMs: ttl(INDEX_TTL_MS2),
       maxBytes: SITEMAP_MAX,
       validate: (b) => parseSitemap(b).length > 0
     });
     if (r.status !== "ok")
-      throw new ContentError(r.status === "error" ? `anthropic site is offline and not cached yet: could not reach ${r.origin}` : `sitemap.xml was not found on ${r.origin}`);
+      throw new ContentError(r.status === "error" ? `claude-resources site is offline and not cached yet: could not reach ${r.origin}` : `sitemap.xml was not found on ${r.origin}`);
     if (this.memo?.body !== r.body) {
       const entries = parseSitemap(r.body);
       const asE = entries.map(asEntry);
@@ -30039,15 +30035,15 @@ class Anthropic {
   }
   readPage(path) {
     return getResource({
-      url: path === ROOT ? `${anthropicBase()}/` : `${anthropicBase()}/${path}`,
-      rel: `anthropic/pages/${path}.html`,
+      url: `${claudeResourcesBase()}/${path}`,
+      rel: `claude-resources/pages/${path}.html`,
       deleteOn404: true,
       ttlMs: ttl(PAGE_TTL_MS2),
       maxBytes: PAGE_MAX2
     });
   }
 }
-var nearAnthropic = (path, entries) => {
+var nearClaudeResources = (path, entries) => {
   const words = (s) => tokenize(s.replace(/[/_.-]+/g, " "));
   const want = new Set(words(path));
   const near = entries.map((e) => ({
@@ -30339,12 +30335,12 @@ var DOC_SOURCES = [
   "clawdipedia",
   "platform",
   "code",
-  "anthropic"
+  "claude-resources"
 ];
 var content = new Content;
 var platform = new Platform;
 var code = new Code;
-var anthropic = new Anthropic;
+var claudeResources = new ClaudeResources;
 var ok = (text, data, source, complete = false) => ({ ok: true, text, data, source, complete });
 var fail = (text, source) => ({
   ok: false,
@@ -34914,7 +34910,7 @@ var htmlToMarkdown = (html, pageUrl) => {
 };
 var htmlTitle = (html) => {
   const root = parse6(html);
-  const title = oneLine(root.querySelector("title")?.text ?? "").replace(/\s*[\\|]\s*Anthropic$/, "");
+  const title = oneLine(root.querySelector("title")?.text ?? "").replace(/\s*[\\|]\s*(?:Claude by )?Anthropic$/, "");
   if (title)
     return title;
   return oneLine(root.querySelector("h1")?.text ?? "") || undefined;
@@ -34956,13 +34952,13 @@ var item = (e) => ({
   group: e.section,
   url: e.url
 });
-var anthropicSource = {
-  name: "anthropic",
+var claudeResourcesSource = {
+  name: "claude-resources",
   groupWord: "section",
-  invalidHint: () => `Use a page path such as "research/building-effective-agents", or "${ROOT}" for the home page (letters, digits, "-", "_", "." and "/" only; pages on ${anthropicBase()} only).`,
-  normalize: normalizeAnthropicPath,
+  invalidHint: () => `Use a page path under resources/ such as "resources/articles/claude-duet", or "resources" for the hub page (letters, digits, "-", "_", "." and "/" only; English pages on ${claudeResourcesBase()} only).`,
+  normalize: normalizeClaudeResourcesPath,
   async index() {
-    const ix = await anthropic.index();
+    const ix = await claudeResources.index();
     return {
       entries: ix.entries.map(item),
       source: ix.source,
@@ -34973,15 +34969,15 @@ var anthropicSource = {
       }))
     };
   },
-  known: () => anthropic.known()?.map(item),
-  readPage: (p) => anthropic.readPage(p),
-  near: nearAnthropic,
-  pageUrl: (p) => p === ROOT ? `${anthropicBase()}/` : `${anthropicBase()}/${p}`,
+  known: () => claudeResources.known()?.map(item),
+  readPage: (p) => claudeResources.readPage(p),
+  near: nearClaudeResources,
+  pageUrl: (p) => `${claudeResourcesBase()}/${p}`,
   markdown: htmlToMarkdown,
   titleOf: htmlTitle,
   pageTitleFirst: true
 };
-var remoteOf = (name) => name === "platform" ? platformSource : name === "code" ? codeSource : name === "anthropic" ? anthropicSource : undefined;
+var remoteOf = (name) => name === "platform" ? platformSource : name === "code" ? codeSource : name === "claude-resources" ? claudeResourcesSource : undefined;
 
 // plugin/mcp/src/core/list.ts
 var list = (args = {}) => guarded(async () => {
@@ -35453,7 +35449,7 @@ var reply = (r) => r.ok ? {
   content: [{ type: "text", text: r.text }],
   ...r.complete ? { structuredContent: r.data } : {}
 } : { isError: true, content: [{ type: "text", text: r.text }] };
-var source = _enum(DOC_SOURCES).default("clawdipedia").describe("clawdipedia: these unofficial Claude Code docs. platform: platform.claude.com/docs. code: code.claude.com/docs (official Claude Code docs). anthropic: www.anthropic.com (news, research, legal).");
+var source = _enum(DOC_SOURCES).default("clawdipedia").describe("clawdipedia: these unofficial Claude Code docs. platform: platform.claude.com/docs. code: code.claude.com/docs (official Claude Code docs). claude-resources: claude.com/resources (articles, guides, webinars).");
 var SECTION = "Top-level section (clawdipedia) or group/section (others)";
 var server = new McpServer({
   name: "clawdipedia-docs",
@@ -35470,7 +35466,7 @@ server.registerTool("search_docs", {
   annotations: READ_ONLY
 }, (a) => search(a).then(reply));
 server.registerTool("read_page", {
-  description: "Read one page of a docs source as markdown (anthropic pages are converted from HTML).",
+  description: "Read one page of a docs source as markdown (claude-resources pages are converted from HTML).",
   inputSchema: {
     route: string2().min(1).describe("Route from search_docs or list_pages"),
     source,

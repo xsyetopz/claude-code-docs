@@ -1,6 +1,6 @@
 // Usage: bun tools/plugin/smoke.ts   (also: bun run plugin:smoke)
 // Opt-in, needs network. Runs plugin/mcp/dist/server.js against the real sites with a temp cache:
-// one search_docs, one read_page, one platform search_docs, one code search_docs, one anthropic search_docs, and one clawdipedia search. Exits non-zero on any failure.
+// one search_docs, one read_page, one platform search_docs, one code search_docs, one claude-resources search_docs, and one clawdipedia search. Exits non-zero on any failure.
 // Not part of verify. Run it after a deploy.
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -72,9 +72,9 @@ try {
     /Source:/,
   );
   await step(
-    "search_docs anthropic",
+    "search_docs claude-resources",
     "search_docs",
-    { query: "responsible scaling", source: "anthropic" },
+    { query: "agents", source: "claude-resources" },
     /Source:/,
   );
   const t0 = Date.now();

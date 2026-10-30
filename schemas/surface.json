@@ -1,5 +1,5 @@
 {
-  "version": "2.1.312",
+  "version": "2.1.314",
   "kinds": {
     "beta": [
       { "name": "advanced-tool-use-2025-11-20", "detail": "tool_search" },
@@ -247,6 +247,10 @@
       { "name": "/v1/code/.well-known/jwks.json", "detail": "path" },
       { "name": "/v1/code/agent-proxy", "detail": "path" },
       { "name": "/v1/code/auth/refresh", "detail": "path" },
+      { "name": "/v1/code/channels", "detail": "path" },
+      { "name": "/v1/code/channels/${…}${…}", "detail": "path" },
+      { "name": "/v1/code/channels/${…}/messages", "detail": "path" },
+      { "name": "/v1/code/channels?${…}", "detail": "path" },
       { "name": "/v1/code/github/${…}-pull-request", "detail": "path" },
       { "name": "/v1/code/github/get-batch-branch-status", "detail": "path" },
       { "name": "/v1/code/github/import-token", "detail": "path" },
@@ -257,7 +261,9 @@
       { "name": "/v1/code/mcp/", "detail": "path" },
       { "name": "/v1/code/mcp/ccr-artifacts", "detail": "path" },
       { "name": "/v1/code/mcp/hearthbot", "detail": "path" },
+      { "name": "/v1/code/mcp/meta", "detail": "path" },
       { "name": "/v1/code/memory/", "detail": "path" },
+      { "name": "/v1/code/memory/channel/${…}/memories", "detail": "path" },
       { "name": "/v1/code/runners/self-hosted/deregister", "detail": "path" },
       { "name": "/v1/code/runners/self-hosted/pools", "detail": "path" },
       { "name": "/v1/code/runners/self-hosted/pools/${…}", "detail": "path" },
@@ -418,6 +424,7 @@
       { "name": "/v1/files?beta=true", "detail": "path" },
       { "name": "/v1/filestore/fs/listDirectory", "detail": "path" },
       { "name": "/v1/filestore/fs/readFile", "detail": "path" },
+      { "name": "/v1/filestore/fs/readFileMetadata", "detail": "path" },
       { "name": "/v1/logs", "detail": "path" },
       { "name": "/v1/mcp/{server_id}", "detail": "path" },
       { "name": "/v1/mcp_servers?limit=1000", "detail": "path" },
@@ -850,6 +857,7 @@
         "detail": "url"
       },
       { "name": "https://platform.claude.com/v1/oauth/token", "detail": "url" },
+      { "name": "https://preview.claude.ai", "detail": "url" },
       { "name": "https://status.claude.com", "detail": "url" },
       {
         "name": "https://support.claude.com/en/articles/12429409",
@@ -1046,6 +1054,7 @@
       { "name": "AWS_ENDPOINT_URL", "detail": "str" },
       { "name": "AWS_ENDPOINT_URL_BEDROCK", "detail": "str" },
       { "name": "AWS_ENDPOINT_URL_BEDROCK_RUNTIME", "detail": "str" },
+      { "name": "AWS_ENDPOINT_URL_SIGNIN", "detail": "listed" },
       { "name": "AWS_ENDPOINT_URL_SSO", "detail": "listed" },
       { "name": "AWS_ENDPOINT_URL_SSO_OIDC", "detail": "listed" },
       { "name": "AWS_ENDPOINT_URL_STS", "detail": "str" },
@@ -1109,6 +1118,7 @@
       { "name": "BUN_INSTALL", "detail": "str" },
       { "name": "BUN_INSTALL_CACHE_DIR", "detail": "set for a child process" },
       { "name": "BUN_OPTIONS", "detail": "listed" },
+      { "name": "BUN_TLS_REFUSE_DISTRUSTED_KEYS", "detail": "listed" },
       { "name": "C9_PID" },
       { "name": "C9_USER" },
       { "name": "CACERT_UPDATES", "detail": "str" },
@@ -1141,9 +1151,6 @@
         "values": ["enforce", "observe", "off"],
         "detail": "enum"
       },
-      { "name": "CCR_PREFETCH_NETWORK" },
-      { "name": "CCR_PREWARM_STAT" },
-      { "name": "CCR_PREWARM_VDA" },
       { "name": "CCR_RUNNER_STARTUP_TIMING" },
       { "name": "CCR_SESSION_ACCOUNT_EMAIL", "detail": "listed" },
       { "name": "CCR_SESSION_PROFILE", "detail": "bool" },
@@ -1373,6 +1380,7 @@
       { "name": "CLAUDE_CODE_BREEZY_HORIZON", "detail": "str" },
       { "name": "CLAUDE_CODE_BRIDGE_CHILD_ARTIFACT", "detail": "bool" },
       { "name": "CLAUDE_CODE_BRIDGE_CHILD_AUTO_DEFAULT", "detail": "bool" },
+      { "name": "CLAUDE_CODE_BRIDGE_CHILD_CLI_ENTRYPOINT", "detail": "bool" },
       { "name": "CLAUDE_CODE_BRIDGE_CHILD_MACHINE_SETTINGS", "detail": "bool" },
       {
         "name": "CLAUDE_CODE_BRIDGE_CHILD_PROJECTS_ENTRYPOINT",
@@ -1404,6 +1412,7 @@
       },
       { "name": "CLAUDE_CODE_CCR_EVENT_FLUSH_POLICY", "detail": "str" },
       { "name": "CLAUDE_CODE_CCR_FOLD_FIRST_TURN_RESCAN", "detail": "bool" },
+      { "name": "CLAUDE_CODE_CCR_LONG_POLL", "detail": "triBool" },
       { "name": "CLAUDE_CODE_CCR_OWN_CONNECTION_POOL", "detail": "bool" },
       { "name": "CLAUDE_CODE_CCR_SKIP_FRESH_MIGRATIONS", "detail": "bool" },
       { "name": "CLAUDE_CODE_CCR_SURFACE", "detail": "str" },
@@ -1589,6 +1598,10 @@
       { "name": "CLAUDE_CODE_DISABLE_PLUGIN_FORWARDING", "detail": "bool" },
       { "name": "CLAUDE_CODE_DISABLE_POLICY_SKILLS", "detail": "bool" },
       {
+        "name": "CLAUDE_CODE_DISABLE_POOLED_CONNECTION_IDLE_LIMIT",
+        "detail": "bool"
+      },
+      {
         "name": "CLAUDE_CODE_DISABLE_POWERSHELL_CMD_RM_DENY",
         "detail": "bool"
       },
@@ -1597,6 +1610,7 @@
       { "name": "CLAUDE_CODE_DISABLE_QUIET_BACKGROUND_WAIT", "detail": "bool" },
       { "name": "CLAUDE_CODE_DISABLE_REFUSAL_FALLBACK", "detail": "bool" },
       { "name": "CLAUDE_CODE_DISABLE_REFUSAL_RETRY", "detail": "bool" },
+      { "name": "CLAUDE_CODE_DISABLE_RESPONSE_COMPARISON", "detail": "bool" },
       { "name": "CLAUDE_CODE_DISABLE_STARTUP_WORK_GATE", "detail": "bool" },
       { "name": "CLAUDE_CODE_DISABLE_STRUCTURED_OUTPUTS", "detail": "bool" },
       {
@@ -1931,6 +1945,7 @@
       { "name": "CLAUDE_CODE_MCP_TOOL_IDLE_TIMEOUT", "detail": "int" },
       { "name": "CLAUDE_CODE_MEMORY_API_BASE_URL", "detail": "listed" },
       { "name": "CLAUDE_CODE_MEMORY_API_TOKEN" },
+      { "name": "CLAUDE_CODE_MEMORY_CONTEXT_NO_WAIT", "detail": "bool" },
       {
         "name": "CLAUDE_CODE_MEMORY_PUSH_DELETE_MODE",
         "values": ["corroborate", "immediate", "never"],
@@ -2266,6 +2281,11 @@
       { "name": "CLAUDE_CODE_STOP_HOOK_BLOCK_CAP", "detail": "int" },
       { "name": "CLAUDE_CODE_STREAMED_BUMBLEBEE", "detail": "triBool" },
       { "name": "CLAUDE_CODE_STREAMED_BUMBLEBEE_TEXT", "detail": "str" },
+      {
+        "name": "CLAUDE_CODE_STREAM_EVENT_HOLD_MS",
+        "detail": "int{min:1,max:2000,digitsOnly:!0}"
+      },
+      { "name": "CLAUDE_CODE_STREAM_EVENT_MAX_LINE_BYTES", "detail": "rawStr" },
       { "name": "CLAUDE_CODE_STRICT_INLINE_SHELL_RM_PROMPT", "detail": "bool" },
       { "name": "CLAUDE_CODE_SUBAGENT_CACHE_EVICT", "detail": "bool" },
       { "name": "CLAUDE_CODE_SUBAGENT_CONFIG_WARNING", "detail": "triBool" },
@@ -2369,6 +2389,7 @@
         "name": "CLAUDE_CODE_UNWATCHED_REPLY_HOLD_MS",
         "detail": "int{min:1,max:2000,digitsOnly:!0}"
       },
+      { "name": "CLAUDE_CODE_UPFRONT_TOOLS", "detail": "names" },
       {
         "name": "CLAUDE_CODE_USER_DIALOG_TIMEOUT_MS",
         "detail": "int{wholeValue:!0}"
@@ -2973,6 +2994,7 @@
       { "name": "NODE_PATH", "detail": "str" },
       { "name": "NODE_REDIRECT_WARNINGS", "detail": "listed" },
       { "name": "NODE_REPL_EXTERNAL_MODULE", "detail": "listed" },
+      { "name": "NODE_TLS_REJECT_UNAUTHORIZED", "detail": "listed" },
       { "name": "NODE_V8_COVERAGE", "detail": "listed" },
       { "name": "NOMAD_CLIENT_CERT", "detail": "listed" },
       { "name": "NOMAD_CLIENT_KEY", "detail": "listed" },
@@ -3644,6 +3666,10 @@
       {
         "name": "${…} The retry over SSH failed too: ${…} Check the repository and ref in the marketplace entry and that github.com can be reached. If the repository is private, add an SSH key to your GitHub account o…",
         "detail": "throw Error"
+      },
+      {
+        "name": "${…} The sign-in was saved but could not be checked against your organization yet; Claude Code checks it again when it next starts.",
+        "detail": "stderr"
       },
       {
         "name": "${…} This install runs that command; confirm it by running `claude plugin install` in a terminal (or with -y/--yes).",
@@ -7424,10 +7450,6 @@
         "detail": "throw Error"
       },
       {
-        "name": "Failed to persist gateway credential${…}",
-        "detail": "throw Error"
-      },
-      {
         "name": "Failed to process certificate chain from ${…}: ${…}",
         "detail": "throw Error"
       },
@@ -10217,6 +10239,10 @@
       },
       { "name": "Session moved to ${…}", "detail": "stderr" },
       {
+        "name": "Session title request failed with an API error",
+        "detail": "throw Error"
+      },
+      {
         "name": "SessionController: used before its screen bound a host",
         "detail": "throw Error"
       },
@@ -12941,6 +12967,7 @@
         "detail": "throw Error"
       },
       { "name": "create requires body", "detail": "throw Error" },
+      { "name": "create the project", "detail": "throw Error" },
       {
         "name": "createMultiStoreState: length mismatch",
         "detail": "throw Error"
@@ -14183,6 +14210,7 @@
         "name": "list ${…}: 404 on page ${…} (cursor expired or store deleted mid-walk)",
         "detail": "throw Error"
       },
+      { "name": "list your cloud environments", "detail": "throw Error" },
       { "name": "list_runs requires trigger_id", "detail": "throw Error" },
       {
         "name": "listen EADDRINUSE on the auto socket path and its moved-aside siblings",
@@ -14218,6 +14246,7 @@
         "name": "logger must implement log, warn and error methods",
         "detail": "throw Error"
       },
+      { "name": "look up the project", "detail": "throw Error" },
       { "name": "macOS only", "detail": "throw Error" },
       { "name": "malformed bundle prerequisite line", "detail": "throw Error" },
       { "name": "malformed bundle ref line", "detail": "throw Error" },
@@ -14627,6 +14656,7 @@
       },
       { "name": "not a v2 or v3 git bundle", "detail": "throw Error" },
       { "name": "not an artifact URL: ${…}", "detail": "throw Error" },
+      { "name": "not available in this build", "detail": "throw Error" },
       { "name": "not in this runtime", "detail": "throw Error" },
       {
         "name": "not is not supported in Zod (except { not: {} } for never)",
@@ -15086,6 +15116,10 @@
       },
       { "name": "read denied: ${…}", "detail": "throw Error" },
       { "name": "read not allowed (${…}): ${…}", "detail": "throw Error" },
+      {
+        "name": "read not allowed under permissions.blockReadsOutsideWorkingDirectories: ${…}",
+        "detail": "throw Error"
+      },
       { "name": "read not allowed: ${…}", "detail": "throw Error" },
       { "name": "read project memory", "detail": "throw Error" },
       { "name": "read requires approval: ${…}", "detail": "throw Error" },
@@ -15498,6 +15532,7 @@
         "name": "sandbox: the task output directory chain under the temp root is no longer plain directories (${…}); refusing to run sandboxed commands until it is restored",
         "detail": "throw Error"
       },
+      { "name": "save to project memory", "detail": "throw Error" },
       {
         "name": "saveRejectedUltraplan: v5 write failed: ${…}",
         "detail": "throw Error"
@@ -15539,6 +15574,7 @@
         "name": "seeded file not stat-able through the storage interface",
         "detail": "throw Error"
       },
+      { "name": "send the message", "detail": "throw Error" },
       { "name": "send-claim timeout", "detail": "throw Error" },
       {
         "name": "sendMessageonChild called with child not populated",
@@ -15629,6 +15665,10 @@
       {
         "name": "setRequestHandler: handler is required",
         "detail": "throw TypeError"
+      },
+      {
+        "name": "setRunnerDeclaredFreshMachinePerSession(false) is test-only: the runner's declaration is one-way in production",
+        "detail": "throw Error"
       },
       {
         "name": "setRunnerDeclaredNestedRepositoryDiff(false) is test-only: the runner's declaration is one-way in production",
@@ -15818,6 +15858,7 @@
         "name": "subfield coverage drift: \"${…}\" lacks subfield() metadata",
         "detail": "throw Error"
       },
+      { "name": "submit the setup proposal", "detail": "throw Error" },
       {
         "name": "submodule state unreadable — cannot verify worktree is clean",
         "detail": "throw Error"
@@ -16368,6 +16409,10 @@
         "detail": "throw Error"
       },
       {
+        "name": "this runtime has no Bun.FetchSession",
+        "detail": "throw Error"
+      },
+      {
         "name": "this runtime, Bun 1.3 or earlier, trusts its own store beside the one root given",
         "detail": "throw Error"
       },
@@ -16878,6 +16923,10 @@
         "detail": "throw Error"
       },
       {
+        "name": "write_files: the directory approved at finalize_plan no longer resolves to the path that was approved (it may have been moved, replaced or deleted). Nothing in this call was uploaded. Run finalize_pla…",
+        "detail": "throw Error"
+      },
+      {
         "name": "writes[${…}] was approved to send a local file, and file_path was removed afterwards — nothing was sent; retry so the inline data is checked",
         "detail": "throw Error"
       },
@@ -17073,6 +17122,11 @@
       {
         "name": "--agents",
         "detail": "--agents <json-or-file> | JSON object defining custom agents, or with --print the path to a file that holds one (e.g. '{\"reviewer\": {\"description\": \"Reviews code\", \"prompt\": \"You are a code reviewer\"}…"
+      },
+      {
+        "name": "--agents-view-if-allowed",
+        "gate": "hidden",
+        "detail": "--agents-view-if-allowed"
       },
       {
         "name": "--all",
@@ -17444,7 +17498,7 @@
       },
       {
         "name": "--proactivity",
-        "gate": "hidden unless mpe()",
+        "gate": "hidden unless Bfe()",
         "detail": "--proactivity <level>"
       },
       {
@@ -18341,7 +18395,11 @@
       { "name": "tengu_amber_rokovoko", "default": "unknown" },
       { "name": "tengu_amber_sextant", "default": "true" },
       { "name": "tengu_amber_tally" },
+      { "name": "tengu_amber_thimble" },
       { "name": "tengu_amber_tollgate", "default": "false" },
+      { "name": "tengu_amber_tributary_dotterel", "default": "false" },
+      { "name": "tengu_amber_tributary_sandpiper", "default": "false" },
+      { "name": "tengu_anchored_lantern" },
       { "name": "tengu_ant_yolo_equiv_strip_config" },
       { "name": "tengu_async_goblet", "default": "true" },
       { "name": "tengu_async_snowglobe" },
@@ -18371,7 +18429,6 @@
       { "name": "tengu_bg_settled_crash_restart", "default": "true" },
       { "name": "tengu_bg_spare_enable", "default": "true" },
       { "name": "tengu_bg_worker_ctty", "default": "true" },
-      { "name": "tengu_binary_balloon", "default": "false" },
       { "name": "tengu_binary_lollipop", "default": "true" },
       { "name": "tengu_binary_music" },
       { "name": "tengu_birch_kettle", "default": "false" },
@@ -18420,10 +18477,12 @@
       { "name": "tengu_bridge_subagent_frames", "default": "true" },
       { "name": "tengu_bridge_subagent_text", "default": "false" },
       { "name": "tengu_bridge_unarchive_on_resume", "default": "true" },
+      { "name": "tengu_bright_fog", "default": "true" },
       { "name": "tengu_bright_lake", "default": "true" },
       { "name": "tengu_bright_wall", "default": "true" },
       { "name": "tengu_brindle_causeway", "default": "true" },
       { "name": "tengu_brisk_meadow" },
+      { "name": "tengu_bubbly_canyon", "default": "null" },
       { "name": "tengu_bubbly_harbor", "default": "true" },
       { "name": "tengu_bubbly_meteor", "default": "true" },
       { "name": "tengu_buzzing_lightning", "default": "false" },
@@ -18480,6 +18539,7 @@
       { "name": "tengu_ccr_sdk_mcp_remote_manifests", "default": "false" },
       { "name": "tengu_ccr_skip_redundant_heartbeat", "default": "false" },
       { "name": "tengu_ccr_sse_keepalive_max_interval_s", "default": "0" },
+      { "name": "tengu_ccr_sse_long_poll_fallback", "default": "true" },
       { "name": "tengu_ccr_stored_gap_bridge_enabled" },
       { "name": "tengu_ccr_stream_event_flush_ms", "default": "unknown" },
       { "name": "tengu_ccr_stream_first_flush_ms", "default": "0" },
@@ -18520,7 +18580,6 @@
         "name": "tengu_claudeai_skills_sync_interval_minutes",
         "default": "unknown"
       },
-      { "name": "tengu_clever_garden", "default": "false" },
       { "name": "tengu_clever_orbit", "default": "false" },
       { "name": "tengu_clever_yeti" },
       { "name": "tengu_cloud_session_shell", "default": "false" },
@@ -18618,6 +18677,7 @@
       { "name": "tengu_dapper_truffle", "default": "\"off\"" },
       { "name": "tengu_dash_flame", "default": "false" },
       { "name": "tengu_dazzling_garden", "default": "true" },
+      { "name": "tengu_deep_dusk" },
       { "name": "tengu_deep_feather", "default": "true" },
       { "name": "tengu_deep_shore", "default": "true" },
       { "name": "tengu_defer_cap_ms", "default": "10000" },
@@ -18643,9 +18703,11 @@
       { "name": "tengu_drifting_nova", "default": "false" },
       { "name": "tengu_drifting_reef", "default": "null" },
       { "name": "tengu_drifting_twilight", "default": "true" },
+      { "name": "tengu_drifting_valley", "default": "false" },
       { "name": "tengu_dunwich_bell", "default": "false" },
       { "name": "tengu_eager_balloon" },
       { "name": "tengu_eager_pillow", "default": "false" },
+      { "name": "tengu_eager_quilt", "default": "false" },
       { "name": "tengu_eager_raccoon", "default": "false" },
       { "name": "tengu_eager_rain", "default": "true" },
       { "name": "tengu_ebbing_tide" },
@@ -18664,6 +18726,7 @@
       { "name": "tengu_ethereal_mist", "default": "true" },
       { "name": "tengu_event_loop_stall", "default": "false" },
       { "name": "tengu_event_sampling_config" },
+      { "name": "tengu_eventual_dragonfly" },
       { "name": "tengu_eventual_haven", "default": "true" },
       { "name": "tengu_eventual_noodle", "default": "false" },
       { "name": "tengu_expressive_church", "default": "false" },
@@ -18676,6 +18739,7 @@
       { "name": "tengu_fancy_wand", "default": "false" },
       { "name": "tengu_fancy_wand_copy" },
       { "name": "tengu_federated_flask", "default": "false" },
+      { "name": "tengu_federated_hearth" },
       { "name": "tengu_federated_robin", "default": "true" },
       { "name": "tengu_federated_ullman", "default": "false" },
       { "name": "tengu_feedback_survey_config", "default": "unknown" },
@@ -18711,12 +18775,14 @@
       { "name": "tengu_functional_llama", "default": "null" },
       { "name": "tengu_gb_eval_authed_enable", "default": "false" },
       { "name": "tengu_gb_refresh_interval_minutes", "default": "null" },
+      { "name": "tengu_generic_papert", "default": "false" },
       { "name": "tengu_gentle_anchor", "default": "true" },
       { "name": "tengu_gentle_brooks", "default": "true" },
       { "name": "tengu_gentle_frost", "default": "false" },
       { "name": "tengu_gentle_grove" },
       { "name": "tengu_gentle_hammock", "default": "false" },
       { "name": "tengu_gentle_hummingbird", "default": "true" },
+      { "name": "tengu_gentle_orchard", "default": "true" },
       { "name": "tengu_giggly_dragonfly", "default": "true" },
       { "name": "tengu_gilded_sundial" },
       { "name": "tengu_gleaming_creek", "default": "null" },
@@ -18761,11 +18827,13 @@
       { "name": "tengu_harbor_moth", "default": "false" },
       { "name": "tengu_harbor_permissions", "default": "false" },
       { "name": "tengu_harbor_willow", "default": "true" },
+      { "name": "tengu_harmonic_bumblebee" },
       { "name": "tengu_harmonic_riddle", "default": "unknown" },
       { "name": "tengu_harp_forepillar", "default": "false" },
       { "name": "tengu_harp_pedal", "default": "true" },
       { "name": "tengu_harp_voatavo", "default": "true" },
       { "name": "tengu_hashed_lark" },
+      { "name": "tengu_hashed_pascal", "default": "false" },
       { "name": "tengu_hawthorn_steeple", "default": "false" },
       { "name": "tengu_haze_glass", "default": "false" },
       { "name": "tengu_hazel_lantern", "default": "0" },
@@ -18780,6 +18848,7 @@
       { "name": "tengu_hearth_resolved_rows", "default": "\"off\"" },
       { "name": "tengu_heron_brook", "default": "\"\"" },
       { "name": "tengu_hidden_frog", "default": "true" },
+      { "name": "tengu_hidden_giraffe", "default": "null" },
       { "name": "tengu_hidden_volcano", "default": "null" },
       { "name": "tengu_hipaa_history_retention_prune", "default": "true" },
       { "name": "tengu_hover_rest", "default": "false" },
@@ -18792,7 +18861,6 @@
       { "name": "tengu_humming_locket", "default": "true" },
       { "name": "tengu_humming_star", "default": "true" },
       { "name": "tengu_humming_sundae", "default": "0" },
-      { "name": "tengu_humming_waffle", "default": "0" },
       { "name": "tengu_hushed_caraway" },
       { "name": "tengu_hushed_kestrel", "default": "true" },
       { "name": "tengu_hushed_lantern", "default": "true" },
@@ -18803,11 +18871,13 @@
       },
       { "name": "tengu_hushed_plover", "default": "true" },
       { "name": "tengu_ide_rc_auto_enable", "default": "false" },
+      { "name": "tengu_idempotent_pine", "default": "0" },
       { "name": "tengu_idempotent_wolf", "default": "true" },
       { "name": "tengu_idle_amber_finch", "default": "false" },
       { "name": "tengu_immutable_ladybug" },
       { "name": "tengu_immutable_tide", "default": "0" },
       { "name": "tengu_imperative_spindle", "default": "false" },
+      { "name": "tengu_imperative_whistle", "default": "false" },
       { "name": "tengu_import", "default": "false" },
       { "name": "tengu_indexed_corbato", "default": "false" },
       { "name": "tengu_indexed_pearl", "default": "unknown" },
@@ -18825,13 +18895,13 @@
       { "name": "tengu_jaunty_ember", "default": "false" },
       { "name": "tengu_jaunty_forest" },
       { "name": "tengu_jaunty_honey" },
-      { "name": "tengu_jaunty_plum" },
       { "name": "tengu_jaunty_umbrella", "default": "false" },
       { "name": "tengu_jazzy_goblet", "default": "false" },
       { "name": "tengu_jazzy_puddle", "default": "true" },
       { "name": "tengu_jazzy_ripple", "default": "false" },
       { "name": "tengu_jiggly_blossom", "default": "\"off\"" },
       { "name": "tengu_jiggly_harp" },
+      { "name": "tengu_jiggly_lollipop", "default": "false" },
       { "name": "tengu_jiggly_mochi", "default": "false" },
       { "name": "tengu_jolly_aurora", "default": "false" },
       { "name": "tengu_jolly_sparrow_enabled", "default": "false" },
@@ -18863,7 +18933,6 @@
       { "name": "tengu_kestrel_moor", "default": "true" },
       { "name": "tengu_keybinding_customization_release", "default": "true" },
       { "name": "tengu_kind_dewdrop" },
-      { "name": "tengu_knobby_oxbow" },
       { "name": "tengu_lantern_hinge", "default": "false" },
       { "name": "tengu_lantern_prism", "default": "false" },
       { "name": "tengu_lantern_sconce", "default": "false" },
@@ -18899,8 +18968,8 @@
       { "name": "tengu_linear_owl", "default": "false" },
       { "name": "tengu_linear_quail", "default": "0" },
       { "name": "tengu_linen_orbit", "default": "false" },
-      { "name": "tengu_linked_cake", "default": "true" },
       { "name": "tengu_linked_clover", "default": "true" },
+      { "name": "tengu_linked_cocoa", "default": "true" },
       { "name": "tengu_linked_rose", "default": "true" },
       { "name": "tengu_lively_beaver", "default": "false" },
       { "name": "tengu_lively_waffle", "default": "true" },
@@ -18922,6 +18991,7 @@
       { "name": "tengu_lucky_finch" },
       { "name": "tengu_lucky_quill", "default": "true" },
       { "name": "tengu_lucky_whisper", "default": "false" },
+      { "name": "tengu_lucky_widget", "default": "false" },
       { "name": "tengu_luminous_locket", "default": "unknown" },
       { "name": "tengu_luminous_seal", "default": "true" },
       { "name": "tengu_madrone_spindle", "default": "true" },
@@ -18969,6 +19039,7 @@
       { "name": "tengu_mcp_protocol_negotiation_stdio", "default": "true" },
       { "name": "tengu_mcp_proxy_needs_approval_retry", "default": "true" },
       { "name": "tengu_mcp_server_policy_bypass_exempt", "default": "true" },
+      { "name": "tengu_mcp_signed_out_fallback", "default": "true" },
       { "name": "tengu_mcp_singleton_unwrap", "default": "true" },
       { "name": "tengu_mcp_startup_policy_seed", "default": "true" },
       { "name": "tengu_mcp_stateless_skip_init", "default": "true" },
@@ -19006,7 +19077,6 @@
       { "name": "tengu_misty_anchor", "default": "false" },
       { "name": "tengu_misty_aurora", "default": "0" },
       { "name": "tengu_misty_crown" },
-      { "name": "tengu_misty_spindle_enabled", "default": "false" },
       { "name": "tengu_misty_sunbeam", "default": "false" },
       { "name": "tengu_misty_twilight", "default": "true" },
       { "name": "tengu_modular_mochi", "default": "false" },
@@ -19066,6 +19136,7 @@
       { "name": "tengu_parallel_trinket", "default": "true" },
       { "name": "tengu_parsed_eagle", "default": "\"off\"" },
       { "name": "tengu_parsed_willow", "default": "true" },
+      { "name": "tengu_partitioned_finch", "default": "true" },
       { "name": "tengu_passport_quail", "default": "false" },
       { "name": "tengu_patient_finch", "default": "true" },
       { "name": "tengu_patient_meteor", "default": "false" },
@@ -19073,6 +19144,7 @@
       { "name": "tengu_peaceful_leaf", "default": "false" },
       { "name": "tengu_pencil_farmer", "default": "false" },
       { "name": "tengu_penguins_off", "default": "null" },
+      { "name": "tengu_peppy_gosling", "default": "0" },
       { "name": "tengu_peppy_nautilus" },
       { "name": "tengu_peppy_nest", "default": "false" },
       { "name": "tengu_peppy_spindle", "default": "false" },
@@ -19126,7 +19198,6 @@
       { "name": "tengu_prompt_cache_1h_config" },
       { "name": "tengu_propose_goal", "default": "false" },
       { "name": "tengu_proud_clover", "default": "false" },
-      { "name": "tengu_proud_firefly", "default": "false" },
       { "name": "tengu_proud_honey" },
       { "name": "tengu_proud_pearl", "default": "false" },
       { "name": "tengu_ptc_enabled", "default": "true" },
@@ -19140,6 +19211,7 @@
       { "name": "tengu_quiet_hopcroft", "default": "false" },
       { "name": "tengu_quiet_lantern", "default": "true" },
       { "name": "tengu_quiet_larkspur", "default": "true" },
+      { "name": "tengu_quiet_ledger", "default": "\"off\"" },
       { "name": "tengu_quiet_locket", "default": "true" },
       { "name": "tengu_quiet_marten" },
       { "name": "tengu_quiet_medlar" },
@@ -19184,6 +19256,7 @@
       { "name": "tengu_remote_backend", "default": "false" },
       { "name": "tengu_rename_full_session_fork", "default": "false" },
       { "name": "tengu_resilient_adleman" },
+      { "name": "tengu_resilient_galaxy", "default": "false" },
       { "name": "tengu_resume_open_live_bg", "default": "true" },
       { "name": "tengu_review_bughunter_config", "default": "null" },
       { "name": "tengu_rippling_map", "default": "true" },
@@ -19192,6 +19265,7 @@
       { "name": "tengu_rosy_elephant", "default": "false" },
       { "name": "tengu_rosy_finch", "default": "false" },
       { "name": "tengu_rosy_flute", "default": "true" },
+      { "name": "tengu_rosy_pebble", "default": "false" },
       { "name": "tengu_rosy_puddle", "default": "true" },
       { "name": "tengu_russet_whimbrel", "default": "0" },
       { "name": "tengu_rustling_crescent", "default": "false" },
@@ -19240,8 +19314,10 @@
         "default": "false"
       },
       { "name": "tengu_sharded_beacon", "default": "true" },
+      { "name": "tengu_sharded_globe", "default": "false" },
       { "name": "tengu_sharded_moonbeam", "default": "true" },
       { "name": "tengu_sharded_snowflake", "default": "false" },
+      { "name": "tengu_shell_task_rows_live_only_enabled", "default": "false" },
       { "name": "tengu_shimmering_cherny", "default": "null" },
       { "name": "tengu_shimmering_firefly", "default": "false" },
       { "name": "tengu_shimmying_mochi", "default": "true" },
@@ -19330,11 +19406,15 @@
       { "name": "tengu_streamed_bumblebee_text", "default": "unknown" },
       { "name": "tengu_streamed_gem" },
       { "name": "tengu_streamed_thimble", "default": "true" },
+      { "name": "tengu_streamed_yeti" },
       { "name": "tengu_structured_output_strict", "default": "false" },
       { "name": "tengu_subagent_cache_evict", "default": "false" },
+      { "name": "tengu_sunny_anchor" },
+      { "name": "tengu_sunset_penguin_opus48", "default": "\"2026-11-30\"" },
       { "name": "tengu_surface_failed_mcp_servers", "default": "true" },
       { "name": "tengu_swift_lynx", "default": "null" },
       { "name": "tengu_swift_whistle", "default": "false" },
+      { "name": "tengu_swirling_koala" },
       { "name": "tengu_swirling_meteor", "default": "true" },
       { "name": "tengu_swirling_squid", "default": "false" },
       { "name": "tengu_synchronous_bunny" },
@@ -19369,7 +19449,6 @@
       { "name": "tengu_tidy_sloth", "default": "true" },
       { "name": "tengu_tidy_widget", "default": "true" },
       { "name": "tengu_tingly_pearl", "default": "true" },
-      { "name": "tengu_tingly_pike", "default": "null" },
       { "name": "tengu_tips_mod", "default": "unknown" },
       { "name": "tengu_toasty_breeze" },
       { "name": "tengu_toasty_fiddle", "default": "[]" },
@@ -19529,6 +19608,7 @@
       { "name": "tengu_wiggly_locket", "default": "false" },
       { "name": "tengu_wild_beacon" },
       { "name": "tengu_wild_gosling", "default": "false" },
+      { "name": "tengu_wild_hamster", "default": "true" },
       { "name": "tengu_wild_octopus" },
       { "name": "tengu_wild_tome", "default": "false" },
       { "name": "tengu_willow_tern", "default": "false" },
@@ -19547,7 +19627,6 @@
       { "name": "tengu_wondrous_acorn", "default": "null" },
       { "name": "tengu_wondrous_haven", "default": "false" },
       { "name": "tengu_wondrous_island", "default": "false" },
-      { "name": "tengu_woolly_forest", "default": "true" },
       { "name": "tengu_woolly_owl", "default": "false" },
       { "name": "tengu_woolly_toast", "default": "false" },
       { "name": "tengu_woolly_wall" },
@@ -19706,6 +19785,7 @@
       { "name": "diff:nextSource", "detail": "action" },
       { "name": "diff:previousFile", "detail": "action" },
       { "name": "diff:previousSource", "detail": "action" },
+      { "name": "effortSlider:adaptive", "detail": "action" },
       { "name": "effortSlider:decreaseEffort", "detail": "action" },
       { "name": "effortSlider:increaseEffort", "detail": "action" },
       { "name": "effortSlider:thisSessionOnly", "detail": "action" },
@@ -19889,6 +19969,7 @@
       { "name": "$.ui.notify", "detail": "call" },
       { "name": "$.ui.open", "detail": "call" },
       { "name": "$.ui.panes", "detail": "call" },
+      { "name": "$.ui.place", "detail": "call" },
       { "name": "$.ui.resolve", "detail": "call" },
       { "name": "$.ui.scroll", "detail": "call" },
       { "name": "$.ui.selection", "detail": "call" },
@@ -20031,6 +20112,7 @@
       { "name": "ui.notify", "detail": "event" },
       { "name": "ui.open", "detail": "event" },
       { "name": "ui.panes", "detail": "event" },
+      { "name": "ui.place", "detail": "event" },
       { "name": "ui.press", "detail": "event" },
       { "name": "ui.render", "detail": "event" },
       { "name": "ui.resolve", "detail": "event" },
@@ -20516,7 +20598,7 @@
       },
       {
         "name": "idleCompaction",
-        "detail": "Set to false to stop Claude Code from compacting a long conversation while the session is idle. Setting it to true does not turn idle compaction on."
+        "detail": "Set to false to stop Claude Code from compacting a long conversation while the session is idle. Defaults to true."
       },
       {
         "name": "includeCoAuthoredBy",
@@ -20682,6 +20764,10 @@
       {
         "name": "respondToBashCommands",
         "detail": "Whether Claude responds after an input-box ! bash command runs. Set to false to add the command output to context without a response. Default: true."
+      },
+      {
+        "name": "responseComparisonEnabled",
+        "detail": "@internal Set to false to stop Claude Code from showing two answers to one message and asking which is better. When absent or true, it may do so on some turns. Hidden from public SDK types until exter…"
       },
       { "name": "sandbox" },
       {
@@ -20875,12 +20961,12 @@
     "slash-command": [
       {
         "name": "/add-dir",
-        "gate": "isEnabled ()=>Se()&&Jwi()",
+        "gate": "isEnabled ()=>_e()&&jOi()",
         "detail": "local-jsx | Add a new working directory"
       },
       {
         "name": "/advisor",
-        "gate": "isEnabled ()=>Se()&&nT()",
+        "gate": "isEnabled ()=>_e()&&bT()",
         "detail": "local | Let Claude consult a stronger model at key moments"
       },
       {
@@ -20890,37 +20976,37 @@
       },
       {
         "name": "/artifact-capabilities",
-        "gate": "isEnabled Pn",
+        "gate": "isEnabled On",
         "detail": "prompt"
       },
       {
         "name": "/artifact-design",
-        "gate": "isEnabled Dn",
+        "gate": "isEnabled Mn",
         "detail": "prompt | Design guidance and fundamentals for Artifacts."
       },
       {
         "name": "/artifact-diagramming",
-        "gate": "isEnabled $n",
+        "gate": "isEnabled jn",
         "detail": "prompt | Diagramming know-how for Artifacts - when a picture earns its place, how to draw one that shows the real mechanism, and the inline-SVG mechanics that keep it legible in both themes."
       },
       {
         "name": "/artifacts",
-        "gate": "isEnabled ()=>NH()&&sc()===null",
+        "gate": "isEnabled ()=>wD()&&gc()===null",
         "detail": "local-jsx | Browse your published and shared artifacts"
       },
       {
         "name": "/auto-mode-setup",
-        "gate": "isEnabled ()=>v4e()&&!Se()",
+        "gate": "isEnabled ()=>b6e()&&!_e()",
         "detail": "local-jsx | Teach auto mode about your environment, plus optional rule tweaks"
       },
       {
         "name": "/autocompact",
-        "gate": "isEnabled (){return Se()||Mn()}",
+        "gate": "isEnabled (){return _e()||On()}",
         "detail": "local | Configure the auto-compact window size"
       },
       {
         "name": "/autofix-pr",
-        "gate": "availability claude-ai, console-profile; isEnabled ()=>u7t()&&!Se()",
+        "gate": "availability claude-ai, console-profile; isEnabled ()=>CJt()&&!_e()",
         "detail": "local | Monitor and autofix any issues with the current PR"
       },
       {
@@ -20955,23 +21041,23 @@
       },
       {
         "name": "/chrome",
-        "gate": "availability claude-ai; isEnabled ()=>!Se()&&_R()",
+        "gate": "availability claude-ai; isEnabled ()=>!_e()&&jR()",
         "detail": "local-jsx | Open Claude in Chrome settings"
       },
       {
         "name": "/claim-credit",
-        "gate": "hidden; isEnabled ()=>kt()&&!Zoe()&&DYn()!==null",
+        "gate": "hidden; isEnabled ()=>kt()&&!Rie()&&rer()!==null",
         "detail": "local | Open the page of the offer shown at start-up"
       },
       { "name": "/claude-api", "gate": "isEnabled ()=>!n", "detail": "prompt" },
       {
         "name": "/claude-code-docs",
-        "gate": "isEnabled (){return!i&&k(\"tengu_birch_kettle\",!1)}",
+        "gate": "isEnabled (){return!i&&v(\"tengu_birch_kettle\",!1)}",
         "detail": "prompt"
       },
       {
         "name": "/claude-in-chrome",
-        "gate": "isEnabled ()=>!e&&(pAe()||Lt())",
+        "gate": "isEnabled ()=>!e&&(URe()||Ot())",
         "detail": "prompt | Automates your Chrome browser to interact with web pages - clicking elements, filling forms, capturing screenshots, reading console logs, and navigating sites. Opens pages in new tabs within …"
       },
       {
@@ -20980,18 +21066,18 @@
       },
       {
         "name": "/cloud-plugins",
-        "gate": "isEnabled ()=>Mbn()&&!i.CLAUDE_CODE_DISABLE_PLUGIN_FORWARDING",
+        "gate": "isEnabled ()=>tCn()&&!i.CLAUDE_CODE_DISABLE_PLUGIN_FORWARDING",
         "detail": "local-jsx | Choose whether cloud sessions use the plugins enabled on this machine"
       },
       { "name": "/code-review", "detail": "prompt (aliases review)" },
       {
         "name": "/color",
-        "gate": "isEnabled ()=>Se()",
+        "gate": "isEnabled ()=>_e()",
         "detail": "local | Set the prompt bar color for this session"
       },
       {
         "name": "/commit",
-        "gate": "isEnabled ()=>gYr()",
+        "gate": "isEnabled ()=>pto()",
         "detail": "prompt | Create a git commit. Use whenever you are about to create a commit, whether the user asked for one or it is a step in your current task — it gathers git context and applies the required commi…"
       },
       {
@@ -21000,17 +21086,17 @@
       },
       {
         "name": "/compact",
-        "gate": "isEnabled ()=>!Ne(process.env.DISABLE_COMPACT)",
+        "gate": "isEnabled ()=>!De(process.env.DISABLE_COMPACT)",
         "detail": "local | Free up context by summarizing the conversation so far"
       },
       {
         "name": "/config",
-        "gate": "isEnabled ()=>Se()",
+        "gate": "isEnabled ()=>_e()",
         "detail": "local (aliases settings) | Set a setting by key"
       },
       {
         "name": "/context",
-        "gate": "isEnabled (){return Se()}",
+        "gate": "isEnabled (){return _e()}",
         "detail": "local | Show current context usage"
       },
       {
@@ -21019,7 +21105,7 @@
       },
       {
         "name": "/cowork-plugin",
-        "gate": "isEnabled ()=>i_()||n2()",
+        "gate": "isEnabled ()=>Sy()||K2()",
         "detail": "prompt | Create a new Cowork plugin from scratch, or customize an installed plugin for a specific organization. Use when: customize plugin, set up plugin, configure plugin, tailor plugin, adjust plugi…"
       },
       {
@@ -21041,32 +21127,32 @@
       },
       {
         "name": "/design-consent",
-        "gate": "hidden; isEnabled ()=>Pj()",
+        "gate": "hidden; isEnabled ()=>vW()",
         "detail": "local | Grant Claude agent access to your Design projects"
       },
       {
         "name": "/design-login",
-        "gate": "isEnabled ()=>Pj()",
+        "gate": "isEnabled ()=>vW()",
         "detail": "local-jsx | Authorize design-system access for /design-sync with your claude.ai account"
       },
       {
         "name": "/design-revoke",
-        "gate": "hidden; isEnabled ()=>Pj()",
+        "gate": "hidden; isEnabled ()=>vW()",
         "detail": "local | Revoke Claude agent access to your Design projects"
       },
       {
         "name": "/design-sync",
-        "gate": "isEnabled Pj",
+        "gate": "isEnabled vW",
         "detail": "prompt | Push a React design system to claude.ai/design. This runs a converter that bundles the real component code (from Storybook or a bare package) and uploads it. Use when the user runs /design-sy…"
       },
       {
         "name": "/desktop",
-        "gate": "availability claude-ai; isEnabled mTe",
+        "gate": "availability claude-ai; isEnabled WAe",
         "detail": "local-jsx (aliases app) | Continue the current session in Claude Desktop"
       },
       {
         "name": "/diff",
-        "gate": "isEnabled ()=>!k9n()",
+        "gate": "isEnabled ()=>!GJn()",
         "detail": "local-jsx"
       },
       {
@@ -21076,13 +21162,13 @@
       },
       {
         "name": "/effort",
-        "gate": "isEnabled ()=>Se()",
+        "gate": "isEnabled ()=>_e()",
         "detail": "local | Set effort level for model usage"
       },
       { "name": "/exit", "detail": "local" },
       {
         "name": "/explain-usage",
-        "gate": "isEnabled ()=>i_()||n2()",
+        "gate": "isEnabled ()=>Sy()||K2()",
         "detail": "prompt | Explain where this session's tokens went, with one simple chart in plain language. Use when: explain usage, explain my usage, where did my tokens go, token usage breakdown, what used the most…"
       },
       {
@@ -21091,10 +21177,10 @@
       },
       {
         "name": "/extra-usage",
-        "gate": "hidden; isEnabled ()=>WR()&&Se()",
+        "gate": "hidden; isEnabled ()=>gx()&&_e()",
         "detail": "local | Renamed to /usage-credits"
       },
-      { "name": "/fast", "gate": "isEnabled ()=>Se()", "detail": "local" },
+      { "name": "/fast", "gate": "isEnabled ()=>_e()", "detail": "local" },
       {
         "name": "/feedback",
         "detail": "local-jsx | Send feedback to Anthropic or report a bug"
@@ -21105,17 +21191,17 @@
       },
       {
         "name": "/focus",
-        "gate": "isEnabled ()=>Se()",
+        "gate": "isEnabled ()=>_e()",
         "detail": "local | Toggle focus view: just your prompt, summary, and response"
       },
       {
         "name": "/fork",
-        "gate": "isEnabled ()=>!Oa()",
+        "gate": "isEnabled ()=>!$a()",
         "detail": "local-jsx | Copy this conversation into a new background session and keep working here"
       },
       {
         "name": "/goal",
-        "gate": "isEnabled ()=>Se()||Mn()",
+        "gate": "isEnabled ()=>_e()||On()",
         "detail": "local | Set a goal — keep working until the condition is met"
       },
       {
@@ -21137,7 +21223,7 @@
       },
       {
         "name": "/import",
-        "gate": "isEnabled ()=>HHe()&&Se()&&!X()",
+        "gate": "isEnabled ()=>_Le()&&_e()&&!X()",
         "detail": "local | Import config from another AI coding agent"
       },
       { "name": "/init", "detail": "prompt" },
@@ -21161,27 +21247,27 @@
       },
       {
         "name": "/keybindings",
-        "gate": "isEnabled ()=>oZ()",
+        "gate": "isEnabled ()=>bee()",
         "detail": "local | Open your keyboard shortcuts file"
       },
       {
         "name": "/keybindings-help",
-        "gate": "isEnabled oZ",
+        "gate": "isEnabled bee",
         "detail": "prompt | Use when the user wants to customize keyboard shortcuts, rebind keys, add chord bindings, or modify ~/.claude/keybindings.json. Examples: \"rebind ctrl+s\", \"add a chord shortcut\", \"change the …"
       },
       {
         "name": "/limit-reset",
-        "gate": "hidden; isEnabled ()=>kt()&&(Oye()||Wre())",
+        "gate": "hidden; isEnabled ()=>kt()&&(nSe()||fse())",
         "detail": "local-jsx"
       },
       {
         "name": "/list-agents",
-        "gate": "isEnabled ()=>ba()",
+        "gate": "isEnabled ()=>Oa()",
         "detail": "local (aliases peers) | List subagents, teammates, and other Claude sessions you can message"
       },
       {
         "name": "/login",
-        "gate": "isEnabled ()=>{let e=tr();return!i.DISABLE_LOGIN_COMMAND&&(e===null||e.sessionId!==void 0)}",
+        "gate": "isEnabled ()=>{let e=Xn();return!i.DISABLE_LOGIN_COMMAND&&(e===null||e.sessionId!==void 0)}",
         "detail": "local-jsx"
       },
       {
@@ -21191,7 +21277,7 @@
       },
       {
         "name": "/loop",
-        "gate": "isEnabled Jx",
+        "gate": "isEnabled kP",
         "detail": "prompt (aliases proactive) | Run a prompt or slash command on a recurring interval (e.g. /loop 5m /foo). Omit the interval to let the model self-pace."
       },
       {
@@ -21201,12 +21287,12 @@
       },
       {
         "name": "/low-priority",
-        "gate": "hidden; isEnabled ()=>kt()&&(TM()||fEt())",
+        "gate": "hidden; isEnabled ()=>kt()&&(ZM()||RCt())",
         "detail": "local | Continue now at lower priority after reaching your 5-hour limit; run again to stop"
       },
       {
         "name": "/mcp",
-        "gate": "isEnabled ()=>Se()",
+        "gate": "isEnabled ()=>_e()",
         "detail": "local-jsx | Manage MCP servers"
       },
       {
@@ -21215,17 +21301,17 @@
       },
       {
         "name": "/memory-types",
-        "gate": "isEnabled ()=>ef()&&$6o()",
+        "gate": "isEnabled ()=>gf()&&$Yo()",
         "detail": "prompt | Full reference for the memory type taxonomy — what each type captures, when to save it, how to structure the body, with examples."
       },
       {
         "name": "/mobile",
         "detail": "local-jsx (aliases ios, android) | Show QR code to download the Claude mobile app"
       },
-      { "name": "/model", "gate": "isEnabled ()=>Se()", "detail": "local-jsx" },
+      { "name": "/model", "gate": "isEnabled ()=>_e()", "detail": "local-jsx" },
       {
         "name": "/output-style",
-        "gate": "isEnabled ()=>Se()||!gTe()||R7t()",
+        "gate": "isEnabled ()=>_e()||!GAe()||YJt()",
         "detail": "local | List output styles or switch to one"
       },
       { "name": "/passes", "detail": "local-jsx" },
@@ -21252,12 +21338,12 @@
       },
       {
         "name": "/pr",
-        "gate": "isEnabled ()=>gYr()",
+        "gate": "isEnabled ()=>pto()",
         "detail": "prompt | Create a GitHub pull request. Use whenever you are about to open a PR, whether the user asked for one or it is a step in your current task — it gathers branch context and applies the required…"
       },
       {
         "name": "/privacy-settings",
-        "gate": "isEnabled ()=>uW()",
+        "gate": "isEnabled ()=>n2()",
         "detail": "local-jsx | View and update your privacy settings"
       },
       {
@@ -21291,22 +21377,22 @@
       },
       {
         "name": "/remote-env",
-        "gate": "availability claude-ai, console-profile; isEnabled ()=>kt()||Qqt()",
+        "gate": "availability claude-ai, console-profile; isEnabled ()=>kt()||a8t()",
         "detail": "local-jsx | Choose the default environment for cloud agents"
       },
       {
         "name": "/rename",
-        "gate": "isEnabled ()=>Se()",
+        "gate": "isEnabled ()=>_e()",
         "detail": "local (aliases name) | Rename the current conversation"
       },
       {
         "name": "/restart",
-        "gate": "isEnabled Xen",
+        "gate": "isEnabled Son",
         "detail": "local (aliases update)"
       },
       {
         "name": "/resume",
-        "gate": "isEnabled v5o",
+        "gate": "isEnabled W3o",
         "detail": "local-jsx (aliases continue)"
       },
       {
@@ -21324,12 +21410,12 @@
       { "name": "/sandbox", "detail": "local-jsx" },
       {
         "name": "/schedule",
-        "gate": "isEnabled ()=>Bn()&&kt()&&!i.CLAUDE_CODE_REMOTE&&an(tde)",
+        "gate": "isEnabled ()=>Dn()&&kt()&&!i.CLAUDE_CODE_REMOTE&&ln(Rce)",
         "detail": "local (aliases routines) | Create and manage scheduled remote Claude Code agents"
       },
       {
         "name": "/scroll-speed",
-        "gate": "isEnabled ()=>{if(!ad())return!1;let e=$u();return!(e?Gme.includes(e.terminal??\"\"):rT.isJetBrainsIdeTerminal())}",
+        "gate": "isEnabled ()=>{if(!gd())return!1;let e=Su();return!(e?Ehe.includes(e.terminal??\"\"):wT.isJetBrainsIdeTerminal())}",
         "detail": "local-jsx | Adjust mouse wheel scroll speed"
       },
       {
@@ -21337,23 +21423,28 @@
         "detail": "prompt | Complete a security review of the pending changes on the current branch"
       },
       {
+        "name": "/send-to-project",
+        "gate": "isEnabled Ggt",
+        "detail": "prompt | Send this session's work to a Claude Project"
+      },
+      {
         "name": "/session",
-        "gate": "isEnabled ()=>Mn()",
+        "gate": "isEnabled ()=>On()",
         "detail": "local-jsx (aliases remote) | Show cloud session URL and QR code"
       },
       {
         "name": "/setup-bedrock",
-        "gate": "isEnabled ()=>Zse(\"bedrock\")===void 0",
+        "gate": "isEnabled ()=>xae(\"bedrock\")===void 0",
         "detail": "local-jsx | Reconfigure Amazon Bedrock authentication, region, or model pins"
       },
       {
         "name": "/setup-claude",
-        "gate": "isEnabled ()=>i_()||n2()",
+        "gate": "isEnabled ()=>Sy()||K2()",
         "detail": "prompt (aliases setup-cowork) | Guided setup — pick a role, install a matching plugin, try a skill, connect tools. Use when: set up claude, setup claude, set up cowork, setup cowork, get started with …"
       },
       {
         "name": "/setup-vertex",
-        "gate": "isEnabled ()=>Zse(\"vertex\")===void 0",
+        "gate": "isEnabled ()=>xae(\"vertex\")===void 0",
         "detail": "local-jsx | Reconfigure Google Vertex AI authentication, project, region, or model pins"
       },
       {
@@ -21362,7 +21453,7 @@
       },
       {
         "name": "/skill-doctor",
-        "gate": "isEnabled ()=>Se()",
+        "gate": "isEnabled ()=>_e()",
         "detail": "local | Show which loaded skills are unused and costing context"
       },
       { "name": "/skills", "detail": "local-jsx | List available skills" },
@@ -21377,12 +21468,12 @@
       { "name": "/stickers", "detail": "local | Order Claude Code stickers" },
       {
         "name": "/stop",
-        "gate": "isEnabled Ft",
+        "gate": "isEnabled $t",
         "detail": "local | Stop this background session; transcript and worktree are kept"
       },
       {
         "name": "/subtask",
-        "gate": "isEnabled ()=>!Oa()",
+        "gate": "isEnabled ()=>!$a()",
         "detail": "local-jsx | Send a subagent off with your full context; its result comes back here"
       },
       {
@@ -21395,7 +21486,7 @@
       },
       {
         "name": "/teleport",
-        "gate": "availability claude-ai, console-profile; isEnabled ()=>kt()||Qqt()",
+        "gate": "availability claude-ai, console-profile; isEnabled ()=>kt()||a8t()",
         "detail": "local (aliases tp) | Send this session to the cloud, or resume one from claude.ai"
       },
       { "name": "/terminal-setup", "detail": "local-jsx" },
@@ -21406,12 +21497,12 @@
       },
       {
         "name": "/ultraplan",
-        "gate": "availability claude-ai; isEnabled ()=>a4()",
+        "gate": "availability claude-ai; isEnabled ()=>i5()",
         "detail": "local | A cloud session drafts a plan you can edit and approve"
       },
       {
         "name": "/ultrareview",
-        "gate": "isEnabled ()=>Se()&&MF()",
+        "gate": "isEnabled ()=>_e()&&O$()",
         "detail": "local | Find and verify bugs in your branch using a cloud session"
       },
       {
@@ -21420,17 +21511,17 @@
       },
       {
         "name": "/upgrade",
-        "gate": "availability claude-ai; isEnabled Kue",
+        "gate": "availability claude-ai; isEnabled wfe",
         "detail": "local-jsx | Upgrade to Max for higher rate limits and more Opus"
       },
       {
         "name": "/usage",
-        "gate": "isEnabled ()=>Se()",
+        "gate": "isEnabled ()=>_e()",
         "detail": "local (aliases cost, stats) | Show session cost, plan usage, and what's contributing to your limits"
       },
       {
         "name": "/usage-credits",
-        "gate": "isEnabled ()=>WR()&&Se()",
+        "gate": "isEnabled ()=>gx()&&_e()",
         "detail": "local | Configure usage credits or request them from your admin when you hit a limit"
       },
       {
@@ -21449,7 +21540,7 @@
       },
       {
         "name": "/web-setup",
-        "gate": "availability claude-ai; isEnabled oLe",
+        "gate": "availability claude-ai; isEnabled BNe",
         "detail": "local-jsx | Set up cloud sessions with your GitHub account"
       },
       {
@@ -21459,7 +21550,7 @@
       },
       {
         "name": "/workflow-authoring",
-        "gate": "isEnabled ()=>tg()",
+        "gate": "isEnabled ()=>fg()",
         "detail": "prompt"
       },
       {
@@ -21469,7 +21560,7 @@
       },
       {
         "name": "/workflows",
-        "gate": "isEnabled ()=>tg()",
+        "gate": "isEnabled ()=>fg()",
         "detail": "local-jsx | Browse running and completed workflows"
       }
     ],
@@ -21554,76 +21645,76 @@
       { "name": "Agent" },
       {
         "name": "AppifactRepl",
-        "gate": "un (=import.meta.require(\"/$bunfs/root/chunk-jjaaffj6.js\").AppifactReplTool)",
-        "detail": "isEnabled(){return dAo()&&NH()&&!yd()}"
+        "gate": "fn (=import.meta.require(\"/$bunfs/root/chunk-72m826v1.js\").AppifactReplTool)",
+        "detail": "isEnabled(){return V0o()&&wD()&&!Cd()}"
       },
       {
         "name": "Artifact",
-        "gate": "ln (=Yr(import.meta.require(\"/$bunfs/root/chunk-90emz4wn.js\").ARTIFACT_TOOL_HEAD,()=>import.meta.require(\"/$bunfs/root/chunk-ae7yjw8s.js\").ArtifactTool))",
-        "detail": "isEnabled(){E4o();let e=zVt();return v4o(e),e===null&&!yd()}"
+        "gate": "pn (=Jr(import.meta.require(\"/$bunfs/root/chunk-t6cn875q.js\").ARTIFACT_TOOL_HEAD,()=>import.meta.require(\"/$bunfs/root/chunk-y31fgxmw.js\").ArtifactTool))",
+        "detail": "isEnabled(){PQo();let e=X3t();return OQo(e),e===null&&!Cd()}"
       },
       { "name": "ArtifactCheck" },
       { "name": "ArtifactComments" },
       { "name": "ArtifactData" },
-      { "name": "AskUserQuestion", "detail": "isEnabled(){return sye()}" },
-      { "name": "Bash", "gate": "xd()" },
+      { "name": "AskUserQuestion", "detail": "isEnabled(){return I_e()}" },
+      { "name": "Bash", "gate": "$d()" },
       {
         "name": "ClaudeDesign",
-        "gate": "e (=sa())",
-        "detail": "isEnabled:aje"
+        "gate": "e (=la())",
+        "detail": "isEnabled:s2e"
       },
-      { "name": "CronCreate", "detail": "isEnabled(){return Jx()}" },
-      { "name": "CronDelete", "detail": "isEnabled(){return Jx()}" },
-      { "name": "CronList", "detail": "isEnabled(){return Jx()}" },
-      { "name": "DesignSync", "detail": "isEnabled(){return Pj()}" },
+      { "name": "CronCreate", "detail": "isEnabled(){return kP()}" },
+      { "name": "CronDelete", "detail": "isEnabled(){return kP()}" },
+      { "name": "CronList", "detail": "isEnabled(){return kP()}" },
+      { "name": "DesignSync", "detail": "isEnabled(){return vW()}" },
       { "name": "Edit" },
       {
         "name": "EndConversation",
-        "gate": "sn (=import.meta.require(\"/$bunfs/root/chunk-djxwhjww.js\").EndConversationTool)",
-        "detail": "isEnabled(){let e=rqt();return e!==void 0&&pxr(e)}"
+        "gate": "cn (=import.meta.require(\"/$bunfs/root/chunk-knpkw771.js\").EndConversationTool)",
+        "detail": "isEnabled(){let e=p9t();return e!==void 0&&$Hr(e)}"
       },
       {
         "name": "EnterPlanMode",
-        "detail": "isEnabled(){return S8.isEnabled()}"
+        "detail": "isEnabled(){return _Y.isEnabled()}"
       },
-      { "name": "EnterWorktree", "gate": "v0t()" },
+      { "name": "EnterWorktree", "gate": "mNt()" },
       {
         "name": "ExitPlanMode",
-        "detail": "isEnabled(){if(SS().length>0&&Se())return!1;if(Se()&&!Qde(Ok()))return!1;return!0}"
+        "detail": "isEnabled(){if(jS().length>0&&_e())return!1;if(_e()&&!kue(Zk()))return!1;return!0}"
       },
-      { "name": "ExitWorktree", "gate": "v0t()" },
+      { "name": "ExitWorktree", "gate": "mNt()" },
       {
         "name": "FetchInboxMessage",
-        "gate": "De (=import.meta.require(\"/$bunfs/root/chunk-d6h65z5m.js\").FetchInboxMessageTool)",
-        "detail": "isEnabled(){return su()||oyn()!==void 0}"
+        "gate": "De (=import.meta.require(\"/$bunfs/root/chunk-sa3mkjsp.js\").FetchInboxMessageTool)",
+        "detail": "isEnabled(){return Uc()||Cwn()!==void 0}"
       },
       { "name": "GetTask", "detail": "isEnabled(){return!1}" },
-      { "name": "Glob", "gate": "(n)=>!yre().has(n.name)" },
-      { "name": "Grep", "gate": "(n)=>!yre().has(n.name)" },
-      { "name": "LSP", "gate": "EVe()", "detail": "isEnabled(){return M2e()}" },
+      { "name": "Glob", "gate": "(n)=>!$oe().has(n.name)" },
+      { "name": "Grep", "gate": "(n)=>!$oe().has(n.name)" },
+      { "name": "LSP", "gate": "bKe()", "detail": "isEnabled(){return Hze()}" },
       {
         "name": "ListAgents",
-        "gate": "hn (=import.meta.require(\"/$bunfs/root/chunk-73ayx025.js\").ListAgentsTool)",
-        "detail": "isEnabled(){return ba()}"
+        "gate": "Sn (=import.meta.require(\"/$bunfs/root/chunk-rbw5dmcp.js\").ListAgentsTool)",
+        "detail": "isEnabled(){return Oa()}"
       },
       {
         "name": "ListConnectors",
-        "gate": "on (=import.meta.require(\"/$bunfs/root/chunk-d4wre4e7.js\").ListConnectorsTool)",
-        "detail": "isEnabled:m0e"
+        "gate": "sn (=import.meta.require(\"/$bunfs/root/chunk-mejw8p3j.js\").ListConnectorsTool)",
+        "detail": "isEnabled:QHe"
       },
       { "name": "ListMcpResourcesTool" },
       { "name": "ListPlugins" },
       { "name": "ListSkills" },
       {
         "name": "MonitorTool",
-        "gate": "rn (=import.meta.require(\"/$bunfs/root/chunk-h3tja48d.js\").MonitorTool)"
+        "gate": "an (=import.meta.require(\"/$bunfs/root/chunk-fsed3b9t.js\").MonitorTool)"
       },
       { "name": "NotebookEdit" },
-      { "name": "OfferChromeSetup", "detail": "isEnabled:bvr" },
+      { "name": "OfferChromeSetup", "detail": "isEnabled:xxr" },
       {
         "name": "Poll",
-        "gate": "ye (=import.meta.require(\"/$bunfs/root/chunk-jat1nabk.js\").PollTool)",
-        "detail": "isEnabled(){return UG()}"
+        "gate": "ye (=import.meta.require(\"/$bunfs/root/chunk-s9w9db18.js\").PollTool)",
+        "detail": "isEnabled(){return Lz()}"
       },
       {
         "name": "PowerShell",
@@ -21632,123 +21723,133 @@
       },
       {
         "name": "Projects",
-        "detail": "isEnabled(){return an(\"allow_projects_tool\")&&Pe()!==void 0}"
+        "detail": "isEnabled(){return ln(\"allow_projects_tool\")&&Pe()!==void 0}"
       },
       {
         "name": "ProposeGoal",
-        "detail": "isEnabled(){if(Se()||Mn())return!1;if(Ft())return!1;if(!mBn())return!1;let e=sRt();if(e===\"disabled\")return!1;return P(e),!0}"
+        "detail": "isEnabled(){if(_e()||On())return!1;if($t())return!1;if(!mzn())return!1;let e=OOt();if(e===\"disabled\")return!1;return E(e),!0}"
       },
-      { "name": "PublishPlugin", "detail": "isEnabled(){return JFn()}" },
+      { "name": "PublishPlugin", "detail": "isEnabled(){return aWn()}" },
       {
         "name": "PushNotification",
-        "gate": "nn (=import.meta.require(\"/$bunfs/root/chunk-29t65mqg.js\").PushNotificationTool)",
-        "detail": "isEnabled(){return QK(\"tengu_kairos_push_notifications\",!1,g)}"
+        "gate": "un (=import.meta.require(\"/$bunfs/root/chunk-8hstfb0j.js\").PushNotificationTool)",
+        "detail": "isEnabled(){return Bq(\"tengu_kairos_push_notifications\",!1,g)}"
       },
       { "name": "Read" },
       { "name": "ReadMcpResourceDirTool" },
       { "name": "ReadMcpResourceTool" },
-      { "name": "ReadNotifications", "detail": "isEnabled:L$n" },
+      { "name": "ReadNotifications", "detail": "isEnabled:PWn" },
       {
         "name": "RefreshMcpTools",
         "gate": "i.CLAUDE_CODE_ENABLE_REFRESH_MCP_TOOLS",
-        "detail": "isEnabled(){let e=pg();return e!==void 0&&e.length>0}"
+        "detail": "isEnabled(){let e=Tg();return e!==void 0&&e.length>0}"
       },
       {
         "name": "RemoteTrigger",
-        "gate": "Zr (=import.meta.require(\"/$bunfs/root/chunk-kv3b2nb3.js\").RemoteTriggerTool)",
-        "detail": "isEnabled(){return Bn()&&kt()&&!i.CLAUDE_CODE_REMOTE&&an(\"allow_remote_sessions\")&&an(tde)}"
+        "gate": "tn (=import.meta.require(\"/$bunfs/root/chunk-jfjs5vms.js\").RemoteTriggerTool)",
+        "detail": "isEnabled(){return Dn()&&kt()&&!i.CLAUDE_CODE_REMOTE&&ln(\"allow_remote_sessions\")&&ln(Rce)}"
       },
       { "name": "ReportFindings" },
       { "name": "ScheduleWakeup" },
       {
         "name": "SearchMcpRegistry",
-        "gate": "Jr (=import.meta.require(\"/$bunfs/root/chunk-8h69assq.js\").SearchMcpRegistryTool)",
-        "detail": "isEnabled:m0e"
+        "gate": "on (=import.meta.require(\"/$bunfs/root/chunk-wvapa0xs.js\").SearchMcpRegistryTool)",
+        "detail": "isEnabled:QHe"
       },
       { "name": "SearchPlugins" },
       { "name": "SearchSkills" },
-      { "name": "SendFeedback", "detail": "isEnabled(){return w3()}" },
-      { "name": "SendFile", "detail": "isEnabled(){return ZWe()}" },
+      { "name": "SendFeedback", "detail": "isEnabled(){return w4()}" },
+      { "name": "SendFile", "detail": "isEnabled(){return QGe()}" },
       { "name": "SendMessage" },
       {
+        "name": "SendToProject",
+        "gate": "dn (=import.meta.require(\"/$bunfs/root/chunk-g3je3g3g.js\").ContinueInProjectsTool)",
+        "detail": "isEnabled(){return Ggt()}"
+      },
+      {
+        "name": "SendToProjectContext",
+        "gate": "mn (=import.meta.require(\"/$bunfs/root/chunk-g3je3g3g.js\").ContinueInProjectsContextTool)",
+        "detail": "isEnabled(){return Ggt()}"
+      },
+      {
         "name": "SendUserFile",
-        "detail": "isEnabled(){let t=!i.CLAUDE_CODE_ATTACHMENTS_BY_PATH;if(t&&(Ce()!==\"firstParty\"||St()))return!1;if(t&&!an(\"allow_send_file\"))return!1;if(!k(\"tengu_send_user_file\",!0))return!1;return(su()||R())&&!_H()…"
+        "detail": "isEnabled(){let t=!i.CLAUDE_CODE_ATTACHMENTS_BY_PATH;if(t&&(Te()!==\"firstParty\"||St()))return!1;if(t&&!ln(\"allow_send_file\"))return!1;if(!v(\"tengu_send_user_file\",!0))return!1;return(Uc()||j())&&!QH()…"
       },
       {
         "name": "SendUserMessage",
-        "detail": "isEnabled(){return _H()||wVe()}"
+        "detail": "isEnabled(){return QH()||SKe()}"
       },
-      { "name": "ShareOnboardingGuide", "detail": "isEnabled(){return wUt()}" },
-      { "name": "ShowOnboardingRolePicker", "detail": "isEnabled:xn" },
-      { "name": "Skill", "detail": "isEnabled(){return!_S()}" },
+      { "name": "ShareOnboardingGuide", "detail": "isEnabled(){return CWt()}" },
+      { "name": "ShowOnboardingRolePicker", "detail": "isEnabled:Fn" },
+      { "name": "Skill", "detail": "isEnabled(){return!US()}" },
       {
         "name": "SuggestConnectors",
-        "gate": "en (=import.meta.require(\"/$bunfs/root/chunk-q27yc66n.js\").SuggestConnectorsTool)",
-        "detail": "isEnabled:m0e"
+        "gate": "nn (=import.meta.require(\"/$bunfs/root/chunk-yc925cgc.js\").SuggestConnectorsTool)",
+        "detail": "isEnabled:QHe"
       },
-      { "name": "SuggestPluginInstall", "detail": "isEnabled:qXe" },
-      { "name": "SuggestSkills", "detail": "isEnabled:qXe" },
+      { "name": "SuggestPluginInstall", "detail": "isEnabled:lQe" },
+      { "name": "SuggestSkills", "detail": "isEnabled:lQe" },
       {
         "name": "TaskCreate",
-        "gate": "gM()",
-        "detail": "isEnabled(){return Xde()}"
+        "gate": "BM()",
+        "detail": "isEnabled(){return Eue()}"
       },
       {
         "name": "TaskGet",
-        "gate": "gM()",
-        "detail": "isEnabled(){return Xde()}"
+        "gate": "BM()",
+        "detail": "isEnabled(){return Eue()}"
       },
       {
         "name": "TaskList",
-        "gate": "gM()",
-        "detail": "isEnabled(){return Xde()}"
+        "gate": "BM()",
+        "detail": "isEnabled(){return Eue()}"
       },
       { "name": "TaskStop" },
       {
         "name": "TaskUpdate",
-        "gate": "gM()",
-        "detail": "isEnabled(){return Xde()}"
+        "gate": "BM()",
+        "detail": "isEnabled(){return Eue()}"
       },
-      { "name": "TodoWrite", "detail": "isEnabled(){return!gM()&&Y3()}" },
+      { "name": "TodoWrite", "detail": "isEnabled(){return!BM()&&Y4()}" },
       {
         "name": "ToolSearch",
-        "gate": "_h()",
-        "detail": "isEnabled(){return _h()}"
+        "gate": "Rh()",
+        "detail": "isEnabled(){return Rh()}"
       },
       {
         "name": "WaitForMcpServers",
-        "detail": "isEnabled(){return Sdr(ot(),pg()??[])}"
+        "detail": "isEnabled(){return Qcr(ot(),Tg()??[])}"
       },
       {
         "name": "WebFetch",
-        "detail": "isEnabled(){return!i.CLAUDE_CODE_DISABLE_WEB_FETCH&&an(jvt)}"
+        "detail": "isEnabled(){return!i.CLAUDE_CODE_DISABLE_WEB_FETCH&&ln(pAt)}"
       },
       {
         "name": "WebSearch",
-        "detail": "isEnabled(){if(!an(dri))return!1;let e=Ce();if(e===\"firstParty\"||PP(e))return!0;if(e===\"gateway\")return!1;if(e===\"vertex\")return N8r(Je(ot()));if(e===\"foundry\")return!0;return!1}"
+        "detail": "isEnabled(){if(!ln(imi))return!1;let e=Te();if(e===\"firstParty\"||oO(e))return!0;if(e===\"gateway\")return!1;if(e===\"vertex\")return Heo(Qe(ot()));if(e===\"foundry\")return!0;return!1}"
       },
-      { "name": "Workflow", "detail": "isEnabled:()=>tg()" },
+      { "name": "Workflow", "detail": "isEnabled:()=>fg()" },
       { "name": "Write" },
       { "name": "enable__mcp__claude-in-chrome" },
       { "name": "enable__mcp__remote-devices__Claude_Browser" },
       { "name": "enable__mcp__remote-devices__computer" },
-      { "name": "memory_list", "detail": "isEnabled(){return TRe()}" },
-      { "name": "memory_read", "detail": "isEnabled(){return TRe()}" },
-      { "name": "memory_write", "detail": "isEnabled(){return TRe()}" },
+      { "name": "memory_list", "detail": "isEnabled(){return tPe()}" },
+      { "name": "memory_read", "detail": "isEnabled(){return tPe()}" },
+      { "name": "memory_write", "detail": "isEnabled(){return tPe()}" },
       {
         "name": "propose_skills",
-        "detail": "isEnabled(){if(hjt())return!1;if(n2())return i.CLAUDE_CODE_SYNC_SKILLS&&!eR();if(!i_()&&!i.CLAUDE_CODE_SKILL_PROPOSALS)return!1;if(!i.CLAUDE_CODE_REMOTE_ENVIRONMENT_TYPE&&!(Gi()&&i.CLAUDE_CODE_SKILL_P…"
+        "detail": "isEnabled(){if(wzt())return!1;if(K2())return i.CLAUDE_CODE_SYNC_SKILLS&&!CR();if(!Sy()&&!i.CLAUDE_CODE_SKILL_PROPOSALS)return!1;if(!i.CLAUDE_CODE_REMOTE_ENVIRONMENT_TYPE&&!(os()&&i.CLAUDE_CODE_SKILL_P…"
       },
       { "name": "request_computer" },
-      { "name": "self_hosted_runner_get_pool", "gate": "Qr()" },
-      { "name": "self_hosted_runner_list_runners", "gate": "Qr()" },
-      { "name": "self_hosted_runner_list_secrets", "gate": "Qr()" },
-      { "name": "self_hosted_runner_list_sessions", "gate": "Qr()" },
-      { "name": "self_hosted_runner_read_health", "gate": "Qr()" },
-      { "name": "self_hosted_runner_read_metrics", "gate": "Qr()" },
-      { "name": "self_hosted_runner_requeue_session", "gate": "Qr()" },
-      { "name": "self_hosted_runner_spawn_local", "gate": "Qr()" },
-      { "name": "self_hosted_runner_tail_log", "gate": "Qr()" }
+      { "name": "self_hosted_runner_get_pool", "gate": "en()" },
+      { "name": "self_hosted_runner_list_runners", "gate": "en()" },
+      { "name": "self_hosted_runner_list_secrets", "gate": "en()" },
+      { "name": "self_hosted_runner_list_sessions", "gate": "en()" },
+      { "name": "self_hosted_runner_read_health", "gate": "en()" },
+      { "name": "self_hosted_runner_read_metrics", "gate": "en()" },
+      { "name": "self_hosted_runner_requeue_session", "gate": "en()" },
+      { "name": "self_hosted_runner_spawn_local", "gate": "en()" },
+      { "name": "self_hosted_runner_tail_log", "gate": "en()" }
     ]
   }
 }

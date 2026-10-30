@@ -8,7 +8,7 @@ These variables control how Claude Code reaches the network.
 They set the API base URL, proxies, custom certificates, timeouts, and retry counts.
 Use them behind a company proxy or when you route traffic through a gateway.
 
-This page lists 68 variables. `HTTPS_PROXY`, `NO_PROXY`, and `ANTHROPIC_BASE_URL` are the usual ones. Project settings cannot set some endpoint variables before you trust the folder.
+This page lists 70 variables. `HTTPS_PROXY`, `NO_PROXY`, and `ANTHROPIC_BASE_URL` are the usual ones. Project settings cannot set some endpoint variables before you trust the folder.
 
 ## Example
 
@@ -33,6 +33,7 @@ The table is sorted by name. See [Environment Variables](index.md#how-to-read-th
 | `ANTHROPIC_UNIX_SOCKET` | <Documented /> | Sends first-party API requests over this Unix socket path. | Text. Claude Code passes it as the `unix` fetch option. Also in the host-managed provider list with `CLAUDE_CODE_PROVIDER_MANAGED_BY_HOST` | First-party API client, all. Not set from project `env` before trust |
 | `API_FORCE_IDLE_TIMEOUT` | <Documented /> | Forces the streaming body idle timeout on or off. | A number. A true value forces it on and a false value (`0`) turns the fetch timeout off | Anthropic API client, all. Not set from project `env` before trust |
 | `API_TIMEOUT_MS` | <Documented /> | Sets the API request timeout in milliseconds. | A number of milliseconds, `600000` (10 minutes) by default. Whole number. Errors show a hint to raise it | All sessions. Not set from project `env` before trust |
+| `BUN_TLS_REFUSE_DISTRUSTED_KEYS` | <Undocumented /> | A Bun runtime variable. The program counts any value except `1` as a TLS trust override, as it does for `NODE_TLS_REJECT_UNAUTHORIZED`. The program does not show what Bun does with it. Added in `2.1.314`. | Text. Raw string. Any set value other than `1` counts | All sessions |
 | `CARGO_HTTP_CAINFO` | <Undocumented /> | Names the CA bundle file for Cargo. Claude Code sets it to the sandbox CA bundle for sandboxed commands, next to `SSL_CERT_FILE` and others. | Text. Also in a list of CA env names | Sandboxed commands and remote sessions |
 | `CLAUDE_AGENT_SDK_CLIENT_APP` | <Documented /> | Names the client app of an Agent SDK host. Claude Code adds it to the user agent as `client-app/<value>`. | Text | SDK hosts. Not set from project `env` before trust |
 | `CLAUDE_AGENT_SDK_VERSION` | <Undocumented /> | Reports the Agent SDK version. Claude Code adds it to the user agent as `agent-sdk/<value>`. | Text. The SDK host sets it | SDK hosts. Not set from project `env` before trust |
@@ -48,6 +49,7 @@ The table is sorted by name. See [Environment Variables](index.md#how-to-read-th
 | `CLAUDE_CODE_DISABLE_MTLS_RELOAD_ON_STALE_CONNECTION` | <Documented /> | Stops the re-read of the mTLS client cert and key after a connection-level API error. | On or off. Only matters when `CLAUDE_CODE_CLIENT_CERT` is set | MTLS setups |
 | `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` | <Documented /> | Turns off nonessential network traffic such as updates, telemetry and error reporting. | On or off | All sessions |
 | `CLAUDE_CODE_DISABLE_NONSTREAMING_FALLBACK` | <Documented /> | Stops the non-streaming retry after a stream fails mid-stream. | On or off | All sessions. Project `env` can set it before trust |
+| `CLAUDE_CODE_DISABLE_POOLED_CONNECTION_IDLE_LIMIT` | <Undocumented /> | Stops the idle limit on pooled connections in a cloud session. Without it, the program turns TCP keepalive off and sets a 35000 ms socket timeout when a pooled connection goes idle. It turns keepalive on (1000 ms) and clears the timeout when the connection is reused. Added in `2.1.314`. | On or off, off by default. The limit applies only when `CLAUDE_CODE_REMOTE` is true and `CLAUDE_CODE_ENVIRONMENT_KIND` is unset | Cloud sessions |
 | `CLAUDE_CODE_ENABLE_FINE_GRAINED_TOOL_STREAMING` | <Documented /> <Gated note="A feature flag or server gate decides by default. This variable overrides it" /> | Forces tool input streaming on or off. Code matches the docs. | On, off, or unset. `0` is off. Else first party needs a feature flag, Vertex and Bedrock need model support and no custom base URL, `1` forces on. Since `2.1.309` a Bedrock base URL on Amazon's own `https://bedrock-runtime.<region>.amazonaws.com` host does not count as custom | All sessions. Project `env` can set it before trust |
 | `CLAUDE_CODE_EXTRA_BODY` | <Documented /> | Merges a JSON object into the top level of every API request body. | JSON text. Ignored when org policy blocks experimental betas. Passed on to background sessions | All sessions |
 | `CLAUDE_CODE_EXTRA_METADATA` | <Undocumented /> | Merges a JSON object into the metadata of API requests. | JSON text. Claude Code logs an error and ignores a bad value | All sessions |
@@ -110,4 +112,4 @@ Numeric variables such as timeouts accept forms like `2e3` and `64_000` in addit
 - [System and Third-Party](system-and-third-party.md): `ALL_PROXY` and CA bundle names owned by other tools.
 - [Undocumented Items](../../reference/undocumented.md): every item that only the program shows.
 
-Source: the program (variable names found in the `2.1.312` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
+Source: the program (variable names found in the `2.1.314` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.

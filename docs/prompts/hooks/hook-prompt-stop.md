@@ -15,11 +15,11 @@ A prompt hook on the `Stop` event gets a different system text from a tool hook.
 | `system[2]` | 1,920 |
 | `messages[0].content[0]` | 592 |
 | `messages[0].content[1]` | 16 |
-| `messages[1].content[0]` | 9,056 |
+| `messages[1].content[0]` | 9,005 |
 | `messages[2].content[0]` | 2 |
 | `messages[3].content[0]` | 509 |
 | System blocks only | 2,060 |
-| Everything shown here | 12,622 |
+| Everything shown here | 12,571 |
 | Tools sent | 0 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -34,7 +34,7 @@ The text below is every part of the request that Claude Code builds before your 
 
 ```text
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.312.<build>; cc_entrypoint=sdk-cli;
+x-anthropic-billing-header: cc_version=2.1.314.<build>; cc_entrypoint=sdk-cli;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -117,8 +117,6 @@ SKIP only when another provider is being worked on (overrides all triggers): Ope
 - init: Initialize a new CLAUDE.md file with codebase documentation
 - security-review: Complete a security review of the pending changes on the current branch
 
-<total_tokens>15000000 tokens left</total_tokens>
-
 Today's date is <date>.
 
 === messages[2].content[0] (role: assistant) ===
@@ -136,12 +134,12 @@ ARGUMENTS: {"session_id":"<uuid-1>","transcript_path":"<config-dir>/projects/<pr
 
 The diff below starts from [Prompt Hook Request](./hook-prompt.md). Lines that start with `-` are only in the baseline. Lines that start with `+` are only here.
 
-Lines added: 83. Lines removed: 5. Size change: +11,144 characters.
+Lines added: 81. Lines removed: 5. Size change: +11,093 characters.
 
 ```diff
 --- hook-prompt
 +++ hook-prompt-stop
-@@ -5,15 +5,93 @@
+@@ -5,15 +5,91 @@
  You are a Claude agent, built on Anthropic's Claude Agent SDK.
 
  === system[2] (cache marker: {"type":"ephemeral"}) ===
@@ -226,8 +224,6 @@ Lines added: 83. Lines removed: 5. Size change: +11,144 characters.
 +- plugin-authoring: Make a mod: a change to Claude's own interface or behaviour, such as a panel or pane that stays beside the chat and updates, a band, status line, toast, slash command, or hook on tool calls. Use to make, change or debug a mod or its hooks module.
 +- init: Initialize a new CLAUDE.md file with codebase documentation
 +- security-review: Complete a security review of the pending changes on the current branch
-+
-+<total_tokens>15000000 tokens left</total_tokens>
 +
 +Today's date is <date>.
 +

@@ -1,9 +1,9 @@
 {
   "name": "clawdipedia-docs",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "license": "MIT",
   "type": "module",
-  "description": "Four doc sources (clawdipedia, platform, code, anthropic) from a shell: search, read, list, and schema. Runs on Bun with no install step.",
+  "description": "Four doc sources (clawdipedia, platform, code, claude-resources) from a shell: search, read, list, and schema. Runs on Bun with no install step.",
   "homepage": "https://clawdipedia.cc/",
   "repository": "https://github.com/xsyetopz/clawdipedia",
   "bin": {

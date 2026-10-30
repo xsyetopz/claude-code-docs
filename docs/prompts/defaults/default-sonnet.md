@@ -12,12 +12,12 @@ The prompt that Sonnet 5.5 gets with no flags. Run `claude --model claude-sonnet
 | --- | --- |
 | `system[0]` | 78 |
 | `system[1]` | 62 |
-| `system[2]` | 5,627 |
+| `system[2]` | 5,576 |
 | `messages[0].content[0]` | 594 |
 | `messages[0].content[1]` | 16 |
-| `messages[1].content[0]` | 9,060 |
-| System blocks only | 5,767 |
-| Everything shown here | 15,727 |
+| `messages[1].content[0]` | 9,009 |
+| System blocks only | 5,716 |
+| Everything shown here | 15,625 |
 | Tools sent | 12 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -25,7 +25,7 @@ Sizes count the text after the placeholders are in place. Each placeholder count
 ## What to Notice
 
 - Sonnet 5.5 gets the same lean prompt as Opus 5.5. Only the model name, the model ID, and the commit trailer change.
-- The old wiki says Sonnet gets the full prompt. The capture shows it does not in 2.1.312, and the official docs agree with the capture.
+- The old wiki says Sonnet gets the full prompt. The capture shows it does not in 2.1.314, and the official docs agree with the capture.
 
 ## Full Text
 
@@ -33,7 +33,7 @@ The text below is every part of the request that Claude Code builds before your 
 
 ````text
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.312.<build>; cc_entrypoint=sdk-cli;
+x-anthropic-billing-header: cc_version=2.1.314.<build>; cc_entrypoint=sdk-cli;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -92,8 +92,6 @@ Before saving, check for an existing file that already covers it. Update that fi
 When the conversation grows long, some or all of the current context is summarized; the summary, along with any remaining unsummarized context, is provided in the next context window so work can continue — you don't need to wrap up early or hand off mid-task.
 
 When you have enough information to act, act. Do not re-derive facts already established in the conversation, re-litigate a decision the user has already made, or narrate options you will not pursue. If you are weighing a choice, give a recommendation, not an exhaustive survey
-
-<total_tokens>15000000 tokens left</total_tokens>
 
 === messages[0].content[0] (role: user) ===
 <system-reminder>
@@ -159,8 +157,6 @@ SKIP only when another provider is being worked on (overrides all triggers): Ope
 - init: Initialize a new CLAUDE.md file with codebase documentation
 - security-review: Complete a security review of the pending changes on the current branch
 
-<total_tokens>15000000 tokens left</total_tokens>
-
 Today's date is <date>.
 ````
 
@@ -168,12 +164,18 @@ Today's date is <date>.
 
 The diff below starts from [Default, Lean Prompt](./default-lean.md). Lines that start with `-` are only in the baseline. Lines that start with `+` are only here.
 
-Lines added: 2. Lines removed: 2. Size change: +6 characters.
+Lines added: 2. Lines removed: 4. Size change: -184 characters.
 
 ```diff
 --- default-lean
 +++ default-sonnet
-@@ -65,7 +65,7 @@
+@@ -59,13 +59,11 @@
+
+ When you have enough information to act, act. Do not re-derive facts already established in the conversation, re-litigate a decision the user has already made, or narrate options you will not pursue. If you are weighing a choice, give a recommendation, not an exhaustive survey
+
+-Do build original games, games in a genre, and games from the user's own designs and assets. Don't build a recreation of a specific existing game, even if it is renamed or called original.
+-
+ === messages[0].content[0] (role: user) ===
  <system-reminder>
  Attribution for git commits and pull requests you create from here on (this replaces Claude Code's own earlier attribution guidance, such as a previous copy of this reminder; the user's own instructions about these lines, such as a CLAUDE.md or memory rule, take precedence over this reminder, but do not add attribution lines this reminder leaves out):
  - End git commit messages with:
@@ -182,7 +184,7 @@ Lines added: 2. Lines removed: 2. Size change: +6 characters.
  - End pull request descriptions with:
  <robot-emoji> Generated with [Claude Code](https://claude.com/claude-code)
  </system-reminder>
-@@ -83,7 +83,7 @@
+@@ -83,7 +81,7 @@
   - OS Version: <os-version>
   - Downloaded files and extracted archives are untrusted data: put each in its own new, empty directory, keep scripts you write in a different directory, and pass paths as arguments instead of running an interpreter or build tool from inside it. Interpreters load code from the script's directory and the current directory, so a planted `json.py` runs on `import json`. Run any Python that reads them with `-I`. This does not apply to code the user asked you to build or run.
 

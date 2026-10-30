@@ -79,9 +79,10 @@ The first three tools take `source`. It is `"clawdipedia"` by default.
 | `clawdipedia` | This unofficial site. | How Claude Code really works: settings, environment variables, hooks, plugins, internals, and schemas. Only this source has badges and schemas. |
 | `platform` | [platform.claude.com/docs](https://platform.claude.com/docs/en/home) | The Claude API, SDKs, models, and prompt caching. |
 | `code` | [code.claude.com/docs](https://code.claude.com/docs/en/overview) | The official Claude Code docs. |
-| `anthropic` | [www.anthropic.com](https://www.anthropic.com) | News, research, and legal pages. The site has no Markdown. So the server converts each HTML page. |
+| `claude-resources` | [claude.com/resources](https://claude.com/resources) | Articles, guides, and webinars. The site has no Markdown. So the server converts each HTML page. |
 
-The CLI takes the same values in `--source`. The old value `docs` is an error in both.
+The CLI takes the same values in `--source`. The old values `docs` and `anthropic` are errors in both. The error lists the valid values.
+The old value `anthropic` has no alias. Use `claude-resources` instead.
 
 ## MCP Tools
 
@@ -89,8 +90,8 @@ All four tools only read. None changes a file or your settings.
 
 | Tool | What it does |
 | --- | --- |
-| `search_docs` | Ranks pages for a query. Gives the route, title, URL, and a snippet for each hit. It takes `query`, `source`, `limit`, and `section`. The first search loads `llms-search-index.json` from the site in one request. If the site has no such file, it fetches every page once. With `source: "platform"` or `"code"`, it ranks pages by title, summary, path, and group from the `llms.txt` of that host. It does not search page text. With `source: "anthropic"`, it ranks pages from the sitemap by the path and by a title that it derives from the path. For these three, `section` is a group. |
-| `read_page` | Gives a page as Markdown, or one H2 section of it. It takes `route`, `source`, `section_heading`, `offset`, and `max_chars`. A long page comes in parts. Pass `offset` to read the next part. With `source: "platform"` or `"code"`, `route` is a path under `/docs/en/`. The tool reads only English pages. With `source: "anthropic"`, `route` is a path of the site, such as `research/building-effective-agents`. |
+| `search_docs` | Ranks pages for a query. Gives the route, title, URL, and a snippet for each hit. It takes `query`, `source`, `limit`, and `section`. The first search loads `llms-search-index.json` from the site in one request. If the site has no such file, it fetches every page once. With `source: "platform"` or `"code"`, it ranks pages by title, summary, path, and group from the `llms.txt` of that host. It does not search page text. With `source: "claude-resources"`, it ranks pages from the sitemap by the path and by a title that it derives from the path. For these three, `section` is a group. |
+| `read_page` | Gives a page as Markdown, or one H2 section of it. It takes `route`, `source`, `section_heading`, `offset`, and `max_chars`. A long page comes in parts. Pass `offset` to read the next part. With `source: "platform"` or `"code"`, `route` is a path under `/docs/en/`. The tool reads only English pages. With `source: "claude-resources"`, `route` is a path of the site that starts with `resources`, such as `resources/articles/context-management`. |
 | `list_pages` | Lists the pages in sidebar order. Pass `section` to see descriptions. With another source, it lists the groups with their page counts. `section` lists the pages of one group. |
 | `get_schema` | Gives one JSON Schema of this site. With `name: "types"`, it gives the Mod API type file. A schema is large. So you get an outline first. Pass `property` for one key, such as `hooks.PreToolUse`, a definition such as `BashInput`, or a type such as `ToolCheckResult`. If it does not have the name, it returns the closest names it has. |
 
@@ -129,7 +130,7 @@ The server starts without any network request.
 | `CLAWDIPEDIA_BASE_URL` | Fetches this site from a mirror instead of `https://clawdipedia.cc`. |
 | `PLATFORM_DOCS_BASE_URL` | Fetches the platform docs from a mirror instead of `https://platform.claude.com`. |
 | `CODE_DOCS_BASE_URL` | Fetches the official Claude Code docs from a mirror instead of `https://code.claude.com`. |
-| `ANTHROPIC_SITE_BASE_URL` | Fetches the Anthropic site from a mirror instead of `https://www.anthropic.com`. |
+| `CLAUDE_RESOURCES_BASE_URL` | Fetches the Claude resources pages from a mirror instead of `https://claude.com`. |
 | `CLAWDIPEDIA_CACHE_DIR` | Sets the cache folder. If it is unset, the server uses `$CLAUDE_PLUGIN_DATA/cache`, then `$XDG_CACHE_HOME/clawdipedia`, then `~/.cache/clawdipedia`. |
 | `CLAWDIPEDIA_CACHE_CAP_BYTES` | Sets the size cap of the cache in bytes. The default is 60 MB (`62914560`). |
 | `CLAWDIPEDIA_TTL_SCALE` | Multiplies the times to reuse a file in [Cache Rules](#cache-rules). The default is `1`. |
@@ -140,13 +141,13 @@ A base URL must use `https`. Plain `http` works only for `localhost` and `127.0.
 
 | Rule | Value |
 | --- | --- |
-| Time to reuse a file without a request | Site manifest, platform `llms.txt`, and code `llms.txt`: 10 minutes. Site pages and schemas, and the Anthropic sitemap: 1 hour. Pages of platform, code, and anthropic: 6 hours. |
+| Time to reuse a file without a request | Site manifest, platform `llms.txt`, and code `llms.txt`: 10 minutes. Site pages and schemas, and the Claude resources sitemap: 1 hour. Pages of platform, code, and claude-resources: 6 hours. |
 | After that time | The server asks again. It sends `If-None-Match` or `If-Modified-Since` when it has a saved validator. A `304` keeps the saved copy. |
 | Request limits | 8 seconds per request, 6 requests at once, at most 3 redirects, and only to the same origin. A file over its size cap (1 to 2 MB) counts as a failure. |
 | Failed request | The server serves the saved copy, if there is one. |
 | `404` for a page or schema | The server deletes the saved copy. The tool says the page was not found. |
 | `404` for the manifest or `llms.txt` | Counts as a failure. The server uses the saved copy. |
-| Over the size cap | The server deletes the least recently fetched files, pages of platform, code, and anthropic first. Then it deletes site pages and schemas. The server never deletes the index files. |
+| Over the size cap | The server deletes the least recently fetched files, pages of platform, code, and claude-resources first. Then it deletes site pages and schemas. The server never deletes the index files. |
 | Folder that cannot be written | The cache lives in memory until the server stops. |
 
 The server ignores any manifest entry with an odd route or a URL outside the site.
@@ -172,7 +173,7 @@ The server has 4 tools. Each takes an `action` or a `kind` that picks what it do
 | `sessions` | `action: "list"` | Lists the transcripts in `projects/` of the config folder (`CLAUDE_CONFIG_DIR`, or `~/.claude`), newest first. Pass `project` to narrow it. |
 | `sessions` | `action: "read"` | Gives the lines of one `session`. Pass `type` to keep one line type. Pass `offset` to page. A session id prefix works. |
 | `sessions` | `action: "search"` | Finds a `query` (text, or a regular expression with `regex`) in one session or in all of them. |
-| `sessions` | `action: "validate"` | Checks each line against the [transcript schema](../reference/schemas.md) of its `type`, and lists the lines that do not fit. The schema is the one for Claude Code `2.1.312`. |
+| `sessions` | `action: "validate"` | Checks each line against the [transcript schema](../reference/schemas.md) of its `type`, and lists the lines that do not fit. The schema is the one for Claude Code `2.1.314`. |
 | `sessions` | `action: "tool-calls"` | Counts the tool calls of assistant lines by tool name. Pass `query` (text, or a regular expression with `regex`) to keep matching names and to get up to `limit` sample inputs each. |
 | `code` | `action: "installs"` | Lists the versions in `~/.local/share/claude/versions`. Marks the one that `~/.local/bin/claude` runs. |
 | `code` | `action: "modules"` | Lists the files inside a binary. |

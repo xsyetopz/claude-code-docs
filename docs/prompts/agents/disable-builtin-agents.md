@@ -12,12 +12,12 @@ sidebar_position: 13
 | --- | --- |
 | `system[0]` | 78 |
 | `system[1]` | 62 |
-| `system[2]` | 5,627 |
+| `system[2]` | 5,766 |
 | `messages[0].content[0]` | 592 |
 | `messages[0].content[1]` | 16 |
-| `messages[1].content[0]` | 7,418 |
-| System blocks only | 5,767 |
-| Everything shown here | 14,083 |
+| `messages[1].content[0]` | 7,367 |
+| System blocks only | 5,906 |
+| Everything shown here | 14,171 |
 | Tools sent | 12 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -32,7 +32,7 @@ The text below is every part of the request that Claude Code builds before your 
 
 ````text
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.312.<build>; cc_entrypoint=sdk-cli;
+x-anthropic-billing-header: cc_version=2.1.314.<build>; cc_entrypoint=sdk-cli;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -92,7 +92,7 @@ When the conversation grows long, some or all of the current context is summariz
 
 When you have enough information to act, act. Do not re-derive facts already established in the conversation, re-litigate a decision the user has already made, or narrate options you will not pursue. If you are weighing a choice, give a recommendation, not an exhaustive survey
 
-<total_tokens>15000000 tokens left</total_tokens>
+Do build original games, games in a genre, and games from the user's own designs and assets. Don't build a recreation of a specific existing game, even if it is renamed or called original.
 
 === messages[0].content[0] (role: user) ===
 <system-reminder>
@@ -148,8 +148,6 @@ SKIP only when another provider is being worked on (overrides all triggers): Ope
 - plugin-authoring: Make a mod: a change to Claude's own interface or behaviour, such as a panel or pane that stays beside the chat and updates, a band, status line, toast, slash command, or hook on tool calls. Use to make, change or debug a mod or its hooks module.
 - init: Initialize a new CLAUDE.md file with codebase documentation
 - security-review: Complete a security review of the pending changes on the current branch
-
-<total_tokens>15000000 tokens left</total_tokens>
 
 Today's date is <date>.
 ````

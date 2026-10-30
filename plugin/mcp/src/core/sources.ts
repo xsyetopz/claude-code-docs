@@ -1,11 +1,10 @@
-// The three remote sources (platform, code, anthropic) behind one shape, so search, list, and read each have one branch.
+// The three remote sources (platform, code, claude-resources) behind one shape, so search, list, and read each have one branch.
 import {
-  type AnthropicEntry,
-  anthropicBase,
-  nearAnthropic,
-  normalizeAnthropicPath,
-  ROOT,
-} from "../anthropic.ts";
+  type ClaudeResourcesEntry,
+  claudeResourcesBase,
+  nearClaudeResources,
+  normalizeClaudeResourcesPath,
+} from "../claude-resources.ts";
 import { codeBase, nearCode, normalizeCodePath } from "../code.ts";
 import type { Resource, Source } from "../fetcher.ts";
 import { htmlTitle, htmlToMarkdown } from "../html.ts";
@@ -14,7 +13,7 @@ import {
   normalizePlatformPath,
   platformBase,
 } from "../platform.ts";
-import { anthropic, code, platform } from "./shared.ts";
+import { claudeResources, code, platform } from "./shared.ts";
 
 /** A page of a remote source. `group` is the filter value: a llms.txt group, or a sitemap section. */
 export type RemoteItem = {
@@ -26,7 +25,7 @@ export type RemoteItem = {
 };
 
 export type RemoteSource = {
-  name: "platform" | "code" | "anthropic";
+  name: "platform" | "code" | "claude-resources";
   /** What the filter is called in messages. */
   groupWord: string;
   /** Rest of the "Invalid path" message. */
@@ -85,7 +84,7 @@ const codeSource: RemoteSource = {
   pageTitleFirst: false,
 };
 
-const item = (e: AnthropicEntry): RemoteItem => ({
+const item = (e: ClaudeResourcesEntry): RemoteItem => ({
   path: e.path,
   title: e.title,
   description: e.lastmod ? `Updated ${e.lastmod.slice(0, 10)}` : "",
@@ -93,14 +92,14 @@ const item = (e: AnthropicEntry): RemoteItem => ({
   url: e.url,
 });
 
-const anthropicSource: RemoteSource = {
-  name: "anthropic",
+const claudeResourcesSource: RemoteSource = {
+  name: "claude-resources",
   groupWord: "section",
   invalidHint: () =>
-    `Use a page path such as "research/building-effective-agents", or "${ROOT}" for the home page (letters, digits, "-", "_", "." and "/" only; pages on ${anthropicBase()} only).`,
-  normalize: normalizeAnthropicPath,
+    `Use a page path under resources/ such as "resources/articles/claude-duet", or "resources" for the hub page (letters, digits, "-", "_", "." and "/" only; English pages on ${claudeResourcesBase()} only).`,
+  normalize: normalizeClaudeResourcesPath,
   async index() {
-    const ix = await anthropic.index();
+    const ix = await claudeResources.index();
     return {
       entries: ix.entries.map(item),
       source: ix.source,
@@ -112,11 +111,10 @@ const anthropicSource: RemoteSource = {
         })),
     };
   },
-  known: () => anthropic.known()?.map(item),
-  readPage: (p) => anthropic.readPage(p),
-  near: nearAnthropic,
-  pageUrl: (p) =>
-    p === ROOT ? `${anthropicBase()}/` : `${anthropicBase()}/${p}`,
+  known: () => claudeResources.known()?.map(item),
+  readPage: (p) => claudeResources.readPage(p),
+  near: nearClaudeResources,
+  pageUrl: (p) => `${claudeResourcesBase()}/${p}`,
   markdown: htmlToMarkdown,
   titleOf: htmlTitle,
   pageTitleFirst: true,
@@ -127,6 +125,6 @@ export const remoteOf = (name: string | undefined): RemoteSource | undefined =>
     ? platformSource
     : name === "code"
       ? codeSource
-      : name === "anthropic"
-        ? anthropicSource
+      : name === "claude-resources"
+        ? claudeResourcesSource
         : undefined;

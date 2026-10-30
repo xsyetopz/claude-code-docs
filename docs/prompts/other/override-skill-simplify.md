@@ -12,13 +12,13 @@ The text that `/simplify` sends to the model. Type `/simplify` in a session.
 | --- | --- |
 | `system[0]` | 78 |
 | `system[1]` | 62 |
-| `system[2]` | 5,627 |
+| `system[2]` | 5,766 |
 | `messages[0].content[0]` | 592 |
 | `messages[0].content[1]` | 83 |
 | `messages[0].content[2]` | 123 |
 | `messages[1].content[0]` | 8,884 |
-| System blocks only | 5,767 |
-| Everything shown here | 15,783 |
+| System blocks only | 5,906 |
+| Everything shown here | 15,922 |
 | Tools sent | 12 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -33,7 +33,7 @@ The text below is every part of the request that Claude Code builds before your 
 
 ````text
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.312.<build>; cc_entrypoint=sdk-cli;
+x-anthropic-billing-header: cc_version=2.1.314.<build>; cc_entrypoint=sdk-cli;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -93,7 +93,7 @@ When the conversation grows long, some or all of the current context is summariz
 
 When you have enough information to act, act. Do not re-derive facts already established in the conversation, re-litigate a decision the user has already made, or narrate options you will not pursue. If you are weighing a choice, give a recommendation, not an exhaustive survey
 
-<total_tokens>15000000 tokens left</total_tokens>
+Do build original games, games in a genre, and games from the user's own designs and assets. Don't build a recreation of a specific existing game, even if it is renamed or called original.
 
 === messages[0].content[0] (role: user) ===
 <system-reminder>

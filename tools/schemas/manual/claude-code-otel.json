@@ -3442,7 +3442,7 @@
       "schema": {
         "type": "string"
       },
-      "anchors": ["P(\"tool\",{tool_name:"],
+      "anchors": ["«»(\"tool\",{tool_name:"],
       "note": "tool_name:m with m=kA()?g:n and g=jt(n): the tool name string."
     },
     "span:claude_code.tool.tool_name_safe": {

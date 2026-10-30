@@ -2,7 +2,7 @@
 //   site/llms-manifest.json, site/llms.txt, site/pages/<route>.md, site/schemas/<name>.json
 //   platform/llms.txt, platform/pages/<path>.md
 //   code/llms.txt, code/pages/<path>.md
-//   anthropic/sitemap.xml, anthropic/pages/<path>.html
+//   claude-resources/sitemap.xml, claude-resources/pages/<path>.html
 // Every body file has a sibling <file>.meta.json. Writes are atomic (temp file, then rename).
 // If the folder cannot be written, the cache lives in memory only.
 import { createHash } from "node:crypto";
@@ -85,7 +85,7 @@ const pruneRank = (relPath: string): number => {
   if (
     rel.startsWith("platform/pages/") ||
     rel.startsWith("code/pages/") ||
-    rel.startsWith("anthropic/pages/")
+    rel.startsWith("claude-resources/pages/")
   )
     return 0;
   if (rel.startsWith("site/pages/") || rel.startsWith("site/schemas/"))
@@ -283,7 +283,7 @@ export class DiskCache {
     }
   }
 
-  /** Deletes the least recently fetched files (pages of platform, code, and anthropic first, then site pages) until under the cap. */
+  /** Deletes the least recently fetched files (pages of platform, code, and claude-resources first, then site pages) until under the cap. */
   private prune(keep: string): void {
     const all = this.files();
     let size = all.reduce((n, f) => n + f.size, 0);

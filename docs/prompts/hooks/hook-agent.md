@@ -33,7 +33,7 @@ The text below is every part of the request that Claude Code builds before your 
 
 ```text
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.312.<build>; cc_entrypoint=sdk-cli;
+x-anthropic-billing-header: cc_version=2.1.314.<build>; cc_entrypoint=sdk-cli;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -69,7 +69,7 @@ Today's date is <date>.
 
 The diff below starts from [Default, Lean Prompt](../defaults/default-lean.md). Lines that start with `-` are only in the baseline. Lines that start with `+` are only here.
 
-Lines added: 7. Lines removed: 104. Size change: -13,359 characters.
+Lines added: 7. Lines removed: 102. Size change: -13,447 characters.
 
 ````diff
 --- default-lean
@@ -138,12 +138,12 @@ Lines added: 7. Lines removed: 104. Size change: -13,359 characters.
 -
 -When you have enough information to act, act. Do not re-derive facts already established in the conversation, re-litigate a decision the user has already made, or narrate options you will not pursue. If you are weighing a choice, give a recommendation, not an exhaustive survey
 -
--<total_tokens>15000000 tokens left</total_tokens>
+-Do build original games, games in a genre, and games from the user's own designs and assets. Don't build a recreation of a specific existing game, even if it is renamed or called original.
 -
  === messages[0].content[0] (role: user) ===
  <system-reminder>
  Attribution for git commits and pull requests you create from here on (this replaces Claude Code's own earlier attribution guidance, such as a previous copy of this reminder; the user's own instructions about these lines, such as a CLAUDE.md or memory rule, take precedence over this reminder, but do not add attribution lines this reminder leaves out):
-@@ -71,60 +25,7 @@
+@@ -71,58 +25,7 @@
  </system-reminder>
 
  === messages[0].content[1] (role: user) ===
@@ -201,8 +201,6 @@ Lines added: 7. Lines removed: 104. Size change: -13,359 characters.
 -- plugin-authoring: Make a mod: a change to Claude's own interface or behaviour, such as a panel or pane that stays beside the chat and updates, a band, status line, toast, slash command, or hook on tool calls. Use to make, change or debug a mod or its hooks module.
 -- init: Initialize a new CLAUDE.md file with codebase documentation
 -- security-review: Complete a security review of the pending changes on the current branch
--
--<total_tokens>15000000 tokens left</total_tokens>
 -
  Today's date is <date>.
 ````

@@ -9,7 +9,7 @@ Each method is also an event with the same name, such as `ui.log`, so a hook abo
 
 Close a pane with `$.ui.close`. A `deny` from a hook refuses a call.
 
-Official page: [Draw in the Interface](https://code.claude.com/docs/en/plugins/mods/interface), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the Mod API type file of the 2.1.312 program (`schemas/claude-code.d.ts`).
+Official page: [Draw in the Interface](https://code.claude.com/docs/en/plugins/mods/interface), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the Mod API type file of the 2.1.314 program (`schemas/claude-code.d.ts`).
 "Run time" appears in a "Where it can be used" cell. It means in a hook, in a closure that a hook drew, or in a timer callback. It does not mean inside `register`.
 
 ## Example
@@ -38,11 +38,12 @@ on("session.start", async ($, e, next) => {
 | `$.ui.open` | <Documented /> | Opens a pane: a framed region that the surface places and this plugin draws by hooking `ui.render` for `{ component: "Pane" }`. | `(pane: PaneOpenArgs) => Promise<UiOpenResult>`. The `id` has 1 to 64 characters. Panes that someone asked for fit at any width. Panes that nobody asked for need 144 columns. | Run time. |
 | `$.ui.close` | <Documented /> | Closes one of the open panes. The call ignores an id that is not open. | `(pane: PaneCloseArgs) => Promise<void>`. A `ui.close` hook can keep it open, except on an unload. | Run time. |
 | `$.ui.panes` | <Documented /> | Lists this plugin's own open panes: id, title, and whether each is shown, holds the keyboard, and is placed. | `() => Promise<readonly UiPane[]>`. In open order, placed ones first. Other plugins' panes are not listed. | Run time. |
+| `$.ui.place` | <Undocumented /> | Places one row at the end of the transcript. It scrolls with the conversation, and a `ui.render` hook draws it as the component `Placed`. Display only: the model and the transcript file never read it. | `(args: UiPlaceArgs) => Promise<UiPlaceResult>`. The `id` names the row among this plugin's rows. A second call with the same `id` answers the row that stands. A plugin holds at most 500 placed rows. Resolves `{ isPlaced: false, reason }` with no conversation. New in `2.1.314`. | Run time. |
 | `$.ui.scroll` | <Documented /> | Scrolls something into view, like the DOM's `scrollIntoView`: a render instance by `requestId`, an element by `key`, or the edge of a site. | `(args: UiScrollArgs) => Promise<UiScrollResult>`. `to` says where, `in` says which site, `block` says where it lands. | Run time. |
 | `$.ui.focus` | <Documented /> | Moves the focus ring of one of this plugin's sites to an element it drew there, like the DOM's `element.focus()`. | `(args: UiFocusArgs) => Promise<UiFocusResult>`. Takes the site `requestId` and the element `key`. Resolves `{}` or `{ deny }`. | Run time. |
 | `$.ui.copy` | <Documented /> | Puts `text` on the clipboard of a surface the session draws on, and says whether it took. | `(args: UiCopyArgs) => Promise<UiCopyResult>`. Resolves `{ isCopied: true }` or `{ isCopied: false, reason }`. | Run time. |
 | `$.ui.selection` | <Documented /> | Returns what the person last selected with the mouse: the text as a copy would take it, and the transcript row it lies in. | `() => Promise<UiSelection \| undefined>`. `undefined` with nothing selected, in `-p`, or when fullscreen is off. | Run time. |
-| `$.ui.view` | <Documented /> | Puts an agent's transcript in the main view, as the person's own switch from the tasks list does. `{}` goes back to the main one. | `(view: SiteView) => Promise<UiViewResult>`. Works only while the call answers the person's own input (press, pick, prompt, command). | Only while answering the person's own input. |
+| `$.ui.view` | <Undocumented /> | Puts an agent's transcript in the main view, as the person's own switch from the tasks list does. `{}` goes back to the main one. | `(view: SiteView) => Promise<UiViewResult>`. Works only while the call answers the person's own input (press, pick, prompt, command). | Only while answering the person's own input. |
 
 ## Related Pages
 

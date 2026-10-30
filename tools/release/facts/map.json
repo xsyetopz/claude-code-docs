@@ -171,6 +171,16 @@
     "probes": [],
     "note": "release history: when it started; recheck only if the feature is removed"
   },
+  "docs/configure/settings/index.md#managed-settings:9d468c67": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour; no probe checks it yet"
+  },
+  "docs/configure/settings/index.md#where-settings-live:8cf3097d": {
+    "kind": "manual",
+    "probes": [],
+    "note": "program behaviour; no probe checks it yet"
+  },
   "docs/configure/settings/mcp-and-channels.md#keys:85755270": {
     "kind": "setting",
     "probes": []
@@ -321,6 +331,21 @@
     "kind": "manual",
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
+  },
+  "docs/extend/mod-api/ui/ui-elements.md#placed:5e7079b0": {
+    "kind": "schema",
+    "probes": [],
+    "note": "RenderInput Placed.id in schemas/claude-code.d.ts"
+  },
+  "docs/extend/mod-api/ui/ui-elements.md#placed:698d8c1d": {
+    "kind": "schema",
+    "probes": [],
+    "note": "RenderInput Placed.plugin in schemas/claude-code.d.ts"
+  },
+  "docs/extend/mod-api/ui/ui-elements.md#placed:a8649054": {
+    "kind": "schema",
+    "probes": [],
+    "note": "RenderInput Placed.onScreen in schemas/claude-code.d.ts"
   },
   "docs/extend/plugins/cli.md#subcommands:ae6630e1": {
     "kind": "manual",
@@ -516,11 +541,6 @@
     "kind": "manual",
     "probes": [],
     "note": "program behaviour; no probe checks it yet"
-  },
-  "docs/start/release-archive.md#older-releases:0d10f2a9": {
-    "kind": "static",
-    "probes": [],
-    "note": "scope or example text, not a claim about the program"
   },
   "docs/configure/status-line.md#how-it-works:fc4602b6": {
     "kind": "behaviour",
@@ -785,18 +805,6 @@
     "kind": "behaviour",
     "probes": ["live.context-budget"]
   },
-  "docs/reference/probes.md#live-login-probes:21e6589e": {
-    "kind": "behaviour",
-    "probes": ["live.oauth-parity", "live.artifacts"]
-  },
-  "docs/reference/probes.md#live-login-probes:dce7a0da": {
-    "kind": "behaviour",
-    "probes": ["live.oauth-parity"]
-  },
-  "docs/reference/probes.md#live-login-probes:82b311c0": {
-    "kind": "behaviour",
-    "probes": ["live.artifacts"]
-  },
   "docs/reference/probes.md#static-and-print-probes:3c918190": {
     "kind": "behaviour",
     "probes": [
@@ -888,21 +896,6 @@
       "live.usage.envelope"
     ],
     "note": "texts seen only against the local stub; live.usage.429* never reach the usage endpoint; again on 2.1.307 and 2.1.308, whose text fragments match 2.1.306"
-  },
-  "docs/start/release-archive.md#version-21306:dcc6649e": {
-    "kind": "manual",
-    "probes": [],
-    "note": "live.artifacts showed Unknown command on 2.1.306, 2.1.307, and 2.1.308; no panel-shown capture exists"
-  },
-  "docs/start/release-archive.md#older-releases:e2b4b69c": {
-    "kind": "manual",
-    "probes": [],
-    "note": "texts seen only against the local stub; live.usage.429* never reach the usage endpoint; again on 2.1.307 and 2.1.308, whose text fragments match 2.1.306"
-  },
-  "docs/start/release-archive.md#example:0688c778": {
-    "kind": "static",
-    "probes": [],
-    "note": "scope or example text, not a claim about the program"
   },
   "docs/configure/env-vars/remote-and-cloud-sessions.md#variables:a42e211e": {
     "kind": "flag",
@@ -1043,6 +1036,29 @@
       "managed.true.classify-user-true-and-flag-false"
     ]
   },
+  "docs/reference/probes.md#live-login-probes:00ecb1d0": {
+    "kind": "behaviour",
+    "probes": ["live.oauth-parity", "live.artifacts"]
+  },
+  "docs/reference/probes.md#live-login-probes:0c9830b1": {
+    "kind": "behaviour",
+    "probes": ["live.oauth-parity"],
+    "note": "was dce7a0da until the row explained the 2.1.314 difference"
+  },
+  "docs/reference/probes.md#live-login-probes:437f2b6b": {
+    "kind": "behaviour",
+    "probes": ["live.oauth-parity", "live.artifacts"],
+    "note": "was 21e6589e until the paragraph named 2.1.314"
+  },
+  "docs/reference/probes.md#live-login-probes:da2034b4": {
+    "kind": "behaviour",
+    "probes": ["live.oauth-parity"]
+  },
+  "docs/reference/probes.md#live-login-probes:fc59136f": {
+    "kind": "behaviour",
+    "probes": ["live.artifacts"],
+    "note": "was 82b311c0 until the row dropped its link to the deleted Release Archive page"
+  },
   "docs/extend/mod-api/calls/session.md#members:5bea862d": {
     "kind": "manual",
     "probes": [],
@@ -1081,14 +1097,14 @@
   "docs/configure/memory-and-rules.md#how-it-works:0e4f9078": {
     "kind": "external",
     "probes": [],
-    "note": "cites the v2.1.309 release notes"
+    "note": "cites the v2.1.309 release notes; was 876ddeba until the row gained the 2.1.314 match rule"
   },
   "docs/configure/permissions/modes.md#safety-checks:172f7afa": {
     "kind": "external",
     "probes": [],
     "note": "cites the v2.1.309 release notes"
   },
-  "docs/configure/permissions/sandbox.md#core-keys:876ddeba": {
+  "docs/configure/permissions/sandbox.md#core-keys:d9805295": {
     "kind": "external",
     "probes": [],
     "note": "cites the v2.1.309 release notes"
@@ -1137,6 +1153,11 @@
     "kind": "schema",
     "probes": [],
     "note": "UiBlitResult.fix in schemas/claude-code.d.ts"
+  },
+  "docs/extend/mod-api/types/ui/select-text-focus.md#svgprops:1bcc9847": {
+    "kind": "schema",
+    "probes": [],
+    "note": "SvgProps.isInteractive doc in schemas/claude-code.d.ts"
   },
   "docs/extend/plugins/manifest.md#top-level-keys:72274c47": {
     "kind": "external",
@@ -1405,6 +1426,46 @@
     "probes": [],
     "note": "the 24, 12, and 12 limits read in the cleaned 2.1.312 code (chunk-r5cyd28m.js, the model hooks and overdue model hooks counts)"
   },
+  "docs/extend/mod-api/types/ui/call-arguments.md#uiplaceargs:a9056167": {
+    "kind": "schema",
+    "probes": [],
+    "note": "UiPlaceArgs.id in schemas/claude-code.d.ts"
+  },
+  "docs/extend/mod-api/types/ui/call-arguments.md#uiplaceresult:37923882": {
+    "kind": "schema",
+    "probes": [],
+    "note": "UiPlaceResult.reason in schemas/claude-code.d.ts"
+  },
+  "docs/extend/mod-api/types/ui/call-arguments.md#uiplaceresult:7a65e3fe": {
+    "kind": "schema",
+    "probes": [],
+    "note": "UiPlaceResult.isPlaced (false) in schemas/claude-code.d.ts"
+  },
+  "docs/extend/mod-api/types/ui/call-arguments.md#uiplaceresult:7b0d4026": {
+    "kind": "schema",
+    "probes": [],
+    "note": "UiPlaceResult.requestId (not placed, optional) in schemas/claude-code.d.ts"
+  },
+  "docs/extend/mod-api/types/ui/call-arguments.md#uiplaceresult:7b86e471": {
+    "kind": "schema",
+    "probes": [],
+    "note": "UiPlaceResult.isPlaced (true) in schemas/claude-code.d.ts"
+  },
+  "docs/extend/mod-api/types/ui/call-arguments.md#uiplaceresult:92b79a90": {
+    "kind": "schema",
+    "probes": [],
+    "note": "UiPlaceResult.requestId (placed) in schemas/claude-code.d.ts"
+  },
+  "docs/extend/mod-api/ui/ui-events.md#events-raised-by-ui-calls:c2e85d78": {
+    "kind": "schema",
+    "probes": [],
+    "note": "ui.place event in schemas/claude-code.d.ts"
+  },
+  "docs/extend/mod-api/ui/ui.md#members:7f79eb81": {
+    "kind": "schema",
+    "probes": [],
+    "note": "$.ui.place in schemas/claude-code.d.ts"
+  },
   "docs/extend/skills-and-commands/frontmatter.md#skill-discovery-with-bash-cd:a4b976c0": {
     "kind": "manual",
     "probes": [],
@@ -1430,6 +1491,11 @@
     "probes": [],
     "note": "the unknown-model branch read in the cleaned 2.1.312 code (chunk-9wgj206m.js:334-363, chunk-3xe0k172.js:24698-24717), against 2.1.311 (chunk-rww18cjm.js, no deterministic option)"
   },
+  "docs/how-it-works/system-prompt.md#session-sections:ae1d3f64": {
+    "kind": "behaviour",
+    "probes": ["print.models.matrix"],
+    "note": "the Opus 5.5 capture grows by the original_games text; the section name comes from the program (chunk-sq7yspzm.js:117139, :117439)"
+  },
   "docs/reference/opentelemetry.md#events:e3080430": {
     "kind": "manual",
     "probes": [],
@@ -1454,5 +1520,15 @@
     "kind": "manual",
     "probes": [],
     "note": "effort read from output_config.effort of the built request in the cleaned 2.1.312 code (chunk-r5cyd28m.js:135670, :136924), against 2.1.311 (chunk-2ht8z368.js:134537)"
+  },
+  "docs/reference/transcript-format.md#attachment-types:d106223c": {
+    "kind": "manual",
+    "probes": [],
+    "note": "an absence: the builder of the attachment is gone in the 2.1.314 program and only the reader, the renderer and the kind lists are left, so no probe can show the kind"
+  },
+  "docs/start/what-changed.md#version-21314:d3aee6dc": {
+    "kind": "external",
+    "probes": [],
+    "note": "no v2.1.313 tag is published, and the official changelog goes from 2.1.314 to 2.1.312"
   }
 }

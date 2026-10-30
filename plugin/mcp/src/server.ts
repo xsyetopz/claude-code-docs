@@ -1,5 +1,5 @@
 // clawdipedia-docs MCP server (stdio). Read-only. No telemetry.
-// A thin front end on core.ts, which reads four sources live (clawdipedia, platform, code, anthropic) and caches every fetch on disk for offline use.
+// A thin front end on core.ts, which reads four sources live (clawdipedia, platform, code, claude-resources) and caches every fetch on disk for offline use.
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
@@ -36,7 +36,7 @@ const source = z
   .enum(DOC_SOURCES)
   .default("clawdipedia")
   .describe(
-    "clawdipedia: these unofficial Claude Code docs. platform: platform.claude.com/docs. code: code.claude.com/docs (official Claude Code docs). anthropic: www.anthropic.com (news, research, legal).",
+    "clawdipedia: these unofficial Claude Code docs. platform: platform.claude.com/docs. code: code.claude.com/docs (official Claude Code docs). claude-resources: claude.com/resources (articles, guides, webinars).",
   );
 
 const SECTION = "Top-level section (clawdipedia) or group/section (others)";
@@ -66,7 +66,7 @@ server.registerTool(
   "read_page",
   {
     description:
-      "Read one page of a docs source as markdown (anthropic pages are converted from HTML).",
+      "Read one page of a docs source as markdown (claude-resources pages are converted from HTML).",
     inputSchema: {
       route: z.string().min(1).describe("Route from search_docs or list_pages"),
       source,

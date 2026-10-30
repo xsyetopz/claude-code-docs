@@ -42,6 +42,13 @@ export const runAll = async (ctx: Ctx): Promise<number> => {
     );
     return 1;
   }
+  // The last step compares the two. Stop now, before the probes, when the defaults collapsed to one.
+  if (ctx.from === ctx.to) {
+    console.error(
+      `release:all: --from and --to are both ${ctx.to}. Give the release before it with --from.`,
+    );
+    return 1;
+  }
   const common = [
     "--from",
     ctx.from,

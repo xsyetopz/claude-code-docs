@@ -1,4 +1,4 @@
-// list_pages: the pages of the docs site or the groups of a remote source (platform, code, anthropic).
+// list_pages: the pages of the docs site or the groups of a remote source (platform, code, claude-resources).
 
 import { sourceData, sourceLine } from "../fetcher.ts";
 import type { Entry } from "../manifest.ts";

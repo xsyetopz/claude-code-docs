@@ -66,7 +66,7 @@ Where the code does not show the purpose, the row says so.
 | `/api/oauth/claude_cli/create_api_key`, `/api/oauth/claude_cli/roles`, `https://api.anthropic.com/api/oauth/claude_cli/create_api_key`, `https://api.anthropic.com/api/oauth/claude_cli/roles` | <Undocumented /> | The `API_KEY_URL` and `ROLES_URL` of the OAuth config. |
 | `/api/oauth/organizations/${…}`, `/api/oauth/organizations/${…}/code/repos/${…}/${…}`, `/api/oauth/organizations/${…}/code/repos/resync`, `/api/oauth/organizations/${…}/sync/github/auth` | <Undocumented /> | Organization paths for the GitHub app. `/code/repos/<owner>/<repo>` checks whether the app is installed, `/code/repos/resync` asks the server to resync that status, and `/sync/github/auth` checks whether the GitHub token is synced by web setup. Other calls also use the first path as a prefix. |
 | `/api/organizations/${…}/reset_rate_limits` | <Undocumented /> | Posts a rate limit reset claim for your OAuth organization. |
-| `/api/oauth/file_upload`, `/api/oauth/files/${…}/content${…}` | <Undocumented /> | File upload with your OAuth token (scope `user:file_upload`), and file content. In `2.1.312` the content URL ends with `?model_copy=inference_highres` when the caller asks for the model copy of the file, and with nothing otherwise (`chunk-6jvss743.js:2015`). |
+| `/api/oauth/file_upload`, `/api/oauth/files/${…}/content${…}` | <Undocumented /> | File upload with your OAuth token (scope `user:file_upload`), and file content. In `2.1.314` the content URL ends with `?model_copy=inference_highres` when the caller asks for the model copy of the file, and with nothing otherwise (`chunk-t2jpyf9b.js:2139`). |
 | `/api/oauth/cri`, `https://api.anthropic.com/api/oauth/cri` | <Undocumented /> | The base of an issuer for `cri+jwt` tokens (ES256), with its keys at `/jwks.json` below it. No source states what it is for. |
 | `/api/oauth/local_pairing` | <Undocumented /> | The issuer for local pairing. Claude Code builds `/attest` and `/jwks.json` below it. |
 | `/v1/oauth/hello` | <Undocumented /> | The startup preflight checks `/api/hello` on the API host and `/v1/oauth/hello` on the OAuth host, with a 10 second timeout. |
@@ -109,6 +109,13 @@ The URLs below are part of the production OAuth config in the program. `CLAUDE_C
 | `/v1/files`, `/v1/files/${…}`, `/v1/files/${…}/content` | <Undocumented /> | Files API paths without `beta=true`. Both Claude Code and the SDK client hold them. |
 | `/v1/filestore/fs/listDirectory`, `/v1/filestore/fs/readFile` | <Undocumented /> | File store calls. `readFile` posts a `filesystem_id` and a `path` with a JWT, and stops after 60 seconds without bytes. |
 | `/v1/code/local/memory/mounts`, `/v1/code/local/memory/credential` | <Undocumented /> | Organization memory stores. The program caches the discovery answer in `org-memory-discovery.json`. |
+| `/v1/code/channels` | <Undocumented /> | Creates a private Claude Project (`POST`). The body holds `name`, `icon` (`Code` by default), and the optional `color`, `topic`, `system_prompt_addendum`, `default_environment_id`. The program calls a channel a project. The `/send-to-project` command and its tools use these project routes. |
+| `/v1/code/channels?${…}` | <Undocumented /> | Lists the projects that you joined (`GET`, query `scope=joined`, `limit`, and `cursor`). |
+| `/v1/code/channels/${…}${…}` | <Undocumented /> | One builder for the routes of one project. The id must look like `chan_…`. With no suffix, `GET` looks up the project, and `?include_members=true` adds the members. `PATCH …/config` updates the default source URLs, and `POST …/setup-proposals` submits a setup proposal. |
+| `/v1/code/channels/${…}/messages` | <Undocumented /> | Sends a message to a project (`POST`). The body holds `body`, `client_message_id`, and an optional `reply_to_message_id`. The answer holds `message_id` and `thread_root_id`. |
+| `/v1/code/memory/channel/${…}/memories` | <Undocumented /> | The memory files of a project. The program lists them (`GET`, 100 for each page) and saves a new file with `POST` (it fails if the path exists). |
+| `/v1/code/mcp/meta` | <Undocumented /> | A JSON-RPC `tools/call` of `send_message` with a `session_id`, a `message`, and the priority `now`. The program uses it to hand a summary to a project. |
+| `/v1/filestore/fs/readFileMetadata` | <Undocumented /> | File store call. It posts a `filesystem_id` and a `path` with a JWT, and reads the `size` and `md5` of the file. The program accepts at most 65,536 bytes of answer. |
 
 ## Hosts and Downloads
 
@@ -120,6 +127,7 @@ The URLs below are part of the production OAuth config in the program. `CLAUDE_C
 | `https://anthropic.com/claude-code/plugin.schema.json` | <Undocumented /> | The URL of the plugin manifest schema, by its name. |
 | `https://code.claude.com/docs/en/claude_code_docs_map.md`, `https://platform.claude.com/llms.txt`, `https://claude.com/docs/llms.txt`, `https://claude.com/docs/claude-tag/overview.md` | <Undocumented /> | Doc sources that the program holds next to the `claude-code-guide` agent. |
 | `https://status.claude.com` | <Undocumented /> | Named next to the "Repeated 529 Overloaded errors" message. |
+| `https://preview.claude.ai` | <Undocumented /> | A host that the program accepts for a Claude Project link, in place of `https://claude.ai`, when the claude.ai origin is the staging one. It also names the host in the hint that tells the model to read artifact links with the Artifact tool. |
 
 ## Request Headers
 

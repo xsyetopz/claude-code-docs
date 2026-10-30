@@ -116,6 +116,9 @@ describe("htmlTitle", () => {
       htmlTitle("<title>Building effective AI agents \\ Anthropic</title>"),
     ).toBe("Building effective AI agents");
     expect(htmlTitle("<title>Privacy | Anthropic</title>")).toBe("Privacy");
+    expect(
+      htmlTitle("<title>Introducing Claude Duet | Claude by Anthropic</title>"),
+    ).toBe("Introducing Claude Duet");
     expect(htmlTitle("<title>Plain &amp; simple</title>")).toBe(
       "Plain & simple",
     );

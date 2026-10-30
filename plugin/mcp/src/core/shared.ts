@@ -1,6 +1,6 @@
 // Types and helpers shared by the core/*.ts files: the result shape, the singletons, and the guard.
 
-import { Anthropic } from "../anthropic.ts";
+import { ClaudeResources } from "../claude-resources.ts";
 import { Code } from "../code.ts";
 import { Content, ContentError } from "../content.ts";
 import type { Source } from "../fetcher.ts";
@@ -14,7 +14,7 @@ export const DOC_SOURCES = [
   "clawdipedia",
   "platform",
   "code",
-  "anthropic",
+  "claude-resources",
 ] as const;
 export type DocSourceName = (typeof DOC_SOURCES)[number];
 export const isDocSource = (s: string): s is DocSourceName =>
@@ -35,7 +35,7 @@ export type Result = {
 export const content = new Content();
 export const platform = new Platform();
 export const code = new Code();
-export const anthropic = new Anthropic();
+export const claudeResources = new ClaudeResources();
 
 export const ok = (
   text: string,

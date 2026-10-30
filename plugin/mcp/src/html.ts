@@ -66,11 +66,11 @@ export const htmlToMarkdown = (html: string, pageUrl: string): string => {
   return `${translator.translate(el.innerHTML).trim()}\n`;
 };
 
-/** The <title> without a trailing " \ Anthropic" or " | Anthropic", else the first <h1>. */
+/** The <title> without a trailing " | Claude by Anthropic" or " | Anthropic", else the first <h1>. */
 export const htmlTitle = (html: string): string | undefined => {
   const root = parse(html);
   const title = oneLine(root.querySelector("title")?.text ?? "").replace(
-    /\s*[\\|]\s*Anthropic$/,
+    /\s*[\\|]\s*(?:Claude by )?Anthropic$/,
     "",
   );
   if (title) return title;

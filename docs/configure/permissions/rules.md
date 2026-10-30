@@ -34,7 +34,8 @@ Lists from all scopes merge. Official pages: [Configure Permissions](https://cod
 | `permissions.deny` | <Documented /> | List of rules for denied operations | A bare tool name hides the tool from the model. See Tools | Each settings scope |
 | `permissions.defaultMode` | <Documented /> | Default permission mode | `manual` is an alias of `default`. `auto` and `bypassPermissions` do not take effect from project or local settings | User, managed, `--settings` |
 | `permissions.disableBypassPermissionsMode` | <Documented /> | Value `disable` removes `bypassPermissions` | Claude Code checks it when a session starts in that mode or can return to it | Mainly managed settings |
-| `permissions.blockReadsOutsideWorkingDirectories` | <Documented /> | Refuses `Read`, `Grep`, `Glob`, and `LSP` reads outside the working directories in each mode | `true` from any scope wins, also over a managed `false`. Needs `2.1.257` | Each settings scope |
+| `permissions.blockReadsOutsideWorkingDirectories` | <Documented /> | Refuses `Read`, `Grep`, `Glob`, and `LSP` reads outside the working directories in each mode | `true` from any scope wins, also over a managed `false`. No allow rule lifts it. Needs `2.1.257` | Each settings scope |
+| `permissions.blockWritesOutsideWorkingDirectories` | <Documented /> | Refuses `Write`, `Edit`, and `NotebookEdit` writes outside the working directories in each mode | `true` from any scope wins. No allow rule lifts it. It also refuses a write to a Claude Code settings file inside the working directories. It removes `EnterWorktree` and `ExitWorktree` from the tools on offer. It does not limit shell commands, MCP tools, the programs that hooks run, or the memory tools. See [Files, Search, and Memory](../../reference/tools/files.md#write-and-edit-limits) | Each settings scope |
 | `permissions.additionalDirectories` | <Documented /> | Extra directories in the permission scope | Applies after workspace trust. `--add-dir` and `/add-dir` do the same for one session | Each settings scope |
 | `permissions.disableAutoMode` | <Documented /> | Value `disable` turns auto mode off | The reason text is `disableAutoMode in settings`. See [Auto Mode](auto-mode.md) | Settings, mainly managed |
 
@@ -94,7 +95,7 @@ A `PermissionUpdate` changes rules or the mode. Hooks and SDK hosts send and rec
 | `destination` | `userSettings`, `projectSettings`, `localSettings`, `session`, `cliArg` |
 | rule value | An object with `toolName` and `ruleContent`. |
 
-Source: `PermissionUpdate` in the Mod API type file of the 2.1.312 program (`schemas/claude-code.d.ts`).
+Source: `PermissionUpdate` in the Mod API type file of the 2.1.314 program (`schemas/claude-code.d.ts`).
 
 ## How It Works
 

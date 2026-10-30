@@ -69,7 +69,7 @@
   </qa_pair>
   <qa_pair>
     <question>Which four values does the source argument of search_docs, read_page and list_pages accept? Give them in the order of the tool schema, separated by comma and space.</question>
-    <answer>clawdipedia, platform, code, anthropic</answer>
+    <answer>clawdipedia, platform, code, claude-resources</answer>
   </qa_pair>
   <qa_pair>
     <question>These Claude Code docs are the default source. A call that passes source "docs" is rejected as an unknown value. Which source value selects these docs when you name it?</question>
@@ -132,8 +132,8 @@
     <answer>statusline</answer>
   </qa_pair>
   <qa_pair>
-    <question>Use search_docs with source "anthropic", query "Responsible Scaling Policy", and limit 2. What is the route of the first hit on www.anthropic.com?</question>
-    <answer>responsible-scaling-policy</answer>
+    <question>Use search_docs with source "claude-resources", query "Claude Duet", and limit 1. What is the route of the single hit on claude.com?</question>
+    <answer>resources/articles/claude-duet</answer>
   </qa_pair>
   <qa_pair>
     <question>Use list_pages with section "how-it-works". Which route covers how Claude Code saves a session and where every file lives on disk?</question>
@@ -144,8 +144,8 @@
     <answer>tools-reference</answer>
   </qa_pair>
   <qa_pair>
-    <question>Use list_pages with source "anthropic" and section "legal". Which route is the Commercial Terms page?</question>
-    <answer>legal/commercial-terms</answer>
+    <question>Use list_pages with source "claude-resources" and section "perspectives". Which route is the only page in that section?</question>
+    <answer>resources/perspectives</answer>
   </qa_pair>
   <qa_pair>
     <question>Use get_schema with name "types" and property "HookBudget". What is the value of catchMs, the grace of a .catch handler, in milliseconds?</question>

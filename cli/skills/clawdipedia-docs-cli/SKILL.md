@@ -5,7 +5,7 @@ description: Look up Claude Code behavior, settings, env vars, flags, hooks, plu
 
 # Anthropic Docs from the Shell
 
-The `clawdipedia` source describes what Claude Code 2.1.312 does, checked against the program and not only against the official docs. Use them instead of memory for any detail that the user may act on: a key name, a default, an environment variable, a hook field. Memory of these details is often stale or wrong. The other three sources cover official docs and Anthropic pages.
+The `clawdipedia` source describes what Claude Code 2.1.314 does, checked against the program and not only against the official docs. Use them instead of memory for any detail that the user may act on: a key name, a default, an environment variable, a hook field. Memory of these details is often stale or wrong. The other three sources cover official docs and Claude resources pages.
 
 This plugin works only in Claude Code. It has no MCP server: you call the `clawdipedia` command with the Bash tool. It needs Bun. If `clawdipedia` is not found, run `"$CLAUDE_PLUGIN_ROOT/bin/clawdipedia"` in its place, because the plugin ships that file.
 
@@ -18,7 +18,7 @@ Four sources answer four kinds of question. Choose with `--source` (default `cla
 | `clawdipedia` | This unofficial site, checked against the program | How Claude Code really works: settings, environment variables, flags, hooks, plugins, internals, JSON Schemas, and undocumented or version-specific behavior. It has the badges. |
 | `code` | code.claude.com/docs | What the official Claude Code docs say. Use it to compare with `clawdipedia`, or to cite the official page. |
 | `platform` | platform.claude.com/docs | The Claude API, SDKs, models, and prompt caching (not Claude Code itself). |
-| `anthropic` | www.anthropic.com | News, research, and legal pages: announcements, model cards, policies, and terms. |
+| `claude-resources` | claude.com/resources | Claude product articles, guides, and webinars: use cases, how-to advice, and product announcements (not Claude Code behavior). |
 
 Only `clawdipedia` has badges and schemas. `schema` reads `clawdipedia` only.
 
@@ -29,7 +29,7 @@ Only `clawdipedia` has badges and schemas. `schema` reads `clawdipedia` only.
 - `clawdipedia list` shows every section and its pages. `clawdipedia list configure` shows one section with the description of each page.
 - `clawdipedia schema settings` prints the outline of a JSON Schema. `clawdipedia schema settings hooks.PreToolUse` or `clawdipedia schema tools BashInput.command` prints one property or definition. The names are `settings`, `managed-settings`, `plugin-manifest`, `plugin-hooks`, `marketplace`, `keybindings`, `mcp`, `agents-json`, `hook-output`, `tools`, `control-protocol`, `stream-json`, `frontmatter`, `status-line`, `transcript`, `otel`, and `claude-json`.
 - `clawdipedia schema types ToolCheckResult` prints the Mod API type file entry for a type, a member (`ToolCheckResult.plugin`), a call (`'$.tool.check'`), or an event (`tool.check`). `clawdipedia schema types` lists the names.
-- Add `--source <name>` (`clawdipedia`, `platform`, `code`, or `anthropic`) to `search`, `read`, or `list` to read another source. The default is `clawdipedia`. An old value such as `--source docs` is a usage error (exit code `2`). Pages of the other three sources are not covered by the badges.
+- Add `--source <name>` (`clawdipedia`, `platform`, `code`, or `claude-resources`) to `search`, `read`, or `list` to read another source. The default is `clawdipedia`. An old value such as `--source docs` is a usage error (exit code `2`). Pages of the other three sources are not covered by the badges.
 - Add `--json` for JSON. `clawdipedia --help` and `clawdipedia <command> --help` print the usage.
 
 Exit codes: `0` a result, `1` no result (no hit, unknown page, or unknown schema property; the message on stderr names the closest routes or properties), `2` a usage error.
@@ -44,7 +44,7 @@ The command keeps a disk cache so it works offline. The folder is the first of t
 2. `${CLAUDE_PLUGIN_DATA}/cache`
 3. `~/.cache/clawdipedia`
 
-When the command runs from the Bash tool, `CLAUDE_PLUGIN_DATA` is not set (probed on Claude Code 2.1.312: the plugin `bin/` is on the Bash PATH, and the variable is not set). So the cache is `~/.cache/clawdipedia` unless `CLAWDIPEDIA_CACHE_DIR` is set.
+When the command runs from the Bash tool, `CLAUDE_PLUGIN_DATA` is not set (probed on Claude Code 2.1.314: the plugin `bin/` is on the Bash PATH, and the variable is not set). So the cache is `~/.cache/clawdipedia` unless `CLAWDIPEDIA_CACHE_DIR` is set.
 
 ## Read the Badges
 
@@ -57,7 +57,7 @@ Tables have a Status column. State the badge when you report a fact, because it 
 
 ## Answer
 
-- Say which source the answer comes from. For `clawdipedia`, say which version it is for: Claude Code 2.1.312. If the user runs another version, say the page may not match it.
+- Say which source the answer comes from. For `clawdipedia`, say which version it is for: Claude Code 2.1.314. If the user runs another version, say the page may not match it.
 - Cite the page (its URL) next to each fact.
 - Before you name a field of a payload (a `$` call, an event, a hook input or output, a tool input), look it up with `clawdipedia schema`, and name only the fields you found. When a lookup comes back empty, tell the user the field is unconfirmed for this version and give the closest names the lookup returned.
 - If the docs do not cover the question, say so. Do not fill the gap from memory as if it were documented.

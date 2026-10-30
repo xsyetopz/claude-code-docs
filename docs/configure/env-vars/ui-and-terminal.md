@@ -96,7 +96,7 @@ The rows are in name order. See [Environment Variables](index.md#how-to-read-the
 | `DISABLE_COST_WARNINGS` | <Documented /> | Turns off cost warning messages. | On or off | - |
 | `DISABLE_UPGRADE_COMMAND` | <Documented /> <Gated note="Works only behind a feature flag or server gate" /> | Hides the `/upgrade` command. | On or off. Claude Code also hides the command for enterprise plans or when a feature flag is on | Interactive. Project `env` can set it before trust |
 | `FORCE_CODE_TERMINAL` | <Undocumented /> | Marks the terminal as a supported IDE terminal for IDE auto-connect. | On or off | IDE integration. Not set from project `env` before trust |
-| `FORCE_HYPERLINK` | <Documented /> | Forces OSC 8 hyperlinks on or off. | A number. Claude Code parses it as a number. `0` turns links off and any other non-empty value, including `false`, turns them on | Terminal output. Not set from project `env` before trust |
+| `FORCE_HYPERLINK` | <Differs note="The docs say only 0 turns it off. The program also reads false, no, and off as off." /> | Forces OSC 8 hyperlinks on or off. | `0`, `false`, `no`, `off`, and any value that reads as the number `0` turn links off. Any other non-empty value turns them on. Unset or empty lets the terminal decide. The match ignores case and outer spaces. In `2.1.312` the value did nothing: with the name set, the support of the terminal decided, and the checks for `TERM_PROGRAM`, tmux, Windows Terminal, and kitty were skipped | Terminal output. Not set from project `env` before trust |
 | `INK_SCREEN_READER` | <Undocumented /> | Turns on screen reader mode in the terminal UI renderer. | - | - |
 | `INTELLIJ_TERMINAL_COMMAND_BLOCKS` | <Undocumented /> | With any value, it marks the JetBrains terminal wheel and arrow scroll handling as bug-confirmed. | - | - |
 | `INTELLIJ_TERMINAL_COMMAND_BLOCKS_REWORKED` | <Undocumented /> | With any value, it marks the JetBrains terminal wheel and arrow scroll handling as bug-confirmed. | - | - |
@@ -127,4 +127,4 @@ The variables on this page override that guess.
 - [Status Line](../status-line.md)
 - [Undocumented Items](../../reference/undocumented.md): every item that only the program shows.
 
-Source: the program (variable names found in the `2.1.312` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
+Source: the program (variable names found in the `2.1.314` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.

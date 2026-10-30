@@ -55,7 +55,7 @@ The event decides what the matcher tests.
 
 | Target | Status | Values | Events |
 | --- | --- | --- | --- |
-| Tool name | <Documented /> | `Bash`, `Edit\|Write`, `mcp__.*`. Plugin MCP tools are `mcp__plugin_<plugin>_<server>__<tool>`. | `PreToolUse`, `PostToolUse`, `PostToolUseFailure`, `PermissionRequest`, `PermissionDenied` |
+| Tool name | <Documented /> | `Bash`, `Edit\|Write`, `mcp__.*`. Plugin MCP tools are `mcp__plugin_<plugin>_<server>__<tool>`. `Bash` also matches a `Monitor` call that has a `command`. Such a hook can block the call or ask, but a `permissionDecision` of `allow` is ignored and `updatedInput` is dropped. A `Monitor` call with `ws` is not covered (the program). | `PreToolUse`, `PostToolUse`, `PostToolUseFailure`, `PermissionRequest`, `PermissionDenied` |
 | Start source | <Documented /> | `startup`, `resume`, `clear`, `compact`, `fork`. `fork` needs 2.1.214. | `SessionStart` |
 | CLI flag | <Documented /> | `init`, `maintenance` | `Setup` |
 | End reason | <Documented /> | `clear`, `resume`, `logout`, `prompt_input_exit`, `other` | `SessionEnd` |

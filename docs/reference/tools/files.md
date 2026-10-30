@@ -89,6 +89,13 @@ Block reads of secret files and all edits to lock files.
 - `Read`, `Glob`, `Grep`, `Write`, and `Edit` carry `remoteExecution` metadata in the program. It marks them as runnable on a remote host.
 - `Read` has no result size cap. So use `offset` and `limit` for large files.
 
+## Write and Edit Limits
+
+| Item | Status | What it does | Notes |
+| --- | --- | --- | --- |
+| `permissions.blockWritesOutsideWorkingDirectories` | <Documented /> | `Write`, `Edit`, and `NotebookEdit` refuse a path outside the working directories in every permission mode. | No allow rule lifts it. The setting also refuses a write to a Claude Code settings file inside the working directories. It removes `EnterWorktree` and `ExitWorktree` from the tools on offer. It does not limit shell commands, MCP tools, the programs that hooks run, or the memory tools. See [Permission Rules](../../configure/permissions/rules.md). |
+| Server-managed settings | <Undocumented /> | `Write` and `Edit` ask before they change the local copy of your organization's server-managed settings. | They ask in the same way for a user settings file. See [Settings](../../configure/settings/index.md). |
+
 ## Write on a File That Claude Read Only in Part
 
 Since `2.1.312`, `Write` refuses to overwrite some very large instruction files.
@@ -109,6 +116,7 @@ Each row is a family of messages. The backticked text is the start that every me
 | Start of Message | Status | What It Means | Cases |
 | --- | --- | --- | --- |
 | Various | <Undocumented /> | **File tools.** `Read`, `Edit`, `Write`, or `NotebookEdit` refused a call. | A Read deny rule covers the file. Claude has not read it yet. It changed since Claude last read it. It is too large. It is a pipe or device. It is a symbolic link. It is not a valid image, PDF page, or notebook. The edit does not match (string not found, no change). A write failed after the file was truncated. |
+| `read not allowed under permissions.blockReadsOutsideWorkingDirectories:` | <Undocumented /> | **File references.** The program refused to read a file that a file reference or a Chrome file upload named. The text ends with the path. | The setting `permissions.blockReadsOutsideWorkingDirectories` blocks that path, or the real path behind it. |
 
 ## Related Pages
 

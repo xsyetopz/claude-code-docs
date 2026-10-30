@@ -12,12 +12,12 @@ sidebar_position: 6
 | --- | --- |
 | `system[0]` | 78 |
 | `system[1]` | 62 |
-| `system[2]` | 5,627 |
+| `system[2]` | 5,766 |
 | `messages[0].content[0]` | 592 |
 | `messages[0].content[1]` | 16 |
-| `messages[1].content[0]` | 10,552 |
-| System blocks only | 5,767 |
-| Everything shown here | 17,217 |
+| `messages[1].content[0]` | 10,501 |
+| System blocks only | 5,906 |
+| Everything shown here | 17,305 |
 | Tools sent | 12 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -32,7 +32,7 @@ The text below is every part of the request that Claude Code builds before your 
 
 ````text
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.312.<build>; cc_entrypoint=sdk-cli;
+x-anthropic-billing-header: cc_version=2.1.314.<build>; cc_entrypoint=sdk-cli;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -92,7 +92,7 @@ When the conversation grows long, some or all of the current context is summariz
 
 When you have enough information to act, act. Do not re-derive facts already established in the conversation, re-litigate a decision the user has already made, or narrate options you will not pursue. If you are weighing a choice, give a recommendation, not an exhaustive survey
 
-<total_tokens>15000000 tokens left</total_tokens>
+Do build original games, games in a genre, and games from the user's own designs and assets. Don't build a recreation of a specific existing game, even if it is renamed or called original.
 
 === messages[0].content[0] (role: user) ===
 <system-reminder>
@@ -174,8 +174,6 @@ This is critical - your turn should only end with either using the AskUserQuesti
 
 **Important:** Use AskUserQuestion ONLY to clarify requirements or choose between approaches. Use ExitPlanMode to request plan approval. Do NOT ask about plan approval in any other way - no text questions, no AskUserQuestion. Phrases like "Is this plan okay?", "Should I proceed?", "How does this plan look?", "Any changes before we start?", or similar MUST use ExitPlanMode.
 
-<total_tokens>15000000 tokens left</total_tokens>
-
 Today's date is <date>.
 ````
 
@@ -188,7 +186,7 @@ Lines added: 2. Lines removed: 44. Size change: -3,383 characters.
 ```diff
 --- mode-plan
 +++ plan-mode-instructions
-@@ -133,56 +133,14 @@
+@@ -133,54 +133,12 @@
 
  ## Plan Workflow
 
@@ -244,8 +242,6 @@ Lines added: 2. Lines removed: 44. Size change: -3,383 characters.
 
 -NOTE: At any point in time through this workflow you should feel free to ask the user questions or clarifications using the AskUserQuestion tool. Don't make large assumptions about user intent. The goal is to present a well researched plan to the user, and tie any loose ends before implementation begins.
 -
- <total_tokens>15000000 tokens left</total_tokens>
-
  Today's date is <date>.
 ```
 

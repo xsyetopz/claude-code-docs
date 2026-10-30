@@ -1,6 +1,6 @@
 ---
 title: Slash Commands
-description: Every built-in slash command in Claude Code 2.1.312, grouped by job, with aliases, arguments, and gates.
+description: Every built-in slash command in Claude Code 2.1.314, grouped by job, with aliases, arguments, and gates.
 sidebar_position: 5
 ---
 
@@ -130,6 +130,7 @@ Each line is a separate command. The text after the name is the argument.
 | `/ultraplan` `<prompt>` | <Gated note="Availability claude-ai." /> | Drafts an editable plan in a cloud session. | Panel. |
 | `/ultrareview` | <Gated note="Paid feature." /> | Runs a cloud code review. | Panel and text form. |
 | `/autofix-pr` | <Gated note="Availability claude-ai and console-profile. Policy allow_remote_sessions." /> | Watches the current pull request and fixes issues. | Panel. |
+| `/send-to-project` `["project name" or id] [message or note]` | <Gated note="Policy allow_remote_sessions, not CLAUDE_CODE_REMOTE, a claude.ai login, and a hidden server-side flag." /> | Sends this session's work to a Claude Project on claude.ai/code. | Text that Claude acts on (prompt command). Only you can run it. Claude cannot start it, and it does not run in a subagent. Put a project name in double quotes, or give a project id. With no name it asks you to pick a project. Claude drafts a brief, or sends your message, with the `SendToProject` tool. The tool shows its own confirmation pane and sends nothing until you approve. Remote Control must be on for the session. See [Gated and Surface-Specific Tools](../../reference/tools/gated-and-other.md). |
 | `/daemon` | <Undocumented /> | Manages background services and routines. | Panel. |
 | `/workflows` | <Gated note="Setting disableWorkflows and env var CLAUDE_CODE_DISABLE_WORKFLOWS." /> | Browses running and finished workflows. | Panel. |
 | `/artifacts` | <Gated note="claude.ai login on a Pro, Max, Team, or Enterprise plan (or no plan set), and an org policy." /> | Browses your published and shared artifacts. | Panel. `d` deletes your own artifact after a confirmation. Since `2.1.304` the confirmation is numbered: 1 or Enter keeps, 2 deletes, and `y`, `n`, and Esc still worked. Since `2.1.305` `y` and `n` no longer answer. See [How `/usage` and `/artifacts` Work](#how-usage-and-artifacts-work). |
@@ -230,6 +231,7 @@ Each row is a family of messages. The backticked text is the start that every me
 | Start of Message | Status | What It Means | Cases |
 | --- | --- | --- | --- |
 | Various | <Undocumented /> | **Terminal setup.** `/terminal-setup` could not change a terminal's settings. | A backup of the Terminal.app preferences could not be made. A profile could not be read. Option as Meta or the audio bell could not be set. No config path was found for Alacritty. The text says whether the settings were restored. |
+| `Could not` | <Undocumented /> <Gated note="Same gate as /send-to-project" /> | **Claude Project requests.** A request that `/send-to-project` makes to the projects routes failed. The message reads `Could not <step>: <reason>`, and the program names the error `ChannelApiError`. | The step is one of `create the project`, `look up the project`, `send the message`, `list your cloud environments`, `submit the setup proposal`, or `save to project memory`. The reason comes from the answer. A sign-in problem and a policy that turns the feature off give their own reason text. Source: the program (`chunk-3vzbpce5.js:175`). |
 
 ## Related Pages
 

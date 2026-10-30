@@ -1,4 +1,4 @@
-// read_page: one chunk of a docs page or a page of a remote source (platform, code, anthropic).
+// read_page: one chunk of a docs page or a page of a remote source (platform, code, claude-resources).
 
 import { type Entry, normalizeRoute } from "../manifest.ts";
 import { tokenize } from "../search.ts";

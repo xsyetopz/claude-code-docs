@@ -12,12 +12,12 @@ The built-in Learning output style on the lean prompt. Run `/output-style Learni
 | --- | --- |
 | `system[0]` | 78 |
 | `system[1]` | 62 |
-| `system[2]` | 5,665 |
+| `system[2]` | 5,804 |
 | `messages[0].content[0]` | 592 |
 | `messages[0].content[1]` | 16 |
-| `messages[1].content[0]` | 14,064 |
-| System blocks only | 5,805 |
-| Everything shown here | 20,767 |
+| `messages[1].content[0]` | 14,013 |
+| System blocks only | 5,944 |
+| Everything shown here | 20,855 |
 | Tools sent | 12 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -33,7 +33,7 @@ The text below is every part of the request that Claude Code builds before your 
 
 ````text
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.312.<build>; cc_entrypoint=sdk-cli;
+x-anthropic-billing-header: cc_version=2.1.314.<build>; cc_entrypoint=sdk-cli;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -93,7 +93,7 @@ When the conversation grows long, some or all of the current context is summariz
 
 When you have enough information to act, act. Do not re-derive facts already established in the conversation, re-litigate a decision the user has already made, or narrate options you will not pursue. If you are weighing a choice, give a recommendation, not an exhaustive survey
 
-<total_tokens>15000000 tokens left</total_tokens>
+Do build original games, games in a genre, and games from the user's own designs and assets. Don't build a recreation of a specific existing game, even if it is renamed or called original.
 
 === messages[0].content[0] (role: user) ===
 <system-reminder>
@@ -240,8 +240,6 @@ SKIP only when another provider is being worked on (overrides all triggers): Ope
 - init: Initialize a new CLAUDE.md file with codebase documentation
 - security-review: Complete a security review of the pending changes on the current branch
 
-<total_tokens>15000000 tokens left</total_tokens>
-
 Learning output style is active. Remember to follow the specific guidelines for this style.
 
 Today's date is <date>.
@@ -353,9 +351,9 @@ Lines added: 84. Lines removed: 1. Size change: +5,046 characters.
  The following deferred tools are now available via ToolSearch. Their schemas are NOT loaded — calling them directly will fail with InputValidationError. Use ToolSearch with query "select:<name>[,<name>...]" to load tool schemas before calling them:
  CronCreate
  CronDelete
-@@ -127,4 +208,6 @@
-
- <total_tokens>15000000 tokens left</total_tokens>
+@@ -125,4 +206,6 @@
+ - init: Initialize a new CLAUDE.md file with codebase documentation
+ - security-review: Complete a security review of the pending changes on the current branch
 
 +Learning output style is active. Remember to follow the specific guidelines for this style.
 +

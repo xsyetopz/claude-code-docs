@@ -1,12 +1,13 @@
 ---
 title: All Flags
-description: Every claude flag in 2.1.312, with the ones that claude --help hides, grouped by job.
+description: Every claude flag in 2.1.314, with the ones that claude --help hides, grouped by job.
 sidebar_position: 2
 ---
 
 A flag changes how one `claude` run behaves.
-`claude --help` shows 66 flags. Another 64 work but stay hidden from the help text.
+`claude --help` shows 66 flags. Another 65 work but stay hidden from the help text.
 This page lists both kinds in one place, grouped by what they do.
+Two hidden flags have no row, because no code reads them: `--runner-declares` and `--agents-view-if-allowed` (the program).
 
 Pass a flag after `claude`, for example `claude --model opus`. Most flags last for one run only. A flag is on when you pass it. Some flags have a `--no-` twin, such as `--no-chrome`.
 
@@ -80,7 +81,7 @@ Flags that strip your setup down, load extra settings, or turn on logs.
 | `--restricted` | <Documented /> | ✅ | Removes the tools that run code and `WebFetch`. Also ignores user, project, and local settings. It suits untrusted input. |
 | `--ax-screen-reader` | <Documented /> | ✅ | Draws flat text with no borders or animations, for screen readers. |
 | `--settings` `<file-or-json>` | <Documented /> | ✅ | Loads more settings from a JSON file or a JSON string. |
-| `--setting-sources` `<sources>` | <Documented /> | ✅ | Chooses which setting sources load: `user`, `project`, and `local`. |
+| `--setting-sources` `<sources>` | <Documented /> | ✅ | Chooses which setting sources load: `user`, `project`, and `local`. A source that you leave out supplies no auto-mode rules and no saved permission consents. Managed settings and `--settings` stay (the program). |
 | `--project-config-root` `<dir>` | <Undocumented /> | ❌ | Reads project settings and the `.claude` trees from another folder. |
 
 ### Permissions and Tools

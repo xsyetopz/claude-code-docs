@@ -227,6 +227,10 @@
     "route": "/extend/plugins/marketplace",
     "anchor": "errors"
   },
+  "error:${…} The sign-in was saved but could not be checked against your organization yet; Claude Code checks it again when it next starts.": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
   "error:${…} This install runs that command; confirm it by running `claude plugin install` in a terminal (or with -y/--yes).": {
     "route": "/extend/plugins/loading",
     "anchor": "errors"
@@ -4147,6 +4151,10 @@
     "route": "/reference/tools/gated-and-other",
     "anchor": "errors"
   },
+  "error:create the project": {
+    "route": "/extend/skills-and-commands/slash-commands",
+    "anchor": "errors"
+  },
   "error:create_webhook_trigger requires body": {
     "route": "/reference/tools/gated-and-other",
     "anchor": "errors"
@@ -4611,6 +4619,10 @@
     "route": "/configure/memory-and-rules",
     "anchor": "errors"
   },
+  "error:list your cloud environments": {
+    "route": "/extend/skills-and-commands/slash-commands",
+    "anchor": "errors"
+  },
   "error:list_runs requires trigger_id": {
     "route": "/reference/tools/gated-and-other",
     "anchor": "errors"
@@ -4629,6 +4641,10 @@
   },
   "error:load_test_mode is on, but the database at store.postgres_url already holds real spend (a spend row above 0 cents). A load test writes made-up developers into it, so it must not share a database with r…": {
     "route": "/configure/cli/subcommands",
+    "anchor": "errors"
+  },
+  "error:look up the project": {
+    "route": "/extend/skills-and-commands/slash-commands",
     "anchor": "errors"
   },
   "error:macOS only": {
@@ -5191,6 +5207,10 @@
     "route": "/configure/permissions/sandbox",
     "anchor": "errors"
   },
+  "error:save to project memory": {
+    "route": "/extend/skills-and-commands/slash-commands",
+    "anchor": "errors"
+  },
   "error:scm-connector dial host is not a valid URL host": {
     "route": "/how-it-works/sessions-and-storage",
     "anchor": "errors"
@@ -5205,6 +5225,10 @@
   },
   "error:seccompConfig.argv0 requires seccompConfig.applyPath": {
     "route": "/configure/permissions/sandbox",
+    "anchor": "errors"
+  },
+  "error:send the message": {
+    "route": "/extend/skills-and-commands/slash-commands",
     "anchor": "errors"
   },
   "error:send-claim timeout": {
@@ -5305,6 +5329,10 @@
   },
   "error:sub-agent listing incomplete": {
     "route": "/reference/tools/agents-and-tasks",
+    "anchor": "errors"
+  },
+  "error:submit the setup proposal": {
+    "route": "/extend/skills-and-commands/slash-commands",
     "anchor": "errors"
   },
   "error:submodule state unreadable — cannot verify worktree is clean": {

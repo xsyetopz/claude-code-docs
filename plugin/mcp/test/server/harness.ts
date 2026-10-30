@@ -1,4 +1,4 @@
-// Shared helpers for the server tests: a mock docs site, mock platform, code, and anthropic sites, and a client for dist/server.js.
+// Shared helpers for the server tests: a mock docs site, mock platform, code, and claude-resources sites, and a client for dist/server.js.
 import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -181,9 +181,9 @@ export const mockCode = () => {
   };
 };
 
-/** Mock www.anthropic.com: /sitemap.xml (Last-Modified) and HTML pages at /<path>. Records every request. */
-export const mockAnthropic = () => {
-  const dir = join(import.meta.dir, "..", "fixtures", "anthropic");
+/** Mock claude.com: /sitemap.xml (Last-Modified) and HTML pages at /<path>. A path with a trailing slash answers 308, like the real host. Records every request. */
+export const mockClaudeResources = () => {
+  const dir = join(import.meta.dir, "..", "fixtures", "claude-resources");
   const hits: PHit[] = [];
   const srv = Bun.serve({
     port: 0,
@@ -197,12 +197,17 @@ export const mockAnthropic = () => {
         if (ims === LM) return new Response(null, { status: 304 });
         return new Response(
           readFileSync(join(dir, "sitemap.xml"), "utf8").replaceAll(
-            "https://www.anthropic.com",
+            "https://claude.com",
             base,
           ),
           { headers: { "last-modified": LM } },
         );
       }
+      if (path.length > 1 && path.endsWith("/"))
+        return new Response(null, {
+          status: 308,
+          headers: { location: path.slice(0, -1) },
+        });
       const m = /^\/([a-z0-9/-]+)$/.exec(path);
       const file = m
         ? join(dir, "pages", `${m[1]?.replaceAll("/", "__")}.html`)

@@ -10,7 +10,7 @@ These five nouns reach the machine: `$.clock` for time and timers, `$.http` for 
 
 A policy can refuse a call. For example, the organization's web-fetch policy can refuse `$.http.fetch`.
 
-Official pages: [Use the Mods API](https://code.claude.com/docs/en/plugins/mods/api), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the Mod API type file of the 2.1.312 program (`schemas/claude-code.d.ts`).
+Official pages: [Use the Mods API](https://code.claude.com/docs/en/plugins/mods/api), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the Mod API type file of the 2.1.314 program (`schemas/claude-code.d.ts`).
 "Run time" appears in a "Where it can be used" cell. It means in a hook, in a closure that a hook drew, or in a timer callback. It does not mean inside `register`.
 
 ## Example

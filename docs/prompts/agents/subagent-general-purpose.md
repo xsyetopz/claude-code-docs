@@ -12,12 +12,12 @@ The prompt that a `general-purpose` subagent gets. The main agent calls the `Age
 | --- | --- |
 | `system[0]` | 99 |
 | `system[1]` | 62 |
-| `system[2]` | 2,720 |
+| `system[2]` | 2,669 |
 | `messages[0].content[0]` | 592 |
 | `messages[0].content[1]` | 36 |
 | `messages[1].content[0]` | 7,336 |
-| System blocks only | 2,881 |
-| Everything shown here | 11,135 |
+| System blocks only | 2,830 |
+| Everything shown here | 11,084 |
 | Tools sent | 8 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -34,7 +34,7 @@ The text below is every part of the request that Claude Code builds before your 
 
 ```text
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.312.<build>; cc_entrypoint=sdk-cli; cc_is_subagent=true;
+x-anthropic-billing-header: cc_version=2.1.314.<build>; cc_entrypoint=sdk-cli; cc_is_subagent=true;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -64,8 +64,6 @@ Notes:
 - For clear communication with the user the assistant MUST avoid using emojis.
 - Do not use a colon before tool calls. Text like "Let me read the file:" followed by a read tool call should just be "Let me read the file." with a period.
 - Do NOT Write report/summary/findings/analysis .md files. Return findings directly as your final assistant message — the parent agent reads your text output, not files you create. (Files written as input to another tool are fine; this note is about report files.)
-
-<total_tokens>15000000 tokens left</total_tokens>
 
 === messages[0].content[0] (role: user) ===
 <system-reminder>
@@ -126,15 +124,15 @@ Today's date is <date>.
 
 The diff below starts from [Default, Lean Prompt](../defaults/default-lean.md). Lines that start with `-` are only in the baseline. Lines that start with `+` are only here.
 
-Lines added: 31. Lines removed: 72. Size change: -4,586 characters.
+Lines added: 31. Lines removed: 72. Size change: -4,725 characters.
 
 ````diff
 --- default-lean
 +++ subagent-general-purpose
-@@ -1,64 +1,35 @@
+@@ -1,66 +1,35 @@
  === system[0] (no cache marker) ===
--x-anthropic-billing-header: cc_version=2.1.312.<build>; cc_entrypoint=sdk-cli;
-+x-anthropic-billing-header: cc_version=2.1.312.<build>; cc_entrypoint=sdk-cli; cc_is_subagent=true;
+-x-anthropic-billing-header: cc_version=2.1.314.<build>; cc_entrypoint=sdk-cli;
++x-anthropic-billing-header: cc_version=2.1.314.<build>; cc_entrypoint=sdk-cli; cc_is_subagent=true;
 
  === system[1] (cache marker: {"type":"ephemeral"}) ===
  You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -214,10 +212,12 @@ Lines added: 31. Lines removed: 72. Size change: -4,586 characters.
 -
 -When you have enough information to act, act. Do not re-derive facts already established in the conversation, re-litigate a decision the user has already made, or narrate options you will not pursue. If you are weighing a choice, give a recommendation, not an exhaustive survey
 -
- <total_tokens>15000000 tokens left</total_tokens>
-
+-Do build original games, games in a genre, and games from the user's own designs and assets. Don't build a recreation of a specific existing game, even if it is renamed or called original.
+-
  === messages[0].content[0] (role: user) ===
-@@ -71,24 +42,10 @@
+ <system-reminder>
+ Attribution for git commits and pull requests you create from here on (this replaces Claude Code's own earlier attribution guidance, such as a previous copy of this reminder; the user's own instructions about these lines, such as a CLAUDE.md or memory rule, take precedence over this reminder, but do not add attribution lines this reminder leaves out):
+@@ -71,24 +40,10 @@
  </system-reminder>
 
  === messages[0].content[1] (role: user) ===
@@ -243,7 +243,7 @@ Lines added: 31. Lines removed: 72. Size change: -4,586 characters.
  EnterWorktree
  ExitWorktree
  Monitor
-@@ -98,14 +55,16 @@
+@@ -98,14 +53,16 @@
  WebFetch
  WebSearch
 
@@ -266,14 +266,6 @@ Lines added: 31. Lines removed: 72. Size change: -4,586 characters.
 +You are powered by the model named Opus 5.5. The exact model ID is claude-opus-5-5. Assistant knowledge cutoff is June 2026.
 
  The following skills are available for use with the Skill tool:
-
-@@ -125,6 +84,4 @@
- - init: Initialize a new CLAUDE.md file with codebase documentation
- - security-review: Complete a security review of the pending changes on the current branch
-
--<total_tokens>15000000 tokens left</total_tokens>
--
- Today's date is <date>.
 ````
 
 Tool list: removes `ListAgents`, `ReportFindings`, `ScheduleWakeup`, `Workflow`. See [Tools per Variant](../tools/tools-per-variant.md).

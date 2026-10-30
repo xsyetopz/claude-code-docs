@@ -1,6 +1,6 @@
 ---
 title: Subcommands
-description: Every claude subcommand in 2.1.312, including background sessions, auth, plugins, and the hidden commands.
+description: Every claude subcommand in 2.1.314, including background sessions, auth, plugins, and the hidden commands.
 sidebar_position: 3
 ---
 
@@ -21,7 +21,7 @@ claude stop <id>                        # stop it, keep the conversation
 
 ## Commands
 
-Source: the text of `claude <command> --help` in `2.1.312`.
+Source: the text of `claude <command> --help` in `2.1.314`.
 
 | Command | Status | What it does |
 | --- | --- | --- |

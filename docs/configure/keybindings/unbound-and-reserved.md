@@ -37,6 +37,7 @@ You can bind them in `keybindings.json`.
 | `chat:attentionDown` | <Undocumented /> |
 | `chat:increaseEffort` | <Undocumented /> |
 | `chat:decreaseEffort` | <Undocumented /> |
+| `effortSlider:adaptive` | <Undocumented /> |
 | `confirm:previousField` | <Documented /> |
 | `proactivityMenu:previousMode` | <Undocumented /> |
 | `proactivityMenu:nextMode` | <Undocumented /> |

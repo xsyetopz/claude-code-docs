@@ -146,4 +146,4 @@ Claude Code passes some variables to MCP server and hook processes. It can strip
 - [Hooks](../../extend/hooks/index.md)
 - [Undocumented Items](../../reference/undocumented.md): every item that only the program shows.
 
-Source: the program (variable names found in the `2.1.312` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
+Source: the program (variable names found in the `2.1.314` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.

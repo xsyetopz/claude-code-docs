@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://clawdipedia.cc/schemas/claude-code-keybindings.json",
-  "title": "Claude Code keybindings.json (Claude Code 2.1.312)",
-  "$comment": "For ~/.claude/keybindings.json. Generated from Claude Code 2.1.312 by calling the zod v4 toJSONSchema embedded in the binary on its own validator (method A, runtime export). Do not edit by hand: run \"bun run schemas\".",
+  "title": "Claude Code keybindings.json (Claude Code 2.1.314)",
+  "$comment": "For ~/.claude/keybindings.json. Generated from Claude Code 2.1.314 by calling the zod v4 toJSONSchema embedded in the binary on its own validator (method A, runtime export). Do not edit by hand: run \"bun run schemas\".",
   "type": "object",
   "properties": {
     "$schema": {
@@ -194,6 +194,7 @@
                     "effortSlider:increaseEffort",
                     "effortSlider:toggleUltracode",
                     "effortSlider:thisSessionOnly",
+                    "effortSlider:adaptive",
                     "select:next",
                     "select:previous",
                     "select:pageUp",

@@ -106,7 +106,7 @@ These names are in the program next to the writer. The meanings come from the wr
 | `pr-link` | `prNumber`, `prUrl`, `prRepository`, `timestamp` | Ties the session to a pull request. |
 | `bridge-session` | `bridgeSessionId`, `lastSequenceNum`, `sessionGroupingId`, owner ids | The Remote Control link. |
 | `content-replacement` | `replacements`, `agentId` | Records which large tool results a short stand-in replaced. A resume then uses the same stand-ins. |
-| `attribution-snapshot` | `messageId` | A snapshot of file-contribution data for commits. On load the program keeps only the last one and trims a large one. In `2.1.312` the program exports its writer function and no code calls it, so only older sessions hold these lines (the program). |
+| `attribution-snapshot` | `messageId` | A snapshot of file-contribution data for commits. On load the program keeps only the last one and trims a large one. In `2.1.314` the program exports its writer function and no code calls it, so only older sessions hold these lines (the program). |
 | `fork-context-ref` | `agentId`, `parentSessionId`, `parentLastUuid`, `contextLength` | A forked agent's pointer to its parent. The fork reads the parent's lines and does not copy them. |
 | `observer-ref` | `observerTaskId`, `observerAgentType`, `agentId`, `timestamp` | An observer agent's pointer. |
 | `progress` | `toolUseID`, `parentToolUseID`, `data` | Progress of a running tool, hook, skill, or agent. `data.type` is `hook_progress`, `tool_heartbeat`, `bash_progress`, `powershell_progress`, `agent_progress`, `agent_api_retry`, `skill_progress`, `search_results_received`, `query_update`, `workflow_log`, `workflow_phase`, `workflow_agent`, or `artifact_publish_retry`. |
@@ -118,7 +118,7 @@ These names are in the program next to the writer. The meanings come from the wr
 | `line-withheld` | `bytes` | Not a stored type. When a transcript is uploaded, `{"type":"line-withheld","bytes":N}` replaces a line that could not be read or was too large. |
 | `artifact-autoreact-ledger` | `artifacts`, `accountUuid`, `v` | Bookkeeping for automatic replies to artifact comments. |
 | `relocated` | `relocatedCwd` | The working folder was moved. |
-| `summary` | `leafUuid`, `summary` | A summary line. The program reads these lines on load, and no code in `2.1.312` writes them, so only older sessions hold them. |
+| `summary` | `leafUuid`, `summary` | A summary line. The program reads these lines on load, and no code in `2.1.314` writes them, so only older sessions hold them. |
 | `continued-in` | `continuedInSessionId` | Points to the session that continued this one. |
 | `history-suppression`, `artifact-comment-monitor` | | Also in the program's table. We read no further meaning. |
 
@@ -200,7 +200,8 @@ Types seen in real 2.1.305 transcripts: `total_tokens_reminder`, `output_style`,
 
 | `attachment.type` | Meaning |
 | --- | --- |
-| `total_tokens_reminder` | A reminder of the token budget. |
+| `total_tokens_reminder` | A reminder of the token budget. Only for a model that carries the `total_tokens_reminder` capability, which Sonnet 5.5 and Opus 5.5 lost in `2.1.314`. |
+| `output_limit_note` | A note that the output hit a limit. No release from `2.1.314` writes it: the builder is gone and only the reader, the renderer and the kind lists are left, so the kind still parses in an older transcript. |
 | `output_style`, `output_style_instructions` | The active output style. |
 | `queued_command` | A prompt that was queued while a turn ran. |
 | `nested_memory` | A nested `CLAUDE.md` that Claude Code loaded. |

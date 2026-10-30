@@ -12,12 +12,12 @@ Shows whether the main-thread prompt flags reach a built-in subagent. Run `claud
 | --- | --- |
 | `system[0]` | 99 |
 | `system[1]` | 94 |
-| `system[2]` | 3,263 |
+| `system[2]` | 3,212 |
 | `messages[0].content[0]` | 592 |
 | `messages[0].content[1]` | 36 |
 | `messages[1].content[0]` | 7,323 |
-| System blocks only | 3,456 |
-| Everything shown here | 11,697 |
+| System blocks only | 3,405 |
+| Everything shown here | 11,646 |
 | Tools sent | 5 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -32,7 +32,7 @@ The text below is every part of the request that Claude Code builds before your 
 
 ```text
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.312.<build>; cc_entrypoint=sdk-cli; cc_is_subagent=true;
+x-anthropic-billing-header: cc_version=2.1.314.<build>; cc_entrypoint=sdk-cli; cc_is_subagent=true;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are Claude Code, Anthropic's official CLI for Claude, running within the Claude Agent SDK.
@@ -80,8 +80,6 @@ Notes:
 - For clear communication with the user the assistant MUST avoid using emojis.
 - Do not use a colon before tool calls. Text like "Let me read the file:" followed by a read tool call should just be "Let me read the file." with a period.
 - Do NOT Write report/summary/findings/analysis .md files. Return findings directly as your final assistant message — the parent agent reads your text output, not files you create. (Files written as input to another tool are fine; this note is about report files.)
-
-<total_tokens>15000000 tokens left</total_tokens>
 
 === messages[0].content[0] (role: user) ===
 <system-reminder>
@@ -147,7 +145,7 @@ Lines added: 1. Lines removed: 1. Size change: +32 characters.
 --- subagent-explore
 +++ subagent-with-prompt-flags
 @@ -2,7 +2,7 @@
- x-anthropic-billing-header: cc_version=2.1.312.<build>; cc_entrypoint=sdk-cli; cc_is_subagent=true;
+ x-anthropic-billing-header: cc_version=2.1.314.<build>; cc_entrypoint=sdk-cli; cc_is_subagent=true;
 
  === system[1] (cache marker: {"type":"ephemeral"}) ===
 -You are a Claude agent, built on Anthropic's Claude Agent SDK.

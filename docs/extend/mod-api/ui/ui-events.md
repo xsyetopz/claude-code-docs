@@ -9,7 +9,7 @@ The second table lists the events that the `$.ui` methods raise.
 
 A `deny` from a hook refuses a scroll, focus, or close. An invalid tree draws the engine's own drawing.
 
-Official pages: [Draw in the Interface](https://code.claude.com/docs/en/plugins/mods/interface), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the Mod API type file of the 2.1.312 program (`schemas/claude-code.d.ts`).
+Official pages: [Draw in the Interface](https://code.claude.com/docs/en/plugins/mods/interface), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the Mod API type file of the 2.1.314 program (`schemas/claude-code.d.ts`).
 
 ## Example
 
@@ -57,9 +57,10 @@ For each call, a hook above the caller returns `next(e)`, `{ deny: reason }`, or
 | `ui.open` | <Documented /> | `$.ui.open({ id, title, focus })`. A hook above may retitle it or refuse with `{ deny }`, never rename it. | Input `PaneOpenArgs`. Value `UiOpenResult`. |
 | `ui.close` | <Documented /> | `$.ui.close({ id })` with `origin` `plugin`. The engine raises it too, for the person (`person`) and for an unload (`unload`). | Input `PaneCloseInput`. Value `void`. |
 | `ui.panes` | <Documented /> | `$.ui.panes()` | Input `NoArgs`. Value `readonly UiPane[]`. |
+| `ui.place` | <Undocumented /> | `$.ui.place({ id })` | Input `UiPlaceArgs`. Value `UiPlaceResult`. New in `2.1.314`. |
 | `ui.selection` | <Documented /> | `$.ui.selection()` | Input `NoArgs`. Value `UiSelection \| undefined`. |
 | `ui.copy` | <Documented /> | `$.ui.copy({ text, surface })`. `surface` takes the session's first surface when left out. | Input `UiCopyArgs`. Value `UiCopyResult`. |
-| `ui.view` | <Documented /> | `$.ui.view({ agentId })`: whose transcript the main view shows. None means the main conversation. | Input `SiteView`. Value `UiViewResult`. |
+| `ui.view` | <Undocumented /> | `$.ui.view({ agentId })`: whose transcript the main view shows. None means the main conversation. | Input `SiteView`. Value `UiViewResult`. |
 | `ui.notify` | <Documented /> | `$.ui.notify(text, { title })`. `title` is the plugin's name when left out. Two mods that notify again on hearing a notification can echo each other without end. | Input `{ text: string, title?: string }`. Value `UiNotifyResult`. |
 | `ui.blit` | <Documented /> | `$.ui.blit(...)`: the `cells` of a `Raster` or the `source` of a keyed `Image`. A hook above may rewrite either, or `{ deny }`. | Input `UiBlitArgs`. Value `UiBlitResult`. |
 

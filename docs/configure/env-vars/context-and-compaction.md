@@ -60,7 +60,7 @@ The table is sorted by name. See [Environment Variables](index.md#how-to-read-th
 | `CLAUDE_CODE_SLEEP_COMPACT` | <Undocumented /> | Turns on sleep compaction. A timer queues `/compact` while the session idles and before the prompt cache expires. | On or off. Active only on a host that qualifies. The timer fires at 0.9 of the cache time window | Idle sessions on supported hosts |
 | `CLAUDE_CODE_SLEEP_COMPACT_AFTER_MS` | <Undocumented /> | Sets how long after a turn ends the sleep compaction may fire. | A number of milliseconds. Integer 1 or more. The code clamps it between 60000 and 210000 ms | Idle sessions with sleep compaction |
 | `CLAUDE_CODE_TOASTY_THIMBLE` | <Undocumented /> <Gated note="A feature flag or server gate decides by default. This variable overrides it" /> | Overrides the batching reminder, a prompt note that tells the model to request all independent tool calls in one response. | Text. The accepted values are not shown here | Models served with the reminder |
-| `CLAUDE_CODE_TOTAL_TOKENS_REMINDER` | <Undocumented /> | Sets the mode of the `total_tokens` reminder that shows the tokens left. `off` turns it off. | Text. Known modes include `off`, `padded-countdown`, `infinite`, and `fixed`. Env wins over settings and flag | All sessions |
+| `CLAUDE_CODE_TOTAL_TOKENS_REMINDER` | <Undocumented /> | Sets the mode of the `total_tokens` reminder that shows the tokens left. `off` turns it off. | Text. Known modes include `off`, `padded-countdown`, `infinite`, and `fixed`. Without it the mode is `padded-countdown` for a model that carries the `total_tokens_reminder` capability, and `off` for one that does not. Sonnet 5.5 and Opus 5.5 lost that capability in `2.1.314`. Env wins over settings and flag | All sessions |
 | `CLAUDE_CODE_TOTAL_TOKENS_REMINDER_AFTER_USER_TURN` | <Undocumented /> | Chooses whether the `total_tokens` reminder shows after each user prompt and re-anchors the budget on each user turn. | On, off, or unset, on by default. Env wins over settings and a feature flag | All sessions |
 | `CLAUDE_CODE_TOTAL_TOKENS_REMINDER_BUDGET` | <Undocumented /> | Sets the starting token budget for the `padded-countdown` reminder mode. | A number, `15000000` by default. Integer above 0. Env wins over settings and flag | All sessions |
 | `CLAUDE_COWORK_MEMORY_EXTRA_GUIDELINES` | <Undocumented /> | Adds extra guideline text to the auto memory and agent memory prompts. | Text. Claude Code ignores it when it is empty | Cowork hosts |
@@ -77,7 +77,7 @@ The table is sorted by name. See [Environment Variables](index.md#how-to-read-th
 | `DISABLE_PROMPT_CACHING_MYTHOS` | <Undocumented /> | Turns off prompt caching for models that the Mythos check matches. | On or off | - |
 | `MAX_MCP_OUTPUT_TOKENS` | <Documented /> | Sets the token limit for one MCP tool result. | A number. Default `25000`. The warning at `10000` stays fixed | - |
 | `SLASH_COMMAND_TOOL_CHAR_BUDGET` | <Documented /> | Overrides the character budget for the skill listing shown to the model. | Unset by default. An integer of `1` or more. If set, it wins over the dynamic budget. The dynamic budget is the context window times a fraction, times the characters per token. That number is 4 for Claude 3 to 4.6 models and 3 for newer ones. The default fraction is 1% | All sessions |
-| `USE_API_CONTEXT_MANAGEMENT` | <Undocumented /> <Gated note="Works only behind a feature flag or server gate" /> | Would turn on the API context-management beta. It is inert in 2.1.312. | On or off. The code ANDs it with a constant false, so it has no effect | Inert, first-party models |
+| `USE_API_CONTEXT_MANAGEMENT` | <Undocumented /> <Gated note="Works only behind a feature flag or server gate" /> | Would turn on the API context-management beta. It is inert in 2.1.314. | On or off. The code ANDs it with a constant false, so it has no effect | Inert, first-party models |
 
 ## How It Works
 
@@ -93,4 +93,4 @@ See [Context and Compaction](../../how-it-works/context-and-compaction.md) for t
 - [Models and Effort](models-and-effort.md)
 - [Undocumented Items](../../reference/undocumented.md): every item that only the program shows.
 
-Source: the program (variable names found in the `2.1.312` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
+Source: the program (variable names found in the `2.1.314` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.

@@ -8,7 +8,7 @@ These variables help a program that runs Claude Code as a child process.
 They say which surface started it, how session events reach the host, and which binary the Agent SDK looks for.
 Most people never set them. Hosts such as the Agent SDK set them for you.
 
-This page lists 25 variables. These are for a host program that starts Claude Code. Set them in the child process environment. Project `env` cannot set most of them before trust.
+This page lists 27 variables. These are for a host program that starts Claude Code. Set them in the child process environment. Project `env` cannot set most of them before trust.
 
 ## Example
 
@@ -30,7 +30,7 @@ The table is sorted by name. See [Environment Variables](index.md#how-to-read-th
 | `ANTHROPIC_WEBHOOK_SIGNING_KEY` | <Undocumented /> | The bundled SDK client reads it as the default webhook signing key. It is `null` when unset. | Text. SDK constructor default | Bundled SDK client. Not set from project `env` before trust |
 | `ANTHROPIC_WORK_ID` | <Undocumented /> | The bundled Anthropic SDK `EnvironmentWorker` reads it as the default work item ID. | Text. The call fails with an error if no ID comes from any source | Bundled SDK work polling. Not set from project `env` before trust |
 | `ANTHROPIC_WORK_SECRET` | <Undocumented /> | The bundled Anthropic SDK `EnvironmentWorker` reads it as the default work secret. | Text | Bundled SDK work polling. Not set from project `env` before trust |
-| `CLAUDE_CODE_CONFIG_PROBE` | <Undocumented /> | In the IDE config probe, skips the `awsAuthRefresh` and `gcpAuthRefresh` commands and the credential helper prefetch. | On or off, off by default. Also in a list of host-controlled names | IDE config probe, Bedrock and Vertex auth refresh |
+| `CLAUDE_CODE_CONFIG_PROBE` | <Undocumented /> | In the IDE config probe, skips the `awsAuthRefresh` and `gcpAuthRefresh` commands and the credential helper prefetch. Since `2.1.314` the process also drops any user message it queues for itself, and so answers only its host's request. The debug log then reads "Dropped a user message that this process queued for itself". | On or off, off by default. Also in a list of host-controlled names | IDE config probe, Bedrock and Vertex auth refresh |
 | `CLAUDE_CODE_EDITOR_CODELIVERY` | <Undocumented /> | Lets a relayed human message carry an `artifact_followup` ack with an `https` URL of at most 2048 chars. | On or off, off by default | Relay and remote sessions only |
 | `CLAUDE_CODE_EMIT_SESSION_STATE_EVENTS` | <Documented /> | Adds `session_state_changed` system messages to the output stream. | On or off, off by default. Code emits a normal event when set, else a host-only event when `CLAUDE_CODE_SDK_READS_SESSION_STATE` is set | SDK and `--print` stream-json |
 | `CLAUDE_CODE_EMIT_USER_PROMPT_SUBMIT_HOOK_EVENTS` | <Undocumented /> | Makes Claude Code send `hook_started` and `hook_response` system messages for `UserPromptSubmit` hooks. Added in `2.1.311`. | On or off, off by default. Claude Code reads it once and removes it from its environment | SDK and print mode |
@@ -48,6 +48,8 @@ The table is sorted by name. See [Environment Variables](index.md#how-to-read-th
 | `CLAUDE_CODE_SIMULATE_PROXY_USAGE` | <Undocumented /> | Simulates proxy use in request shaping. Claude Code then skips steps such as the thinking display update. A Probes run saw no `anthropic-beta` header. | On or off | API requests |
 | `CLAUDE_CODE_SUPERVISED` | <Undocumented /> | Tells Claude Code that a supervisor restarts it. On an uncaught exception it then exits at once instead of staying alive. | On or off | Supervised or managed runs |
 | `CLAUDE_CODE_TETHER_LIVE` | <Undocumented /> <Gated note="A feature flag or server gate decides by default. This variable overrides it" /> | Forces the tether-live gate on or off. It replaces the feature flag and also gates the kept-reminder delivery. | On or off. Needs the first-party provider. Without it, the flag decides, and only for some builds or users | First-party provider only |
+| `CLAUDE_CODE_STREAM_EVENT_HOLD_MS` | <Undocumented /> | Holds the `stream_event` text deltas of stream-json output for this many ms. The program joins held deltas into fewer lines and prints them when the time ends. It prints at once on any other message, after 100 held lines, or on exit. Added in `2.1.314`. | A number of milliseconds. Whole number from `1` to `2000`, digits only. It has no effect while `CLAUDE_CODE_STREAM_EVENT_MAX_LINE_BYTES` is set to a bad value | SDK and print mode, stream-json output. The program removes it from the env of child processes in a cloud session |
+| `CLAUDE_CODE_STREAM_EVENT_MAX_LINE_BYTES` | <Undocumented /> | Sets the largest size in bytes of one joined stream-json line when `CLAUDE_CODE_STREAM_EVENT_HOLD_MS` is set. A joined line that would be larger prints as separate lines. Added in `2.1.314`. | A number of bytes. Whole number of at least `1`, digits only. Unset means no line limit. A bad value logs a warning and turns the hold off | SDK and print mode, stream-json output. The program removes it from the env of child processes in a cloud session |
 | `SDK_NATIVE_BIN` | <Undocumented /> | Sets the native binary file name that the Agent SDK looks for. | Text, `claude` by default. Joined to the platform package path `@anthropic-ai/claude-agent-sdk-<os>-<arch>` | Agent SDK launch. Not set from project `env` before trust |
 
 ## How It Works
@@ -63,4 +65,4 @@ Other variables here turn on extra stream events or tell Claude Code that a supe
 - [Remote and Cloud Sessions](remote-and-cloud-sessions.md)
 - [Undocumented Items](../../reference/undocumented.md): every item that only the program shows.
 
-Source: the program (variable names found in the `2.1.312` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.
+Source: the program (variable names found in the `2.1.314` binary) and the [Environment Variables](https://code.claude.com/docs/en/env-vars) page of the official docs.

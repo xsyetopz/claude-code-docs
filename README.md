@@ -5,7 +5,7 @@ It is not made by or tied to Anthropic. "Claude" and "Claude Code" name the prod
 
 The site covers every surface of Claude Code that you can use, change, or turn on and off.
 That includes items the official docs never name. They carry an Undocumented badge.
-It tracks one release only: `2.1.312` (see `src/version.ts`). There are no versioned docs.
+It tracks one release only: `2.1.314` (see `src/version.ts`). There are no versioned docs.
 
 Live site: <https://clawdipedia.cc/>
 
@@ -60,7 +60,7 @@ together, then run `bun run schemas`.
 
 The repo is also a Claude Code plugin marketplace, `clawdipedia`, with three plugins:
 
-- `clawdipedia-docs`: an MCP server with four tools (`search_docs`, `read_page`, `list_pages`, `get_schema`) and a skill. It reads four sources, picked with `source`: `clawdipedia` (this site, the default), `platform` (platform.claude.com/docs), `code` (code.claude.com/docs), and `anthropic` (www.anthropic.com).
+- `clawdipedia-docs`: an MCP server with four tools (`search_docs`, `read_page`, `list_pages`, `get_schema`) and a skill. It reads four sources, picked with `source`: `clawdipedia` (this site, the default), `platform` (platform.claude.com/docs), `code` (code.claude.com/docs), and `claude-resources` (claude.com/resources).
 - `clawdipedia-docs-cli`: the same lookups as an `clawdipedia-docs` command that the Bash tool runs, plus a skill. It has no MCP server, so it adds no tool list to the context. It works only in Claude Code and needs Bun.
 - `cc-inspect`: an MCP server and a skill that read your session transcripts and the installed Claude Code program.
 

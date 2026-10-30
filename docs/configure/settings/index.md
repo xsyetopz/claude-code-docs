@@ -10,7 +10,7 @@ Create or edit a settings file, pass `--settings`, or use `/config` and `/model`
 An administrator can deploy managed settings.
 Each key is its own switch. `disableAllHooks` turns off hooks, the status line, and file suggestions at once.
 
-The managed schema of `2.1.312` lists 194 top-level keys. The user schema lists 171, and the other 23 are managed-only.
+The managed schema of `2.1.314` lists 195 top-level keys. The user schema lists 172, and the other 23 are managed-only.
 Source: the program (the published settings schemas).
 
 ## Example
@@ -53,7 +53,7 @@ Each key has a row on one of these pages.
 - `Where to Set It` says which files may set the key. `Any settings file` means the user, project, local, and managed files.
   `Settings files` means the settings files without a narrower scope in the source.
 - Many boolean keys are written as the thing to switch off, such as `spinnerTipsEnabled`. Read the row before you pick a value.
-- Items that are removed or do nothing in `2.1.312` are left out. See the end of this page.
+- Items that are removed or do nothing in `2.1.314` are left out. See the end of this page.
 
 ## Where Settings Live
 
@@ -78,6 +78,7 @@ Source: [Settings Files and Precedence](https://code.claude.com/docs/en/settings
 - A cloud session reads only the shared project file and server-managed settings.
 - Run `/status` to see the `Setting sources` line. Run `claude doctor` to see the entries that Claude Code dropped.
 - The flag `--setting-sources <sources>` loads only the sources you name (`user`, `project`, `local`).
+  A source you leave out no longer supplies auto mode rules or saved permission consents (v2.1.314 or later).
 
 Source: the program names the five sources `userSettings`, `projectSettings`, `localSettings`, `flagSettings`, and `policySettings`.
 
@@ -137,6 +138,7 @@ Source: [Deploy Managed Settings](https://code.claude.com/docs/en/managed-settin
 - `managedSourcesBehavior` decides how sources combine. `first-wins` uses the highest source alone. `merge` deep-merges them.
 - `parentSettingsBehavior` does the same for the SDK parent tier.
 - `policyHelper` and `policyHelpers` compute managed settings at startup.
+- A file tool asks before it edits the local copy of server-managed settings, as it does for a user settings file (v2.1.314 or later).
 
 The keys are in [Enterprise Settings](enterprise.md).
 
@@ -161,7 +163,7 @@ Claude Code then takes the model keys of that app over the managed values.
 
 ## Left Out on Purpose
 
-These keys do nothing in `2.1.312`, so the pages do not list them.
+These keys do nothing in `2.1.314`, so the pages do not list them.
 
 - `taskOutputMaxChars` — Claude Code removed the `TaskOutput` tool.
 - `keybindingFlavor` — Word-editing keys always follow Bash (readline) rules now.

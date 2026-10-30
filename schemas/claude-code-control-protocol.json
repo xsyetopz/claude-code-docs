@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://clawdipedia.cc/schemas/claude-code-control-protocol.json",
-  "title": "Claude Code control protocol (Claude Code 2.1.312)",
-  "$comment": "For the request and response of each control_request subtype in stream-json mode (definitions <subtype>Request and <subtype>Response, direction in x-direction). Generated from Claude Code 2.1.312 by calling the zod v4 toJSONSchema embedded in the binary on its own validator (method A, runtime export). Anchor: the SDK schema module, table of rows {request, originator, response}; the request union is described as \"Control requests a client sends to drive the loop\". Do not edit by hand: run \"bun run schemas\".",
+  "title": "Claude Code control protocol (Claude Code 2.1.314)",
+  "$comment": "For the request and response of each control_request subtype in stream-json mode (definitions <subtype>Request and <subtype>Response, direction in x-direction). Generated from Claude Code 2.1.314 by calling the zod v4 toJSONSchema embedded in the binary on its own validator (method A, runtime export). Anchor: the SDK schema module, table of rows {request, originator, response}; the request union is described as \"Control requests a client sends to drive the loop\". Do not edit by hand: run \"bun run schemas\".",
   "$defs": {
     "apply_flag_settingsRequest": {
       "type": "object",
@@ -393,7 +393,7 @@
         },
         "requires_user_interaction": {
           "type": "boolean",
-          "description": "True when one-tap Approve/Deny must not be offered: the tool's approval card IS the user-interaction surface (Tool.requiresUserInteraction(): the user responds on the card itself), OR the pending ask is localDisplayOnly (its consent disclosure cannot ride this wire and only the local dialog renders it), OR the auto-mode classifier blocked the call and it was handed to a person (decision_reason_type 'classifier' on a person-only ask), which no stored grant or automatic approval may answer, OR the MCP server's name spells a claude.ai connector's key and the server came from neither claude.ai nor whoever launched the session, so a grant keyed on the tool name must not answer it, OR the SDK host worded the ask (title and description are its consent copy, which a push cannot carry whole). In each case the user has to open the session to answer."
+          "description": "True when one-tap Approve/Deny must not be offered: the tool's approval card IS the user-interaction surface (Tool.requiresUserInteraction(): the user responds on the card itself), OR the pending ask is localDisplayOnly (its consent disclosure cannot ride this wire and only the local dialog renders it), OR the auto-mode classifier blocked the call and it was handed to a person (decision_reason_type 'classifier' on a person-only ask), which no stored grant or automatic approval may answer, OR the MCP server's name spells a claude.ai connector's key and the server came from neither claude.ai nor whoever launched the session, so a grant keyed on the tool name must not answer it, OR the SDK host worded the ask (title and description are its consent copy, which a push cannot carry whole), OR the ask is the one made before the first upload by file reference to a connector, which no stored grant or automatic approval may answer. In each case the user has to open the session to answer."
         },
         "server_prompt": {
           "type": "string",
@@ -7063,6 +7063,11 @@
           "type": "boolean",
           "description": "@internal Whether an IDE host that connects Claude in Chrome itself should connect it when the session starts. True when the \"Enabled by default\" setting (claudeInChromeDefaultEnabled) is on, this session did not connect the server itself, and the gates the terminal applies to the setting at startup pass (claudeInChromeDefaultForHost). Sent only to a host that owns the session's startup (isVscodeHostOwnedStartupSession). Absent (older CLI, other hosts) → treat as false."
         },
+        "claude_in_chrome_prompt_disabled": {
+          "type": "boolean",
+          "const": true,
+          "description": "@internal Present, and true, when CLAUDE_CODE_DISABLE_CFC_PROMPT is set to a true value for this process: Claude Code leaves its own Claude in Chrome guidance out (the system-prompt section and the bundled skill), and a host that adds that guidance to messages itself (the VS Code extension's browser instructions) leaves it out too. The browser tools are unaffected. Absent (variable unset or false, older CLI): treat as false — the host adds its guidance."
+        },
         "remote_control_available": {
           "type": "boolean",
           "description": "@internal Whether Remote Control can be offered at all in this deployment (isRemoteControlDeploymentAvailable: not hard-disabled by managed settings, not nested in a remote environment, first-party provider). Only host-lifetime-stable conditions; transient ones (auth state, the GrowthBook rollout gate, the async org-compliance verdict) are deliberately excluded since hosts latch this from one initialize response — see the helper docstring. Lets IDE hosts hide their Remote Control affordance where it can never work. Absent (older CLI) → treat as available."
@@ -8254,9 +8259,10 @@
                 "enum": [
                   "CLAUDEAI_BEARER_REJECTED",
                   "FIRST_PARTY_AUTH_REJECTED",
-                  "APPROVAL_REQUIRED"
+                  "APPROVAL_REQUIRED",
+                  "CLIENT_REGISTRATION_UNAVAILABLE"
                 ],
-                "description": "@internal Why a 'failed' row failed, for the causes a host can fix: CLAUDEAI_BEARER_REJECTED (a claude.ai connector rejected the claude.ai login — sign in again), FIRST_PARTY_AUTH_REJECTED (a first-party Anthropic server rejected its credential — the claude.ai login, or for the Claude Design server its /design-login authorization; the row's error names which sign-in fixes it), APPROVAL_REQUIRED (a project-scoped server awaiting the user's approval). Absent for every other failure; new values are additive."
+                "description": "@internal Why a row is not connected, where a host can act on it. On a 'failed' row: CLAUDEAI_BEARER_REJECTED (a claude.ai connector rejected the claude.ai login — sign in again), FIRST_PARTY_AUTH_REJECTED (a first-party Anthropic server rejected its credential — the claude.ai login, or for the Claude Design server its /design-login authorization; the row's error names which sign-in fixes it), APPROVAL_REQUIRED (a project-scoped server awaiting the user's approval). On a 'failed' or a 'needs-auth' row: CLIENT_REGISTRATION_UNAVAILABLE (the last look at the server's authorization server, under 30 days ago, found no way to register a client, so mcp_authenticate is expected to fail; the row keeps this value until the server is dialed again, for example by mcp_reconnect or a completed sign-in, so keep sign-in and reconnect available). Absent in every other case; new values are additive."
               },
               "config": {
                 "anyOf": [
@@ -9381,9 +9387,10 @@
                 "enum": [
                   "CLAUDEAI_BEARER_REJECTED",
                   "FIRST_PARTY_AUTH_REJECTED",
-                  "APPROVAL_REQUIRED"
+                  "APPROVAL_REQUIRED",
+                  "CLIENT_REGISTRATION_UNAVAILABLE"
                 ],
-                "description": "@internal Why a 'failed' row failed, for the causes a host can fix: CLAUDEAI_BEARER_REJECTED (a claude.ai connector rejected the claude.ai login — sign in again), FIRST_PARTY_AUTH_REJECTED (a first-party Anthropic server rejected its credential — the claude.ai login, or for the Claude Design server its /design-login authorization; the row's error names which sign-in fixes it), APPROVAL_REQUIRED (a project-scoped server awaiting the user's approval). Absent for every other failure; new values are additive."
+                "description": "@internal Why a row is not connected, where a host can act on it. On a 'failed' row: CLAUDEAI_BEARER_REJECTED (a claude.ai connector rejected the claude.ai login — sign in again), FIRST_PARTY_AUTH_REJECTED (a first-party Anthropic server rejected its credential — the claude.ai login, or for the Claude Design server its /design-login authorization; the row's error names which sign-in fixes it), APPROVAL_REQUIRED (a project-scoped server awaiting the user's approval). On a 'failed' or a 'needs-auth' row: CLIENT_REGISTRATION_UNAVAILABLE (the last look at the server's authorization server, under 30 days ago, found no way to register a client, so mcp_authenticate is expected to fail; the row keeps this value until the server is dialed again, for example by mcp_reconnect or a completed sign-in, so keep sign-in and reconnect available). Absent in every other case; new values are additive."
               },
               "config": {
                 "anyOf": [
@@ -11229,7 +11236,8 @@
             "SessionMode",
             "PromptHint",
             "AbovePrompt",
-            "Pane"
+            "Pane",
+            "Placed"
           ],
           "description": "@internal A component a plugin may draw through `ui.render`: one name per render site of the hooks engine (src/plugins/functionHooks/types/render/render-component.ts)."
         },
@@ -11418,7 +11426,8 @@
             "SessionMode",
             "PromptHint",
             "AbovePrompt",
-            "Pane"
+            "Pane",
+            "Placed"
           ],
           "description": "@internal A component a plugin may draw through `ui.render`: one name per render site of the hooks engine (src/plugins/functionHooks/types/render/render-component.ts)."
         },
@@ -11795,7 +11804,8 @@
             "SessionMode",
             "PromptHint",
             "AbovePrompt",
-            "Pane"
+            "Pane",
+            "Placed"
           ],
           "description": "@internal The render site the Input was drawn in, as the ui_render that drew it named it; pairs with `key` for the re-resolve."
         },
@@ -11865,7 +11875,8 @@
             "SessionMode",
             "PromptHint",
             "AbovePrompt",
-            "Pane"
+            "Pane",
+            "Placed"
           ],
           "description": "@internal A component a plugin may draw through `ui.render`: one name per render site of the hooks engine (src/plugins/functionHooks/types/render/render-component.ts)."
         },
@@ -12209,7 +12220,8 @@
                 "SessionMode",
                 "PromptHint",
                 "AbovePrompt",
-                "Pane"
+                "Pane",
+                "Placed"
               ],
               "description": "@internal A component a plugin may draw through `ui.render`: one name per render site of the hooks engine (src/plugins/functionHooks/types/render/render-component.ts)."
             },
@@ -13458,7 +13470,8 @@
             "SessionMode",
             "PromptHint",
             "AbovePrompt",
-            "Pane"
+            "Pane",
+            "Placed"
           ],
           "description": "@internal A component a plugin may draw through `ui.render`: one name per render site of the hooks engine (src/plugins/functionHooks/types/render/render-component.ts)."
         },
@@ -14303,7 +14316,8 @@
             "SessionMode",
             "PromptHint",
             "AbovePrompt",
-            "Pane"
+            "Pane",
+            "Placed"
           ],
           "description": "@internal The render site the Select was drawn in, as the ui_render that drew it named it; pairs with `key` for the re-resolve."
         },

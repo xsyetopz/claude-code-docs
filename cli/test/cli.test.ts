@@ -108,7 +108,7 @@ const envOf = (env: Record<string, string>): Record<string, string> => {
     Object.entries(process.env).filter(
       (e): e is [string, string] =>
         typeof e[1] === "string" &&
-        !/^(CLAWDIPEDIA_|ANTHROPIC_SITE_|CODE_DOCS_|CLAUDE_PLUGIN_DATA|PLATFORM_DOCS_)/.test(
+        !/^(CLAWDIPEDIA_|CLAUDE_RESOURCES_|CODE_DOCS_|CLAUDE_PLUGIN_DATA|PLATFORM_DOCS_)/.test(
           e[0],
         ),
     ),
@@ -285,7 +285,7 @@ describe("subcommands", () => {
     const old = await cc(["search", "PreToolUse", "--source", "docs"], env);
     expect(old.code).toBe(2);
     expect(old.out).toBe("");
-    for (const name of ["clawdipedia", "platform", "code", "anthropic"])
+    for (const name of ["clawdipedia", "platform", "code", "claude-resources"])
       expect(old.err).toContain(name);
   });
 });

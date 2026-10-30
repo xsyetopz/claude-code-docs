@@ -79,7 +79,7 @@ The props of `Svg`, the vector leaf of the remote surfaces. The markup is the da
 | `alt` | <Documented /> | What the drawing says, for a reader that cannot see it. Required, because a surface without the element draws nothing else of it. | Type: `string`. |
 | `width` | <Documented /> | CSS pixels. If absent, the box takes the own width of the markup up to the slot. | Type: `number`. Optional. |
 | `height` | <Documented /> | CSS pixels. If absent, the own height of the markup at the drawn width. | Type: `number`. Optional. |
-| `isInteractive` | <Documented /> | `true` draws the SVG in a script-less sandboxed frame so hover, CSS `:hover`, SMIL animation and `<title>` tooltips work. If absent, an image. | Type: `boolean`. Optional. It never enables script or event-handler attributes. Put presses on an enclosing element. |
+| `isInteractive` | <Documented /> | `true` draws the SVG in a script-less sandboxed frame so hover, CSS `:hover`, SMIL animation and `<title>` tooltips work. If absent, an image. | Type: `boolean`. Optional. It never enables script or event-handler attributes. Put presses on an enclosing element. New in `2.1.314`: the editor ignores it and always draws an image. SMIL and CSS animation can run there, but hover, CSS `:hover`, and `<title>` tooltips never work. |
 
 ### `TextHoverProps`
 

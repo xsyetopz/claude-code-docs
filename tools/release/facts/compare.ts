@@ -289,6 +289,12 @@ export const runCompare = async (ctx: Ctx): Promise<number> => {
   const { from, to } = ctx; // cli.ts turns `compare <from> <to>` into --from/--to
   if (!to)
     throw new Error("no <to> version given and no installed binary found");
+  // `--from` falls back to the tracked version and `--to` to the installed one, so a bare
+  // `release:compare` asks for `<v>..<v>`. That run reports nothing and overwrites `compare.md`.
+  if (from === to)
+    throw new Error(
+      `compare needs two versions, and both are ${to}. Give them: \`release:compare -- <from> ${to}\``,
+    );
   for (const v of [from, to])
     if (!existsSync(join(CAPTURES, v)))
       throw new Error(`no captures/${v}/ (run the probes for ${v} first)`);

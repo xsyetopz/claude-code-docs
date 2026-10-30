@@ -1,4 +1,4 @@
-// search_docs: BM25 search of the docs site or a remote source (platform, code, anthropic).
+// search_docs: BM25 search of the docs site or a remote source (platform, code, claude-resources).
 
 import { sourceData } from "../fetcher.ts";
 import { searchRemote } from "./remote.ts";

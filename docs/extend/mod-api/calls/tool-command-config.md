@@ -11,7 +11,7 @@ A hook on `tool.call` or `command.run` serves a tool or command that a mod regis
 
 A `deny` from a `tool.call`, `tool.check`, or `config.set` hook stops the action. A registered tool has the name `mcp__<plugin>__<name>`.
 
-Official pages: [Use the Mods API](https://code.claude.com/docs/en/plugins/mods/api), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the Mod API type file of the 2.1.312 program (`schemas/claude-code.d.ts`).
+Official pages: [Use the Mods API](https://code.claude.com/docs/en/plugins/mods/api), [Mods Reference](https://code.claude.com/docs/en/plugins/mods/reference). Source: the Mod API type file of the 2.1.314 program (`schemas/claude-code.d.ts`).
 "Run time" appears in a "Where it can be used" cell. It means in a hook, in a closure that a hook drew, or in a timer callback. It does not mean inside `register`.
 
 ## Example
