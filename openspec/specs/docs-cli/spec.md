@@ -1,15 +1,15 @@
 # Docs-Cli Specification
 
 ## Purpose
-Let people and agents query the four doc sources (clawdipedia, platform, code, and anthropic) from a shell with one command, without the MCP server, through `bunx clawdipedia-docs` or the `clawdipedia-docs-cli` plugin.
+Let people and agents query the four doc sources (clawdipedia, platform, code, and claude-resources) from a shell with one command, without the MCP server, through `bunx clawdipedia-docs` or the `clawdipedia-docs-cli` plugin.
 
 ## Requirements
 
 ### Requirement: Subcommands
 
 The `clawdipedia` command SHALL have the subcommands `search <query>`, `read <route>`, `list [prefix]`, and `schema <name> [property]`.
-`search`, `read`, and `list` SHALL take `--source clawdipedia|platform|code|anthropic`, with `clawdipedia` as the default.
-Any other value, including the old `docs`, SHALL be a usage error.
+`search`, `read`, and `list` SHALL take `--source clawdipedia|platform|code|claude-resources`, with `clawdipedia` as the default.
+Any other value, including the old `docs` and the dropped `anthropic`, SHALL be a usage error.
 `read` SHALL take `--section <heading>`.
 `search` SHALL take `--limit <n>`.
 Each subcommand SHALL print plain text by default and JSON with `--json`.
