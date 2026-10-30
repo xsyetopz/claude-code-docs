@@ -373,8 +373,26 @@ Design: `design.md`.
   valid, `claude-code.d.ts` ok, `surface.json` same as a fresh run. `verify:locked` exited 0 and ran
   every step to the `wrangler deploy --dry-run`, which read 1,014 files. `bun test`: 317 pass,
   17 skip, 0 fail.
-- [ ] 7.7 Review with a fresh context, then commit with Conventional Commits and push. The pre-push
-  hook runs `verify:locked` again. Never `--no-verify`.
+- [x] 7.7 Review with a fresh context, then commit with Conventional Commits and push. The pre-push
+  hook runs `verify:locked` again. Never `--no-verify`. The review found five items. Four were real
+  and are fixed: the version bump had rewritten two older `CHANGELOG.md` entries from 2.0.0 to
+  3.0.0, which contradicted the new "both plugins go from 2.0.0 to 3.0.0" entry, because 2.0.0 is
+  the version on `main`; `inspect/mcp/dist/server.js` carried the regenerated `2.1.314` transcript
+  schema with no bump, so `cc-inspect` goes to 0.9.0 and `plugin:build` rebuilt all three bundles;
+  the `idleCompaction` row of `docs/configure/settings/core.md` read as if the setting stops idle
+  compaction by default, against the schema text and `docs/how-it-works/context-and-compaction.md`;
+  and the Monitor hook rule of task 4.7 was on `shell-and-web.md` only, so the Matcher Targets table
+  of `docs/extend/hooks/configuration.md` now carries it. The fifth, that
+  `openspec/specs/tracked-release-docs/spec.md` still requires the deleted archive page, is not a
+  defect: this change holds the `MODIFIED Requirements` delta for it, which OpenSpec applies at
+  archive time.
+  Two badges also changed. A web check of the official docs shows that the changelog entry for
+  `2.1.314` names the `FORCE_HYPERLINK` change, so its What Changed row is `<Documented />`, and
+  that the [Environment Variables](https://code.claude.com/docs/en/env-vars) page still says only
+  `0` turns it off, so its row on `docs/configure/env-vars/ui-and-terminal.md` is now `<Differs />`.
+  `verify:locked` exited 0 and `bun test` gave 317 pass, 17 skip, 0 fail. Commit `93f19d3`, pushed
+  to `main`. The push reports that the remote moved to
+  `https://github.com/xsyetopz/www.clawdipedia.cc.git`, so the `origin` URL needs an update.
 
 ## 8. Blocked
 
