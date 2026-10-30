@@ -65,7 +65,7 @@ The repo is also a Claude Code plugin marketplace, `clawdipedia`, with three plu
 - `cc-inspect`: an MCP server and a skill that read your session transcripts and the installed Claude Code program.
 
 ```sh
-claude plugin marketplace add xsyetopz/clawdipedia
+claude plugin marketplace add xsyetopz/www.clawdipedia.cc
 claude plugin install clawdipedia-docs@clawdipedia   # or clawdipedia-docs-cli, or cc-inspect
 ```
 

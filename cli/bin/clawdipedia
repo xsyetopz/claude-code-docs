@@ -6911,7 +6911,7 @@ class DiskCache {
 var FETCH_TIMEOUT_MS = 8000;
 var MAX_REDIRECTS = 3;
 var MAX_CONCURRENT = 6;
-var UA = `clawdipedia-docs-mcp/${package_default.version} (+https://github.com/xsyetopz/clawdipedia)`;
+var UA = `clawdipedia-docs-mcp/${package_default.version} (+https://github.com/xsyetopz/www.clawdipedia.cc)`;
 var ACCEPT = "text/markdown, text/plain, application/json;q=0.9";
 var MB = 1024 * 1024;
 var ttlScale = () => {

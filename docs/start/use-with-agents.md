@@ -29,7 +29,7 @@ An agent with a web fetch tool can start at `llms.txt`. It can pick a page and f
 The plugin has the name `clawdipedia-docs`. Its display name is Anthropic Docs. The name `clawdipedia` is the marketplace.
 
 ```text
-/plugin marketplace add xsyetopz/clawdipedia
+/plugin marketplace add xsyetopz/www.clawdipedia.cc
 /plugin install clawdipedia-docs@clawdipedia
 ```
 

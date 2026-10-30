@@ -8,7 +8,7 @@ import rehypeCodeWbr from "./src/plugins/rehype/code-wbr";
 import rehypeTableMarks from "./src/plugins/rehype/table-marks";
 import { CLAUDE_CODE_VERSION } from "./src/version";
 
-const REPO = "https://github.com/xsyetopz/clawdipedia";
+const REPO = "https://github.com/xsyetopz/www.clawdipedia.cc";
 const DISCLAIMER = "Unofficial. Not made by or tied to Anthropic.";
 
 // Serves schemas/ at <baseUrl>schemas/ so the $id and $schema URLs resolve after deploy.

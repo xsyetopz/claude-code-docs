@@ -8,7 +8,7 @@ import { DiskCache } from "./cache.ts";
 export const FETCH_TIMEOUT_MS = 8000;
 export const MAX_REDIRECTS = 3;
 const MAX_CONCURRENT = 6;
-const UA = `clawdipedia-docs-mcp/${pkg.version} (+https://github.com/xsyetopz/clawdipedia)`;
+const UA = `clawdipedia-docs-mcp/${pkg.version} (+https://github.com/xsyetopz/www.clawdipedia.cc)`;
 const ACCEPT = "text/markdown, text/plain, application/json;q=0.9";
 
 export const MB = 1024 * 1024;
