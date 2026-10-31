@@ -149,7 +149,7 @@ test("run keeps every stdout event, with multibyte text split across chunks inta
 });
 
 test("resultText is the text of the last result event, or null", async () => {
-  const { resultText } = await import("../src/run.ts");
+  const { resultText } = await import("../src/requests.ts");
   expect(
     resultText({
       events: [

@@ -4,7 +4,8 @@ import { cut, lines as linesOf } from "../diff.ts";
 import { findUnits } from "../find.ts";
 import { prepared } from "../prepare.ts";
 import { readable } from "../readable.ts";
-import { resultText, runArgs, runPrompt, userText } from "../run.ts";
+import { resultText, toolNames } from "../requests.ts";
+import { runArgs, runPrompt, userText } from "../run.ts";
 import {
   type Args,
   clip,
@@ -197,11 +198,12 @@ group<
         files: files ?? {},
       });
       const sent = r.requests.map((x) => `${x.method} ${x.path}`);
+      const tools = toolNames(r);
       const stdout = clip(r.stdout, 4000);
       const stderr = clip(r.stderr, 2000);
       return text(
-        `${bin.version}: exit ${r.exit}, ${sent.length} requests.\nstdout: ${stdout}\nstderr: ${stderr}`,
-        { exit: r.exit, requests: sent, stdout, stderr },
+        `${bin.version}: exit ${r.exit}, ${sent.length} requests.${tools.length ? `\ntools: ${tools.map((t) => t.join(" ")).join(" | ")}` : ""}\nstdout: ${stdout}\nstderr: ${stderr}`,
+        { exit: r.exit, requests: sent, tools, stdout, stderr },
       );
     },
     prepare: ({ version }) => {

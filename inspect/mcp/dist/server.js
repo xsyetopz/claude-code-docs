@@ -39592,6 +39592,15 @@ var readable = async (binary, module) => {
   }
 };
 
+// inspect/mcp/src/requests.ts
+var isTurn = (path) => path.startsWith("/v1/messages") && !path.includes("count_tokens");
+var toolNames = (r) => r.requests.filter((q) => isTurn(q.path)).map((q) => (q.body?.tools ?? []).map((t) => t.name).filter((n) => typeof n === "string"));
+var resultText = (r) => {
+  const last = [...r.events].reverse().find((e) => e["type"] === "result");
+  const text = last?.["result"];
+  return typeof text === "string" ? text : null;
+};
+
 // inspect/mcp/src/run.ts
 import {
   chmodSync,
@@ -39791,11 +39800,6 @@ var userText = (r, mark) => {
   }
   return null;
 };
-var resultText = (r) => {
-  const last = [...r.events].reverse().find((e) => e["type"] === "result");
-  const text = last?.["result"];
-  return typeof text === "string" ? text : null;
-};
 
 // inspect/mcp/src/mcp/code.ts
 var installed = (version) => {
@@ -39931,11 +39935,13 @@ ${t.slice(start, end)}${said}`, {
       files: files ?? {}
     });
     const sent = r.requests.map((x) => `${x.method} ${x.path}`);
+    const tools = toolNames(r);
     const stdout = clip(r.stdout, 4000);
     const stderr = clip(r.stderr, 2000);
-    return text(`${bin.version}: exit ${r.exit}, ${sent.length} requests.
+    return text(`${bin.version}: exit ${r.exit}, ${sent.length} requests.${tools.length ? `
+tools: ${tools.map((t) => t.join(" ")).join(" | ")}` : ""}
 stdout: ${stdout}
-stderr: ${stderr}`, { exit: r.exit, requests: sent, stdout, stderr });
+stderr: ${stderr}`, { exit: r.exit, requests: sent, tools, stdout, stderr });
   },
   prepare: ({ version }) => {
     const r = prepared(version);
