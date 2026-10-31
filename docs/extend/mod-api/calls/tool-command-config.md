@@ -58,6 +58,27 @@ on("command.run", { command: "standup" }, async ($, e) => ({
 | `config.set` | <Documented /> | Fires when a `/config` row is about to change, from the menu or a plugin's `$.config.set`. `next(e)` resolves to `{ value }` once written. | Input `ConfigSetInput`. Result `{ value }` or `{ deny }`. `{ deny: reason }` leaves the row as it is. The engine refuses a value of the wrong kind. | `on('config.set', ...)`. Also `$.config.set(...)`. |
 | `config.describe` | <Documented /> | Fires once for each `/config` row, when the menu lists it and for `$.config.list`. `next(e)` resolves to `{ label, description, isHidden }`. | Input `ConfigDescribeInput`. The engine caches it until `$.ui.invalidate("config.describe")`. | `on('config.describe', ...)`. In tests: `$.config.describe(...)` on the test engine (not on a hook's `$`). |
 
+## How `tool.describe` Resolves a Description
+
+Source: the program in 2.1.316. `chunk-a8r9352h.js` holds the resolver. `chunk-qd604jgh.js` holds the request builder.
+
+1. The engine builds its own description for the tool. It also decides if the tool waits behind `ToolSearch` (`isDeferred`).
+2. The engine passes the tool, that text, and that placement to the resolver. With no `tool.describe` hook, the resolver returns them unchanged.
+3. With a hook, the resolver returns what the hook chain gives back as `{ description, isDeferred }`.
+4. The request builder writes the resolved `description` into the tool object of the request body. That object has `name`, `description`, and `input_schema`. So a hook changes what the model reads. A shorter text makes a smaller request.
+5. The engine may hold a recorded description for the tool from an earlier request. The recorded text goes into the request instead. The exception is a tool that counts as redescribed and that a hook rewrote. Then the hook text goes in.
+6. A request that the engine builds with the option `withoutToolDescribeHooks` skips the hook. The program shows no more about which requests set it.
+
+The hook sees the tool as `e.tool`. It sees the engine's text as `e.description`.
+This hook shortens the `Read` description.
+
+```javascript
+on("tool.describe", { tool: "Read" }, async ($, e, next) => {
+  const base = await next(e);
+  return { ...base, description: "Read a file by its absolute path." };
+});
+```
+
 ## Events Raised by These Calls
 
 For each call, a hook above the caller returns `next(e)`, `{ deny: reason }`, or `{ value }`.

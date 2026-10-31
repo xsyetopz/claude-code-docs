@@ -110,6 +110,19 @@ The token numbers above are from `2.1.305`. The table below counts characters in
 - The probe `print.dsc.sizes` runs the same request with `--disable-slash-commands`. The `Skill` tool leaves (1,811 bytes in the body). The skills section of the messages leaves (6,191 bytes). The `Workflow` tool grows from 5,383 to 22,511 bytes. The request body changes from 46,108 to 54,967 bytes, which is 8,859 bytes more, not less. This is the same effect as denying `Skill` in the table above.
 - Sizes in this table are for one model and one account state. A server flag or a setting can change the tool list.
 
+### Deny-List Savings in Characters
+
+The 12 tools that `2.1.316` sends first hold 28,658 characters of description and schema in all (17,231 and 11,427). A deny rule removes the tool from this sum.
+We ran `claude -p "Reply with OK" --model claude-opus-5-5 --disallowedTools Workflow,ScheduleWakeup` on `2.1.316` against the stub API, with and without the flag.
+
+| Run | Tools sent | Description and schema | Request body (JSON characters) |
+| --- | --- | --- | --- |
+| No deny rule | 12 | 28,658 | 46,110 |
+| Deny `Workflow` and `ScheduleWakeup` | 10 | 18,615 | 35,867 |
+| Saving | 2 | 10,043 | 10,243 |
+
+The saving of 10,043 equals the two sums in the table above (5,255 and 4,788). The body also drops about 200 characters of JSON framing around the two tools.
+
 `Skill` brings the skills listing. It is 2,210 tokens for the built-in skills:
 
 | Skill | Tokens |

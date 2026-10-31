@@ -106,7 +106,21 @@ The captures linked above hold the full text of each built-in style prompt. We c
 
 The probe of 2.1.316 shows that the style text does not go in `system[2]`. Claude Code puts it in the environment message, a system-role message in `messages`, under the line `# Output Style: <name>`. The front matter is not sent. Source: [Style Custom](../prompts/output-styles/style-custom.md).
 The first line of the body, `You are an agent working with the user ...`, becomes `You are an interactive agent that helps users according to your "Output Style", which describes how you should respond to user queries.` when a style is active and keeps no coding instructions.
-A reminder line follows the deferred tool list and the command list: `<name> output style is active. Remember to follow the specific guidelines for this style.` The probe sent one user message, so this page does not state how often the reminder repeats.
+A reminder line follows the deferred tool list and the command list: `<name> output style is active. Remember to follow the specific guidelines for this style.`
+A run of 2.1.316 against a local stub sent three user messages in one session. The reminder came after each user message. The `# Output Style: <name>` header appeared once in each request and was not repeated. So the reminder repeats on every turn, and the header does not.
+
+## Styles and Prompt Overrides
+
+A run of 2.1.316 against a local stub used a custom style named `Terse` with `keep-coding-instructions: true`. The run compared four launches. In each, the style text and the reminder stayed in `messages`.
+
+| Launch | What happens to the system prompt body |
+| --- | --- |
+| Style only | The body is the standard prompt with the style intro line. The style text is not in it. |
+| `--system-prompt "ONLY THIS"` | The body is only `ONLY THIS`. The style intro line is gone. |
+| `--agent mine` | The body is the text of the agent file. The style intro line is gone. |
+| `--append-system-prompt "EXTRA"` | The body is the standard prompt with the text added. |
+
+So a replacing flag removes the standard body, and the style still reaches the model as a message. See [Override](../prompts/other/override.md) for the captured prompts and [Style Custom](../prompts/output-styles/style-custom.md) for the style message.
 
 ## Exact Fields
 

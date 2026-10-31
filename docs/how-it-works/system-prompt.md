@@ -62,8 +62,8 @@ See [Request and Cache](request-and-cache.md#system-blocks-and-cache-markers) fo
 A model gets the short prompt (one `lean_body` section, about 5.7k characters) or the full prompt (six longer sections, about 26.9k characters).
 The official docs and the real request captures agree here. Only the old wiki was wrong.
 
-`2.1.316` removed one line from the short prompt (`lean_body`): "Write code that reads like the surrounding code: match its comment density, naming, and idiom." The line stood between the bullet list that ends with the `file_path:line_number` rule and the `pronouns` paragraph. The `system[2]` block is 96 characters shorter for the short-prompt models and 95 for `claude-fable-5` and `claude-mythos-5`, The full-prompt models (`claude-sonnet-5`, `claude-haiku-4-5`) keep their size, and the memory text is the same as in `2.1.314`. Source: the probe `print.models.matrix` and the re-rendered [captured prompts](../prompts/index.md).
-Captures of 2.1.311 show the following. See [Captured System Prompts](../prompts/index.md) for the texts.
+`2.1.316` removed one line from the short prompt (`lean_body`): "Write code that reads like the surrounding code: match its comment density, naming, and idiom." The line stood between the bullet list that ends with the `file_path:line_number` rule and the `pronouns` paragraph. The `system[2]` block is 96 characters shorter for the short-prompt models and 95 for `claude-fable-5` and `claude-mythos-5`. The full-prompt models (`claude-sonnet-5`, `claude-haiku-4-5`) keep their size, and the memory text is the same as in `2.1.314`. Source: the probe `print.models.matrix` and the re-rendered [captured prompts](../prompts/index.md).
+The captures show the following. See [Captured System Prompts](../prompts/index.md) for the texts.
 
 ```mermaid
 flowchart TD
@@ -196,7 +196,7 @@ They follow in this order. Claude Code omits a section that has no text. Session
 | `bg-session` | <Gated note="CLAUDE_CODE_SESSION_KIND=bg and CLAUDE_JOB_DIR set" /> | `CLAUDE_CODE_SESSION_KIND=bg` and `CLAUDE_JOB_DIR` set | Rules for background jobs: use `$CLAUDE_JOB_DIR/tmp`, use `EnterWorktree`, and end with a report. |
 | `context_management` | <Undocumented /> | Always | Old context gets summarized, so do not finish early. |
 | `brief` | <Undocumented /> | `--brief`, or the `SendUserMessage` tool | Rules for that tool. |
-| `focus_mode` | <Undocumented /> | The view mode is focus | The user sees only the final message. |
+| `focus_mode` | <Undocumented /> | The view mode is focus (the setting `viewMode` is `focus`) | The user sees only the final message. The section is a separate cache entry and it clears when the view mode changes. See Responsive Mode below. |
 | `act_dont_rederive` | <Gated note="CLAUDE_CODE_ACT_DONT_REDERIVE, or an experiment that is on by default" /> | `CLAUDE_CODE_ACT_DONT_REDERIVE`, or an experiment that is on by default | Act when you have enough information. |
 | `delivering_work_max` | <Gated note="CLAUDE_CODE_BISON_CAIRN, or an experiment for some models" /> | `CLAUDE_CODE_BISON_CAIRN`, or an experiment for some models | Do the full scope of the work. |
 | `overcorrection` | <Gated note="CLAUDE_CODE_LARCH_CISTERN, or an experiment" /> | `CLAUDE_CODE_LARCH_CISTERN`, or an experiment | Correct yourself only when it matters. |
@@ -212,6 +212,25 @@ They follow in this order. Claude Code omits a section that has no text. Session
 
 Experiments come from GrowthBook, a flag service that Anthropic runs.
 You cannot set an experiment. But the env vars in the table switch some of the sections.
+
+## Prompt Variants
+
+Runs of 2.1.316 against a local stub measured the `system[2]` body for each launch. The sizes are characters.
+
+| Launch | Status | `system[2]` body | Tools |
+| --- | --- | --- | --- |
+| `claude-opus-5-5` | <Undocumented /> | The short prompt, about 5,800 characters | 12 |
+| `claude-sonnet-5` | <Undocumented /> | The full prompt, about 27,000 characters | 12 |
+| `--bare` | <Documented /> | Only a `CWD:` line and a `Date:` line | 3 |
+| `CLAUDE_CODE_SIMPLE=1` | <Documented /> | Only a `CWD:` line and a `Date:` line | 3 |
+
+The first two rows differ because Opus 5.5 gets the short prompt and Sonnet 5 the full one. Each body holds the path of the working directory, so its size changes by a few characters from one run to the next. The sizes are for one account state and can change with the experiments.
+
+## Responsive Mode
+
+The program has a built-in plugin named `cc-plugin-responsive-mode` (the plugin is defined in `chunk-mdwf4s3v.js`, registered in `chunk-bxdwwc5h.js`, and loads `chunk-rzn7bhp2.js`). Its description reads: "Responsive mode: Claude replies to you in a sentence before thinking or using tools, on every prompt".
+The plugin is off by default (`defaultEnabled: false`). It is only available when the experiment `tengu_quiet_ember` is on, and never in a background or daemon session. You cannot set that experiment. The plugin registers when the entry point is not `local-agent`, or when the session is remote. The plugin acts only on a prompt that a person typed and that is not a slash command.
+This page does not state how the plugin changes the prompt, because that text was not read in this run.
 
 ## Bare Mode
 

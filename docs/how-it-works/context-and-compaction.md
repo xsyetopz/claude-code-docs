@@ -127,6 +127,7 @@ Source: the program (`chunk-qd604jgh.js@1556935` to `@2455980`). All rows are <U
 
 | Item | What it does |
 | --- | --- |
+| When it checks | The query loop calls the auto-compaction check once per pass, before it builds the next model request (`chunk-n6xbt9zz.js`). It does not check after each tool result of one batch. A batch of large results can push the context over the limit before the next check. |
 | Skip checks | Auto-compaction does nothing when `DISABLE_COMPACT` is set, when `autoCompactEnabled` is `false`, or when the level is below `compact`. |
 | Failure breaker | After 3 failed auto-compactions in a row, the check returns without a new try. |
 | Rapid-refill breaker | A refill within 3 turns of the last compaction adds 1 to a counter. Any later refill resets it. At 3, auto-compaction stops with the `Autocompact is thrashing` error. |

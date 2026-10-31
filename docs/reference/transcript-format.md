@@ -207,6 +207,7 @@ A compaction writes a `system` line with `subtype: compact_boundary` and the con
 | `messagesSummarized` | At creation | How many messages the summary covers. |
 | `postTokens` | After the summary exists | The token count of the new context. |
 | `durationMs` | After the summary exists | The time the compaction took. |
+| `cumulativeDroppedTokens` | After the summary exists | The tokens dropped by all compactions so far. It adds `preTokens - postTokens` to the largest earlier value (`chunk-qd604jgh.js`). |
 | `preservedSegment` | Partial compaction | The `headUuid` and `tailUuid` of the kept messages. |
 | `preservedMessages` | Hook-built compaction | The `uuids` of the kept messages. |
 
@@ -217,7 +218,7 @@ If a listed `uuid` is missing, or the walk does not reach `headUuid`, the load a
 
 ## Subagent Lines
 
-A line in `<session>/subagents/agent-<agentId>.jsonl` can carry `attributionAgent`. It holds the agent name, for the sources `agent:builtin:<name>` and `agent:custom:<name>`. Lines caused by a skill carry `attributionSkill`, and `attributionPlugin` when the skill belongs to a plugin (the program, `chunk-a8r9352h.js@823642`).
+A subagent writes its lines to its own file, `<session>/subagents/agent-<agentId>.jsonl`, and not to the session transcript. A search of the session file alone finds no subagent line. A line in that file can carry `attributionAgent`. It holds the agent name, for the sources `agent:builtin:<name>` and `agent:custom:<name>`. Lines caused by a skill carry `attributionSkill`, and `attributionPlugin` when the skill belongs to a plugin (the program, `chunk-a8r9352h.js@823642`).
 
 ## `attachment` Types
 

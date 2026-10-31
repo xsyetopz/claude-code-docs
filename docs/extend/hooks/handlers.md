@@ -121,7 +121,30 @@ On a repeat block, the feedback to Claude holds the hook prompt in square bracke
 Claude Code cuts the bracketed prompt to 500 characters on a repeat.
 
 The turn ends after a number of consecutive blocks. The default is 8. `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP` sets it, and a value of 0 or less removes the cap. The program prints a warning when the cap ends the turn (the program, `chunk-n6xbt9zz.js`).
-We did not trace what a hook error or an invalid reply does, so this page makes no claim about it.
+When the cap ends the turn in a subagent or a teammate, Claude Code does not show the notice to you. Only the main session shows it (the program, `chunk-n6xbt9zz.js`). So a subagent can end with no sign in the parent.
+A timeout, an API error, a reply that is not JSON, and a reply that fails the schema all leave the stop alone. The hook fails open. See the next section.
+
+## Calls of `prompt` and `agent` Hooks
+
+Source: the program (`chunk-qd604jgh.js`). All rows are <Undocumented />, except where a note says otherwise.
+
+| Item | `prompt` hook | `agent` hook |
+| --- | --- | --- |
+| Model | The `model` field, else the background model. | The `model` field, else the background model. |
+| Default timeout | 30 seconds. | 60 seconds. |
+| Your `timeout` | Used as given, at least 1 second. | Used as given, at least 1 second. |
+| Thinking | Off. | Off. |
+| Reply | One JSON object. The request requires `ok` and `reason`. `impossible` is optional. | The agent returns the same object through a structured output tool. |
+| Input | Your `prompt`, and for a stop event the transcript. | Your `prompt`. The system prompt names the transcript file, which the agent can read. |
+| Tools | None. | The tools of the session, minus some, in `dontAsk` mode. A `Read` of the transcript file is allowed. |
+| Turn cap | One call. | 50 assistant turns. Then the hook is `cancelled`, and it does not block. |
+
+- On a stop event, the transcript is cut to fit. The program keeps the newest messages up to half of the window of the evaluator model. It puts a note first that says how many earlier messages it left out. The note tells the model to answer `insufficient evidence in transcript` when the proof may be in the part that was cut.
+- If the evaluator says the prompt is too long, Claude Code tries once more with a smaller share of the window.
+- An API error, a reply that is not JSON, a reply that fails the schema, and any other error give a non-blocking error. The stop or the tool call goes on.
+- A timeout gives the outcome `cancelled`. Nothing blocks.
+- An agent hook that returns no structured output is `cancelled`. If the model refused the request, Claude Code runs the agent hook again on the model of the session.
+- `ok: false` blocks. The feedback is the prompt in square brackets, then a colon and the `reason`. An agent hook gives `Agent hook condition was not met:` and the `reason`.
 
 ## Prompt and Agent Concurrency
 

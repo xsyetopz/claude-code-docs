@@ -45,6 +45,11 @@ on("agent.spawn", async ($, e, next) =>
 | `agent.list` | <Documented /> | The argument of `$.agent.list()`. | Input `NoArgs`. Value `AgentInfo[]`. A hook above the caller returns `next(e)`, `{ deny: reason }`, or `{ value }`. | `on('agent.list', ...)` |
 | `agent.register` | <Documented /> | The argument of `$.agent.register(spec)`. A hook above can rewrite any of it, but the type stays the caller's. | Input `AgentSpec`. Value `{ agent: string }`. | `on('agent.register', ...)` |
 
+## Listing Cost of an Agent
+
+Each agent the model can use adds its listing line to the request. A run of 2.1.316 against a local stub added one project agent file with a 1000-character `description`. The `messages` text grew from 10011 to 11042 characters, 1031 more. The `Agent` tool description stayed at 3227 characters. So the listing is in `messages` and not in the tool description, and a long `description` costs its length on every session.
+A `agent.offer` hook that returns `{ isOffered: false }` hides the type from the listing, so it saves those characters. This run did not load a mod, so the saving is not measured here.
+
 ## Agent Types
 
 ### Call Records and Status

@@ -40,7 +40,7 @@ Leave out VS Code, Cloud sessions, Claude Tag, Code Review, the self-hosted runn
 - [x] 3.8 `/model <id>` warns about an unknown model and the 200K window (proposed).
 - [x] 3.9 Bash tool shell: aliases with line breaks, dash-named functions, exported `SHELLOPTS`: `shell-and-web.md`.
 - [x] 3.10 PowerShell hooks and exit code 2. Confirmed: 2.1.314 `pWe` (`chunk-sq7yspzm.js@863369`) against 2.1.316 `CHt` (`chunk-qd604jgh.js@863809`). `handlers.md:76` holds.
-- [ ] 3.11 Sub-agent model inheritance after a wake-up (proposed).
+- [x] 3.11 Sub-agent model inheritance after a wake-up (proposed). Not confirmed: the saved metadata `model` is the per-call `model` (`chunk-b6x26kja.js`). `runtime.md` says so.
 
 ## 4. Missing Mechanisms
 
@@ -52,9 +52,9 @@ Check each fact again in `2.1.316` before a page states it. Keep claudetto's mea
 - [ ] 4.2 The enable logic of `EnterPlanMode`, `ExitPlanMode`, and `AskUserQuestion` (`docs/reference/tools/agents-and-tasks.md`).
 - [ ] 4.3 Built-in `cc-plugin-<name>@builtin` plugins: the full list, `enabledPlugins`, and the policy-only flags
   (`docs/extend/mod-api/nouns-and-gates.md`).
-- [ ] 4.4 `cc-plugin-responsive-mode` and the `focus_mode` section (`docs/how-it-works/system-prompt.md`).
-- [ ] 4.5 How `tool.describe` resolves a description (the `tool.describe` call page).
-- [ ] 4.6 Per-tool definition sizes and the deny-list savings in characters (`docs/how-it-works/context-budget.md`).
+- [x] 4.4 `cc-plugin-responsive-mode` and the `focus_mode` section (`docs/how-it-works/system-prompt.md`).
+- [x] 4.5 How `tool.describe` resolves a description (the `tool.describe` call page).
+- [x] 4.6 Per-tool definition sizes and the deny-list savings in characters (`docs/how-it-works/context-budget.md`). The Responsive Mode prompt text is not read.
 - [ ] 4.7 `disableBundledSkills` and the Workflow tool, and `enableWorkflows: false` against `disableWorkflows: true`.
 - [ ] 4.8 Subagent and hook-agent limits: the hook-agent turn cap, `max_turns_reached`, `error_max_turns`,
   the spawn depth order, and `CLAUDE_CODE_MAX_SUBAGENTS_PER_SESSION` (`docs/extend/subagents/`).
