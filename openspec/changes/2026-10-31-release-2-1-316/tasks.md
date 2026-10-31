@@ -66,8 +66,8 @@ Check each fact again in `2.1.316` before a page states it. Keep claudetto's mea
 
 ## 5. What Changed
 
-- [ ] 5.1 `docs/start/what-changed.md` holds only the `2.1.316` section, compared with `2.1.314`.
-- [ ] 5.2 Drop the `2.1.314` fact ids from `tools/release/facts/map.json`, and map the new facts.
+- [x] 5.1 `docs/start/what-changed.md` holds only the `2.1.316` section, compared with `2.1.314`.
+- [x] 5.2 Drop the `2.1.314` fact ids from `tools/release/facts/map.json`, and map the new facts.
 
 ## 6. Release
 

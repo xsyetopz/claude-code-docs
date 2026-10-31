@@ -1109,11 +1109,6 @@
     "probes": [],
     "note": "cites the v2.1.309 release notes"
   },
-  "docs/extend/headless/control-protocol.md#subtypes:d309356f": {
-    "kind": "schema",
-    "probes": [],
-    "note": "mcp_status liveReply in schemas/claude-code-control-protocol.json"
-  },
   "docs/extend/mod-api/types/turn-prompt/edit-fill-submit.md#promptfillargs:2847c0a4": {
     "kind": "schema",
     "probes": [],
@@ -1526,9 +1521,49 @@
     "probes": [],
     "note": "an absence: the builder of the attachment is gone in the 2.1.314 program and only the reader, the renderer and the kind lists are left, so no probe can show the kind"
   },
-  "docs/start/what-changed.md#version-21314:d3aee6dc": {
+  "docs/configure/models-and-providers/model-catalog.md#catalog:f4ea2594": {
+    "kind": "manual",
+    "probes": [],
+    "note": "/model unknown-id warning, 2.1.316 release notes and a -p probe of /model claude-zeta-9"
+  },
+  "docs/configure/permissions/auto-mode.md#classifier-billing-notice:9fe44c8d": {
+    "kind": "manual",
+    "probes": [],
+    "note": "desktop form of the billing notice: in 2.1.316 chunk-qd604jgh.js, no match in 2.1.314 (cc-inspect code search)"
+  },
+  "docs/extend/headless/control-protocol.md#subtypes:1086c6bf": {
+    "kind": "schema",
+    "probes": [],
+    "note": "mcp_status cloudServiceProvided in the 2.1.316 control schema (chunk-fbth6v0w.js)"
+  },
+  "docs/extend/headless/control-protocol.md#subtypes:5a47b1ae": {
+    "kind": "schema",
+    "probes": [],
+    "note": "pending_elicitation_requests in the 2.1.316 control schema (chunk-fbth6v0w.js)"
+  },
+  "docs/extend/hooks/handlers.md#command-fields:a80d78e8": {
+    "kind": "manual",
+    "probes": [],
+    "note": "PowerShell exit code 2 prefixes: 2.1.314 chunk-sq7yspzm.js against 2.1.316 chunk-qd604jgh.js"
+  },
+  "docs/how-it-works/context-budget.md#definition-sizes-in-characters:812766d1": {
+    "kind": "static",
+    "probes": [],
+    "note": "a measured number kept with its version"
+  },
+  "docs/reference/tools/files.md#how-it-works:5de184af": {
     "kind": "external",
     "probes": [],
-    "note": "no v2.1.313 tag is published, and the official changelog goes from 2.1.314 to 2.1.312"
+    "note": "cites the 2.1.316 release notes; code in chunk-md79t6ar.js"
+  },
+  "docs/reference/tools/shell-and-web.md#how-it-works:c60f237e": {
+    "kind": "manual",
+    "probes": [],
+    "note": "shell snapshot changes in 2.1.316 chunk-qd604jgh.js"
+  },
+  "docs/start/what-changed.md#version-21316:49661234": {
+    "kind": "manual",
+    "probes": [],
+    "note": "not-regular-file refusal new in 2.1.316 chunk-j4564a1j.js; prompt-free path in both versions"
   }
 }
