@@ -723,7 +723,7 @@ These items exist in the official docs, but the program works in another way. Co
 
 ## In the Program
 
-The program of `2.1.314` holds 9113 items in 17 kinds, counted from `schemas/surface.json`.
+The program of `2.1.314` holds 9128 items in 17 kinds, counted from `schemas/surface.json`.
 [Surface Coverage](surface-coverage.md) lists each item with its page.
 
 | Kind | Items | Not on a Page Yet |
@@ -731,7 +731,7 @@ The program of `2.1.314` holds 9113 items in 17 kinds, counted from `schemas/sur
 | [Betas](surface-coverage.md#betas) | 50 | 0 |
 | [API Endpoints](surface-coverage.md#api-endpoints) | 444 | 0 |
 | [Environment Variables](surface-coverage.md#environment-variables) | 1895 | 0 |
-| [Error Texts](surface-coverage.md#error-texts) | 4061 | 0 |
+| [Error Texts](surface-coverage.md#error-texts) | 4076 | 0 |
 | [Files](surface-coverage.md#files) | 78 | 0 |
 | [CLI Flags](surface-coverage.md#cli-flags) | 304 | 0 |
 | [Gates](surface-coverage.md#gates) | 1205 | 0 |
@@ -745,7 +745,7 @@ The program of `2.1.314` holds 9113 items in 17 kinds, counted from `schemas/sur
 | [Slash Commands](surface-coverage.md#slash-commands) | 140 | 0 |
 | [Subcommands](surface-coverage.md#subcommands) | 71 | 0 |
 | [Tools](surface-coverage.md#tools) | 91 | 0 |
-| All kinds | 9113 | 0 |
+| All kinds | 9128 | 0 |
 
 ## Related Pages
 

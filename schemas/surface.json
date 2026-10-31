@@ -3608,6 +3608,7 @@
         "name": "$.ui.${…}: no ${…} of ${…} keyed ${…} is drawn${…}; render or mount the tree that holds it first",
         "detail": "throw Error"
       },
+      { "name": "$.ui.mount: ${…}", "detail": "throw Error" },
       {
         "name": "$.ui.mount: ${…} ${…} is mounted on the ${…} surface already; unmount it first, or name another requestId for a second instance",
         "detail": "throw Error"
@@ -3854,6 +3855,10 @@
       },
       {
         "name": "${…} is a symlink (or its path loops through symlinks); use a regular file at a plain path",
+        "detail": "throw Error"
+      },
+      {
+        "name": "${…} is blocked by your organization. ${…}",
         "detail": "throw Error"
       },
       {
@@ -4291,6 +4296,7 @@
         "detail": "throw Error"
       },
       { "name": "${…}: ${…} (host check)", "detail": "throw Error" },
+      { "name": "${…}: ${…} does not compile: ${…}", "detail": "throw Error" },
       {
         "name": "${…}: ${…} exports no register(on, options) function",
         "detail": "throw Error"
@@ -6439,6 +6445,10 @@
         "detail": "stderr"
       },
       {
+        "name": "Cloud gateway token expired — refresh ANTHROPIC_AUTH_TOKEN and restart.",
+        "detail": "throw Error"
+      },
+      {
         "name": "Cloud session ${…} has shown an unanswered MCP server question for more than ${…} min, and nothing on this machine can answer it, so this run stopped waiting for it. If that server needs to ask the us…",
         "detail": "throw Error"
       },
@@ -6619,6 +6629,10 @@
       },
       {
         "name": "Could not connect to ${…}. Please check your internet connection and verify the URL is correct. Technical details: ${…}",
+        "detail": "throw Error"
+      },
+      {
+        "name": "Could not connect to gateway host ${…} to check it${…}. Connect to your organization's network and try again.",
         "detail": "throw Error"
       },
       {
@@ -10481,6 +10495,10 @@
         "detail": "throw TypeError"
       },
       {
+        "name": "The ${…} isn't available in this session",
+        "detail": "throw Error"
+      },
+      {
         "name": "The '${…}' property is not allowed when passing additionalClaims. This claim is included in the JWT by default.",
         "detail": "throw Error"
       },
@@ -10680,6 +10698,10 @@
       },
       {
         "name": "The permission rule ${…} asks the user before the ${…} type is listed, and the user is asked only when the call names the type by that link, so nothing was listed. To have the user asked, list it agai…",
+        "detail": "throw Error"
+      },
+      {
+        "name": "The permission rule ${…} asks the user before the ${…} type is listed, and this type can be listed only by its link, where nothing can ask the user, so nothing was listed. Tell the user; an ask rule n…",
         "detail": "throw Error"
       },
       {
@@ -12704,6 +12726,22 @@
         "name": "catch with a callback (only a constant catch value compiles)",
         "detail": "throw Error"
       },
+      {
+        "name": "ccr-gateway --sdk-url rejected: ${…}",
+        "detail": "throw Error"
+      },
+      {
+        "name": "ccr-gateway host requires --sdk-url",
+        "detail": "throw Error"
+      },
+      {
+        "name": "ccr-session --sdk-url rejected: ${…}",
+        "detail": "throw Error"
+      },
+      {
+        "name": "ccr-session host requires --sdk-url",
+        "detail": "throw Error"
+      },
       { "name": "cd ~/.claude/local && npm update ${…}", "detail": "stderr" },
       {
         "name": "certificateFile and privateKeyFile must be set or unset together",
@@ -13223,6 +13261,10 @@
       },
       {
         "name": "deviceRegistry: device key could not be persisted",
+        "detail": "throw Error"
+      },
+      {
+        "name": "deviceRegistry: device key could not be persisted (${…})",
         "detail": "throw Error"
       },
       {
@@ -15037,6 +15079,10 @@
         "detail": "throw Error"
       },
       {
+        "name": "project_memory_read: spill to tool-results failed",
+        "detail": "throw Error"
+      },
+      {
         "name": "project_read: downloaded bytes do not match the reported file size (corrupt response, or the file is being modified concurrently — retry if a save was just issued).",
         "detail": "throw Error"
       },
@@ -15046,6 +15092,10 @@
       },
       {
         "name": "project_read: server returned a malformed file id.",
+        "detail": "throw Error"
+      },
+      {
+        "name": "project_read: spill to tool-results failed",
         "detail": "throw Error"
       },
       {
@@ -16453,6 +16503,7 @@
         "name": "thread_id must be a thread id from action \"comments\" (a lowercase UUID)",
         "detail": "throw Error"
       },
+      { "name": "timeout of ${…}ms exceeded", "detail": "throw Error" },
       {
         "name": "timeout: no answer from the cloud worker in time",
         "detail": "throw Error"

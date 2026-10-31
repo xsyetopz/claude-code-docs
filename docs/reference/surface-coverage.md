@@ -4,7 +4,7 @@ description: Every item that the Claude Code 2.1.314 program holds, by kind, wit
 sidebar_position: 11
 ---
 
-The program of Claude Code `2.1.314` holds 9113 items in 17 kinds.
+The program of Claude Code `2.1.314` holds 9128 items in 17 kinds.
 Each row below names the page that covers an item, or the reason the item is left out.
 `bun run surface` makes this page from `schemas/surface.json`, so do not edit it by hand.
 
@@ -14,8 +14,8 @@ Each row below names the page that covers an item, or the reason the item is lef
 | --- | --- | --- | --- | --- | --- |
 | [Betas](#betas) | 50 | 50 | 0 | 0 | 0 |
 | [API Endpoints](#api-endpoints) | 444 | 117 | 10 | 317 | 0 |
-| [Environment Variables](#environment-variables) | 1895 | 1389 | 20 | 486 | 0 |
-| [Error Texts](#error-texts) | 4061 | 29 | 2194 | 1838 | 0 |
+| [Environment Variables](#environment-variables) | 1895 | 1390 | 20 | 485 | 0 |
+| [Error Texts](#error-texts) | 4076 | 30 | 2203 | 1843 | 0 |
 | [Files](#files) | 78 | 49 | 0 | 29 | 0 |
 | [CLI Flags](#cli-flags) | 304 | 118 | 184 | 2 | 0 |
 | [Gates](#gates) | 1205 | 0 | 0 | 1205 | 0 |
@@ -29,7 +29,7 @@ Each row below names the page that covers an item, or the reason the item is lef
 | [Slash Commands](#slash-commands) | 140 | 102 | 31 | 7 | 0 |
 | [Subcommands](#subcommands) | 71 | 7 | 64 | 0 | 0 |
 | [Tools](#tools) | 91 | 85 | 0 | 6 | 0 |
-| Total | 9113 | 2550 | 2662 | 3901 | 0 |
+| Total | 9128 | 2552 | 2671 | 3905 | 0 |
 
 ## Betas
 
@@ -1564,7 +1564,7 @@ Items: 1895.
 | `CLAUDE_CODE_TETHER_LIVE` | [SDK and Automation](../configure/env-vars/sdk-and-automation.md) |
 | `CLAUDE_CODE_THINKING_DISPLAY_UPDATES` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
 | `CLAUDE_CODE_THISTLE_GREBE` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
-| `CLAUDE_CODE_THRIFTY_SONIC` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
+| `CLAUDE_CODE_THRIFTY_SONIC` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_TICKLISH_WHISPER` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_TICKLISH_WHISPER_TIMEOUT_MS` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_TMPDIR` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
@@ -2443,7 +2443,7 @@ Items: 1895.
 
 ## Error Texts
 
-Items: 4061.
+Items: 4076.
 
 | Item | Where |
 | --- | --- |
@@ -2508,6 +2508,7 @@ Items: 4061.
 | `$.telemetry: the call names no origin` | [/extend/mod-api#errors](/extend/mod-api#errors) |
 | `$.ui.${…}: ${…} holds ${…} ${…}s keyed ${…}, in ${…}; name the requestId or the surface` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
 | `$.ui.${…}: no ${…} of ${…} keyed ${…} is drawn${…}; render or mount the tree that holds it first` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
+| `$.ui.mount: ${…}` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
 | `$.ui.mount: ${…} ${…} is mounted on the ${…} surface already; unmount it first, or name another requestId for a second instance` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
 | `$.ui.mount: the test ended while the drawing was being raised` | [/extend/mod-api/calls/testing#errors](/extend/mod-api/calls/testing#errors) |
 | `$data keyword must have "code" or "validate" function` | Excluded: Bundled Ajv JSON Schema validator |
@@ -2585,6 +2586,7 @@ Items: 4061.
 | `${…} is a directory, not a file` | [Plugin Commands](../extend/plugins/cli.md) |
 | `${…} is a folder link or a bundled copy` | [/extend/plugins/marketplace#errors](/extend/plugins/marketplace#errors) |
 | `${…} is a symlink (or its path loops through symlinks); use a regular file at a plain path` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
+| `${…} is blocked by your organization. ${…}` | [/extend/plugins/marketplace#errors](/extend/plugins/marketplace#errors) |
 | `${…} is built in and not declared in any settings scope. Omit --scope to turn it off.${…}` | [/extend/plugins/marketplace#errors](/extend/plugins/marketplace#errors) |
 | `${…} is hard-linked elsewhere (${…} links); use a plain copy` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
 | `${…} is in a private, link-local, or cloud-metadata range` | Excluded: Address and URL vetting for outbound connections (private range, scheme, host) |
@@ -2717,6 +2719,7 @@ Items: 4061.
 | `${…}: $.ui.resolve ${…}` | [/extend/mod-api#errors](/extend/mod-api#errors) |
 | `${…}: ${…} ${…}s of ${…} are drawn in this drawing; key each once` | Excluded: Plugin test kit and render-surface assertions (Client drawing, mounted tree, timers) |
 | `${…}: ${…} (host check)` | Excluded: Internal consistency and refusal messages (bundled text, tool pairing, import size cap, host checks) |
+| `${…}: ${…} does not compile: ${…}` | [/extend/mod-api#errors](/extend/mod-api#errors) |
 | `${…}: ${…} exports no register(on, options) function` | Excluded: Mod engine load and registration assertions (plugin module shape, hook results) |
 | `${…}: ${…} exports the name "then" (its own, or through an export *), which no entry module may: rename the export` | Excluded: Mod engine load and registration assertions (plugin module shape, hook results) |
 | `${…}: ${…} failed: ${…}` | Excluded: Mod engine load and registration assertions (plugin module shape, hook results) |
@@ -3298,6 +3301,7 @@ Items: 4061.
 | `Cloud gateway ${…} TLS certificate changed since you connected — run /login to verify and reconnect.` | [/configure/settings/auth#errors](/configure/settings/auth#errors) |
 | `Cloud gateway ${…} is not trusted on this machine — run /login to reconnect.` | [/configure/settings/auth#errors](/configure/settings/auth#errors) |
 | `Cloud gateway session expired — run /login to reconnect.` | [/configure/settings/auth#errors](/configure/settings/auth#errors) |
+| `Cloud gateway token expired — refresh ANTHROPIC_AUTH_TOKEN and restart.` | [/configure/settings/auth#errors](/configure/settings/auth#errors) |
 | `Cloud session ${…} has shown an unanswered MCP server question for more than ${…} min, and nothing on this machine can answer it, so this run stopped waiting for it. If that server needs to ask the us…` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
 | `Cloud session ${…} is waiting for input that nothing on this machine can give (a permission prompt, a question, or some other dialog). If it is a permission prompt, make sure the cloud agent's allowed…` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
 | `Cloud session ${…} timed out after ${…} min${…}` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
@@ -3349,6 +3353,7 @@ Items: 4061.
 | `Could not archive ${…} ${…}: its staged tree was replaced before archiving; retry the load or the install.` | [/extend/plugins/marketplace#errors](/extend/plugins/marketplace#errors) |
 | `Could not confirm the Artifact at ${…} (${…}). ${…}` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `Could not connect to ${…}. Please check your internet connection and verify the URL is correct. Technical details: ${…}` | [/extend/plugins/marketplace#errors](/extend/plugins/marketplace#errors) |
+| `Could not connect to gateway host ${…} to check it${…}. Connect to your organization's network and try again.` | [/extend/plugins/marketplace#errors](/extend/plugins/marketplace#errors) |
 | `Could not correct remote.origin.url in ${…}/config after ${…} tries over about six seconds (${…}). The clone was left as it is; if that error says "could not lock config file" and "File exists", and n…` | [/extend/plugins/marketplace#errors](/extend/plugins/marketplace#errors) |
 | `Could not determine current tmux pane/window` | [/extend/skills-and-commands/slash-commands#errors](/extend/skills-and-commands/slash-commands#errors) |
 | `Could not determine pane count for current window` | [/extend/skills-and-commands/slash-commands#errors](/extend/skills-and-commands/slash-commands#errors) |
@@ -4511,6 +4516,7 @@ Items: 4061.
 | `The "b64" (base64url-encode payload) Header Parameter must be a boolean` | Excluded: Bundled jose library (JWT, JWS, JWE, JWK) |
 | `The "input" argument must be ArrayBuffer. Received type ${…} (${…})` | Excluded: Bundled AWS SDK and Smithy libraries |
 | `The "input" argument must be of type string. Received type ${…} (${…})` | Excluded: Bundled AWS SDK and Smithy libraries |
+| `The ${…} isn't available in this session` | [Marketplaces](../extend/plugins/marketplace.md) |
 | `The '${…}' property is not allowed when passing additionalClaims. This claim is included in the JWT by default.` | Excluded: Bundled Google auth library (google-auth-library) |
 | `The Cloud gateway session that named this collector ended — dropping this telemetry batch` | [/extend/headless#errors](/extend/headless#errors) |
 | `The IDE connection is managed automatically and can't be reconnected manually` | Excluded: Reconnect refusal for the `ide` server name, thrown by the MCP reconnect function |
@@ -4563,6 +4569,7 @@ Items: 4061.
 | `The options argument of hardenVMIntrinsics and createVMIntakeWalkers must be either { importModuleDynamically: <function> } or COMPILE_WITHOUT_IMPORT_HOOK, which src/utils/vmHardening.ts exports` | Excluded: Coding-error guards: a provider, delegate, or controller used before it is bound, and test-only setters |
 | `The permission rule ${…} asks the user before the ${…} type is listed, and the type listing could not be read completely to find the name to ask under, so nothing was listed — retry.` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `The permission rule ${…} asks the user before the ${…} type is listed, and the user is asked only when the call names the type by that link, so nothing was listed. To have the user asked, list it agai…` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
+| `The permission rule ${…} asks the user before the ${…} type is listed, and this type can be listed only by its link, where nothing can ask the user, so nothing was listed. Tell the user; an ask rule n…` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `The permission rule ${…} asks the user before this type is listed, and it was added after this call's permission check ran, so nothing was listed. List it again the same way to have the user asked.` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `The plugin archive from claude.ai has no plugin content at its root. It was not installed.` | [/extend/plugins/marketplace#errors](/extend/plugins/marketplace#errors) |
 | `The plugin archive from claude.ai was refused: it carries a git repository layout.` | [/extend/plugins/marketplace#errors](/extend/plugins/marketplace#errors) |
@@ -5160,6 +5167,10 @@ Items: 4061.
 | `case ${…}: plugins entry ${…} resolves to ${…}, which is not loaded: ${…}.` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
 | `case.yaml must be a YAML object` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
 | `catch with a callback (only a constant catch value compiles)` | Excluded: Bundled Zod schema library |
+| `ccr-gateway --sdk-url rejected: ${…}` | Excluded: The host check of `--sdk-url` for a cloud session host (`ccr-session` or `ccr-gateway`). This site does not cover cloud sessions. |
+| `ccr-gateway host requires --sdk-url` | Excluded: The host check of `--sdk-url` for a cloud session host (`ccr-session` or `ccr-gateway`). This site does not cover cloud sessions. |
+| `ccr-session --sdk-url rejected: ${…}` | Excluded: The host check of `--sdk-url` for a cloud session host (`ccr-session` or `ccr-gateway`). This site does not cover cloud sessions. |
+| `ccr-session host requires --sdk-url` | Excluded: The host check of `--sdk-url` for a cloud session host (`ccr-session` or `ccr-gateway`). This site does not cover cloud sessions. |
 | `cd ~/.claude/local && npm update ${…}` | [/configure/cli/subcommands#errors](/configure/cli/subcommands#errors) |
 | `certificateFile and privateKeyFile must be set or unset together` | Excluded: Bundled gRPC library (@grpc/grpc-js) |
 | `check type ${…}` | Excluded: Bundled Zod schema library |
@@ -5318,6 +5329,7 @@ Items: 4061.
 | `deviceBind: tool-host link request ids must be 1 to 65535 bytes` | [/configure/cli/flags#errors](/configure/cli/flags#errors) |
 | `deviceBind: tool-host resume nonce must be 1 to 65535 bytes` | [/configure/cli/flags#errors](/configure/cli/flags#errors) |
 | `deviceRegistry: device key could not be persisted` | [/extend/hooks/configuration#errors](/extend/hooks/configuration#errors) |
+| `deviceRegistry: device key could not be persisted (${…})` | [/extend/hooks/configuration#errors](/extend/hooks/configuration#errors) |
 | `deviceRegistry: register ${…}: ${…}` | [/extend/hooks/configuration#errors](/extend/hooks/configuration#errors) |
 | `deviceRegistry: register not sent (${…})` | [/extend/hooks/configuration#errors](/extend/hooks/configuration#errors) |
 | `deviceRegistry: register request failed (${…})` | [/extend/hooks/configuration#errors](/extend/hooks/configuration#errors) |
@@ -5926,9 +5938,11 @@ Items: 4061.
 | `profile name is empty` | [/configure/settings/auth#errors](/configure/settings/auth#errors) |
 | `programs.buildInvocation must return an absolute path to a file named git` | [/reference/tools/agents-and-tasks#errors](/reference/tools/agents-and-tasks#errors) |
 | `programs.buildInvocation must return the environment it was handed, less at most PWD and OLDPWD, and the arguments it was handed, with nothing before them but -C and the directory it was handed; it ch…` | [/reference/tools/agents-and-tasks#errors](/reference/tools/agents-and-tasks#errors) |
+| `project_memory_read: spill to tool-results failed` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `project_read: downloaded bytes do not match the reported file size (corrupt response, or the file is being modified concurrently — retry if a save was just issued).` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `project_read: server returned a different file.` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `project_read: server returned a malformed file id.` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
+| `project_read: spill to tool-results failed` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `project_write: could not confirm that the new content was saved. Nothing was removed, so the project may now list this path twice. ${…}` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `project_write: local_path resolves outside the working directory.` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `project_write: local_path was replaced during the upload.` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
@@ -6329,6 +6343,7 @@ Items: 4061.
 | `this write was approved with inline data, and a file_path was added afterwards — nothing was read or sent; retry so the file is checked` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `thread_id is not a valid thread id after permission or hook rewrites` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `thread_id must be a thread id from action "comments" (a lowercase UUID)` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
+| `timeout of ${…}ms exceeded` | Excluded: The event-logging exporter: its retry and status logic handles the error, and no message reaches the user. |
 | `timeout: no answer from the cloud worker in time` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
 | `timestamp out of range` | Excluded: Bundled protobuf and CEL libraries (@bufbuild/protobuf, cel-js) |
 | `title must be non-empty` | [/extend/headless#errors](/extend/headless#errors) |

@@ -333,6 +333,19 @@ process.stderr.write(\`Cloud gateway \${n} is not trusted\`);
     expect(by.get("Cloud gateway session expired")?.detail).toBe("stderr");
   });
 
+  test("each branch of a conditional throw gives its own text", () => {
+    const src = `
+class R extends Error{}
+function f(a,p){throw a.some(g)?new R(\`read not allowed under --restricted: \${p}\`,"x"):new R(\`read not allowed under the read block: \${p}\`,"y")}
+throw ok?Error("First branch message"):dyn("Factory branch text");
+`;
+    expect(names("error", src).sort()).toEqual([
+      "First branch message",
+      `read not allowed under --restricted: \${…}`,
+      `read not allowed under the read block: \${…}`,
+    ]);
+  });
+
   test("factory throws, other classes, short texts, and codes are dropped", () => {
     const src = `
 throw dyn("Cloud gateway failed here");

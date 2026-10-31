@@ -22,8 +22,8 @@ Source: `captures/2.1.316/diff/report.md`.
 - [x] 2.2 A row for `--session-began-as-copy` and `auth login --gateway-json`, or an exclusion.
 - [x] 2.3 `bashEditDiffEnabled`: the new default (off, except in auto mode).
 - [x] 2.4 `BASH_ENV`: the changed detail.
-- [ ] 2.5 The 18 new error texts on the page the diff names, and the 2 removed texts off the pages.
-- [ ] 2.6 The 2 removed gates, `tengu_bubbly_canyon` and `tengu_enchanted_nest`, off the pages.
+- [x] 2.5 The 18 new error texts on the page the diff names, and the 2 removed texts off the pages. Seven new texts reach only the debug log, a cloud session, or an internal check, so no page takes them. The extractor missed a conditional `throw`, so the diff listed `read not allowed under permissions.blockReadsOutsideWorkingDirectories` as removed. It is still in `2.1.316`.
+- [ ] 2.6 The 2 removed gates, `tengu_bubbly_canyon` and `tengu_enchanted_nest`, off the pages. Only the generated `docs/reference/surface-coverage.md` names them, so `bun run surface` in 6.1 removes them.
 
 ## 3. Release-Notes Items
 

@@ -399,6 +399,10 @@
     "route": "/extend/plugins/cli",
     "anchor": "errors"
   },
+  "error:${…} is blocked by your organization. ${…}": {
+    "route": "/extend/plugins/marketplace",
+    "anchor": "errors"
+  },
   "error:${…} is built in and not declared in any settings scope. Omit --scope to turn it off.${…}": {
     "route": "/extend/plugins/marketplace",
     "anchor": "errors"
@@ -800,6 +804,10 @@
     "anchor": "errors"
   },
   "error:${…}: $.ui.resolve ${…}": {
+    "route": "/extend/mod-api",
+    "anchor": "errors"
+  },
+  "error:${…}: ${…} does not compile: ${…}": {
     "route": "/extend/mod-api",
     "anchor": "errors"
   },
@@ -3153,6 +3161,10 @@
   },
   "error:The \"${…}\" connector *": {
     "route": "/extend/mcp/runtime",
+    "anchor": "errors"
+  },
+  "error:The ${…} isn't available in this session": {
+    "route": "/extend/plugins/marketplace",
     "anchor": "errors"
   },
   "error:The Cloud gateway session that named this collector ended — dropping this telemetry batch": {

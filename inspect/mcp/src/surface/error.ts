@@ -1,6 +1,6 @@
 // Kind `error`: error and warning text a user can see.
 // Anchor (checked on 2.1.309, task 1.1): the message (first argument) of `throw Error(…)` and
-// `throw new X(…)`, where `X` is Error, TypeError, RangeError, SyntaxError (the global, not a local
+// `throw new X(…)` (each branch of a `c ? … : …` argument counts), where `X` is Error, TypeError, RangeError, SyntaxError (the global, not a local
 // binding), or a class that extends one (the class is found through its binding, followed across imports,
 // and through its `extends` chain); and the argument of `process.stderr.write(…)`. A message is a literal,
 // a name bound once to a literal, a template, or a `+` concatenation with at least one literal part; `${…}`
@@ -103,28 +103,19 @@ const inLibrary = (m: Module, at: Node): boolean => {
   return false;
 };
 
+type Call = ES.NewExpression | ES.CallExpression;
+
+/** The constructions a throw can raise: both branches of `c ? new A(…) : new B(…)` raise one each. */
+const thrown = (a: ES.Expression): Call[] =>
+  a.type === "ConditionalExpression"
+    ? [...thrown(a.consequent), ...thrown(a.alternate)]
+    : a.type === "NewExpression" || a.type === "CallExpression"
+      ? [a]
+      : [];
+
 export const extractErrors: Extractor = (bundle) => {
   const out: SurfaceItem[] = [];
-  scan(bundle, ["throw", "stderr"], (m, n) => {
-    let call: (ES.NewExpression | ES.CallExpression) | undefined;
-    let detail = "stderr";
-    if (n.type === "ThrowStatement") {
-      const a = n.argument as ES.Expression;
-      if (a.type !== "NewExpression" && a.type !== "CallExpression") return;
-      const base = errorClass(m, a.callee as Node);
-      if (!base) return;
-      call = a;
-      detail = `throw ${base}`;
-    } else if (
-      n.type === "CallExpression" &&
-      n.callee.type === "MemberExpression" &&
-      !n.callee.computed &&
-      n.callee.property.type === "Identifier" &&
-      n.callee.property.name === "write" &&
-      m.src(n.callee.object as Node) === "process.stderr"
-    )
-      call = n;
-    if (!call) return;
+  const add = (m: Module, call: Call, detail: string) => {
     const t = text(m, call.arguments[0] as Node | undefined);
     if (t === undefined) return;
     const name = short(t);
@@ -136,6 +127,22 @@ export const extractErrors: Extractor = (bundle) => {
         offset: (call as Node).start,
         detail,
       });
+  };
+  scan(bundle, ["throw", "stderr"], (m, n) => {
+    if (n.type === "ThrowStatement") {
+      for (const call of thrown(n.argument as ES.Expression)) {
+        const base = errorClass(m, call.callee as Node);
+        if (base) add(m, call, `throw ${base}`);
+      }
+    } else if (
+      n.type === "CallExpression" &&
+      n.callee.type === "MemberExpression" &&
+      !n.callee.computed &&
+      n.callee.property.type === "Identifier" &&
+      n.callee.property.name === "write" &&
+      m.src(n.callee.object as Node) === "process.stderr"
+    )
+      add(m, n, "stderr");
   });
   return unique(out);
 };
