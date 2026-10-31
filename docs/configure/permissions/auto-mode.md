@@ -134,6 +134,15 @@ The `config` output tags custom rules as `(custom rules added alongside the defa
 
 Put `--settings <file>` before the subcommand: `claude --settings f.json auto-mode config` reads the file. `claude auto-mode config --settings f.json` stops with `error: unknown option '--settings'` and exit code 1. A probe got the same result on `2.1.314` and `2.1.316`.
 
+### `claude auto-mode critique` Details
+
+Source: the program, `chunk-ncc3yyk3.js`.
+
+- With no custom rules in `allow`, `soft_deny`, `hard_deny`, or `environment`, the command prints `No custom auto mode rules found.` and sends no request.
+- Otherwise it sends one request to the model with the full classifier system prompt and your custom rules. `max_tokens` is 4096. The program prints the first text block of the reply.
+- A long review can end in the middle of a word, because the reply stops at the 4096 token limit. The program does not ask for the rest.
+- If the request fails, the program prints `Failed to analyze rules:` and the error text. A missing login shows the error of the request, for example `Could not resolve authentication method`.
+
 ### `/auto-mode-setup` without the Dialog
 
 The program also has a non-interactive form of `/auto-mode-setup`. It is the same in `2.1.314` and `2.1.316`. Source: the program, `chunk-j7pd2cdk.js` and `chunk-qd604jgh.js`.
