@@ -31,7 +31,7 @@ Source: `captures/2.1.316/notes.md` and the `release` action `notes` (28 matched
 Leave out VS Code, Cloud sessions, Claude Tag, Code Review, the self-hosted runner, and the Claude apps gateway.
 
 - [x] 3.1 `CLAUDE_CODE_DISABLE_ULTRATHINK`: row in `models-and-effort.md`.
-- [ ] 3.2 `CLAUDE_CODE_SUBAGENT_EFFORT` and its place in the effort order (proposed).
+- [x] 3.2 `CLAUDE_CODE_SUBAGENT_EFFORT` and its place in the effort order: row in `models-and-effort.md` (`chunk-05t65sbt.js`).
 - [x] 3.3 `CLAUDE_CODE_DISABLE_LOOPED_CROSS_CERT_DROP` and `CLAUDE_CODE_DISABLE_SELF_NAMED_CERT_DROP`: rows in `network-and-proxy.md`.
 - [x] 3.4 Opus 4.8 fast mode deprecation. Not new: the notice (`tengu_sunset_penguin_opus48`, default `2026-11-30`) is in both versions (`chunk-wysb6q7k.js@3625`, `chunk-sy129746.js@3625`). `slash-commands.md` no longer says "since 2.1.316".
 - [x] 3.5 Managed `autoMode.allow` without `"$defaults"` and the scheduled-task rule: `auto-mode.md`, "Which Sources Count" (`chunk-k83gbg21.js`, `chunk-n6xbt9zz.js`).

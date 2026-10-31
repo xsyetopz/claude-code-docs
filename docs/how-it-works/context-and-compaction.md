@@ -185,6 +185,10 @@ Source: [Explore the Context Window: What Survives Compaction](https://code.clau
 | Background commands and subagents | <Documented /> | They keep running. |
 | `SessionStart` hooks with the `compact` matcher | <Documented /> | They run again. |
 
+:::note[Spinner after Compaction]
+In `2.1.316`, when automatic compaction runs in the middle of a turn, the spinner can show `Running SessionStart hooks…` until the turn ends. The turn keeps working. The spinner store sets that text on `hooks_start`, and only `compact_end` and the end-of-turn reset clear it. It has no case for the end of the hooks, so the `SessionStart` run after `compact_end` leaves the text up (the program, `chunk-21856tx9.js`). A claudetto session saw it.
+:::
+
 ## Example
 
 Your session is long. You start a new task.
