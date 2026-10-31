@@ -23,7 +23,7 @@ Source: `captures/2.1.316/diff/report.md`.
 - [x] 2.3 `bashEditDiffEnabled`: the new default (off, except in auto mode).
 - [x] 2.4 `BASH_ENV`: the changed detail.
 - [x] 2.5 The 18 new error texts on the page the diff names, and the 2 removed texts off the pages. Seven new texts reach only the debug log, a cloud session, or an internal check, so no page takes them. The extractor missed a conditional `throw`, so the diff listed `read not allowed under permissions.blockReadsOutsideWorkingDirectories` as removed. It is still in `2.1.316`.
-- [ ] 2.6 The 2 removed gates, `tengu_bubbly_canyon` and `tengu_enchanted_nest`, off the pages. Only the generated `docs/reference/surface-coverage.md` names them, so `bun run surface` in 6.1 removes them.
+- [x] 2.6 The 2 removed gates, `tengu_bubbly_canyon` and `tengu_enchanted_nest`, off the pages. Only the generated `docs/reference/surface-coverage.md` names them, so `bun run surface` in 6.1 removes them.
 
 ## 3. Release-Notes Items
 
@@ -71,8 +71,8 @@ Check each fact again in `2.1.316` before a page states it. Keep claudetto's mea
 
 ## 6. Release
 
-- [ ] 6.1 Bump `src/version.ts` to `2.1.316`, run `bun run schemas`, `bun run surface`, `bun run surface:check`.
-- [ ] 6.2 `bun run version:bump -- clawdipedia-docs patch`, and bump `clawdipedia-docs-cli` with it.
-- [ ] 6.3 One `CHANGELOG.md` entry.
-- [ ] 6.4 `bun run schemas:check` and `bun run verify:locked`.
+- [x] 6.1 Bump `src/version.ts` to `2.1.316`, run `bun run schemas`, `bun run surface`, `bun run surface:check`.
+- [x] 6.2 `bun run version:bump -- clawdipedia-docs patch`, and bump `clawdipedia-docs-cli` with it.
+- [x] 6.3 One `CHANGELOG.md` entry.
+- [x] 6.4 `bun run schemas:check` and `bun run verify:locked`.
 - [ ] 6.5 Review of the diff, then commit. Do not push: the user chose a local commit for this release.

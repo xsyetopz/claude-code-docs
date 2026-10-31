@@ -28218,7 +28218,7 @@ class StdioServerTransport {
 // plugin/mcp/package.json
 var package_default = {
   name: "clawdipedia-docs-mcp",
-  version: "3.0.0",
+  version: "3.0.1",
   private: true,
   license: "MIT",
   type: "module",

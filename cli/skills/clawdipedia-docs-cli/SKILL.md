@@ -5,7 +5,7 @@ description: Look up Claude Code behavior, settings, env vars, flags, hooks, plu
 
 # Anthropic Docs from the Shell
 
-The `clawdipedia` source describes what Claude Code 2.1.314 does, checked against the program and not only against the official docs. Use them instead of memory for any detail that the user may act on: a key name, a default, an environment variable, a hook field. Memory of these details is often stale or wrong. The other three sources cover official docs and Claude resources pages.
+The `clawdipedia` source describes what Claude Code 2.1.316 does, checked against the program and not only against the official docs. Use them instead of memory for any detail that the user may act on: a key name, a default, an environment variable, a hook field. Memory of these details is often stale or wrong. The other three sources cover official docs and Claude resources pages.
 
 This plugin works only in Claude Code. It has no MCP server: you call the `clawdipedia` command with the Bash tool. It needs Bun. If `clawdipedia` is not found, run `"$CLAUDE_PLUGIN_ROOT/bin/clawdipedia"` in its place, because the plugin ships that file.
 
@@ -44,7 +44,7 @@ The command keeps a disk cache so it works offline. The folder is the first of t
 2. `${CLAUDE_PLUGIN_DATA}/cache`
 3. `~/.cache/clawdipedia`
 
-When the command runs from the Bash tool, `CLAUDE_PLUGIN_DATA` is not set (probed on Claude Code 2.1.314: the plugin `bin/` is on the Bash PATH, and the variable is not set). So the cache is `~/.cache/clawdipedia` unless `CLAWDIPEDIA_CACHE_DIR` is set.
+When the command runs from the Bash tool, `CLAUDE_PLUGIN_DATA` is not set (probed on Claude Code 2.1.316: the plugin `bin/` is on the Bash PATH, and the variable is not set). So the cache is `~/.cache/clawdipedia` unless `CLAWDIPEDIA_CACHE_DIR` is set.
 
 ## Read the Badges
 
@@ -57,7 +57,7 @@ Tables have a Status column. State the badge when you report a fact, because it 
 
 ## Answer
 
-- Say which source the answer comes from. For `clawdipedia`, say which version it is for: Claude Code 2.1.314. If the user runs another version, say the page may not match it.
+- Say which source the answer comes from. For `clawdipedia`, say which version it is for: Claude Code 2.1.316. If the user runs another version, say the page may not match it.
 - Cite the page (its URL) next to each fact.
 - Before you name a field of a payload (a `$` call, an event, a hook input or output, a tool input), look it up with `clawdipedia schema`, and name only the fields you found. When a lookup comes back empty, tell the user the field is unconfirmed for this version and give the closest names the lookup returned.
 - If the docs do not cover the question, say so. Do not fill the gap from memory as if it were documented.
