@@ -22,7 +22,7 @@ A compaction that stands. It has the conversation as it reads afterwards. It als
 
 | Field | Status | What it is for | Type and limits |
 | --- | --- | --- | --- |
-| `messages` | <Documented /> | The conversation after the compaction, oldest first. From core, it is its summary and the messages it kept. From a hook, it is whatever the hook hands up. | Type: `readonly SessionMessage[]`. What the transcript becomes after compaction. A message with a `handle` stays as it is. The engine builds others from `role`, `text`, and tool blocks. |
+| `messages` | <Documented /> | The conversation after the compaction, oldest first. From core, it is its summary and the messages it kept. From a hook, it is whatever the hook hands up. | Type: `readonly SessionMessage[]`. What the transcript becomes after compaction. A message with a `handle` stays as it is. The engine builds others from `role`, `text`, and tool blocks. The transcript line that records the compaction is described in [Compaction Rows](../../../../reference/transcript-format.md#compaction-rows). |
 | `tokensBefore` | <Documented /> | The size of the conversation before, in tokens. Absent when core did not record it. | Type: `number`. Optional. |
 | `tokensAfter` | <Documented /> | Its size afterwards, in tokens. Absent on `precompute` and when core did not record it. | Type: `number`. Optional. |
 | `usage` | <Documented /> | What the own model request of the compaction cost (ModelUsage), when core made one: the token counts of the summarizer as the API reported them. | Type: `ModelUsage`. Optional. Absent when a hook answered, when a stored summary was reused, or when the response gave none. The cost ledger already holds it. |

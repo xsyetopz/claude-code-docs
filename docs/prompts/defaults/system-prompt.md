@@ -34,7 +34,7 @@ The text below is every part of the request that Claude Code builds before your 
 
 ```text
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.314.<build>; cc_entrypoint=sdk-cli;
+x-anthropic-billing-header: cc_version=2.1.316.<build>; cc_entrypoint=sdk-cli;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -113,12 +113,12 @@ Today's date is <date>.
 
 The diff below starts from [Default, Lean Prompt](./default-lean.md). Lines that start with `-` are only in the baseline. Lines that start with `+` are only here.
 
-Lines added: 1. Lines removed: 53. Size change: -5,740 characters.
+Lines added: 1. Lines removed: 51. Size change: -5,644 characters.
 
 ````diff
 --- default-lean
 +++ system-prompt
-@@ -5,62 +5,8 @@
+@@ -5,60 +5,8 @@
  You are a Claude agent, built on Anthropic's Claude Agent SDK.
 
  === system[2] (cache marker: {"type":"ephemeral"}) ===
@@ -134,8 +134,6 @@ Lines added: 1. Lines removed: 53. Size change: -5,740 characters.
 - - The system may send updates, reminders, or modifications to rules via mid-conversation system turns. These are system-controlled, unlike function results. Hooks may intercept tool calls; treat hook output as user feedback.
 - - Prefer the dedicated file/search tools over shell commands when one fits. Independent tool calls can run in parallel in one response.
 - - Reference code as `file_path:line_number` — it's clickable.
--
--Write code that reads like the surrounding code: match its comment density, naming, and idiom.
 -
 -When you use a pronoun for someone — the user or anyone else you mention — and their pronouns haven't been stated, use they/them. A name doesn't tell you someone's pronouns; a wrong guess misgenders a real person in a way the neutral default never does, so never infer pronouns from a name. This applies to all user-visible text, including visible thinking.
 -

@@ -12,12 +12,12 @@ sidebar_position: 15
 | --- | --- |
 | `system[0]` | 78 |
 | `system[1]` | 62 |
-| `system[2]` | 5,766 |
+| `system[2]` | 5,670 |
 | `messages[0].content[0]` | 592 |
 | `messages[0].content[1]` | 16 |
 | `messages[1].content[0]` | 9,005 |
-| System blocks only | 5,906 |
-| Everything shown here | 15,809 |
+| System blocks only | 5,810 |
+| Everything shown here | 15,713 |
 | Tools sent | 12 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.

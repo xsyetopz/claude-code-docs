@@ -80,6 +80,28 @@ sequenceDiagram
   Note over CC: The marker stays on the last message from now on
 ```
 
+### The Attribution Line
+
+`system[0]` is a text block that starts with `x-anthropic-billing-header:`. Claude Code builds it for each request (the program, `chunk-9k4ptx80.js@2851`). The text after the colon is a list of `name=value;` pairs.
+The `cc_` names say which client, entry point, and turn made the request.
+
+| Pair | When it appears |
+| --- | --- |
+| `cc_version=2.1.316.<suffix>` | Always. The suffix is a short code that Claude Code computes. |
+| `cc_entrypoint=<value>` | Always. The value is the entry point of the run, or `unknown`. |
+| `cch=00000` | First-party API requests that pass an internal test, and Vertex requests. |
+| `cc_workload=<value>` | A workload tag is set. |
+| `cc_is_subagent=true` | The request is from a subagent, not the main session. |
+| `cc_prev_req=<req_id>` | First-party only, and the id matches `req_` and up to 36 letters, digits, `_`, or `-`. |
+| `cc_prompt_id=<uuid>` | First-party only, and the id is a UUID. |
+| `cc_turn_origin=<name>` | First-party only, and the name is 1 to 32 lowercase letters or `_`. |
+| `cc_prompt_index=<n>; cc_turn_index=<n>` | First-party only, and both are valid numbers. |
+| `cc_gateway=1` or `cc_gateway=env` | A gateway login (`1`) or a base URL from the environment (`env`), unless the host check says the URL is local or vouched. |
+| `cc_project=<id>; cc_project_src=<source>` | The run has an attribution project with a valid id and a known source. |
+| `cc_prev_msg=<msg_id>`, `cc_prev_prompt_index`, `cc_prev_turn_index` | First-party only, in the request right after a compaction. They name the response before it. |
+
+The block has no cache marker.
+
 ## Cache Lifetime
 
 Sources: [How Claude Code Uses Prompt Caching: Cache Lifetime](https://code.claude.com/docs/en/prompt-caching#cache-lifetime) and [Environment Variables](https://code.claude.com/docs/en/env-vars).
@@ -94,9 +116,43 @@ Sources: [How Claude Code Uses Prompt Caching: Cache Lifetime](https://code.clau
 | `FORCE_PROMPT_CACHING_5M` | <Documented /> | Forces five minutes. It wins over the other items. |
 | `DISABLE_PROMPT_CACHING` | <Documented /> | Turns caching off. The suffixes `_HAIKU`, `_SONNET`, `_OPUS`, and `_FABLE` turn it off for one model family. |
 | `DISABLE_PROMPT_CACHING_MYTHOS` | <Undocumented /> | Turns caching off for the Mythos models. |
+| `experimental.cacheTtl` in an agent definition | <Undocumented /> | Sets `5m` or `1h` for the requests of that agent when no `subagentPromptCacheTtl` setting or variable is set. The program ignores `1h` while a Claude subscription is in overage (the program, `chunk-qd604jgh.js@800717`). |
 | `CLAUDE_CODE_MESSAGES_PROMPT_CACHE_TTL` | <Undocumented /> | Appears in the env schema. No source states what it does. |
 
+Unset, `promptCacheTtl` means one hour on a Claude subscription within its usage limits and five minutes on an API key, Bedrock, Vertex, or Foundry. Unset, `subagentPromptCacheTtl` means five minutes unless `ENABLE_PROMPT_CACHING_1H=1`. Each environment variable wins over its setting (the program, `chunk-j4564a1j.js@294694`). The cache ledger counts a TTL of `5m` as 300,000 ms and `1h` as 3,600,000 ms (`chunk-v055v41g.js@4128`).
+
 The cache is per machine and per folder, because the prompt holds memory paths and the working directory.
+
+## The Cache Line of `/usage`
+
+`/usage` prints one line that starts with `Prompt cache (main):`. It shows only after the session sent a request (the program, `chunk-qd604jgh.js@974753`). Claude Code joins the parts below with ` · `.
+
+| Part | Text | Source of the number |
+| --- | --- | --- |
+| Requests | `N request` or `N requests` | Requests of the main conversation. |
+| Hit ratio | `N% of input tokens from cache` | `cache_read / (cache_read + cache_creation + uncached input)`. It is left out until it is known. |
+| Misses | `no misses`, or `N miss (last T ago — likely cause: ..., N tokens re-cached)` | A miss is a request whose cached prefix shrank without a compaction to explain it. |
+| Expected rebuilds | `N expected rebuild (compaction or tool-result clearing)` | Shown only when above zero. A compaction or a tool-result clearing announced the drop. |
+| State | `warm (<ttl> TTL, last activity T ago)`, or `cold — idle T, next turn re-caches ~N tokens`, or `no prompt caching reported by the API` | The TTL of the last request and the time since it. |
+
+The likely cause is a list with a comma between the items. A cause can add a count: `tool definitions changed (+2/-0)` or `system prompt changed (+120 chars)`.
+
+| Cause text | Meaning |
+| --- | --- |
+| `system prompt changed` | The system text differs from the last request. |
+| `tool definitions changed` | The tool list differs. |
+| `model changed`, `fast mode toggled` | You switched model or fast mode. |
+| `cache scope or TTL changed` | The marker scope or TTL differs. |
+| `beta headers changed` | The beta list differs. |
+| `effort changed`, `thinking toggled`, `thinking display changed` | A thinking or effort setting changed. |
+| `auto mode toggled`, `usage-limit state changed` | Auto mode or the usage-limit state changed. |
+| `extra request fields changed`, `deferred tool loading changed` | A body field differs. |
+| `earlier messages changed` | Old messages were rewritten. |
+| `idle past the 5m TTL`, `idle past the 1h TTL` | The gap since the last activity is longer than the TTL. |
+| `prompt unchanged — likely server-side` | Nothing differs and the gap is under five minutes. |
+| `unknown` | No cause matched. |
+
+Source: the program, `chunk-v055v41g.js@4128` (the cause names and texts).
 
 ## What Breaks the Cache
 

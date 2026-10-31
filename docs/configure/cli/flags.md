@@ -151,6 +151,7 @@ Flags that continue, fork, name, or rewind a session, or run it in a worktree or
 | `--resume-session-at` `<message id>` | <Undocumented /> | ❌ | Resumes only up to one message of the chain, with `--resume` in print mode. |
 | `--resume-drops-turn` `<message id>` | <Undocumented /> | ❌ | Names the turn that a truncating resume drops. The resume fails if more would go. |
 | `--reply-on-resume` | <Undocumented /> | ❌ | Asks the model to reply at once when the transcript ends with a user message. |
+| `--session-began-as-copy` `<value>` | <Undocumented /> | ❌ | Hidden. A server sends it. The value `1` marks a session that began as a copy of another. Then `--resume` in print mode does not continue the last turn of the session it was copied from, and does not run a tool call that a hook deferred there. Any other value is ignored. It means the same as `CLAUDE_CODE_SESSION_BEGAN_AS_COPY=1`, and either one is enough (the program). |
 | `--rewind-files` `<user-message-id>` | <Undocumented /> | ❌ | Restores the files to the state at a user message and exits. It needs `--resume`. |
 | `--bg`, `--background` | <Documented /> | ✅ | Starts the session in the background and prints its ID. |
 | `-w, --worktree [name]` | <Documented /> | ✅ | Creates a new git worktree for the session. |
@@ -239,7 +240,7 @@ Each row is a family of messages. The backticked text is the start that every me
 | Start of Message | Status | What It Means | Cases |
 | --- | --- | --- | --- |
 | Various | <Undocumented /> | **Deep links.** Claude Code refused a deep link. | The `cwd` is not an absolute path. The `cwd` holds `..`, control characters, or a network path. The plugin or marketplace value is not valid. The scheme or action is unknown. The launch command cannot be quoted safely. |
-| Various | <Undocumented /> | **Flag values.** Claude Code refused a command-line flag value or combination. | A flag needs another flag. For example, `--resume-session-at` needs `--resume`. A flag cannot be combined with a prompt. A flag needs a value in a range. The socket path of `--messaging-socket-path` is not a private local socket. |
+| Various | <Undocumented /> | **Flag values.** Claude Code refused a command-line flag value or combination. | A flag needs another flag. For example, `--resume-session-at` needs `--resume`. A flag cannot be combined with a prompt. A flag needs a value in a range. `claude auth login --gateway-json` is used with `--console`, `--claudeai`, `--sso`, or `--email` (`--gateway-json cannot be used together with --console, --claudeai, --sso, or --email.`). The socket path of `--messaging-socket-path` is not a private local socket. |
 | Various | <Undocumented /> | **Claude in Chrome.** The Claude in Chrome connection failed. | The bridge is not connected. No extension connected. The browser is not paired. The socket directory or socket has the wrong owner or permissions. Claude Code could not find the browser helper. |
 
 ## Related Pages

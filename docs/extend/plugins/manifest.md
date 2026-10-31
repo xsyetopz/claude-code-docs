@@ -54,6 +54,19 @@ The last column says where the key may appear: the manifest, a marketplace entry
 | `experimental.syntaxHighlighting.hljsLanguages` | <Undocumented /> <Experimental /> | Adds highlight.js languages. | Up to 16 items. `id` matches `^[a-z][a-z0-9_-]*$` (64 characters at most). `remote` is `npm:<pkg>[@ver]` or `github:<owner>/<repo>@<ref>#<path>.js`. `integrity` is an SRI hash with `sha256-`, `sha384-`, or `sha512-`. Strict. | Manifest |
 | `binaries` | <Undocumented /> | Lists files fetched into `bin/` at install. | A map of base name to `{ "sha256": <64 hex> }`. At most 64 entries. Names match `^[a-z0-9](?:[a-z0-9._-]*[a-z0-9_-])?$`. The env var `CLAUDE_CODE_PLUGIN_BINARY_ASSETS` also exists. | Manifest |
 
+## Icon Checks
+
+`claude plugin validate` checks the plugin icon for the directory listing. Both findings are warnings, not errors (the program).
+
+| Finding | Status | When it appears | Fix |
+| --- | --- | --- | --- |
+| `ICON_MISSING` | <Undocumented /> | `plugin.json` has no `icon`, and the validator finds no file at `.claude-plugin/icon.png`, `.claude-plugin/icon.svg`, `assets/icon.png`, `assets/icon.svg`, or a similar path. | Add a square PNG at `.claude-plugin/icon.png`, or set `icon` to a square PNG or JPEG in the plugin. |
+| `ICON_INVALID` | <Undocumented /> | The icon file fails the size or type test, or `icon` points at a path that is not a file in the plugin. | Use a PNG or JPEG of 512 to 2048 px on each side, under 2 MB. SVG and WebP are not accepted. |
+
+A path in `icon` that holds `..` raises `PATH_TRAVERSAL`. A path with quotes, angle brackets, a backslash, a backtick, whitespace, or control characters raises `LISTING_URL_SCHEME`. So does an `icon` URL that is not `https://`.
+The listing takes the icon file only once: the first time the plugin is saved or submitted in the developer portal. A later change does not change the icon.
+Source: the program, `chunk-nsr1txpr.js@2667` and `chunk-nsr1txpr.js@31512`.
+
 ## `userConfig` Option Keys
 
 Each key under `userConfig` is the name of one option. The name must match `^[A-Za-z_]\w*$`.

@@ -8,7 +8,7 @@ These variables decide where Claude Code keeps its files and how it handles save
 They also control installs and auto updates.
 `CLAUDE_CONFIG_DIR` is the most used one. It moves the whole `.claude` folder.
 
-This page lists 78 variables. Use absolute paths. Set `DISABLE_AUTOUPDATER` to stop updates. Project and local settings cannot set `CLAUDE_CONFIG_DIR`. Set these in your shell.
+This page lists 79 variables. Use absolute paths. Set `DISABLE_AUTOUPDATER` to stop updates. Project and local settings cannot set `CLAUDE_CONFIG_DIR`. Set these in your shell.
 
 ## Example
 
@@ -76,6 +76,7 @@ The rows are in name order. See [Environment Variables](index.md#how-to-read-the
 | `CLAUDE_CODE_RESUME_TOKEN_THRESHOLD` | <Undocumented /> <Gated note="Works only behind a feature flag or server gate" /> | Sets the estimated token size above which a resumed session receives the return prompt. Default is 100000. | A number, `100000` by default. Integer, default `100000`. Works only when a feature flag or a feature flag is on | Interactive resume. Gated by a feature flag and a feature flag |
 | `CLAUDE_CODE_RESUME_TOLERATES_CONTEXT_APPENDS` | <Undocumented /> | On resume, does not treat trailing context-only user rows from the host as a new prompt. This keeps interrupted-turn detection correct. | On or off. Claude Code also passes it to the parked-permission logic as `toleratesContextAppends` | Resume and SDK or remote hosts |
 | `CLAUDE_CODE_RESUME_TOLERATES_CONTEXT_SEEDS` | <Undocumented /> | On resume, lets context seed rows and queued task notifications pass in interrupted-turn detection. Then the log reads as no turn rows. | On or off | Resume and SDK or remote hosts |
+| `CLAUDE_CODE_SESSION_BEGAN_AS_COPY` | <Undocumented /> | The value `1` marks a session that began as a copy of another. Then `--resume` in print mode does not continue the last turn of the session it was copied from, and does not run a tool call that a hook deferred there. Another value is ignored. The hidden flag `--session-began-as-copy` means the same, and either one is enough (the program). | Only `1` has an effect | Print mode `--resume` |
 | `CLAUDE_CODE_SESSION_ID` | <Documented /> | Holds the current session ID for Bash, hook, and stdio MCP subprocesses. Session sync also reads it. | Text. Claude Code sets it for subprocesses. Claude Code deletes it from some inherited envs so a child does not reuse it. For stdio MCP servers the ID stays as it was at spawn | Bash, PowerShell, hooks, MCP stdio. Claude Code sets it |
 | `CLAUDE_CODE_SESSION_KIND` | <Undocumented /> | Names the kind of session. The value `bg` marks a background session, which changes cwd handling and restart advice. | Text. The code seen tests only the value `bg` | Background sessions. The supervisor sets it |
 | `CLAUDE_CODE_SESSION_NAME` | <Undocumented /> | Sets the session name in the concurrent-session record. A user-set name has source `user`. | Text. The code trims it. An empty result means no name | Concurrent-session registry, background sessions |

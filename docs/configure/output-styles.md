@@ -93,7 +93,7 @@ flowchart TD
   Pick --> Plug{force-for-plugin?}
   Plug -->|yes| Force[Plugin style wins]
   Plug -->|no| Use[Chosen style]
-  Force --> Prompt[Style text joins the system prompt]
+  Force --> Prompt[Style text goes in the environment message]
   Use --> Prompt
 ```
 
@@ -101,6 +101,12 @@ flowchart TD
 A probe set `outputStyle` in user settings and added a plugin style with `force-for-plugin: true`. The system prompt used the forced style and not the configured one. The `init` event still showed the setting's name. With several forced styles, the first wins. A warning lists all. In a user style, Claude Code ignores `force-for-plugin`. A managed `outputStyle` with its style file in the managed folder won over user, project, local, and `--settings` values. See [Probes](../reference/probes.md#configure-and-memory) and [Managed Folder Probe](../reference/probes.md#managed-folder-probe).
 The captures linked above hold the full text of each built-in style prompt. We compared them with the strings in the program. The only difference is the blank lines that the capture adds after the style header and between paragraphs.
 :::
+
+## Where the Style Text Goes
+
+The probe of 2.1.316 shows that the style text does not go in `system[2]`. Claude Code puts it in the environment message, a system-role message in `messages`, under the line `# Output Style: <name>`. The front matter is not sent. Source: [Style Custom](../prompts/output-styles/style-custom.md).
+The first line of the body, `You are an agent working with the user ...`, becomes `You are an interactive agent that helps users according to your "Output Style", which describes how you should respond to user queries.` when a style is active and keeps no coding instructions.
+A reminder line follows the deferred tool list and the command list: `<name> output style is active. Remember to follow the specific guidelines for this style.` The probe sent one user message, so this page does not state how often the reminder repeats.
 
 ## Exact Fields
 

@@ -8,7 +8,7 @@ These variables matter when Claude Code runs away from your terminal.
 They cover cloud sessions, the remote bridge, the desktop app, the Chrome extension, Cowork, and Slack.
 The host sets most of them, and Claude Code reads them. Set one yourself only when you run your own host.
 
-This page lists 188 variables. The host program that starts Claude Code sets many of them. You can change them only if you control that process. They live in the environment of the Claude Code process.
+This page lists 186 variables. The host program that starts Claude Code sets many of them. You can change them only if you control that process. They live in the environment of the Claude Code process.
 
 ## Example
 
@@ -82,6 +82,7 @@ The table is sorted by name. See [Environment Variables](index.md#how-to-read-th
 | `CLAUDE_CODE_CONTAINER_ID` | <Undocumented /> | Reports the container id in session metadata as `claudeCodeContainerId`. Its presence also marks a remote or container session. | Text. No default. Set by the container host | Remote and container sessions |
 | `CLAUDE_CODE_DESKTOP_APP_VERSION` | <Undocumented /> | Gives the desktop app version to Claude Code. Claude Code reads it only for the desktop entrypoints. | Text. Used when `CLAUDE_CODE_ENTRYPOINT` is `claude-desktop` or `local-agent`. Else ignored | Desktop app |
 | `CLAUDE_CODE_DIFF_COPY_ROOT` | <Undocumented /> | Names the folder where the runner keeps the checked copy of the repository git settings, which the workspace diff uses. Claude Code creates the folder. | An absolute path. A value that is not absolute gives an error that says the variable must reach Claude Code unchanged from the runner | Set by the runner |
+| `CLAUDE_CODE_DISABLE_HELD_MESSAGE_RECOGNITION` | <Undocumented /> | Turns off the recognition of messages that were merged or held in a self-hosted remote session. With it set, the gate `tengu_mellow_heron` is not read and Claude Code does not collect the uuids of merged sends. The launcher of a self-hosted runner passes it to the child as `1` (the program). | On or off. Off by default, so the `tengu_mellow_heron` gate decides, and it is off by default | Self-hosted remote sessions |
 | `CLAUDE_CODE_DISABLE_TURN_HANDOFF` | <Undocumented /> | Marks turn handoff as disabled in the admission check for SDK and remote sessions. | On or off, off by default | SDK and remote sessions |
 | `CLAUDE_CODE_DISABLE_ULTRAREVIEW_TRUST_CHECK` | <Undocumented /> | Lets `claude ultrareview` start in a folder you have not trusted when it cannot ask, such as in a script or CI job. | On or off, off by default. Since `2.1.309`. `--trust-workspace` trusts the folder for one run instead | `claude ultrareview`. See [Subcommands](../cli/subcommands.md) |
 | `CLAUDE_CODE_DISABLE_WORKING_SYNC` | <Undocumented /> | Stops the synced working-file syncer in remote sessions and blocks the self-hosted `admitted` state. | On or off, off by default | Remote sessions with `CLAUDE_CODE_REMOTE_SESSION_ID` and an SDK URL |

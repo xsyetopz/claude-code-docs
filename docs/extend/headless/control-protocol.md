@@ -27,7 +27,7 @@ Source: the program (the bundled schema of `2.1.311`; for the `2.1.311` addition
 | `set_max_thinking_tokens` | <Undocumented /> | No description in the program schema. |
 | `rename_session` | <Undocumented /> | Sets the title of the session. |
 | `set_color` | <Undocumented /> | No description in the program schema. |
-| `mcp_status` | <Undocumented /> | Asks for the state of all MCP server connections. Since `2.1.309`, `liveReply: true` sends a success reply only to the clients attached at that moment, when the CLI writes through a cloud session or Remote Control worker. The reply is not stored, and a reply sent while the stream is down is lost. |
+| `mcp_status` | <Undocumented /> | Asks for the state of all MCP server connections. Since `2.1.309`, `liveReply: true` sends a success reply only to the clients attached at that moment, when the CLI writes through a cloud session or Remote Control worker. The reply is not stored, and a reply sent while the stream is down is lost. In `2.1.316` an entry of `mcpServers` can have `cloudServiceProvided`. It is `true` for an `http` or `sse` server that the cloud service added to the session, and it is set only when `sessionProxied` is `true`. The session judges it by the address of the server and can miss one. `reload_plugins` entries have the same field (the program). |
 | `file_suggestions` | <Undocumented /> | Asks for `@` file suggestions for a partial path. |
 | `get_context_usage` | <Undocumented /> | Asks for the use of the context window by category. |
 | `get_session_cost` | <Undocumented /> | Asks for the cost summary that `/usage` prints in print mode. |
@@ -80,7 +80,7 @@ Source: the program (the bundled schema of `2.1.311`; for the `2.1.311` addition
 | `background_tasks` | <Undocumented /> | No description in the program schema. |
 | `get_task_output` | <Undocumented /> | Reads the last 8 KiB of the output of a background task. |
 | `apply_flag_settings` | <Undocumented /> | Merges settings into the flag settings layer. |
-| `get_settings` | <Undocumented /> | Returns the merged settings and the settings of each source. |
+| `get_settings` | <Undocumented /> | Returns the merged settings and the settings of each source. In `2.1.316` the `applied` object can have `ultrathinkAvailable`, a boolean. It is `true` when typing `ultrathink` runs the turn at `xhigh` effort, and when the session is already at `xhigh` or `max`. If it is absent, the Claude Code is too old to report it (the program). |
 | `update_settings` | <Undocumented /> | Writes settings through the writer of Claude Code. |
 | `get_hooks_listing` | <Undocumented /> | Returns the hooks that the read-only `/hooks` menu shows. |
 | `list_permission_rules` | <Undocumented /> | Returns the permission rules and workspace folders that `/permissions` lists. Since `2.1.311` the `source` of a rule can be `mcpMount` (string). |
@@ -117,6 +117,7 @@ Source: the program (the bundled schema of `2.1.311`; for the `2.1.311` addition
 
 Some requests go from Claude Code to the host, such as `can_use_tool`, `elicitation`, `hook_callback`, `request_user_dialog`, and the token refresh requests.
 The host must answer them or the turn waits.
+A `control_response` can carry `pending_elicitation_requests` (new in `2.1.316`). It is an array of the `elicitation` requests that Claude Code sent and nobody answered or withdrew yet. A client that joins late can show the question. It is on a success `initialize` response when Claude Code lists them, which not every session does. If it is absent, nothing is known about what is pending. Show a `request_id` once, even if it also arrives as a live `control_request` line (the program).
 
 ## Example
 

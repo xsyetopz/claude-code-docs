@@ -24,7 +24,7 @@ A type written as `system` / `init` means `type` is `system` and `subtype` is `i
 | --- | --- | --- |
 | `user` | <Documented /> | A user message, such as a message of a subagent when `--forward-subagent-text` is on. |
 | `result` | <Documented /> | The final result of the run. |
-| `system` / `init` | <Documented /> | Session data at the start of each turn: session ID, model, working folder, tools, MCP servers, slash commands, and plugins. |
+| `system` / `init` | <Documented /> | Session data at the start of each turn: session ID, model, working folder, tools, MCP servers, slash commands, and plugins. In `2.1.316` it can have `ultrathink_available`, a boolean. It is `true` when typing `ultrathink` runs the turn at `xhigh` effort on the `model` of this line, and when the session is already at `xhigh` or `max`. After a `system` / `per_turn_effort_changed` line, treat it as `false` until the next `init` line. If the field is absent, the answer is unknown, and a host colors nothing. The stream-json host sends it, and `get_settings` gives the same answer as `applied.ultrathinkAvailable` (the program). |
 | `stream_event` | <Documented /> | A step of the answer as it grows, only with `--include-partial-messages`. |
 | `system` / `compact_boundary` | <Documented /> | Claude Code compacted the conversation here. |
 | `system` / `api_retry` | <Documented /> | An API request failed with an error that can be retried, and Claude Code will try again after a wait. |

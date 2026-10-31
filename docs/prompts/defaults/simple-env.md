@@ -32,12 +32,12 @@ This variant sends exactly the same text and tools as [Bare Mode](./bare.md). Th
 
 The diff below starts from [Default, Lean Prompt](./default-lean.md). Lines that start with `-` are only in the baseline. Lines that start with `+` are only here.
 
-Lines added: 2. Lines removed: 116. Size change: -15,433 characters.
+Lines added: 2. Lines removed: 114. Size change: -15,337 characters.
 
 ````diff
 --- default-lean
 +++ simple-env
-@@ -5,124 +5,8 @@
+@@ -5,122 +5,8 @@
  You are a Claude agent, built on Anthropic's Claude Agent SDK.
 
  === system[2] (cache marker: {"type":"ephemeral"}) ===
@@ -54,8 +54,6 @@ Lines added: 2. Lines removed: 116. Size change: -15,433 characters.
 - - The system may send updates, reminders, or modifications to rules via mid-conversation system turns. These are system-controlled, unlike function results. Hooks may intercept tool calls; treat hook output as user feedback.
 - - Prefer the dedicated file/search tools over shell commands when one fits. Independent tool calls can run in parallel in one response.
 - - Reference code as `file_path:line_number` — it's clickable.
--
--Write code that reads like the surrounding code: match its comment density, naming, and idiom.
 -
 -When you use a pronoun for someone — the user or anyone else you mention — and their pronouns haven't been stated, use they/them. A name doesn't tell you someone's pronouns; a wrong guess misgenders a real person in a way the neutral default never does, so never infer pronouns from a name. This applies to all user-visible text, including visible thinking.
 -

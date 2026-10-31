@@ -81,6 +81,35 @@ Deferred by default: `CronCreate`, `CronDelete`, `CronList`, `DesignSync`, `Ente
 A deferred tool costs nothing, apart from its name, until `ToolSearch` loads it.
 In the default session the deferred tools would add 13,425 tokens.
 
+### Definition Sizes in Characters
+
+The token numbers above are from `2.1.305`. The table below counts characters in the tool texts that the `2.1.316` probe captured (`print` captures with the stub API, model `claude-opus-5-5`, 12 tools). A denied tool leaves the request, so its description and schema characters are the saving. The request body also holds a little JSON framing around each tool. Source: the probe captures, shown in [Tool Descriptions](../prompts/tools/tools.md).
+
+| Tool | Description | Schema | Sum | Sent in the first request |
+| --- | --- | --- | --- | --- |
+| `Agent` | 3,227 | 1,942 | 5,169 | Yes |
+| `Workflow` | 3,480 | 1,775 | 5,255 | Yes |
+| `ScheduleWakeup` | 3,396 | 1,392 | 4,788 | Yes |
+| `Bash` | 1,934 | 1,720 | 3,654 | Yes |
+| `Skill` | 1,417 | 327 | 1,744 | Yes |
+| `ReportFindings` | 574 | 1,545 | 2,119 | Yes |
+| `Read` | 790 | 1,071 | 1,861 | Yes |
+| `ToolSearch` | 953 | 406 | 1,359 | Yes |
+| `ListAgents` | 777 | 316 | 1,093 | Yes |
+| `Edit` | 360 | 552 | 912 | Yes |
+| `Write` | 240 | 348 | 588 | Yes |
+| `DeferredToolPlaceholder` | 83 | 33 | 116 | Yes |
+| `Monitor` | 6,354 | 1,040 | 7,394 | Deferred |
+| `SendMessage` | 4,259 | 1,291 | 5,550 | Deferred |
+| `CronCreate` | 3,399 | 958 | 4,357 | Deferred |
+| `EnterWorktree` | 3,220 | 687 | 3,907 | Deferred |
+| `ExitWorktree` | 1,923 | 481 | 2,404 | Deferred |
+| `NotebookEdit` | 619 | 940 | 1,559 | Deferred |
+
+- A deferred tool sends only its name until `ToolSearch` loads it. Denying it saves nothing in the first request.
+- The probe `print.dsc.sizes` runs the same request with `--disable-slash-commands`. The `Skill` tool leaves (1,811 bytes in the body). The skills section of the messages leaves (6,191 bytes). The `Workflow` tool grows from 5,383 to 22,511 bytes. The request body changes from 46,108 to 54,967 bytes, which is 8,859 bytes more, not less. This is the same effect as denying `Skill` in the table above.
+- Sizes in this table are for one model and one account state. A server flag or a setting can change the tool list.
+
 `Skill` brings the skills listing. It is 2,210 tokens for the built-in skills:
 
 | Skill | Tokens |

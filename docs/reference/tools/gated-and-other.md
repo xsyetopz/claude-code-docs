@@ -49,17 +49,34 @@ Source: [Tools Reference](https://code.claude.com/docs/en/tools-reference) for t
 
 ## Plugin, Skill, and Browser Tools
 
-Source: the program (the tool names and the input schemas in [`claude-code-tools.json`](../schemas.md)). The program does not show a gate for these tools, except where the table gives one, and it does not show their read-only, parallel, or deferred flags here.
+Source: the program (the tool names and the input schemas in [`claude-code-tools.json`](../schemas.md)). The four plugin and skill tools share one enable gate, described below. The program does not show a gate for the other tools, except where the table gives one.
 
 | Tool | Status | What It Does | Parameters and Gate |
 | --- | --- | --- | --- |
-| `ListPlugins` | <Undocumented /> | Lists plugins. | `keywords` (up to 8 strings, optional filter). Omit it to list everything. Gate not confirmed. |
-| `ListSkills` | <Undocumented /> | Lists skills. | `keywords` (up to 8 strings, optional filter). Omit it to list everything. Gate not confirmed. |
-| `SearchPlugins` | <Undocumented /> | Searches plugins by keyword. | `keywords` (1 to 8 strings, required). Gate not confirmed. |
-| `SearchSkills` | <Undocumented /> | Searches skills by keyword. | `keywords` (1 to 8 strings, required). Gate not confirmed. |
+| `ListPlugins` | <Undocumented /> | Lists plugins. | `keywords` (up to 8 strings, optional filter). Omit it to list everything. [Shared enable gate](#shared-enable-gate). |
+| `ListSkills` | <Undocumented /> | Lists skills. | `keywords` (up to 8 strings, optional filter). Omit it to list everything. [Shared enable gate](#shared-enable-gate). |
+| `SearchPlugins` | <Undocumented /> | Searches plugins by keyword. | `keywords` (1 to 8 strings, required). [Shared enable gate](#shared-enable-gate). |
+| `SearchSkills` | <Undocumented /> | Searches skills by keyword. | `keywords` (1 to 8 strings, required). [Shared enable gate](#shared-enable-gate). |
 | `RefreshMcpTools` | <Undocumented /> <Gated note="CLAUDE_CODE_ENABLE_REFRESH_MCP_TOOLS" /> | Queries the tool list of connected MCP servers again and applies it. It never dials a server. | `server` (string, optional). Omit it to refresh all connected servers. Each result has a `status` of `refreshed`, `error`, or `not_connected`. |
 | `enable__mcp__claude-in-chrome` | <Undocumented /> | Enables Claude in Chrome, the Claude extension in the Chrome browser on your computer, for the conversation. | Parameters and gate not confirmed. |
 | `enable__mcp__remote-devices__Claude_Browser` | <Undocumented /> | Enables the browser built into the Claude desktop app for the conversation. | Parameters and gate not confirmed. |
+
+### Shared Enable Gate
+
+`ListPlugins`, `ListSkills`, `SearchPlugins`, `SearchSkills`, `SuggestPluginInstall`, and `SuggestSkills` all use one `isEnabled` function (the program, `chunk-5z8h8hpn.js` and `chunk-cydxgbbs.js` of `2.1.316`). Claude Code evaluates these tests in order and stops at the first answer.
+
+| Step | Test | Result |
+| --- | --- | --- |
+| 1 | The policy mirror for `allow_plugin_skill_search` says `org_denied`, `latched`, or `unregistered`. | Off |
+| 2 | A policy mirror answer exists (not `null`) and the HIPAA mode is on. | Off |
+| 3 | `CLAUDE_CODE_REMOTE` is set and the provider is first party. | On |
+| 4 | The entrypoint is `claude-desktop`, `claude-desktop-3p`, or `local-agent`, the session is not a child session, the provider is first party, and the rollout reader answers true. | On |
+| 5 | None of the above. | Off |
+
+- The provider is first party when no `CLAUDE_CODE_USE_*` variable for Bedrock, Mantle, Vertex, or another cloud provider selects another one. A normal terminal login (entrypoint `cli`) with `CLAUDE_CODE_REMOTE` unset reaches step 5, so these tools are off.
+- The rollout reader of step 4 answers from a server flag (`tengu_saddle_lantern`, default `false`), which you cannot set. `SuggestSkills` and `SuggestPluginInstall` are deferred only while their own rollout test is off.
+- A second check answers for a tool name: it says yes for every name outside the list `SearchPlugins`, `SearchSkills`, `ListPlugins`, `ListSkills`, and gives the gate's answer for those four. The two `Suggest` tools are not in that list.
+- A search call that the policy refuses fails with the policy text, `Plugin and skill search is unavailable right now; please try again.`, when the policy gives no text of its own. A login token without the `user:plugins` scope makes `SearchPlugins` return an empty list.
 
 ## Self-Hosted Runner Tools
 

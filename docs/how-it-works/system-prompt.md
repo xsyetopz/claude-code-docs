@@ -61,6 +61,8 @@ See [Request and Cache](request-and-cache.md#system-blocks-and-cache-markers) fo
 
 A model gets the short prompt (one `lean_body` section, about 5.7k characters) or the full prompt (six longer sections, about 26.9k characters).
 The official docs and the real request captures agree here. Only the old wiki was wrong.
+
+`2.1.316` removed one line from the short prompt (`lean_body`): "Write code that reads like the surrounding code: match its comment density, naming, and idiom." The line stood between the bullet list that ends with the `file_path:line_number` rule and the `pronouns` paragraph. The `system[2]` block is 96 characters shorter for the short-prompt models and 95 for `claude-fable-5` and `claude-mythos-5`, The full-prompt models (`claude-sonnet-5`, `claude-haiku-4-5`) keep their size, and the memory text is the same as in `2.1.314`. Source: the probe `print.models.matrix` and the re-rendered [captured prompts](../prompts/index.md).
 Captures of 2.1.311 show the following. See [Captured System Prompts](../prompts/index.md) for the texts.
 
 ```mermaid
@@ -104,18 +106,19 @@ The models with the catalog flag `lean_prompt` get the short prompt: Haiku 5.5, 
 
 | Model | Prompt | System Characters |
 | --- | --- | --- |
-| `claude-opus-5-5`, `claude-sonnet-5-5`, and their `-eap` names | Short | 5,699 |
-| `claude-haiku-5-5` | Short plus 5 paragraphs on effort and turns | 8,491 |
-| `claude-opus-4-8` | Short, with one different bullet in a system reminder | 5,641 |
-| `claude-opus-5` | Short plus "Delivering work" and "Corrections" sections and a line to not use agents or workflows unless asked | 9,079 |
-| `claude-fable-5` | Short plus "Communicating with the user", a comment rule, an identity paragraph, and an autonomy block | 9,992 |
-| `claude-fable-5-1` | Short plus "Delivering work", "Writing for the user", an identity paragraph, and an autonomy block | 11,771 |
-| `claude-mythos-5` | Short plus "Communicating with the user" and an autonomy block | 9,414 |
-| `claude-mythos-5-1` | Like Fable 5.1 | 11,084 |
-| Unknown name | Short, without the `total_tokens` line | 5,648 |
-| `claude-sonnet-5` | Full, with one different `TaskCreate` bullet | 26,944 |
-| `claude-haiku-4-5`, `claude-3-5-haiku`, `claude-3-5-sonnet`, `claude-3-7-sonnet`, `claude-sonnet-4-0`, `claude-sonnet-4-5`, `claude-sonnet-4-6`, `claude-opus-4-5`, `claude-opus-4-6`, `claude-opus-4-7` | Full | 27,046 |
-| `claude-opus-4-0`, `claude-opus-4-1` | Claude Code silently changes the request model to `claude-opus-5-5`, so they get the short prompt | 5,699 |
+| `claude-opus-5-5` and `claude-opus-5-5-eap` | Short | 5,776 |
+| `claude-sonnet-5-5` and `claude-sonnet-5-5-eap` | Short | 5,586 |
+| `claude-haiku-5-5` | Short plus 5 paragraphs on effort and turns | 8,429 |
+| `claude-opus-4-8` | Short, with one different bullet in a system reminder | 5,579 |
+| `claude-opus-5` | Short plus "Delivering work" and "Corrections" sections and a line to not use agents or workflows unless asked | 9,017 |
+| `claude-fable-5` | Short plus "Communicating with the user", a comment rule, an identity paragraph, and an autonomy block | 9,931 |
+| `claude-fable-5-1` | Short plus "Delivering work", "Writing for the user", an identity paragraph, and an autonomy block | 11,805 |
+| `claude-mythos-5` | Short plus "Communicating with the user" and an autonomy block | 9,353 |
+| `claude-mythos-5-1` | Like Fable 5.1 | 11,118 |
+| Unknown name | Short, without the `total_tokens` line | 5,586 |
+| `claude-sonnet-5` | Full, with one different `TaskCreate` bullet | 26,978 |
+| `claude-haiku-4-5`, `claude-3-5-haiku`, `claude-3-5-sonnet`, `claude-3-7-sonnet`, `claude-sonnet-4-0`, `claude-sonnet-4-5`, `claude-sonnet-4-6`, `claude-opus-4-5`, `claude-opus-4-6`, `claude-opus-4-7` | Full | 27,080 |
+| `claude-opus-4-0`, `claude-opus-4-1` | Claude Code silently changes the request model to `claude-opus-5-5`, so they get the short prompt | 5,776 |
 
 The 3.5 and 3.7 Haiku and Sonnet models also get 25 tools and not 12, because they have no tool search. In `2.1.309` it was 24, before `Monitor` joined the tool list (probe `print.models.matrix`). The captures cover only Opus 5.5, Sonnet 5.5, Haiku 5.5, and the full prompt. The other models have no capture page.
 

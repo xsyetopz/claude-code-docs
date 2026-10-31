@@ -46,7 +46,11 @@ flowchart TD
 | Compact threshold | <Documented /> | `effective - 13000` | 967,000, which the docs call "about 967K" |
 | Warning | <Undocumented /> | `threshold - 20000` | 947,000 |
 | Blocked | <Undocumented /> | `window - out - 3000` | 977,000 |
-| Percent override | <Documented /> | The smaller of `effective * pct / 100` and `effective - 13000` | `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` sets `pct` from 1 to 100 |
+| Percent override | <Documented /> | The smaller of `floor(effective * pct / 100)` and `effective - 13000` | `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` sets `pct` above 0 and up to 100 |
+
+When auto-compaction is off, the warning level is `effective - 20000` and the compact level never applies.
+The blocked level is checked first, then compact, then warning (the program).
+Source: the program (`chunk-qd604jgh.js@1550773`).
 
 At the blocked level, Claude Code stops the turn with a "prompt is too long" error, unless it can recover by compacting.
 `CLAUDE_CODE_BLOCKING_LIMIT_OVERRIDE` (<Undocumented />) replaces the blocked level.
@@ -116,6 +120,32 @@ The second request adds a short note that says the reply must hold the summary i
 If the second reply has none either, the compaction fails with `no <summary> block in the second reply either` (`chunk-2ht8z368.js:108779`).
 A gate in the program decides whether the second ask runs, so "usually" is the right word (`chunk-2ht8z368.js:108784`).
 Source: the [Claude Code changelog](https://code.claude.com/docs/en/changelog) and the program.
+
+## Gates and Retries
+
+Source: the program (`chunk-qd604jgh.js@1556935` to `@2455980`). All rows are <Undocumented /> unless a note says otherwise.
+
+| Item | What it does |
+| --- | --- |
+| Skip checks | Auto-compaction does nothing when `DISABLE_COMPACT` is set, when `autoCompactEnabled` is `false`, or when the level is below `compact`. |
+| Failure breaker | After 3 failed auto-compactions in a row, the check returns without a new try. |
+| Rapid-refill breaker | A refill within 3 turns of the last compaction adds 1 to a counter. Any later refill resets it. At 3, auto-compaction stops with the `Autocompact is thrashing` error. |
+| Fixed prefix check | When the system prompt and tools alone are over the threshold, Claude Code logs `compaction cannot help` and goes on. |
+| Reactive route | A window that is not the model default, or an overflow in the auto mode classifier, routes the compaction through the reactive path, not the plain one. |
+| Precompute | `precomputeCompactionEnabled` (default `true`, needs auto-compact on) lets Claude Code write the summary ahead of time. The path also needs a server gate. It starts earlier than the compact threshold, at `effective - round(effective * fraction)` or the compact threshold, whichever is smaller. |
+| Cold compaction | `CLAUDE_CODE_COLD_COMPACT` makes auto-compaction send the full history in a plain request. It sets `stripNonEssential`, which turns off the request that shares the prompt cache prefix. |
+| Larger-model retry | A failed compaction can run once more on a model with a larger window. |
+| Prompt-too-long retry | When the compaction request itself is too long, Claude Code drops the oldest message groups and sends it again. `compactionApiAttemptsLeft` caps the API attempts. At 0 the retry stops. |
+| Second ask | A reply with no `<summary>` block gets one more request. |
+
+## Server-Side Clearing
+
+The API beta `context-management-2025-06-27` can clear old tool results.
+Claude Code sends the edit `clear_tool_uses_20250919` with a trigger on the count of tool uses, a number of recent tool uses to keep, and a minimum of input tokens to clear.
+The reply carries `applied_edits`. Claude Code adds up `cleared_input_tokens` of each such edit, and it never counts more than its own estimate.
+The count lowers the token total that the threshold check uses (it logs `serverCleared`).
+A cleared result shows the text `[Old tool result content cleared]` (the program).
+The summary prompt tells the model to report only that the output of such a call is not available.
 
 Auto compaction stops with an error when the context refills within 3 turns of the last compaction, 3 times in a row.
 The message starts `Autocompact is thrashing`.

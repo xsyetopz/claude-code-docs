@@ -62,7 +62,7 @@ Each line is a separate command. The text after the name is the argument.
 | `/diff` | <Documented /> | Shows uncommitted changes and per-turn diffs. | Panel. Off when a mod provides its own diff view. |
 | `/model` `<model> or [model]` | <Documented /> | Sets the model. | Panel and text form. See [Models](../../how-it-works/models.md). |
 | `/effort` `[levels] or <levels>` | <Documented /> | Sets the effort level. | Panel and text form. Since `2.1.304`, `/effort status` no longer shows a guessed level when `CLAUDE_CODE_EFFORT_LEVEL` is `auto` or `unset`. |
-| `/fast` `[on\|off]` | <Gated note="First-party provider, and env var CLAUDE_CODE_DISABLE_FAST_MODE not set." /> | Toggles fast mode. | Panel and text form. |
+| `/fast` `[on\|off]` | <Gated note="First-party provider, and env var CLAUDE_CODE_DISABLE_FAST_MODE not set." /> | Toggles fast mode. | Panel and text form. When you turn it on with `claude-opus-4-8` as the model, from the command or the picker, Claude Code shows "Opus 4.8 fast mode is deprecated and will be removed on Nov 30". The notice stops after that date. A server value can move the date. `2.1.314` has the same notice (the program, `chunk-sy129746.js`). |
 | `/advisor` `[model\|off]` | <Gated note="On when env CLAUDE_CODE_ENABLE_EXPERIMENTAL_ADVISOR_TOOL is set, otherwise server flag tengu_sage_compass2" /> <Experimental /> | Lets Claude consult a stronger model at key moments. | Panel and text form. See [`CLAUDE_CODE_ENABLE_EXPERIMENTAL_ADVISOR_TOOL`](../../configure/env-vars/models-and-effort.md). |
 
 ## Setup, Interface, and Config Commands

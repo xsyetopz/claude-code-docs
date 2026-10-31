@@ -22,8 +22,8 @@ Source: [Tools Reference](https://code.claude.com/docs/en/tools-reference), [Con
 | `SendMessage` | <Documented /> | Sends a message to a teammate, a named subagent, `main`, or a background agent. | `to` (string, required), `summary` (string, optional label), `message` (string, required). In a build with `notify_when_idle`, that boolean field asks for one idle notice. | Main session and subagents. | ✅ | ❌ | ✅ |
 | `ListAgents` | <Documented /> <Gated note="cross-session messaging must be on" /> | Lists agents that `SendMessage` can reach. | `channel` and `q` (strings, optional, "not available in this build"). Alias `ListPeers`. Not kept in background subagents. | Main session and foreground subagents. | ✅ | ✅ | ❌ |
 | `Skill` | <Documented /> | Runs a skill or slash command. | `skill` (string, required), `args` (string, optional). | Main session and subagents. Kept in background subagents. | ❌ | ❌ | ❌ |
-| `TodoWrite` | <Documented /> <Gated note="CLAUDE_CODE_ENABLE_TASKS=0 or a server flag" /> | Writes the session checklist (legacy). | `CLAUDE_CODE_ENABLE_TASKS=0` selects `TodoWrite` over the Task tools. | Main session and subagents. Kept in background subagents. | ❌ | ❌ | ✅ |
-| `TaskCreate` | <Documented /> <Gated note="default on models in the task tool list" /> | Creates a task. | `subject` (string, required), `description` (string, required), `activeForm` (string, optional), `metadata` (object, optional). | Main session. Teammates keep it. Other subagents do not. | ❌ | ❌ | ✅ |
+| `TodoWrite` | <Documented /> <Gated note="CLAUDE_CODE_ENABLE_TASKS=0, and a model test" /> | Writes the session checklist (legacy). | `CLAUDE_CODE_ENABLE_TASKS=0` selects `TodoWrite` over the Task tools. | Main session and subagents. Kept in background subagents. | ❌ | ❌ | ✅ |
+| `TaskCreate` | <Documented /> <Gated note="CLAUDE_CODE_ENABLE_TASKS is not 0, and a model test" /> | Creates a task. | `subject` (string, required), `description` (string, required), `activeForm` (string, optional), `metadata` (object, optional). | Main session. Teammates keep it. Other subagents do not. | ❌ | ❌ | ✅ |
 | `TaskGet` | <Documented /> <Gated note="hidden server-side flag" /> | Reads a task. | `taskId` (string, required). | Same as `TaskCreate`. | ✅ | ❌ | ✅ |
 | `TaskUpdate` | <Documented /> <Gated note="same gate as TaskCreate" /> | Updates or deletes a task. | `taskId` (required), `subject`, `description`, `activeForm`, `status` (a task status or `deleted`), `addBlocks`, `addBlockedBy` (string arrays), `owner`, `metadata` (a null value deletes a key). | Same as `TaskCreate`. | ❌ | ❌ | ✅ |
 | `TaskList` | <Documented /> <Gated note="hidden server-side flag" /> | Lists tasks. | No parameters. | Same as `TaskCreate`. | ✅ | ❌ | ✅ |
@@ -34,9 +34,9 @@ Source: [Tools Reference](https://code.claude.com/docs/en/tools-reference), [Con
 | `Workflow` | <Documented /> <Gated note="off with CLAUDE_CODE_DISABLE_WORKFLOWS=1" /> | Runs a JavaScript workflow that orchestrates subagents. | `script`, `name`, `scriptPath`, `args`, `resumeFromRunId`. `description` and `title` are ignored. Alias `RunWorkflow`. Removed from subagents. | Main session. | ❌ | ❌ | ❌ |
 | `EnterWorktree` | <Documented /> | Creates a git worktree and switches into it. | `name` (string, optional) or `path` (string, optional, an existing worktree). Not both. Not deferred when `CLAUDE_CODE_SESSION_KIND` is `bg`. Refused from a subagent with a cwd override. | Main session and subagents. Kept in background subagents. | ❌ | ❌ | ✅ |
 | `ExitWorktree` | <Documented /> | Leaves the worktree. | `action` (`keep` or `remove`, required), `discard_changes` (boolean, needed for `remove` when there are changes). Refused from a subagent with a cwd override. | Main session and subagents. Kept in background subagents. | ❌ | ❌ | ✅ |
-| `EnterPlanMode` | <Documented /> <Gated note="internal enable check" /> | Switches to plan mode. | No parameters. Gives a validation error from an agent. Removed from subagents. | Main session only. | ✅ | ❌ | ✅ |
-| `ExitPlanMode` | <Documented /> <Gated note="internal enable check" /> | Presents the plan and leaves plan mode. | `allowedPrompts` (deprecated, unused). A subagent keeps it only when its `permissionMode` is `plan`. | Main session. | ❌ | ❌ | ✅ |
-| `AskUserQuestion` | <Documented /> | Asks the user 1 to 4 multiple-choice questions. | Removed from every subagent. The answer to a question can set `annotations[question].unanswered` to `skipped`, `replied_in_chat`, or `dismissed`. The tool result echoes it. The model does not see it. Send it only to a session whose `init` line lists `ask_user_question_unanswered_v1`. See [Capabilities of the `init` Line](../../extend/headless/stream-json.md#capabilities-of-the-init-line). | Main session. | ✅ | ❌ | ❌ |
+| `EnterPlanMode` | <Documented /> <Gated note="non-interactive runs need a permission prompt tool" /> | Switches to plan mode. | No parameters. Gives a validation error from an agent. Removed from subagents. | Main session only. | ✅ | ❌ | ✅ |
+| `ExitPlanMode` | <Documented /> <Gated note="non-interactive runs need a permission prompt tool" /> | Presents the plan and leaves plan mode. | `allowedPrompts` (deprecated, unused). A subagent keeps it only when its `permissionMode` is `plan`. | Main session. | ❌ | ❌ | ✅ |
+| `AskUserQuestion` | <Documented /> <Gated note="non-interactive runs need a permission prompt tool" /> | Asks the user 1 to 4 multiple-choice questions. | Removed from every subagent. The answer to a question can set `annotations[question].unanswered` to `skipped`, `replied_in_chat`, or `dismissed`. The tool result echoes it. The model does not see it. Send it only to a session whose `init` line lists `ask_user_question_unanswered_v1`. See [Capabilities of the `init` Line](../../extend/headless/stream-json.md#capabilities-of-the-init-line). | Main session. | ✅ | ❌ | ❌ |
 | `ProposeGoal` | <Undocumented /> <Gated note="hidden server-side flag" /> | Proposes a goal condition for user approval. | `condition` (string, required), `ask_user` (boolean, default true). | Main session. | ✅ | ❌ | ✅ |
 | `ReportFindings` | <Documented /> | Reports code-review findings as a list. | `level` (`low`, `medium`, `high`, `xhigh`, `max`, optional), `findings` (array of at most 32, required). Used only when review instructions ask for it. | Main session. | ✅ | ✅ | ❌ |
 
@@ -70,6 +70,24 @@ Two result fields are new in `2.1.311`. Source: `AgentResult` and `SkillResult` 
 | `toolsUsedLine` | <Undocumented /> | `Skill`, the forked result | String | The line that the `tool_result` text opens with. It names the tools that the subagent called and that the requests of this conversation did not yet name. The program leaves the field out when there is no such tool (`chunk-sr9nzxgx.js:587`, `chunk-sr9nzxgx.js:1265`). |
 
 The program builds the list only while the server flag `tengu_silly_shore` is on (default on). When it is off, the list is empty (`chunk-35qty13k.js:101`, `chunk-2ht8z368.js:12649`).
+
+## Enable Tests
+
+Source: the program (`chunk-qd604jgh.js` and `chunk-8z3t1tjj.js` of `2.1.316`). Each tool object has an `isEnabled` function. Claude Code leaves the tool out of the request when it answers no.
+
+| Tools | Test | Result |
+| --- | --- | --- |
+| `ExitPlanMode`, `AskUserQuestion` | One shared test. The run is not interactive and channels are allowed. | Off |
+| | The run is not interactive and no permission prompt tool is named (the name is empty or `none`). | Off |
+| | Anything else. An interactive session is always on. | On |
+| `EnterPlanMode` | It calls the `ExitPlanMode` test. | Same as `ExitPlanMode` |
+| `TodoWrite` | `CLAUDE_CODE_ENABLE_TASKS` is `false`, and the model test below passes. | On |
+| `TaskCreate`, `TaskGet`, `TaskUpdate`, `TaskList` | `CLAUDE_CODE_ENABLE_TASKS` is not `false`, and the model test below passes. | On |
+
+- A non-interactive run is `claude -p` or an SDK run. So a plain `claude -p` run has none of the three tools. Adding `--permission-prompt-tool <name>` turns them on, unless channels are allowed.
+- The model test passes when any of these holds: a launch test passes (one is a host option that opts in to the todo tools); the main-loop model is not known yet; the model name holds `application-inference-profile`; the model is one of `claude-3-opus`, `claude-3-sonnet`, `claude-3-haiku`, `claude-3-5-sonnet`, `claude-3-5-haiku`, `claude-3-7-sonnet`, `claude-opus-4-0`, `claude-opus-4-1`, `claude-opus-4-5`, `claude-opus-4-6`, `claude-opus-4-7`, `claude-sonnet-4-0`, `claude-sonnet-4-5`, `claude-sonnet-4-6`, or `claude-haiku-4-5`; or `CLAUDE_CODE_ENABLE_TODO_TOOLS` is `true`.
+- The probe `print.request.baseline-a` on `2.1.316` (Opus 5.5, `-p`) sends 12 tools. None of `TodoWrite`, `TaskCreate`, `AskUserQuestion`, or `EnterPlanMode` is among them. `Glob` and `Grep` are not among them either, because `Bash` is.
+- `CLAUDE_CODE_ENABLE_TASKS=0` switches the Task tools off and `TodoWrite` on. Any other value does the reverse. The two families never run together.
 
 ## Example
 

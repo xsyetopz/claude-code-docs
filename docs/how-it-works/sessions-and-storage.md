@@ -48,6 +48,7 @@ Source: [Manage Sessions](https://code.claude.com/docs/en/sessions).
 
 A resumed session restores the history, the model, the agent, the permission mode, an active goal, and scheduled tasks.
 It does not restore the values of `--mcp-config`, `--settings`, `--plugin-dir`, `--fallback-model`, or `--add-dir`. Pass them again.
+After a compaction, a resume does not load the lines before the last `compact_boundary` line, unless that line lists kept messages in `preservedSegment` or `preservedMessages`. Then the loader also loads those messages. A missing kept message makes the load abort. See [Compaction Rows](../reference/transcript-format.md#compaction-rows).
 If you resume one session in two terminals, the messages mix in one transcript.
 
 ## Where Files Live

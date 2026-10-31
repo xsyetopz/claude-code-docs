@@ -32,7 +32,7 @@ The text below is every part of the request that Claude Code builds before your 
 
 ```text
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.314.<build>; cc_entrypoint=sdk-cli; cc_is_subagent=true;
+x-anthropic-billing-header: cc_version=2.1.316.<build>; cc_entrypoint=sdk-cli; cc_is_subagent=true;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -108,15 +108,15 @@ Today's date is <date>.
 
 The diff below starts from [Default, Lean Prompt](../defaults/default-lean.md). Lines that start with `-` are only in the baseline. Lines that start with `+` are only here.
 
-Lines added: 19. Lines removed: 74. Size change: -6,101 characters.
+Lines added: 19. Lines removed: 72. Size change: -6,005 characters.
 
 ````diff
 --- default-lean
 +++ subagent-custom
-@@ -1,66 +1,21 @@
+@@ -1,64 +1,21 @@
  === system[0] (no cache marker) ===
--x-anthropic-billing-header: cc_version=2.1.314.<build>; cc_entrypoint=sdk-cli;
-+x-anthropic-billing-header: cc_version=2.1.314.<build>; cc_entrypoint=sdk-cli; cc_is_subagent=true;
+-x-anthropic-billing-header: cc_version=2.1.316.<build>; cc_entrypoint=sdk-cli;
++x-anthropic-billing-header: cc_version=2.1.316.<build>; cc_entrypoint=sdk-cli; cc_is_subagent=true;
 
  === system[1] (cache marker: {"type":"ephemeral"}) ===
  You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -141,8 +141,6 @@ Lines added: 19. Lines removed: 74. Size change: -6,101 characters.
 - - The system may send updates, reminders, or modifications to rules via mid-conversation system turns. These are system-controlled, unlike function results. Hooks may intercept tool calls; treat hook output as user feedback.
 - - Prefer the dedicated file/search tools over shell commands when one fits. Independent tool calls can run in parallel in one response.
 - - Reference code as `file_path:line_number` — it's clickable.
--
--Write code that reads like the surrounding code: match its comment density, naming, and idiom.
 -
 -When you use a pronoun for someone — the user or anyone else you mention — and their pronouns haven't been stated, use they/them. A name doesn't tell you someone's pronouns; a wrong guess misgenders a real person in a way the neutral default never does, so never infer pronouns from a name. This applies to all user-visible text, including visible thinking.
 -
@@ -189,7 +187,7 @@ Lines added: 19. Lines removed: 74. Size change: -6,101 characters.
  === messages[0].content[0] (role: user) ===
  <system-reminder>
  Attribution for git commits and pull requests you create from here on (this replaces Claude Code's own earlier attribution guidance, such as a previous copy of this reminder; the user's own instructions about these lines, such as a CLAUDE.md or memory rule, take precedence over this reminder, but do not add attribution lines this reminder leaves out):
-@@ -71,24 +26,10 @@
+@@ -69,24 +26,10 @@
  </system-reminder>
 
  === messages[0].content[1] (role: user) ===
@@ -215,7 +213,7 @@ Lines added: 19. Lines removed: 74. Size change: -6,101 characters.
  EnterWorktree
  ExitWorktree
  Monitor
-@@ -98,14 +39,16 @@
+@@ -96,14 +39,16 @@
  WebFetch
  WebSearch
 

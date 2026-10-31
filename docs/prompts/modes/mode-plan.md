@@ -12,12 +12,12 @@ Starts in `plan` permission mode. Run `claude --permission-mode plan`.
 | --- | --- |
 | `system[0]` | 78 |
 | `system[1]` | 62 |
-| `system[2]` | 5,766 |
+| `system[2]` | 5,670 |
 | `messages[0].content[0]` | 592 |
 | `messages[0].content[1]` | 16 |
 | `messages[1].content[0]` | 13,884 |
-| System blocks only | 5,906 |
-| Everything shown here | 20,688 |
+| System blocks only | 5,810 |
+| Everything shown here | 20,592 |
 | Tools sent | 12 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -33,7 +33,7 @@ The text below is every part of the request that Claude Code builds before your 
 
 ````text
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.314.<build>; cc_entrypoint=sdk-cli;
+x-anthropic-billing-header: cc_version=2.1.316.<build>; cc_entrypoint=sdk-cli;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -50,8 +50,6 @@ IMPORTANT: Assist with authorized security testing, defensive security, CTF chal
  - The system may send updates, reminders, or modifications to rules via mid-conversation system turns. These are system-controlled, unlike function results. Hooks may intercept tool calls; treat hook output as user feedback.
  - Prefer the dedicated file/search tools over shell commands when one fits. Independent tool calls can run in parallel in one response.
  - Reference code as `file_path:line_number` — it's clickable.
-
-Write code that reads like the surrounding code: match its comment density, naming, and idiom.
 
 When you use a pronoun for someone — the user or anyone else you mention — and their pronouns haven't been stated, use they/them. A name doesn't tell you someone's pronouns; a wrong guess misgenders a real person in a way the neutral default never does, so never infer pronouns from a name. This applies to all user-visible text, including visible thinking.
 
@@ -229,7 +227,7 @@ Lines added: 58. Lines removed: 0. Size change: +4,879 characters.
 ```diff
 --- default-lean
 +++ mode-plan
-@@ -125,4 +125,62 @@
+@@ -123,4 +123,62 @@
  - init: Initialize a new CLAUDE.md file with codebase documentation
  - security-review: Complete a security review of the pending changes on the current branch
 

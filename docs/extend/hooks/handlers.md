@@ -73,7 +73,7 @@ Source: a probe of the program (see [Probes](../../reference/probes.md)).
 | --- | --- | --- | --- |
 | `command` | <Documented /> | The command string, or the program to run when you set `args`. | Shell form uses `sh -c`, Git Bash, or PowerShell. |
 | `args` | <Documented /> | An argument list for exec form. | No shell runs. Claude Code replaces placeholders in `command` and in each element. |
-| `shell` | <Documented /> | `bash` or `powershell`. | Claude Code ignores it when you set `args`. |
+| `shell` | <Documented /> | `bash` or `powershell`. | Claude Code ignores it when you set `args`. With `powershell`, Claude Code adds `; if (-not $?) { if ($LASTEXITCODE -eq 2) { exit 2 } }` after the command, so exit code 2 blocks. It does not add it for `PermissionRequest`. It also does not add it when the command starts with `using`, `param(`, a `[type]` cast or attribute, or a named block, and also has a `begin`, `process`, `end`, `clean`, or `dynamicparam` block. Before `2.1.316`, any of those starts was enough to leave it out, so exit code 2 did not block (the program, `chunk-qd604jgh.js`). |
 | `async` | <Documented /> | Runs in the background. | Claude Code does not enforce `timeout`. The hook cannot block. Output arrives on the next turn. |
 | `asyncRewake` | <Documented /> | A background run that wakes the model on exit 2. | `stderr` (or `stdout` if `stderr` is empty) becomes a system reminder. `timeout` still applies. Implies `async`. |
 | `onFailure` | <Documented /> | `continue` or `block`. | Needs 2.1.295. See [Configuration](configuration.md#failure-handling). Also works on `http`. |
@@ -112,6 +112,16 @@ On observer events, it does not wait.
 | `ok` (model reply) | <Documented /> | `true` allows. `false` blocks. | The effect of `false` per event is in the Response schema section of the Hooks Reference. |
 | `reason` (model reply) | <Documented /> | Why the model blocked. | Required when `ok` is `false`. |
 | `impossible` (model reply) | <Documented /> | The condition can never be met. | On `Stop` and `SubagentStop` the turn ends. Agents ignore it. `prompt` only. |
+
+## Prompt Hooks on `Stop` and `SubagentStop`
+
+On `Stop` and `SubagentStop`, the program wraps the `prompt` as a stopping condition that the model judges on transcript evidence only (the program, `chunk-qd604jgh.js`).
+The model must answer with a JSON object. `ok` and `reason` are required, and `impossible` is optional.
+On a repeat block, the feedback to Claude holds the hook prompt in square brackets, then the `reason`.
+Claude Code cuts the bracketed prompt to 500 characters on a repeat.
+
+The turn ends after a number of consecutive blocks. The default is 8. `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP` sets it, and a value of 0 or less removes the cap. The program prints a warning when the cap ends the turn (the program, `chunk-n6xbt9zz.js`).
+We did not trace what a hook error or an invalid reply does, so this page makes no claim about it.
 
 ## Prompt and Agent Concurrency
 

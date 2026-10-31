@@ -32,7 +32,7 @@ Official pages: [Mods Reference](https://code.claude.com/docs/en/plugins/mods/re
 | Manifest key `types` | <Documented /> | Path to the type contract of the plugin. It starts with `./`. | A self-contained `.d.ts` with no import, export-from, require, or reference. It declares the noun in `declare module 'claude-code' { interface EngineInterface { ... } }` and the `PluginState` values. `claude plugin validate` checks it. | `plugin.json` |
 | Manifest key `dependencies` | <Documented /> | Plugins that must be enabled. | A mod that lists a plugin here gets its contract at `.claude-plugin/types/<plugin>/index.d.ts` when the engine loads the mod from a folder the person owns. | `plugin.json` |
 | Manifest key `userConfig` | <Documented /> | Fields whose values reach `register` as `options`. | The engine fills in defaults. Values are in `pluginConfigs` of settings. A required field with no value fails the load. `PluginOptions` is a read-only record of string, number, boolean, or string list. | `plugin.json` |
-| `.claude-plugin/types/` | <Documented /> | The engine writes `claude-code/index.d.ts`, `claude-code-tools/`, `claude-code-mcp/`, and one folder for each dependency here. | The engine writes them again after an update. A mod that has no tsconfig gets one that extends `.claude-plugin/types/tsconfig.json`. | A mod loaded from a folder the person owns. |
+| `.claude-plugin/types/` | <Documented /> | The engine writes `claude-code/index.d.ts`, `claude-code-tools/`, `claude-code-mcp/`, and one folder for each dependency here. | The engine writes them again after an update. The engine skips a file whose text already matches, and replaces a folder that stands where a file belongs. A mod that has no tsconfig gets one that extends `.claude-plugin/types/tsconfig.json`. A mod that has a `jsconfig.json` gets no new `tsconfig.json`, and an existing `tsconfig.json` stays as it is (the program, `chunk-qd604jgh.js@4156331`). | A mod loaded from a folder the person owns. |
 | Tests `*.test.ts`, `*.test.tsx` | <Documented /> | `claude plugin test [dir]` runs them. | See [Testing](calls/testing.md). | Plugin folder. |
 
 ## The Dollar Object
@@ -115,17 +115,41 @@ Claude Code skips a hook that is too slow.
 
 ## Built-in Mods
 
-Six built-in plugins ship in the program.
+Claude Code 2.1.316 registers up to 13 built-in plugins at start (the program).
+Each id is `cc-plugin-<name>@builtin`.
 The settings and flags that stop installed mods do not stop them.
 
-| Name in `/plugin` | What it does |
-| --- | --- |
-| `cc-plugin-agents-md` | Loads `AGENTS.md` as project instructions. |
-| `cc-plugin-diff` | Takes over `/diff` and draws its pane. |
-| `cc-plugin-plugin-authoring` | Gives Claude the `plugin-authoring` skill for writing mods. It holds no mod code. |
-| `cc-plugin-sec-default` | Guards what your organization manages from the mods a user installs. You cannot turn it off. |
-| `cc-plugin-telemetry` | Sends the analytics records that Claude Code and its built-in mods log. |
-| `cc-plugin-you-should-know` | Displays a note above the prompt when a side agent finds something you might have missed. Off until you turn it on. |
+| Name in `/plugin` | What it does | Registered when |
+| --- | --- | --- |
+| `cc-plugin-sec-default` | Guards what your organization manages from the mods a user installs. You cannot turn it off. | Always |
+| `cc-plugin-agents-md` | Loads `AGENTS.md` as project instructions. | Always |
+| `cc-plugin-telemetry` | Sends the analytics records that Claude Code and its built-in mods log. | Always |
+| `cc-plugin-plugin-authoring` | Gives Claude the `plugin-authoring` skill for writing mods. It holds no mod code. | `CLAUDE_CODE_ENTRYPOINT` is not `local-agent` |
+| `cc-plugin-mods-guide` | Shows a small panel over the question card when Claude explains how mods work, until you answer the card. | `CLAUDE_CODE_ENTRYPOINT` is not `local-agent` |
+| `cc-plugin-tips` | Shows tips (the program names it `cc-plugin-tips`; this page did not read its text). | Not `local-agent`, and the entry point does not start with `remote` |
+| `cc-plugin-mermaid` | Draws Mermaid diagrams (the program names it `cc-plugin-mermaid`; this page did not read its text). | Not `local-agent`, and the entry point does not start with `remote` |
+| `cc-plugin-responsive-mode` | Claude replies in one sentence before it thinks or uses tools, on every prompt. | Normal run, or the `remote` entry point |
+| `cc-plugin-diff` | Takes over `/diff` and draws its pane. | Not `local-agent`, and the entry point does not start with `remote` |
+| `cc-plugin-you-should-know` | Displays a note above the prompt when a side agent finds something you might have missed. Off until you turn it on. | `CLAUDE_CODE_ENTRYPOINT` is not `local-agent` |
+| `cc-plugin-easel` | Draws charts in the transcript. | Normal run, or the `remote_cowork` entry point |
+| `cc-plugin-claude-platform` | A built-in plugin of the same registry. | Normal run |
+| `cc-plugin-claude-test` | A built-in plugin of the same registry. | Normal run |
+
+Source: the program, `chunk-bxdwwc5h.js@0`, the start function that calls the registry one plugin at a time. "Normal run" means the entry point is not `local-agent` and does not start with `remote`.
+A plugin can also hide itself with its own `isAvailable` test.
+For example, `cc-plugin-easel` needs Linux or macOS and no `hipaa` or `zdr` data policy (the program).
+
+### Enable Test
+
+The program decides each built-in plugin in this order (`chunk-c27zh2rw.js@76952`).
+
+1. A plugin that fails `isAvailable`, or that failed to load, is not listed.
+2. With `enabledFromPolicyOnly`, only the policy settings value of `cc-plugin-<name>@builtin` counts.
+3. With `enabledFromTrustedSettingsOnly`, only the trusted settings value counts. `cc-plugin-sec-default` sets both.
+4. Otherwise the `enabledPlugins` key of your settings counts. A plugin that a directory you added with `--add-dir` also lists is read by the loader for that case.
+5. A value that is set decides: only `true` turns the plugin on. With no value, the plugin uses its `defaultEnabled`, and that is `true` when the plugin sets none.
+
+`cc-plugin-responsive-mode` sets `defaultEnabled: false`. It is also available only outside the Teams surface, and only while a server gate that you cannot set is on (the program, `chunk-mdwf4s3v.js@627`). So turn it on with `enabledPlugins` and expect it to be missing when the gate is off.
 
 ## Related Pages
 

@@ -113,6 +113,7 @@ Notes:
 - The catalog keeps a rank for each model for the advisor tool (`--advisor`). The ranks run from `1` for `claude-haiku-4-5` to `9` for `claude-fable-5-1` and `claude-mythos-5-1`.
 - A model can name a model to use instead on a third-party provider. For example, `claude-opus-5-5` falls back to `claude-opus-5`, and `claude-fable-5-1` falls back to `claude-fable-5`.
 - The Mythos models have a name on the Anthropic API only, and none on the cloud providers.
+- For an ID that is not in the catalog, Claude Code assumes a 200K window. Since `2.1.316`, `/model <id>` says so: a probe ran `/model claude-zeta-9` with `-p`. The program replied "Set model to `claude-zeta-9` for this session only", then "Claude Code doesn't recognize the model "claude-zeta-9", so it assumes a context window of 200k tokens", with a link to [Model Configuration: Correct the Window for a Gateway or Custom Model ID](https://code.claude.com/docs/en/model-config#correct-the-window-for-a-gateway-or-custom-model-id). `2.1.314` gave the first line only. A known ID, such as `claude-opus-5-5`, gives no warning. At startup, a status notice says the same thing ("Model "…" isn't recognized").
 
 ## Other Model IDs in the Program
 

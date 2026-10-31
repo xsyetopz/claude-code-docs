@@ -31,7 +31,7 @@ The text below is every part of the request that Claude Code builds before your 
 
 ```text
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.314.<build>; cc_entrypoint=sdk-cli;
+x-anthropic-billing-header: cc_version=2.1.316.<build>; cc_entrypoint=sdk-cli;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -55,12 +55,12 @@ PROBE-HOOK-PROMPT: check this call. {"session_id":"<uuid-1>","transcript_path":"
 
 The diff below starts from [Default, Lean Prompt](../defaults/default-lean.md). Lines that start with `-` are only in the baseline. Lines that start with `+` are only here.
 
-Lines added: 7. Lines removed: 114. Size change: -14,331 characters.
+Lines added: 7. Lines removed: 112. Size change: -14,235 characters.
 
 ````diff
 --- default-lean
 +++ hook-prompt
-@@ -5,124 +5,15 @@
+@@ -5,122 +5,15 @@
  You are a Claude agent, built on Anthropic's Claude Agent SDK.
 
  === system[2] (cache marker: {"type":"ephemeral"}) ===
@@ -82,8 +82,6 @@ Lines added: 7. Lines removed: 114. Size change: -14,331 characters.
 - - Reference code as `file_path:line_number` — it's clickable.
 +Always include a "reason" field.
 
--Write code that reads like the surrounding code: match its comment density, naming, and idiom.
--
 -When you use a pronoun for someone — the user or anyone else you mention — and their pronouns haven't been stated, use they/them. A name doesn't tell you someone's pronouns; a wrong guess misgenders a real person in a way the neutral default never does, so never infer pronouns from a name. This applies to all user-visible text, including visible thinking.
 -
 -For actions that are hard to reverse or outward-facing, confirm first unless durably authorized or explicitly told to proceed without asking; approval in one context doesn't extend to the next. Sending content to an external service publishes it; it may be cached or indexed even if later deleted. Before deleting or overwriting, look at the target. Report outcomes faithfully: if tests fail, say so with the output; if a step was skipped, say that; when something is done and verified, state it plainly without hedging.

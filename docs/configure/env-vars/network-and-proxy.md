@@ -8,7 +8,7 @@ These variables control how Claude Code reaches the network.
 They set the API base URL, proxies, custom certificates, timeouts, and retry counts.
 Use them behind a company proxy or when you route traffic through a gateway.
 
-This page lists 70 variables. `HTTPS_PROXY`, `NO_PROXY`, and `ANTHROPIC_BASE_URL` are the usual ones. Project settings cannot set some endpoint variables before you trust the folder.
+This page lists 73 variables. `HTTPS_PROXY`, `NO_PROXY`, and `ANTHROPIC_BASE_URL` are the usual ones. Project settings cannot set some endpoint variables before you trust the folder.
 
 ## Example
 
@@ -27,6 +27,9 @@ The table is sorted by name. See [Environment Variables](index.md#how-to-read-th
 
 | Variable | Status | What it does | Values and default | Notes |
 | --- | --- | --- | --- | --- |
+| `CLAUDE_CODE_DISABLE_HTTPS_AGENT_KEEPING` | <Undocumented /> | Stops Claude Code from tying the HTTPS agent to the TLS switches. Normally it builds a signature of `NODE_TLS_REJECT_UNAUTHORIZED` and `BUN_TLS_REFUSE_DISTRUSTED_KEYS` (`length:value` for each). It builds a new agent and drops pooled sockets when the signature changes. Set, there is no signature, so a change of those two variables in a session keeps the agent and its sockets. The agent uses keep-alive with no socket limit (the program). | On or off. Off by default | All sessions |
+| `CLAUDE_CODE_DISABLE_LOOPED_CROSS_CERT_DROP` | <Undocumented /> | Keeps the cross-certificates that Claude Code would drop from the system store. A certificate is dropped when it is a single, unexpired entry whose issuer links lead back to itself, and the store holds a valid self-signed root with the same subject, key, and subject key identifier that does not expire sooner. A certificate that `NODE_EXTRA_CA_CERTS` also lists stays. If a store entry does not parse, nothing is dropped. The log says `CA certs: Dropped N cross-certificate(s) ...` (the program). | On or off. Off by default. A client certificate (`CLAUDE_CODE_CLIENT_CERT`) also skips the drop | All sessions |
+| `CLAUDE_CODE_DISABLE_SELF_NAMED_CERT_DROP` | <Undocumented /> | Keeps every certificate in the `NODE_EXTRA_CA_CERTS` file whose subject and issuer match, whoever signed it. Normally Claude Code drops such a certificate when its own key did not sign it, or it cannot check that, unless a kept certificate issued it or it is in the built-in root list. If all or none would be dropped, the list stays whole. The log says `CA certs: Dropped the certificate with SHA-256 fingerprint ...` at error level (the program). | On or off. Off by default. A client certificate also skips the drop | All sessions |
 | `all_proxy` | <Undocumented /> | Lower case proxy variable. It is the last fallback after `HTTPS_PROXY` and `ALL_PROXY` for git proxy settings. | Text. Non-empty string. Also listed with proxy names | All sessions |
 | `ANTHROPIC_BASE_URL` | <Documented /> | Overrides the API endpoint. A non-first-party host changes first-party checks, such as Remote Control. Since 2.1.304 tool search stays on behind a custom URL, and a 400 or 422 from the gateway is retried without it. | Text. An unset value or an Anthropic host counts as first party | All sessions. Not set from project `env` before trust |
 | `ANTHROPIC_CUSTOM_HEADERS` | <Documented /> | Adds custom request headers. | Text. Split on new lines, each `Name: Value` at the first colon. Claude Code drops bad header names or values with a warning | All sessions. Not set from project `env` before trust |

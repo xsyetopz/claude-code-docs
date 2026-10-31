@@ -6,7 +6,7 @@ sidebar_position: 1
 
 An environment variable is a named setting that a program reads when it starts.
 Claude Code `2.1.314` reads well over a thousand of them.
-This section lists 1465 variables that you can use. It splits them into groups, so you can find them.
+This section lists 1480 variables that you can use. It splits them into groups, so you can find them.
 The [official docs](https://code.claude.com/docs/en/env-vars) list a few of them. Only the program shows most of them.
 
 Set a variable in your shell, or under the `env` key of `~/.claude/settings.json`, `.claude/settings.json`, `.claude/settings.local.json`, or managed settings.

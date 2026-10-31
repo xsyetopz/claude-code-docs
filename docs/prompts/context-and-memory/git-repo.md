@@ -12,13 +12,13 @@ What changes when the project is a git repository. Start Claude Code in a folder
 | --- | --- |
 | `system[0]` | 78 |
 | `system[1]` | 62 |
-| `system[2]` | 5,766 |
+| `system[2]` | 5,670 |
 | `messages[0].content[0]` | 571 |
 | `messages[0].content[1]` | 592 |
 | `messages[0].content[2]` | 16 |
 | `messages[1].content[0]` | 9,004 |
-| System blocks only | 5,906 |
-| Everything shown here | 16,425 |
+| System blocks only | 5,810 |
+| Everything shown here | 16,329 |
 | Tools sent | 12 |
 
 Sizes count the text after the placeholders are in place. Each placeholder counts at its own length.
@@ -34,7 +34,7 @@ The text below is every part of the request that Claude Code builds before your 
 
 ````text
 === system[0] (no cache marker) ===
-x-anthropic-billing-header: cc_version=2.1.314.<build>; cc_entrypoint=sdk-cli;
+x-anthropic-billing-header: cc_version=2.1.316.<build>; cc_entrypoint=sdk-cli;
 
 === system[1] (cache marker: {"type":"ephemeral"}) ===
 You are a Claude agent, built on Anthropic's Claude Agent SDK.
@@ -51,8 +51,6 @@ IMPORTANT: Assist with authorized security testing, defensive security, CTF chal
  - The system may send updates, reminders, or modifications to rules via mid-conversation system turns. These are system-controlled, unlike function results. Hooks may intercept tool calls; treat hook output as user feedback.
  - Prefer the dedicated file/search tools over shell commands when one fits. Independent tool calls can run in parallel in one response.
  - Reference code as `file_path:line_number` — it's clickable.
-
-Write code that reads like the surrounding code: match its comment density, naming, and idiom.
 
 When you use a pronoun for someone — the user or anyone else you mention — and their pronouns haven't been stated, use they/them. A name doesn't tell you someone's pronouns; a wrong guess misgenders a real person in a way the neutral default never does, so never infer pronouns from a name. This applies to all user-visible text, including visible thinking.
 
@@ -191,7 +189,7 @@ Lines added: 21. Lines removed: 2. Size change: +616 characters.
 ```diff
 --- default-lean
 +++ git-repo
-@@ -63,6 +63,25 @@
+@@ -61,6 +61,25 @@
 
  === messages[0].content[0] (role: user) ===
  <system-reminder>
@@ -217,7 +215,7 @@ Lines added: 21. Lines removed: 2. Size change: +616 characters.
  Attribution for git commits and pull requests you create from here on (this replaces Claude Code's own earlier attribution guidance, such as a previous copy of this reminder; the user's own instructions about these lines, such as a CLAUDE.md or memory rule, take precedence over this reminder, but do not add attribution lines this reminder leaves out):
  - End git commit messages with:
  Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
-@@ -70,14 +89,14 @@
+@@ -68,14 +87,14 @@
  <robot-emoji> Generated with [Claude Code](https://claude.com/claude-code)
  </system-reminder>
 

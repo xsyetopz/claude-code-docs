@@ -87,6 +87,7 @@ Block reads of secret files and all edits to lock files.
 - `machine` is an extra optional field that Claude Code adds to a tool schema when an attached-machines feature is on.
 - File tools check permissions with the rule syntax in [Permission Rules](../../configure/permissions/rules.md).
 - `Read`, `Glob`, `Grep`, `Write`, and `Edit` carry `remoteExecution` metadata in the program. It marks them as runnable on a remote host.
+- In a `--restricted` session, a file outside the working directories is refused for a file reference or an upload, even when a `Read` allow rule covers it. Before 2.1.316 such a rule could open the file for an upload (the program, and the 2.1.316 release notes).
 - `Read` has no result size cap. So use `offset` and `limit` for large files.
 
 ## Write and Edit Limits
@@ -116,7 +117,8 @@ Each row is a family of messages. The backticked text is the start that every me
 | Start of Message | Status | What It Means | Cases |
 | --- | --- | --- | --- |
 | Various | <Undocumented /> | **File tools.** `Read`, `Edit`, `Write`, or `NotebookEdit` refused a call. | A Read deny rule covers the file. Claude has not read it yet. It changed since Claude last read it. It is too large. It is a pipe or device. It is a symbolic link. It is not a valid image, PDF page, or notebook. The edit does not match (string not found, no change). A write failed after the file was truncated. |
-| `read not allowed under permissions.blockReadsOutsideWorkingDirectories:` | <Undocumented /> | **File references.** The program refused to read a file that a file reference or a Chrome file upload named. The text ends with the path. | The setting `permissions.blockReadsOutsideWorkingDirectories` blocks that path, or the real path behind it. |
+| `read not allowed under` | <Undocumented /> | **File references and uploads.** The program refused to read a file that a file reference, a Chrome file upload, or the upload screen named. The text ends with the path. | `read not allowed under --restricted: ${path}` means a `--restricted` session found the file outside the working directories and no working-directory rule covers it. A Read allow rule does not open it in this mode (the program, 2.1.316). `read not allowed under permissions.blockReadsOutsideWorkingDirectories: ${path}` means that setting blocks the path, or the real path behind it. |
+| `Refusing to read` | <Undocumented /> | **File import.** The gated `/import` command, which imports config from another AI coding agent ([Slash Commands](../../extend/skills-and-commands/slash-commands.md)), opened a file for a project-scope import and the opened handle is not a regular file. The text is `Refusing to read ${path}: it is not a regular file.` | The reader opens the path without following links. A file over `10485760` bytes (`IMPORT_MAX_FILE_BYTES`) fails with `file exceeds IMPORT_MAX_FILE_BYTES; refusing to load`. Source: the program (`chunk-t1y1g3sw.js`). |
 
 ## Related Pages
 

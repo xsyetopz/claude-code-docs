@@ -21,7 +21,9 @@ claude -p "/debug the login test fails on CI"
 ## Controls
 
 - The setting `disableBundledSkills` and the env var `CLAUDE_CODE_DISABLE_BUNDLED_SKILLS` remove them.
-  `/doctor` stays available.
+  The switch is on when the env var is set or the setting is exactly `true` (the program).
+  It also removes the bundled workflow skills. Built-in commands that can be typed, such as `/doctor`, stay available to you.
+  The model gets a refusal that names the setting and the env var. Skills from plugins, `.claude/skills`, and `.claude/commands` are not affected.
 - When the policy `allow_bundled_skills` is not granted, only names in a fixed list stay.
   The list in the program is: `artifact-diagramming`, `batch`, `claude-code-docs`, `code-review`, `commit`, `dataviz`, `debug`, `explain-usage`, `fewer-permission-prompts`, `keybindings-help`, `loop`, `memory-types`, `plugin-authoring`, `pr`, `simplify`, `update-config`, `verify`, `workflow-authoring`.
 

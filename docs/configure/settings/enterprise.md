@@ -26,6 +26,31 @@ Where to Set It tells you which files may set the key. See [Settings Files and S
 | `requiredMinimumVersion` | <Documented /> <ManagedOnly /> | string | - | Refuse to start on a version older than your organization requires. Claude Code exits at startup with update steps. This key works in managed settings only. | Managed settings only |
 | `wslInheritsWindowsSettings` | <Documented /> | boolean | - | Have WSL read managed settings from the Windows policy chain. Set it in an admin-only Windows source. It has no effect on native Windows. | Managed settings only |
 
+## Approval of Server-Managed Settings
+
+Claude Code fetches server-managed settings from Anthropic's API. It compares them with the copy you approved before. For changed settings, it either applies them without a prompt or shows an approval dialog.
+
+Claude Code applies them without a prompt only when all of these are true:
+
+1. You log in with a claude.ai account (OAuth).
+2. Claude Code fetched the settings for the organization of the account that is logged in now, and that account is still logged in when Claude Code decides.
+3. The login does not come from a profile store.
+4. No other approval review is open.
+5. If an admin-owned settings file sets `forceLoginOrgUUID`, the list holds that organization, and the signature of the settings names it.
+
+Claude Code shows the dialog when Claude Code cannot read the `forceLoginOrgUUID` pin. This occurs if an admin-owned settings file has a read error, or if the managed-settings path is overridden.
+
+When Claude Code cannot show the dialog, it keeps the copy you approved before.
+In a run that cannot ask, it prints "Your organization's managed settings need your approval, which couldn't be asked for here."
+In a non-interactive run, the new settings can apply for that run only, and Claude Code does not save them as approved.
+If you reject the settings in a terminal, Claude Code prints "Managed settings were not approved; exiting without applying them." and exits with code 1.
+
+Claude Code checks the stored copy on disk before it uses it. If the copy does not verify, Claude Code treats it as absent.
+In `2.1.316`, Claude Code also refuses to write over a stored copy that is not a regular file, with the error "the stored copy is not a regular file".
+The prompt-free path and the stored-copy check are also in `2.1.314`.
+
+Source: the program (`chunk-tjhecrh9.js`, `chunk-2rszbz49.js`, `chunk-3yzzzbh2.js`, `chunk-j4564a1j.js`).
+
 ## Example
 
 ### Require a Version Range

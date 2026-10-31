@@ -72,7 +72,7 @@ Each row is a family of messages. The backticked text is the start that every me
 
 | Start of Message | Status | What It Means | Cases |
 | --- | --- | --- | --- |
-| Various | <Undocumented /> | **Agent SDK.** The Agent SDK or the control protocol refused an option or a request. | A skill name is not valid. The caller used `sessionStore` with an option that it cannot work with. The caller did not provide a callback such as `canUseTool` or `getOAuthToken`. A control request subtype is not supported. A value has the wrong type. Claude Code did not find the native CLI binary. |
+| Various | <Undocumented /> | **Agent SDK.** The Agent SDK or the control protocol refused an option or a request. | A skill name is not valid. The caller used `sessionStore` with an option that it cannot work with. With `persistSession: false` the error says that the storage adapter needs local writes to mirror from. It tells you to pass `env: { ...process.env, CLAUDE_CONFIG_DIR: dir }`, where `dir` is a new private directory such as one from `fs.mkdtempSync(path.join(os.tmpdir(), 'claude-'))`, and to delete `dir` when the query ends. Version 2.1.314 told you to use `CLAUDE_CONFIG_DIR=/tmp` instead. The caller did not provide a callback such as `canUseTool` or `getOAuthToken`. A control request subtype is not supported. A value has the wrong type. Claude Code did not find the native CLI binary. |
 | Various | <Undocumented /> | **Exporter variables.** An OpenTelemetry exporter setting is not known. | The protocol or exporter type set in an `OTEL_*` variable is not known, or the Cloud gateway session that named the collector ended. |
 
 ## Related Pages

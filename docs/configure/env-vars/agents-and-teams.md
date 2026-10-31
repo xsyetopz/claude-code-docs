@@ -8,7 +8,7 @@ These variables control subagents, agent teams, background tasks, and workflows.
 They set limits, switch features on, and change how child agents behave.
 Several are experimental and may change without notice.
 
-This page lists 80 variables. Switch rows take `1` or `0`.
+This page lists 82 variables. Switch rows take `1` or `0`.
 
 ## Example
 
@@ -34,6 +34,8 @@ The table is sorted by name. See [Environment Variables](index.md#how-to-read-th
 | `CLAUDE_BG_ISOLATION` | <Undocumented /> | Sets worktree isolation for a background session. | Text. Otherwise the job or the `worktree.bgIsolation` setting decides. It changes the prompt text | Background sessions. Not set from project `env` before trust |
 | `CLAUDE_BG_POST_CLEAR_RESPAWN` | <Undocumented /> | Marks a respawn after a clear. The session then skips the `--agent` not-found check and the agent prompt step. | On or off. Claude Code sets `1` on respawn attempts after the first when the session id changed | Background sessions. Not set from project `env` before trust |
 | `CLAUDE_BG_RENDEZVOUS_SOCK` | <Undocumented /> | Gives the path of the rendezvous socket for a background session. The session starts a server on it. | Text. Claude Code reads it once, deletes it, and removes the socket file | Background sessions. Not set from project `env` before trust |
+| `CLAUDE_BG_SILENT_PEER_TIMEOUT_MS` | <Undocumented /> | Sets how long the rendezvous server of a background session waits for the first line from a new connection. A connection that wrote nothing in that time is closed, and the log says `[bg-rv] closed a connection that wrote nothing in ${ms}ms`. A peer is admitted when it writes its first line (the program). | A number of milliseconds, `5000` by default. A value of `0` or text that is not a number gives `5000` | Background sessions |
+| `CLAUDE_BG_SOCK_ADMIT_SILENT_PEERS` | <Undocumented /> | Admits every connection to the rendezvous socket at once, with no wait for a first line. Without it, a connection is admitted at once only when the session has no pty auth and no tokens file. The pty host reads the variable and then removes it. The supervisor sets it to `1` for a respawn, unless the `bot_protected_tengu_merry_bear` gate is on, and then it removes it (the program). | Only the value `1` turns it on | Background sessions |
 | `CLAUDE_BG_SOURCE` | <Undocumented /> | Tells how a background session started. The value `spare` marks a pre-started spare. A telemetry event also records it. | Text. The code reports free text as `other` | Background sessions. Not set from project `env` before trust |
 | `CLAUDE_BG_STARTUP_WEDGE_MS` | <Undocumented /> | Sets the time before the startup wedge watchdog fires for a background session. | A number of milliseconds, `45000` by default. Whole number, default `45000` when unset or `0` | Background sessions. Not set from project `env` before trust |
 | `CLAUDE_CODE_AGENT` | <Undocumented /> | Holds the agent name of the main thread. Claude Code records it in the session registry file. | Text. Claude Code sets it from the `--agent` flag | All sessions. Not set from project `env` before trust |

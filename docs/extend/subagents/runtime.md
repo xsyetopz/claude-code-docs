@@ -51,15 +51,18 @@ See [Probes](../../reference/probes.md#subagents-and-hooks).
 | First filter | <Documented /> | Removes tools from every subagent. | Removed: `Agent` at the depth limit (not for a fork), `AskUserQuestion`, `EndConversation`, `EnterPlanMode`, `ExitPlanMode` (kept in `plan` mode), `ScheduleWakeup`, `WaitForMcpServers`, `Workflow`. Forks skip both filters. |
 | Second filter | <Documented /> | The built-in tools that a background subagent keeps. | File and search tools, shell tools, web tools, `TodoWrite`, `Skill`, `ToolSearch`, the worktree tools, `Monitor`, `TaskStop`, `SendMessage`, `Artifact`, `SubagentHandback`, and every MCP tool. |
 | Foreground or background | <Documented /> | How Claude Code places a start. | A teammate start and `CLAUDE_CODE_DISABLE_BACKGROUND_TASKS=1` run in the foreground. Fork mode and `background: true` run in the background. Otherwise the default is background, and `Ctrl+B` backgrounds a running task. |
-| Resume | <Documented /> | Continues a finished subagent. | Use `SendMessage` with the name or agent ID. A per-call `model` also applies on resume (2.1.211). |
+| Resume | <Documented /> | Continues a finished subagent. | Use `SendMessage` with the name or agent ID. A per-call `model` also applies on resume (2.1.211). Claude Code saves a `model` in the agent metadata when a subagent that another subagent started took that parent's model, and it reads the saved value on resume. So the subagent keeps its model when woken, not the main model (the program, 2.1.316). |
 | Initial context | <Documented /> | What a non-fork subagent loads. | The agent prompt, the task message, `CLAUDE.md` files (unless `omitClaudeMd`), git status (not for `Explore` and `Plan`), preloaded skills, and a roster of siblings with `SendMessage`. No output style and no auto memory. |
 
 ## Limits and Switches
 
 | Item | Status | What it does | Notes |
 | --- | --- | --- | --- |
-| `CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH` | <Documented /> | Layers of nesting below the main session. | Default 3. At the limit `Agent` is withheld, except from a fork. `1` turns nesting off. Earlier defaults: 5 (2.1.172), 1 (2.1.217). |
+| `CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH` | <Documented /> | Layers of nesting below the main session. | Default 3. At the limit `Agent` is withheld, except from a fork. `1` turns nesting off. Earlier defaults: 5 (2.1.172), 1 (2.1.217). The program reads the depth from this variable, then from a server experiment value, then uses 3. |
+| Order of `Agent` refusals | <Undocumented /> | The checks that run before a subagent starts. | In order: spawn depth, a stop pending on the spawner, an unknown agent type, the concurrency limit, then the budget. The first check that fails gives the error (the program). |
 | `CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS` | <Documented /> | The most subagents running at once. | Default 20. The error is `Concurrent subagent limit reached`. Ultracode sessions are exempt. Resumes and `/subtask` forks take a slot but are not blocked. |
+| Hook agent turn cap | <Undocumented /> | Stops an agent hook that runs too long. | At turn 50 the hook agent aborts and logs `Hooks: Agent turn N hit max turns, aborting`. The hook outcome is `cancelled` (the program). See [Hook Handlers](../hooks/handlers.md). |
+| Subagent `maxTurns` | <Documented /> | Stops a subagent at its turn limit. | The loop adds a `max_turns_reached` attachment, and the debug log says `Reached max turns limit`. A `-p` run that reaches its own `--max-turns` ends with the result subtype `error_max_turns` and the error `Reached maximum number of turns (N)` (the program). |
 | `CLAUDE_CODE_FORK_SUBAGENT` | <Documented /> | Fork mode. | On in interactive sessions (since 2.1.232), off in `-p` and the SDK. `1` forces on, `0` forces off. In fork mode every subagent runs in the background, and `Agent` has no `run_in_background`. |
 | `CLAUDE_CODE_DISABLE_BACKGROUND_TASKS` | <Documented /> | Runs all subagents in the foreground. | Set `1`. Also removes `run_in_background`. |
 | `CLAUDE_ASYNC_AGENT_STALL_TIMEOUT_MS` | <Documented /> | The stall timeout. | Default 600000. |

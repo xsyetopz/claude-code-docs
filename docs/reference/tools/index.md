@@ -41,6 +41,7 @@ Source: the program (the tool definitions).
 | `backgrounding` | `never`, `self`, `detach` | `self` means the tool backgrounds itself (`Bash`, `PowerShell`, `Agent`). `detach` applies to `WebFetch` and `WebSearch`. |
 | `maxResultSizeChars` | 100000 for most tools, 20000 for `Grep`, unbounded for `Read` | The largest result the tool sends back. |
 | `strict` | true for `Write`, `Edit`, `Read`, `Grep`, `Bash`, `PowerShell`, `TodoWrite`, `ReportFindings` | The tool schema is strict. |
+| `isEnabled` | A function that answers yes or no each time Claude Code builds the tool list | A tool that answers no is not sent. Examples: [the plan mode and task tests](agents-and-tasks.md#enable-tests) and [the plugin and skill gate](gated-and-other.md#shared-enable-gate). |
 | MCP tool name | `mcp__<server>__<tool>` | How a tool from an MCP server is named. See [MCP](../../extend/mcp/index.md). |
 
 ## `ToolSearch`

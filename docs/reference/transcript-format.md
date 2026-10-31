@@ -24,7 +24,7 @@ Source: [Explore the .claude Directory: Application Data](https://code.claude.co
       - `<session>.orphaned-<time>-<id>.jsonl` set aside, not in the picker
       - `<session>.jsonl.superseded-<time>` set aside, not in the picker
       - `<session>/`
-        - `subagents/` one transcript per subagent
+        - `subagents/` one transcript per subagent, `agent-<agentId>.jsonl`, with a `agent-<agentId>.meta.json` beside it (nested paths allowed, up to six levels)
         - `tool-results/` large tool outputs and MCP images
 
 </FileTree>
@@ -191,7 +191,33 @@ Content block types seen: `text`, `thinking`, `tool_use` (in `assistant` lines),
 | `turn_duration` | `durationMs`, `messageCount`, `pendingBackgroundAgentCount` | How long a turn took. |
 | `local_command` | `content`, `level`, `commandRun` | The output of a local slash command. |
 | `informational` | `content`, `level` | A notice for the user. |
-| `compact_boundary` | (see [Context and Compaction](../how-it-works/context-and-compaction.md)) | Marks where a compaction replaced the history. |
+| `compact_boundary` | `compactMetadata`, `logicalParentUuid` | Marks where a compaction replaced the history. See [Compaction Rows](#compaction-rows). |
+
+## Compaction Rows
+
+Source: the program (`chunk-qd604jgh.js@5027313` and `@2423336`).
+
+A compaction writes a `system` line with `subtype: compact_boundary` and the content `Conversation compacted`. Its `compactMetadata` object holds these keys.
+
+| Key | When set | Meaning |
+| --- | --- | --- |
+| `trigger` | At creation | `auto` or `manual`. |
+| `preTokens` | At creation | The token count before the compaction. |
+| `userContext` | At creation | The focus text that you gave `/compact`. |
+| `messagesSummarized` | At creation | How many messages the summary covers. |
+| `postTokens` | After the summary exists | The token count of the new context. |
+| `durationMs` | After the summary exists | The time the compaction took. |
+| `preservedSegment` | Partial compaction | The `headUuid` and `tailUuid` of the kept messages. |
+| `preservedMessages` | Hook-built compaction | The `uuids` of the kept messages. |
+
+The summary is a `user` line with `isCompactSummary: true` and `isVisibleInTranscriptOnly: true`.
+On `--resume`, the loader finds the last boundary line. A boundary with neither `preservedSegment` nor `preservedMessages` cuts the chain: lines before it are not loaded.
+With `preservedMessages`, the loader keeps each listed `uuid`. With `preservedSegment`, it walks `parentUuid` from `tailUuid` back to `headUuid`.
+If a listed `uuid` is missing, or the walk does not reach `headUuid`, the load aborts with `preserved_uuid_missing` or `preserved_walk_broken`.
+
+## Subagent Lines
+
+A line in `<session>/subagents/agent-<agentId>.jsonl` can carry `attributionAgent`. It holds the agent name, for the sources `agent:builtin:<name>` and `agent:custom:<name>`. Lines caused by a skill carry `attributionSkill`, and `attributionPlugin` when the skill belongs to a plugin (the program, `chunk-a8r9352h.js@823642`).
 
 ## `attachment` Types
 
