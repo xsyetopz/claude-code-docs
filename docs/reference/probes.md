@@ -118,6 +118,15 @@ There were five requests of each stage, because the stub's `OK` reply makes the 
 The debug log says `server_no_result` and falls back to billed local classifier requests.
 `CLAUDE_CODE_TWO_STAGE_CLASSIFIER=1` and `CLAUDE_CODE_AUTO_MODE_SERVER=1` changed nothing. `CLAUDE_CODE_AUTO_MODE_SERVER=0` removed the `server_no_result` line from the debug log, and the stub still got the same ten requests.
 These four runs gave the same results on `2.1.306`, `2.1.307`, `2.1.308`, and `2.1.309`.
+The `2.1.316` capture also had five stage 1 requests with `max_tokens` 64 and five stage 2 requests with `max_tokens` 8192, all on `claude-sonnet-5`, with no `temperature` field.
+
+The cc-inspect `code` action `cli` ran `claude auto-mode` subcommands with a fake key and a temp home, config folder, and project:
+
+| Run | Status | Result |
+| --- | --- | --- |
+| `claude --settings s.json auto-mode config`, with `autoMode.allow` in `s.json` | <Documented /> | Exit 0. The output holds the rule. Same on `2.1.314` and `2.1.316` |
+| `claude auto-mode config --settings s.json` | <Documented /> | Exit 1, `error: unknown option '--settings'`. Same on `2.1.314` and `2.1.316` |
+| `claude auto-mode defaults` and `claude auto-mode config`, with no settings | <Documented /> | Exit 0, the same output, on `2.1.316` |
 
 ### `autoMode.classifyAllShell`
 

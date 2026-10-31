@@ -18,10 +18,10 @@ server (`inspect/mcp/dist/server.js`) from a stdio client, with `CC_INSPECT_CACH
 
 Source: `captures/2.1.316/diff/report.md`.
 
-- [ ] 2.1 A row or an exclusion for each of the 14 new environment variables.
-- [ ] 2.2 A row for `--session-began-as-copy` and `auth login --gateway-json`, or an exclusion.
-- [ ] 2.3 `bashEditDiffEnabled`: the new default (off, except in auto mode).
-- [ ] 2.4 `BASH_ENV`: the changed detail.
+- [x] 2.1 A row or an exclusion for each of the 14 new environment variables.
+- [x] 2.2 A row for `--session-began-as-copy` and `auth login --gateway-json`, or an exclusion.
+- [x] 2.3 `bashEditDiffEnabled`: the new default (off, except in auto mode).
+- [x] 2.4 `BASH_ENV`: the changed detail.
 - [ ] 2.5 The 18 new error texts on the page the diff names, and the 2 removed texts off the pages.
 - [ ] 2.6 The 2 removed gates, `tengu_bubbly_canyon` and `tengu_enchanted_nest`, off the pages.
 
@@ -30,15 +30,15 @@ Source: `captures/2.1.316/diff/report.md`.
 Source: `captures/2.1.316/notes.md` and the `release` action `notes` (28 matched, 4 gated, 23 unmatched).
 Leave out VS Code, Cloud sessions, Claude Tag, Code Review, the self-hosted runner, and the Claude apps gateway.
 
-- [ ] 3.1 `CLAUDE_CODE_DISABLE_ULTRATHINK` (proposed).
+- [x] 3.1 `CLAUDE_CODE_DISABLE_ULTRATHINK`: row in `models-and-effort.md`.
 - [ ] 3.2 `CLAUDE_CODE_SUBAGENT_EFFORT` and its place in the effort order (proposed).
-- [ ] 3.3 `CLAUDE_CODE_DISABLE_LOOPED_CROSS_CERT_DROP` and `CLAUDE_CODE_DISABLE_SELF_NAMED_CERT_DROP` (proposed).
+- [x] 3.3 `CLAUDE_CODE_DISABLE_LOOPED_CROSS_CERT_DROP` and `CLAUDE_CODE_DISABLE_SELF_NAMED_CERT_DROP`: rows in `network-and-proxy.md`.
 - [x] 3.4 Opus 4.8 fast mode deprecation. Not new: the notice (`tengu_sunset_penguin_opus48`, default `2026-11-30`) is in both versions (`chunk-wysb6q7k.js@3625`, `chunk-sy129746.js@3625`). `slash-commands.md` no longer says "since 2.1.316".
-- [ ] 3.5 Managed `autoMode.allow` without `"$defaults"` and the scheduled-task rule (proposed).
+- [x] 3.5 Managed `autoMode.allow` without `"$defaults"` and the scheduled-task rule: `auto-mode.md`, "Which Sources Count" (`chunk-k83gbg21.js`, `chunk-n6xbt9zz.js`).
 - [x] 3.6 Server-managed settings. The prompt-free path (`first_party_silent`, predicate in `chunk-tjhecrh9.js@3050`) and the stored-copy refusal are in both versions. New in 2.1.316: "the stored copy is not a regular file" (`chunk-j4564a1j.js@175120`), `refusedCopyHelperTier`. Algorithm written in `docs/configure/settings/enterprise.md`.
-- [ ] 3.7 `--restricted` and Read allow rules outside the working directories (proposed).
+- [x] 3.7 `--restricted` and Read allow rules outside the working directories: `reference/tools/files.md`.
 - [x] 3.8 `/model <id>` warns about an unknown model and the 200K window (proposed).
-- [ ] 3.9 Bash tool shell: aliases with line breaks, dash-named functions, exported `SHELLOPTS` (proposed).
+- [x] 3.9 Bash tool shell: aliases with line breaks, dash-named functions, exported `SHELLOPTS`: `shell-and-web.md`.
 - [x] 3.10 PowerShell hooks and exit code 2. Confirmed: 2.1.314 `pWe` (`chunk-sq7yspzm.js@863369`) against 2.1.316 `CHt` (`chunk-qd604jgh.js@863809`). `handlers.md:76` holds.
 - [ ] 3.11 Sub-agent model inheritance after a wake-up (proposed).
 
