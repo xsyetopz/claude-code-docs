@@ -71,10 +71,10 @@ Official pages: [Configure the Sandboxed Bash Tool](https://code.claude.com/docs
 
 | Key | Status | What it does | How it works | Scope |
 | --- | --- | --- | --- | --- |
-| `sandbox.filesystem.allowWrite` | <Documented /> | Extra writable paths | The program limits repo-committed entries to trusted tiers | Merged |
-| `sandbox.filesystem.denyWrite` | <Documented /> | Paths denied for writes | - | Merged |
-| `sandbox.filesystem.denyRead` | <Documented /> | Paths denied for reads | - | Merged |
-| `sandbox.filesystem.allowRead` | <Documented /> | Re-allows reads inside `denyRead` | Wins over `denyRead` | Merged |
+| `sandbox.filesystem.allowWrite` | <Documented /> | Extra writable paths | Claude Code merges them with the paths of `Edit(...)` allow rules. The program limits repo-committed entries to trusted tiers | Merged |
+| `sandbox.filesystem.denyWrite` | <Documented /> | Paths denied for writes | Claude Code merges them with the paths of `Edit(...)` deny rules | Merged |
+| `sandbox.filesystem.denyRead` | <Documented /> | Paths denied for reads | Claude Code merges them with the paths of `Read(...)` deny rules. `allowRead` can re-open a part of a denied region | Merged |
+| `sandbox.filesystem.allowRead` | <Documented /> | Re-allows reads inside `denyRead` | Wins over `denyRead` for the paths that match. Deny a broad region, then allow back the subfolders you need | Merged |
 | `sandbox.filesystem.allowManagedReadPathsOnly` | <Documented /> | Only managed `allowRead` paths | Boolean | Managed |
 | `sandbox.filesystem.disabled` | <Documented /> | Skip filesystem isolation | It works on macOS, Linux, and WSL only. Network and seccomp stay. Native Windows ignores it. Claude Code pins it to managed when managed sets filesystem rules | User, managed, `--settings` |
 
@@ -130,6 +130,23 @@ flowchart TD
 
 With `sandbox.autoAllowBashIfSandboxed` on, a sandboxed command skips the prompt.
 See [Permission Flow](../../how-it-works/permission-flow.md).
+
+## Sandbox Section in the `Bash` Prompt
+
+Source: the program (`chunk-qd604jgh.js`, settings schema in `chunk-j4564a1j.js`, `2.1.316`).
+
+When the sandbox is on, the `Bash` tool prompt carries a sandbox section. The model reads the limits there. The section lists these paths and hosts:
+
+| Part | List |
+| --- | --- |
+| `Filesystem` read | Paths denied for reads, and paths allowed back inside a denied region |
+| `Filesystem` write | Paths allowed for writes, and paths denied inside an allowed region |
+| `Network` | Denied hosts and allowed Unix sockets |
+| `Ignored violations` | The `sandbox.ignoreViolations` map |
+
+- The program cuts each path or host list after 50 entries. It ends the list with `... and N more (truncated for prompt size)`. The model then does not see the entries past 50.
+- The cut affects only the prompt text. The sandbox still enforces the whole list.
+- When `sandbox.allowUnsandboxedCommands` is `true`, the prompt tells the model to retry a command with `dangerouslyDisableSandbox: true` after a failure that the sandbox caused. When it is `false`, the prompt says the parameter is disabled. The model is told to report the restriction that it hit.
 
 ## Errors
 
