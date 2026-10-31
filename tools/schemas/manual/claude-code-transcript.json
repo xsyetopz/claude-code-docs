@@ -2883,7 +2883,7 @@
       },
       "anchors": [
         "diagnostics:null,id:«»(),container:null,model:«»,role:\"assistant\",stop_details:null,stop_reason:\"stop_sequence\",stop_sequence:\"\",type:\"message\",usage:«»,content:«»,context_management:null",
-        "message:{...«»,content:«»,usage:«»(«»,«».usage)}"
+        "message:{...«»,content:«»,usage:«»(«»,«».usage),"
       ],
       "note": "The line carries the Anthropic API message as returned by the API (the program spreads the streamed message, {...Gr, content, usage:cve(ym, Gr.usage)}) or the synthetic message built by the message factory in the same module. Types follow BetaMessage in @anthropic-ai/sdk (the program bundles 0.128.0; read in 0.129.0, resources/beta/messages/messages.d.ts). Array<BetaContentBlock>: text, thinking, redacted_thinking, tool_use, server_tool_use, mcp_tool_use, the *_tool_result blocks and others; each block is an object, not typed per block here."
     },

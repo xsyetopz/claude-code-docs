@@ -2475,6 +2475,10 @@
     "route": "/configure/settings/auth",
     "anchor": "errors"
   },
+  "error:Login interrupted.": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
   "error:Logout failed: ${…}": {
     "route": "/configure/settings/auth",
     "anchor": "errors"
@@ -3271,6 +3275,10 @@
     "route": "/reference/tools/shell-and-web",
     "anchor": "errors"
   },
+  "error:This command is run by the VS Code extension, not by hand. To sign in from a terminal, run /login in Claude Code.": {
+    "route": "/configure/settings/auth",
+    "anchor": "errors"
+  },
   "error:This eval run stubs artifact publishing locally*": {
     "route": "/reference/tools/gated-and-other",
     "anchor": "errors"
@@ -3849,6 +3857,10 @@
   },
   "error:a turn is in flight; the conversation compacts between turns": {
     "route": "/how-it-works/context-and-compaction",
+    "anchor": "errors"
+  },
+  "error:a write made no progress; copy stopped": {
+    "route": "/extend/plugins/marketplace",
     "anchor": "errors"
   },
   "error:action \"*": {
@@ -5579,6 +5591,10 @@
     "route": "/configure/cli/subcommands",
     "anchor": "errors"
   },
+  "error:the stored copy is not a regular file": {
+    "route": "/configure/settings/enterprise",
+    "anchor": "approval-of-server-managed-settings"
+  },
   "error:the stub publish directory is not a real directory": {
     "route": "/extend/plugins/cli",
     "anchor": "errors"
@@ -6040,6 +6056,10 @@
     "anchor": "commands"
   },
   "flag:auth login --email": {
+    "route": "/configure/cli/subcommands",
+    "anchor": "commands"
+  },
+  "flag:auth login --gateway-json": {
     "route": "/configure/cli/subcommands",
     "anchor": "commands"
   },

@@ -1,4 +1,4 @@
-// The Claude Code 2.1.314 Mod API type file, as the program embeds it.
+// The Claude Code 2.1.316 Mod API type file, as the program embeds it.
 // Extracted by tools/schemas/types.ts. Do not edit: run "bun run schemas".
 // biome-ignore-all format: verbatim from the program
 // biome-ignore-all lint: verbatim from the program

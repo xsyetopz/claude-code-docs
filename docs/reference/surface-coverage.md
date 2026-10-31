@@ -1,10 +1,10 @@
 ---
 title: Surface Coverage
-description: Every item that the Claude Code 2.1.314 program holds, by kind, with the page that covers it.
+description: Every item that the Claude Code 2.1.316 program holds, by kind, with the page that covers it.
 sidebar_position: 11
 ---
 
-The program of Claude Code `2.1.314` holds 9128 items in 17 kinds.
+The program of Claude Code `2.1.316` holds 9194 items in 17 kinds.
 Each row below names the page that covers an item, or the reason the item is left out.
 `bun run surface` makes this page from `schemas/surface.json`, so do not edit it by hand.
 
@@ -13,12 +13,12 @@ Each row below names the page that covers an item, or the reason the item is lef
 | Kind | Items | In a Docs Table | In the Map | Excluded | Not on a Page Yet |
 | --- | --- | --- | --- | --- | --- |
 | [Betas](#betas) | 50 | 50 | 0 | 0 | 0 |
-| [API Endpoints](#api-endpoints) | 444 | 117 | 10 | 317 | 0 |
-| [Environment Variables](#environment-variables) | 1895 | 1390 | 20 | 485 | 0 |
-| [Error Texts](#error-texts) | 4076 | 30 | 2203 | 1843 | 0 |
+| [API Endpoints](#api-endpoints) | 445 | 117 | 10 | 318 | 0 |
+| [Environment Variables](#environment-variables) | 1909 | 1404 | 20 | 485 | 0 |
+| [Error Texts](#error-texts) | 4093 | 30 | 2213 | 1850 | 0 |
 | [Files](#files) | 78 | 49 | 0 | 29 | 0 |
-| [CLI Flags](#cli-flags) | 304 | 118 | 184 | 2 | 0 |
-| [Gates](#gates) | 1205 | 0 | 0 | 1205 | 0 |
+| [CLI Flags](#cli-flags) | 306 | 119 | 185 | 2 | 0 |
+| [Gates](#gates) | 1237 | 0 | 0 | 1237 | 0 |
 | [Hook Events](#hook-events) | 33 | 33 | 0 | 0 | 0 |
 | [Keybindings](#keybindings) | 205 | 66 | 139 | 0 | 0 |
 | [Mod API](#mod-api) | 233 | 233 | 0 | 0 | 0 |
@@ -29,7 +29,7 @@ Each row below names the page that covers an item, or the reason the item is lef
 | [Slash Commands](#slash-commands) | 140 | 102 | 31 | 7 | 0 |
 | [Subcommands](#subcommands) | 71 | 7 | 64 | 0 | 0 |
 | [Tools](#tools) | 91 | 85 | 0 | 6 | 0 |
-| Total | 9128 | 2552 | 2671 | 3905 | 0 |
+| Total | 9194 | 2567 | 2682 | 3945 | 0 |
 
 ## Betas
 
@@ -90,7 +90,7 @@ Items: 50.
 
 ## API Endpoints
 
-Items: 444.
+Items: 445.
 
 | Item | Where |
 | --- | --- |
@@ -480,6 +480,7 @@ Items: 444.
 | `https://claude.com/docs/claude-tag/overview.md` | [Endpoints and Headers](api/endpoints.md) |
 | `https://claude.com/docs/llms.txt` | [Endpoints and Headers](api/endpoints.md) |
 | `https://claude.com/docs/third-party/claude-desktop` | Excluded: A link that the program prints or opens in a browser; Claude Code does not call it. |
+| `https://claude.com/docs/third-party/claude-desktop/gateway#auto-mode-checks` | Excluded: A link that the program prints or opens in a browser; Claude Code does not call it. |
 | `https://claude.com/download#mobile` | Excluded: A link that the program prints or opens in a browser; Claude Code does not call it. |
 | `https://claude.com/enterprise` | Excluded: A link that the program prints or opens in a browser; Claude Code does not call it. |
 | `https://claude.com/form/cyber-block-false-positive-report-cvp-rejection-appeal` | Excluded: A link that the program prints or opens in a browser; Claude Code does not call it. |
@@ -541,7 +542,7 @@ Items: 444.
 
 ## Environment Variables
 
-Items: 1895.
+Items: 1909.
 
 | Item | Where |
 | --- | --- |
@@ -807,7 +808,9 @@ Items: 1895.
 | `CLAUDE_BG_RENDEZVOUS_SOCK` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_BG_RV_AUTH` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `CLAUDE_BG_SESSION_PERMISSION_RULES` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
+| `CLAUDE_BG_SILENT_PEER_TIMEOUT_MS` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_BG_SOCKET_TOKENS_PATH` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
+| `CLAUDE_BG_SOCK_ADMIT_SILENT_PEERS` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_BG_SOURCE` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_BG_STARTUP_WEDGE_MS` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_BG_TCC_DISCLAIMED` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
@@ -921,6 +924,7 @@ Items: 1895.
 | `CLAUDE_CODE_AUTO_MODE_EMAIL_SENDER_REPLY_TURN` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_AUTO_MODE_EMAIL_SENDER_TURN` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_AUTO_MODE_EXTERNAL_PERMISSIONS` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.314. It has no known effect. |
+| `CLAUDE_CODE_AUTO_MODE_FULL_CONTEXT` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_AUTO_MODE_GIT_STATUS` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_AUTO_MODE_GIT_STATUS_LIMIT` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_AUTO_MODE_GIT_STATUS_UPLOADS` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
@@ -973,6 +977,7 @@ Items: 1895.
 | `CLAUDE_CODE_CCR_EVENT_FLUSH_POLICY` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_CCR_FOLD_FIRST_TURN_RESCAN` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_CCR_LONG_POLL` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
+| `CLAUDE_CODE_CCR_ONE_PLUGIN_LOAD_PER_RELOAD` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_CCR_OWN_CONNECTION_POOL` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_CCR_SKIP_FRESH_MIGRATIONS` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `CLAUDE_CODE_CCR_SURFACE` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
@@ -1055,12 +1060,15 @@ Items: 1895.
 | `CLAUDE_CODE_DISABLE_FILE_CHECKPOINTING` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `CLAUDE_CODE_DISABLE_FILE_MENTIONS` | [Context and Compaction](../configure/env-vars/context-and-compaction.md) |
 | `CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS` | [Context and Compaction](../configure/env-vars/context-and-compaction.md) |
+| `CLAUDE_CODE_DISABLE_HELD_MESSAGE_RECOGNITION` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_DISABLE_HOOK_FORWARDING` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
+| `CLAUDE_CODE_DISABLE_HTTPS_AGENT_KEEPING` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
 | `CLAUDE_CODE_DISABLE_INLINE_SHELL_RM_PROMPT` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_DISABLE_LAUNCHER_SIGN_IN` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `CLAUDE_CODE_DISABLE_LAUNCH_COMPOSER` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.314. It has no known effect. |
 | `CLAUDE_CODE_DISABLE_LEGACY_MODEL_REMAP` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
 | `CLAUDE_CODE_DISABLE_LONE_SEC_DEFAULT_SHORTCUT` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
+| `CLAUDE_CODE_DISABLE_LOOPED_CROSS_CERT_DROP` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
 | `CLAUDE_CODE_DISABLE_MCP_TASK_BACKGROUND` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_DISABLE_MEMORY_BULK_INFLATE` | [Context and Compaction](../configure/env-vars/context-and-compaction.md) |
 | `CLAUDE_CODE_DISABLE_MEMORY_MASS_DELETE_HOLD` | [Context and Compaction](../configure/env-vars/context-and-compaction.md) |
@@ -1091,6 +1099,7 @@ Items: 1895.
 | `CLAUDE_CODE_DISABLE_REFUSAL_FALLBACK` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
 | `CLAUDE_CODE_DISABLE_REFUSAL_RETRY` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
 | `CLAUDE_CODE_DISABLE_RESPONSE_COMPARISON` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The program names it only in two lists of environment names, and no code reads it, so it is left out. |
+| `CLAUDE_CODE_DISABLE_SELF_NAMED_CERT_DROP` | [Network and Proxy](../configure/env-vars/network-and-proxy.md) |
 | `CLAUDE_CODE_DISABLE_STARTUP_WORK_GATE` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `CLAUDE_CODE_DISABLE_STRUCTURED_OUTPUTS` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
 | `CLAUDE_CODE_DISABLE_SUBSTITUTION_RM_PROMPT` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
@@ -1098,6 +1107,7 @@ Items: 1895.
 | `CLAUDE_CODE_DISABLE_THINKING` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
 | `CLAUDE_CODE_DISABLE_TURN_HANDOFF` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
 | `CLAUDE_CODE_DISABLE_ULTRAREVIEW_TRUST_CHECK` | [Remote and Cloud Sessions](../configure/env-vars/remote-and-cloud-sessions.md) |
+| `CLAUDE_CODE_DISABLE_ULTRATHINK` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
 | `CLAUDE_CODE_DISABLE_UNKNOWN_MODEL_WINDOW_ENFORCEMENT` | [Context and Compaction](../configure/env-vars/context-and-compaction.md) |
 | `CLAUDE_CODE_DISABLE_VIRTUAL_SCROLL` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
 | `CLAUDE_CODE_DISABLE_VITALS_EMITTER` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
@@ -1284,6 +1294,7 @@ Items: 1895.
 | `CLAUDE_CODE_MCP_AUTO_BACKGROUND_MS` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_MCP_CONNECTOR_PREWAIT_MS` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_MCP_MEMORY_CGROUP` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
+| `CLAUDE_CODE_MCP_NO_REDIAL_AFTER_POLICY_REFUSAL` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_MCP_PREWAIT_SERVERS` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_MCP_PREWAIT_SERVERS_MS` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_MCP_REGISTRY_FETCH_AT_STARTUP` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
@@ -1295,6 +1306,7 @@ Items: 1895.
 | `CLAUDE_CODE_MCP_SERVE_SETTINGS` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_MCP_SERVE_TOOL_OUTPUT` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_MCP_SERVE_WORKSPACE_ROOT` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
+| `CLAUDE_CODE_MCP_SKIP_UNCHANGED_RELIST` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_MCP_STARTUP_WAIT_MS` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_MCP_TOOL_IDLE_TIMEOUT` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_MEMORY_API_BASE_URL` | Excluded: Named in the program's table or lists of environment names, but no code that reads it was found in 2.1.314. It has no known effect. |
@@ -1467,6 +1479,7 @@ Items: 1895.
 | `CLAUDE_CODE_SESSIONS_OAUTH_TOKEN` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `CLAUDE_CODE_SESSION_ACCESS_TOKEN` | [Auth and Accounts](../configure/env-vars/auth-and-accounts.md) |
 | `CLAUDE_CODE_SESSION_ATTENDED` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
+| `CLAUDE_CODE_SESSION_BEGAN_AS_COPY` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `CLAUDE_CODE_SESSION_ID` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `CLAUDE_CODE_SESSION_KIND` | [Sessions and Storage](../configure/env-vars/sessions-and-storage.md) |
 | `CLAUDE_CODE_SESSION_LOG` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
@@ -1510,6 +1523,7 @@ Items: 1895.
 | `CLAUDE_CODE_SLEEP_COMPACT_AFTER_MS` | [Context and Compaction](../configure/env-vars/context-and-compaction.md) |
 | `CLAUDE_CODE_SLOW_OPERATION_THRESHOLD_MS` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
 | `CLAUDE_CODE_SNAPPY_PELICAN` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
+| `CLAUDE_CODE_SORTED_OTTER` | [Plugins and MCP](../configure/env-vars/plugins-and-mcp.md) |
 | `CLAUDE_CODE_SPAWNED_BY_SERVER` | Excluded: Switch or override for a feature flag, experiment, or host-to-process state. The code reads it but does not show what it changes for a user, so it is left out. |
 | `CLAUDE_CODE_SPAWN_TIMESTAMP_MS` | [Telemetry and Debug](../configure/env-vars/telemetry-and-debug.md) |
 | `CLAUDE_CODE_SSE_PORT` | [UI and Terminal](../configure/env-vars/ui-and-terminal.md) |
@@ -1524,6 +1538,7 @@ Items: 1895.
 | `CLAUDE_CODE_STRICT_INLINE_SHELL_RM_PROMPT` | [Tools and Bash](../configure/env-vars/tools-and-bash.md) |
 | `CLAUDE_CODE_SUBAGENT_CACHE_EVICT` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_CODE_SUBAGENT_CONFIG_WARNING` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
+| `CLAUDE_CODE_SUBAGENT_EFFORT` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
 | `CLAUDE_CODE_SUBAGENT_HISTORY` | [Agents and Teams](../configure/env-vars/agents-and-teams.md) |
 | `CLAUDE_CODE_SUBAGENT_MODEL` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
 | `CLAUDE_CODE_SUBAGENT_MODEL_FORCE` | [Models and Effort](../configure/env-vars/models-and-effort.md) |
@@ -2443,7 +2458,7 @@ Items: 1895.
 
 ## Error Texts
 
-Items: 4076.
+Items: 4093.
 
 | Item | Where |
 | --- | --- |
@@ -3301,6 +3316,8 @@ Items: 4076.
 | `Cloud gateway ${…} TLS certificate changed since you connected — run /login to verify and reconnect.` | [/configure/settings/auth#errors](/configure/settings/auth#errors) |
 | `Cloud gateway ${…} is not trusted on this machine — run /login to reconnect.` | [/configure/settings/auth#errors](/configure/settings/auth#errors) |
 | `Cloud gateway session expired — run /login to reconnect.` | [/configure/settings/auth#errors](/configure/settings/auth#errors) |
+| `Cloud gateway sign-in isn't available with this machine's settings. If your organization manages this machine's settings, a gateway in your own settings file isn't used.` | [/configure/settings/auth#errors](/configure/settings/auth#errors) |
+| `Cloud gateway sign-in needs a person to answer its questions, so it cannot run inside a Claude Code session. Sign in from the Claude Code panel in VS Code, or run /login in Claude Code.` | [/configure/settings/auth#errors](/configure/settings/auth#errors) |
 | `Cloud gateway token expired — refresh ANTHROPIC_AUTH_TOKEN and restart.` | [/configure/settings/auth#errors](/configure/settings/auth#errors) |
 | `Cloud session ${…} has shown an unanswered MCP server question for more than ${…} min, and nothing on this machine can answer it, so this run stopped waiting for it. If that server needs to ask the us…` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
 | `Cloud session ${…} is waiting for input that nothing on this machine can give (a permission prompt, a question, or some other dialog). If it is a permission prompt, make sure the cloud agent's allowed…` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
@@ -3470,6 +3487,7 @@ Items: 4076.
 | `Error: ${…} has a recorded install path that ${…}; reinstall it, or pass ./<dir> to evaluate a directory.` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
 | `Error: --concurrency must be a whole number from 1 to ${…}` | [/configure/cli/flags#errors](/configure/cli/flags#errors) |
 | `Error: --console and --claudeai cannot be used together.` | [/configure/settings/auth#errors](/configure/settings/auth#errors) |
+| `Error: --gateway-json cannot be used together with --console, --claudeai, --sso, or --email.` | [/configure/cli/flags#errors](/configure/cli/flags#errors) |
 | `Error: --max-cost-usd must be a non-negative number` | [/configure/cli/flags#errors](/configure/cli/flags#errors) |
 | `Error: --mocks must be record or off` | [/configure/cli/flags#errors](/configure/cli/flags#errors) |
 | `Error: --no-publish and --publish-report are contradictory — pass at most one.` | [/configure/cli/flags#errors](/configure/cli/flags#errors) |
@@ -3992,6 +4010,7 @@ Items: 4076.
 | `LocalFileJournal: journal stat failed` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
 | `Login failed: ${…} ${…}` | [/configure/settings/auth#errors](/configure/settings/auth#errors) |
 | `Login failed: ${…}${…} ${…}` | [/configure/settings/auth#errors](/configure/settings/auth#errors) |
+| `Login interrupted.` | [/configure/settings/auth#errors](/configure/settings/auth#errors) |
 | `Logout failed: ${…}` | [/configure/settings/auth#errors](/configure/settings/auth#errors) |
 | `Lost connection to the cloud session after repeated retries — the session may still be running` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
 | `MCP OAuth failed for ${…}: ${…}` | [/extend/mcp/auth#errors](/extend/mcp/auth#errors) |
@@ -3999,6 +4018,7 @@ Items: 4076.
 | `MCP error text or config too long or too deeply encoded` | [/extend/mcp/cli#errors](/extend/mcp/cli#errors) |
 | `MCP error text repeats too much of the config` | [/extend/mcp/cli#errors](/extend/mcp/cli#errors) |
 | `MCP error text too long once decoded` | [/extend/mcp/cli#errors](/extend/mcp/cli#errors) |
+| `MCP request not sent: its list of trusted CA certificates has nothing in common with the one Claude Code uses now, most likely because Claude Code's TLS settings changed after the server connected. Re…` | Excluded: Reached only in a cloud session (hosted worker); this site leaves out cloud sessions. |
 | `MCP server "${…}" exists in multiple scopes:` | [/extend/mcp/runtime#errors](/extend/mcp/runtime#errors) |
 | `MCP server "${…}" is blocked by managed policy` | [/extend/mcp/runtime#errors](/extend/mcp/runtime#errors) |
 | `MCP server "${…}" is disabled — re-enable it via /mcp to use its tools` | [/extend/mcp/runtime#errors](/extend/mcp/runtime#errors) |
@@ -4336,9 +4356,11 @@ Items: 4076.
 | `Refusing git URL ${…}: a file: URL must name a local path (no host, no network-shaped path).${…}` | [/extend/plugins/marketplace#errors](/extend/plugins/marketplace#errors) |
 | `Refusing to copy ${…}: it is no longer a directory (swapped during the copy).` | [/extend/plugins/marketplace#errors](/extend/plugins/marketplace#errors) |
 | `Refusing to copy ${…}: it is no longer a directory as listed — a link or Windows junction stands there (planted, or swapped during the copy). Plugin trees must hold plain directories.` | [/extend/plugins/marketplace#errors](/extend/plugins/marketplace#errors) |
+| `Refusing to copy ${…}: it is no longer a regular file.` | [/extend/plugins/marketplace#errors](/extend/plugins/marketplace#errors) |
 | `Refusing to copy ${…}: it resolves somewhere other than its own name (a junction or mount point).` | [/extend/plugins/marketplace#errors](/extend/plugins/marketplace#errors) |
 | `Refusing to copy ${…}: its target is no longer what it resolved to (swapped during the copy).` | [/extend/plugins/marketplace#errors](/extend/plugins/marketplace#errors) |
 | `Refusing to extract a plugin archive outside the session plugin cache` | [/extend/plugins/marketplace#errors](/extend/plugins/marketplace#errors) |
+| `Refusing to read ${…}: it is not a regular file.` | [/reference/tools/files#errors](/reference/tools/files#errors) |
 | `Refusing to read ${…}: the system would not say where it was opened (reading /proc/self/fd failed with ${…}), so it cannot be told apart from a path this session may not read.` | [/reference/tools/files#errors](/reference/tools/files#errors) |
 | `Refusing to search ${…}: a path one of its Read deny rules is written through changed while the search was being prepared. Retry.` | [/configure/permissions/sandbox#errors](/configure/permissions/sandbox#errors) |
 | `Refusing to search ${…}: it could not be opened (${…}) — it is unreadable, or is being replaced concurrently.` | [/configure/permissions/sandbox#errors](/configure/permissions/sandbox#errors) |
@@ -4595,6 +4617,7 @@ Items: 4076.
 | `This agent has been stopped and its stop is still completing; it cannot start monitors.` | [/reference/tools/agents-and-tasks#errors](/reference/tools/agents-and-tasks#errors) |
 | `This call stood for agent ${…}, which stopped when the container was restarted. This call does not resume it and launched nothing. Send agent ${…} a message, or launch a new agent, if you still need t…` | Excluded: Cloud session containers: an agent call after the container restarted |
 | `This call was interrupted before the monitor started; nothing is running.` | [/reference/tools/shell-and-web#errors](/reference/tools/shell-and-web#errors) |
+| `This command is run by the VS Code extension, not by hand. To sign in from a terminal, run /login in Claude Code.` | [/configure/settings/auth#errors](/configure/settings/auth#errors) |
 | `This eval run stubs artifact publishing locally and has no artifact control plane: only publishing (the default action) is available here — list, delete, comments, replies, watches, database writes, a…` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | ``This eval run stubs artifact publishing locally: `url` may only name an artifact this run published (an eval-stub:// link), never a live claude.ai artifact. Omit `url` to publish fresh.`` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `This hook's matcher cannot be tested in a cloud session: it has to be rewritten.` | [/extend/hooks/configuration#errors](/extend/hooks/configuration#errors) |
@@ -4975,6 +4998,7 @@ Items: 4076.
 | `a timer takes a function` | Excluded: Plugin test kit and render-surface assertions (Client drawing, mounted tree, timers) |
 | `a turn is in flight; the conversation compacts between turns` | [/how-it-works/context-and-compaction#errors](/how-it-works/context-and-compaction#errors) |
 | `a value of state is JSON data of at most ${…} characters` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
+| `a write made no progress; copy stopped` | [/extend/plugins/marketplace#errors](/extend/plugins/marketplace#errors) |
 | `accepted settings text exceeds the settings size limit` | Excluded: Validation of synced settings packs, sidecars, and item names |
 | `account-memory text still matched a search key after 16 replacement rounds` | Excluded: Request digest and replay recording checks |
 | `action "${…}" is not available in this session` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
@@ -5482,6 +5506,7 @@ Items: 4076.
 | `gh: this command is run by the gh shim Claude Code writes for a session; it is not for direct use.` | [/reference/tools/shell-and-web#errors](/reference/tools/shell-and-web#errors) |
 | `git ${…} failed${…}: ${…}` | [/extend/plugins/marketplace#errors](/extend/plugins/marketplace#errors) |
 | `git ${…}.${…} is too old for claude plugin eval: it ignores the environment configuration (GIT_CONFIG_COUNT, added in git ${…}.${…}) that switches off the repository's git hooks and helper programs fo…` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
+| `git could not be made ready for the sandbox` | Excluded: An internal check whose caller catches the error; it does not reach the user. |
 | `git could not say whether a cherry-pick or revert is in progress` | [/reference/tools/agents-and-tasks#errors](/reference/tools/agents-and-tasks#errors) |
 | `git fetch failed (cumulative hard cap after ${…} attempts): ${…}` | [/extend/plugins/marketplace#errors](/extend/plugins/marketplace#errors) |
 | `git fetch failed for ${…}` | [/extend/plugins/marketplace#errors](/extend/plugins/marketplace#errors) |
@@ -5574,6 +5599,7 @@ Items: 4076.
 | `incomplete float32 at end of buf.` | Excluded: Bundled AWS SDK and Smithy libraries |
 | `incomplete float64 at end of buf.` | Excluded: Bundled AWS SDK and Smithy libraries |
 | `info is a non-empty directory, not a link` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
+| `info/exclude: the write stopped making progress` | Excluded: An internal check whose caller catches the error; it does not reach the user. |
 | `initSync does not support encrypted payloads` | Excluded: Bundled GrowthBook SDK |
 | `inputRequired() requires at least one of inputRequests (with at least one entry) or requestState (spec: every InputRequiredResult MUST include at least one of the two)` | Excluded: Bundled MCP SDK (@modelcontextprotocol/sdk) |
 | `insertChild: child was created with a different Config` | Excluded: Terminal layout engine and Tree misuse assertions (Yoga config, Ink root, Tree nodes) |
@@ -5903,6 +5929,7 @@ Items: 4076.
 | `permission_context is too large` | [/reference/tools/files#errors](/reference/tools/files#errors) |
 | `persistAgentMetadata: storage write failed` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
 | `pick_first config field shuffleAddressList must be a boolean if provided` | Excluded: Bundled gRPC library (@grpc/grpc-js) |
+| `pinInside: path is not strictly inside its root` | Excluded: An internal check whose caller catches the error; it does not reach the user. |
 | `pipeline() expects an array as the first argument` | [/reference/tools/agents-and-tasks#errors](/reference/tools/agents-and-tasks#errors) |
 | `pipeline() stages must be functions: pipeline(items, item => ..., result => ...)` | [/reference/tools/agents-and-tasks#errors](/reference/tools/agents-and-tasks#errors) |
 | `placement option top must be a boolean` | [/reference/tools/agents-and-tasks#errors](/reference/tools/agents-and-tasks#errors) |
@@ -5963,6 +5990,7 @@ Items: 4076.
 | `quickstart is not available in this session — list the Artifact types with their own call instead` | [/reference/tools/gated-and-other#errors](/reference/tools/gated-and-other#errors) |
 | `read denied: ${…}` | [/reference/tools/files#errors](/reference/tools/files#errors) |
 | `read not allowed (${…}): ${…}` | [/reference/tools/files#errors](/reference/tools/files#errors) |
+| `read not allowed under --restricted: ${…}` | [/reference/tools/files#errors](/reference/tools/files#errors) |
 | `read not allowed under permissions.blockReadsOutsideWorkingDirectories: ${…}` | [/reference/tools/files#errors](/reference/tools/files#errors) |
 | `read not allowed: ${…}` | [/reference/tools/files#errors](/reference/tools/files#errors) |
 | `read project memory` | [/reference/tools/files#errors](/reference/tools/files#errors) |
@@ -6106,7 +6134,7 @@ Items: 4076.
 | `session create allows at most ${…} initial events, got ${…}` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
 | `session history POST refused` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
 | `sessionScopeOf: not a transcript key` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
-| `sessionStore cannot be used with persistSession: false -- the storage adapter requires local writes to mirror from. Use CLAUDE_CONFIG_DIR=/tmp for ephemeral local writes with external mirroring.` | [/extend/headless#errors](/extend/headless#errors) |
+| `sessionStore cannot be used with persistSession: false -- the storage adapter requires local writes to mirror from. To avoid keeping a local copy, pass env: { ...process.env, CLAUDE_CONFIG_DIR: dir },…` | [/extend/headless#errors](/extend/headless#errors) |
 | `sessionStore resume: invalid v5 key for ${…}: ${…}${…}` | [/extend/headless#errors](/extend/headless#errors) |
 | `session_id is not the current session` | [/extend/headless#errors](/extend/headless#errors) |
 | `set only one of --proxy-authorization-command (SELF_HOSTED_RUNNER_PROXY_AUTHORIZATION_COMMAND) and --proxy-authorization-file (SELF_HOSTED_RUNNER_PROXY_AUTHORIZATION_FILE)` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
@@ -6282,11 +6310,14 @@ Items: 4076.
 | `the record of attached computers gave no list` | [/extend/mcp/cli#errors](/extend/mcp/cli#errors) |
 | `the remote sent a context breakdown this version can't read` | [/how-it-works/sessions-and-storage#errors](/how-it-works/sessions-and-storage#errors) |
 | `the repo declares no such hook for that event now` | [/extend/hooks/configuration#errors](/extend/hooks/configuration#errors) |
+| `the rows owed make no client row` | Excluded: Reached only in a cloud session (hosted worker); this site leaves out cloud sessions. |
 | `the run created ${…}/ in its working directory — that name is reserved for the run's artifact publishes, so its file evidence cannot be trusted` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
 | `the run made more artifact publishes (${…}) than the harness indexes (${…})` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
 | `the run was granted artifact publishing but the child was not offered ${…}, so the local Artifacts server did not attach: its grader counts would read 0` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
 | `the run's artifact-publish staging directory changed while it was being indexed` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
 | `the run's artifact-publish staging directory is gone although the run published (${…} corroborated) — its publishes cannot be vouched for` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
+| `the sandbox cannot confine commands here, so git did not run` | Excluded: An internal check whose caller catches the error; it does not reach the user. |
+| `the sandbox has not started` | Excluded: An internal check whose caller catches the error; it does not reach the user. |
 | `the scratch directory is no longer the one this pass created` | Excluded: Storage, journal, and sidecar read and write assertions (short write, failed stat or delete, cursor did not advance, diskless session) |
 | `the sealed directory mode did not take` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
 | `the second server/discover does not offer ${…}` | Excluded: Bundled MCP SDK (@modelcontextprotocol/sdk) |
@@ -6303,6 +6334,7 @@ Items: 4076.
 | `the staged file was replaced before it was placed` | Excluded: Internal validation refusals with no sentence of their own (path vetting, task lookup, mount path, shape and encoding checks) |
 | `the staging folder is not a real directory` | [/reference/tools/agents-and-tasks#errors](/reference/tools/agents-and-tasks#errors) |
 | `the stop action is missing` | [/configure/cli/subcommands#errors](/configure/cli/subcommands#errors) |
+| `the stored copy is not a regular file` | [/configure/settings/enterprise#approval-of-server-managed-settings](/configure/settings/enterprise#approval-of-server-managed-settings) |
 | `the stub publish directory is not a real directory` | [/extend/plugins/cli#errors](/extend/plugins/cli#errors) |
 | `the sub-command was killed or did not exit with 0` | [/configure/permissions/sandbox#errors](/configure/permissions/sandbox#errors) |
 | `the ui.resolve answer is a Proxy or a vm context; a table of elements is a plain object` | Excluded: Coding-error guards: a provider, delegate, or controller used before it is bound, and test-only setters |
@@ -6611,7 +6643,7 @@ Items: 78.
 
 ## CLI Flags
 
-Items: 304.
+Items: 306.
 
 | Item | Where |
 | --- | --- |
@@ -6725,6 +6757,7 @@ Items: 304.
 | `--runner-declares` | Excluded: A runner-internal flag with no help text; this site does not list runner-internal names (the program). |
 | `--safe-mode` | [All Flags](../configure/cli/flags.md) |
 | `--sdk-url` | [All Flags](../configure/cli/flags.md) |
+| `--session-began-as-copy` | [All Flags](../configure/cli/flags.md) |
 | `--session-id` | [All Flags](../configure/cli/flags.md) |
 | `--session-mirror` | [All Flags](../configure/cli/flags.md) |
 | `--setting-sources` | [All Flags](../configure/cli/flags.md) |
@@ -6776,6 +6809,7 @@ Items: 304.
 | `auth login --claudeai` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
 | `auth login --console` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
 | `auth login --email` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
+| `auth login --gateway-json` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
 | `auth login --sso` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
 | `auth status --json` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
 | `auth status --text` | [/configure/cli/subcommands#commands](/configure/cli/subcommands#commands) |
@@ -6922,7 +6956,7 @@ Items: 304.
 
 ## Gates
 
-Items: 1205.
+Items: 1237.
 
 | Item | Where |
 | --- | --- |
@@ -6992,6 +7026,7 @@ Items: 1205.
 | `tengu_bramble_lintel` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_brass_plover` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_brass_sled` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
+| `tengu_breezy_acorn` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_breezy_crescent` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_breezy_diffie` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_breezy_fairy` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
@@ -7037,7 +7072,6 @@ Items: 1205.
 | `tengu_bright_wall` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_brindle_causeway` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_brisk_meadow` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
-| `tengu_bubbly_canyon` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_bubbly_harbor` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_bubbly_meteor` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_buzzing_lightning` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
@@ -7171,6 +7205,7 @@ Items: 1205.
 | `tengu_copper_kestrel` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_copper_kite` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_copper_lantern` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
+| `tengu_copper_sluice` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_copper_thistle` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_copper_trellis` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_coral_anchor` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
@@ -7185,6 +7220,7 @@ Items: 1205.
 | `tengu_cozy_eagle` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_cozy_fern` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_cozy_kite` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
+| `tengu_cozy_parasol` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_cozy_pinwheel` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_cozy_teapot` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_crimson_vector` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
@@ -7237,6 +7273,8 @@ Items: 1205.
 | `tengu_drifting_valley` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_dunwich_bell` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_eager_balloon` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
+| `tengu_eager_charm` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
+| `tengu_eager_lighthouse` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_eager_pillow` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_eager_quilt` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_eager_raccoon` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
@@ -7251,7 +7289,7 @@ Items: 1205.
 | `tengu_encapsulated_dusk` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_encapsulated_honey` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_encapsulated_pebble` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
-| `tengu_enchanted_nest` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
+| `tengu_enchanted_kite` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_enchanted_pebble` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_enumerated_locket` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_ethereal_mist` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
@@ -7297,6 +7335,7 @@ Items: 1205.
 | `tengu_foamy_pelican` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_foamy_sedgewick` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_foamy_spring` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
+| `tengu_foamy_waterfall` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_fresh_heron` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_frolicking_nest` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_frond_boric` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
@@ -7329,6 +7368,7 @@ Items: 1205.
 | `tengu_golden_panda` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_golden_pebble` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_golden_popcorn` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
+| `tengu_golden_wirth` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_good_survey_transcript_ask_config` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_goofy_hare` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_goofy_jellyfish` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
@@ -7338,7 +7378,9 @@ Items: 1205.
 | `tengu_graceful_cake` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_gravel_chorus` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_greedy_crane` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
+| `tengu_greedy_shore` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_groovy_eclipse` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
+| `tengu_groovy_ember` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_gypsum_kite` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_happy_ocean` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_harbor` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
@@ -7376,22 +7418,26 @@ Items: 1205.
 | `tengu_hidden_giraffe` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_hidden_volcano` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_hipaa_history_retention_prune` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
+| `tengu_hollow_sandpiper` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_hover_rest` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_humble_emerson` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_humble_flurry` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_humble_hammock` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_humble_petal` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_humble_wand` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
+| `tengu_humble_whale` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_humble_zephyr` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_humming_locket` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_humming_star` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_humming_sundae` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
+| `tengu_humming_waterfall` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_hushed_caraway` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_hushed_kestrel` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_hushed_lantern` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_hushed_lark` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_hushed_lark_text` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_hushed_plover` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
+| `tengu_hushed_wren` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_ide_rc_auto_enable` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_idempotent_pine` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_idempotent_wolf` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
@@ -7406,6 +7452,7 @@ Items: 1205.
 | `tengu_iridescent_boot` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_iridescent_crystal` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_iridescent_gem` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
+| `tengu_iterative_aurora` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_iterative_cosmos` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_iterative_falcon` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_iterative_haven` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
@@ -7417,6 +7464,7 @@ Items: 1205.
 | `tengu_jaunty_ember` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_jaunty_forest` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_jaunty_honey` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
+| `tengu_jaunty_pike` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_jaunty_umbrella` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_jazzy_goblet` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_jazzy_puddle` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
@@ -7487,6 +7535,7 @@ Items: 1205.
 | `tengu_linked_clover` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_linked_cocoa` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_linked_rose` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
+| `tengu_lively_avalanche` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_lively_beaver` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_lively_waffle` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_log_datadog_events` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
@@ -7497,6 +7546,7 @@ Items: 1205.
 | `tengu_long_context_survey_question_variant` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_long_context_survey_threshold` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_long_context_survey_trigger_mode` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
+| `tengu_lovely_locket` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_lovely_rain` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_lovely_umbrella` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_lucid_anchor` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
@@ -7578,6 +7628,7 @@ Items: 1205.
 | `tengu_merry_popcorn` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_merry_tide` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_mighty_flask` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
+| `tengu_mighty_sprout` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_mighty_thimble` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_mill_orange` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_mint_lanes` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
@@ -7591,6 +7642,7 @@ Items: 1205.
 | `tengu_moonlit_island` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_moonlit_kettle` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_moonlit_lagoon` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
+| `tengu_moonlit_locket` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_moonlit_panda` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_moonlit_toucan` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_moss_anchor` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
@@ -7646,6 +7698,7 @@ Items: 1205.
 | `tengu_partitioned_finch` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_passport_quail` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_patient_finch` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
+| `tengu_patient_ledger` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_patient_meteor` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_patient_tide` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_peaceful_leaf` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
@@ -7702,9 +7755,11 @@ Items: 1205.
 | `tengu_proud_honey` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_proud_pearl` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_ptc_enabled` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
+| `tengu_purring_micali` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_purring_pine` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_quartz_pipit` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_quartz_thimble` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
+| `tengu_quiet_badger` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_quiet_elephant` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_quiet_ember` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_quiet_harbor` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
@@ -7716,6 +7771,7 @@ Items: 1205.
 | `tengu_quiet_locket` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_quiet_marten` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_quiet_medlar` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
+| `tengu_quiet_pike` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_quiet_slate_wren` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_quill_marten` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_quilted_lantern` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
@@ -7841,9 +7897,11 @@ Items: 1205.
 | `tengu_smooth_harbor` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_snappy_pelican` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_snappy_plum` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
+| `tengu_snappy_sunrise_killswitch` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_snappy_tower` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_snoopy_creek` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_snug_mitten` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
+| `tengu_snug_orbit` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_snug_platypus` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_snug_quill` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_snug_reef` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
@@ -7874,6 +7932,7 @@ Items: 1205.
 | `tengu_squishy_spring` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_staged_ladybug` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_staged_pumpkin` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
+| `tengu_starry_balloon` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_starry_locket` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_starry_squid` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_starry_waterfall` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
@@ -7902,6 +7961,7 @@ Items: 1205.
 | `tengu_structured_output_strict` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_subagent_cache_evict` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_sunny_anchor` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
+| `tengu_sunny_garden` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_sunset_penguin_opus48` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_surface_failed_mcp_servers` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_swift_lynx` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
@@ -7920,6 +7980,7 @@ Items: 1205.
 | `tengu_teleport_github_access_precheck` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_teleport_send_to_cloud` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_temporal_hare` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
+| `tengu_temporal_kazoo` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_tender_mitten` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_tender_thunder` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_tender_truffle` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
@@ -7935,6 +7996,7 @@ Items: 1205.
 | `tengu_tidy_eclipse` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_tidy_fern` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_tidy_frost` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
+| `tengu_tidy_lantern` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_tidy_lemon` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_tidy_origami` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_tidy_shelf` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
@@ -7942,11 +8004,13 @@ Items: 1205.
 | `tengu_tidy_widget` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_tingly_pearl` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_tips_mod` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
+| `tengu_toasty_beacon` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_toasty_breeze` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_toasty_fiddle` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_toasty_giraffe` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_toasty_hammock` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_toasty_owl` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
+| `tengu_toasty_planet` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_tool_cgroup_exclude_classes` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_tool_detach` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_tool_memory_cgroup` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
@@ -7956,6 +8020,7 @@ Items: 1205.
 | `tengu_trace_lantern` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_tranquil_cloud` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_tranquil_crescent` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
+| `tengu_tranquil_crown` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_tranquil_duckling` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_tranquil_fern` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_tranquil_starlight` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
@@ -8091,6 +8156,7 @@ Items: 1205.
 | `tengu_whimsical_otter` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_wif_user_oauth_refresh_token_cleared` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_wiggly_dove` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
+| `tengu_wiggly_gray` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_wiggly_locket` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_wild_beacon` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
 | `tengu_wild_gosling` | Excluded: A server-side GrowthBook feature flag or config value; users cannot set it, and DISABLE_GROWTHBOOK only turns the fetch off. The pages name a gate in the row where it changes a documented behavior. |
