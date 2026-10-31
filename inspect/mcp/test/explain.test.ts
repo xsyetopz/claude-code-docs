@@ -71,3 +71,43 @@ test("explains a command, a stubbed call, and a gated handled tool", () => {
 test("an unknown name explains nothing", () => {
   expect(explain(index(APP), "no-such-name")).toBeUndefined();
 });
+
+// The shapes the program uses: a pass-through list of env names, an export map whose keys are the names,
+// the function that reads one, and CLI flags whose literal carries `--` and an argument placeholder.
+const ENV = [
+  'var pass=new Set(["A_ONE","MY_SETTING","B_TWO","C_THREE","LISTED_ONLY"]);',
+  "var exp={MY_SETTING:()=>x,KEY_ONLY:()=>y,OTHER:()=>z};",
+  "function reads(i){return!i.MY_SETTING&&!i.READ_ONLY}",
+  'var cli=[new Opt("--began-as-copy <value>","Sent by the server."),new Opt("--gateway-json","For a program.")];',
+  "var re=/ZETA_NAME/;",
+  "var x=1,y=2,z=3;function Opt(a,b){return[a,b]}",
+].join("\n");
+
+test("an env name: the unit that reads it is the holder, the lists are 'also in'", () => {
+  const ix = index(ENV);
+  const e = explain(ix, "MY_SETTING");
+  expect(e?.holder.t).toContain(".MY_SETTING");
+  expect(e?.holder.t).not.toContain('"A_ONE"');
+  expect(e?.others).toHaveLength(2);
+  expect(e?.via).toBe("unit");
+  expect(explain(ix, "READ_ONLY")?.holder.t).toContain(".READ_ONLY");
+  expect(explain(ix, "KEY_ONLY")?.holder.t).toContain("KEY_ONLY:");
+});
+
+test("a flag is found with or without its leading dashes and placeholder", () => {
+  const ix = index(ENV);
+  for (const n of [
+    "began-as-copy",
+    "--began-as-copy",
+    "gateway-json",
+    "--gateway-json",
+  ])
+    expect(explain(ix, n)?.holder.t).toContain(`"--${n.replace(/^--/, "")}`);
+  expect(explain(ix, "began-as")).toBeUndefined();
+});
+
+test("a name only in code text is found by text search and says so", () => {
+  const e = explain(index(ENV), "ZETA_NAME");
+  expect(e?.via).toBe("text");
+  expect(e?.holder.t).toContain("ZETA_NAME");
+});

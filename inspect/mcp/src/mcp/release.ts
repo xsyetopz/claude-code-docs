@@ -128,7 +128,9 @@ group<Args & { from?: string; to?: string }>(
           : "none found";
       return text(
         [
-          `"${name}" in ${r.index.version}`,
+          e.via === "text"
+            ? `"${name}" in ${r.index.version}, found by a search of the code text: no string literal, key, or read names it`
+            : `"${name}" in ${r.index.version}`,
           `Where: ${h.m}:${h.s} (${h.k})${e.others.length ? `; also in ${e.others.join(", ")}` : ""}`,
           `Who: ${list(e.who, 10)}`,
           `When: gates ${list(e.when.gates, 10)}; env reads ${list(e.when.env, 10)}${e.when.isEnabled ? `; isEnabled ${e.when.isEnabled}` : ""}`,
@@ -138,6 +140,7 @@ group<Args & { from?: string; to?: string }>(
         ].join("\n"),
         {
           where: `${h.m}:${h.s}`,
+          via: e.via,
           who: e.who,
           when: e.when,
           how: e.how,

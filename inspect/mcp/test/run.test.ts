@@ -147,3 +147,18 @@ test("run keeps every stdout event, with multibyte text split across chunks inta
   ]);
   expect(r.events[1]?.["text"]).toBe("é".repeat(300000));
 });
+
+test("resultText is the text of the last result event, or null", async () => {
+  const { resultText } = await import("../src/run.ts");
+  expect(
+    resultText({
+      events: [
+        { type: "system" },
+        { type: "result", result: "first" },
+        { type: "result", subtype: "success", result: "Set model to x" },
+      ],
+    }),
+  ).toBe("Set model to x");
+  expect(resultText({ events: [{ type: "result" }] })).toBeNull();
+  expect(resultText({ events: [] })).toBeNull();
+});

@@ -4,7 +4,7 @@ import { cut, lines as linesOf } from "../diff.ts";
 import { findUnits } from "../find.ts";
 import { prepared } from "../prepare.ts";
 import { readable } from "../readable.ts";
-import { runPrompt, userText } from "../run.ts";
+import { resultText, runPrompt, userText } from "../run.ts";
 import {
   type Args,
   clip,
@@ -155,17 +155,30 @@ group<
       const r = await runPrompt(bin.path, q, undefined, undefined, env);
       const t = userText(r, mark);
       const sent = r.requests.map((x) => `${x.method} ${x.path}`);
+      const out = resultText(r);
+      const said = out === null ? "" : `\nResult: ${clip(out, 2000)}`;
       const head = `${bin.version}: exit ${r.exit}, ${sent.length} requests.${r.exit !== 0 || t === null ? `\nstderr: ${clip(r.stderr, 500)}` : ""}`;
       if (t === null)
-        return text(`${head}\nNo user turn holds "${clip(mark, 100)}".`, {
-          exit: r.exit,
-          requests: sent,
-        });
+        return text(
+          `${head}\nNo user turn holds "${clip(mark, 100)}".${said}`,
+          {
+            exit: r.exit,
+            requests: sent,
+            result: out,
+          },
+        );
       const start = Math.min(offset, t.length);
       const end = Math.min(t.length, start + length);
       return text(
-        `${head}\nUser turn [${start}, ${end}) of ${t.length}\n${t.slice(start, end)}`,
-        { exit: r.exit, requests: sent, offset: start, end, total: t.length },
+        `${head}\nUser turn [${start}, ${end}) of ${t.length}\n${t.slice(start, end)}${said}`,
+        {
+          exit: r.exit,
+          requests: sent,
+          offset: start,
+          end,
+          total: t.length,
+          result: out,
+        },
       );
     },
     prepare: ({ version }) => {

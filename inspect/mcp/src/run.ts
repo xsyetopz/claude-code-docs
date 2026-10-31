@@ -265,3 +265,10 @@ export const userText = (
   }
   return null;
 };
+
+/** The `result` text of the last stream-json `result` event, where `-p` puts a local command's output, or null. */
+export const resultText = (r: Pick<RunResult, "events">): string | null => {
+  const last = [...r.events].reverse().find((e) => e["type"] === "result");
+  const text = last?.["result"];
+  return typeof text === "string" ? text : null;
+};
