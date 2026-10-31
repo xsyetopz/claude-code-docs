@@ -25211,7 +25211,7 @@ var EMPTY_COMPLETION_RESULT = {
 // inspect/mcp/package.json
 var package_default = {
   name: "cc-inspect-mcp",
-  version: "0.10.0",
+  version: "0.11.0",
   private: true,
   license: "MIT",
   type: "module",
