@@ -39602,7 +39602,7 @@ import {
   writeFileSync as writeFileSync3
 } from "fs";
 import { tmpdir as tmpdir3 } from "os";
-import { join as join5 } from "path";
+import { dirname as dirname2, isAbsolute, join as join5, normalize } from "path";
 var FAKE_KEY = "sk-ant-fake-probe";
 var sse = (ev, d) => `event: ${ev}
 data: ${JSON.stringify(d)}
@@ -39635,7 +39635,23 @@ var STREAM = sse("message_start", {
 }) + sse("message_stop", { type: "message_stop" });
 var UNSAFE = /KEY|TOKEN|SECRET|PASSWORD|CREDENTIAL|SESSION|PROXY|BASE_URL|ENDPOINT|HEADERS|^(NODE|BUN)_OPTIONS$|^(LD|DYLD)_/i;
 var tempDir = (p) => realpathSync2(mkdtempSync3(join5(tmpdir3(), p)));
-var runPrompt = async (bin, prompt, model = "claude-opus-5-5", timeoutMs = 60000, env = {}) => {
+var runPrompt = (bin, prompt, model = "claude-opus-5-5", timeoutMs = 60000, env = {}) => runArgs(bin, [
+  "-p",
+  prompt,
+  "--output-format",
+  "stream-json",
+  "--verbose",
+  "--model",
+  model
+], { timeoutMs, env });
+var runArgs = async (bin, args, {
+  timeoutMs = 60000,
+  env = {},
+  files = {}
+} = {}) => {
+  for (const name of Object.keys(files))
+    if (isAbsolute(name) || normalize(name).startsWith(".."))
+      throw new Error(`file ${name} is outside the project`);
   const made = [];
   let stub;
   try {
@@ -39702,16 +39718,11 @@ exit 44
     for (const [k, v] of Object.entries(env))
       if (k.toUpperCase() in fixed || UNSAFE.test(k) || v.includes("sk-ant-"))
         throw new Error(`env ${k} is not allowed: run fixes it, or it could carry a credential or route a request`);
-    const p = Bun.spawn([
-      bin,
-      "-p",
-      prompt,
-      "--output-format",
-      "stream-json",
-      "--verbose",
-      "--model",
-      model
-    ], {
+    for (const [name, body] of Object.entries(files)) {
+      mkdirSync3(dirname2(join5(dirs.project, name)), { recursive: true });
+      writeFileSync3(join5(dirs.project, name), body);
+    }
+    const p = Bun.spawn([bin, ...args.map((a) => a.replaceAll("<project-dir>", dirs.project))], {
       cwd: dirs.project,
       stdin: "ignore",
       stdout: "pipe",
@@ -39754,7 +39765,7 @@ exit 44
     const bad = requests.filter((r) => r.fakeKey === false || r.host !== self);
     if (bad.length)
       throw new Error(`a request had another host or key: ${bad.map((r) => `${r.host}${r.path}`).join(", ")}`);
-    return { exit, requests, stderr, events, dirs };
+    return { exit, requests, stdout: out, stderr, events, dirs };
   } finally {
     stub?.stop(true);
     for (const d of made)
@@ -39787,7 +39798,14 @@ var resultText = (r) => {
 };
 
 // src/mcp/code.ts
-group("code", "Read the code inside a Claude Code binary: list installs or modules, search literal text, find code by plain words, read a module slice, prepare a cleaned index for release diffs, or run a prompt in an installed version against a local fake API to see the text it sends.", "action", {
+var installed = (version) => {
+  const all = listInstalls();
+  const bin = version ? all.find((i) => i.version === version) : all.find((i) => i.current) ?? all[0];
+  if (!bin)
+    throw new Error(`run and cli take an installed version; installed: ${all.map((i) => i.version).join(", ") || "none"}`);
+  return bin;
+};
+group("code", "Read the code inside a Claude Code binary: list installs or modules, search literal text, find code by plain words, read a module slice, prepare a cleaned index for release diffs, run a prompt in an installed version against a local fake API to see the text it sends, or run it with other args (cli), such as a subcommand.", "action", {
   installs: () => {
     const installs = listInstalls();
     return text(installs.length ? installs.map((i) => `- ${i.version}${i.current ? " (current)" : ""}  ${i.path}`).join(`
@@ -39875,10 +39893,7 @@ ${excerpt.join(`
     const q = need(prompt, "prompt");
     const cmd = /^\/([\w:-]+)/.exec(q)?.[1];
     const mark = name ?? (cmd ? `<command-name>/${cmd}</command-name>` : q);
-    const all = listInstalls();
-    const bin = version ? all.find((i) => i.version === version) : all.find((i) => i.current) ?? all[0];
-    if (!bin)
-      throw new Error(`run takes an installed version; installed: ${all.map((i) => i.version).join(", ") || "none"}`);
+    const bin = installed(version);
     const r = await runPrompt(bin.path, q, undefined, undefined, env);
     const t = userText(r, mark);
     const sent = r.requests.map((x) => `${x.method} ${x.path}`);
@@ -39907,6 +39922,21 @@ ${t.slice(start, end)}${said}`, {
       result: out
     });
   },
+  cli: async ({ args, files, version, env }) => {
+    if (!args?.length)
+      throw new Error('cli needs args, such as ["auto-mode", "config"]');
+    const bin = installed(version);
+    const r = await runArgs(bin.path, args, {
+      env: env ?? {},
+      files: files ?? {}
+    });
+    const sent = r.requests.map((x) => `${x.method} ${x.path}`);
+    const stdout = clip(r.stdout, 4000);
+    const stderr = clip(r.stderr, 2000);
+    return text(`${bin.version}: exit ${r.exit}, ${sent.length} requests.
+stdout: ${stdout}
+stderr: ${stderr}`, { exit: r.exit, requests: sent, stdout, stderr });
+  },
   prepare: ({ version }) => {
     const r = prepared(version);
     const skipped = Object.keys(r.index.skipped);
@@ -39932,7 +39962,9 @@ Not JavaScript: ${skipped.join(", ")}` : ""}`, {
   view: string2().optional().describe('With read: "readable" gives the module through Wakaru (the first call per module runs it, then it is cached).'),
   length: number2().int().min(1).max(MAX_CHARS).optional().describe("Characters to read (default 4000)."),
   prompt: string2().min(1).optional().describe('With run: the prompt or slash command, such as "/verify ARG". `name` is the text that picks the user turn (default: the command tag).'),
-  env: record(string2(), string2()).optional().describe('With run: extra environment variables, such as {"CLAUDE_CODE_USE_BEDROCK": "1"}. Names that run fixes (key, base URL, proxies, folders), and names or values that could carry a credential or route a request, are refused.')
+  env: record(string2(), string2()).optional().describe('With run or cli: extra environment variables, such as {"CLAUDE_CODE_USE_BEDROCK": "1"}. Names that run fixes (key, base URL, proxies, folders), and names or values that could carry a credential or route a request, are refused.'),
+  args: array(string2()).optional().describe('With cli: the program args, such as ["--settings", "<project-dir>/s.json", "auto-mode", "config"]. `<project-dir>` becomes the temp project folder.'),
+  files: record(string2(), string2()).optional().describe('With cli: files to write in the temp project folder first, by relative path, such as {"s.json": "{}"}.')
 }, { ...WRITES_CACHE, openWorldHint: true });
 
 // src/events.ts
@@ -41526,7 +41558,7 @@ ${Object.entries(r.functions).map(([n, s]) => `- ${n}: ${s}`).join(`
 
 // src/mcp/release.ts
 import { existsSync as existsSync6, readFileSync as readFileSync6 } from "fs";
-import { dirname as dirname3, join as join6 } from "path";
+import { dirname as dirname4, join as join6 } from "path";
 
 // src/explain.ts
 var CONST = String.raw`(?:!0|!1|null|void 0|""|-?\d+(?:\.\d+)?|\[\]|\{\}|"(?:[^"\\]|\\.)*")`;
@@ -41624,7 +41656,7 @@ var explain = (ix, name, cap = 40) => {
 
 // src/notes.ts
 import { existsSync as existsSync5, mkdirSync as mkdirSync4, readFileSync as readFileSync5, writeFileSync as writeFileSync4 } from "fs";
-import { dirname as dirname2 } from "path";
+import { dirname as dirname3 } from "path";
 var STOP = new Set("added fixed improved changed which there their about after before being would could should these those where while other through without within instead claude still first every again showing shows error errors their".split(" "));
 var readNotes = (version, file) => {
   if (existsSync5(file))
@@ -41645,7 +41677,7 @@ var readNotes = (version, file) => {
     throw new Error(`gh release view v${version} failed: ${r.stderr.toString().slice(0, 200)}`);
   if (!r.stdout.toString().trim())
     throw new Error(`gh release view v${version} gave no notes`);
-  mkdirSync4(dirname2(file), { recursive: true });
+  mkdirSync4(dirname3(file), { recursive: true });
   writeFileSync4(file, r.stdout.toString());
   return r.stdout.toString();
 };
@@ -41796,7 +41828,7 @@ ${unitDiff(c, DIFF_LINES).join(`
     if (!older)
       throw new Error(`no install older than ${b.index.version}; give from`);
     const a = prepared(older);
-    const root = dirname3(b.dir);
+    const root = dirname4(b.dir);
     const report = join6(root, "diff", "report.md");
     const items = existsSync6(report) ? readFileSync6(report, "utf8").split(`
 `).filter((l) => l.startsWith("- ")) : [];

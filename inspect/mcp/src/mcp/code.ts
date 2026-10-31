@@ -4,7 +4,7 @@ import { cut, lines as linesOf } from "../diff.ts";
 import { findUnits } from "../find.ts";
 import { prepared } from "../prepare.ts";
 import { readable } from "../readable.ts";
-import { resultText, runPrompt, userText } from "../run.ts";
+import { resultText, runArgs, runPrompt, userText } from "../run.ts";
 import {
   type Args,
   clip,
@@ -17,6 +17,19 @@ import {
   WRITES_CACHE,
 } from "./app.ts";
 
+// Only an install: `run` and `cli` execute the file, where the other actions only read it.
+const installed = (version: string | undefined) => {
+  const all = listInstalls();
+  const bin = version
+    ? all.find((i) => i.version === version)
+    : (all.find((i) => i.current) ?? all[0]);
+  if (!bin)
+    throw new Error(
+      `run and cli take an installed version; installed: ${all.map((i) => i.version).join(", ") || "none"}`,
+    );
+  return bin;
+};
+
 group<
   Args & {
     context?: number;
@@ -24,10 +37,12 @@ group<
     view?: string;
     prompt?: string;
     env?: Record<string, string>;
+    args?: string[];
+    files?: Record<string, string>;
   }
 >(
   "code",
-  "Read the code inside a Claude Code binary: list installs or modules, search literal text, find code by plain words, read a module slice, prepare a cleaned index for release diffs, or run a prompt in an installed version against a local fake API to see the text it sends.",
+  "Read the code inside a Claude Code binary: list installs or modules, search literal text, find code by plain words, read a module slice, prepare a cleaned index for release diffs, run a prompt in an installed version against a local fake API to see the text it sends, or run it with other args (cli), such as a subcommand.",
   "action",
   {
     installs: () => {
@@ -143,15 +158,7 @@ group<
       const q = need(prompt, "prompt");
       const cmd = /^\/([\w:-]+)/.exec(q)?.[1];
       const mark = name ?? (cmd ? `<command-name>/${cmd}</command-name>` : q);
-      // Only an install: `run` executes the file, where the other actions only read it.
-      const all = listInstalls();
-      const bin = version
-        ? all.find((i) => i.version === version)
-        : (all.find((i) => i.current) ?? all[0]);
-      if (!bin)
-        throw new Error(
-          `run takes an installed version; installed: ${all.map((i) => i.version).join(", ") || "none"}`,
-        );
+      const bin = installed(version);
       const r = await runPrompt(bin.path, q, undefined, undefined, env);
       const t = userText(r, mark);
       const sent = r.requests.map((x) => `${x.method} ${x.path}`);
@@ -179,6 +186,22 @@ group<
           total: t.length,
           result: out,
         },
+      );
+    },
+    cli: async ({ args, files, version, env }) => {
+      if (!args?.length)
+        throw new Error('cli needs args, such as ["auto-mode", "config"]');
+      const bin = installed(version);
+      const r = await runArgs(bin.path, args, {
+        env: env ?? {},
+        files: files ?? {},
+      });
+      const sent = r.requests.map((x) => `${x.method} ${x.path}`);
+      const stdout = clip(r.stdout, 4000);
+      const stderr = clip(r.stderr, 2000);
+      return text(
+        `${bin.version}: exit ${r.exit}, ${sent.length} requests.\nstdout: ${stdout}\nstderr: ${stderr}`,
+        { exit: r.exit, requests: sent, stdout, stderr },
       );
     },
     prepare: ({ version }) => {
@@ -236,7 +259,19 @@ group<
       .record(z.string(), z.string())
       .optional()
       .describe(
-        'With run: extra environment variables, such as {"CLAUDE_CODE_USE_BEDROCK": "1"}. Names that run fixes (key, base URL, proxies, folders), and names or values that could carry a credential or route a request, are refused.',
+        'With run or cli: extra environment variables, such as {"CLAUDE_CODE_USE_BEDROCK": "1"}. Names that run fixes (key, base URL, proxies, folders), and names or values that could carry a credential or route a request, are refused.',
+      ),
+    args: z
+      .array(z.string())
+      .optional()
+      .describe(
+        'With cli: the program args, such as ["--settings", "<project-dir>/s.json", "auto-mode", "config"]. `<project-dir>` becomes the temp project folder.',
+      ),
+    files: z
+      .record(z.string(), z.string())
+      .optional()
+      .describe(
+        'With cli: files to write in the temp project folder first, by relative path, such as {"s.json": "{}"}.',
       ),
   },
   { ...WRITES_CACHE, openWorldHint: true },

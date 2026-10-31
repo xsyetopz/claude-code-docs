@@ -1,4 +1,4 @@
-// Runs the program once in print mode against a local fake Messages API and keeps each request it sends.
+// Runs the program once, in print mode or with other args, against a local fake Messages API and keeps each request it sends.
 // Free: a fake key, a dead proxy for any request that skips the stub, a temp HOME, config dir, and project,
 // and a `security` shim on PATH, since with a temp HOME macOS would show a "Keychain Not Found" dialog.
 import {
@@ -10,7 +10,7 @@ import {
   writeFileSync,
 } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { dirname, isAbsolute, join, normalize } from "node:path";
 
 export const FAKE_KEY = "sk-ant-fake-probe";
 export type Sent = {
@@ -24,6 +24,7 @@ export type Dirs = { home: string; config: string; project: string };
 export type RunResult = {
   exit: number;
   requests: Sent[];
+  stdout: string;
   stderr: string;
   /** The stream-json events the program wrote to stdout. */
   events: Record<string, unknown>[];
@@ -74,13 +75,47 @@ const tempDir = (p: string) => realpathSync(mkdtempSync(join(tmpdir(), p)));
  * Throws when a request has another host or key, or when the program does not end in `timeoutMs`.
  * The folders in `dirs` are removed before it returns.
  */
-export const runPrompt = async (
+export const runPrompt = (
   bin: string,
   prompt: string,
   model = "claude-opus-5-5",
   timeoutMs = 60000,
   env: Record<string, string> = {},
+): Promise<RunResult> =>
+  runArgs(
+    bin,
+    [
+      "-p",
+      prompt,
+      "--output-format",
+      "stream-json",
+      "--verbose",
+      "--model",
+      model,
+    ],
+    { timeoutMs, env },
+  );
+
+/**
+ * Run the program with `args`, such as a subcommand, in the same safe setup as `runPrompt`.
+ * `files` are written in the project folder first, and `<project-dir>` in an arg becomes its path.
+ */
+export const runArgs = async (
+  bin: string,
+  args: string[],
+  {
+    timeoutMs = 60000,
+    env = {},
+    files = {},
+  }: {
+    timeoutMs?: number;
+    env?: Record<string, string>;
+    files?: Record<string, string>;
+  } = {},
 ): Promise<RunResult> => {
+  for (const name of Object.keys(files))
+    if (isAbsolute(name) || normalize(name).startsWith(".."))
+      throw new Error(`file ${name} is outside the project`);
   const made: string[] = [];
   let stub: ReturnType<typeof Bun.serve> | undefined;
   try {
@@ -155,17 +190,12 @@ export const runPrompt = async (
         throw new Error(
           `env ${k} is not allowed: run fixes it, or it could carry a credential or route a request`,
         );
+    for (const [name, body] of Object.entries(files)) {
+      mkdirSync(dirname(join(dirs.project, name)), { recursive: true });
+      writeFileSync(join(dirs.project, name), body);
+    }
     const p = Bun.spawn(
-      [
-        bin,
-        "-p",
-        prompt,
-        "--output-format",
-        "stream-json",
-        "--verbose",
-        "--model",
-        model,
-      ],
+      [bin, ...args.map((a) => a.replaceAll("<project-dir>", dirs.project))],
       {
         cwd: dirs.project,
         stdin: "ignore",
@@ -214,7 +244,7 @@ export const runPrompt = async (
       throw new Error(
         `a request had another host or key: ${bad.map((r) => `${r.host}${r.path}`).join(", ")}`,
       );
-    return { exit, requests, stderr, events, dirs };
+    return { exit, requests, stdout: out, stderr, events, dirs };
   } finally {
     stub?.stop(true);
     for (const d of made) rmSync(d, { recursive: true, force: true });

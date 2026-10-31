@@ -162,3 +162,42 @@ test("resultText is the text of the last result event, or null", async () => {
   expect(resultText({ events: [{ type: "result" }] })).toBeNull();
   expect(resultText({ events: [] })).toBeNull();
 });
+
+const argsProgram = () => {
+  const bin = join(tmp, `claude-args-${n++}`);
+  writeFileSync(
+    bin,
+    `#!/usr/bin/env bun
+const f = process.argv.at(-1);
+console.log(JSON.stringify(process.argv.slice(2)) + " " + (await Bun.file(f).text()).trim());
+process.stderr.write("cwd=" + process.cwd());
+process.exit(3);
+`,
+  );
+  chmodSync(bin, 0o755);
+  return bin;
+};
+
+test("runArgs passes the args, writes files in the project, and keeps plain stdout", async () => {
+  const { runArgs } = await import("../src/run.ts");
+  const r = await runArgs(
+    argsProgram(),
+    ["auto-mode", "<project-dir>/s.json"],
+    {
+      files: { "s.json": '{"a":1}' },
+    },
+  );
+  expect(r.exit).toBe(3);
+  const p = r.dirs.project;
+  expect(r.stdout.trim()).toBe(`["auto-mode","${p}/s.json"] {"a":1}`);
+  expect(r.stderr).toBe(`cwd=${p}`);
+  expect(existsSync(p)).toBe(false);
+});
+
+test("runArgs refuses a file path outside the project", async () => {
+  const { runArgs } = await import("../src/run.ts");
+  for (const name of ["/etc/x", "../x", "a/../../x"])
+    await expect(
+      runArgs(argsProgram(), ["x"], { files: { [name]: "" } }),
+    ).rejects.toThrow("outside the project");
+});

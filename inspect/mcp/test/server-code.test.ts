@@ -184,6 +184,19 @@ describe("find and prompts", () => {
     expect(JSON.stringify(r.structuredContent)).toContain("/^sleep");
   });
 
+  test("code cli needs args and an installed version", async () => {
+    const none = await call("code", { action: "cli", version: "9.9.9" });
+    expect(none.isError).toBe(true);
+    expect(none.content[0]?.text).toContain("args");
+    const gone = await call("code", {
+      action: "cli",
+      args: ["--version"],
+      version: "0.0.1",
+    });
+    expect(gone.isError).toBe(true);
+    expect(gone.content[0]?.text).toContain("installed: 9.9.9");
+  });
+
   test("prompts/list gives the release and explain prompts", async () => {
     const { prompts } = await client.listPrompts();
     expect(prompts.map((p) => p.name).sort()).toEqual([
