@@ -3,7 +3,7 @@
   "$id": "https://clawdipedia.cc/schemas/claude-code-tools.json",
   "title": "Claude Code built-in tool payloads (Claude Code 2.1.314)",
   "$comment": "For the input and result of each built-in tool (definitions <Tool>Input and <Tool>Result). Generated from Claude Code 2.1.314 by calling the zod v4 toJSONSchema embedded in the binary on its own validator (method A, runtime export). Anchor: the tool factory that copies a tool definition's properties (getters included), read as inputSchema and outputSchema on each tool. Do not edit by hand: run \"bun run schemas\".",
-  "description": "The program did not give these definitions: ObserverReportResult, TestingPermissionResult, SendMessageResult, ArtifactCommentsInput, ArtifactDataInput, ArtifactCheckInput, ArtifactInput.",
+  "description": "The program did not give these definitions: ObserverReportResult, TestingPermissionResult, ArtifactCommentsInput, ArtifactDataInput, ArtifactCheckInput, SendMessageResult, ArtifactInput.",
   "$defs": {
     "AgentInput": {
       "type": "object",
@@ -13533,6 +13533,18 @@
           "description": "Total size of the output in bytes (set when output is too large for inline)",
           "type": "number"
         },
+        "stdoutHoldsOutputEnd": {
+          "description": "@internal True when stdout holds the first part of the persisted output, a line saying that the middle was left out, and then its last lines",
+          "type": "boolean"
+        },
+        "memoryLimitNote": {
+          "description": "@internal Tells the model that the kernel killed a process for lack of memory while the command ran",
+          "type": "string"
+        },
+        "triggeredNote": {
+          "description": "@internal One line of advice for the model after a finished command, set by a rule in a feature flag",
+          "type": "string"
+        },
         "staleReadFileStateHint": {
           "description": "Model-facing note listing readFileState entries whose mtime bumped during this command (set when WRITE_COMMAND_MARKERS matches)",
           "type": "string"
@@ -19887,7 +19899,7 @@
         },
         "runner_id": {
           "type": "string",
-          "description": "Tagged runner id (ccrunner_…) the caller observed failing. Server verifies this still matches the session assignment; mismatch returns Conflict. For a stuck session whose runner is gone, any value is accepted."
+          "description": "Tagged runner id (ccrunner_…) the caller observed failing. Server verifies this still matches the session assignment; mismatch returns Conflict. For a stuck session with no runner assigned, pass any runner id of this environment, such as one of the excluded_runner_ids of the session; the server does not compare it."
         }
       },
       "required": ["session_id", "runner_id"],

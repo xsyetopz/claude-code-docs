@@ -2522,6 +2522,10 @@
             "ultracodeAvailable": {
               "type": "boolean",
               "description": "Whether ultracode can be turned on for the session: dynamic workflows are enabled and the model supports it. Hosts should offer an Ultracode control only while this is true."
+            },
+            "ultrathinkAvailable": {
+              "type": "boolean",
+              "description": "True when typing `ultrathink` runs the turn at xhigh effort, and when the session is already at xhigh or max, where the turn stays as it is. The terminal colors the word by this rule, and hosts should color it only while this is true. Absent means a Claude Code too old to report it, which does not raise the turn in a host's chat box."
             }
           },
           "required": ["model", "effort"],
@@ -3958,7 +3962,7 @@
                         "schedule_wakeup",
                         "poll_event"
                       ],
-                      "description": "Who authored/injected the prompt: `user` = submitted from the interactive composer, `sdk` = non-interactive entrypoint (`-p` / Agent SDK), `loop_wakeup` = dynamic /loop wakeup, `schedule_wakeup` = scheduled-task fire (CronCreate/routine), `system` = other machine-injected turns (peer/channel messages, task notifications, auto-continuation), `poll_event` = the poll-event channel enqueue-time pass (the hook fires when the host submits an event, before its delivery ack exists — a blocking verdict rejects the event). Payloads may omit it while the field rolls out."
+                      "description": "Who authored/injected the prompt: `user` = submitted from the interactive composer, `sdk` = non-interactive entrypoint (`-p` / Agent SDK), `loop_wakeup` = dynamic /loop wakeup, `schedule_wakeup` = scheduled-task fire (CronCreate or a cloud scheduled task), `system` = other machine-injected turns (peer/channel messages, task notifications, auto-continuation), `poll_event` = the poll-event channel enqueue-time pass (the hook fires when the host submits an event, before its delivery ack exists — a blocking verdict rejects the event). Payloads may omit it while the field rolls out."
                     },
                     "session_title": {
                       "type": "string"
@@ -7171,7 +7175,7 @@
         },
         "send_now": {
           "type": "boolean",
-          "description": "@internal True when the request is a client's Send now on a message that is waiting, not its Stop: it asks that the waiting messages reach the model now, as the terminal's send-now key does. It is not a Stop: it makes no later turn start aborted, cancels nothing that is queued, and ends no background task, subscription or other thing outside the running turn that a Stop ends. What it does depends on what the CLI holds when it reads the request, and the response's send_now says which. Without message_uuid every waiting user message counts, which may be another than the one pressed. With no user message waiting at the CLI it does nothing: a message the running turn has already taken in, or was started for, is being answered. With one waiting that is not in the queue yet (received and still being admitted, or already taken for the next turn), that the running turn is taking in at that moment, or with no turn under way, it also does nothing: the message runs when its place comes. With a person's message in the queue behind a turn under way, the CLI chooses how that turn makes way: it moves what the turn waits on to the background so that the turn takes the message in (and, if that fails, stops the turn later as a priority 'now' message does, without a marker), or it aborts that turn at once as a plain interrupt does (running tools are ended, the interruption marker is written, the result is an error_during_execution); what was queued ahead of the message still runs before it. Either way a sender learns that the turn has ended from the turn's result, not from this response. The message must already be at the CLI, or the request finds nothing waiting: a sender that still holds it delivers it first, or sends it with priority 'now', or sends a plain interrupt instead. Only the boolean true counts, and with cancel_queued:true the request is a Stop. Advertised by interrupt_send_now_v1 on system/init; a CLI without it handles the request as a plain interrupt."
+          "description": "@internal True when the request is a client's Send now on a message that is waiting, not its Stop: it asks that the waiting messages reach the model now, as the terminal's send-now key does. It is not a Stop: it makes no later turn start aborted, cancels nothing that is queued, and ends no background task, subscription or other thing outside the running turn that a Stop ends. What it does depends on what the CLI holds when it reads the request, and the response's send_now says which. Without message_uuid every waiting user message counts, which may be another than the one pressed. With no user message waiting at the CLI it does nothing: a message the running turn has already taken in, or was started for, is being answered. With one waiting that is not in the queue yet (received and still being admitted, or already taken for the next turn), that the running turn is taking in at that moment, or with no turn under way, it also does nothing: the message runs when its place comes. With a person's message in the queue behind a turn under way, the CLI chooses how that turn makes way: it moves what the turn waits on to the background so that the turn takes the message in (and, if that fails, stops the turn later as a priority 'now' message does, without a marker); over a turn that is compacting the conversation by itself, it first lets the compaction end, so that the summary is kept, and then moves what the turn waits on, or stops the turn at its next model request as a priority 'now' message does, without a marker; or it aborts that turn at once as a plain interrupt does (running tools are ended, the interruption marker is written, the result is an error_during_execution); what was queued ahead of the message still runs before it. Either way a sender learns that the turn has ended from the turn's result, not from this response. The message must already be at the CLI, or the request finds nothing waiting: a sender that still holds it delivers it first, or sends it with priority 'now', or sends a plain interrupt instead. Only the boolean true counts, and with cancel_queued:true the request is a Stop. Advertised by interrupt_send_now_v1 on system/init; a CLI without it handles the request as a plain interrupt."
         },
         "message_uuid": {
           "type": "string",
@@ -7215,7 +7219,7 @@
         "send_now": {
           "type": "string",
           "enum": ["stopped", "delivering", "nothing_waiting"],
-          "description": "@internal Present only when a CLI that advertises interrupt_send_now_v1 itself answers a send_now (a client that relays to a hosted session answers without it). 'nothing_waiting': no user message waited (with message_uuid, the named one did not), and nothing was done. 'delivering': one waits and this request stopped no turn, for one of these reasons: no turn is under way and the message runs when its place comes; the message is not in the queue yet, or the running turn is just taking it in; the CLI is moving what the turn waits on to the background, and may still stop the turn later if that fails; the turn is already being stopped; or the process is on its way out, and the message will not run in it. 'stopped': the running turn was aborted for what waits, and its result follows."
+          "description": "@internal Present only when a CLI that advertises interrupt_send_now_v1 itself answers a send_now (a client that relays to a hosted session answers without it). 'nothing_waiting': no user message waited (with message_uuid, the named one did not), and nothing was done. 'delivering': one waits and this request stopped no turn, for one of these reasons: no turn is under way and the message runs when its place comes; the message is not in the queue yet, or the running turn is just taking it in; the CLI is moving what the turn waits on to the background, and may still stop the turn later if that fails; the turn is compacting the conversation by itself, and once that ends the CLI moves what the turn waits on or stops the turn at its next model request, while a turn with no further request ends by itself; the turn is already being stopped; or the process is on its way out, and the message will not run in it. 'stopped': the running turn was aborted for what waits, and its result follows."
         },
         "turn": {
           "type": "string",
@@ -8539,6 +8543,10 @@
                 "type": "boolean",
                 "description": "@internal True when the server is reached through the cloud session's own MCP proxy, or is a claude.ai connector the session mounted: its sign-in is held there, never in this process, so a client offers no OAuth sign-in for it. Absent when false and on CLIs that predate the field."
               },
+              "cloudServiceProvided": {
+                "type": "boolean",
+                "description": "@internal True for an http or sse server that Claude Code's cloud service itself added to the session, not a claude.ai connector: a client shows it as coming with the session and offers no claude.ai connector actions for it. The session judges this by the server's address and may miss one. Set only when `sessionProxied` is true. Absent when false and on CLIs that predate the field."
+              },
               "urlHost": {
                 "type": "string",
                 "description": "@internal Host and port of an http or sse server's URL as its settings file wrote it, for display where `config` is withheld. Absent for other transports, for a server with no settings file (dynamic, plugin, sdk, agent, claudeai), for a server the session proxies (its host would be the session's own), when the file's host holds an environment-variable placeholder or the file can't be re-read, and on CLIs that predate the field."
@@ -9666,6 +9674,10 @@
               "sessionProxied": {
                 "type": "boolean",
                 "description": "@internal True when the server is reached through the cloud session's own MCP proxy, or is a claude.ai connector the session mounted: its sign-in is held there, never in this process, so a client offers no OAuth sign-in for it. Absent when false and on CLIs that predate the field."
+              },
+              "cloudServiceProvided": {
+                "type": "boolean",
+                "description": "@internal True for an http or sse server that Claude Code's cloud service itself added to the session, not a claude.ai connector: a client shows it as coming with the session and offers no claude.ai connector actions for it. The session judges this by the server's address and may miss one. Set only when `sessionProxied` is true. Absent when false and on CLIs that predate the field."
               },
               "urlHost": {
                 "type": "string",
